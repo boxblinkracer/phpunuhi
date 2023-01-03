@@ -15,8 +15,9 @@ class JsonValidator implements ValidationInterface
         $scopeSnippetCount = null;
         $foundSnippets = [];
 
-        foreach ($files as $file) {
+        $isValid = true;
 
+        foreach ($files as $file) {
 
             $snippetJson = (string)file_get_contents($file);
             $snippetArray = json_decode($snippetJson, true);
@@ -28,19 +29,6 @@ class JsonValidator implements ValidationInterface
             $snippetArrayFlat = $this->getFlatArray($snippetArray);
 
             $allKeys = array_keys($snippetArrayFlat);
-            $allValues = array_values($snippetArrayFlat);
-
-            if ($scopeSnippetCount === null) {
-                # its our first
-                $scopeSnippetCount = count($allKeys);
-            }
-
-            foreach ($allKeys as $key) {
-                $value = $snippetArrayFlat[$key];
-                if (empty($value)) {
-                    return false;
-                }
-            }
 
             foreach ($allKeys as $key) {
                 $foundSnippets[$file][] = $key;
@@ -57,9 +45,11 @@ class JsonValidator implements ValidationInterface
 
             if ($previousKeys !== null) {
 
-                if (!$this->arrayEqual($previousKeys, $snippetKeys)) {
+                $structureValid = $this->isStructureEqual($previousKeys, $snippetKeys);
 
-                    echo "Found difference in snippets in these files: " . PHP_EOL;
+                if (!$structureValid) {
+
+                    echo "Found different structure in these files: " . PHP_EOL;
                     echo "  - A: " . $previousFile . PHP_EOL;
                     echo "  - B: " . $file . PHP_EOL;
 
@@ -67,8 +57,9 @@ class JsonValidator implements ValidationInterface
                     foreach ($filtered as $key) {
                         echo '           [x]: ' . $key . PHP_EOL;
                     }
+                    echo PHP_EOL;
 
-                    return false;
+                    $isValid = false;
                 }
             }
 
@@ -76,7 +67,39 @@ class JsonValidator implements ValidationInterface
             $previousKeys = $snippetKeys;
         }
 
-        return true;
+
+        foreach ($files as $file) {
+
+            $snippetJson = (string)file_get_contents($file);
+            $snippetArray = json_decode($snippetJson, true);
+
+            if ($snippetArray === false) {
+                $snippetArray = [];
+            }
+
+            $snippetArrayFlat = $this->getFlatArray($snippetArray);
+
+            $allKeys = array_keys($snippetArrayFlat);
+
+            if ($scopeSnippetCount === null) {
+                # its our first
+                $scopeSnippetCount = count($allKeys);
+            }
+
+            foreach ($allKeys as $key) {
+                $value = $snippetArrayFlat[$key];
+                if (empty($value)) {
+                    echo "Found empty translation in this file: " . PHP_EOL;
+                    echo "  - " . $file . PHP_EOL;
+                    echo '           [x]: ' . $key . PHP_EOL;
+                    echo PHP_EOL;
+                    $isValid = false;
+                }
+            }
+        }
+
+
+        return $isValid;
     }
 
 
@@ -107,7 +130,7 @@ class JsonValidator implements ValidationInterface
      * @param mixed $b
      * @return bool
      */
-    private function arrayEqual($a, $b)
+    private function isStructureEqual($a, $b)
     {
         return (is_array($b)
             && is_array($a)
