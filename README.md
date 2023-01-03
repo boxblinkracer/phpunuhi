@@ -38,3 +38,34 @@ php vendor/bin/phpunuhi ...
 The whole configuration is done using a XML file.
 You can create different translation suites with different files and settings.
 
+Configure a **translation** node for every scope of translation.
+This scope can then contain multiple files that need to match and only vary in their content.
+
+```xml
+
+<phpunuhi>
+    <translations>
+        <translation name="Storefront Translations">
+            <file>./snippets/de.json</file>
+            <file>./snippets/en.json</file>
+        </translation>
+    </translations>
+</phpunuhi>
+```
+
+## Validate Command
+
+You can then start the validation of your translation files by running this command.
+
+```bash 
+php bin/phpunuhi validate --configuration=./tests/e2e/phpunuhi.xml
+```
+
+## Export Command
+
+You can easily export your translations into a CSV file that can be passed on to an external translator or company.
+Every row will contain the translation key, and every column will be a different translation.
+
+```bash 
+php bin/phpunuhi export --configuration=./tests/e2e/phpunuhi.xml
+```
