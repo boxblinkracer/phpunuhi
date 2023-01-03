@@ -13,6 +13,8 @@ help:
 
 bin: ## Runs all tests via bin/phpunuhi
 	cd ../.. && php bin/phpunuhi validate --configuration=./tests/e2e/phpunuhi.xml
+	cd ../.. && php bin/phpunuhi export --configuration=./tests/e2e/phpunuhi.xml
 
 phar: ## Runs all tests with the PHAR
 	php ../../build/phpunuhi.phar validate --configuration=phpunuhi.xml
+	php ../../build/phpunuhi.phar export --configuration=phpunuhi.xml
