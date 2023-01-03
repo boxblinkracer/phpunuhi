@@ -1,0 +1,17 @@
+<phpunuhi>
+
+    <translations>
+
+        <translation name="Admin Translations">
+            <file>./files/invalid/de.json</file>
+            <file>./files/invalid/en.json</file>
+        </translation>
+
+        <translation name="Storefront Translations">
+            <file>./files/valid/de.json</file>
+            <file>./files/valid/en.json</file>
+        </translation>
+
+    </translations>
+
+</phpunuhi>

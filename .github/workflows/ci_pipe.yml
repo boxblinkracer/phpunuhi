@@ -1,0 +1,205 @@
+name: CI Pipeline
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths-ignore:
+      - '**.md'
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '.github/**'
+      - '**.md'
+      - 'makefile'
+
+jobs:
+
+
+  install_dev:
+    name: Install Dev Dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone Code
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4
+
+      - name: Mount Cache
+        uses: actions/cache@v3
+        with:
+          key: cache-${{ github.run_id }}
+          path: |
+            build
+            vendor
+
+      - name: Install Dependencies
+        run: make dev -B
+
+  # ------------------------------------------------------------------------------------------------------------------------
+
+  syntax_checks:
+    name: Syntax Checks
+    needs: install_dev
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone Code
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4
+
+      - name: PHP Syntax Checks
+        run: find . -name '*.php' -not -path "./src/vendor/*" -not -path "./tests/*" | xargs -n 1 -P4 php -l
+
+  unit_tests:
+    name: Unit Tests
+    needs: install_dev
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Clone Code
+        uses: actions/checkout@v3
+
+      - name: Mount Cache
+        uses: actions/cache@v3
+        with:
+          key: cache-${{ github.run_id }}
+          path: |
+            build
+            vendor
+
+      - name: Run PHPUnit
+        run: make phpunit -B
+
+  # ------------------------------------------------------------------------------------------------------------------------
+
+  phpstan:
+    name: PHPStan Analyzer
+    needs: install_dev
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Clone Code
+        uses: actions/checkout@v3
+
+      - name: Mount Cache
+        uses: actions/cache@v3
+        with:
+          key: cache-${{ github.run_id }}
+          path: |
+            build
+            vendor
+
+      - name: Run PHPStan
+        run: make stan -B
+
+  phpcsfixer:
+    name: PHP CS Fixer
+    needs: install_dev
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Clone Code
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4
+
+      - name: Mount Cache
+        uses: actions/cache@v3
+        with:
+          key: cache-${{ github.run_id }}
+          path: |
+            build
+            vendor
+
+      - name: Run PHP CS Fixer
+        run: make csfix -B
+
+  # ------------------------------------------------------------------------------------------------------------------------
+
+  build:
+    name: Build Binaries
+    needs: [ syntax_checks, unit_tests, phpstan, phpcsfixer ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone Code
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4
+          ini-values: phar.readonly=OFF
+
+      - name: Mount Cache
+        uses: actions/cache@v3
+        with:
+          key: cache-build-${{ github.run_id }}
+          path: |
+            build
+            vendor
+
+      - name: Build Binaries
+        run: make build -B
+
+  # ------------------------------------------------------------------------------------------------------------------------
+
+  test_bin:
+    name: E2E Tests | bin/phpunuhi
+    needs: [ build ]
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4
+
+      - name: Mount Cache
+        uses: actions/cache@v3
+        with:
+          key: cache-build-${{ github.run_id }}
+          path: |
+            build
+            vendor
+
+      - name: Start Tests
+        run: |
+          cd tests/e2e && make bin -B
+
+
+  test_phar:
+    name: E2E Tests | phpunuhi.phar
+    needs: [ build ]
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4
+
+      - name: Mount Cache
+        uses: actions/cache@v3
+        with:
+          key: cache-build-${{ github.run_id }}
+          path: |
+            build
+            vendor
+
+      - name: Start Tests
+        run: |
+          cd tests/e2e && make phar -B
