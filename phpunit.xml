@@ -24,8 +24,7 @@
             <directory suffix=".php">./</directory>
             <exclude>
                 <directory suffix=".php">./tests</directory>
-                <directory suffix=".php">./src/vendor</directory>
-                <file>./MollieShopware.php</file>
+                <directory suffix=".php">./vendor</directory>
             </exclude>
         </whitelist>
     </filter>
