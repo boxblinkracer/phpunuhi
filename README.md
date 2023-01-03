@@ -4,4 +4,37 @@
 
 Welcome to PHPUnuhi - An easy tool to work with translation files!
 
-## Basic Concept
+## Installation
+
+PHPUnuhi is based on PHP. So you need to have PHP installed.
+
+### PHAR File
+
+PHPUnuhi is available as `phar` file.
+Just download the ZIP file, extract it and you are ready to go.
+
+```
+curl -O https:// 
+unzip -o phpunuhi.zip
+rm -f phpunuhi.zip
+```
+
+### Composer
+
+You can also use PHPUnuhi with Composer. Just install it with this script.
+
+```
+composer require boxblinkracer/phpunuhi
+```
+
+You can then run it with this command
+
+```
+php vendor/bin/phpunuhi ...
+```
+
+## Configuration
+
+The whole configuration is done using a XML file.
+You can create different translation suites with different files and settings.
+
