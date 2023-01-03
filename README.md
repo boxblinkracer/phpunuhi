@@ -58,7 +58,7 @@ This scope can then contain multiple files that need to match and only vary in t
 You can then start the validation of your translation files by running this command.
 
 ```bash 
-php bin/phpunuhi validate --configuration=./phpunuhi.xml
+php php vendor/bin/phpunuhi validate validate --configuration=./phpunuhi.xml
 ```
 
 ## Export Command
@@ -67,5 +67,5 @@ You can easily export your translations into a CSV file that can be passed on to
 Every row will contain the translation key, and every column will be a different translation.
 
 ```bash 
-php bin/phpunuhi export --configuration=./phpunuhi.xml
+php php vendor/bin/phpunuhi validate export --configuration=./phpunuhi.xml
 ```
