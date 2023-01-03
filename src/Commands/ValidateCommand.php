@@ -74,7 +74,7 @@ class ValidateCommand extends Command
     }
 
     /**
-     * @param array $files
+     * @param array<string> $files
      * @return bool
      */
     private function validateTranslation(array $files): bool
@@ -85,8 +85,12 @@ class ValidateCommand extends Command
         foreach ($files as $file) {
 
 
-            $snippetJson = file_get_contents($file);
+            $snippetJson = (string)file_get_contents($file);
             $snippetArray = json_decode($snippetJson, true);
+
+            if ($snippetArray === false) {
+                $snippetArray = [];
+            }
 
             $snippetArrayFlat = $this->getFlatArray($snippetArray);
 
@@ -144,11 +148,11 @@ class ValidateCommand extends Command
 
 
     /**
-     * @param $array
-     * @param $prefix
-     * @return array
+     * @param array<mixed> $array
+     * @param string $prefix
+     * @return array<string>
      */
-    private function getFlatArray($array, $prefix = '')
+    private function getFlatArray(array $array, string $prefix = '')
     {
         $result = [];
 
@@ -165,11 +169,15 @@ class ValidateCommand extends Command
         return $result;
     }
 
+    /**
+     * @param mixed $a
+     * @param mixed $b
+     * @return bool
+     */
     private function arrayEqual($a, $b)
     {
-        return (
-            is_array($a)
-            && is_array($b)
+        return (is_array($b)
+            && is_array($a)
             && count($a) == count($b)
             && array_diff($a, $b) === array_diff($b, $a)
         );

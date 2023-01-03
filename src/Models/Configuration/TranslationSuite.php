@@ -11,14 +11,14 @@ class TranslationSuite
     private $name;
 
     /**
-     * @var array<string>
+     * @var array<mixed>
      */
     private $files;
 
 
     /**
      * @param string $name
-     * @param string[] $files
+     * @param array<mixed> $files
      */
     public function __construct($name, array $files)
     {
@@ -36,7 +36,7 @@ class TranslationSuite
     }
 
     /**
-     * @return string[]
+     * @return array<mixed>
      */
     public function getFiles()
     {
