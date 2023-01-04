@@ -2,16 +2,16 @@
 
 namespace PHPUnuhi\Services\Validation;
 
-use PHPUnuhi\Models\Translation\TranslationSuite;
+use PHPUnuhi\Models\Translation\TranslationSet;
 
 class JsonValidator implements ValidationInterface
 {
 
     /**
-     * @param TranslationSuite $suite
+     * @param TranslationSet $suite
      * @return bool
      */
-    public function validate(TranslationSuite $suite): bool
+    public function validate(TranslationSet $suite): bool
     {
         $foundSnippets = [];
 

@@ -16,7 +16,7 @@ At the moment it only supports JSON based files.
 Although it's not dependent on a specific platform, you can use it perfectly with Shopware 6 and other platforms.
 
 For example, Shopware 6 has snippets based on JSON files.
-If you develop plugins for this platform, you can build translation suites in PHPUnuhi that contain all your files for the individual languages, like EN, DE, NL, and whatever you support.
+If you develop plugins for this platform, you can build translation sets in PHPUnuhi that contain all your files for the individual languages, like EN, DE, NL, and whatever you support.
 PHPUnuhi helps you to make sure you didn't forget any translations, screwed up structures across your language files and even
 helps you to export and import your translations.
 
@@ -55,7 +55,7 @@ php vendor/bin/phpunuhi validate
 ## Configuration
 
 The whole configuration is done using a XML file.
-You can create different translation suites with different files and settings.
+You can create different translation sets with different files and settings.
 
 Configure a **translation** node for every scope of translation.
 This scope can then contain multiple files that need to match and only vary in their content.
@@ -98,21 +98,21 @@ php vendor/bin/phpunuhi export --configuration=./phpunuhi.xml
 # provide custom export folder
 php vendor/bin/phpunuhi export --configuration=./phpunuhi.xml --dir=.exports
 
-# only export single suite
-php vendor/bin/phpunuhi export --configuration=./phpunuhi.xml --suite="my suite"
+# only export single set
+php vendor/bin/phpunuhi export --configuration=./phpunuhi.xml --set="my set"
 ```
 
 ## Import Command
 
 You can easily import your translations from a CSV file.
-This will automatically update the JSON files that have been assigned to the imported translation suite.
+This will automatically update the JSON files that have been assigned to the imported translation set.
 
 ```bash 
-php vendor/bin/phpunuhi import --configuration=./phpunuhi.xml --suite=storefront --file=./storefront.csv
+php vendor/bin/phpunuhi import --configuration=./phpunuhi.xml --set=storefront --file=./storefront.csv
 
 # intent of 4 spaces
-php vendor/bin/phpunuhi import --configuration=./phpunuhi.xml --suite=storefront --file=./storefront.csv --intent=4
+php vendor/bin/phpunuhi import --configuration=./phpunuhi.xml --set=storefront --file=./storefront.csv --intent=4
 
 # sort JSON alphabetically
-php vendor/bin/phpunuhi import --configuration=./phpunuhi.xml --suite=storefront --file=./storefront.csv --sort
+php vendor/bin/phpunuhi import --configuration=./phpunuhi.xml --set=storefront --file=./storefront.csv --sort
 ```

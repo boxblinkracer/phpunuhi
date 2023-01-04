@@ -2,7 +2,7 @@
 
 namespace PHPUnuhi\Models\Translation;
 
-class TranslationSuite
+class TranslationSet
 {
 
     /**

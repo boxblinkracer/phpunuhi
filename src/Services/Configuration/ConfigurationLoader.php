@@ -4,8 +4,7 @@ namespace PHPUnuhi\Services\Configuration;
 
 use PHPUnuhi\Models\Configuration\Configuration;
 use PHPUnuhi\Models\Translation\Locale;
-use PHPUnuhi\Models\Translation\Translation;
-use PHPUnuhi\Models\Translation\TranslationSuite;
+use PHPUnuhi\Models\Translation\TranslationSet;
 use SimpleXMLElement;
 
 class ConfigurationLoader
@@ -57,7 +56,7 @@ class ConfigurationLoader
                 }
             }
 
-            $suite = new TranslationSuite($name, $foundLocales);
+            $suite = new TranslationSet($name, $foundLocales);
 
             $suite = $this->loadTranslations($suite);
 
@@ -68,10 +67,10 @@ class ConfigurationLoader
     }
 
     /**
-     * @param TranslationSuite $suite
-     * @return TranslationSuite
+     * @param TranslationSet $suite
+     * @return TranslationSet
      */
-    private function loadTranslations(TranslationSuite $suite): TranslationSuite
+    private function loadTranslations(TranslationSet $suite): TranslationSet
     {
         foreach ($suite->getLocales() as $locale) {
 

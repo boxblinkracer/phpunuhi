@@ -23,7 +23,7 @@ class ExportCommand extends Command
             ->setName('export')
             ->setDescription('Exports all or specific translations into a CSV file')
             ->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', '')
-            ->addOption('suite', null, InputOption::VALUE_REQUIRED, '', '')
+            ->addOption('set', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('dir', null, InputOption::VALUE_OPTIONAL, '', '');
 
         parent::configure();
@@ -43,7 +43,7 @@ class ExportCommand extends Command
 
         $configFile = $this->getConfigFile($input);
         $outputDir = (string)$input->getOption('dir');
-        $suiteName = (string)$input->getOption('suite');
+        $setName = (string)$input->getOption('set');
 
 
         $configLoader = new ConfigurationLoader();
@@ -51,19 +51,19 @@ class ExportCommand extends Command
         $config = $configLoader->load($configFile);
 
 
-        foreach ($config->getTranslationSuites() as $suite) {
+        foreach ($config->getTranslationSets() as $set) {
 
             # if we have configured to only export a single suite
             # then skip all others
-            if (!empty($suiteName) && $suiteName !== $suite->getName()) {
+            if (!empty($setName) && $setName !== $set->getName()) {
                 continue;
             }
 
-            $io->section('Translation Suite: ' . $suite->getName());
+            $io->section('Translation Set: ' . $set->getName());
 
             $allEntries = [];
 
-            foreach ($suite->getLocales() as $locale) {
+            foreach ($set->getLocales() as $locale) {
 
                 $fileBase = basename($locale->getFilename());
 
@@ -107,7 +107,7 @@ class ExportCommand extends Command
                 }
             }
 
-            $csvFilename = $outputDir . '/' . $suite->getName() . '.csv';
+            $csvFilename = $outputDir . '/' . $set->getName() . '.csv';
 
             if (file_exists($csvFilename)) {
                 unlink($csvFilename);

@@ -53,16 +53,16 @@ class ValidateCommand extends Command
 
         $validator = new JsonValidator();
 
-        foreach ($config->getTranslationSuites() as $suite) {
+        foreach ($config->getTranslationSets() as $set) {
 
-            $io->section('Translation Suite: ' . $suite->getName());
+            $io->section('Translation Set: ' . $set->getName());
 
-            $isValid = $validator->validate($suite);
+            $isValid = $validator->validate($set);
 
             if ($isValid) {
-                $io->info('Suite is valid!');
+                $io->info('Set is valid!');
             } else {
-                $io->info('Suite is not valid!');
+                $io->info('Set is not valid!');
                 $isAllValid = false;
             }
         }

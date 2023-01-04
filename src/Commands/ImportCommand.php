@@ -23,7 +23,7 @@ class ImportCommand extends Command
             ->setName('import')
             ->setDescription('Imports translations from a provided CSV file')
             ->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', '')
-            ->addOption('suite', null, InputOption::VALUE_REQUIRED, 'R', '')
+            ->addOption('set', null, InputOption::VALUE_REQUIRED, 'R', '')
             ->addOption('file', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('intent', null, InputOption::VALUE_OPTIONAL, '', '')
             ->addOption('sort', null, InputOption::VALUE_NONE, '', null);
@@ -45,7 +45,7 @@ class ImportCommand extends Command
 
         $configFile = $this->getConfigFile($input);
         $csvFilename = (string)$input->getOption('file');
-        $suiteName = (string)$input->getOption('suite');
+        $suiteName = (string)$input->getOption('set');
         $intent = (string)$input->getOption('intent');
         $sort = (bool)$input->getOption('sort');
 
@@ -92,14 +92,14 @@ class ImportCommand extends Command
         $importedLocales = 0;
         $importedTranslations = 0;
 
-        foreach ($config->getTranslationSuites() as $suite) {
+        foreach ($config->getTranslationSets() as $set) {
 
-            if ($suiteName !== $suite->getName()) {
+            if ($suiteName !== $set->getName()) {
                 continue;
             }
 
             # todo only use 1 translation with arguments of this command!
-            foreach ($suite->getLocales() as $locale) {
+            foreach ($set->getLocales() as $locale) {
                 $fileName = basename($locale->getFilename());
 
                 foreach ($translationFileValues as $key => $values) {
@@ -134,7 +134,7 @@ class ImportCommand extends Command
             }
         }
 
-        $io->success('Imported ' . $importedTranslations . ' translations of ' . $importedLocales . ' locales for suite: ' . $suiteName);
+        $io->success('Imported ' . $importedTranslations . ' translations of ' . $importedLocales . ' locales for set: ' . $suiteName);
         exit(0);
 
     }

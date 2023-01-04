@@ -1,15 +1,15 @@
 <?php
 
 namespace PHPUnuhi\Services\Validation;
-use PHPUnuhi\Models\Translation\TranslationSuite;
+use PHPUnuhi\Models\Translation\TranslationSet;
 
 interface ValidationInterface
 {
 
     /**
-     * @param TranslationSuite $suite
+     * @param TranslationSet $suite
      * @return bool
      */
-    function validate(TranslationSuite $suite): bool;
+    function validate(TranslationSet $suite): bool;
 
 }

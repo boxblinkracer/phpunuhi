@@ -3,18 +3,18 @@
 namespace PHPUnuhi\Models\Configuration;
 
 
-use PHPUnuhi\Models\Translation\TranslationSuite;
+use PHPUnuhi\Models\Translation\TranslationSet;
 
 class Configuration
 {
 
     /**
-     * @var array<TranslationSuite>
+     * @var array<TranslationSet>
      */
     private $translationSuites;
 
     /**
-     * @param TranslationSuite[] $translationSuites
+     * @param TranslationSet[] $translationSuites
      */
     public function __construct(array $translationSuites)
     {
@@ -22,9 +22,9 @@ class Configuration
     }
 
     /**
-     * @return TranslationSuite[]
+     * @return TranslationSet[]
      */
-    public function getTranslationSuites()
+    public function getTranslationSets()
     {
         return $this->translationSuites;
     }
