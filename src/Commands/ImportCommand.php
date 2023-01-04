@@ -111,13 +111,16 @@ class ImportCommand extends Command
 
                         $tmpArray = $this->flattenToMultiDimensional($values, '.');
 
+                        $jsonString = (string)json_encode($tmpArray, JSON_PRETTY_PRINT);
+
                         $json = preg_replace_callback(
                             '/^ +/m',
                             function ($m) use ($intent) {
-                                $intentStr = str_repeat(' ', $intent);
-                                return str_repeat($intentStr, strlen($m[0]) / 2);
+                                $intentStr = (string)str_repeat(' ', $intent);
+                                $repeat = (int)(strlen($m[0]) / 2);
+                                return str_repeat($intentStr, $repeat);
                             },
-                            json_encode($tmpArray, JSON_PRETTY_PRINT)
+                            $jsonString
                         );
 
                         file_put_contents($locale->getFilename(), $json);
@@ -139,7 +142,7 @@ class ImportCommand extends Command
      * @param string $delimiter
      * @return array<mixed>
      */
-    private function flattenToMultiDimensional(array $array, string $delimiter = '.')
+    private function flattenToMultiDimensional(array $array, string $delimiter = '.') : array
     {
         $result = [];
         foreach ($array as $notations => $value) {
