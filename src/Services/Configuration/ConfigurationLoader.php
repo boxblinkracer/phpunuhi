@@ -77,10 +77,14 @@ class ConfigurationLoader
 
             $snippetJson = (string)file_get_contents($locale->getFilename());
 
-            $foundTranslations = json_decode($snippetJson, true);
+            $foundTranslations = [];
 
-            if ($foundTranslations === false) {
-                $foundTranslations = [];
+            if (!empty($snippetJson)) {
+                $foundTranslations = json_decode($snippetJson, true);
+
+                if ($foundTranslations === false) {
+                    $foundTranslations = [];
+                }
             }
 
             $foundTranslationsFlat = $this->getFlatArray($foundTranslations);

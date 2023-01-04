@@ -30,6 +30,8 @@ class Locale
     {
         $this->locale = $locale;
         $this->filename = $filename;
+
+        $this->translations = [];
     }
 
     /**

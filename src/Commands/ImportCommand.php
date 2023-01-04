@@ -78,6 +78,7 @@ class ImportCommand extends Command
                     $key = $lineArray[0];
                     $value = $lineArray[$i];
 
+
                     $transFile = (string)$headerFiles[$i];
 
                     if ($transFile !== '') {
@@ -111,7 +112,7 @@ class ImportCommand extends Command
 
                         $tmpArray = $this->flattenToMultiDimensional($values, '.');
 
-                        $jsonString = (string)json_encode($tmpArray, JSON_PRETTY_PRINT);
+                        $jsonString = (string)json_encode($tmpArray, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
                         $json = preg_replace_callback(
                             '/^ +/m',
@@ -142,7 +143,7 @@ class ImportCommand extends Command
      * @param string $delimiter
      * @return array<mixed>
      */
-    private function flattenToMultiDimensional(array $array, string $delimiter = '.') : array
+    private function flattenToMultiDimensional(array $array, string $delimiter = '.'): array
     {
         $result = [];
         foreach ($array as $notations => $value) {
