@@ -24,8 +24,8 @@ class ValidateCommand extends Command
     {
         $this
             ->setName('validate')
-            ->setDescription('')
-            ->addOption('configuration', null, InputOption::VALUE_REQUIRED, 'Read configuration from XML file', '');
+            ->setDescription('Validates all your translations in your configuration')
+            ->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', '');
 
         parent::configure();
     }
@@ -42,7 +42,7 @@ class ValidateCommand extends Command
 
         $this->showHeader();
 
-        $configFile =$this->getConfigFile($input);
+        $configFile = $this->getConfigFile($input);
 
         $configLoader = new ConfigurationLoader();
 

@@ -21,8 +21,8 @@ class ImportCommand extends Command
     {
         $this
             ->setName('import')
-            ->setDescription('')
-            ->addOption('configuration', null, InputOption::VALUE_REQUIRED, 'Read configuration from XML file', '')
+            ->setDescription('Imports translations from a provided CSV file')
+            ->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('suite', null, InputOption::VALUE_REQUIRED, 'R', '')
             ->addOption('file', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('intent', null, InputOption::VALUE_OPTIONAL, '', '')

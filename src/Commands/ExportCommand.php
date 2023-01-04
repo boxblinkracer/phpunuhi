@@ -21,8 +21,8 @@ class ExportCommand extends Command
     {
         $this
             ->setName('export')
-            ->setDescription('')
-            ->addOption('configuration', null, InputOption::VALUE_REQUIRED, 'Read configuration from XML file', '')
+            ->setDescription('Exports all or specific translations into a CSV file')
+            ->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('suite', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('dir', null, InputOption::VALUE_OPTIONAL, '', '');
 
