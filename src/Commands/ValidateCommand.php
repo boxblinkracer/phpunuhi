@@ -2,10 +2,10 @@
 
 namespace PHPUnuhi\Commands;
 
+use PHPUnuhi\Commands\CommandTrait;
 use PHPUnuhi\Services\Configuration\ConfigurationLoader;
 use PHPUnuhi\Services\Validation\JsonValidator;
 use SimpleXMLElement;
-use SVRUnit\Commands\CommandTrait;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -42,7 +42,7 @@ class ValidateCommand extends Command
 
         $this->showHeader();
 
-        $configFile = (string)$input->getOption('configuration');
+        $configFile =$this->getConfigFile($input);
 
         $configLoader = new ConfigurationLoader();
 
@@ -57,7 +57,7 @@ class ValidateCommand extends Command
 
             $io->section('Translation Suite: ' . $suite->getName());
 
-            $isValid = $validator->validate($suite->getFiles());
+            $isValid = $validator->validate($suite);
 
             if ($isValid) {
                 $io->info('Suite is valid!');

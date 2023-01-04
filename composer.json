@@ -2,7 +2,7 @@
   "name": "boxblinkracer/phpunuhi",
   "version": "v0.0.1",
   "license": "MIT",
-  "description": "",
+  "description": "Easy tool to work with translation files for validation, imports and exports.",
   "keywords": [
   ],
   "authors": [
@@ -21,9 +21,7 @@
     "php": ">=7.2",
     "ext-dom": "*",
     "ext-simplexml": "*",
-    "symfony/console": "*",
-    "symfony/yaml": "^5.4",
-    "twig/twig": "^3.4"
+    "symfony/console": "*"
   },
   "require-dev": {
     "phpunit/phpunit": "^8.5",

@@ -3,8 +3,9 @@
 namespace PHPUnuhi;
 
 use Exception;
+use PHPUnuhi\Commands\ExportCommand;
+use PHPUnuhi\Commands\ImportCommand;
 use PHPUnuhi\Commands\ValidateCommand;
-use SVRUnit\Commands\ExportCommand;
 use Symfony\Component\Console\Application;
 
 class AppManager
@@ -21,6 +22,7 @@ class AppManager
 
         $application->add(new ValidateCommand());
         $application->add(new ExportCommand());
+        $application->add(new ImportCommand());
 
         $application->setDefaultCommand('validate');
 

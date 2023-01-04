@@ -3,6 +3,8 @@
 namespace PHPUnuhi\Models\Configuration;
 
 
+use PHPUnuhi\Models\Translation\TranslationSuite;
+
 class Configuration
 {
 

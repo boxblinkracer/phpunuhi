@@ -2,127 +2,73 @@
 
 namespace PHPUnuhi\Services\Validation;
 
+use PHPUnuhi\Models\Translation\TranslationSuite;
+
 class JsonValidator implements ValidationInterface
 {
 
-
     /**
-     * @param array<string> $files
+     * @param TranslationSuite $suite
      * @return bool
      */
-    public function validate(array $files): bool
+    public function validate(TranslationSuite $suite): bool
     {
-        $scopeSnippetCount = null;
         $foundSnippets = [];
 
         $isValid = true;
 
-        foreach ($files as $file) {
-
-            $snippetJson = (string)file_get_contents($file);
-            $snippetArray = json_decode($snippetJson, true);
-
-            if ($snippetArray === false) {
-                $snippetArray = [];
-            }
-
-            $snippetArrayFlat = $this->getFlatArray($snippetArray);
-
-            $allKeys = array_keys($snippetArrayFlat);
-
-            foreach ($allKeys as $key) {
-                $foundSnippets[$file][] = $key;
+        foreach ($suite->getLocales() as $locale) {
+            foreach ($locale->getTranslations() as $translation) {
+                $foundSnippets[$locale->getFilename()][] = $translation->getKey();
             }
         }
 
 
-        # NOW COMPARE THAT THEY HAVE THE SAME STRUCTURE
-        # ACROSS ALL FILES
+        # NOW COMPARE THAT THEY HAVE THE SAME STRUCTURE ACROSS ALL FILES
 
         $previousFile = '';
         $previousKeys = null;
-        foreach ($foundSnippets as $file => $snippetKeys) {
 
-            if ($previousKeys !== null) {
+        $allKeys = $suite->getAllTranslationKeys();
 
-                $structureValid = $this->isStructureEqual($previousKeys, $snippetKeys);
+        foreach ($suite->getLocales() as $locale) {
 
-                if (!$structureValid) {
+            $localeKeys = $locale->getTranslationKeys();
 
-                    echo "Found different structure in these files: " . PHP_EOL;
-                    echo "  - A: " . $previousFile . PHP_EOL;
-                    echo "  - B: " . $file . PHP_EOL;
+            # verify if our current locale has the same structure
+            # as our global suite keys list
+            $structureValid = $this->isStructureEqual($localeKeys, $allKeys);
 
-                    $filtered = array_diff($previousKeys, $snippetKeys);
-                    foreach ($filtered as $key) {
-                        echo '           [x]: ' . $key . PHP_EOL;
-                    }
-                    echo PHP_EOL;
+            if (!$structureValid) {
 
-                    $isValid = false;
-                }
-            }
+                echo "Found different structure in this file: " . PHP_EOL;
+                echo "  - " . $locale->getFilename() . PHP_EOL;
 
-            $previousFile = $file;
-            $previousKeys = $snippetKeys;
-        }
+                $filtered = $this->getDiff($localeKeys, $allKeys);
 
-
-        foreach ($files as $file) {
-
-            $snippetJson = (string)file_get_contents($file);
-            $snippetArray = json_decode($snippetJson, true);
-
-            if ($snippetArray === false) {
-                $snippetArray = [];
-            }
-
-            $snippetArrayFlat = $this->getFlatArray($snippetArray);
-
-            $allKeys = array_keys($snippetArrayFlat);
-
-            if ($scopeSnippetCount === null) {
-                # its our first
-                $scopeSnippetCount = count($allKeys);
-            }
-
-            foreach ($allKeys as $key) {
-                $value = $snippetArrayFlat[$key];
-                if (empty($value)) {
-                    echo "Found empty translation in this file: " . PHP_EOL;
-                    echo "  - " . $file . PHP_EOL;
+                foreach ($filtered as $key) {
                     echo '           [x]: ' . $key . PHP_EOL;
+                }
+                echo PHP_EOL;
+
+                $isValid = false;
+            }
+        }
+
+
+        foreach ($suite->getLocales() as $locale) {
+            foreach ($locale->getTranslations() as $translation) {
+                if (empty($translation->getValue())) {
+                    echo "Found empty translation in this file: " . PHP_EOL;
+                    echo "  - " . $locale->getFilename() . PHP_EOL;
+                    echo '           [x]: ' . $translation->getKey() . PHP_EOL;
                     echo PHP_EOL;
                     $isValid = false;
                 }
             }
         }
-
 
         return $isValid;
-    }
-
-
-    /**
-     * @param array<mixed> $array
-     * @param string $prefix
-     * @return array<string>
-     */
-    private function getFlatArray(array $array, string $prefix = '')
-    {
-        $result = [];
-
-        foreach ($array as $key => $value) {
-            $new_key = $prefix . (empty($prefix) ? '' : '.') . $key;
-
-            if (is_array($value)) {
-                $result = array_merge($result, $this->getFlatArray($value, $new_key));
-            } else {
-                $result[$new_key] = $value;
-            }
-        }
-
-        return $result;
     }
 
     /**
@@ -137,8 +83,18 @@ class JsonValidator implements ValidationInterface
             && count($a) == count($b)
             && array_diff($a, $b) === array_diff($b, $a)
         );
-
-
     }
 
+    /**
+     * @param array<mixed> $a
+     * @param array<mixed> $b
+     * @return array<mixed>
+     */
+    private function getDiff(array $a, array $b): array
+    {
+        $diffA = array_diff($a, $b);
+        $diffB = array_diff($b, $a);
+
+        return array_merge($diffA, $diffB);
+    }
 }

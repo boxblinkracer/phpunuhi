@@ -1,10 +1,8 @@
 <?php
 
-namespace SVRUnit\Commands;
+namespace PHPUnuhi\Commands;
 
 use PHPUnuhi\Services\Configuration\ConfigurationLoader;
-use SimpleXMLElement;
-use SVRUnit\Commands\CommandTrait;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -24,7 +22,8 @@ class ExportCommand extends Command
         $this
             ->setName('export')
             ->setDescription('')
-            ->addOption('configuration', null, InputOption::VALUE_REQUIRED, 'Read configuration from XML file', '');
+            ->addOption('configuration', null, InputOption::VALUE_REQUIRED, 'Read configuration from XML file', '')
+            ->addOption('dir', null, InputOption::VALUE_OPTIONAL, '', '');
 
         parent::configure();
     }
@@ -41,7 +40,9 @@ class ExportCommand extends Command
 
         $this->showHeader();
 
-        $configFile = (string)$input->getOption('configuration');
+        $configFile = $this->getConfigFile($input);
+        $outputDir = (string)$input->getOption('dir');
+
 
         $configLoader = new ConfigurationLoader();
 
@@ -54,21 +55,12 @@ class ExportCommand extends Command
 
             $allEntries = [];
 
-            foreach ($suite->getFiles() as $file) {
+            foreach ($suite->getLocales() as $locale) {
 
-                $fileBase = basename($file);
+                $fileBase = basename($locale->getFilename());
 
-                $snippetJson = (string)file_get_contents($file);
-                $snippetArray = json_decode($snippetJson, true);
-
-                if ($snippetArray === false) {
-                    $snippetArray = [];
-                }
-
-                $snippetArrayFlat = $this->getFlatArray($snippetArray);
-
-                foreach ($snippetArrayFlat as $key => $value) {
-                    $allEntries[$key][$fileBase] = $value;
+                foreach ($locale->getTranslations() as $translation) {
+                    $allEntries[$translation->getKey()][$fileBase] = $translation->getValue();
                 }
             }
 
@@ -99,7 +91,20 @@ class ExportCommand extends Command
                 $lines[] = $line;
             }
 
-            $csvFilename = './export_' . $suite->getName() . '.csv';
+            if (empty($outputDir)) {
+                $outputDir = '.';
+            } else {
+                if (!file_exists($outputDir)) {
+                    mkdir($outputDir);
+                }
+            }
+
+            $csvFilename = $outputDir . '/' . $suite->getName() . '.csv';
+
+            if (file_exists($csvFilename)) {
+                unlink($csvFilename);
+            }
+
             $f = fopen($csvFilename, 'a');
 
             if ($f !== false) {
@@ -111,33 +116,8 @@ class ExportCommand extends Command
 
         }
 
-
         $io->success('All translations exported!');
         exit(0);
-
-    }
-
-
-    /**
-     * @param array<mixed> $array
-     * @param string $prefix
-     * @return array<string>
-     */
-    private function getFlatArray(array $array, string $prefix = '')
-    {
-        $result = [];
-
-        foreach ($array as $key => $value) {
-            $new_key = $prefix . (empty($prefix) ? '' : '.') . $key;
-
-            if (is_array($value)) {
-                $result = array_merge($result, $this->getFlatArray($value, $new_key));
-            } else {
-                $result[$new_key] = $value;
-            }
-        }
-
-        return $result;
     }
 
 }

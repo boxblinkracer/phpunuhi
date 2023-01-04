@@ -45,9 +45,13 @@ This scope can then contain multiple files that need to match and only vary in t
 
 <phpunuhi>
     <translations>
-        <translation name="Storefront Translations">
-            <file>./snippets/de.json</file>
-            <file>./snippets/en.json</file>
+        <translation name="Storefront">
+            <file locale="de">./snippets/storefront/de.json</file>
+            <file locale="en">./snippets/storefront/en.json</file>
+        </translation>
+        <translation name="Admin">
+            <file locale="de">./snippets/admin/de.json</file>
+            <file locale="en">./snippets/admin/en.json</file>
         </translation>
     </translations>
 </phpunuhi>
@@ -58,7 +62,7 @@ This scope can then contain multiple files that need to match and only vary in t
 You can then start the validation of your translation files by running this command.
 
 ```bash 
-php php vendor/bin/phpunuhi validate validate --configuration=./phpunuhi.xml
+php vendor/bin/phpunuhi validate --configuration=./phpunuhi.xml
 ```
 
 ## Export Command
@@ -67,5 +71,23 @@ You can easily export your translations into a CSV file that can be passed on to
 Every row will contain the translation key, and every column will be a different translation.
 
 ```bash 
-php php vendor/bin/phpunuhi validate export --configuration=./phpunuhi.xml
+php vendor/bin/phpunuhi export --configuration=./phpunuhi.xml
+
+# provide custom export folder
+php vendor/bin/phpunuhi export --configuration=./phpunuhi.xml --dir=.exports
+```
+
+## Import Command
+
+You can easily import your translations from a CSV file.
+This will automatically update the JSON files that have been assigned to the imported translation suite.
+
+```bash 
+php vendor/bin/phpunuhi import --configuration=./phpunuhi.xml --suite=storefront --file=./storefront.csv
+
+# intent of 4 spaces
+php vendor/bin/phpunuhi import --configuration=./phpunuhi.xml --suite=storefront --file=./storefront.csv --intent=4
+
+# sort JSON alphabetically
+php vendor/bin/phpunuhi import --configuration=./phpunuhi.xml --suite=storefront --file=./storefront.csv --sort
 ```

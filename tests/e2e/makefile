@@ -12,9 +12,11 @@ help:
 #------------------------------------------------------------------------------------------------
 
 bin: ## Runs all tests via bin/phpunuhi
-	cd ../.. && php bin/phpunuhi validate --configuration=./tests/e2e/phpunuhi.xml
-	cd ../.. && php bin/phpunuhi export --configuration=./tests/e2e/phpunuhi.xml
+	cd ../.. && php bin/phpunuhi validate --configuration=./tests/e2e/files/valid/phpunuhi.xml
+	cd ../.. && php bin/phpunuhi export --configuration=./tests/e2e/files/valid/phpunuhi.xml --dir=.export
+	cd ../.. && php bin/phpunuhi import --configuration=./tests/e2e/files/import/phpunuhi.xml --suite=storefront --file=./tests/e2e/files/import/import.csv --intent=3 --sort
 
 phar: ## Runs all tests with the PHAR
-	php ../../build/phpunuhi.phar validate --configuration=phpunuhi.xml
-	php ../../build/phpunuhi.phar export --configuration=phpunuhi.xml
+	php ../../build/phpunuhi.phar validate --configuration=files/valid/phpunuhi.xml
+	php ../../build/phpunuhi.phar export --configuration=files/valid/phpunuhi.xml --dir=.export
+	php ../../build/phpunuhi.phar import --configuration=files/import/phpunuhi.xml --suite=storefront --file=./tests/e2e/files/import/import.csv --intent=3 --sort

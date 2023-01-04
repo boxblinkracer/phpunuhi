@@ -3,7 +3,9 @@
 namespace PHPUnuhi\Services\Configuration;
 
 use PHPUnuhi\Models\Configuration\Configuration;
-use PHPUnuhi\Models\Configuration\TranslationSuite;
+use PHPUnuhi\Models\Translation\Locale;
+use PHPUnuhi\Models\Translation\Translation;
+use PHPUnuhi\Models\Translation\TranslationSuite;
 use SimpleXMLElement;
 
 class ConfigurationLoader
@@ -31,7 +33,7 @@ class ConfigurationLoader
 
             $name = (string)$translation['name'];
 
-            $files = [];
+            $foundLocales = [];
 
             /** @var SimpleXMLElement $childNode */
             foreach ($translation->children() as $childNode) {
@@ -39,20 +41,77 @@ class ConfigurationLoader
                 $nodeType = $childNode->getName();
                 $nodeValue = (string)$childNode[0];
 
+                $locale = null;
+
                 switch ($nodeType) {
                     case 'file':
-                        $file = $nodeValue;
-                        $files[] = realpath(dirname($configFilename) . '/' . $file);
+                        $localeAttr = (string)$childNode['locale'];
+                        $fileName = (string)realpath(dirname($configFilename) . '/' . $nodeValue);
+
+                        $locale = new Locale($localeAttr, $fileName);
                         break;
+                }
+
+                if ($locale instanceof Locale) {
+                    $foundLocales[] = $locale;
                 }
             }
 
-            $suites[] = new TranslationSuite(
-                $name,
-                $files
-            );
+            $suite = new TranslationSuite($name, $foundLocales);
+
+            $suite = $this->loadTranslations($suite);
+
+            $suites[] = $suite;
         }
 
         return new Configuration($suites);
+    }
+
+    /**
+     * @param TranslationSuite $suite
+     * @return TranslationSuite
+     */
+    private function loadTranslations(TranslationSuite $suite): TranslationSuite
+    {
+        foreach ($suite->getLocales() as $locale) {
+
+            $snippetJson = (string)file_get_contents($locale->getFilename());
+
+            $foundTranslations = json_decode($snippetJson, true);
+
+            if ($foundTranslations === false) {
+                $foundTranslations = [];
+            }
+
+            $foundTranslationsFlat = $this->getFlatArray($foundTranslations);
+
+            foreach ($foundTranslationsFlat as $key => $value) {
+                $locale->addTranslation($key, $value);
+            }
+        }
+
+        return $suite;
+    }
+
+    /**
+     * @param array<mixed> $array
+     * @param string $prefix
+     * @return array<string>
+     */
+    private function getFlatArray(array $array, string $prefix = '')
+    {
+        $result = [];
+
+        foreach ($array as $key => $value) {
+            $new_key = $prefix . (empty($prefix) ? '' : '.') . $key;
+
+            if (is_array($value)) {
+                $result = array_merge($result, $this->getFlatArray($value, $new_key));
+            } else {
+                $result[$new_key] = $value;
+            }
+        }
+
+        return $result;
     }
 }
