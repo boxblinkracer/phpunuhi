@@ -23,6 +23,7 @@ class ExportCommand extends Command
             ->setName('export')
             ->setDescription('')
             ->addOption('configuration', null, InputOption::VALUE_REQUIRED, 'Read configuration from XML file', '')
+            ->addOption('suite', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('dir', null, InputOption::VALUE_OPTIONAL, '', '');
 
         parent::configure();
@@ -42,6 +43,7 @@ class ExportCommand extends Command
 
         $configFile = $this->getConfigFile($input);
         $outputDir = (string)$input->getOption('dir');
+        $suiteName = (string)$input->getOption('suite');
 
 
         $configLoader = new ConfigurationLoader();
@@ -50,6 +52,12 @@ class ExportCommand extends Command
 
 
         foreach ($config->getTranslationSuites() as $suite) {
+
+            # if we have configured to only export a single suite
+            # then skip all others
+            if (!empty($suiteName) && $suiteName !== $suite->getName()) {
+                continue;
+            }
 
             $io->section('Translation Suite: ' . $suite->getName());
 

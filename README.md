@@ -75,6 +75,9 @@ php vendor/bin/phpunuhi export --configuration=./phpunuhi.xml
 
 # provide custom export folder
 php vendor/bin/phpunuhi export --configuration=./phpunuhi.xml --dir=.exports
+
+# only export single suite
+php vendor/bin/phpunuhi export --configuration=./phpunuhi.xml --suite="my suite"
 ```
 
 ## Import Command
