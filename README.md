@@ -65,15 +65,15 @@ This scope can then contain multiple files that need to match and only vary in t
 <phpunuhi>
     <translations>
 
-        <translation name="Storefront">
+        <set name="Storefront">
             <file locale="de">./snippets/storefront/de.json</file>
             <file locale="en">./snippets/storefront/en.json</file>
-        </translation>
+        </set>
 
-        <translation name="Admin">
+        <set name="Admin">
             <file locale="de">./snippets/admin/de.json</file>
             <file locale="en">./snippets/admin/en.json</file>
-        </translation>
+        </set>
 
     </translations>
 </phpunuhi>
