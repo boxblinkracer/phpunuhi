@@ -1,8 +1,27 @@
-[<img src="https://raw.githubusercontent.com/wiki/boxblinkracer/phpunuhi/assets/logo.png">]()
+![Build Status](https://github.com/boxblinkracer/phpunuhi/actions/workflows/ci_pipe.yml/badge.svg)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/boxblinkracer/phpunuhi)
+![GitHub commits since latest release (by date)](https://img.shields.io/github/commits-since/boxblinkracer/phpunuhi/latest)
+![Build Status](https://github.com/boxblinkracer/phpunuhi/actions/workflows/nightly_build.yml/badge.svg)
 
-![Build Status](https://github.com/boxblinkracer/phpunuhi/actions/workflows/ci_pipe.yml/badge.svg) ![GitHub release (latest by date)](https://img.shields.io/github/v/release/boxblinkracer/phpunuhi) ![GitHub commits since latest release (by date)](https://img.shields.io/github/commits-since/phpunuhi/phpunuhi/latest) ![Build Status](https://github.com/boxblinkracer/phpunuhi/actions/workflows/nightly_build.yml/badge.svg)
+Welcome to PHPUnuhi - The easy framework to validate and manage translation files!
 
-Welcome to PHPUnuhi - An easy tool to work with translation files!
+Unuhi? This is Hawaiian for "translate" or "translation".
+Now that you know this, let's get started!
+
+## Basic Concept
+
+This is a framework that helps you to validate and maintain translation files.
+At the moment it only supports JSON based files.
+
+Although it's not dependent on a specific platform, you can use it perfectly with Shopware 6 and other platforms.
+
+For example, Shopware 6 has snippets based on JSON files.
+If you develop plugins for this platform, you can build translation suites in PHPUnuhi that contain all your files for the individual languages, like EN, DE, NL, and whatever you support.
+PHPUnuhi helps you to make sure you didn't forget any translations, screwed up structures across your language files and even
+helps you to export and import your translations.
+
+One of the benefits is, that this framework does not require anything else than your translation files.
+This makes it a perfect fit for your CI/CD pipelines.
 
 ## Installation
 
@@ -14,7 +33,7 @@ PHPUnuhi is available as `phar` file.
 Just download the ZIP file, extract it and you are ready to go.
 
 ```
-curl -O https:// 
+curl -O https://(todo)
 unzip -o phpunuhi.zip
 rm -f phpunuhi.zip
 ```
@@ -27,10 +46,10 @@ You can also use PHPUnuhi with Composer. Just install it with this script.
 composer require boxblinkracer/phpunuhi
 ```
 
-You can then run it with this command
+You can then run it with this command, once you have a configuration.
 
 ```
-php vendor/bin/phpunuhi ...
+php vendor/bin/phpunuhi validate
 ```
 
 ## Configuration
@@ -45,14 +64,17 @@ This scope can then contain multiple files that need to match and only vary in t
 
 <phpunuhi>
     <translations>
+
         <translation name="Storefront">
             <file locale="de">./snippets/storefront/de.json</file>
             <file locale="en">./snippets/storefront/en.json</file>
         </translation>
+
         <translation name="Admin">
             <file locale="de">./snippets/admin/de.json</file>
             <file locale="en">./snippets/admin/en.json</file>
         </translation>
+
     </translations>
 </phpunuhi>
 ```
