@@ -112,8 +112,9 @@ class ImportCommand extends Command
 
                         $tmpArray = $this->flattenToMultiDimensional($values, '.');
 
-                        $jsonString = (string)json_encode($tmpArray, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
+                        $jsonString = (string)json_encode($tmpArray, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+                        
                         $json = preg_replace_callback(
                             '/^ +/m',
                             function ($m) use ($intent) {

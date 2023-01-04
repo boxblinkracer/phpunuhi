@@ -1,5 +1,6 @@
 {
       "card": {
+            "ccv": "MM/JJ",
             "description": "Meine Karte 2",
             "text": "Gäste"
       },

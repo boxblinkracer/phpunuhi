@@ -1,5 +1,6 @@
 {
       "card": {
+            "ccv": "CVC/CVV",
             "description": "My card 2",
             "text": "guests"
       },
