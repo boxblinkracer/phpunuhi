@@ -57,8 +57,8 @@ php vendor/bin/phpunuhi validate
 The whole configuration is done using a XML file.
 You can create different translation sets with different files and settings.
 
-Configure a **translation** node for every scope of translation.
-This scope can then contain multiple files that need to match and only vary in their content.
+Configure a **translation set** for every bundle (scope) of your translations.
+Such a set can then contain multiple files with your individual language and locale values.
 
 ```xml
 
@@ -89,7 +89,7 @@ php vendor/bin/phpunuhi validate --configuration=./phpunuhi.xml
 
 ## Export Command
 
-You can easily export your translations into a CSV file that can be passed on to an external translator or company.
+You can export your translations into a CSV file that can be passed on to an external translator or company.
 Every row will contain the translation key, and every column will be a different translation.
 
 ```bash 
@@ -104,7 +104,7 @@ php vendor/bin/phpunuhi export --configuration=./phpunuhi.xml --set="my set"
 
 ## Import Command
 
-You can easily import your translations from a CSV file.
+You can import your translations from a CSV file.
 This will automatically update the JSON files that have been assigned to the imported translation set.
 
 ```bash 
