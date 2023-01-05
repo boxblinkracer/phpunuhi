@@ -11,6 +11,6 @@ help:
 
 run: ## Installs all prod dependencies
 	docker-compose up -d
-	sleep 5
+	sleep 8
 	docker exec -it dev bash -c 'cd /app && make dev'
 	docker exec -it dev bash -c 'cd /app && make pr'
