@@ -115,7 +115,7 @@ Every row will contain the translation key, and every column will be a different
 php vendor/bin/phpunuhi export --configuration=./phpunuhi.xml
 
 # provide custom export folder
-php vendor/bin/phpunuhi export ... --dir=.exports
+php vendor/bin/phpunuhi export ... --dir=./exports
 
 # only export single set
 php vendor/bin/phpunuhi export ... --set="my set"
