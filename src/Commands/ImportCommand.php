@@ -2,6 +2,7 @@
 
 namespace PHPUnuhi\Commands;
 
+use PHPUnuhi\Models\Translation\Format;
 use PHPUnuhi\Services\Configuration\ConfigurationLoader;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -25,6 +26,7 @@ class ImportCommand extends Command
             ->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('set', null, InputOption::VALUE_REQUIRED, 'R', '')
             ->addOption('file', null, InputOption::VALUE_REQUIRED, '', '')
+            ->addOption('delimiter', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('intent', null, InputOption::VALUE_OPTIONAL, '', '')
             ->addOption('sort', null, InputOption::VALUE_NONE, '', null);
 
@@ -48,18 +50,21 @@ class ImportCommand extends Command
         $suiteName = (string)$input->getOption('set');
         $intent = (string)$input->getOption('intent');
         $sort = (bool)$input->getOption('sort');
+        $delimiter = (string)$input->getOption('delimiter');
 
 
-        $configLoader = new ConfigurationLoader();
-        $config = $configLoader->load($configFile);
-
-        #    $csvFilename = realpath(dirname($csvFilename)) . '/' . basename($csvFilename);
+        if (empty($delimiter)) {
+            $delimiter = ',';
+        }
 
         if (empty($intent)) {
             $intent = 2;
         } else {
             $intent = (int)$intent;
         }
+
+        $configLoader = ConfigurationLoader::fromFormat(Format::JSON);
+        $config = $configLoader->load($configFile);
 
 
         $translationFileValues = [];
@@ -78,7 +83,7 @@ class ImportCommand extends Command
             throw new \Exception('Error when opening CSV file: ' . $csvFilename);
         }
 
-        while ($row = fgetcsv($csvFile)) {
+        while ($row = fgetcsv($csvFile, 0, $delimiter)) {
 
             if (count($headerFiles) === 0) {
                 # header line

@@ -1,10 +1,11 @@
 <?php
 
-namespace PHPUnuhi\Services\Validation;
+namespace PHPUnuhi\Bundles\JSON;
 
+use PHPUnuhi\Bundles\ValidationInterface;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
-class JsonValidator implements ValidationInterface
+class Validator implements ValidationInterface
 {
 
     /**
@@ -13,18 +14,8 @@ class JsonValidator implements ValidationInterface
      */
     public function validate(TranslationSet $suite): bool
     {
-        $foundSnippets = [];
-
         $isValid = true;
 
-        foreach ($suite->getLocales() as $locale) {
-            foreach ($locale->getTranslations() as $translation) {
-                $foundSnippets[$locale->getFilename()][] = $translation->getKey();
-            }
-        }
-
-
-        # NOW COMPARE THAT THEY HAVE THE SAME STRUCTURE ACROSS ALL FILES
 
         $previousFile = '';
         $previousKeys = null;

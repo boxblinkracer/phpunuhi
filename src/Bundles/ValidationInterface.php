@@ -1,6 +1,7 @@
 <?php
 
-namespace PHPUnuhi\Services\Validation;
+namespace PHPUnuhi\Bundles;
+
 use PHPUnuhi\Models\Translation\TranslationSet;
 
 interface ValidationInterface

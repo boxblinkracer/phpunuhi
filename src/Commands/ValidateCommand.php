@@ -2,10 +2,10 @@
 
 namespace PHPUnuhi\Commands;
 
-use PHPUnuhi\Commands\CommandTrait;
+
+use PHPUnuhi\Bundles\JSON\Validator;
+use PHPUnuhi\Models\Translation\Format;
 use PHPUnuhi\Services\Configuration\ConfigurationLoader;
-use PHPUnuhi\Services\Validation\JsonValidator;
-use SimpleXMLElement;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -44,14 +44,14 @@ class ValidateCommand extends Command
 
         $configFile = $this->getConfigFile($input);
 
-        $configLoader = new ConfigurationLoader();
+        $configLoader = ConfigurationLoader::fromFormat(Format::JSON);
 
         $config = $configLoader->load($configFile);
 
 
         $isAllValid = true;
 
-        $validator = new JsonValidator();
+        $validator = new Validator();
 
         foreach ($config->getTranslationSets() as $set) {
 

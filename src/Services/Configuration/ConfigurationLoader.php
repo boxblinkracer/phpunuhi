@@ -2,13 +2,48 @@
 
 namespace PHPUnuhi\Services\Configuration;
 
+
+use PHPUnuhi\Bundles\JSON\TranslationLoader;
+use PHPUnuhi\Bundles\TranslationLoaderInterface;
 use PHPUnuhi\Models\Configuration\Configuration;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
 use SimpleXMLElement;
 
+
 class ConfigurationLoader
 {
+
+    /**
+     * @var TranslationLoaderInterface
+     */
+    private $translationLoader;
+
+
+    /**
+     * @param string $format
+     * @return ConfigurationLoader
+     * @throws \Exception
+     */
+    public static function fromFormat(string $format): ConfigurationLoader
+    {
+        switch (strtolower($format)) {
+            case 'json':
+                return new ConfigurationLoader(new TranslationLoader());
+
+            default:
+                throw new \Exception('Unknown format: ' . $format);
+        }
+    }
+
+    /**
+     * @param TranslationLoaderInterface $translationLoader
+     */
+    private function __construct(TranslationLoaderInterface $translationLoader)
+    {
+        $this->translationLoader = $translationLoader;
+    }
+
 
     /**
      * @param string $configFilename
@@ -56,65 +91,19 @@ class ConfigurationLoader
                 }
             }
 
-            $suite = new TranslationSet($name, $foundLocales);
+            # create our new set
+            $set = new TranslationSet($name, $foundLocales);
 
-            $suite = $this->loadTranslations($suite);
+            # now iterate through our locales
+            # and load the translation files for it
+            foreach ($set->getLocales() as $locale) {
+                $this->translationLoader->loadTranslations($locale);
+            }
 
-            $suites[] = $suite;
+            $suites[] = $set;
         }
 
         return new Configuration($suites);
     }
 
-    /**
-     * @param TranslationSet $suite
-     * @return TranslationSet
-     */
-    private function loadTranslations(TranslationSet $suite): TranslationSet
-    {
-        foreach ($suite->getLocales() as $locale) {
-
-            $snippetJson = (string)file_get_contents($locale->getFilename());
-
-            $foundTranslations = [];
-
-            if (!empty($snippetJson)) {
-                $foundTranslations = json_decode($snippetJson, true);
-
-                if ($foundTranslations === false) {
-                    $foundTranslations = [];
-                }
-            }
-
-            $foundTranslationsFlat = $this->getFlatArray($foundTranslations);
-
-            foreach ($foundTranslationsFlat as $key => $value) {
-                $locale->addTranslation($key, $value);
-            }
-        }
-
-        return $suite;
-    }
-
-    /**
-     * @param array<mixed> $array
-     * @param string $prefix
-     * @return array<string>
-     */
-    private function getFlatArray(array $array, string $prefix = '')
-    {
-        $result = [];
-
-        foreach ($array as $key => $value) {
-            $new_key = $prefix . (empty($prefix) ? '' : '.') . $key;
-
-            if (is_array($value)) {
-                $result = array_merge($result, $this->getFlatArray($value, $new_key));
-            } else {
-                $result[$new_key] = $value;
-            }
-        }
-
-        return $result;
-    }
 }

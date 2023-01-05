@@ -2,6 +2,7 @@
 
 namespace PHPUnuhi\Commands;
 
+use PHPUnuhi\Models\Translation\Format;
 use PHPUnuhi\Services\Configuration\ConfigurationLoader;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -24,7 +25,8 @@ class ExportCommand extends Command
             ->setDescription('Exports all or specific translations into a CSV file')
             ->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('set', null, InputOption::VALUE_REQUIRED, '', '')
-            ->addOption('dir', null, InputOption::VALUE_OPTIONAL, '', '');
+            ->addOption('dir', null, InputOption::VALUE_REQUIRED, '', '')
+            ->addOption('delimiter', null, InputOption::VALUE_REQUIRED, '', '');
 
         parent::configure();
     }
@@ -44,9 +46,15 @@ class ExportCommand extends Command
         $configFile = $this->getConfigFile($input);
         $outputDir = (string)$input->getOption('dir');
         $setName = (string)$input->getOption('set');
+        $delimiter = (string)$input->getOption('delimiter');
+
+        if (empty($delimiter)) {
+            $delimiter = ',';
+        }
 
 
-        $configLoader = new ConfigurationLoader();
+
+        $configLoader = ConfigurationLoader::fromFormat(Format::JSON);
 
         $config = $configLoader->load($configFile);
 
@@ -125,10 +133,12 @@ class ExportCommand extends Command
 
             if ($f !== false) {
                 foreach ($lines as $row) {
-                    fputcsv($f, $row);
+                    fputcsv($f, $row, $delimiter);
                 }
                 fclose($f);
             }
+
+            $io->write('generated file: ' . $csvFilename);
 
         }
 
