@@ -53,7 +53,7 @@ class ImportCommand extends Command
         $configLoader = new ConfigurationLoader();
         $config = $configLoader->load($configFile);
 
-        $csvFilename = realpath(dirname($csvFilename)) . '/' . basename($csvFilename);
+        #    $csvFilename = realpath(dirname($csvFilename)) . '/' . basename($csvFilename);
 
         if (empty($intent)) {
             $intent = 2;
@@ -64,6 +64,12 @@ class ImportCommand extends Command
 
         $translationFileValues = [];
         $headerFiles = [];
+
+
+        # required for PHAR loading
+        $cur_dir = explode('\\', (string)getcwd());
+        $workingDir = $cur_dir[count($cur_dir) - 1];
+        $csvFilename = $workingDir . '/' . $csvFilename;
 
 
         $csvFile = fopen($csvFilename, 'r');

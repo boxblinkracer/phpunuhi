@@ -23,4 +23,4 @@ phar: ## Runs all tests with the PHAR
 	php ../../build/phpunuhi.phar list
 	php ../../build/phpunuhi.phar validate --configuration=files/valid/phpunuhi.xml
 	php ../../build/phpunuhi.phar export --configuration=files/valid/phpunuhi.xml --dir=.export
-	php ../../build/phpunuhi.phar import --configuration=files/import/phpunuhi.xml --set=storefront --file=./tests/e2e/files/import/import.csv --intent=3 --sort
+	php ../../build/phpunuhi.phar import --configuration=files/import/phpunuhi.xml --set=storefront --file=files/import/import.csv --intent=3 --sort

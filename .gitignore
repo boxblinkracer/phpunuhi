@@ -9,3 +9,4 @@
 /src/composer.lock
 /vendor
 /.export/
+/tests/e2e/.export

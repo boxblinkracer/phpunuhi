@@ -31,7 +31,10 @@ trait CommandTrait
             $configFile = 'phpunuhi.xml';
         }
 
-        return $configFile;
+        $cur_dir = explode('\\', (string)getcwd());
+        $workingDir = $cur_dir[count($cur_dir) - 1];
+
+        return $workingDir . '/' . $configFile;
     }
 
 }

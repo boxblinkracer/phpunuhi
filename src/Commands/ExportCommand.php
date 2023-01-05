@@ -101,13 +101,21 @@ class ExportCommand extends Command
 
             if (empty($outputDir)) {
                 $outputDir = '.';
-            } else {
-                if (!file_exists($outputDir)) {
-                    mkdir($outputDir);
-                }
             }
 
+            # required for phar
+            $cur_dir = explode('\\', (string)getcwd());
+            $workingDir = $cur_dir[count($cur_dir) - 1];
+            $outputDir = $workingDir . '/' . $outputDir;
+
+
+            if (!file_exists($outputDir)) {
+                mkdir($outputDir);
+            }
+
+
             $csvFilename = $outputDir . '/' . $set->getName() . '.csv';
+
 
             if (file_exists($csvFilename)) {
                 unlink($csvFilename);
