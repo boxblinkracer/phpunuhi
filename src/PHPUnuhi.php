@@ -8,6 +8,6 @@ class PHPUnuhi
     /**
      *
      */
-    public const VERSION = "0.0.1";
+    public const VERSION = "0.5.0";
 
 }
