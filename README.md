@@ -74,6 +74,16 @@ You can then start the validation of your translation files by running this comm
 php vendor/bin/phpunuhi validate --configuration=./phpunuhi.xml
 ```
 
+### Validations
+
+#### 1. Invalid structure
+The command will check if all files of a translation set have the same structure.
+If not, you might have forgotten something ;)
+
+#### 2. Missing translations
+As soon as an empty string is found, the validation process will notify you about it.
+This helps against forgetting certain translations in any of your files.
+
 ## Export Command
 
 You can export your translations into a CSV file that can be passed on to an external translator or company.
@@ -93,6 +103,8 @@ php vendor/bin/phpunuhi export --configuration=./phpunuhi.xml --set="my set"
 
 You can import your translations from a CSV file.
 This will automatically update the JSON files that have been assigned to the imported translation set.
+
+> It's recommended to use version control (GIT, ...) to verify the changes before approving them.
 
 ```bash 
 php vendor/bin/phpunuhi import --configuration=./phpunuhi.xml --set=storefront --file=./storefront.csv
