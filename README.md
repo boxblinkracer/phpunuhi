@@ -121,7 +121,7 @@ php vendor/bin/phpunuhi export ... --dir=.exports
 php vendor/bin/phpunuhi export ... --set="my set"
 
 # set custom delimiter
-php vendor/bin/phpunuhi export ... --delimiter=;
+php vendor/bin/phpunuhi export ... --delimiter=";"
 ```
 
 ## Import Command
@@ -141,5 +141,5 @@ php vendor/bin/phpunuhi import ... --intent=4
 php vendor/bin/phpunuhi import ... --sort
 
 # import CSV with custom delimiter
-php vendor/bin/phpunuhi import ... --delimiter=;
+php vendor/bin/phpunuhi import ... --delimiter=";"
 ```
