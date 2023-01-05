@@ -1,7 +1,6 @@
 <?php
 
-namespace Configuration;
-
+namespace PHPUnuhi\Configuration;
 
 use PHPUnuhi\Bundles\JSON\TranslationLoader;
 use PHPUnuhi\Bundles\TranslationLoaderInterface;

@@ -2,7 +2,7 @@
 
 namespace PHPUnuhi\Commands;
 
-use Configuration\ConfigurationLoader;
+use PHPUnuhi\Configuration\ConfigurationLoader;
 use PHPUnuhi\Models\Translation\Format;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
