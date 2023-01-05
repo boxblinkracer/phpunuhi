@@ -4,6 +4,7 @@ namespace PHPUnuhi\Commands;
 
 use PHPUnuhi\Configuration\ConfigurationLoader;
 use PHPUnuhi\Export\CSV\CSVExporter;
+use PHPUnuhi\Export\HTML\HTMLExporter;
 use PHPUnuhi\Models\Translation\Format;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -59,7 +60,7 @@ class ExportCommand extends Command
         $config = $configLoader->load($configFile);
 
 
-        $expoter = new CSVExporter($delimiter);
+        $exporter = new CSVExporter($delimiter);
 
         foreach ($config->getTranslationSets() as $set) {
 
@@ -71,7 +72,7 @@ class ExportCommand extends Command
 
             $io->section('Translation Set: ' . $set->getName());
 
-            $expoter->export($set, $outputDir);
+            $exporter->export($set, $outputDir);
         }
 
         $io->success('All translations exported!');
