@@ -1,3 +1,7 @@
+<p align="center">
+   <img src="/.github/assets/home-logo.png">
+</p>
+
 ![Build Status](https://github.com/boxblinkracer/phpunuhi/actions/workflows/ci_pipe.yml/badge.svg)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/boxblinkracer/phpunuhi)
 ![GitHub commits since latest release (by date)](https://img.shields.io/github/commits-since/boxblinkracer/phpunuhi/latest)
@@ -10,7 +14,7 @@ Now that you know this, let's get started!
 
 ## Basic Concept
 
-This is a framework that helps you to validate and maintain translation files.
+This is a framework that helps you to **validate and maintain translation files**.
 At the moment it only supports JSON based files.
 
 Although it's not dependent on a specific platform, you can use it perfectly with Shopware 6 and other platforms.
@@ -22,6 +26,14 @@ helps you to export and import your translations.
 
 One of the benefits is, that this framework does not require anything else than your translation files.
 This makes it a perfect fit for your CI/CD pipelines.
+
+
+<p align="center">
+   <img src="/.github/assets/shopware.png">
+</p>
+
+
+> Missing your platform or file format? Feel free to contribute :)
 
 ## Installation
 
@@ -77,31 +89,44 @@ php vendor/bin/phpunuhi validate --configuration=./phpunuhi.xml
 ### Validations
 
 #### 1. Invalid structure
-The command will check if all files of a translation set have the same structure.
+
+The command will check if all files of a translation set have the **same structure**.
 If not, you might have forgotten something ;)
 
+<p align="center">
+   <img src="/.github/assets/validation-structure.png">
+</p>
+
 #### 2. Missing translations
-As soon as an empty string is found, the validation process will notify you about it.
+
+As soon as an **empty string** is found, the validation process will notify you about it.
 This helps against forgetting certain translations in any of your files.
+
+<p align="center">
+   <img src="/.github/assets/validation-empty.png">
+</p>
 
 ## Export Command
 
-You can export your translations into a CSV file that can be passed on to an external translator or company.
+You can export your translations **into a CSV file** that can be passed on to an external translator or company.
 Every row will contain the translation key, and every column will be a different translation.
 
 ```bash 
 php vendor/bin/phpunuhi export --configuration=./phpunuhi.xml
 
 # provide custom export folder
-php vendor/bin/phpunuhi export --configuration=./phpunuhi.xml --dir=.exports
+php vendor/bin/phpunuhi export ... --dir=.exports
 
 # only export single set
-php vendor/bin/phpunuhi export --configuration=./phpunuhi.xml --set="my set"
+php vendor/bin/phpunuhi export ... --set="my set"
+
+# set custom delimiter
+php vendor/bin/phpunuhi export ... --delimiter=;
 ```
 
 ## Import Command
 
-You can import your translations from a CSV file.
+You can import your translations **from a CSV file**.
 This will automatically update the JSON files that have been assigned to the imported translation set.
 
 > It's recommended to use version control (GIT, ...) to verify the changes before approving them.
@@ -110,8 +135,11 @@ This will automatically update the JSON files that have been assigned to the imp
 php vendor/bin/phpunuhi import --configuration=./phpunuhi.xml --set=storefront --file=./storefront.csv
 
 # intent of 4 spaces
-php vendor/bin/phpunuhi import --configuration=./phpunuhi.xml --set=storefront --file=./storefront.csv --intent=4
+php vendor/bin/phpunuhi import ... --intent=4
 
 # sort JSON alphabetically
-php vendor/bin/phpunuhi import --configuration=./phpunuhi.xml --set=storefront --file=./storefront.csv --sort
+php vendor/bin/phpunuhi import ... --sort
+
+# import CSV with custom delimiter
+php vendor/bin/phpunuhi import ... --delimiter=;
 ```
