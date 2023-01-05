@@ -8,9 +8,15 @@ interface ValidationInterface
 {
 
     /**
-     * @param TranslationSet $suite
+     * @param TranslationSet $set
      * @return bool
      */
-    function validate(TranslationSet $suite): bool;
+    function validateStructure(TranslationSet $set): bool;
+
+    /**
+     * @param TranslationSet $set
+     * @return bool
+     */
+    function validateEmptyTranslations(TranslationSet $set): bool;
 
 }

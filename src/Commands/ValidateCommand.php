@@ -57,7 +57,11 @@ class ValidateCommand extends Command
 
             $io->section('Translation Set: ' . $set->getName());
 
-            $isValid = $validator->validate($set);
+            $isValid = $validator->validateStructure($set);
+
+            if ($isValid) {
+                $isValid = $validator->validateEmptyTranslations($set);
+            }
 
             if ($isValid) {
                 $io->info('Set is valid!');

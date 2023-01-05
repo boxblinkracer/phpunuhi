@@ -9,20 +9,16 @@ class Validator implements ValidationInterface
 {
 
     /**
-     * @param TranslationSet $suite
+     * @param TranslationSet $set
      * @return bool
      */
-    public function validate(TranslationSet $suite): bool
+    public function validateStructure(TranslationSet $set): bool
     {
         $isValid = true;
 
+        $allKeys = $set->getAllTranslationKeys();
 
-        $previousFile = '';
-        $previousKeys = null;
-
-        $allKeys = $suite->getAllTranslationKeys();
-
-        foreach ($suite->getLocales() as $locale) {
+        foreach ($set->getLocales() as $locale) {
 
             $localeKeys = $locale->getTranslationKeys();
 
@@ -46,8 +42,18 @@ class Validator implements ValidationInterface
             }
         }
 
+        return $isValid;
+    }
 
-        foreach ($suite->getLocales() as $locale) {
+    /**
+     * @param TranslationSet $set
+     * @return bool
+     */
+    public function validateEmptyTranslations(TranslationSet $set): bool
+    {
+        $isValid = true;
+
+        foreach ($set->getLocales() as $locale) {
             foreach ($locale->getTranslations() as $translation) {
                 if (empty($translation->getValue())) {
                     echo "Found empty translation in this file: " . PHP_EOL;
