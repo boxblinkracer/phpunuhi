@@ -29,7 +29,7 @@ This makes it a perfect fit for your CI/CD pipelines.
 
 
 <p align="center">
-   <img src="/.github/assets/shopware.png">
+   <img src="/.github/assets/works-with.png">
 </p>
 
 
