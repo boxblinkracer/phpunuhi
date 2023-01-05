@@ -61,33 +61,38 @@ class ImportCommand extends Command
             $intent = (int)$intent;
         }
 
-        /** @var array<mixed> $csvFile */
-        $csvFile = file($csvFilename);
 
         $translationFileValues = [];
         $headerFiles = [];
-        foreach ($csvFile as $line) {
 
-            $lineArray = str_getcsv($line);
+
+        $csvFile = fopen($csvFilename, 'r');
+
+        if ($csvFile === false) {
+            throw new \Exception('Error when opening CSV file: ' . $csvFilename);
+        }
+
+        while ($row = fgetcsv($csvFile)) {
 
             if (count($headerFiles) === 0) {
                 # header line
-                $headerFiles = $lineArray;
+                $headerFiles = $row;
             } else {
-                for ($i = 1; $i <= count($lineArray) - 1; $i++) {
-                    $key = $lineArray[0];
-                    $value = $lineArray[$i];
-
+                for ($i = 1; $i <= count($row) - 1; $i++) {
+                    $key = $row[0];
+                    $value = $row[$i];
 
                     $transFile = (string)$headerFiles[$i];
 
                     if ($transFile !== '') {
                         $translationFileValues[$transFile][$key] = $value;
                     }
-
                 }
             }
         }
+
+        fclose($csvFile);
+
 
         $importedLocales = 0;
         $importedTranslations = 0;
@@ -110,11 +115,13 @@ class ImportCommand extends Command
                             ksort($values);
                         }
 
+
                         $tmpArray = $this->flattenToMultiDimensional($values, '.');
 
 
                         $jsonString = (string)json_encode($tmpArray, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-                        
+
+
                         $json = preg_replace_callback(
                             '/^ +/m',
                             function ($m) use ($intent) {
