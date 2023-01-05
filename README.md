@@ -25,19 +25,6 @@ This makes it a perfect fit for your CI/CD pipelines.
 
 ## Installation
 
-PHPUnuhi is based on PHP. So you need to have PHP installed.
-
-### PHAR File
-
-PHPUnuhi is available as `phar` file.
-Just download the ZIP file, extract it and you are ready to go.
-
-```
-curl -O https://(todo)
-unzip -o phpunuhi.zip
-rm -f phpunuhi.zip
-```
-
 ### Composer
 
 You can also use PHPUnuhi with Composer. Just install it with this script.
