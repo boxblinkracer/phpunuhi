@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPUnuhi\Services\Configuration;
+namespace Configuration;
 
 
 use PHPUnuhi\Bundles\JSON\TranslationLoader;

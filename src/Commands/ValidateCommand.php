@@ -3,9 +3,9 @@
 namespace PHPUnuhi\Commands;
 
 
+use Configuration\ConfigurationLoader;
 use PHPUnuhi\Bundles\JSON\Validator;
 use PHPUnuhi\Models\Translation\Format;
-use PHPUnuhi\Services\Configuration\ConfigurationLoader;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
