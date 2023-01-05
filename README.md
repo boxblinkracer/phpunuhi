@@ -124,6 +124,11 @@ php vendor/bin/phpunuhi export ... --set="my set"
 php vendor/bin/phpunuhi export ... --delimiter=";"
 ```
 
+<p align="center">
+   <img src="/.github/assets/csv.png">
+</p>
+
+
 ## Import Command
 
 You can import your translations **from a CSV file**.
