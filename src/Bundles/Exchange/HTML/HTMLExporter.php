@@ -21,6 +21,9 @@ class HTMLExporter implements ExportInterface
 
         $html .= "<head>";
 
+        $html .= "<title>PHPUnuhi - " . $set->getName() . "</title>";
+
+
         $html .= "<style>";
         $html .= $this->getCSS();
         $html .= "</style>";
@@ -49,7 +52,7 @@ class HTMLExporter implements ExportInterface
 
 
         $html .= "<form name=\"gridForm\">";
-        $html .= "<input type=\"button\" class=\"btn-save\" onclick=\"download();\" value=\"Save Translation\"/>";
+        $html .= "<input type=\"button\" class=\"btn-save\" onclick=\"download();\" value=\"Save Translations\"/>";
 
         $html .= " <input type=\"hidden\" id=\"set\" value=\"" . $set->getName() . "\"></input>";
 
@@ -87,10 +90,9 @@ class HTMLExporter implements ExportInterface
                         <td>
                             <input 
                                 id="' . $key . '--' . $locale->getExchangeIdentifier() . '" 
-                                class="translation" 
+                                class="translation textfield" 
                                 type="text" 
-                                value="' . $value . '" 
-                                style="min-width: 400px;"/>
+                                value="' . $value . '"/>
                         </td>
                         ';
                     }
@@ -104,7 +106,7 @@ class HTMLExporter implements ExportInterface
 
         $html .= "</table>";
 
-        $html .= "<input type=\"button\" class=\"btn-save\" onclick=\"download();\" value=\"Save Translation\"/>";
+        $html .= "<input type=\"button\" class=\"btn-save\" onclick=\"download();\" value=\"Save Translations\"/>";
 
 
         $html .= "</form>";
@@ -151,7 +153,7 @@ table {
 td, th {
   white-space: nowrap;
   border: 1px solid #ddd;
-  padding: 20px;
+  padding: 10px;
   text-align: center;
 }
 
@@ -174,6 +176,10 @@ tbody tr td:first-of-type {
   text-align: left;
 }
 
+.textfield {
+  height: 40px;
+  min-width: 400px;
+}
 
 .alert {
   padding: 20px;
