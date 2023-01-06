@@ -5,6 +5,7 @@ namespace PHPUnuhi\Commands;
 
 use PHPUnuhi\Bundles\Translation\Format;
 use PHPUnuhi\Bundles\Translation\JSON\JSONTranslationValidator;
+use PHPUnuhi\Bundles\Translation\TranslationFactory;
 use PHPUnuhi\Configuration\ConfigurationLoader;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -44,18 +45,19 @@ class ValidateCommand extends Command
 
         $configFile = $this->getConfigFile($input);
 
-        $configLoader =new ConfigurationLoader();
+        $configLoader = new ConfigurationLoader();
 
         $config = $configLoader->load($configFile);
 
 
         $isAllValid = true;
 
-        $validator = new JSONTranslationValidator();
 
         foreach ($config->getTranslationSets() as $set) {
 
             $io->section('Translation Set: ' . $set->getName());
+
+            $validator = TranslationFactory::getValidatorFromFormat($set->getFormat());
 
             $isValid = $validator->validateStructure($set);
 

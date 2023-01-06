@@ -4,6 +4,7 @@ namespace PHPUnuhi\Configuration;
 
 use PHPUnuhi\Bundles\Translation\Format;
 use PHPUnuhi\Bundles\Translation\JSON\JSONTranslationLoader;
+use PHPUnuhi\Bundles\Translation\TranslationFactory;
 use PHPUnuhi\Bundles\Translation\TranslationLoaderInterface;
 use PHPUnuhi\Models\Configuration\Configuration;
 use PHPUnuhi\Models\Translation\Locale;
@@ -49,16 +50,7 @@ class ConfigurationLoader
                 $format = Format::JSON;
             }
 
-            $translationLoader = null;
-
-            switch ($format) {
-                case Format::JSON:
-                    $translationLoader = new JSONTranslationLoader();
-                    break;
-
-                default:
-                    throw new \Exception('No TranslationLoader found for format: ' . $format);
-            }
+            $translationLoader = TranslationFactory::getLoaderFromFormat($format);
 
             $foundLocales = [];
 
@@ -77,6 +69,9 @@ class ConfigurationLoader
 
                         $locale = new Locale($localeAttr, $fileName);
                         break;
+
+                    default:
+                        throw new \Exception('child element not recognized in translation set: ' . $name);
                 }
 
                 if ($locale instanceof Locale) {
@@ -85,7 +80,7 @@ class ConfigurationLoader
             }
 
             # create our new set
-            $set = new TranslationSet($name, $foundLocales);
+            $set = new TranslationSet($name, $format, $foundLocales);
 
             # now iterate through our locales
             # and load the translation files for it

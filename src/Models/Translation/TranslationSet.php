@@ -11,6 +11,11 @@ class TranslationSet
     private $name;
 
     /**
+     * @var string
+     */
+    private $format;
+
+    /**
      * @var Locale[]
      */
     private $locales;
@@ -18,11 +23,13 @@ class TranslationSet
 
     /**
      * @param string $name
+     * @param string $format
      * @param Locale[] $locales
      */
-    public function __construct(string $name, array $locales)
+    public function __construct(string $name, string $format, array $locales)
     {
         $this->name = $name;
+        $this->format = $format;
         $this->locales = $locales;
     }
 
@@ -33,6 +40,14 @@ class TranslationSet
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFormat(): string
+    {
+        return $this->format;
     }
 
     /**

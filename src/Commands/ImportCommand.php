@@ -5,8 +5,7 @@ namespace PHPUnuhi\Commands;
 use PHPUnuhi\Bundles\Exchange\ExchangeFactory;
 use PHPUnuhi\Bundles\Exchange\ExchangeFormat;
 use PHPUnuhi\Bundles\Exchange\ImportResult;
-use PHPUnuhi\Bundles\Translation\Format;
-use PHPUnuhi\Bundles\Translation\JSON\JSONTranslationSaver;
+use PHPUnuhi\Bundles\Translation\TranslationFactory;
 use PHPUnuhi\Configuration\ConfigurationLoader;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -69,9 +68,8 @@ class ImportCommand extends Command
             $intent = (int)$intent;
         }
 
-        $translationSaver = new JSONTranslationSaver($intent, $sort);
 
-        $configLoader =new ConfigurationLoader();
+        $configLoader = new ConfigurationLoader();
         $config = $configLoader->load($configFile);
 
 
@@ -81,9 +79,6 @@ class ImportCommand extends Command
         $importFilename = $workingDir . '/' . $importFilename;
 
 
-        $importer = ExchangeFactory::getImporterFromFormat($importExchangeFormat, $translationSaver, $delimiter);
-
-
         $result = null;
 
         foreach ($config->getTranslationSets() as $set) {
@@ -91,6 +86,10 @@ class ImportCommand extends Command
             if ($suiteName !== $set->getName()) {
                 continue;
             }
+
+            $translationSaver = TranslationFactory::getSaverFromFormat($set->getFormat(), $intent, $sort);
+
+            $importer = ExchangeFactory::getImporterFromFormat($importExchangeFormat, $translationSaver, $delimiter);
 
             $result = $importer->import($set, $importFilename);
         }
