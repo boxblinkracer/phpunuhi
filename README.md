@@ -194,9 +194,7 @@ Here are a few use cases and ideas to get you started.
 One of the typical things you want to make sure is, that your plugin/software doesn't miss any
 required translations.
 
-This can be done easy directly within your CI pipeline.
-Just install your dependencies and run the validation command.
-
+This can be done directly within your CI pipeline. Just install your dependencies and run the validation command.
 The exit value of this command will automatically stop your pipeline if an error is detected.
 
 ### 8.2 Working with external translation agencies
