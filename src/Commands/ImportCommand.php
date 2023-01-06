@@ -5,7 +5,7 @@ namespace PHPUnuhi\Commands;
 use PHPUnuhi\Bundles\Exchange\ExchangeFactory;
 use PHPUnuhi\Bundles\Exchange\ExchangeFormat;
 use PHPUnuhi\Bundles\Exchange\ImportResult;
-use PHPUnuhi\Bundles\Translation\TranslationFactory;
+use PHPUnuhi\Bundles\Storage\StorageFactory;
 use PHPUnuhi\Configuration\ConfigurationLoader;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -87,7 +87,7 @@ class ImportCommand extends Command
                 continue;
             }
 
-            $translationSaver = TranslationFactory::getSaverFromFormat($set->getFormat(), $intent, $sort);
+            $translationSaver = StorageFactory::getSaverFromFormat($set->getFormat(), $intent, $sort);
 
             $importer = ExchangeFactory::getImporterFromFormat($importExchangeFormat, $translationSaver, $delimiter);
 

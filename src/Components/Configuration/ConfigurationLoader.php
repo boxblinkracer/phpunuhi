@@ -2,10 +2,8 @@
 
 namespace PHPUnuhi\Configuration;
 
-use PHPUnuhi\Bundles\Translation\Format;
-use PHPUnuhi\Bundles\Translation\JSON\JSONTranslationLoader;
-use PHPUnuhi\Bundles\Translation\TranslationFactory;
-use PHPUnuhi\Bundles\Translation\TranslationLoaderInterface;
+use PHPUnuhi\Bundles\Storage\StorageFactory;
+use PHPUnuhi\Bundles\Storage\StorageFormat;
 use PHPUnuhi\Models\Configuration\Configuration;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
@@ -47,10 +45,10 @@ class ConfigurationLoader
             $format = (string)$translation['format'];
 
             if (empty($format)) {
-                $format = Format::JSON;
+                $format = StorageFormat::JSON;
             }
 
-            $translationLoader = TranslationFactory::getLoaderFromFormat($format);
+            $translationLoader = StorageFactory::getLoaderFromFormat($format);
 
             $foundLocales = [];
 

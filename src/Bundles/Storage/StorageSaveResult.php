@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPUnuhi\Bundles\Translation;
+namespace PHPUnuhi\Bundles\Storage;
 
-class TranslateSaveResult
+class StorageSaveResult
 {
 
     /**

@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPUnuhi\Bundles\Translation;
+namespace PHPUnuhi\Bundles\Storage;
 
 use PHPUnuhi\Models\Translation\Locale;
 
-interface TranslationLoaderInterface
+interface StorageLoaderInterface
 {
 
     /**

@@ -6,19 +6,19 @@ use PHPUnuhi\Bundles\Exchange\CSV\CSVExporter;
 use PHPUnuhi\Bundles\Exchange\CSV\CSVImporter;
 use PHPUnuhi\Bundles\Exchange\HTML\HTMLExporter;
 use PHPUnuhi\Bundles\Exchange\HTML\HTMLImporter;
-use PHPUnuhi\Bundles\Translation\TranslationSaverInterface;
+use PHPUnuhi\Bundles\Storage\StorageSaverInterface;
 
 class ExchangeFactory
 {
 
     /**
      * @param string $format
-     * @param TranslationSaverInterface $translationSaver
+     * @param StorageSaverInterface $translationSaver
      * @param string $delimiter
      * @return ImportInterface
      * @throws \Exception
      */
-    public static function getImporterFromFormat(string $format, TranslationSaverInterface $translationSaver, string $delimiter): ImportInterface
+    public static function getImporterFromFormat(string $format, StorageSaverInterface $translationSaver, string $delimiter): ImportInterface
     {
         switch (strtolower($format)) {
             case ExchangeFormat::CSV:

@@ -1,18 +1,17 @@
 <?php
 
-namespace PHPUnuhi\Bundles\Translation\JSON;
+namespace PHPUnuhi\Components\Validator;
 
-use PHPUnuhi\Bundles\Translation\ValidationInterface;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
-class JSONTranslationValidator implements ValidationInterface
+class Validator
 {
 
     /**
      * @param TranslationSet $set
      * @return bool
      */
-    public function validateStructure(TranslationSet $set): bool
+    public function validate(TranslationSet $set): bool
     {
         $isValid = true;
 
@@ -42,16 +41,6 @@ class JSONTranslationValidator implements ValidationInterface
             }
         }
 
-        return $isValid;
-    }
-
-    /**
-     * @param TranslationSet $set
-     * @return bool
-     */
-    public function validateEmptyTranslations(TranslationSet $set): bool
-    {
-        $isValid = true;
 
         foreach ($set->getLocales() as $locale) {
             foreach ($locale->getTranslations() as $translation) {
@@ -70,6 +59,7 @@ class JSONTranslationValidator implements ValidationInterface
 
         return $isValid;
     }
+
 
     /**
      * @param mixed $a

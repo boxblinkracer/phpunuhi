@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPUnuhi\Bundles\Translation;
+namespace PHPUnuhi\Bundles\Storage;
 
-interface Format
+interface StorageFormat
 {
 
     /**

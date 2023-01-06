@@ -1,12 +1,12 @@
 <?php
 
-namespace PHPUnuhi\Bundles\Translation\JSON;
+namespace PHPUnuhi\Bundles\Storage\JSON;
 
-use PHPUnuhi\Bundles\Translation\TranslateSaveResult;
-use PHPUnuhi\Bundles\Translation\TranslationSaverInterface;
+use PHPUnuhi\Bundles\Storage\StorageSaveResult;
+use PHPUnuhi\Bundles\Storage\StorageSaverInterface;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
-class JSONTranslationSaver implements TranslationSaverInterface
+class JsonSaver implements StorageSaverInterface
 {
 
     /**
@@ -31,9 +31,9 @@ class JSONTranslationSaver implements TranslationSaverInterface
 
     /**
      * @param TranslationSet $set
-     * @return TranslateSaveResult
+     * @return StorageSaveResult
      */
-    public function save(TranslationSet $set): TranslateSaveResult
+    public function save(TranslationSet $set): StorageSaveResult
     {
         $intent = $this->jsonIntent;
 
@@ -72,7 +72,7 @@ class JSONTranslationSaver implements TranslationSaverInterface
             file_put_contents($locale->getFilename(), $json);
         }
 
-        return new TranslateSaveResult($localeCount, $translationCount);
+        return new StorageSaveResult($localeCount, $translationCount);
     }
 
     /**
