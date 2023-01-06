@@ -17,6 +17,9 @@ install: ## Installs all prod dependencies
 dev: ## Installs all dev dependencies
 	composer install
 
+clean: ## Clears all dependencies
+	rm -rf vendor/*
+
 #------------------------------------------------------------------------------------------------
 
 csfix: ## Starts the PHP CS Fixer

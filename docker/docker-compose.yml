@@ -7,7 +7,6 @@ services:
     image: php:7.4
     volumes:
       - "../:/app"
-      - "/app/vendor"
     entrypoint:
       - /bin/sh
       - "/app/docker/boot.sh"
