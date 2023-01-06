@@ -55,11 +55,20 @@ class Locale
      */
     public function getExchangeIdentifier(): string
     {
+        $id = "";
+
         if (!empty($this->name)) {
-            return $this->name;
+            $id = $this->name;
+        } else {
+            $id = basename($this->filename);
         }
 
-        return basename($this->filename);
+        # we use this also in technical environments
+        # such as class and id names in HTML
+        # so we need to remove spaces
+        $id = str_replace(' ', '-', $id);
+
+        return $id;
     }
 
     /**

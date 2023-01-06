@@ -28,4 +28,14 @@ class LocaleTest extends TestCase
         $this->assertEquals('DE', $locale->getExchangeIdentifier());
     }
 
+    /**
+     * @return void
+     */
+    public function testExchangeIdentifierHasNoSpaces()
+    {
+        $locale = new Locale('en GB', 'de.json');
+
+        $this->assertEquals('en-GB', $locale->getExchangeIdentifier());
+    }
+
 }

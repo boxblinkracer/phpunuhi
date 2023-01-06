@@ -76,7 +76,7 @@ class HTMLExporter implements ExportInterface
 
                     if ($translation->getKey() === $key) {
                         $html .= "<td>";
-                        $html .= "<input id=\"" . $key . "--" . $locale->getName() . "\" class=\"translation\" type=\"text\" value=\"" . $translation->getValue() . "\"></input>";
+                        $html .= "<input id=\"" . $key . "--" . $locale->getExchangeIdentifier() . "\" class=\"translation\" type=\"text\" value=\"" . $translation->getValue() . "\"></input>";
                         $html .= "</td>";
                     }
                 }
