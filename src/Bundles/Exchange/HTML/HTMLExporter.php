@@ -159,19 +159,12 @@ td, th {
 
 th {
   background-color: #eee;
-  position: sticky;
-  top: -1px;
-  z-index: 2;
-  
-  &:first-of-type {
-    left: 0;
-    z-index: 3;
-  }
+ 
 }
 
 tbody tr td:first-of-type {
   background-color: #eee;
-  position: sticky;
+
   left: -1px;
   text-align: left;
 }
