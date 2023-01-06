@@ -102,18 +102,16 @@ class CSVImporter implements ImportInterface
             # search filename form locales
             foreach ($set->getLocales() as $locale) {
 
-                $localeFileName = basename($locale->getFilename());
-
-                # check if either our locale name or filename match
-                # if not, move on to the next locale
-                if ($locale->getName() === $identifier || $localeFileName === $identifier) {
-                    # create translations
-                    foreach ($csvTranslations as $csvTranslationKey => $csvTranslationValue) {
-                        $translationsForLocale[] = new Translation($csvTranslationKey, (string)$csvTranslationValue);
-                    }
-
-                    $locale->setTranslations($translationsForLocale);
+                if ($locale->getExchangeIdentifier() !== $identifier) {
+                    continue;
                 }
+
+                # create translations
+                foreach ($csvTranslations as $csvTranslationKey => $csvTranslationValue) {
+                    $translationsForLocale[] = new Translation($csvTranslationKey, (string)$csvTranslationValue);
+                }
+
+                $locale->setTranslations($translationsForLocale);
             }
         }
 

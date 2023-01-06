@@ -45,15 +45,8 @@ class CSVExporter implements ExportInterface
         $headerLine[] = 'Key';
 
         foreach ($set->getLocales() as $locale) {
-            # add locale name to header, if existing
-            # otherwise use the file name
-            if (!empty($locale->getName())) {
-                $headerLine[] = $locale->getName();
-            } else {
-                $headerLine[] = basename($locale->getFilename());
-            }
+            $headerLine[] = $locale->getExchangeIdentifier();
         }
-
 
         $lines = [];
         $lines[] = $headerLine;

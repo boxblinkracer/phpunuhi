@@ -51,6 +51,18 @@ class Locale
     }
 
     /**
+     * @return string
+     */
+    public function getExchangeIdentifier(): string
+    {
+        if (!empty($this->name)) {
+            return $this->name;
+        }
+
+        return basename($this->filename);
+    }
+
+    /**
      * @param string $key
      * @param string $value
      * @return void
