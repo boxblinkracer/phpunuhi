@@ -29,9 +29,9 @@ class ImportCommand extends Command
             ->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('set', null, InputOption::VALUE_REQUIRED, 'R', '')
             ->addOption('file', null, InputOption::VALUE_REQUIRED, '', '')
-            ->addOption('delimiter', null, InputOption::VALUE_REQUIRED, '', '')
-            ->addOption('intent', null, InputOption::VALUE_OPTIONAL, '', '')
-            ->addOption('sort', null, InputOption::VALUE_NONE, '', null);
+            ->addOption('csv-delimiter', null, InputOption::VALUE_REQUIRED, '', '')
+            ->addOption('json-intent', null, InputOption::VALUE_OPTIONAL, '', '')
+            ->addOption('json-sort', null, InputOption::VALUE_NONE, '', null);
 
         parent::configure();
     }
@@ -51,9 +51,9 @@ class ImportCommand extends Command
         $configFile = $this->getConfigFile($input);
         $importFilename = (string)$input->getOption('file');
         $suiteName = (string)$input->getOption('set');
-        $intent = (string)$input->getOption('intent');
-        $sort = (bool)$input->getOption('sort');
-        $delimiter = (string)$input->getOption('delimiter');
+        $intent = (string)$input->getOption('json-intent');
+        $sort = (bool)$input->getOption('json-sort');
+        $delimiter = (string)$input->getOption('csv-delimiter');
 
 
         if (empty($delimiter)) {

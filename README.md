@@ -120,14 +120,13 @@ php vendor/bin/phpunuhi export ... --dir=./exports
 # only export single set
 php vendor/bin/phpunuhi export ... --set="my set"
 
-# set custom delimiter
-php vendor/bin/phpunuhi export ... --delimiter=";"
+# set custom delimiter for CSV export
+php vendor/bin/phpunuhi export ... --csv-delimiter=";"
 ```
 
 <p align="center">
    <img src="/.github/assets/csv.png">
 </p>
-
 
 ## Import Command
 
@@ -139,12 +138,51 @@ This will automatically update the JSON files that have been assigned to the imp
 ```bash 
 php vendor/bin/phpunuhi import --configuration=./phpunuhi.xml --set=storefront --file=./storefront.csv
 
-# intent of 4 spaces
-php vendor/bin/phpunuhi import ... --intent=4
+# intent of 4 spaces in saved JSON
+php vendor/bin/phpunuhi import ... --json-intent=4
 
 # sort JSON alphabetically
-php vendor/bin/phpunuhi import ... --sort
+php vendor/bin/phpunuhi import ... --json-sort
 
 # import CSV with custom delimiter
-php vendor/bin/phpunuhi import ... --delimiter=";"
+php vendor/bin/phpunuhi import ... --csv-delimiter=";"
 ```
+
+## Advanced
+
+### Translation Formats
+
+Translation formats define how your translations are stored.
+Every format has its own loading and saving implementation, as well as a unique validation.
+
+The following formats are currently supported.
+
+#### JSON
+
+The JSON format means that your files are stored in separate JSON files.
+Every locale or language has its own JSON file.
+The JSON structure across all your related files of a translation set should match.
+
+### Exchange Formats
+
+Exchange formats define how you export and import translation data.
+The main purpose is to be able to send it out to a translating company or just someone als,
+and be able to import it back into your system afterwards.
+
+The following formats are currently supported.
+
+#### CSV
+
+The CSV format is a well known and solid format for interoperability.
+You can open CSV files with Microsoft Excel, Apple Numbers as well as simple text editors or more.
+The only downside with Excel and Numbers is, that they might force you to save the updated file in their own formats (just pay attention to this).
+
+The benefit is that you can simply open all translation in an easy spreadsheet way.
+Every row is the translation key, and every locale and language has its won column in that row.
+
+<p align="center">
+   <img src="/.github/assets/csv.png">
+</p>
+
+
+#### HTML

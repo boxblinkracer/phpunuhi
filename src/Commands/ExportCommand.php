@@ -27,7 +27,7 @@ class ExportCommand extends Command
             ->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('set', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('dir', null, InputOption::VALUE_REQUIRED, '', '')
-            ->addOption('delimiter', null, InputOption::VALUE_REQUIRED, '', '');
+            ->addOption('csv-delimiter', null, InputOption::VALUE_REQUIRED, '', '');
 
         parent::configure();
     }
@@ -47,7 +47,7 @@ class ExportCommand extends Command
         $configFile = $this->getConfigFile($input);
         $outputDir = (string)$input->getOption('dir');
         $setName = (string)$input->getOption('set');
-        $delimiter = (string)$input->getOption('delimiter');
+        $delimiter = (string)$input->getOption('csv-delimiter');
 
         if (empty($delimiter)) {
             $delimiter = ',';
