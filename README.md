@@ -201,6 +201,14 @@ Every translation key has its own row, and all locale-values have their own colu
    <img src="/.github/assets/csv.png">
 </p>
 
-#### 8.2.2 HTML
+#### 8.2.2 HTML / WebEdit
 
-**IN PROGRESS**
+The HTML export helps you to export all translations into a single HTML file.
+You can then open this file in your browser and immediately start to edit your translations.
+
+Once finished, just slick on "save translations". This will download a **html.txt** file that
+you can import again into your system with the format **html** in PHPUnuhi.
+
+<p align="center">
+   <img src="/.github/assets/html.png">
+</p>
