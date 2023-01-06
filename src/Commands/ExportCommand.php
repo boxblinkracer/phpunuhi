@@ -24,7 +24,7 @@ class ExportCommand extends Command
     {
         $this
             ->setName('export')
-            ->setDescription('Exports all or specific translations into a CSV file')
+            ->setDescription('Exports all or specific translations into an exchange file')
             ->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('set', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('dir', null, InputOption::VALUE_REQUIRED, '', '')

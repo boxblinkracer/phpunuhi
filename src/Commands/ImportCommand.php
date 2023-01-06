@@ -25,7 +25,7 @@ class ImportCommand extends Command
     {
         $this
             ->setName('import')
-            ->setDescription('Imports translations from a provided CSV file')
+            ->setDescription('Imports translations from a provided exchange file')
             ->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('format', null, InputOption::VALUE_REQUIRED, 'R', ExchangeFormat::CSV)
             ->addOption('set', null, InputOption::VALUE_REQUIRED, 'R', '')
