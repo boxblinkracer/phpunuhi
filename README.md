@@ -122,17 +122,17 @@ These files can then be passed on to an external translator or company.
 Every row will contain the translation key, and every column in that row will be a different translation (in case of CSV files).
 
 ```bash 
-# default export in format CSV
+# default export in default exchange format CSV
 php vendor/bin/phpunuhi export 
 
-# default export in other format
+# default export in specific exchange format
 php vendor/bin/phpunuhi export ... --format=html
 
 # provide custom export folder
 php vendor/bin/phpunuhi export ... --dir=./exports
 
-# only export single set
-php vendor/bin/phpunuhi export ... --set="my set"
+# only export single set "storefront"
+php vendor/bin/phpunuhi export ... --set="storefront"
 
 # set custom delimiter for CSV export
 php vendor/bin/phpunuhi export ... --csv-delimiter=";"

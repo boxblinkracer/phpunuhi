@@ -11,6 +11,6 @@ interface StorageSaverInterface
      * @param TranslationSet $set
      * @return StorageSaveResult
      */
-    function save(TranslationSet $set): StorageSaveResult;
+    function saveTranslations(TranslationSet $set): StorageSaveResult;
 
 }

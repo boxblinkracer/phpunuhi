@@ -15,6 +15,7 @@ class StorageSaveResult
      */
     private $savedTranslations;
 
+    
     /**
      * @param int $savedLocales
      * @param int $savedTranslations

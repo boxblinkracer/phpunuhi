@@ -51,6 +51,8 @@ class ExportCommand extends Command
         $exportExchangeFormat = (string)$input->getOption('format');
         $setName = (string)$input->getOption('set');
         $outputDir = (string)$input->getOption('dir');
+
+        # arguments for individual exchange exporters
         $delimiter = (string)$input->getOption('csv-delimiter');
 
         if (empty($delimiter)) {

@@ -46,7 +46,7 @@ class CSVImporter implements ImportInterface
         $set = $this->importTranslations($set, $filename);
 
         # now save the set with the new values
-        $result = $this->saver->save($set);
+        $result = $this->saver->saveTranslations($set);
 
         return new ImportResult(
             $result->getSavedLocales(),

@@ -33,7 +33,7 @@ class JsonSaver implements StorageSaverInterface
      * @param TranslationSet $set
      * @return StorageSaveResult
      */
-    public function save(TranslationSet $set): StorageSaveResult
+    public function saveTranslations(TranslationSet $set): StorageSaveResult
     {
         $intent = $this->jsonIntent;
 

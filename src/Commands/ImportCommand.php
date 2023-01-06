@@ -55,9 +55,11 @@ class ImportCommand extends Command
         $importFilename = (string)$input->getOption('file');
         $importExchangeFormat = (string)$input->getOption('format');
         $suiteName = (string)$input->getOption('set');
+
+        # arguments for individual exchange exporters
+        $delimiter = (string)$input->getOption('csv-delimiter');
         $intent = (string)$input->getOption('json-intent');
         $sort = (bool)$input->getOption('json-sort');
-        $delimiter = (string)$input->getOption('csv-delimiter');
 
         if (empty($delimiter)) {
             $delimiter = ',';
@@ -69,7 +71,7 @@ class ImportCommand extends Command
             $intent = (int)$intent;
         }
 
-        # required for PHAR loading
+        # adjust correct file path, required for PHAR loading
         $cur_dir = explode('\\', (string)getcwd());
         $workingDir = $cur_dir[count($cur_dir) - 1];
         $importFilename = $workingDir . '/' . $importFilename;
