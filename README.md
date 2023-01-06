@@ -12,7 +12,7 @@ Welcome to PHPUnuhi - The easy framework to validate and manage translation file
 Unuhi? This is Hawaiian for "translate" or "translation".
 Now that you know this, let's get started!
 
-## Basic Concept
+## 1. Basic Concept
 
 This is a framework that helps you to **validate and maintain translation files**.
 At the moment it only supports JSON based files.
@@ -35,9 +35,7 @@ This makes it a perfect fit for your CI/CD pipelines.
 
 > Missing your platform or file format? Feel free to contribute :)
 
-## Installation
-
-### Composer
+## 2. Installation
 
 You can also use PHPUnuhi with Composer. Just install it with this script.
 
@@ -51,7 +49,7 @@ You can then run it with this command, once you have a configuration.
 php vendor/bin/phpunuhi validate
 ```
 
-## Configuration
+## 3. Configuration
 
 The whole configuration is done using XML.
 You can create different **translation sets** with different files and settings.
@@ -83,7 +81,7 @@ Create a new **phpunuhi.xml** file (or rename it to something else).
 * Every set can have its own storage format (default is JSON).
 * Every translation file can have its own locale (it's used in a few spots - experimental at the moment).
 
-## Validate Command
+## 4. Validate Command
 
 Start the validation of your translation files by running this command:
 
@@ -95,9 +93,9 @@ php vendor/bin/phpunuhi validate
 php vendor/bin/phpunuhi validate --configuration=./translations.xml
 ```
 
-### Validations
+### 5. Validations
 
-#### 1. Invalid structure
+#### 5.1 Invalid structure
 
 The command will check if all files of a translation set have the **same structure**.
 If not, you might have forgotten something ;)
@@ -106,7 +104,7 @@ If not, you might have forgotten something ;)
    <img src="/.github/assets/validation-structure.png">
 </p>
 
-#### 2. Missing translations
+#### 5.2 Missing translations
 
 If missing translations (**empty values**) are found, the validation process will fail.
 This helps against forgetting certain translations in any of your files.
@@ -115,7 +113,7 @@ This helps against forgetting certain translations in any of your files.
    <img src="/.github/assets/validation-empty.png">
 </p>
 
-## Export Command
+## 6. Export Command
 
 You can export your translations **into a CSV file** or other supported exchange formats.
 These files can then be passed on to an external translator or company.
@@ -143,7 +141,7 @@ php vendor/bin/phpunuhi export ... --csv-delimiter=";"
    <img src="/.github/assets/csv.png">
 </p>
 
-## Import Command
+## 7. Import Command
 
 You can import your translations **from a CSV file** or other supported exchange formats.
 This will automatically update the storage files (JSON, ...) that have been assigned to the imported translation set.
@@ -167,42 +165,42 @@ php vendor/bin/phpunuhi import ... --json-sort
 php vendor/bin/phpunuhi import ... --csv-delimiter=";"
 ```
 
-## Advanced
+## 8. Appendix
 
-### Storage Formats
+### 8.1 Storage Formats
 
 Storage formats define how your translations are stored.
 Every format has its own loading and saving implementation.
 
 The following formats are currently supported.
 
-#### JSON
+#### 8.1.1 JSON
 
 The JSON format means that your files are stored in separate JSON files.
-Every locale or language has its own JSON file.
-The JSON structure across all your related files of a translation set should match.
+Every locale has its own JSON file.
+The JSON structure across all files of a set should match.
 
-### Exchange Formats
+### 8.2 Exchange Formats
 
 Exchange formats define how you export and import translation data.
-The main purpose is to be able to send it out to a translating company or just someone als,
-and be able to import it back into your system afterwards.
+The main purpose is to send it out to a translation company or just someone else,
+and be able to import it back into your system again.
 
 The following formats are currently supported.
 
-#### CSV
+#### 8.2.1 CSV
 
 The CSV format is a well known and solid format for interoperability.
 You can open CSV files with Microsoft Excel, Apple Numbers as well as simple text editors or more.
 The only downside with Excel and Numbers is, that they might force you to save the updated file in their own formats (just pay attention to this).
 
-The benefit is that you can simply open all translation in an easy spreadsheet way.
-Every row is the translation key, and every locale and language has its won column in that row.
+The benefit is that you can simply open all translation in a spreadsheet.
+Every translation key has its own row, and all locale-values have their own column in that row.
 
 <p align="center">
    <img src="/.github/assets/csv.png">
 </p>
 
-#### HTML
+#### 8.2.2 HTML
 
 **IN PROGRESS**
