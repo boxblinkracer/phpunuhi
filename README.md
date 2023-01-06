@@ -53,13 +53,13 @@ php vendor/bin/phpunuhi validate
 
 ## Configuration
 
-The whole configuration is done using a XML file.
-You can create different translation sets with different files and settings.
+The whole configuration is done using XML.
+You can create different **translation sets** with different files and settings.
 
 Configure a **translation set** for every bundle (scope) of your translations.
 Such a set can then contain multiple files with your individual language and locale values.
 
-Just create a new **phpunuhi.xml** file (or rename it to something else).
+Create a new **phpunuhi.xml** file (or rename it to something else).
 
 ```xml
 
@@ -80,12 +80,12 @@ Just create a new **phpunuhi.xml** file (or rename it to something else).
 </phpunuhi>
 ```
 
-Every set can have its own storage format (default is JSON).
-Every translation file can have its own locale (which is used in a few spots - experimental at the moment).
+* Every set can have its own storage format (default is JSON).
+* Every translation file can have its own locale (it's used in a few spots - experimental at the moment).
 
 ## Validate Command
 
-You can then start the validation of your translation files by running this command.
+Start the validation of your translation files by running this command:
 
 ```bash 
 # loads configuration phpunuhi.xml as default
@@ -108,7 +108,7 @@ If not, you might have forgotten something ;)
 
 #### 2. Missing translations
 
-As soon as an **empty string** is found, the validation process will notify you about it.
+If missing translations (**empty values**) are found, the validation process will fail.
 This helps against forgetting certain translations in any of your files.
 
 <p align="center">
@@ -119,6 +119,7 @@ This helps against forgetting certain translations in any of your files.
 
 You can export your translations **into a CSV file** or other supported exchange formats.
 These files can then be passed on to an external translator or company.
+
 Every row will contain the translation key, and every column in that row will be a different translation (in case of CSV files).
 
 ```bash 
@@ -145,9 +146,9 @@ php vendor/bin/phpunuhi export ... --csv-delimiter=";"
 ## Import Command
 
 You can import your translations **from a CSV file** or other supported exchange formats.
-This will automatically update the JSON files that have been assigned to the imported translation set.
+This will automatically update the storage files (JSON, ...) that have been assigned to the imported translation set.
 
-> It's recommended to use version control (GIT, ...) to verify the changes before approving them.
+> It's recommended to use version control to verify changes, before approving them.
 
 ```bash 
 # import from default format CSV
