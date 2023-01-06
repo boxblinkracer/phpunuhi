@@ -8,7 +8,7 @@ class Locale
     /**
      * @var string
      */
-    private $locale;
+    private $name;
 
     /**
      * @var string
@@ -23,12 +23,12 @@ class Locale
 
 
     /**
-     * @param string $locale
+     * @param string $name
      * @param string $filename
      */
-    public function __construct(string $locale, string $filename)
+    public function __construct(string $name, string $filename)
     {
-        $this->locale = $locale;
+        $this->name = $name;
         $this->filename = $filename;
 
         $this->translations = [];
@@ -37,9 +37,9 @@ class Locale
     /**
      * @return string
      */
-    public function getLocale(): string
+    public function getName(): string
     {
-        return $this->locale;
+        return $this->name;
     }
 
     /**
@@ -58,7 +58,6 @@ class Locale
     public function addTranslation(string $key, string $value): void
     {
         $this->translations[] = new Translation(
-            $this->locale,
             $key,
             $value
         );

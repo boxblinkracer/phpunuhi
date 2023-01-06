@@ -61,7 +61,7 @@ class HTMLExporter implements ExportInterface
         $html .= "<tr>";
         $html .= "<td>Key</td>";
         foreach ($set->getLocales() as $locale) {
-            $html .= "<td>" . $locale->getLocale() . "</td>";
+            $html .= "<td>" . $locale->getName() . "</td>";
         }
         $html .= "</tr>";
 
@@ -76,7 +76,7 @@ class HTMLExporter implements ExportInterface
 
                     if ($translation->getKey() === $key) {
                         $html .= "<td>";
-                        $html .= "<input id=\"" . $key . "--" . $translation->getLocale() . "\" class=\"translation\" type=\"text\" value=\"" . $translation->getValue() . "\"></input>";
+                        $html .= "<input id=\"" . $key . "--" . $locale->getName() . "\" class=\"translation\" type=\"text\" value=\"" . $translation->getValue() . "\"></input>";
                         $html .= "</td>";
                     }
                 }

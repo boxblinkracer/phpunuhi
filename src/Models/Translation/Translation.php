@@ -8,11 +8,6 @@ class Translation
     /**
      * @var string
      */
-    private $locale;
-
-    /**
-     * @var string
-     */
     private $key;
 
     /**
@@ -21,23 +16,13 @@ class Translation
     private $value;
 
     /**
-     * @param string $locale
      * @param string $key
      * @param string $value
      */
-    public function __construct(string $locale, string $key, string $value)
+    public function __construct(string $key, string $value)
     {
-        $this->locale = $locale;
         $this->key = $key;
         $this->value = $value;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLocale()
-    {
-        return $this->locale;
     }
 
     /**

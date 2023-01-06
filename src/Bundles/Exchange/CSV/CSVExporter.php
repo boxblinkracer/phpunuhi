@@ -41,30 +41,32 @@ class CSVExporter implements ExportInterface
         }
 
 
-        $lines = [];
+        $headerLine = [];
+        $headerLine[] = 'Key';
 
-        foreach ($allEntries as $key => $values) {
-
-            $line = [];
-            $line[] = 'Key';
-
-            foreach ($values as $file => $value) {
-                $line[] = $file;
+        foreach ($set->getLocales() as $locale) {
+            # add locale name to header, if existing
+            # otherwise use the file name
+            if (!empty($locale->getName())) {
+                $headerLine[] = $locale->getName();
+            } else {
+                $headerLine[] = basename($locale->getFilename());
             }
-
-            $lines[] = $line;
-            break;
         }
 
+
+        $lines = [];
+        $lines[] = $headerLine;
+
         foreach ($allEntries as $key => $values) {
 
-            $line = [];
-            $line[] = $key;
+            $headerLine = [];
+            $headerLine[] = $key;
             foreach ($values as $value) {
-                $line[] = $value;
+                $headerLine[] = $value;
             }
 
-            $lines[] = $line;
+            $lines[] = $headerLine;
         }
 
         if (empty($outputDir)) {

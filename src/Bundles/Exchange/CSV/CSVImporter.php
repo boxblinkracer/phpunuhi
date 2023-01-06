@@ -95,24 +95,25 @@ class CSVImporter implements ImportInterface
         fclose($csvFile);
 
 
-        foreach ($translationFileValues as $fileName => $csvTranslations) {
+        foreach ($translationFileValues as $identifier => $csvTranslations) {
 
             $translationsForLocale = [];
 
             # search filename form locales
             foreach ($set->getLocales() as $locale) {
+
                 $localeFileName = basename($locale->getFilename());
 
-                if ($localeFileName !== $fileName) {
-                    continue;
-                }
+                # check if either our locale name or filename match
+                # if not, move on to the next locale
+                if ($locale->getName() === $identifier || $localeFileName === $identifier) {
+                    # create translations
+                    foreach ($csvTranslations as $csvTranslationKey => $csvTranslationValue) {
+                        $translationsForLocale[] = new Translation($csvTranslationKey, (string)$csvTranslationValue);
+                    }
 
-                # create translations
-                foreach ($csvTranslations as $csvTranslationKey => $csvTranslationValue) {
-                    $translationsForLocale[] = new Translation($locale->getLocale(), $csvTranslationKey, (string)$csvTranslationValue);
+                    $locale->setTranslations($translationsForLocale);
                 }
-
-                $locale->setTranslations($translationsForLocale);
             }
         }
 
