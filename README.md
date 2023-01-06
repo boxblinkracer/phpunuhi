@@ -115,7 +115,7 @@ This helps against forgetting certain translations in any of your files.
 
 ## 6. Export Command
 
-You can export your translations **into a CSV file** or other supported exchange formats.
+You can export your translations **into a CSV file**, a HTML WebEdit spreadsheet, or other supported exchange formats.
 These files can then be passed on to an external translator or company.
 
 Every row will contain the translation key, and every column in that row will be a different translation (in case of CSV files).
@@ -132,10 +132,9 @@ php vendor/bin/phpunuhi export ... --dir=./exports
 
 # only export single set "storefront"
 php vendor/bin/phpunuhi export ... --set="storefront"
-
-# set custom delimiter for CSV export
-php vendor/bin/phpunuhi export ... --csv-delimiter=";"
 ```
+
+> For more options and arguments of the formats please see the appendix below!
 
 <p align="center">
    <img src="/.github/assets/csv.png">
@@ -160,10 +159,10 @@ php vendor/bin/phpunuhi import ... --json-intent=4
 
 # sort JSON based files alphabetically
 php vendor/bin/phpunuhi import ... --json-sort
-
-# import CSV with custom delimiter
-php vendor/bin/phpunuhi import ... --csv-delimiter=";"
 ```
+
+> For more options and arguments of the formats please see the appendix below!
+
 
 ## 8. Appendix
 
@@ -175,6 +174,12 @@ Every format has its own loading and saving implementation.
 The following formats are currently supported.
 
 #### 8.1.1 JSON
+
+* Format: "json" 
+* Arguments:
+  * Import Command
+    * --json-sort 
+    * --json-intent 
 
 The JSON format means that your files are stored in separate JSON files.
 Every locale has its own JSON file.
@@ -190,6 +195,13 @@ The following formats are currently supported.
 
 #### 8.2.1 CSV
 
+* Format: "csv"
+* Arguments:
+    * Export Command
+        * --csv-delimiter
+    * Import Command
+        * --csv-delimiter
+
 The CSV format is a well known and solid format for interoperability.
 You can open CSV files with Microsoft Excel, Apple Numbers as well as simple text editors or more.
 The only downside with Excel and Numbers is, that they might force you to save the updated file in their own formats (just pay attention to this).
@@ -202,6 +214,8 @@ Every translation key has its own row, and all locale-values have their own colu
 </p>
 
 #### 8.2.2 HTML / WebEdit
+
+* Format: "html" 
 
 The HTML export helps you to export all translations into a single HTML file.
 You can then open this file in your browser and immediately start to edit your translations.
