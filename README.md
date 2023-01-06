@@ -13,23 +13,26 @@ Unuhi? This is Hawaiian for "translate" or "translation".
 Now that you know this, let's get started!
 
 <!-- TOC -->
-* [1. Basic Concept](#1-basic-concept)
-* [2. Installation](#2-installation)
-* [3. Configuration](#3-configuration)
-* [4. Validate Command](#4-validate-command)
+  * [1. Basic Concept](#1-basic-concept)
+  * [2. Installation](#2-installation)
+  * [3. Configuration](#3-configuration)
+  * [4. Validate Command](#4-validate-command)
     * [5. Validations](#5-validations)
-        * [5.1 Invalid structure](#51-invalid-structure)
-        * [5.2 Missing translations](#52-missing-translations)
-* [6. Export Command](#6-export-command)
-* [7. Import Command](#7-import-command)
-* [8. Appendix](#8-appendix)
-    * [8.1 Storage Formats](#81-storage-formats)
-        * [8.1.1 JSON](#811-json)
-    * [8.2 Exchange Formats](#82-exchange-formats)
-        * [8.2.1 CSV](#821-csv)
-        * [8.2.2 HTML / WebEdit](#822-html--webedit)
+      * [5.1 Invalid structure](#51-invalid-structure)
+      * [5.2 Missing translations](#52-missing-translations)
+  * [6. Export Command](#6-export-command)
+  * [7. Import Command](#7-import-command)
+  * [8. Use Cases](#8-use-cases)
+    * [8.1 Validation in CI pipeline](#81-validation-in-ci-pipeline)
+    * [8.2 Working with external translation agencies](#82-working-with-external-translation-agencies)
+    * [8.3 Live WebEdit with HTML](#83-live-webedit-with-html)
+  * [9 Appendix](#9-appendix)
+    * [9.1 Storage Formats](#91-storage-formats)
+      * [9.1.1 JSON](#911-json)
+    * [9.2 Exchange Formats](#92-exchange-formats)
+      * [9.2.1 CSV](#921-csv)
+      * [9.2.2 HTML / WebEdit](#922-html--webedit)
 <!-- TOC -->
-
 
 ## 1. Basic Concept
 
@@ -53,7 +56,6 @@ This makes it a perfect fit for your CI/CD pipelines.
 
 
 > Missing your platform or file format? Feel free to contribute :)
-
 
 ## 2. Installation
 
@@ -183,29 +185,60 @@ php vendor/bin/phpunuhi import ... --json-sort
 
 > For more options and arguments of the formats please see the appendix below!
 
+## 8. Use Cases
 
-## 8. Appendix
+Here are a few use cases and ideas to get you started.
 
-### 8.1 Storage Formats
+### 8.1 Validation in CI pipeline
+
+One of the typical things you want to make sure is, that your plugin/software doesn't miss any
+required translations.
+
+This can be done easy directly within your CI pipeline.
+Just install your dependencies and run the validation command.
+
+The exit value of this command will automatically stop your pipeline if an error is detected.
+
+### 8.2 Working with external translation agencies
+
+External translation agencies often require CSV exports.
+You can easily generate and export a CSV file for your partner agencies.
+
+Once they have adjusted their translation, they can send you the file back and you simply
+import it again with the import command.
+
+### 8.3 Live WebEdit with HTML
+
+If you have a test or staging system, you can even go one step further.
+Just imagine setting up a cronjob that runs after a deployment, or as scheduled job.
+This cronjob could trigger the HTML export of PHPUnuhi with an output directory to a folder that is available within your DocRoot.
+That HTML file might then be exposed with something like this **https://stage.my-shop.com/snippets**.
+
+Everyone who wants to either see all translations, or even modify them, can easily do this in their browser.
+And because you use a cronjob to generate the file, it's always automatically updated.
+
+## 9 Appendix
+
+### 9.1 Storage Formats
 
 Storage formats define how your translations are stored.
 Every format has its own loading and saving implementation.
 
 The following formats are currently supported.
 
-#### 8.1.1 JSON
+#### 9.1.1 JSON
 
-* Format: "json" 
+* Format: "json"
 * Arguments:
-  * Import Command
-    * --json-sort 
-    * --json-intent 
+    * Import Command
+        * --json-sort
+        * --json-intent
 
 The JSON format means that your files are stored in separate JSON files.
 Every locale has its own JSON file.
 The JSON structure across all files of a set should match.
 
-### 8.2 Exchange Formats
+### 9.2 Exchange Formats
 
 Exchange formats define how you export and import translation data.
 The main purpose is to send it out to a translation company or just someone else,
@@ -213,7 +246,7 @@ and be able to import it back into your system again.
 
 The following formats are currently supported.
 
-#### 8.2.1 CSV
+#### 9.2.1 CSV
 
 * Format: "csv"
 * Arguments:
@@ -233,9 +266,9 @@ Every translation key has its own row, and all locale-values have their own colu
    <img src="/.github/assets/csv.png">
 </p>
 
-#### 8.2.2 HTML / WebEdit
+#### 9.2.2 HTML / WebEdit
 
-* Format: "html" 
+* Format: "html"
 
 The HTML export helps you to export all translations into a single HTML file.
 You can then open this file in your browser and immediately start to edit your translations.
