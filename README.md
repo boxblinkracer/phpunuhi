@@ -12,6 +12,25 @@ Welcome to PHPUnuhi - The easy framework to validate and manage translation file
 Unuhi? This is Hawaiian for "translate" or "translation".
 Now that you know this, let's get started!
 
+<!-- TOC -->
+* [1. Basic Concept](#1-basic-concept)
+* [2. Installation](#2-installation)
+* [3. Configuration](#3-configuration)
+* [4. Validate Command](#4-validate-command)
+    * [5. Validations](#5-validations)
+        * [5.1 Invalid structure](#51-invalid-structure)
+        * [5.2 Missing translations](#52-missing-translations)
+* [6. Export Command](#6-export-command)
+* [7. Import Command](#7-import-command)
+* [8. Appendix](#8-appendix)
+    * [8.1 Storage Formats](#81-storage-formats)
+        * [8.1.1 JSON](#811-json)
+    * [8.2 Exchange Formats](#82-exchange-formats)
+        * [8.2.1 CSV](#821-csv)
+        * [8.2.2 HTML / WebEdit](#822-html--webedit)
+<!-- TOC -->
+
+
 ## 1. Basic Concept
 
 This is a framework that helps you to **validate and maintain translation files**.
@@ -34,6 +53,7 @@ This makes it a perfect fit for your CI/CD pipelines.
 
 
 > Missing your platform or file format? Feel free to contribute :)
+
 
 ## 2. Installation
 
