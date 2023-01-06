@@ -59,6 +59,8 @@ You can create different translation sets with different files and settings.
 Configure a **translation set** for every bundle (scope) of your translations.
 Such a set can then contain multiple files with your individual language and locale values.
 
+Just create a new **phpunuhi.xml** file (or rename it to something else).
+
 ```xml
 
 <phpunuhi>
@@ -83,7 +85,11 @@ Such a set can then contain multiple files with your individual language and loc
 You can then start the validation of your translation files by running this command.
 
 ```bash 
-php vendor/bin/phpunuhi validate --configuration=./phpunuhi.xml
+# loads configuration phpunuhi.xml as default
+php vendor/bin/phpunuhi validate 
+
+# provide custom configuration
+php vendor/bin/phpunuhi validate --configuration=./translations.xml
 ```
 
 ### Validations
@@ -108,11 +114,12 @@ This helps against forgetting certain translations in any of your files.
 
 ## Export Command
 
-You can export your translations **into a CSV file** that can be passed on to an external translator or company.
-Every row will contain the translation key, and every column will be a different translation.
+You can export your translations **into a CSV file** or other formats.
+These files can then be passed on to an external translator or company.
+Every row will contain the translation key, and every column in that row will be a different translation (in case of CSV files).
 
 ```bash 
-php vendor/bin/phpunuhi export --configuration=./phpunuhi.xml
+php vendor/bin/phpunuhi export 
 
 # provide custom export folder
 php vendor/bin/phpunuhi export ... --dir=./exports
@@ -136,7 +143,7 @@ This will automatically update the JSON files that have been assigned to the imp
 > It's recommended to use version control (GIT, ...) to verify the changes before approving them.
 
 ```bash 
-php vendor/bin/phpunuhi import --configuration=./phpunuhi.xml --set=storefront --file=./storefront.csv
+php vendor/bin/phpunuhi import --set=storefront --file=storefront.csv
 
 # intent of 4 spaces in saved JSON
 php vendor/bin/phpunuhi import ... --json-intent=4
@@ -186,3 +193,5 @@ Every row is the translation key, and every locale and language has its won colu
 
 
 #### HTML
+
+**IN PROGRESS**
