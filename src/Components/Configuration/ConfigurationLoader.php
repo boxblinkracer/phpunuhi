@@ -2,6 +2,7 @@
 
 namespace PHPUnuhi\Configuration;
 
+use PHPUnuhi\Bundles\Translation\Format;
 use PHPUnuhi\Bundles\Translation\JSON\JSONTranslationLoader;
 use PHPUnuhi\Bundles\Translation\TranslationLoaderInterface;
 use PHPUnuhi\Models\Configuration\Configuration;
@@ -14,33 +15,10 @@ class ConfigurationLoader
 {
 
     /**
-     * @var TranslationLoaderInterface
+     *
      */
-    private $translationLoader;
-
-
-    /**
-     * @param string $format
-     * @return ConfigurationLoader
-     * @throws \Exception
-     */
-    public static function fromFormat(string $format): ConfigurationLoader
+    public function __construct()
     {
-        switch (strtolower($format)) {
-            case 'json':
-                return new ConfigurationLoader(new JSONTranslationLoader());
-
-            default:
-                throw new \Exception('Unknown format: ' . $format);
-        }
-    }
-
-    /**
-     * @param TranslationLoaderInterface $translationLoader
-     */
-    private function __construct(TranslationLoaderInterface $translationLoader)
-    {
-        $this->translationLoader = $translationLoader;
     }
 
 
@@ -65,6 +43,22 @@ class ConfigurationLoader
         foreach ($xmlSettings->translations->children() as $translation) {
 
             $name = (string)$translation['name'];
+            $format = (string)$translation['format'];
+
+            if (empty($format)) {
+                $format = Format::JSON;
+            }
+
+            $translationLoader = null;
+
+            switch ($format) {
+                case Format::JSON:
+                    $translationLoader = new JSONTranslationLoader();
+                    break;
+
+                default:
+                    throw new \Exception('No TranslationLoader found for format: ' . $format);
+            }
 
             $foundLocales = [];
 
@@ -96,7 +90,7 @@ class ConfigurationLoader
             # now iterate through our locales
             # and load the translation files for it
             foreach ($set->getLocales() as $locale) {
-                $this->translationLoader->loadTranslations($locale);
+                $translationLoader->loadTranslations($locale);
             }
 
             $suites[] = $set;

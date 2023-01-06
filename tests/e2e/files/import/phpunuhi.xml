@@ -2,7 +2,7 @@
 
     <translations>
 
-        <set name="storefront">
+        <set name="storefront" format="json">
             <file locale="de">./de.json</file>
             <file locale="en">./en.json</file>
         </set>

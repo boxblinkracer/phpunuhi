@@ -2,9 +2,10 @@
 
 namespace PHPUnuhi\Commands;
 
-use PHPUnuhi\Bundles\Exchange\CSV\CSVExporter;
+use PHPUnuhi\Bundles\Exchange\ExchangeFactory;
+use PHPUnuhi\Bundles\Exchange\ExchangeFormat;
+use PHPUnuhi\Bundles\Translation\Format;
 use PHPUnuhi\Configuration\ConfigurationLoader;
-use PHPUnuhi\Models\Translation\Format;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -27,6 +28,7 @@ class ExportCommand extends Command
             ->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('set', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('dir', null, InputOption::VALUE_REQUIRED, '', '')
+            ->addOption('format', null, InputOption::VALUE_REQUIRED, '', ExchangeFormat::CSV)
             ->addOption('csv-delimiter', null, InputOption::VALUE_REQUIRED, '', '');
 
         parent::configure();
@@ -45,8 +47,9 @@ class ExportCommand extends Command
         $this->showHeader();
 
         $configFile = $this->getConfigFile($input);
-        $outputDir = (string)$input->getOption('dir');
+        $exportExchangeFormat = (string)$input->getOption('format');
         $setName = (string)$input->getOption('set');
+        $outputDir = (string)$input->getOption('dir');
         $delimiter = (string)$input->getOption('csv-delimiter');
 
         if (empty($delimiter)) {
@@ -54,12 +57,10 @@ class ExportCommand extends Command
         }
 
 
-        $configLoader = ConfigurationLoader::fromFormat(Format::JSON);
+        $configLoader =new ConfigurationLoader();
+        $exporter = ExchangeFactory::getExporterFromFormat($exportExchangeFormat, $delimiter);
 
         $config = $configLoader->load($configFile);
-
-
-        $exporter = new CSVExporter($delimiter);
 
         foreach ($config->getTranslationSets() as $set) {
 

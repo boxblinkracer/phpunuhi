@@ -2,11 +2,12 @@
 
 namespace PHPUnuhi\Commands;
 
-use PHPUnuhi\Bundles\Exchange\CSV\CSVImporter;
+use PHPUnuhi\Bundles\Exchange\ExchangeFactory;
+use PHPUnuhi\Bundles\Exchange\ExchangeFormat;
 use PHPUnuhi\Bundles\Exchange\ImportResult;
+use PHPUnuhi\Bundles\Translation\Format;
 use PHPUnuhi\Bundles\Translation\JSON\JSONTranslationSaver;
 use PHPUnuhi\Configuration\ConfigurationLoader;
-use PHPUnuhi\Models\Translation\Format;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -27,6 +28,7 @@ class ImportCommand extends Command
             ->setName('import')
             ->setDescription('Imports translations from a provided CSV file')
             ->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', '')
+            ->addOption('format', null, InputOption::VALUE_REQUIRED, 'R', ExchangeFormat::CSV)
             ->addOption('set', null, InputOption::VALUE_REQUIRED, 'R', '')
             ->addOption('file', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('csv-delimiter', null, InputOption::VALUE_REQUIRED, '', '')
@@ -50,6 +52,7 @@ class ImportCommand extends Command
 
         $configFile = $this->getConfigFile($input);
         $importFilename = (string)$input->getOption('file');
+        $importExchangeFormat = (string)$input->getOption('format');
         $suiteName = (string)$input->getOption('set');
         $intent = (string)$input->getOption('json-intent');
         $sort = (bool)$input->getOption('json-sort');
@@ -68,7 +71,7 @@ class ImportCommand extends Command
 
         $translationSaver = new JSONTranslationSaver($intent, $sort);
 
-        $configLoader = ConfigurationLoader::fromFormat(Format::JSON);
+        $configLoader =new ConfigurationLoader();
         $config = $configLoader->load($configFile);
 
 
@@ -78,7 +81,7 @@ class ImportCommand extends Command
         $importFilename = $workingDir . '/' . $importFilename;
 
 
-        $importer = new CSVImporter($translationSaver, $delimiter);
+        $importer = ExchangeFactory::getImporterFromFormat($importExchangeFormat, $translationSaver, $delimiter);
 
 
         $result = null;

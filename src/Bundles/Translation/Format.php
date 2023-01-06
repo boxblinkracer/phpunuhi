@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPUnuhi\Models\Translation;
+namespace PHPUnuhi\Bundles\Translation;
 
 interface Format
 {

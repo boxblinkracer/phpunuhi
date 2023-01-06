@@ -71,7 +71,7 @@ Just create a new **phpunuhi.xml** file (or rename it to something else).
             <file locale="en">./snippets/storefront/en.json</file>
         </set>
 
-        <set name="Admin">
+        <set name="Admin" format="json">
             <file locale="de">./snippets/admin/de.json</file>
             <file locale="en">./snippets/admin/en.json</file>
         </set>
@@ -79,6 +79,9 @@ Just create a new **phpunuhi.xml** file (or rename it to something else).
     </translations>
 </phpunuhi>
 ```
+
+Every set can have its own format (default is JSON).
+Every translation file can have its own locale (which is used in a few spots - experimental at the moment).
 
 ## Validate Command
 
@@ -119,7 +122,11 @@ These files can then be passed on to an external translator or company.
 Every row will contain the translation key, and every column in that row will be a different translation (in case of CSV files).
 
 ```bash 
+# default export in format CSV
 php vendor/bin/phpunuhi export 
+
+# default export in other format
+php vendor/bin/phpunuhi export ... --format=html
 
 # provide custom export folder
 php vendor/bin/phpunuhi export ... --dir=./exports
@@ -143,12 +150,16 @@ This will automatically update the JSON files that have been assigned to the imp
 > It's recommended to use version control (GIT, ...) to verify the changes before approving them.
 
 ```bash 
+# import from default format CSV
 php vendor/bin/phpunuhi import --set=storefront --file=storefront.csv
+
+# import with other exchange format
+php vendor/bin/phpunuhi import ... --format=html
 
 # intent of 4 spaces in saved JSON
 php vendor/bin/phpunuhi import ... --json-intent=4
 
-# sort JSON alphabetically
+# sort JSON based files alphabetically
 php vendor/bin/phpunuhi import ... --json-sort
 
 # import CSV with custom delimiter
@@ -190,7 +201,6 @@ Every row is the translation key, and every locale and language has its won colu
 <p align="center">
    <img src="/.github/assets/csv.png">
 </p>
-
 
 #### HTML
 
