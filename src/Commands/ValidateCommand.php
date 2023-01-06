@@ -23,7 +23,7 @@ class ValidateCommand extends Command
     {
         $this
             ->setName('validate')
-            ->setDescription('Validates all your translations in your configuration')
+            ->setDescription('Validates all your translations from your configuration')
             ->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', '');
 
         parent::configure();
@@ -32,7 +32,7 @@ class ValidateCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return int
+     * @return int|void
      * @throws \Exception
      */
     public function execute(InputInterface $input, OutputInterface $output)
@@ -41,16 +41,19 @@ class ValidateCommand extends Command
 
         $this->showHeader();
 
+        # -----------------------------------------------------------------
+
         $configFile = $this->getConfigFile($input);
 
-        $configLoader = new ConfigurationLoader();
+        # -----------------------------------------------------------------
 
+        $configLoader = new ConfigurationLoader();
         $config = $configLoader->load($configFile);
+
+        $validator = new Validator();
 
 
         $isAllValid = true;
-
-        $validator = new Validator();
 
         foreach ($config->getTranslationSets() as $set) {
 

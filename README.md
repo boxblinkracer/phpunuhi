@@ -80,7 +80,7 @@ Just create a new **phpunuhi.xml** file (or rename it to something else).
 </phpunuhi>
 ```
 
-Every set can have its own format (default is JSON).
+Every set can have its own storage format (default is JSON).
 Every translation file can have its own locale (which is used in a few spots - experimental at the moment).
 
 ## Validate Command
@@ -117,7 +117,7 @@ This helps against forgetting certain translations in any of your files.
 
 ## Export Command
 
-You can export your translations **into a CSV file** or other formats.
+You can export your translations **into a CSV file** or other supported exchange formats.
 These files can then be passed on to an external translator or company.
 Every row will contain the translation key, and every column in that row will be a different translation (in case of CSV files).
 
@@ -144,7 +144,7 @@ php vendor/bin/phpunuhi export ... --csv-delimiter=";"
 
 ## Import Command
 
-You can import your translations **from a CSV file**.
+You can import your translations **from a CSV file** or other supported exchange formats.
 This will automatically update the JSON files that have been assigned to the imported translation set.
 
 > It's recommended to use version control (GIT, ...) to verify the changes before approving them.
@@ -168,10 +168,10 @@ php vendor/bin/phpunuhi import ... --csv-delimiter=";"
 
 ## Advanced
 
-### Translation Formats
+### Storage Formats
 
-Translation formats define how your translations are stored.
-Every format has its own loading and saving implementation, as well as a unique validation.
+Storage formats define how your translations are stored.
+Every format has its own loading and saving implementation.
 
 The following formats are currently supported.
 

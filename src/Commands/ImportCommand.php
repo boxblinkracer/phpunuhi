@@ -49,6 +49,8 @@ class ImportCommand extends Command
 
         $this->showHeader();
 
+        # -----------------------------------------------------------------
+
         $configFile = $this->getConfigFile($input);
         $importFilename = (string)$input->getOption('file');
         $importExchangeFormat = (string)$input->getOption('format');
@@ -56,7 +58,6 @@ class ImportCommand extends Command
         $intent = (string)$input->getOption('json-intent');
         $sort = (bool)$input->getOption('json-sort');
         $delimiter = (string)$input->getOption('csv-delimiter');
-
 
         if (empty($delimiter)) {
             $delimiter = ',';
@@ -68,15 +69,15 @@ class ImportCommand extends Command
             $intent = (int)$intent;
         }
 
-
-        $configLoader = new ConfigurationLoader();
-        $config = $configLoader->load($configFile);
-
-
         # required for PHAR loading
         $cur_dir = explode('\\', (string)getcwd());
         $workingDir = $cur_dir[count($cur_dir) - 1];
         $importFilename = $workingDir . '/' . $importFilename;
+
+        # -----------------------------------------------------------------
+
+        $configLoader = new ConfigurationLoader();
+        $config = $configLoader->load($configFile);
 
 
         $result = null;
@@ -87,9 +88,12 @@ class ImportCommand extends Command
                 continue;
             }
 
-            $translationSaver = StorageFactory::getSaverFromFormat($set->getFormat(), $intent, $sort);
+            # get correct storage saver from our current set
+            $storageSaver = StorageFactory::getSaverFromFormat($set->getFormat(), $intent, $sort);
 
-            $importer = ExchangeFactory::getImporterFromFormat($importExchangeFormat, $translationSaver, $delimiter);
+            # build the correct importer for our exchange format
+            # and pass on the matching storage saver of our current ste
+            $importer = ExchangeFactory::getImporterFromFormat($importExchangeFormat, $storageSaver, $delimiter);
 
             $result = $importer->import($set, $importFilename);
         }

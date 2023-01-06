@@ -45,6 +45,8 @@ class ExportCommand extends Command
 
         $this->showHeader();
 
+        # -----------------------------------------------------------------
+
         $configFile = $this->getConfigFile($input);
         $exportExchangeFormat = (string)$input->getOption('format');
         $setName = (string)$input->getOption('set');
@@ -55,16 +57,17 @@ class ExportCommand extends Command
             $delimiter = ',';
         }
 
+        # -----------------------------------------------------------------
 
-        $configLoader =new ConfigurationLoader();
-        $exporter = ExchangeFactory::getExporterFromFormat($exportExchangeFormat, $delimiter);
+        $configLoader = new ConfigurationLoader();
 
         $config = $configLoader->load($configFile);
 
+        $exporter = ExchangeFactory::getExporterFromFormat($exportExchangeFormat, $delimiter);
+
         foreach ($config->getTranslationSets() as $set) {
 
-            # if we have configured to only export a single suite
-            # then skip all others
+            # if we have configured to only export a single suite then skip all others
             if (!empty($setName) && $setName !== $set->getName()) {
                 continue;
             }
