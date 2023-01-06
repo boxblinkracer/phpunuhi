@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPUnuhi\Export\HTML;
+namespace PHPUnuhi\Bundles\Exchange\HTML;
 
-use PHPUnuhi\Export\ExportInterface;
+use PHPUnuhi\Bundles\Exchange\ExportInterface;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
 class HTMLExporter implements ExportInterface

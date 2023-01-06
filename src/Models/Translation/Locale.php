@@ -65,6 +65,14 @@ class Locale
     }
 
     /**
+     * @param array|Translation[] $translations
+     */
+    public function setTranslations(array $translations): void
+    {
+        $this->translations = $translations;
+    }
+
+    /**
      * @return Translation[]
      */
     public function getTranslations(): array

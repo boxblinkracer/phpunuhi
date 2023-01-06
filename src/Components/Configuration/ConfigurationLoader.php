@@ -2,8 +2,8 @@
 
 namespace PHPUnuhi\Configuration;
 
-use PHPUnuhi\Bundles\JSON\TranslationLoader;
-use PHPUnuhi\Bundles\TranslationLoaderInterface;
+use PHPUnuhi\Bundles\Translation\JSON\JSONTranslationLoader;
+use PHPUnuhi\Bundles\Translation\TranslationLoaderInterface;
 use PHPUnuhi\Models\Configuration\Configuration;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
@@ -28,7 +28,7 @@ class ConfigurationLoader
     {
         switch (strtolower($format)) {
             case 'json':
-                return new ConfigurationLoader(new TranslationLoader());
+                return new ConfigurationLoader(new JSONTranslationLoader());
 
             default:
                 throw new \Exception('Unknown format: ' . $format);

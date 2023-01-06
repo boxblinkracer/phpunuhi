@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPUnuhi\Bundles\JSON;
+namespace PHPUnuhi\Bundles\Translation\JSON;
 
-use PHPUnuhi\Bundles\ValidationInterface;
+use PHPUnuhi\Bundles\Translation\ValidationInterface;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
-class Validator implements ValidationInterface
+class JSONTranslationValidator implements ValidationInterface
 {
 
     /**

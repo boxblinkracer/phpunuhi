@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPUnuhi\Bundles;
+namespace PHPUnuhi\Bundles\Translation;
 
 use PHPUnuhi\Models\Translation\TranslationSet;
 

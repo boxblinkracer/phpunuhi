@@ -1,13 +1,12 @@
 <?php
 
-namespace PHPUnuhi\Bundles\JSON;
+namespace PHPUnuhi\Bundles\Translation\JSON;
 
-use PHPUnuhi\Bundles\TranslationLoaderInterface;
+use PHPUnuhi\Bundles\Translation\TranslationLoaderInterface;
 use PHPUnuhi\Models\Translation\Locale;
-use PHPUnuhi\Models\Translation\TranslationSet;
 
 
-class TranslationLoader implements TranslationLoaderInterface
+class JSONTranslationLoader implements TranslationLoaderInterface
 {
 
     /**

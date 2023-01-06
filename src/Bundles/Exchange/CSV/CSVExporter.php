@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPUnuhi\Export\CSV;
+namespace PHPUnuhi\Bundles\Exchange\CSV;
 
-use PHPUnuhi\Export\ExportInterface;
+use PHPUnuhi\Bundles\Exchange\ExportInterface;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
 class CSVExporter implements ExportInterface

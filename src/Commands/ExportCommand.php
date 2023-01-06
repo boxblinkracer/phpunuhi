@@ -2,9 +2,8 @@
 
 namespace PHPUnuhi\Commands;
 
+use PHPUnuhi\Bundles\Exchange\CSV\CSVExporter;
 use PHPUnuhi\Configuration\ConfigurationLoader;
-use PHPUnuhi\Export\CSV\CSVExporter;
-use PHPUnuhi\Export\HTML\HTMLExporter;
 use PHPUnuhi\Models\Translation\Format;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
