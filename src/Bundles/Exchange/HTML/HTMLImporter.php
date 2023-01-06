@@ -39,7 +39,15 @@ class HTMLImporter implements ImportInterface
 
         foreach (new SplFileObject($filename) as $line) {
 
+            if ($line === false) {
+                $line = '';
+            }
+
             $line = str_replace(PHP_EOL, '', $line);
+
+            if (is_array($line)) {
+                $line = '';
+            }
 
             if (trim($line) === '') {
                 continue;
