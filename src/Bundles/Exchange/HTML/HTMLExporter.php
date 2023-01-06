@@ -47,11 +47,14 @@ class HTMLExporter implements ExportInterface
                 </div>
         ';
 
-        $html .= "<h3>Translation Set: " . $set->getName() . "</h3>";
 
         $html .= "<form name=\"gridForm\">";
+        $html .= "<input type=\"button\" class=\"btn-save\" onclick=\"download();\" value=\"Save Translation\"/>";
 
         $html .= " <input type=\"hidden\" id=\"set\" value=\"" . $set->getName() . "\"></input>";
+
+        $html .= "<h3>Translation Set: " . $set->getName() . "</h3>";
+
 
         $html .= "<table>";
 
@@ -77,9 +80,19 @@ class HTMLExporter implements ExportInterface
                 foreach ($locale->getTranslations() as $translation) {
 
                     if ($translation->getKey() === $key) {
-                        $html .= "<td>";
-                        $html .= "<input id=\"" . $key . "--" . $locale->getExchangeIdentifier() . "\" class=\"translation\" type=\"text\" value=\"" . $translation->getValue() . "\"></input>";
-                        $html .= "</td>";
+
+                        $value = htmlentities($translation->getValue());
+
+                        $html .= '
+                        <td>
+                            <input 
+                                id="' . $key . '--' . $locale->getExchangeIdentifier() . '" 
+                                class="translation" 
+                                type="text" 
+                                value="' . $value . '" 
+                                style="min-width: 400px;"/>
+                        </td>
+                        ';
                     }
                 }
             }
@@ -92,9 +105,12 @@ class HTMLExporter implements ExportInterface
         $html .= "</table>";
 
         $html .= "<input type=\"button\" class=\"btn-save\" onclick=\"download();\" value=\"Save Translation\"/>";
+
+
         $html .= "</form>";
 
         $html .= "</div>";
+
 
         $html .= "</body>";
         $html .= "</html>";
@@ -179,6 +195,7 @@ tbody tr td:first-of-type {
   cursor: pointer;
   
   margin-top:30px;
+  margin-bottom:20px;
   float: right;
 }
         ';
