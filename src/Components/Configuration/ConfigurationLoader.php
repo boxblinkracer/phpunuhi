@@ -65,6 +65,10 @@ class ConfigurationLoader
                         $localeAttr = (string)$childNode['locale'];
                         $fileName = (string)realpath(dirname($configFilename) . '/' . $nodeValue);
 
+                        if (trim($localeAttr) === '') {
+                            throw new \Exception('empty locale values are not allowed in set: ' . $configFilename);
+                        }
+
                         $locale = new Locale($localeAttr, $fileName);
                         break;
 

@@ -101,7 +101,7 @@ Create a new **phpunuhi.xml** file (or rename it to something else).
 ```
 
 * Every set can have its own storage format (default is JSON).
-* Every translation file can have its own locale (it's used in a few spots - experimental at the moment).
+* Every translation file needs its own locale.
 
 ## 4. Validate Command
 
