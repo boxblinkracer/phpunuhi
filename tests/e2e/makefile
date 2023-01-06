@@ -26,5 +26,5 @@ phar: ## Runs all tests with the PHAR
 	php ../../build/phpunuhi.phar validate --configuration=files/valid/phpunuhi.xml
 	php ../../build/phpunuhi.phar export --configuration=files/valid/phpunuhi.xml --dir=.export --csv-delimiter=","
 	php ../../build/phpunuhi.phar import --configuration=files/import/phpunuhi.xml --set=storefront --file=files/import/import.csv --csv-delimiter="," --json-intent=3 --json-sort
-	php ../../build/phpunuhi.phar export --configuration=files/html/html.xml --dir=.export --format=html
+	php ../../build/phpunuhi.phar export --configuration=files/html/phpunuhi.xml --dir=.export --format=html
 	php ../../build/phpunuhi.phar import --configuration=files/html/phpunuhi.xml --set=storefront --file=files/html/storefront.txt --format=html
