@@ -47,6 +47,8 @@ class HTMLExporter implements ExportInterface
                 </div>
         ';
 
+        $html .= "<h3>Translation Set: " . $set->getName() . "</h3>";
+
         $html .= "<form name=\"gridForm\">";
 
         $html .= " <input type=\"hidden\" id=\"set\" value=\"" . $set->getName() . "\"></input>";
@@ -55,7 +57,7 @@ class HTMLExporter implements ExportInterface
 
         $html .= "<thead>";
         $html .= "<tr>";
-        $html .= "<th>Key</th>";
+        $html .= "<th>Keys (" . count($set->getAllTranslationKeys()) . ")</th>";
         foreach ($set->getLocales() as $locale) {
             $html .= "<th>";
             $html .= $locale->getName();
