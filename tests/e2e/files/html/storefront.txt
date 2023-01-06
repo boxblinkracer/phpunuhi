@@ -1,0 +1,6 @@
+title--de=Deutscher Titel HTML
+title--en=English title HTML
+title--nl=Duitse titel HTML
+card.description--de=Meine Karte HTML
+card.description--en=My card HTML
+card.description--nl=Mijn kaart HTML

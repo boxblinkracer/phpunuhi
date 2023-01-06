@@ -25,7 +25,7 @@ class ExchangeFactory
                 return new CSVImporter($translationSaver, $delimiter);
 
             case ExchangeFormat::HTML:
-                return new HTMLImporter();
+                return new HTMLImporter($translationSaver);
 
             default:
                 throw new \Exception('No importer found for ExchangeFormat: ' . $format);
