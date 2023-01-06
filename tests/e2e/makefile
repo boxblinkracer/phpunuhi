@@ -17,7 +17,7 @@ bin: ## Runs all tests via bin/phpunuhi
 	cd ../.. && php bin/phpunuhi validate --configuration=./tests/e2e/files/valid/phpunuhi.xml
 	cd ../.. && php bin/phpunuhi export --configuration=./tests/e2e/files/valid/phpunuhi.xml --dir=.export --csv-delimiter=","
 	cd ../.. && php bin/phpunuhi import --configuration=./tests/e2e/files/import/phpunuhi.xml --set=storefront --file=./tests/e2e/files/import/import.csv --csv-delimiter="," --json-intent=3 --json-sort
-    cd ../.. && php bin/phpunuhi export --configuration=./tests/e2e/files/html/phpunuhi.xml --dir=.export --format=html
+  cd ../.. && php bin/phpunuhi export --configuration=./tests/e2e/files/html/phpunuhi.xml --dir=.export --format=html
 	cd ../.. && php bin/phpunuhi import --configuration=./tests/e2e/files/html/phpunuhi.xml --set=storefront --file=./tests/e2e/files/html/storefront.txt --format=html
 
 phar: ## Runs all tests with the PHAR
