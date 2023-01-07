@@ -263,9 +263,11 @@ The following formats are currently supported.
 #### 10.1.1 JSON
 
 * Format: "json"
-* XML Set Attributes:
-    * --json-sort
-    * --json-intent
+
+| XML Set Attribute | Default | Description                                               | 
+|-------------------|---------|-----------------------------------------------------------|
+| jsonIntent        | 2       | Set a custom JSON intent for the spaces [jsonIntent="4"]  |
+| jsonSort          | false   | Turn on or off the alphabetical sorting [jsonSort="true"] |
 
 The JSON format means that your files are stored in separate JSON files.
 Every locale has its own JSON file.
@@ -282,11 +284,11 @@ The following formats are currently supported.
 #### 10.2.1 CSV
 
 * Format: "csv"
-* Arguments:
-    * Export Command
-        * --csv-delimiter=","
-    * Import Command
-        * --csv-delimiter=","
+
+| Command | Argument        | Description                                             |
+|---------|-----------------|---------------------------------------------------------|
+| export  | --csv-delimiter | Custom delimiter for the CSV file [--csv-delimiter=";"] |
+| import  | --csv-delimiter | Custom delimiter for the CSV file [--csv-delimiter=";"] |
 
 The CSV format is a well known and solid format for interoperability.
 You can open CSV files with Microsoft Excel, Apple Numbers as well as simple text editors or more.
@@ -321,10 +323,11 @@ These services usually require an API key that needs to be provided for PHPUnuhi
 #### 10.3.1 DeepL
 
 * Service: "deepl"
-* Arguments:
-    * Translate Command
-        * --deepl-key=xyz
-        * --deepl-formal
+
+| Command   | Argument       | Description                                           |
+|-----------|----------------|-------------------------------------------------------|
+| translate | --deepl-key    | Your DeepL API Key. [--depl-key=xyz]                  |
+| translate | --deepl-formal | just provide this flag if you want a formal language. |
 
 DeepL is one of the leading translation services.
 If you have an API Key from DeepL, you can send your translation requests directly to their API.
@@ -336,9 +339,10 @@ You can request a formal language by simply applying the argument "--deepl-forma
 #### 10.3.2 Google Cloud Translate
 
 * Service: "googlecloud"
-* Arguments:
-    * Translate Command
-        * --google-key=xyz
+
+| Command   | Argument     | Description               |
+|-----------|--------------|---------------------------|
+| translate | --google-key | Your Google Cloud API Key |
 
 Google Cloud Translation allows you to use the AI services of Google.
 If you have an API Key, you can easily provide it with the corresponding argument when running the translation command.
