@@ -28,4 +28,14 @@ class TranslationTest extends TestCase
         $this->assertEquals('Titel', $translation->getValue());
     }
 
+    /**
+     * @return void
+     */
+    public function testIsEmptyWithSpaces()
+    {
+        $translation = new Translation('title', '   ');
+
+        $this->assertEquals(true, $translation->isEmpty());
+    }
+
 }

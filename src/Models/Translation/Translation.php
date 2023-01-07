@@ -50,4 +50,12 @@ class Translation
         $this->value = $newValue;
     }
 
+    /**
+     * @return bool
+     */
+    public function isEmpty(): bool
+    {
+        return (trim($this->value) === '');
+    }
+
 }

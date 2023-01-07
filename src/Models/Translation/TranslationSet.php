@@ -118,15 +118,12 @@ class TranslationSet
 
             foreach ($locale->getTranslations() as $translation) {
 
-                if ($translation->getKey() === $searchKey) {
-                    if (trim($translation->getValue()) !== '') {
-
-                        # should be an object, just too lazy atm
-                        return [
-                            'locale' => $locale->getName(),
-                            'translation' => $translation,
-                        ];
-                    }
+                if ($translation->getKey() === $searchKey && !$translation->isEmpty()) {
+                    # should be an object, just too lazy atm
+                    return [
+                        'locale' => $locale->getName(),
+                        'translation' => $translation,
+                    ];
                 }
             }
         }

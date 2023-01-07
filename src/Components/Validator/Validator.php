@@ -45,9 +45,7 @@ class Validator
         foreach ($set->getLocales() as $locale) {
             foreach ($locale->getTranslations() as $translation) {
 
-                $value = (string)trim($translation->getValue());
-
-                if ($value === '') {
+                if ($translation->isEmpty()) {
                     echo "Found empty translation in this file: " . PHP_EOL;
                     echo "  - " . $locale->getFilename() . PHP_EOL;
                     echo '           [x]: ' . $translation->getKey() . PHP_EOL;

@@ -90,7 +90,7 @@ class TranslateCommand extends Command
             foreach ($set->getLocales() as $locale) {
                 foreach ($locale->getTranslations() as $currentTranslation) {
 
-                    if (!empty(trim($currentTranslation->getValue()))) {
+                    if (!empty($currentTranslation->isEmpty())) {
                         continue;
                     }
 
