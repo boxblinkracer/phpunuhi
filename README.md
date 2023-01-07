@@ -220,6 +220,9 @@ php vendor/bin/phpunuhi translate --service=googleweb
 
 # translate using DeepL
 php vendor/bin/phpunuhi translate ... --service=deepl --deepl-key=xyz
+
+# translate only the set "storefront"
+php vendor/bin/phpunuhi translate ... --set="storefront"
 ```
 
 > For more options and arguments of the formats please see the appendix below!

@@ -26,6 +26,7 @@ class TranslateCommand extends Command
             ->setDescription('Translate all your translations by using one of our translation services')
             ->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('service', null, InputOption::VALUE_REQUIRED, '', '')
+            ->addOption('set', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('google-key', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('deepl-key', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('deepl-formal', null, InputOption::VALUE_NONE, '', null);
@@ -50,6 +51,7 @@ class TranslateCommand extends Command
         $configFile = $this->getConfigFile($input);
 
         $service = (string)$input->getOption('service');
+        $setName = (string)$input->getOption('set');
         $deeplApiKey = (string)$input->getOption('deepl-key');
         $googleKey = (string)$input->getOption('google-key');
         $formal = (bool)$input->getOption('deepl-formal');
@@ -77,6 +79,11 @@ class TranslateCommand extends Command
         $translateFailedCount = 0;
 
         foreach ($config->getTranslationSets() as $set) {
+
+            # if we have configured to only export a single suite then skip all others
+            if (!empty($setName) && $setName !== $set->getName()) {
+                continue;
+            }
 
             $io->section('Translation Set: ' . $set->getName());
 
