@@ -115,11 +115,9 @@ Create a new **phpunuhi.xml** file (or rename it to something else).
 </phpunuhi>
 ```
 
-* Every set can have its own storage format (default is JSON).
-* A JSON set can have 2 additional attributes
-    * jsonIntent [optioanl]: the intent for the imported and formatted JSON files (e.g. jsonIntent="3"). default is "2"
-    * jsonSort [optioanl]: indicates if the JSON data should be sorted alphabetically or not (e.g. jsonSort="true"), default is "false"
-* Every translation file needs its own locale.
+Every set can have its own storage format (default is JSON).
+
+> Read more about optional attributes in the Storage section in the appendix below.
 
 ## 4. Validate Command
 
