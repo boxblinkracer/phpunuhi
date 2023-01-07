@@ -331,6 +331,7 @@ These services usually require an API key that needs to be provided for PHPUnuhi
 * Arguments:
     * Translate Command
         * --deepl-key
+        * --deepl-formal
 
 #### 10.3.2 Google Cloud Translate
 

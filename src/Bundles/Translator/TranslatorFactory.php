@@ -12,10 +12,11 @@ class TranslatorFactory
     /**
      * @param string $service
      * @param string $apiKey
+     * @param bool $formal
      * @return TranslatorInterface
      * @throws \Exception
      */
-    public static function fromService(string $service, string $apiKey): TranslatorInterface
+    public static function fromService(string $service, string $apiKey, bool $formal): TranslatorInterface
     {
         switch (strtolower($service)) {
 
@@ -23,7 +24,7 @@ class TranslatorFactory
                 return new FakeTranslator();
 
             case 'deepl':
-                return new DeeplTranslator($apiKey);
+                return new DeeplTranslator($apiKey, $formal);
 
             case 'google':
                 return new GoogleCloudTranslator($apiKey);

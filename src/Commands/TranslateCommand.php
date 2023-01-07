@@ -27,6 +27,7 @@ class TranslateCommand extends Command
             ->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('service', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('deepl-key', null, InputOption::VALUE_REQUIRED, '', '')
+            ->addOption('deepl-formal', null, InputOption::VALUE_NONE, '', '')
             ->addOption('json-intent', null, InputOption::VALUE_OPTIONAL, '', '')
             ->addOption('json-sort', null, InputOption::VALUE_NONE, '', null);
 
@@ -52,8 +53,8 @@ class TranslateCommand extends Command
         $service = (string)$input->getOption('service');
         $deeplApiKey = (string)$input->getOption('deepl-key');
         $googleKey = (string)$input->getOption('google-key');
-
-
+        $formal = (bool)$input->getOption('deepl-formal');
+        
         $intent = (string)$input->getOption('json-intent');
         $sort = (bool)$input->getOption('json-sort');
 
@@ -79,7 +80,7 @@ class TranslateCommand extends Command
         $config = $configLoader->load($configFile);
 
 
-        $translator = TranslatorFactory::fromService($service, $apiKey);
+        $translator = TranslatorFactory::fromService($service, $apiKey, $formal);
 
 
         $translatedCount = 0;

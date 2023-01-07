@@ -12,14 +12,22 @@ class DeeplTranslator implements TranslatorInterface
      */
     private $apiKey;
 
+    /**
+     * @var bool
+     */
+    private $formality;
+
 
     /**
      * @param string $apiKey
+     * @param bool $formality
      */
-    public function __construct(string $apiKey)
+    public function __construct(string $apiKey, bool $formality)
     {
         $this->apiKey = $apiKey;
+        $this->formality = $formality;
     }
+
 
     /**
      * @param string $text
@@ -30,13 +38,22 @@ class DeeplTranslator implements TranslatorInterface
      */
     public function translate(string $text, string $sourceLanguage, string $targetLanguage): string
     {
+        $formalValue = ($this->formality) ? 'more' : 'less';
+
         $translator = new \DeepL\Translator($this->apiKey);
 
         if ($targetLanguage === 'en') {
             $targetLanguage = 'en-GB';
         }
 
-        $result = $translator->translateText($text, null, $targetLanguage);
+        $result = $translator->translateText(
+            $text,
+            null,
+            $targetLanguage,
+            [
+                'formality' => $formalValue,
+            ]
+        );
 
         if (is_array($result)) {
             return $result[0]->text;
