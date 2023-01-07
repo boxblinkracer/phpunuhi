@@ -3,6 +3,7 @@
 namespace PHPUnuhi\Bundles\Exchange\HTML;
 
 use PHPUnuhi\Bundles\Exchange\ExportInterface;
+use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
 class HTMLExporter implements ExportInterface
@@ -80,13 +81,12 @@ class HTMLExporter implements ExportInterface
             $html .= "<td>" . $key . "</td>";
 
             foreach ($set->getLocales() as $locale) {
-                foreach ($locale->getTranslations() as $translation) {
 
-                    if ($translation->getKey() === $key) {
+                $value = $this->getTranslationValue($locale, $key);
 
-                        $value = htmlentities($translation->getValue());
+                $value = htmlentities($value);
 
-                        $html .= '
+                $html .= '
                         <td>
                             <input 
                                 id="' . $key . '--' . $locale->getExchangeIdentifier() . '" 
@@ -95,8 +95,6 @@ class HTMLExporter implements ExportInterface
                                 value="' . $value . '"/>
                         </td>
                         ';
-                    }
-                }
             }
 
 
@@ -124,6 +122,23 @@ class HTMLExporter implements ExportInterface
         file_put_contents($outputDir . '/index.html', $html);
     }
 
+    /**
+     * @param Locale $locale
+     * @param string $key
+     * @return string
+     */
+    private function getTranslationValue(Locale $locale, string $key): string
+    {
+        foreach ($locale->getTranslations() as $translation) {
+
+            if ($translation->getKey() === $key) {
+
+                return $translation->getValue();
+            }
+        }
+
+        return "";
+    }
 
     private function getCSS(): string
     {
