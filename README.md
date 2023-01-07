@@ -204,19 +204,22 @@ php vendor/bin/phpunuhi import ... --format=html
 
 ## 8. Translate Command
 
-PHPUnuhi includes the option to use external service to automatically translate missing values for you.
-The command will search for empty values in your translation sets.
+PHPUnuhi includes the option to use external services to automatically translate missing values for you.
 
-If an empty translation is found, it will try to find an existing one from a different locale.
-This one is then used as source locale for the external translation service.
+The **translate** command will search for empty values in your translations.
 
-After all values are filled, your storage is updated and saved.
+If an empty translation is found, it will request a translation from your external service.
+The text that will be translated in this request, is the translation from another language.
+
+For instance, if your "English" translation is empty, PHPUnuhi will find your "German" text and send it to the external service.
+The English result is then saved in your storage.
 
 ```bash 
-php vendor/bin/phpunuhi translate --service=abc
+# translate using GoogleWeb
+php vendor/bin/phpunuhi translate --service=googleweb
 
 # translate using DeepL
-php vendor/bin/phpunuhi translate ... --service=deepls --deepl-key=xyz
+php vendor/bin/phpunuhi translate ... --service=deepl --deepl-key=xyz
 ```
 
 > For more options and arguments of the formats please see the appendix below!
