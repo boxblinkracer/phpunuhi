@@ -19,8 +19,10 @@
     },
     "require": {
         "php": ">=7.2",
-        "ext-simplexml": "*",
+        "ext-curl": "*",
         "ext-json": "*",
+        "ext-simplexml": "*",
+        "deeplcom/deepl-php": "^1.2",
         "symfony/console": "*"
     },
     "require-dev": {

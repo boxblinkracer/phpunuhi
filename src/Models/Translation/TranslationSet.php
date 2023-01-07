@@ -2,6 +2,8 @@
 
 namespace PHPUnuhi\Models\Translation;
 
+use _PHPStan_d279f388f\Nette\Neon\Exception;
+
 class TranslationSet
 {
 
@@ -73,6 +75,28 @@ class TranslationSet
             }
         }
         return $allKeys;
+    }
+
+    /**
+     * @param string $searchKey
+     * @return Translation
+     * @throws \Exception
+     */
+    public function findAnyExistingTranslation(string $searchKey): Translation
+    {
+        foreach ($this->locales as $locale) {
+
+            foreach ($locale->getTranslations() as $translation) {
+
+                if ($translation->getKey() === $searchKey) {
+                    if (trim($translation->getValue()) !== '') {
+                        return $translation;
+                    }
+                }
+            }
+        }
+
+        throw new \Exception('No valid translation found for key: ' . $searchKey);
     }
 
 }

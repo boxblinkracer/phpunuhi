@@ -13,25 +13,30 @@ Unuhi? This is Hawaiian for "translate" or "translation".
 Now that you know this, let's get started!
 
 <!-- TOC -->
-  * [1. Basic Concept](#1-basic-concept)
-  * [2. Installation](#2-installation)
-  * [3. Configuration](#3-configuration)
-  * [4. Validate Command](#4-validate-command)
+
+* [1. Basic Concept](#1-basic-concept)
+* [2. Installation](#2-installation)
+* [3. Configuration](#3-configuration)
+* [4. Validate Command](#4-validate-command)
     * [5. Validations](#5-validations)
-      * [5.1 Invalid structure](#51-invalid-structure)
-      * [5.2 Missing translations](#52-missing-translations)
-  * [6. Export Command](#6-export-command)
-  * [7. Import Command](#7-import-command)
-  * [8. Use Cases](#8-use-cases)
-    * [8.1 Validation in CI pipeline](#81-validation-in-ci-pipeline)
-    * [8.2 Working with external translation agencies](#82-working-with-external-translation-agencies)
-    * [8.3 Live WebEdit with HTML](#83-live-webedit-with-html)
-  * [9 Appendix](#9-appendix)
-    * [9.1 Storage Formats](#91-storage-formats)
-      * [9.1.1 JSON](#911-json)
-    * [9.2 Exchange Formats](#92-exchange-formats)
-      * [9.2.1 CSV](#921-csv)
-      * [9.2.2 HTML / WebEdit](#922-html--webedit)
+        * [5.1 Invalid structure](#51-invalid-structure)
+        * [5.2 Missing translations](#52-missing-translations)
+* [6. Export Command](#6-export-command)
+* [7. Import Command](#7-import-command)
+* [8. Translate Command](#8-translate-command)
+* [9. Use Cases](#9-use-cases)
+    * [9.1 Validation in CI pipeline](#91-validation-in-ci-pipeline)
+    * [9.2 Working with external translation agencies](#92-working-with-external-translation-agencies)
+    * [9.3 Live WebEdit with HTML](#93-live-webedit-with-html)
+    * [9.4 Automatic Translation with DeepL](#94-automatic-translation-with-deepl)
+* [10 Appendix](#10-appendix)
+    * [10.1 Storage Formats](#101-storage-formats)
+        * [10.1.1 JSON](#1011-json)
+    * [10.2 Exchange Formats](#102-exchange-formats)
+        * [10.2.1 CSV](#1021-csv)
+        * [10.2.2 HTML / WebEdit](#1022-html--webedit)
+        * [10.3 Translators](#103-translators)
+
 <!-- TOC -->
 
 ## 1. Basic Concept
@@ -183,13 +188,30 @@ php vendor/bin/phpunuhi import ... --json-intent=4
 php vendor/bin/phpunuhi import ... --json-sort
 ```
 
+## 8. Translate Command
+
+PHPUnuhi includes the option to use external service to automatically translate missing values for you.
+The command will search for empty values in your translation sets.
+
+If an empty translation is found, it will try to find an existing one from a different locale.
+This one is then used as source locale for the external translation service.
+
+After all values are filled, your storage is updated and saved.
+
+```bash 
+php vendor/bin/phpunuhi translate --service=abc
+
+# translate using DeepL
+php vendor/bin/phpunuhi import ... --format=deepls --deepl-key=xyz
+```
+
 > For more options and arguments of the formats please see the appendix below!
 
-## 8. Use Cases
+## 9. Use Cases
 
 Here are a few use cases and ideas to get you started.
 
-### 8.1 Validation in CI pipeline
+### 9.1 Validation in CI pipeline
 
 One of the typical things you want to make sure is, that your plugin/software doesn't miss any
 required translations.
@@ -197,7 +219,7 @@ required translations.
 This can be done directly within your CI pipeline. Just install your dependencies and run the validation command.
 The exit value of this command will automatically stop your pipeline if an error is detected.
 
-### 8.2 Working with external translation agencies
+### 9.2 Working with external translation agencies
 
 External translation agencies often require CSV exports.
 You can easily generate and export a CSV file for your partner agencies.
@@ -205,7 +227,7 @@ You can easily generate and export a CSV file for your partner agencies.
 Once they have adjusted their translation, they can send you the file back and you simply
 import it again with the import command.
 
-### 8.3 Live WebEdit with HTML
+### 9.3 Live WebEdit with HTML
 
 If you have a test or staging system, you can even go one step further.
 Just imagine setting up a cronjob that runs after a deployment, or as scheduled job.
@@ -215,20 +237,30 @@ That HTML file might then be exposed with something like this **https://stage.my
 Everyone who wants to either see all translations, or even modify them, can easily do this in their browser.
 And because you use a cronjob to generate the file, it's always automatically updated.
 
-## 9 Appendix
+### 9.4 Automatic Translation with DeepL
 
-### 9.1 Storage Formats
+If you have a DeepL API key, you can automatically have PHPUnuhi translate missing texts using this services (or another supported service).
+In this case you might only want to translate 1 single language, and have DeepL doing the rest for you.
+
+> A double check and approval in your version control would still be a good thing.
+
+## 10 Appendix
+
+### 10.1 Storage Formats
 
 Storage formats define how your translations are stored.
 Every format has its own loading and saving implementation.
 
 The following formats are currently supported.
 
-#### 9.1.1 JSON
+#### 10.1.1 JSON
 
 * Format: "json"
 * Arguments:
     * Import Command
+        * --json-sort
+        * --json-intent
+    * Translate Command
         * --json-sort
         * --json-intent
 
@@ -236,7 +268,7 @@ The JSON format means that your files are stored in separate JSON files.
 Every locale has its own JSON file.
 The JSON structure across all files of a set should match.
 
-### 9.2 Exchange Formats
+### 10.2 Exchange Formats
 
 Exchange formats define how you export and import translation data.
 The main purpose is to send it out to a translation company or just someone else,
@@ -244,7 +276,7 @@ and be able to import it back into your system again.
 
 The following formats are currently supported.
 
-#### 9.2.1 CSV
+#### 10.2.1 CSV
 
 * Format: "csv"
 * Arguments:
@@ -264,7 +296,7 @@ Every translation key has its own row, and all locale-values have their own colu
    <img src="/.github/assets/csv.png">
 </p>
 
-#### 9.2.2 HTML / WebEdit
+#### 10.2.2 HTML / WebEdit
 
 * Format: "html"
 
@@ -277,3 +309,9 @@ you can import again into your system with the format **html** in PHPUnuhi.
 <p align="center">
    <img src="/.github/assets/html.png">
 </p>
+
+#### 10.3 Translators
+
+Translators are supported (external) services that automatically translate empty values for you.
+These services usually require an API key that needs to be provided for PHPUnuhi.
+

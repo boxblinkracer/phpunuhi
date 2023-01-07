@@ -41,4 +41,13 @@ class Translation
         return $this->value;
     }
 
+    /**
+     * @param string $newValue
+     * @return void
+     */
+    public function setValue(string $newValue): void
+    {
+        $this->value = $newValue;
+    }
+
 }
