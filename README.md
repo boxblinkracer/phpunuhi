@@ -90,14 +90,16 @@ php vendor/bin/phpunuhi validate
 
 The whole configuration is done using XML.
 
-You can create different **Translation-Set** in a configuration.
+You can create different **Translation-Sets** in a configuration.
 
 A single **Translation-Set** contains one or more **locales**.
 
-Every locale is defined by a **single file** that contains the translations in this locale.
+Every locale is defined by a **single file** that contains the actual **translations** in this locale.
 
 This means, a single **Translation-Set** consists of **multiple files** that should all match in their structure,
 but have different values for their translations.
+
+How you define such a Translation-Set is totally up to you.
 
 Let's create a new **phpunuhi.xml** file (or rename it to something else).
 
