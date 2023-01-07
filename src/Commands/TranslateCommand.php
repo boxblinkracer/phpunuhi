@@ -65,7 +65,7 @@ class TranslateCommand extends Command
         # -----------------------------------------------------------------
 
         if (empty($service)) {
-            throw new \Exception('No service provided for translation! Please set a service with argument --service=[deepl, google, ...]');
+            throw new \Exception('No service provided for translation! Please set a service with argument --service=xyz');
         }
 
         $configLoader = new ConfigurationLoader();
@@ -90,7 +90,7 @@ class TranslateCommand extends Command
             foreach ($set->getLocales() as $locale) {
                 foreach ($locale->getTranslations() as $currentTranslation) {
 
-                    if (!empty($currentTranslation->getValue())) {
+                    if (!empty(trim($currentTranslation->getValue()))) {
                         continue;
                     }
 
