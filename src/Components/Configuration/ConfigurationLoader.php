@@ -41,10 +41,10 @@ class ConfigurationLoader
         /** @var SimpleXMLElement $xmlSet */
         foreach ($xmlSettings->translations->children() as $xmlSet) {
 
-            $name = (string)$xmlSet['name'];
-            $format = (string)$xmlSet['format'];
-            $jsonIntent = (string)$xmlSet['jsonIntent'];
-            $jsonSort = (string)$xmlSet['jsonSort'];
+            $name = trim((string)$xmlSet['name']);
+            $format = trim((string)$xmlSet['format']);
+            $jsonIntent = trim((string)$xmlSet['jsonIntent']);
+            $jsonSort = trim((string)$xmlSet['jsonSort']);
 
             if (empty($format)) {
                 $format = StorageFormat::JSON;
@@ -105,7 +105,42 @@ class ConfigurationLoader
             $suites[] = $set;
         }
 
-        return new Configuration($suites);
+        $config = new Configuration($suites);
+
+        $this->validateConfig($config);
+
+        return $config;
+    }
+
+
+    /**
+     * @param Configuration $configuration
+     * @return void
+     * @throws \Exception
+     */
+    private function validateConfig(Configuration $configuration)
+    {
+        foreach ($configuration->getTranslationSets() as $set) {
+
+            if ($set->getName() === '') {
+                throw new \Exception('TranslationSet has no name. This is required!');
+            }
+
+            if ($set->getFormat() === '') {
+                throw new \Exception('TranslationSet has no format. This is required!');
+            }
+
+            foreach ($set->getLocales() as $locale) {
+
+                if ($locale->getName() === '') {
+                    throw new \Exception('Locale has no name. This is required!');
+                }
+
+                if ($locale->getFilename() === '') {
+                    throw new \Exception('Locale has no filename. This is required!');
+                }
+            }
+        }
     }
 
 }
