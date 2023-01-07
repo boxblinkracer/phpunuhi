@@ -89,12 +89,17 @@ php vendor/bin/phpunuhi validate
 ## 3. Configuration
 
 The whole configuration is done using XML.
-You can create different **translation sets** with different files and settings.
 
-Configure a **translation set** for every bundle (scope) of your translations.
-Such a set can then contain multiple files with your individual language and locale values.
+You can create different **Translation-Set** in a configuration.
 
-Create a new **phpunuhi.xml** file (or rename it to something else).
+A single **Translation-Set** contains one or more **locales**.
+
+Every locale is defined by a **single file** that contains the translations in this locale.
+
+This means, a single **Translation-Set** consists of **multiple files** that should all match in their structure,
+but have different values for their translations.
+
+Let's create a new **phpunuhi.xml** file (or rename it to something else).
 
 ```xml
 
@@ -115,9 +120,11 @@ Create a new **phpunuhi.xml** file (or rename it to something else).
 </phpunuhi>
 ```
 
-Every set can have its own storage format (default is JSON).
+Every set can have its own **storage format** (default is JSON).
 
-> Read more about optional attributes in the Storage section in the appendix below.
+Some storage formats, such as JSON, have individual attributes that can be defined in the Translation-Set.
+
+> Read more about optional attributes in the storage-format section in the appendix below.
 
 ## 4. Validate Command
 
