@@ -283,9 +283,9 @@ The following formats are currently supported.
 * Format: "csv"
 * Arguments:
     * Export Command
-        * --csv-delimiter
+        * --csv-delimiter=","
     * Import Command
-        * --csv-delimiter
+        * --csv-delimiter=","
 
 The CSV format is a well known and solid format for interoperability.
 You can open CSV files with Microsoft Excel, Apple Numbers as well as simple text editors or more.
@@ -322,12 +322,23 @@ These services usually require an API key that needs to be provided for PHPUnuhi
 * Service: "deepl"
 * Arguments:
     * Translate Command
-        * --deepl-key
+        * --deepl-key=xyz
         * --deepl-formal
+
+DeepL is one of the leading translation services.
+If you have an API Key from DeepL, you can send your translation requests directly to their API.
+
+DeepL allows you to either translate to a formal or informal language.
+This option is only available for some target languages, just like "German" ("du" vs. "Sie").
+You can request a formal language by simply applying the argument "--deepl-formal" to the translate command.
 
 #### 10.3.2 Google Cloud Translate
 
 * Service: "google"
 * Arguments:
     * Translate Command
-        * --google-key
+        * --google-key=xyz
+
+Google Cloud Translation allows you to use the AI services of Google.
+If you have an API Key, you can easily provide it with the corresponding argument when running the translation command.
+
