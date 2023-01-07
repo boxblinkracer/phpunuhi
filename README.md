@@ -13,30 +13,32 @@ Unuhi? This is Hawaiian for "translate" or "translation".
 Now that you know this, let's get started!
 
 <!-- TOC -->
-  * [1. Basic Concept](#1-basic-concept)
-  * [2. Installation](#2-installation)
-  * [3. Configuration](#3-configuration)
-  * [4. Validate Command](#4-validate-command)
+
+* [1. Basic Concept](#1-basic-concept)
+* [2. Installation](#2-installation)
+* [3. Configuration](#3-configuration)
+* [4. Validate Command](#4-validate-command)
     * [5. Validations](#5-validations)
-      * [5.1 Invalid structure](#51-invalid-structure)
-      * [5.2 Missing translations](#52-missing-translations)
-  * [6. Export Command](#6-export-command)
-  * [7. Import Command](#7-import-command)
-  * [8. Translate Command](#8-translate-command)
-  * [9. Use Cases](#9-use-cases)
+        * [5.1 Invalid structure](#51-invalid-structure)
+        * [5.2 Missing translations](#52-missing-translations)
+* [6. Export Command](#6-export-command)
+* [7. Import Command](#7-import-command)
+* [8. Translate Command](#8-translate-command)
+* [9. Use Cases](#9-use-cases)
     * [9.1 Validation in CI pipeline](#91-validation-in-ci-pipeline)
     * [9.2 Working with external translation agencies](#92-working-with-external-translation-agencies)
     * [9.3 Live WebEdit with HTML](#93-live-webedit-with-html)
     * [9.4 Automatic Translation with DeepL](#94-automatic-translation-with-deepl)
-  * [10 Appendix](#10-appendix)
+* [10 Appendix](#10-appendix)
     * [10.1 Storage Formats](#101-storage-formats)
-      * [10.1.1 JSON](#1011-json)
+        * [10.1.1 JSON](#1011-json)
     * [10.2 Exchange Formats](#102-exchange-formats)
-      * [10.2.1 CSV](#1021-csv)
-      * [10.2.2 HTML / WebEdit](#1022-html--webedit)
+        * [10.2.1 CSV](#1021-csv)
+        * [10.2.2 HTML / WebEdit](#1022-html--webedit)
     * [10.3 Translator Services](#103-translator-services)
-      * [10.3.1 DeepL](#1031-deepl)
-      * [10.3.2 Google Cloud Translate](#1032-google-cloud-translate)
+        * [10.3.1 DeepL](#1031-deepl)
+        * [10.3.2 Google Cloud Translate](#1032-google-cloud-translate)
+
 <!-- TOC -->
 
 ## 1. Basic Concept
@@ -54,7 +56,6 @@ helps you to export and import your translations.
 One of the benefits is, that this framework does not require anything else than your translation files.
 This makes it a perfect fit for your CI/CD pipelines.
 
-
 **Key Benefits**
 
 * Validates structure and content
@@ -62,7 +63,6 @@ This makes it a perfect fit for your CI/CD pipelines.
 * Exchange formats such as CSV and HTML
 * Live WebEdit with HTML exchange format
 * Automatic translation using DeepL (or more)
-
 
 <p align="center">
    <img src="/.github/assets/works-with.jpg">
@@ -105,7 +105,7 @@ Create a new **phpunuhi.xml** file (or rename it to something else).
             <file locale="en">./snippets/storefront/en.json</file>
         </set>
 
-        <set name="Admin" format="json">
+        <set name="Admin" format="json" jsonIntent="4" jsonSort="true">
             <file locale="de">./snippets/admin/de.json</file>
             <file locale="en">./snippets/admin/en.json</file>
         </set>
@@ -115,6 +115,9 @@ Create a new **phpunuhi.xml** file (or rename it to something else).
 ```
 
 * Every set can have its own storage format (default is JSON).
+* A JSON set can have 2 additional attributes
+    * jsonIntent [optioanl]: the intent for the imported and formatted JSON files (e.g. jsonIntent="3"). default is "2"
+    * jsonSort [optioanl]: indicates if the JSON data should be sorted alphabetically or not (e.g. jsonSort="true"), default is "false"
 * Every translation file needs its own locale.
 
 ## 4. Validate Command
@@ -189,12 +192,6 @@ php vendor/bin/phpunuhi import --set=storefront --file=storefront.csv
 
 # import with other exchange format
 php vendor/bin/phpunuhi import ... --format=html
-
-# intent of 4 spaces in saved JSON
-php vendor/bin/phpunuhi import ... --json-intent=4
-
-# sort JSON based files alphabetically
-php vendor/bin/phpunuhi import ... --json-sort
 ```
 
 ## 8. Translate Command
@@ -265,13 +262,9 @@ The following formats are currently supported.
 #### 10.1.1 JSON
 
 * Format: "json"
-* Arguments:
-    * Import Command
-        * --json-sort
-        * --json-intent
-    * Translate Command
-        * --json-sort
-        * --json-intent
+* XML Set Attributes:
+    * --json-sort
+    * --json-intent
 
 The JSON format means that your files are stored in separate JSON files.
 Every locale has its own JSON file.
@@ -323,7 +316,6 @@ you can import again into your system with the format **html** in PHPUnuhi.
 
 Translators are supported (external) services that automatically translate empty values for you.
 These services usually require an API key that needs to be provided for PHPUnuhi.
-
 
 #### 10.3.1 DeepL
 

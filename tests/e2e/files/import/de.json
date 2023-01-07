@@ -1,8 +1,8 @@
 {
-      "card": {
-            "ccv": "MM/JJ",
-            "description": "Meine Karte",
-            "text": "Gäste"
-      },
-      "title": "Deutscher Titel"
+    "card": {
+        "ccv": "MM/JJ",
+        "description": "Meine Karte",
+        "text": "Gäste"
+    },
+    "title": "Deutscher Titel"
 }

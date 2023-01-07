@@ -38,22 +38,30 @@ class ConfigurationLoader
 
         $suites = [];
 
-        /** @var SimpleXMLElement $translation */
-        foreach ($xmlSettings->translations->children() as $translation) {
+        /** @var SimpleXMLElement $xmlSet */
+        foreach ($xmlSettings->translations->children() as $xmlSet) {
 
-            $name = (string)$translation['name'];
-            $format = (string)$translation['format'];
+            $name = (string)$xmlSet['name'];
+            $format = (string)$xmlSet['format'];
+            $jsonIntent = (string)$xmlSet['jsonIntent'];
+            $jsonSort = (string)$xmlSet['jsonSort'];
 
             if (empty($format)) {
                 $format = StorageFormat::JSON;
             }
 
-            $translationLoader = StorageFactory::getLoaderFromFormat($format);
+            if (empty($jsonIntent)) {
+                $jsonIntent = "2";
+            }
+
+            if (empty($jsonSort)) {
+                $jsonSort = "false";
+            }
 
             $foundLocales = [];
 
             /** @var SimpleXMLElement $childNode */
-            foreach ($translation->children() as $childNode) {
+            foreach ($xmlSet->children() as $childNode) {
 
                 $nodeType = $childNode->getName();
                 $nodeValue = (string)$childNode[0];
@@ -62,8 +70,9 @@ class ConfigurationLoader
 
                 switch ($nodeType) {
                     case 'file':
-                        $localeAttr = (string)$childNode['locale'];
+
                         $fileName = (string)realpath(dirname($configFilename) . '/' . $nodeValue);
+                        $localeAttr = (string)$childNode['locale'];
 
                         if (trim($localeAttr) === '') {
                             throw new \Exception('empty locale values are not allowed in set: ' . $configFilename);
@@ -82,7 +91,10 @@ class ConfigurationLoader
             }
 
             # create our new set
-            $set = new TranslationSet($name, $format, $foundLocales);
+            $set = new TranslationSet($name, $format, (int)$jsonIntent, (bool)$jsonSort, $foundLocales);
+
+
+            $translationLoader = StorageFactory::getLoaderFromFormat($set->getFormat());
 
             # now iterate through our locales
             # and load the translation files for it

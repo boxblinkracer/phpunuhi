@@ -18,6 +18,16 @@ class TranslationSet
     private $format;
 
     /**
+     * @var int
+     */
+    private $jsonIntent;
+
+    /**
+     * @var bool
+     */
+    private $jsonSort;
+
+    /**
      * @var Locale[]
      */
     private $locales;
@@ -26,12 +36,16 @@ class TranslationSet
     /**
      * @param string $name
      * @param string $format
+     * @param int $jsonIntent
+     * @param bool $jsonSort
      * @param Locale[] $locales
      */
-    public function __construct(string $name, string $format, array $locales)
+    public function __construct(string $name, string $format, int $jsonIntent, bool $jsonSort, array $locales)
     {
         $this->name = $name;
         $this->format = $format;
+        $this->jsonIntent = $jsonIntent;
+        $this->jsonSort = $jsonSort;
         $this->locales = $locales;
     }
 
@@ -50,6 +64,22 @@ class TranslationSet
     public function getFormat(): string
     {
         return $this->format;
+    }
+
+    /**
+     * @return int
+     */
+    public function getJsonIntent(): int
+    {
+        return $this->jsonIntent;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isJsonSort(): bool
+    {
+        return $this->jsonSort;
     }
 
     /**

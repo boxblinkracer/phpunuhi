@@ -30,9 +30,7 @@ class ImportCommand extends Command
             ->addOption('format', null, InputOption::VALUE_REQUIRED, 'R', ExchangeFormat::CSV)
             ->addOption('set', null, InputOption::VALUE_REQUIRED, 'R', '')
             ->addOption('file', null, InputOption::VALUE_REQUIRED, '', '')
-            ->addOption('csv-delimiter', null, InputOption::VALUE_REQUIRED, '', '')
-            ->addOption('json-intent', null, InputOption::VALUE_OPTIONAL, '', '')
-            ->addOption('json-sort', null, InputOption::VALUE_NONE, '', null);
+            ->addOption('csv-delimiter', null, InputOption::VALUE_REQUIRED, '', '');
 
         parent::configure();
     }
@@ -58,18 +56,11 @@ class ImportCommand extends Command
 
         # arguments for individual exchange exporters
         $delimiter = (string)$input->getOption('csv-delimiter');
-        $intent = (string)$input->getOption('json-intent');
-        $sort = (bool)$input->getOption('json-sort');
 
         if (empty($delimiter)) {
             $delimiter = ',';
         }
 
-        if (empty($intent)) {
-            $intent = 2;
-        } else {
-            $intent = (int)$intent;
-        }
 
         # adjust correct file path, required for PHAR loading
         $cur_dir = explode('\\', (string)getcwd());
@@ -91,7 +82,11 @@ class ImportCommand extends Command
             }
 
             # get correct storage saver from our current set
-            $storageSaver = StorageFactory::getSaverFromFormat($set->getFormat(), $intent, $sort);
+            $storageSaver = StorageFactory::getSaverFromFormat(
+                $set->getFormat(),
+                $set->getJsonIntent(),
+                $set->isJsonSort()
+            );
 
             # build the correct importer for our exchange format
             # and pass on the matching storage saver of our current ste

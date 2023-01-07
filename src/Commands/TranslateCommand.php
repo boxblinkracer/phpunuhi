@@ -27,9 +27,7 @@ class TranslateCommand extends Command
             ->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('service', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('deepl-key', null, InputOption::VALUE_REQUIRED, '', '')
-            ->addOption('deepl-formal', null, InputOption::VALUE_NONE, '', '')
-            ->addOption('json-intent', null, InputOption::VALUE_OPTIONAL, '', '')
-            ->addOption('json-sort', null, InputOption::VALUE_NONE, '', null);
+            ->addOption('deepl-formal', null, InputOption::VALUE_NONE, '', null);
 
         parent::configure();
     }
@@ -54,15 +52,6 @@ class TranslateCommand extends Command
         $deeplApiKey = (string)$input->getOption('deepl-key');
         $googleKey = (string)$input->getOption('google-key');
         $formal = (bool)$input->getOption('deepl-formal');
-        
-        $intent = (string)$input->getOption('json-intent');
-        $sort = (bool)$input->getOption('json-sort');
-
-        if (empty($intent)) {
-            $intent = 2;
-        } else {
-            $intent = (int)$intent;
-        }
 
         $apiKey = $deeplApiKey;
 
@@ -109,7 +98,11 @@ class TranslateCommand extends Command
                 }
             }
 
-            $storageSaver = StorageFactory::getSaverFromFormat($set->getFormat(), $intent, $sort);
+            $storageSaver = StorageFactory::getSaverFromFormat(
+                $set->getFormat(),
+                $set->getJsonIntent(),
+                $set->isJsonSort()
+            );
 
             $storageSaver->saveTranslations($set);
         }
