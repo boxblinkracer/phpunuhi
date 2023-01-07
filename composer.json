@@ -23,6 +23,7 @@
         "ext-json": "*",
         "ext-simplexml": "*",
         "deeplcom/deepl-php": "^1.2",
+        "google/cloud-translate": "^1.12",
         "symfony/console": "*"
     },
     "require-dev": {

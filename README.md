@@ -13,30 +13,30 @@ Unuhi? This is Hawaiian for "translate" or "translation".
 Now that you know this, let's get started!
 
 <!-- TOC -->
-
-* [1. Basic Concept](#1-basic-concept)
-* [2. Installation](#2-installation)
-* [3. Configuration](#3-configuration)
-* [4. Validate Command](#4-validate-command)
+  * [1. Basic Concept](#1-basic-concept)
+  * [2. Installation](#2-installation)
+  * [3. Configuration](#3-configuration)
+  * [4. Validate Command](#4-validate-command)
     * [5. Validations](#5-validations)
-        * [5.1 Invalid structure](#51-invalid-structure)
-        * [5.2 Missing translations](#52-missing-translations)
-* [6. Export Command](#6-export-command)
-* [7. Import Command](#7-import-command)
-* [8. Translate Command](#8-translate-command)
-* [9. Use Cases](#9-use-cases)
+      * [5.1 Invalid structure](#51-invalid-structure)
+      * [5.2 Missing translations](#52-missing-translations)
+  * [6. Export Command](#6-export-command)
+  * [7. Import Command](#7-import-command)
+  * [8. Translate Command](#8-translate-command)
+  * [9. Use Cases](#9-use-cases)
     * [9.1 Validation in CI pipeline](#91-validation-in-ci-pipeline)
     * [9.2 Working with external translation agencies](#92-working-with-external-translation-agencies)
     * [9.3 Live WebEdit with HTML](#93-live-webedit-with-html)
     * [9.4 Automatic Translation with DeepL](#94-automatic-translation-with-deepl)
-* [10 Appendix](#10-appendix)
+  * [10 Appendix](#10-appendix)
     * [10.1 Storage Formats](#101-storage-formats)
-        * [10.1.1 JSON](#1011-json)
+      * [10.1.1 JSON](#1011-json)
     * [10.2 Exchange Formats](#102-exchange-formats)
-        * [10.2.1 CSV](#1021-csv)
-        * [10.2.2 HTML / WebEdit](#1022-html--webedit)
-        * [10.3 Translators](#103-translators)
-
+      * [10.2.1 CSV](#1021-csv)
+      * [10.2.2 HTML / WebEdit](#1022-html--webedit)
+    * [10.3 Translator Services](#103-translator-services)
+      * [10.3.1 DeepL](#1031-deepl)
+      * [10.3.2 Google Cloud Translate](#1032-google-cloud-translate)
 <!-- TOC -->
 
 ## 1. Basic Concept
@@ -73,7 +73,7 @@ This makes it a perfect fit for your CI/CD pipelines.
 
 ## 2. Installation
 
-You can also use PHPUnuhi with Composer. Just install it with this script.
+You can use PHPUnuhi with Composer. Just install it with this script.
 
 ```
 composer require boxblinkracer/phpunuhi
@@ -211,7 +211,7 @@ After all values are filled, your storage is updated and saved.
 php vendor/bin/phpunuhi translate --service=abc
 
 # translate using DeepL
-php vendor/bin/phpunuhi import ... --service=deepls --deepl-key=xyz
+php vendor/bin/phpunuhi translate ... --service=deepls --deepl-key=xyz
 ```
 
 > For more options and arguments of the formats please see the appendix below!
@@ -312,15 +312,29 @@ Every translation key has its own row, and all locale-values have their own colu
 The HTML export helps you to export all translations into a single HTML file.
 You can then open this file in your browser and immediately start to edit your translations.
 
-Once finished, just slick on "save translations". This will download a **html.txt** file that
+Once finished, just click on "save translations". This will download a **html.txt** file that
 you can import again into your system with the format **html** in PHPUnuhi.
 
 <p align="center">
    <img src="/.github/assets/html.png">
 </p>
 
-#### 10.3 Translators
+### 10.3 Translator Services
 
 Translators are supported (external) services that automatically translate empty values for you.
 These services usually require an API key that needs to be provided for PHPUnuhi.
 
+
+#### 10.3.1 DeepL
+
+* Service: "deepl"
+* Arguments:
+    * Translate Command
+        * --deepl-key
+
+#### 10.3.2 Google Cloud Translate
+
+* Service: "google"
+* Arguments:
+    * Translate Command
+        * --google-key

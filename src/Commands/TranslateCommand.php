@@ -51,6 +51,8 @@ class TranslateCommand extends Command
 
         $service = (string)$input->getOption('service');
         $deeplApiKey = (string)$input->getOption('deepl-key');
+        $googleKey = (string)$input->getOption('google-key');
+
 
         $intent = (string)$input->getOption('json-intent');
         $sort = (bool)$input->getOption('json-sort');
@@ -61,17 +63,23 @@ class TranslateCommand extends Command
             $intent = (int)$intent;
         }
 
+        $apiKey = $deeplApiKey;
+
+        if (empty($deeplApiKey)) {
+            $apiKey = $googleKey;
+        }
+
         # -----------------------------------------------------------------
 
         if (empty($service)) {
-            throw new \Exception('No service provided for translation! Please set a service with argument --service=[deepl,...]');
+            throw new \Exception('No service provided for translation! Please set a service with argument --service=[deepl, google, ...]');
         }
 
         $configLoader = new ConfigurationLoader();
         $config = $configLoader->load($configFile);
 
 
-        $translator = TranslatorFactory::fromService($service, $deeplApiKey);
+        $translator = TranslatorFactory::fromService($service, $apiKey);
 
 
         $translatedCount = 0;
