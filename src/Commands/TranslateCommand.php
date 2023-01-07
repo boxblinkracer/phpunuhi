@@ -26,6 +26,7 @@ class TranslateCommand extends Command
             ->setDescription('Translate all your translations by using one of our translation services')
             ->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('service', null, InputOption::VALUE_REQUIRED, '', '')
+            ->addOption('google-key', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('deepl-key', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('deepl-formal', null, InputOption::VALUE_NONE, '', null);
 
@@ -73,28 +74,38 @@ class TranslateCommand extends Command
 
 
         $translatedCount = 0;
+        $translateFailedCount = 0;
 
         foreach ($config->getTranslationSets() as $set) {
 
             $io->section('Translation Set: ' . $set->getName());
 
             foreach ($set->getLocales() as $locale) {
-                foreach ($locale->getTranslations() as $translation) {
+                foreach ($locale->getTranslations() as $currentTranslation) {
 
-                    if (empty($translation->getValue())) {
-                        # translate
-                        $existingTranslation = $set->findAnyExistingTranslation($translation->getKey());
+                    if (!empty($currentTranslation->getValue())) {
+                        continue;
+                    }
 
-                        $newTranslation = $translator->translate(
-                            $existingTranslation->getValue(),
-                            '',
-                            $locale->getName()
-                        );
+                    $existingData = $set->findAnyExistingTranslation($currentTranslation->getKey());
 
+                    $existingLocale = $existingData['locale'];
+                    $existingTranslation = $existingData['translation'];
+
+                    $newTranslation = $translator->translate(
+                        $existingTranslation->getValue(),
+                        $existingLocale,
+                        $locale->getName()
+                    );
+
+                    if (!empty($newTranslation)) {
                         $translatedCount++;
 
-                        $translation->setValue($newTranslation);
+                        $currentTranslation->setValue($newTranslation);
+                    } else {
+                        $translateFailedCount++;
                     }
+
                 }
             }
 
@@ -107,6 +118,10 @@ class TranslateCommand extends Command
             $storageSaver->saveTranslations($set);
         }
 
+        if ($translateFailedCount > 0) {
+            $io->warning($translatedCount . ' translations are updated! ' . $translateFailedCount . ' translations not updated!');
+            exit(0);
+        }
 
         $io->success($translatedCount . ' translations are updated!');
         exit(0);

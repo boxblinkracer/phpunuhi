@@ -109,10 +109,10 @@ class TranslationSet
 
     /**
      * @param string $searchKey
-     * @return Translation
+     * @return array<mixed>
      * @throws \Exception
      */
-    public function findAnyExistingTranslation(string $searchKey): Translation
+    public function findAnyExistingTranslation(string $searchKey): array
     {
         foreach ($this->locales as $locale) {
 
@@ -120,7 +120,12 @@ class TranslationSet
 
                 if ($translation->getKey() === $searchKey) {
                     if (trim($translation->getValue()) !== '') {
-                        return $translation;
+
+                        # should be an object, just too lazy atm
+                        return [
+                            'locale' => $locale->getName(),
+                            'translation' => $translation,
+                        ];
                     }
                 }
             }

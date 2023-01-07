@@ -117,6 +117,9 @@ class HTMLExporter implements ExportInterface
         $html .= "</body>";
         $html .= "</html>";
 
+        if (!file_exists($outputDir)) {
+            mkdir($outputDir);
+        }
 
         file_put_contents($outputDir . '/index.html', $html);
     }

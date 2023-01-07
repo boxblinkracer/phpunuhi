@@ -5,6 +5,7 @@ namespace PHPUnuhi\Bundles\Translation;
 use PHPUnuhi\Bundles\Translation\DeepL\DeeplTranslator;
 use PHPUnuhi\Bundles\Translation\Fake\FakeTranslator;
 use PHPUnuhi\Bundles\Translation\GoogleCloud\GoogleCloudTranslator;
+use PHPUnuhi\Bundles\Translation\GoogleWeb\GoogleWebTranslator;
 
 class TranslatorFactory
 {
@@ -26,8 +27,11 @@ class TranslatorFactory
             case 'deepl':
                 return new DeeplTranslator($apiKey, $formal);
 
-            case 'google':
+            case 'googlecloud':
                 return new GoogleCloudTranslator($apiKey);
+
+            case 'googleweb':
+                return new GoogleWebTranslator();
 
             default:
                 throw new \Exception('Translator service ' . $service . ' not found in PHPUnuhi');

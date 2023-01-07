@@ -59,6 +59,12 @@ class ExportCommand extends Command
             $delimiter = ',';
         }
 
+
+        $cur_dir = explode('\\', (string)getcwd());
+        $workingDir = $cur_dir[count($cur_dir) - 1];
+        $outputDir = $workingDir . '/' . $outputDir;
+
+
         # -----------------------------------------------------------------
 
         $configLoader = new ConfigurationLoader();

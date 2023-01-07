@@ -38,6 +38,7 @@ Now that you know this, let's get started!
     * [10.3 Translator Services](#103-translator-services)
         * [10.3.1 DeepL](#1031-deepl)
         * [10.3.2 Google Cloud Translate](#1032-google-cloud-translate)
+        * [10.3.3 Google Web Translate](#1033-google-web-translate)
 
 <!-- TOC -->
 
@@ -334,11 +335,22 @@ You can request a formal language by simply applying the argument "--deepl-forma
 
 #### 10.3.2 Google Cloud Translate
 
-* Service: "google"
+* Service: "googlecloud"
 * Arguments:
     * Translate Command
         * --google-key=xyz
 
 Google Cloud Translation allows you to use the AI services of Google.
 If you have an API Key, you can easily provide it with the corresponding argument when running the translation command.
+
+#### 10.3.3 Google Web Translate
+
+* Service: "googleweb"
+
+This service just consumes the web page of Google.
+So it's the same thing that you would do when just visiting the Google search page.
+
+The good thing is that this service is totally free.
+The bad thing is, that a massive number of requests might lead to a temporary blocking of your IP address.
+
 
