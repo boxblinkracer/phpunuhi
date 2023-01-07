@@ -58,6 +58,7 @@ This makes it a perfect fit for your CI/CD pipelines.
 **Key Benefits**
 
 * Validates structure and content
+* Platform independent with option for different storage formats
 * Exchange formats such as CSV and HTML
 * Live WebEdit with HTML exchange format
 * Automatic translation using DeepL (or more)
