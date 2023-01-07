@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPUnuhi\Bundles\Translation\Deepl;
+namespace PHPUnuhi\Bundles\Translation\DeepL;
 
 use PHPUnuhi\Bundles\Translation\TranslatorInterface;
 

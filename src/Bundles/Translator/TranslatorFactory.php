@@ -2,7 +2,7 @@
 
 namespace PHPUnuhi\Bundles\Translation;
 
-use PHPUnuhi\Bundles\Translation\Deepl\DeeplTranslator;
+use PHPUnuhi\Bundles\Translation\DeepL\DeeplTranslator;
 use PHPUnuhi\Bundles\Translation\Fake\FakeTranslator;
 
 class TranslatorFactory
