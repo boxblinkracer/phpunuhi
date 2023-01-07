@@ -55,6 +55,14 @@ One of the benefits is, that this framework does not require anything else than 
 This makes it a perfect fit for your CI/CD pipelines.
 
 
+**Key Benefits**
+
+* Validates structure and content
+* Exchange formats such as CSV and HTML
+* Live WebEdit with HTML exchange format
+* Automatic translation using DeepL (or more)
+
+
 <p align="center">
    <img src="/.github/assets/works-with.jpg">
 </p>
