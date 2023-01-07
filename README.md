@@ -66,7 +66,7 @@ This makes it a perfect fit for your CI/CD pipelines.
 * Automatic translation using DeepL (or more)
 
 <p align="center">
-   <img src="/.github/assets/works-with.jpg">
+   <img src="/.github/assets/supported-systems.jpg">
 </p>
 
 
