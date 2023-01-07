@@ -41,6 +41,10 @@ class GoogleCloudTranslator implements TranslatorInterface
             ]
         );
 
+        if (!isset($result['text'])) {
+            return '';
+        }
+
         return (string)$result['text'];
     }
 
