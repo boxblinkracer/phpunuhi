@@ -202,7 +202,7 @@ After all values are filled, your storage is updated and saved.
 php vendor/bin/phpunuhi translate --service=abc
 
 # translate using DeepL
-php vendor/bin/phpunuhi import ... --format=deepls --deepl-key=xyz
+php vendor/bin/phpunuhi import ... --service=deepls --deepl-key=xyz
 ```
 
 > For more options and arguments of the formats please see the appendix below!
