@@ -21,6 +21,6 @@ translate: ## Translate command
 	cd ../.. && php bin/phpunuhi translate --configuration=./tests/playground/phpunuhi.xml --service=googleweb
 
 export: ## Export command
-	cd ../.. && php bin/phpunuhi export --configuration=./tests/playground/phpunuhi.xml
+	cd ../.. && php bin/phpunuhi export --configuration=./tests/playground/phpunuhi.xml --dir=./tests/playground/.exports
 
 
