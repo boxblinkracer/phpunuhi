@@ -29,7 +29,7 @@ stan: ## Starts the PHPStan Analyser
 	@php ./vendor/bin/phpstan analyse -c ./.phpstan.neon
 
 phpunit: ## Runs all tests
-	@php ./vendor/bin/phpunit --configuration=./phpunit.xml -v
+	@php ./vendor/bin/phpunit --configuration=./.phpunit.xml -v
 
 #------------------------------------------------------------------------------------------------
 
