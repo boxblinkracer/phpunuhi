@@ -130,6 +130,8 @@ class ConfigurationLoader
                 throw new \Exception('TranslationSet has no format. This is required!');
             }
 
+            $foundLocales = [];
+
             foreach ($set->getLocales() as $locale) {
 
                 if ($locale->getName() === '') {
@@ -139,6 +141,12 @@ class ConfigurationLoader
                 if ($locale->getFilename() === '') {
                     throw new \Exception('Locale has no filename. This is required!');
                 }
+
+                if (in_array($locale->getName(), $foundLocales)) {
+                    throw new \Exception('Locale "' . $locale->getName() . '" has already been found in Translation-Set: ' . $set->getName());
+                }
+
+                $foundLocales[] = $locale->getName();
             }
         }
     }
