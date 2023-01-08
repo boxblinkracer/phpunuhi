@@ -188,6 +188,11 @@ php vendor/bin/phpunuhi fix
 php vendor/bin/phpunuhi fix --set="storefront"
 ```
 
+<p align="center">
+   <img src="/.github/assets/fix.png">
+</p>
+
+
 ### 4.3 Export Command
 
 You can export your translations **into a CSV file**, a HTML WebEdit spreadsheet, or other supported exchange formats.
