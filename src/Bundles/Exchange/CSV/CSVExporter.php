@@ -66,15 +66,11 @@ class CSVExporter implements ExportInterface
             $outputDir = '.';
         }
 
-        # required for phar
-        $cur_dir = explode('\\', (string)getcwd());
-        $workingDir = $cur_dir[count($cur_dir) - 1];
-        $outputDir = $workingDir . '/' . $outputDir;
-
 
         if (!file_exists($outputDir)) {
             mkdir($outputDir, 0775, true);
         }
+
 
 
         $csvFilename = $outputDir . '/' . $set->getName() . '.csv';
