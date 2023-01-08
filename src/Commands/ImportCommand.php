@@ -52,7 +52,7 @@ class ImportCommand extends Command
         $configFile = $this->getConfigFile($input);
         $importFilename = (string)$input->getOption('file');
         $importExchangeFormat = (string)$input->getOption('format');
-        $suiteName = (string)$input->getOption('set');
+        $setName = (string)$input->getOption('set');
 
         # arguments for individual exchange exporters
         $delimiter = (string)$input->getOption('csv-delimiter');
@@ -69,6 +69,11 @@ class ImportCommand extends Command
 
         # -----------------------------------------------------------------
 
+        if (empty($setName)) {
+            throw new \Exception('Please provide a Translation-Set name that will be imported with argument --set=xyz');
+        }
+
+
         $configLoader = new ConfigurationLoader();
         $config = $configLoader->load($configFile);
 
@@ -77,7 +82,7 @@ class ImportCommand extends Command
 
         foreach ($config->getTranslationSets() as $set) {
 
-            if ($suiteName !== $set->getName()) {
+            if ($setName !== $set->getName()) {
                 continue;
             }
 
@@ -96,11 +101,11 @@ class ImportCommand extends Command
         }
 
         if ($result instanceof ImportResult) {
-            $io->success('Imported ' . $result->getCountTranslations() . ' translations of ' . $result->getCountLocales() . ' locales for set: ' . $suiteName);
+            $io->success('Imported ' . $result->getCountTranslations() . ' translations of ' . $result->getCountLocales() . ' locales for set: ' . $setName);
             exit(0);
         }
 
-        $io->warning('No sets found with name: ' . $suiteName);
+        $io->warning('No sets found with name: ' . $setName);
         exit(1);
     }
 
