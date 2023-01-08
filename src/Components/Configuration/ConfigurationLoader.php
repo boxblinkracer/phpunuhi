@@ -121,6 +121,8 @@ class ConfigurationLoader
      */
     private function validateConfig(Configuration $configuration)
     {
+        $foundSets = [];
+
         foreach ($configuration->getTranslationSets() as $set) {
 
             if ($set->getName() === '') {
@@ -130,6 +132,13 @@ class ConfigurationLoader
             if ($set->getFormat() === '') {
                 throw new \Exception('TranslationSet has no format. This is required!');
             }
+
+            if (in_array($set->getName(), $foundSets)) {
+                throw new \Exception('TranslationSet "' . $set->getName() . '" has already been found');
+            }
+
+            $foundSets[] = $set->getName();
+
 
             $foundLocales = [];
 
