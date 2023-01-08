@@ -86,12 +86,15 @@ class HTMLExporter implements ExportInterface
 
                 $value = htmlentities($value);
 
+                $wasEmpty = ($value === '') ? 'was-empty' : '';
+
                 $html .= '
                         <td>
                             <input 
                                 id="' . $key . '--' . $locale->getExchangeIdentifier() . '" 
-                                class="translation textfield" 
+                                class="translation textfield ' . $wasEmpty . '" 
                                 type="text" 
+                                onchange="onTextfieldChanged(this)"
                                 value="' . $value . '"/>
                         </td>
                         ';
@@ -249,6 +252,38 @@ tbody tr td:first-of-type {
                     link.click();
                     URL.revokeObjectURL(link.href);
                 }
+                
+                function onTextfieldChanged(input) {
+                    updateTextfieldStyle(input);
+                }
+                
+                function updateTextfieldStyle(input) {
+                    if (input.value === "") {
+                        input.style.backgroundColor = "#fb9696";
+                        input.style.border = "1px solid red";
+                    } else {
+                        
+                        if (input.classList.contains("was-empty")) {
+                            input.style.backgroundColor = "#b0ffda";
+                            input.style.border = "1px solid #52cc54";
+                        } else {
+                            input.style.backgroundColor = "#ffffff";
+                            input.style.border = "1px solid gray";
+                        }
+                    }
+                }
+                
+                
+                document.addEventListener("DOMContentLoaded", function(event) {
+                    // update all styles (init)
+                    const translations = document.getElementsByClassName("translation");
+                    Array.from(translations).forEach(input => {
+                        console.log(input);
+                        updateTextfieldStyle(input);
+                    });
+                });
+
+                
             </script>
         ';
     }
