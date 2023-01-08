@@ -125,8 +125,8 @@ Let's create a new **phpunuhi.xml** file (or rename it to something else).
         </set>
 
         <set name="Frontend Single INI" format="ini">
-            <file locale="de" iniSection="de">./snippets/admin/full.ini</file>
-            <file locale="en" iniSection="en">./snippets/admin/full.ini</file>
+            <file locale="de" iniSection="de">./snippets/full.ini</file>
+            <file locale="en" iniSection="en">./snippets/full.ini</file>
         </set>
 
     </translations>
@@ -258,6 +258,11 @@ php vendor/bin/phpunuhi translate ...  --force=en
 
 > For more options and arguments of the formats please see the appendix below!
 
+<p align="center">
+   <img src="/.github/assets/translate.png">
+</p>
+
+
 ### 4.6 Status Command
 
 Use this command to get the coverage status of your translations.
@@ -265,6 +270,11 @@ Use this command to get the coverage status of your translations.
 ```bash 
 php vendor/bin/phpunuhi status 
 ```
+
+<p align="center">
+   <img src="/.github/assets/status.png">
+</p>
+
 
 ## 5. Use Cases
 
