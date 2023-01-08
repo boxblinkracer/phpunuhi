@@ -100,11 +100,11 @@ class TranslateCommand extends Command
                     }
 
                     try {
-                        $currentTranslation = $locale->findAnyExistingTranslation($currentKey);
+                        $currentTranslation = $locale->findTranslation($currentKey);
                     } catch (TranslationNotFoundException $ex) {
-                        # if its not existing, fix it and create a new "empty" one
-                        $currentTranslation = $locale->addTranslation($currentKey, '');
-
+                        # if no translation exits
+                        # then skip this one
+                        continue;
                     }
 
                     # translate if we either force it or only if our value is empty
@@ -120,7 +120,7 @@ class TranslateCommand extends Command
                             $locale->getName()
                         );
 
-                        $io->writeln(' [.] translating "' . $currentTranslation->getKey() . '". Result ["' . $locale->getName() . '"] => ' . $newTranslation);
+                        $io->writeln('   [~] translating "' . $currentTranslation->getKey() . '". Result ["' . $locale->getName() . '"] => ' . $newTranslation);
 
                         if (!empty($newTranslation)) {
                             $translatedCount++;

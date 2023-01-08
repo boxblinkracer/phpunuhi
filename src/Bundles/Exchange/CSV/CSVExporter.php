@@ -73,7 +73,7 @@ class CSVExporter implements ExportInterface
 
 
         if (!file_exists($outputDir)) {
-            mkdir($outputDir);
+            mkdir($outputDir, 0775, true);
         }
 
 
@@ -93,7 +93,7 @@ class CSVExporter implements ExportInterface
             fclose($f);
         }
 
-        echo 'generated file: ' . $csvFilename . PHP_EOL;
+        echo '   [+] generated file: ' . $csvFilename . PHP_EOL . PHP_EOL;
 
     }
 

@@ -127,16 +127,16 @@ class Locale
      * @return Translation
      * @throws TranslationNotFoundException
      */
-    public function findAnyExistingTranslation(string $searchKey): Translation
+    public function findTranslation(string $searchKey): Translation
     {
         foreach ($this->getTranslations() as $translation) {
 
-            if ($translation->getKey() === $searchKey && !$translation->isEmpty()) {
+            if ($translation->getKey() === $searchKey) {
                 return $translation;
             }
         }
 
-        throw new TranslationNotFoundException('No valid translation found for key: ' . $searchKey);
+        throw new TranslationNotFoundException('No existing translation found for key: ' . $searchKey);
     }
 
 }

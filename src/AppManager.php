@@ -4,6 +4,7 @@ namespace PHPUnuhi;
 
 use Exception;
 use PHPUnuhi\Commands\ExportCommand;
+use PHPUnuhi\Commands\FixCommand;
 use PHPUnuhi\Commands\ImportCommand;
 use PHPUnuhi\Commands\TranslateCommand;
 use PHPUnuhi\Commands\ValidateCommand;
@@ -25,6 +26,7 @@ class AppManager
         $application->add(new ExportCommand());
         $application->add(new ImportCommand());
         $application->add(new TranslateCommand());
+        $application->add(new FixCommand());
 
         $application->setDefaultCommand('validate');
 
