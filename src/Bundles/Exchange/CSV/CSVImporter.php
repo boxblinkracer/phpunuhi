@@ -4,6 +4,7 @@ namespace PHPUnuhi\Bundles\Exchange\CSV;
 
 use PHPUnuhi\Bundles\Exchange\ImportInterface;
 use PHPUnuhi\Bundles\Exchange\ImportResult;
+use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Bundles\Storage\StorageSaverInterface;
 use PHPUnuhi\Models\Translation\Translation;
 use PHPUnuhi\Models\Translation\TranslationSet;
@@ -12,9 +13,9 @@ class CSVImporter implements ImportInterface
 {
 
     /**
-     * @var StorageSaverInterface
+     * @var StorageInterface
      */
-    private $saver;
+    private $storage;
 
     /**
      * @var string
@@ -23,12 +24,12 @@ class CSVImporter implements ImportInterface
 
 
     /**
-     * @param StorageSaverInterface $saver
+     * @param StorageInterface $storage
      * @param string $delimiter
      */
-    public function __construct(StorageSaverInterface $saver, string $delimiter)
+    public function __construct(StorageInterface $storage, string $delimiter)
     {
-        $this->saver = $saver;
+        $this->storage = $storage;
         $this->delimiter = $delimiter;
     }
 
@@ -46,7 +47,7 @@ class CSVImporter implements ImportInterface
         $set = $this->importTranslations($set, $filename);
 
         # now save the set with the new values
-        $result = $this->saver->saveTranslations($set);
+        $result = $this->storage->saveTranslations($set);
 
         return new ImportResult(
             $result->getSavedLocales(),

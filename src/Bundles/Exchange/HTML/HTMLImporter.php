@@ -4,7 +4,7 @@ namespace PHPUnuhi\Bundles\Exchange\HTML;
 
 use PHPUnuhi\Bundles\Exchange\ImportInterface;
 use PHPUnuhi\Bundles\Exchange\ImportResult;
-use PHPUnuhi\Bundles\Storage\StorageSaverInterface;
+use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Models\Translation\Translation;
 use PHPUnuhi\Models\Translation\TranslationSet;
 use SplFileObject;
@@ -13,17 +13,17 @@ class HTMLImporter implements ImportInterface
 {
 
     /**
-     * @var StorageSaverInterface
+     * @var StorageInterface
      */
-    private $translationSaver;
+    private $storage;
 
 
     /**
-     * @param StorageSaverInterface $translationSaver
+     * @param StorageInterface $storage
      */
-    public function __construct(StorageSaverInterface $translationSaver)
+    public function __construct(StorageInterface $storage)
     {
-        $this->translationSaver = $translationSaver;
+        $this->storage = $storage;
     }
 
 
@@ -81,7 +81,7 @@ class HTMLImporter implements ImportInterface
         }
 
 
-        $result = $this->translationSaver->saveTranslations($set);
+        $result = $this->storage->saveTranslations($set);
 
         return new ImportResult($result->getSavedLocales(), $result->getSavedTranslations());
     }

@@ -6,7 +6,7 @@ use PHPUnuhi\Bundles\Storage\StorageSaveResult;
 use PHPUnuhi\Bundles\Storage\StorageSaverInterface;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
-class JsonSaver implements StorageSaverInterface
+class JsonSaver
 {
 
     /**

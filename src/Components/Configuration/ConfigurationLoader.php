@@ -94,7 +94,7 @@ class ConfigurationLoader
             $set = new TranslationSet($name, $format, (int)$jsonIntent, (bool)$jsonSort, $foundLocales);
 
 
-            $translationLoader = StorageFactory::getLoaderFromFormat($set->getFormat());
+            $translationLoader = StorageFactory::getStorage($set->getFormat(), $set->getJsonIntent(), $set->isJsonSort());
 
             # now iterate through our locales
             # and load the translation files for it

@@ -6,7 +6,7 @@ use PHPUnuhi\Bundles\Storage\StorageLoaderInterface;
 use PHPUnuhi\Models\Translation\Locale;
 
 
-class JsonLoader implements StorageLoaderInterface
+class JsonLoader
 {
 
     /**

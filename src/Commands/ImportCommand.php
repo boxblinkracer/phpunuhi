@@ -87,7 +87,7 @@ class ImportCommand extends Command
             }
 
             # get correct storage saver from our current set
-            $storageSaver = StorageFactory::getSaverFromFormat(
+            $storageSaver = StorageFactory::getStorage(
                 $set->getFormat(),
                 $set->getJsonIntent(),
                 $set->isJsonSort()
