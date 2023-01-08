@@ -10,3 +10,4 @@
 /vendor
 /.export/
 /tests/e2e/.export
+/tests/playground/.exports

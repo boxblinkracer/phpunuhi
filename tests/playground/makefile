@@ -23,4 +23,5 @@ translate: ## Translate command
 export: ## Export command
 	cd ../.. && php bin/phpunuhi export --configuration=./tests/playground/phpunuhi.xml --dir=./tests/playground/.exports
 
-
+import: ## Import command
+	cd ../.. && php bin/phpunuhi import --configuration=./tests/playground/phpunuhi.xml --set=storefront --file=./tests/playground/.exports/storefront.csv
