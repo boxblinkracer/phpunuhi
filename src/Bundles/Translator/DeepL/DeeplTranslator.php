@@ -40,6 +40,10 @@ class DeeplTranslator implements TranslatorInterface
     {
         $formalValue = ($this->formality) ? 'more' : 'less';
 
+        if (empty($this->apiKey)) {
+            throw new \Exception('Please provide your API key for DeepL');
+        }
+
         $translator = new \DeepL\Translator($this->apiKey);
 
         if ($targetLanguage === 'en') {

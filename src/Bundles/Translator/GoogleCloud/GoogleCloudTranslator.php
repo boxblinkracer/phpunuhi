@@ -30,6 +30,10 @@ class GoogleCloudTranslator implements TranslatorInterface
      */
     public function translate(string $text, string $sourceLanguage, string $targetLanguage): string
     {
+        if (empty($this->apiKey)) {
+            throw new \Exception('Please provide your API key for GoogleCloud');
+        }
+
         $translate = new TranslateClient([
             'key' => $this->apiKey
         ]);
