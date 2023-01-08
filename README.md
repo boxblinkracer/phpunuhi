@@ -13,33 +13,31 @@ Unuhi? This is Hawaiian for "translate" or "translation".
 Now that you know this, let's get started!
 
 <!-- TOC -->
-
-* [1. Basic Concept](#1-basic-concept)
-* [2. Installation](#2-installation)
-* [3. Configuration](#3-configuration)
-* [4. Validate Command](#4-validate-command)
+  * [1. Basic Concept](#1-basic-concept)
+  * [2. Installation](#2-installation)
+  * [3. Configuration](#3-configuration)
+  * [4. Validate Command](#4-validate-command)
     * [5. Validations](#5-validations)
-        * [5.1 Invalid structure](#51-invalid-structure)
-        * [5.2 Missing translations](#52-missing-translations)
-* [6. Export Command](#6-export-command)
-* [7. Import Command](#7-import-command)
-* [8. Translate Command](#8-translate-command)
-* [9. Use Cases](#9-use-cases)
+      * [5.1 Invalid structure](#51-invalid-structure)
+      * [5.2 Missing translations](#52-missing-translations)
+  * [6. Export Command](#6-export-command)
+  * [7. Import Command](#7-import-command)
+  * [8. Translate Command](#8-translate-command)
+  * [9. Use Cases](#9-use-cases)
     * [9.1 Validation in CI pipeline](#91-validation-in-ci-pipeline)
     * [9.2 Working with external translation agencies](#92-working-with-external-translation-agencies)
     * [9.3 Live WebEdit with HTML](#93-live-webedit-with-html)
-    * [9.4 Automatic Translation with DeepL](#94-automatic-translation-with-deepl)
-* [10 Appendix](#10-appendix)
+    * [9.4 Automatic Translation with Google, DeepL, ...](#94-automatic-translation-with-google-deepl-)
+  * [10 Appendix](#10-appendix)
     * [10.1 Storage Formats](#101-storage-formats)
-        * [10.1.1 JSON](#1011-json)
+      * [10.1.1 JSON](#1011-json)
     * [10.2 Exchange Formats](#102-exchange-formats)
-        * [10.2.1 CSV](#1021-csv)
-        * [10.2.2 HTML / WebEdit](#1022-html--webedit)
+      * [10.2.1 CSV](#1021-csv)
+      * [10.2.2 HTML / WebEdit](#1022-html--webedit)
     * [10.3 Translator Services](#103-translator-services)
-        * [10.3.1 DeepL](#1031-deepl)
-        * [10.3.2 Google Cloud Translate](#1032-google-cloud-translate)
-        * [10.3.3 Google Web Translate](#1033-google-web-translate)
-
+      * [10.3.1 DeepL](#1031-deepl)
+      * [10.3.2 Google Cloud Translate](#1032-google-cloud-translate)
+      * [10.3.3 Google Web Translate](#1033-google-web-translate)
 <!-- TOC -->
 
 ## 1. Basic Concept
@@ -63,7 +61,7 @@ This makes it a perfect fit for your CI/CD pipelines.
 * Platform independent with option for different storage formats
 * Exchange formats such as CSV and HTML
 * Live WebEdit with HTML exchange format
-* Automatic translation using DeepL (or more)
+* Automatic translation using Google, DeepL or more
 
 <p align="center">
    <img src="/.github/assets/supported-systems.jpg">
@@ -260,10 +258,11 @@ That HTML file might then be exposed with something like this **https://stage.my
 Everyone who wants to either see all translations, or even modify them, can easily do this in their browser.
 And because you use a cronjob to generate the file, it's always automatically updated.
 
-### 9.4 Automatic Translation with DeepL
+### 9.4 Automatic Translation with Google, DeepL, ...
 
-If you have a DeepL API key, you can automatically have PHPUnuhi translate missing texts using this services (or another supported service).
-In this case you might only want to translate 1 single language, and have DeepL doing the rest for you.
+You can automatically translate your missing (or all) translations by using an external service.
+This can be GoogleWeb, GoogleCloud or even DeepL.
+Provide your API key (if required for service) and see the magic happening.
 
 > A double check and approval in your version control would still be a good thing.
 
