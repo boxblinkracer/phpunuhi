@@ -13,7 +13,7 @@ class LocaleTest extends TestCase
      */
     public function testExchangeIdentifierFilename()
     {
-        $locale = new Locale('', 'de.json');
+        $locale = new Locale('', 'de.json', '');
 
         $this->assertEquals('de.json', $locale->getExchangeIdentifier());
     }
@@ -23,7 +23,7 @@ class LocaleTest extends TestCase
      */
     public function testExchangeIdentifierName()
     {
-        $locale = new Locale('DE', 'de.json');
+        $locale = new Locale('DE', 'de.json', '');
 
         $this->assertEquals('DE', $locale->getExchangeIdentifier());
     }
@@ -33,7 +33,7 @@ class LocaleTest extends TestCase
      */
     public function testExchangeIdentifierHasNoSpaces()
     {
-        $locale = new Locale('en GB', 'de.json');
+        $locale = new Locale('en GB', 'de.json', '');
 
         $this->assertEquals('en-GB', $locale->getExchangeIdentifier());
     }

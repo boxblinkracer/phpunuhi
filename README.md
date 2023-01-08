@@ -119,9 +119,14 @@ Let's create a new **phpunuhi.xml** file (or rename it to something else).
             <file locale="en">./snippets/admin/en.json</file>
         </set>
 
-        <set name="Frontend" format="ini" sort="true">
+        <set name="Frontend INI" format="ini" sort="true">
             <file locale="de">./snippets/admin/de.ini</file>
             <file locale="en">./snippets/admin/en.ini</file>
+        </set>
+
+        <set name="Frontend Single INI" format="ini">
+            <file locale="de" iniSection="de">./snippets/admin/full.ini</file>
+            <file locale="en" iniSection="en">./snippets/admin/full.ini</file>
         </set>
 
     </translations>
@@ -329,9 +334,16 @@ The JSON structure across all files of a set should match.
 |-------------------|---------|-------------------------------------------------------|
 | sort              | false   | Turn on or off the alphabetical sorting [sort="true"] |
 
+| XML File Attribute | Default | Description                                  | 
+|--------------------|---------|----------------------------------------------|
+| iniSection         |         | Section name of the locale [iniSection="de"] |
+
 The INI format means that your files are stored in separate INI files.
 Every locale has its own INI file.
 The INI structure across all files of a set should match.
+
+It's also possible to have all translations in a single INI file.
+For this, you might want to use the **iniSection** feature and just assign the same INI file to all locales, but with different sections.
 
 ### 6.2 Exchange Formats
 

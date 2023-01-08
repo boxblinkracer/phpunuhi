@@ -17,6 +17,10 @@ class Locale
      */
     private $filename;
 
+    /**
+     * @var string
+     */
+    private $iniSection;
 
     /**
      * @var Translation[]
@@ -27,11 +31,13 @@ class Locale
     /**
      * @param string $name
      * @param string $filename
+     * @param string $iniSection
      */
-    public function __construct(string $name, string $filename)
+    public function __construct(string $name, string $filename, string $iniSection)
     {
         $this->name = $name;
         $this->filename = $filename;
+        $this->iniSection = $iniSection;
 
         $this->translations = [];
     }
@@ -71,6 +77,14 @@ class Locale
         $id = str_replace(' ', '-', $id);
 
         return $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIniSection(): string
+    {
+        return $this->iniSection;
     }
 
     /**

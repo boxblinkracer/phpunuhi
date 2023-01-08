@@ -2,15 +2,20 @@
 
     <translations>
 
-        <set name="storefront" format="json" jsonIntent="2" sort="true">
-            <file locale="de">./de.json</file>
-            <file locale="en">./en.json</file>
-            <file locale="nl">./nl.json</file>
+        <set name="json" format="json" jsonIntent="2" sort="true">
+            <file locale="de">./json/de.json</file>
+            <file locale="en">./json/en.json</file>
+            <file locale="nl">./json/nl.json</file>
         </set>
 
-        <set name="frontend" format="ini" sort="true">
-            <file locale="de">./de.ini</file>
-            <file locale="en">./en.ini</file>
+        <set name="ini" format="ini" sort="true">
+            <file locale="de">./ini/de.ini</file>
+            <file locale="en">./ini/en.ini</file>
+        </set>
+
+        <set name="ini_sections" format="ini" sort="true">
+            <file locale="de" iniSection="de">./ini/ini_sections.ini</file>
+            <file locale="en" iniSection="en">./ini/ini_sections.ini</file>
         </set>
 
     </translations>

@@ -35,15 +35,28 @@ class IniStorage implements StorageInterface
             throw new \Exception('Attention, translation file not found: ' . $locale->getFilename());
         }
 
-        $iniArray = parse_ini_file($locale->getFilename());
+        $iniArray = parse_ini_file($locale->getFilename(), true);
 
         if ($iniArray === false) {
             throw new \Exception('Error when loading INI file: ' . $locale->getFilename());
         }
 
         foreach ($iniArray as $key => $value) {
-            $locale->addTranslation($key, $value);
+
+            if (is_array($value)) {
+                # we have a section
+                if ($key === $locale->getIniSection()) {
+                    foreach ($value as $transKey => $transValue) {
+                        $locale->addTranslation($transKey, $transValue);
+                    }
+                }
+
+            } else {
+                # we just have a plain value
+                $locale->addTranslation($key, $value);
+            }
         }
+
     }
 
     /**
@@ -55,11 +68,27 @@ class IniStorage implements StorageInterface
         $localeCount = 0;
         $translationCount = 0;
 
+
+        $fileContents = [];
+
+
         foreach ($set->getLocales() as $locale) {
+
+            $content = "";
+
+            if (array_key_exists($locale->getFilename(), $fileContents)) {
+                $content = $fileContents[$locale->getFilename()];
+                $content .= PHP_EOL;
+            }
+
+
+            if ($locale->getIniSection() !== '') {
+                $content .= "[" . $locale->getIniSection() . "]" . PHP_EOL;
+                $content .= PHP_EOL;
+            }
 
             $localeCount++;
 
-            $content = "";
 
             $preparedTranslations = [];
 
@@ -73,12 +102,17 @@ class IniStorage implements StorageInterface
 
             foreach ($preparedTranslations as $key => $value) {
 
-                $content .= $key . '=' . $value . PHP_EOL;
+                $content .= $key . ' = ' . $value . PHP_EOL;
 
                 $translationCount++;
             }
 
-            file_put_contents($locale->getFilename(), $content);
+            $fileContents[$locale->getFilename()] = $content;
+        }
+
+
+        foreach ($fileContents as $filename => $content) {
+            file_put_contents($filename, $content);
         }
 
         return new StorageSaveResult($localeCount, $translationCount);

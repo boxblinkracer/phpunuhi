@@ -73,12 +73,13 @@ class ConfigurationLoader
 
                         $fileName = (string)realpath(dirname($configFilename) . '/' . $nodeValue);
                         $localeAttr = (string)$childNode['locale'];
+                        $iniSection = (string)$childNode['iniSection'];
 
                         if (trim($localeAttr) === '') {
                             throw new \Exception('empty locale values are not allowed in set: ' . $configFilename);
                         }
 
-                        $locale = new Locale($localeAttr, $fileName);
+                        $locale = new Locale($localeAttr, $fileName, $iniSection);
                         break;
 
                     default:
