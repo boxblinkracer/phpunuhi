@@ -219,10 +219,13 @@ The English result is then saved in your storage.
 php vendor/bin/phpunuhi translate --service=googleweb
 
 # translate using DeepL
-php vendor/bin/phpunuhi translate ... --service=deepl --deepl-key=xyz
+php vendor/bin/phpunuhi translate --service=deepl --deepl-key=xyz
 
 # translate only the set "storefront"
 php vendor/bin/phpunuhi translate ... --set="storefront"
+
+# force the translation of "en". This will translate everything, not only empty values
+php vendor/bin/phpunuhi translate ...  --force=en
 ```
 
 > For more options and arguments of the formats please see the appendix below!

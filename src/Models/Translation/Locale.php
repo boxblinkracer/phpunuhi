@@ -2,6 +2,8 @@
 
 namespace PHPUnuhi\Models\Translation;
 
+use PHPUnuhi\Exceptions\TranslationNotFoundException;
+
 class Locale
 {
 
@@ -74,14 +76,18 @@ class Locale
     /**
      * @param string $key
      * @param string $value
-     * @return void
+     * @return Translation
      */
-    public function addTranslation(string $key, string $value): void
+    public function addTranslation(string $key, string $value): Translation
     {
-        $this->translations[] = new Translation(
+        $translation = new Translation(
             $key,
             $value
         );
+
+        $this->translations[] = $translation;
+
+        return $translation;
     }
 
     /**
@@ -114,6 +120,23 @@ class Locale
         }
 
         return $keys;
+    }
+
+    /**
+     * @param string $searchKey
+     * @return Translation
+     * @throws TranslationNotFoundException
+     */
+    public function findAnyExistingTranslation(string $searchKey): Translation
+    {
+        foreach ($this->getTranslations() as $translation) {
+
+            if ($translation->getKey() === $searchKey && !$translation->isEmpty()) {
+                return $translation;
+            }
+        }
+
+        throw new TranslationNotFoundException('No valid translation found for key: ' . $searchKey);
     }
 
 }

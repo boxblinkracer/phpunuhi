@@ -5,6 +5,7 @@ namespace PHPUnuhi\Commands;
 use PHPUnuhi\Bundles\Storage\StorageFactory;
 use PHPUnuhi\Bundles\Translation\TranslatorFactory;
 use PHPUnuhi\Configuration\ConfigurationLoader;
+use PHPUnuhi\Exceptions\TranslationNotFoundException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -27,6 +28,7 @@ class TranslateCommand extends Command
             ->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('service', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('set', null, InputOption::VALUE_REQUIRED, '', '')
+            ->addOption('force', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('google-key', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('deepl-key', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('deepl-formal', null, InputOption::VALUE_NONE, '', null);
@@ -52,6 +54,7 @@ class TranslateCommand extends Command
 
         $service = (string)$input->getOption('service');
         $setName = (string)$input->getOption('set');
+        $forceLocale = (string)$input->getOption('force');
         $deeplApiKey = (string)$input->getOption('deepl-key');
         $googleKey = (string)$input->getOption('google-key');
         $formal = (bool)$input->getOption('deepl-formal');
@@ -80,41 +83,59 @@ class TranslateCommand extends Command
 
         foreach ($config->getTranslationSets() as $set) {
 
-            # if we have configured to only export a single suite then skip all others
+            # if we have configured to only translate a specific set then skip others
             if (!empty($setName) && $setName !== $set->getName()) {
                 continue;
             }
 
             $io->section('Translation Set: ' . $set->getName());
 
-            foreach ($set->getLocales() as $locale) {
-                foreach ($locale->getTranslations() as $currentTranslation) {
+            foreach ($set->getAllTranslationKeys() as $currentKey) {
 
-                    if (!empty($currentTranslation->isEmpty())) {
+                foreach ($set->getLocales() as $locale) {
+
+                    # if we have configured to only translate a specific locale then skip other locales
+                    if (!empty($forceLocale) && $forceLocale !== $locale->getName()) {
                         continue;
                     }
 
-                    $existingData = $set->findAnyExistingTranslation($currentTranslation->getKey());
+                    try {
+                        $currentTranslation = $locale->findAnyExistingTranslation($currentKey);
+                    } catch (TranslationNotFoundException $ex) {
+                        # if its not existing, fix it and create a new "empty" one
+                        $currentTranslation = $locale->addTranslation($currentKey, '');
 
-                    $existingLocale = $existingData['locale'];
-                    $existingTranslation = $existingData['translation'];
+                    }
 
-                    $newTranslation = $translator->translate(
-                        $existingTranslation->getValue(),
-                        $existingLocale,
-                        $locale->getName()
-                    );
+                    # translate if we either force it or only if our value is empty
+                    if ($forceLocale || $currentTranslation->isEmpty()) {
+                        $existingData = $set->findAnyExistingTranslation($currentKey);
 
-                    if (!empty($newTranslation)) {
-                        $translatedCount++;
+                        $existingLocale = $existingData['locale'];
+                        $existingTranslation = $existingData['translation'];
 
-                        $currentTranslation->setValue($newTranslation);
-                    } else {
-                        $translateFailedCount++;
+                        $newTranslation = $translator->translate(
+                            $existingTranslation->getValue(),
+                            $existingLocale,
+                            $locale->getName()
+                        );
+
+                        $io->writeln(' [.] translating "' . $currentTranslation->getKey() . '". Result ["' . $locale->getName() . '"] => ' . $newTranslation);
+
+                        if (!empty($newTranslation)) {
+                            $translatedCount++;
+
+                            $currentTranslation->setValue($newTranslation);
+                        } else {
+                            $translateFailedCount++;
+                        }
                     }
 
                 }
             }
+
+
+            $io->note('saving translations...');
 
             $storageSaver = StorageFactory::getSaverFromFormat(
                 $set->getFormat(),
