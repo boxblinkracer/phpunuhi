@@ -3,7 +3,6 @@
 namespace PHPUnuhi\Commands;
 
 use PHPUnuhi\Bundles\Exchange\ExchangeFormat;
-use PHPUnuhi\Components\Validator\Validator;
 use PHPUnuhi\Configuration\ConfigurationLoader;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -56,41 +55,35 @@ class StatusCommand extends Command
 
             $io->section('Translation Set: ' . $set->getName());
 
-            $countKeys = count($set->getAllTranslationKeys()) * count($set->getLocales());
+            $countMaxLocaleKeys = count($set->getAllTranslationKeys());
+            $countAllKeys = $countMaxLocaleKeys * count($set->getLocales());
 
-            $countSetEmpty = 0;
-            $countSetFilled = 0;
+            $countAllFilled = 0;
 
             foreach ($set->getLocales() as $locale) {
-                $emptyList = $locale->findEmptyTranslations();
                 $filledList = $locale->findFilledTranslations();
 
-                $countSetEmpty += count($emptyList);
-                $countSetFilled += count($filledList);
-
-
+                $countAllFilled += count($filledList);
             }
 
-            $percent = round($countSetFilled / $countKeys, 2) * 100;
+            $percent = round($countAllFilled / $countAllKeys, 2) * 100;
 
-            $io->writeln("Coverage: " . ': ' . $percent . '% (' . $countSetFilled . '/' . $countKeys . ')');
+            $io->writeln("Coverage: " . ': ' . $percent . '% (' . $countAllFilled . '/' . $countAllKeys . ')');
 
             foreach ($set->getLocales() as $locale) {
-                $countKeys = count($locale->getTranslationKeys());
+                $countAllKeys = count($locale->getTranslationKeys());
 
-                if ($countKeys === 0) {
-                    $io->writeln("   [" . $locale->getName() . "] Coverage: 0,00% (0/0)");
+                if ($countAllKeys === 0) {
+                    $io->writeln("   [" . $locale->getName() . "] Coverage: 0% (0/" . $countMaxLocaleKeys . ")");
 
                 } else {
                     $emptyList = $locale->findEmptyTranslations();
                     $filledList = $locale->findFilledTranslations();
 
-                    $percent = round(count($filledList) / $countKeys, 2) * 100;
+                    $percent = round(count($filledList) / $countAllKeys, 2) * 100;
 
-                    $io->writeln("   [" . $locale->getName() . '] Coverage: ' . $percent . ' % (' . count($filledList) . ' / ' . $countKeys . ')');
+                    $io->writeln("   [" . $locale->getName() . '] Coverage: ' . $percent . ' % (' . count($filledList) . '/' . $countAllKeys . ')');
                 }
-            
-
             }
         }
 

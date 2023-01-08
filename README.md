@@ -13,32 +13,34 @@ Unuhi? This is Hawaiian for "translate" or "translation".
 Now that you know this, let's get started!
 
 <!-- TOC -->
-  * [1. Basic Concept](#1-basic-concept)
-  * [2. Installation](#2-installation)
-  * [3. Configuration](#3-configuration)
-  * [4. Validate Command](#4-validate-command)
-    * [5. Validations](#5-validations)
-      * [5.1 Invalid structure](#51-invalid-structure)
-      * [5.2 Missing translations](#52-missing-translations)
-  * [6. Fix Command](#6-fix-command)
-  * [7. Export Command](#7-export-command)
-  * [8. Import Command](#8-import-command)
-  * [9. Translate Command](#9-translate-command)
-  * [10. Use Cases](#10-use-cases)
-    * [10.1 Validation in CI pipeline](#101-validation-in-ci-pipeline)
-    * [10.2 Working with external translation agencies](#102-working-with-external-translation-agencies)
-    * [10.3 Live WebEdit with HTML](#103-live-webedit-with-html)
-    * [10.4 Automatic Translation with Google, DeepL, ...](#104-automatic-translation-with-google-deepl-)
-  * [11 Appendix](#11-appendix)
-    * [11.1 Storage Formats](#111-storage-formats)
-      * [11.1.1 JSON](#1111-json)
-    * [11.2 Exchange Formats](#112-exchange-formats)
-      * [11.2.1 CSV](#1121-csv)
-      * [11.2.2 HTML / WebEdit](#1122-html--webedit)
-    * [11.3 Translator Services](#113-translator-services)
-      * [11.3.1 DeepL](#1131-deepl)
-      * [11.3.2 Google Cloud Translate](#1132-google-cloud-translate)
-      * [11.3.3 Google Web Translate](#1133-google-web-translate)
+
+* [1. Basic Concept](#1-basic-concept)
+* [2. Installation](#2-installation)
+* [3. Configuration](#3-configuration)
+* [4. Commands](#4-commands)
+    * [4.1 Validate Command](#41-validate-command)
+        * [4.1.1 Validations](#411-validations)
+    * [4.2 Fix Command](#42-fix-command)
+    * [4.3 Export Command](#43-export-command)
+    * [4.4 Import Command](#44-import-command)
+    * [4.5 Translate Command](#45-translate-command)
+    * [4.6 Status Command](#46-status-command)
+* [5. Use Cases](#5-use-cases)
+    * [5.1 Validation in CI pipeline](#51-validation-in-ci-pipeline)
+    * [5.2 Working with external translation agencies](#52-working-with-external-translation-agencies)
+    * [5.3 Live WebEdit with HTML](#53-live-webedit-with-html)
+    * [5.4 Automatic Translation with Google, DeepL, ...](#54-automatic-translation-with-google-deepl-)
+* [6 Appendix](#6-appendix)
+    * [6.1 Storage Formats](#61-storage-formats)
+        * [6.1.1 JSON](#611-json)
+    * [6.2 Exchange Formats](#62-exchange-formats)
+        * [6.2.1 CSV](#621-csv)
+        * [6.2.2 HTML / WebEdit](#622-html--webedit)
+    * [6.3 Translator Services](#63-translator-services)
+        * [6.3.1 DeepL](#631-deepl)
+        * [6.3.2 Google Cloud Translate](#632-google-cloud-translate)
+        * [6.3.3 Google Web Translate](#633-google-web-translate)
+
 <!-- TOC -->
 
 ## 1. Basic Concept
@@ -127,7 +129,9 @@ Some storage formats, such as JSON, have individual attributes that can be defin
 
 > Read more about optional attributes in the storage-format section in the appendix below.
 
-## 4. Validate Command
+## 4. Commands
+
+### 4.1 Validate Command
 
 Start the validation of your translation files by running this command:
 
@@ -139,9 +143,9 @@ php vendor/bin/phpunuhi validate
 php vendor/bin/phpunuhi validate --configuration=./translations.xml
 ```
 
-### 5. Validations
+#### 4.1.1 Validations
 
-#### 5.1 Invalid structure
+**Invalid structure**
 
 The command will check if all files of a translation set have the **same structure**.
 If not, you might have forgotten something ;)
@@ -150,7 +154,7 @@ If not, you might have forgotten something ;)
    <img src="/.github/assets/validation-structure.png">
 </p>
 
-#### 5.2 Missing translations
+**Missing translations**
 
 If missing translations (**empty values**) are found, the validation process will fail.
 This helps against forgetting certain translations in any of your files.
@@ -159,7 +163,7 @@ This helps against forgetting certain translations in any of your files.
    <img src="/.github/assets/validation-empty.png">
 </p>
 
-## 6. Fix Command
+### 4.2 Fix Command
 
 If your storage files are not matching, you can easily use the fixing command to make sure they are in sync.
 Please note, that this will only create empty translations so that the structure is the same.
@@ -174,7 +178,7 @@ php vendor/bin/phpunuhi fix
 php vendor/bin/phpunuhi fix --set="storefront"
 ```
 
-## 7. Export Command
+### 4.3 Export Command
 
 You can export your translations **into a CSV file**, a HTML WebEdit spreadsheet, or other supported exchange formats.
 These files can then be passed on to an external translator or company.
@@ -201,7 +205,7 @@ php vendor/bin/phpunuhi export ... --set="storefront"
    <img src="/.github/assets/csv.png">
 </p>
 
-## 8. Import Command
+### 4.4 Import Command
 
 You can import your translations **from a CSV file** or other supported exchange formats.
 This will automatically update the storage files (JSON, ...) that have been assigned to the imported translation set.
@@ -216,7 +220,7 @@ php vendor/bin/phpunuhi import --set=storefront --file=storefront.csv
 php vendor/bin/phpunuhi import ... --format=html
 ```
 
-## 9. Translate Command
+### 4.5 Translate Command
 
 PHPUnuhi includes the option to use external services to automatically translate missing values for you.
 
@@ -244,11 +248,19 @@ php vendor/bin/phpunuhi translate ...  --force=en
 
 > For more options and arguments of the formats please see the appendix below!
 
-## 10. Use Cases
+### 4.6 Status Command
+
+Use this command to get the coverage status of your translations.
+
+```bash 
+php vendor/bin/phpunuhi status 
+```
+
+## 5. Use Cases
 
 Here are a few use cases and ideas to get you started.
 
-### 10.1 Validation in CI pipeline
+### 5.1 Validation in CI pipeline
 
 One of the typical things you want to make sure is, that your plugin/software doesn't miss any
 required translations.
@@ -256,7 +268,7 @@ required translations.
 This can be done directly within your CI pipeline. Just install your dependencies and run the validation command.
 The exit value of this command will automatically stop your pipeline if an error is detected.
 
-### 10.2 Working with external translation agencies
+### 5.2 Working with external translation agencies
 
 External translation agencies often require CSV exports.
 You can easily generate and export a CSV file for your partner agencies.
@@ -264,7 +276,7 @@ You can easily generate and export a CSV file for your partner agencies.
 Once they have adjusted their translation, they can send you the file back and you simply
 import it again with the import command.
 
-### 10.3 Live WebEdit with HTML
+### 5.3 Live WebEdit with HTML
 
 If you have a test or staging system, you can even go one step further.
 Just imagine setting up a cronjob that runs after a deployment, or as scheduled job.
@@ -274,7 +286,7 @@ That HTML file might then be exposed with something like this **https://stage.my
 Everyone who wants to either see all translations, or even modify them, can easily do this in their browser.
 And because you use a cronjob to generate the file, it's always automatically updated.
 
-### 10.4 Automatic Translation with Google, DeepL, ...
+### 5.4 Automatic Translation with Google, DeepL, ...
 
 You can automatically translate your missing (or all) translations by using an external service.
 This can be GoogleWeb, GoogleCloud or even DeepL.
@@ -282,16 +294,16 @@ Provide your API key (if required for service) and see the magic happening.
 
 > A double check and approval in your version control would still be a good thing.
 
-## 11 Appendix
+## 6 Appendix
 
-### 11.1 Storage Formats
+### 6.1 Storage Formats
 
 Storage formats define how your translations are stored.
 Every format has its own loading and saving implementation.
 
 The following formats are currently supported.
 
-#### 11.1.1 JSON
+#### 6.1.1 JSON
 
 * Format: "json"
 
@@ -304,7 +316,7 @@ The JSON format means that your files are stored in separate JSON files.
 Every locale has its own JSON file.
 The JSON structure across all files of a set should match.
 
-### 11.2 Exchange Formats
+### 6.2 Exchange Formats
 
 Exchange formats define how you export and import translation data.
 The main purpose is to send it out to a translation company or just someone else,
@@ -312,7 +324,7 @@ and be able to import it back into your system again.
 
 The following formats are currently supported.
 
-#### 11.2.1 CSV
+#### 6.2.1 CSV
 
 * Format: "csv"
 
@@ -332,7 +344,7 @@ Every translation key has its own row, and all locale-values have their own colu
    <img src="/.github/assets/csv.png">
 </p>
 
-#### 11.2.2 HTML / WebEdit
+#### 6.2.2 HTML / WebEdit
 
 * Format: "html"
 
@@ -346,12 +358,12 @@ you can import again into your system with the format **html** in PHPUnuhi.
    <img src="/.github/assets/html.png">
 </p>
 
-### 11.3 Translator Services
+### 6.3 Translator Services
 
 Translators are supported (external) services that automatically translate empty values for you.
 These services usually require an API key that needs to be provided for PHPUnuhi.
 
-#### 11.3.1 DeepL
+#### 6.3.1 DeepL
 
 * Service: "deepl"
 
@@ -367,7 +379,7 @@ DeepL allows you to either translate to a formal or informal language.
 This option is only available for some target languages, just like "German" ("du" vs. "Sie").
 You can request a formal language by simply applying the argument "--deepl-formal" to the translate command.
 
-#### 11.3.2 Google Cloud Translate
+#### 6.3.2 Google Cloud Translate
 
 * Service: "googlecloud"
 
@@ -378,7 +390,7 @@ You can request a formal language by simply applying the argument "--deepl-forma
 Google Cloud Translation allows you to use the AI services of Google.
 If you have an API Key, you can easily provide it with the corresponding argument when running the translation command.
 
-#### 11.3.3 Google Web Translate
+#### 6.3.3 Google Web Translate
 
 * Service: "googleweb"
 
