@@ -139,5 +139,36 @@ class Locale
         throw new TranslationNotFoundException('No existing translation found for key: ' . $searchKey);
     }
 
+    /**
+     * @return Translation[]
+     */
+    public function findEmptyTranslations(): array
+    {
+        $list = [];
+
+        foreach ($this->getTranslations() as $translation) {
+            if ($translation->isEmpty()) {
+                $list[] = $translation;
+            }
+        }
+
+        return $list;
+    }
+
+    /**
+     * @return Translation[]
+     */
+    public function findFilledTranslations(): array
+    {
+        $list = [];
+
+        foreach ($this->getTranslations() as $translation) {
+            if (!$translation->isEmpty()) {
+                $list[] = $translation;
+            }
+        }
+
+        return $list;
+    }
 }
 

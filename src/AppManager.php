@@ -6,6 +6,7 @@ use Exception;
 use PHPUnuhi\Commands\ExportCommand;
 use PHPUnuhi\Commands\FixCommand;
 use PHPUnuhi\Commands\ImportCommand;
+use PHPUnuhi\Commands\StatusCommand;
 use PHPUnuhi\Commands\TranslateCommand;
 use PHPUnuhi\Commands\ValidateCommand;
 use Symfony\Component\Console\Application;
@@ -22,6 +23,7 @@ class AppManager
     {
         $application = new Application('PHPUnuhi', PHPUnuhi::VERSION);
 
+        $application->add(new StatusCommand());
         $application->add(new ValidateCommand());
         $application->add(new ExportCommand());
         $application->add(new ImportCommand());
