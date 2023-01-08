@@ -13,34 +13,32 @@ Unuhi? This is Hawaiian for "translate" or "translation".
 Now that you know this, let's get started!
 
 <!-- TOC -->
-
-* [1. Basic Concept](#1-basic-concept)
-* [2. Installation](#2-installation)
-* [3. Configuration](#3-configuration)
-* [4. Commands](#4-commands)
+  * [1. Basic Concept](#1-basic-concept)
+  * [2. Installation](#2-installation)
+  * [3. Configuration](#3-configuration)
+  * [4. Commands](#4-commands)
     * [4.1 Validate Command](#41-validate-command)
-        * [4.1.1 Validations](#411-validations)
+      * [4.1.1 Validations](#411-validations)
     * [4.2 Fix Command](#42-fix-command)
     * [4.3 Export Command](#43-export-command)
     * [4.4 Import Command](#44-import-command)
     * [4.5 Translate Command](#45-translate-command)
     * [4.6 Status Command](#46-status-command)
-* [5. Use Cases](#5-use-cases)
+  * [5. Use Cases](#5-use-cases)
     * [5.1 Validation in CI pipeline](#51-validation-in-ci-pipeline)
     * [5.2 Working with external translation agencies](#52-working-with-external-translation-agencies)
     * [5.3 Live WebEdit with HTML](#53-live-webedit-with-html)
     * [5.4 Automatic Translation with Google, DeepL, ...](#54-automatic-translation-with-google-deepl-)
-* [6 Appendix](#6-appendix)
+  * [6 Appendix](#6-appendix)
     * [6.1 Storage Formats](#61-storage-formats)
-        * [6.1.1 JSON](#611-json)
+      * [6.1.1 JSON](#611-json)
     * [6.2 Exchange Formats](#62-exchange-formats)
-        * [6.2.1 CSV](#621-csv)
-        * [6.2.2 HTML / WebEdit](#622-html--webedit)
+      * [6.2.1 CSV](#621-csv)
+      * [6.2.2 HTML / WebEdit](#622-html--webedit)
     * [6.3 Translator Services](#63-translator-services)
-        * [6.3.1 DeepL](#631-deepl)
-        * [6.3.2 Google Cloud Translate](#632-google-cloud-translate)
-        * [6.3.3 Google Web Translate](#633-google-web-translate)
-
+      * [6.3.1 DeepL](#631-deepl)
+      * [6.3.2 Google Cloud Translate](#632-google-cloud-translate)
+      * [6.3.3 Google Web Translate](#633-google-web-translate)
 <!-- TOC -->
 
 ## 1. Basic Concept
