@@ -11,6 +11,9 @@ help:
 
 #------------------------------------------------------------------------------------------------
 
+status: ## Status command
+	cd ../.. && php bin/phpunuhi status --configuration=./tests/playground/phpunuhi.xml
+
 validate: ## Validate command
 	cd ../.. && php bin/phpunuhi validate --configuration=./tests/playground/phpunuhi.xml
 
@@ -22,6 +25,9 @@ translate: ## Translate command
 
 export: ## Export command
 	cd ../.. && php bin/phpunuhi export --configuration=./tests/playground/phpunuhi.xml --dir=./tests/playground/.exports
+
+html: ## Export command with HTML
+	cd ../.. && php bin/phpunuhi export --configuration=./tests/playground/phpunuhi.xml --dir=./tests/playground/.exports --format=html
 
 import: ## Import command
 	cd ../.. && php bin/phpunuhi import --configuration=./tests/playground/phpunuhi.xml --set=storefront --file=./tests/playground/.exports/storefront.csv
