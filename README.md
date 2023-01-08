@@ -13,38 +13,40 @@ Unuhi? This is Hawaiian for "translate" or "translation".
 Now that you know this, let's get started!
 
 <!-- TOC -->
-  * [1. Basic Concept](#1-basic-concept)
-  * [2. Installation](#2-installation)
-  * [3. Configuration](#3-configuration)
-  * [4. Commands](#4-commands)
+
+* [1. Basic Concept](#1-basic-concept)
+* [2. Installation](#2-installation)
+* [3. Configuration](#3-configuration)
+* [4. Commands](#4-commands)
     * [4.1 Validate Command](#41-validate-command)
-      * [4.1.1 Validations](#411-validations)
+        * [4.1.1 Validations](#411-validations)
     * [4.2 Fix Command](#42-fix-command)
     * [4.3 Export Command](#43-export-command)
     * [4.4 Import Command](#44-import-command)
     * [4.5 Translate Command](#45-translate-command)
     * [4.6 Status Command](#46-status-command)
-  * [5. Use Cases](#5-use-cases)
+* [5. Use Cases](#5-use-cases)
     * [5.1 Validation in CI pipeline](#51-validation-in-ci-pipeline)
     * [5.2 Working with external translation agencies](#52-working-with-external-translation-agencies)
     * [5.3 Live WebEdit with HTML](#53-live-webedit-with-html)
     * [5.4 Automatic Translation with Google, DeepL, ...](#54-automatic-translation-with-google-deepl-)
-  * [6 Appendix](#6-appendix)
+* [6 Appendix](#6-appendix)
     * [6.1 Storage Formats](#61-storage-formats)
-      * [6.1.1 JSON](#611-json)
+        * [6.1.1 JSON](#611-json)
+        * [6.1.2 INI](#612-ini)
     * [6.2 Exchange Formats](#62-exchange-formats)
-      * [6.2.1 CSV](#621-csv)
-      * [6.2.2 HTML / WebEdit](#622-html--webedit)
+        * [6.2.1 CSV](#621-csv)
+        * [6.2.2 HTML / WebEdit](#622-html--webedit)
     * [6.3 Translator Services](#63-translator-services)
-      * [6.3.1 DeepL](#631-deepl)
-      * [6.3.2 Google Cloud Translate](#632-google-cloud-translate)
-      * [6.3.3 Google Web Translate](#633-google-web-translate)
+        * [6.3.1 DeepL](#631-deepl)
+        * [6.3.2 Google Cloud Translate](#632-google-cloud-translate)
+        * [6.3.3 Google Web Translate](#633-google-web-translate)
+
 <!-- TOC -->
 
 ## 1. Basic Concept
 
 This is a framework that helps you to **validate and maintain translation files**.
-At the moment it only supports JSON based files.
 
 Although it's not dependent on a specific platform, you can use it perfectly with Shopware 6 and other platforms.
 
@@ -112,9 +114,14 @@ Let's create a new **phpunuhi.xml** file (or rename it to something else).
             <file locale="en">./snippets/storefront/en.json</file>
         </set>
 
-        <set name="Admin" format="json" jsonIntent="4" jsonSort="true">
+        <set name="Admin" format="json" sort="true" jsonIntent="4">
             <file locale="de">./snippets/admin/de.json</file>
             <file locale="en">./snippets/admin/en.json</file>
+        </set>
+
+        <set name="Frontend" format="ini" sort="true">
+            <file locale="de">./snippets/admin/de.ini</file>
+            <file locale="en">./snippets/admin/en.ini</file>
         </set>
 
     </translations>
@@ -305,14 +312,26 @@ The following formats are currently supported.
 
 * Format: "json"
 
-| XML Set Attribute | Default | Description                                               | 
-|-------------------|---------|-----------------------------------------------------------|
-| jsonIntent        | 2       | Set a custom JSON intent for the spaces [jsonIntent="4"]  |
-| jsonSort          | false   | Turn on or off the alphabetical sorting [jsonSort="true"] |
+| XML Set Attribute | Default | Description                                              | 
+|-------------------|---------|----------------------------------------------------------|
+| jsonIntent        | 2       | Set a custom JSON intent for the spaces [jsonIntent="4"] |
+| sort              | false   | Turn on or off the alphabetical sorting [sort="true"]    |
 
 The JSON format means that your files are stored in separate JSON files.
 Every locale has its own JSON file.
 The JSON structure across all files of a set should match.
+
+#### 6.1.2 INI
+
+* Format: "ini"
+
+| XML Set Attribute | Default | Description                                           | 
+|-------------------|---------|-------------------------------------------------------|
+| sort              | false   | Turn on or off the alphabetical sorting [sort="true"] |
+
+The INI format means that your files are stored in separate INI files.
+Every locale has its own INI file.
+The INI structure across all files of a set should match.
 
 ### 6.2 Exchange Formats
 

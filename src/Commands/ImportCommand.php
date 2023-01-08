@@ -90,7 +90,7 @@ class ImportCommand extends Command
             $storageSaver = StorageFactory::getStorage(
                 $set->getFormat(),
                 $set->getJsonIntent(),
-                $set->isJsonSort()
+                $set->isSortStorage()
             );
 
             # build the correct importer for our exchange format

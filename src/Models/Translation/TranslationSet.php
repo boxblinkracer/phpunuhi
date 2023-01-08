@@ -2,7 +2,6 @@
 
 namespace PHPUnuhi\Models\Translation;
 
-use _PHPStan_d279f388f\Nette\Neon\Exception;
 
 class TranslationSet
 {
@@ -25,7 +24,7 @@ class TranslationSet
     /**
      * @var bool
      */
-    private $jsonSort;
+    private $sortStorage;
 
     /**
      * @var Locale[]
@@ -37,15 +36,15 @@ class TranslationSet
      * @param string $name
      * @param string $format
      * @param int $jsonIntent
-     * @param bool $jsonSort
+     * @param bool $sortStorage
      * @param Locale[] $locales
      */
-    public function __construct(string $name, string $format, int $jsonIntent, bool $jsonSort, array $locales)
+    public function __construct(string $name, string $format, int $jsonIntent, bool $sortStorage, array $locales)
     {
         $this->name = $name;
         $this->format = $format;
         $this->jsonIntent = $jsonIntent;
-        $this->jsonSort = $jsonSort;
+        $this->sortStorage = $sortStorage;
         $this->locales = $locales;
     }
 
@@ -77,9 +76,9 @@ class TranslationSet
     /**
      * @return bool
      */
-    public function isJsonSort(): bool
+    public function isSortStorage(): bool
     {
-        return $this->jsonSort;
+        return $this->sortStorage;
     }
 
     /**

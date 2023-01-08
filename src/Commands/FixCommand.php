@@ -82,7 +82,7 @@ class FixCommand extends Command
             $storageSaver = StorageFactory::getStorage(
                 $set->getFormat(),
                 $set->getJsonIntent(),
-                $set->isJsonSort()
+                $set->isSortStorage()
             );
 
             $storageSaver->saveTranslations($set);
