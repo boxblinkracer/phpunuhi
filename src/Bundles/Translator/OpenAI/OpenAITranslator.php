@@ -33,6 +33,10 @@ class OpenAITranslator implements TranslatorInterface
      */
     public function translate(string $text, string $sourceLocale, string $targetLocale): string
     {
+        if (empty($this->apiKey)) {
+            throw new \Exception('OpenAI API Key must not be empty. Please provide a key');
+        }
+
         $languageName = Locale::getDisplayLanguage($targetLocale);
 
         $prompt = "Translate this into " . $languageName . ":" . $text;
