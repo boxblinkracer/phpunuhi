@@ -122,7 +122,11 @@ class HTMLExporter implements ExportInterface
             mkdir($outputDir);
         }
 
-        file_put_contents($outputDir . '/index.html', $html);
+        $fullFile = $outputDir . '/index.html';
+        file_put_contents($fullFile, $html);
+
+        echo '   [+] generated file: ' . $fullFile . PHP_EOL . PHP_EOL;
+
     }
 
     /**

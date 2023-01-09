@@ -114,7 +114,24 @@ Let's create a new **phpunuhi.xml** file (or rename it to something else).
             <file locale="en">./snippets/storefront/en.json</file>
         </set>
 
-        <set name="Admin" format="json" sort="true" jsonIntent="4">
+    </translations>
+</phpunuhi>
+```
+
+This was a simple configuration, but you can also do way more.
+Look at this one:
+
+```xml
+
+<phpunuhi>
+    <translations>
+
+        <set name="Storefront">
+            <file locale="de">./snippets/storefront/de.json</file>
+            <file locale="en">./snippets/storefront/en.json</file>
+        </set>
+
+        <set name="Admin" format="json" sort="true" jsonIndent="4">
             <file locale="de">./snippets/admin/de.json</file>
             <file locale="en">./snippets/admin/en.json</file>
         </set>
@@ -192,7 +209,6 @@ php vendor/bin/phpunuhi fix --set="storefront"
    <img src="/.github/assets/fix.png">
 </p>
 
-
 ### 4.3 Export Command
 
 You can export your translations **into a CSV file**, a HTML WebEdit spreadsheet, or other supported exchange formats.
@@ -267,7 +283,6 @@ php vendor/bin/phpunuhi translate ...  --force=en
    <img src="/.github/assets/translate.png">
 </p>
 
-
 ### 4.6 Status Command
 
 Use this command to get the coverage status of your translations.
@@ -279,7 +294,6 @@ php vendor/bin/phpunuhi status
 <p align="center">
    <img src="/.github/assets/status.png">
 </p>
-
 
 ## 5. Use Cases
 
@@ -332,10 +346,10 @@ The following formats are currently supported.
 
 * Format: "json"
 
-| XML Set Attribute | Default | Description                                              | 
-|-------------------|---------|----------------------------------------------------------|
-| jsonIntent        | 2       | Set a custom JSON intent for the spaces [jsonIntent="4"] |
-| sort              | false   | Turn on or off the alphabetical sorting [sort="true"]    |
+| XML Set Attribute | Default | Description                                           | 
+|-------------------|---------|-------------------------------------------------------|
+| jsonIndent        | 2       | Set a custom JSON indent for the spaces [jsonIndent="4"] |
+| sort              | false   | Turn on or off the alphabetical sorting [sort="true"] |
 
 The JSON format means that your files are stored in separate JSON files.
 Every locale has its own JSON file.

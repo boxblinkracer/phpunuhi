@@ -156,23 +156,7 @@ class Locale
     /**
      * @return Translation[]
      */
-    public function findEmptyTranslations(): array
-    {
-        $list = [];
-
-        foreach ($this->getTranslations() as $translation) {
-            if ($translation->isEmpty()) {
-                $list[] = $translation;
-            }
-        }
-
-        return $list;
-    }
-
-    /**
-     * @return Translation[]
-     */
-    public function findFilledTranslations(): array
+    public function getValidTranslations(): array
     {
         $list = [];
 
@@ -184,5 +168,6 @@ class Locale
 
         return $list;
     }
+
 }
 

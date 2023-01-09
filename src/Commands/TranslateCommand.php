@@ -46,6 +46,7 @@ class TranslateCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
+        $io->title('PHPUnuhi Translate');
         $this->showHeader();
 
         # -----------------------------------------------------------------
@@ -83,6 +84,8 @@ class TranslateCommand extends Command
 
         foreach ($config->getTranslationSets() as $set) {
 
+            $translatedInSet = 0;
+
             # if we have configured to only translate a specific set then skip others
             if (!empty($setName) && $setName !== $set->getName()) {
                 continue;
@@ -90,9 +93,14 @@ class TranslateCommand extends Command
 
             $io->section('Translation Set: ' . $set->getName());
 
-            foreach ($set->getAllTranslationKeys() as $currentKey) {
+            $allKeys = $set->getAllTranslationKeys();
+
+            # first iterate through keys
+            # then we have all keys next to each other for better comparing on CLI
+            foreach ($allKeys as $currentKey) {
 
                 foreach ($set->getLocales() as $locale) {
+
 
                     # if we have configured to only translate a specific locale then skip other locales
                     if (!empty($forceLocale) && $forceLocale !== $locale->getName()) {
@@ -120,26 +128,30 @@ class TranslateCommand extends Command
                             $locale->getName()
                         );
 
-                        $io->writeln('   [~] translating "' . $currentTranslation->getKey() . '". Result ["' . $locale->getName() . '"] => ' . $newTranslation);
+                        $io->writeln('   [~] translating "' . $currentTranslation->getKey() . '" (' . $locale->getName() . ') => ' . $newTranslation);
 
                         if (!empty($newTranslation)) {
                             $translatedCount++;
+                            $translatedInSet++;
 
                             $currentTranslation->setValue($newTranslation);
                         } else {
                             $translateFailedCount++;
                         }
                     }
-
                 }
             }
 
+            if ($translatedInSet <= 0) {
+                $io->note('nothing translated in this set...');
+                continue;
+            }
 
-            $io->note('saving translations...');
+            $io->block('saving translations of this set...');
 
             $storageSaver = StorageFactory::getStorage(
                 $set->getFormat(),
-                $set->getJsonIntent(),
+                $set->getJsonIndent(),
                 $set->isSortStorage()
             );
 
@@ -147,11 +159,11 @@ class TranslateCommand extends Command
         }
 
         if ($translateFailedCount > 0) {
-            $io->warning($translatedCount . ' translations are updated! ' . $translateFailedCount . ' translations not updated!');
+            $io->warning($translatedCount . ' translation(s) are updated! ' . $translateFailedCount . ' translation(s) not updated!');
             exit(0);
         }
 
-        $io->success($translatedCount . ' translations are updated!');
+        $io->success($translatedCount . ' translation(s) are updated!');
         exit(0);
     }
 

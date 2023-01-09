@@ -39,6 +39,7 @@ class ValidateCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
+        $io->title('PHPUnuhi Validate');
         $this->showHeader();
 
         # -----------------------------------------------------------------
@@ -62,9 +63,9 @@ class ValidateCommand extends Command
             $isValid = $validator->validate($set);
 
             if ($isValid) {
-                $io->info('Set is valid!');
+                $io->block('Set is valid!');
             } else {
-                $io->info('Set is not valid!');
+                $io->note('Set is not valid!');
                 $isAllValid = false;
             }
         }

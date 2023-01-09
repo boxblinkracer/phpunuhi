@@ -30,7 +30,7 @@ class AppManager
         $application->add(new TranslateCommand());
         $application->add(new FixCommand());
 
-        $application->setDefaultCommand('validate');
+        $application->setDefaultCommand('list');
 
         $application->run();
     }

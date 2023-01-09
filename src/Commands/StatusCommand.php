@@ -4,6 +4,7 @@ namespace PHPUnuhi\Commands;
 
 use PHPUnuhi\Bundles\Exchange\ExchangeFormat;
 use PHPUnuhi\Configuration\ConfigurationLoader;
+use PHPUnuhi\Services\Maths\PercentageCalculator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -39,6 +40,7 @@ class StatusCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
+        $io->title('PHPUnuhi Status');
         $this->showHeader();
 
         # -----------------------------------------------------------------
@@ -50,40 +52,42 @@ class StatusCommand extends Command
         $configLoader = new ConfigurationLoader();
         $config = $configLoader->load($configFile);
 
+        $calculator = new PercentageCalculator();
+
 
         foreach ($config->getTranslationSets() as $set) {
 
             $io->section('Translation Set: ' . $set->getName());
 
             $countMaxLocaleKeys = count($set->getAllTranslationKeys());
-            $countAllKeys = $countMaxLocaleKeys * count($set->getLocales());
+            $countSetKeys = $countMaxLocaleKeys * count($set->getLocales());
 
-            $countAllFilled = 0;
+            $countSetValid = 0;
 
             foreach ($set->getLocales() as $locale) {
-                $filledList = $locale->findFilledTranslations();
-
-                $countAllFilled += count($filledList);
+                $countSetValid += count($locale->getValidTranslations());
             }
 
-            $percent = round($countAllFilled / $countAllKeys, 2) * 100;
+            $percent = $calculator->getRoundedPercentage($countSetValid, $countSetKeys);
 
-            $io->writeln("Coverage: " . ': ' . $percent . '% (' . $countAllFilled . '/' . $countAllKeys . ')');
+            $io->writeln("Coverage: " . $percent . '% (' . $countSetValid . '/' . $countSetKeys . ')');
+
 
             foreach ($set->getLocales() as $locale) {
-                $countAllKeys = count($locale->getTranslationKeys());
+                $countLocaleKeys = count($locale->getTranslationKeys());
 
-                if ($countAllKeys === 0) {
+                if ($countLocaleKeys === 0) {
+                    # if our current locale has no keys
+                    # then show 0,00 %, and also show the maximum number of keys as coverage possibility
                     $io->writeln("   [" . $locale->getName() . "] Coverage: 0% (0/" . $countMaxLocaleKeys . ")");
-
-                } else {
-                    $emptyList = $locale->findEmptyTranslations();
-                    $filledList = $locale->findFilledTranslations();
-
-                    $percent = round(count($filledList) / $countAllKeys, 2) * 100;
-
-                    $io->writeln("   [" . $locale->getName() . '] Coverage: ' . $percent . ' % (' . count($filledList) . '/' . $countAllKeys . ')');
+                    continue;
                 }
+
+                $countLocaleValid = count($locale->getValidTranslations());
+
+                $percent = $calculator->getRoundedPercentage($countLocaleValid, $countLocaleKeys);
+
+                $io->writeln("   [" . $locale->getName() . '] Coverage: ' . $percent . '% (' . $countLocaleValid . '/' . $countLocaleKeys . ')');
             }
         }
 

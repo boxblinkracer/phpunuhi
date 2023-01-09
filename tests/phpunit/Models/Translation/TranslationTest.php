@@ -38,4 +38,16 @@ class TranslationTest extends TestCase
         $this->assertEquals(true, $translation->isEmpty());
     }
 
+    /**
+     * @return void
+     */
+    public function testSetValue()
+    {
+        $translation = new Translation('title', '   ');
+        $translation->setValue('abc');
+
+        $this->assertEquals('abc', $translation->getValue());
+    }
+
+
 }

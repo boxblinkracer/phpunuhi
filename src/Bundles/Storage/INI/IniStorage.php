@@ -35,8 +35,8 @@ class IniStorage implements StorageInterface
             throw new \Exception('Attention, translation file not found: ' . $locale->getFilename());
         }
 
-        $iniArray = parse_ini_file($locale->getFilename(), true);
-
+        $iniArray = parse_ini_file($locale->getFilename(), true, INI_SCANNER_RAW);
+        
         if ($iniArray === false) {
             throw new \Exception('Error when loading INI file: ' . $locale->getFilename());
         }
@@ -102,7 +102,7 @@ class IniStorage implements StorageInterface
 
             foreach ($preparedTranslations as $key => $value) {
 
-                $content .= $key . ' = ' . $value . PHP_EOL;
+                $content .= $key . '="' . $value . '"' . PHP_EOL;
 
                 $translationCount++;
             }
