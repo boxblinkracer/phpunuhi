@@ -50,7 +50,8 @@ class OpenAITranslator implements TranslatorInterface
 
         $openAI = new OpenAi($this->apiKey);
 
-        $complete = $openAI->completion($params);
+        $complete = (string)$openAI->completion($params);
+
 
         $json = json_decode($complete, true);
 
