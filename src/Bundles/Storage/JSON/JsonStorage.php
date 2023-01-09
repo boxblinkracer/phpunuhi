@@ -22,13 +22,13 @@ class JsonStorage implements StorageInterface
 
 
     /**
-     * @param int $intent
+     * @param int $indent
      * @param bool $sort
      */
-    public function __construct(int $intent, bool $sort)
+    public function __construct(int $indent, bool $sort)
     {
         $this->loader = new JsonLoader();
-        $this->saver = new JsonSaver($intent, $sort);
+        $this->saver = new JsonSaver($indent, $sort);
     }
 
     /**

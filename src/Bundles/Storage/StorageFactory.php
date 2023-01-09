@@ -11,16 +11,16 @@ class StorageFactory
 
     /**
      * @param string $format
-     * @param int $jsonIntent
+     * @param int $jsonIndent
      * @param bool $sortStorage
      * @return StorageInterface
      * @throws \Exception
      */
-    public static function getStorage(string $format, int $jsonIntent, bool $sortStorage): StorageInterface
+    public static function getStorage(string $format, int $jsonIndent, bool $sortStorage): StorageInterface
     {
         switch (strtolower($format)) {
             case StorageFormat::JSON:
-                return new JsonStorage($jsonIntent, $sortStorage);
+                return new JsonStorage($jsonIndent, $sortStorage);
 
             case StorageFormat::INI:
                 return new IniStorage($sortStorage);

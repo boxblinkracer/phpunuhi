@@ -2,7 +2,7 @@
 
     <translations>
 
-        <set name="json" format="json" jsonIntent="2" sort="true">
+        <set name="json" format="json" jsonIndent="2" sort="true">
             <file locale="de">./json/de.json</file>
             <file locale="en">./json/en.json</file>
             <file locale="nl">./json/nl.json</file>

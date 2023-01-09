@@ -45,6 +45,7 @@ class ImportCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
+        $io->title('PHPUnuhi Import');
         $this->showHeader();
 
         # -----------------------------------------------------------------
@@ -89,7 +90,7 @@ class ImportCommand extends Command
             # get correct storage saver from our current set
             $storageSaver = StorageFactory::getStorage(
                 $set->getFormat(),
-                $set->getJsonIntent(),
+                $set->getJsonIndent(),
                 $set->isSortStorage()
             );
 
@@ -105,7 +106,7 @@ class ImportCommand extends Command
             exit(0);
         }
 
-        $io->warning('No sets found with name: ' . $setName);
+        $io->error('No sets found with name: ' . $setName);
         exit(1);
     }
 

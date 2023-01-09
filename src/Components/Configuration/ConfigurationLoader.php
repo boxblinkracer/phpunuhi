@@ -43,15 +43,15 @@ class ConfigurationLoader
 
             $name = trim((string)$xmlSet['name']);
             $format = trim((string)$xmlSet['format']);
-            $jsonIntent = trim((string)$xmlSet['jsonIntent']);
+            $jsonIndent = trim((string)$xmlSet['jsonIndent']);
             $sortStorage = trim((string)$xmlSet['sort']);
 
             if (empty($format)) {
                 $format = StorageFormat::JSON;
             }
 
-            if (empty($jsonIntent)) {
-                $jsonIntent = "2";
+            if (empty($jsonIndent)) {
+                $jsonIndent = "2";
             }
 
             if (empty($sortStorage)) {
@@ -92,10 +92,10 @@ class ConfigurationLoader
             }
 
             # create our new set
-            $set = new TranslationSet($name, $format, (int)$jsonIntent, (bool)$sortStorage, $foundLocales);
+            $set = new TranslationSet($name, $format, (int)$jsonIndent, (bool)$sortStorage, $foundLocales);
 
 
-            $translationLoader = StorageFactory::getStorage($set->getFormat(), $set->getJsonIntent(), $set->isSortStorage());
+            $translationLoader = StorageFactory::getStorage($set->getFormat(), $set->getJsonIndent(), $set->isSortStorage());
 
             # now iterate through our locales
             # and load the translation files for it

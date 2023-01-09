@@ -12,7 +12,7 @@ class JsonSaver
     /**
      * @var int
      */
-    private $jsonIntent;
+    private $jsonIndent;
 
     /**
      * @var bool
@@ -20,12 +20,12 @@ class JsonSaver
     private $sortJson;
 
     /**
-     * @param int $jsonIntent
+     * @param int $jsonIndent
      * @param bool $sortJson
      */
-    public function __construct(int $jsonIntent, bool $sortJson)
+    public function __construct(int $jsonIndent, bool $sortJson)
     {
-        $this->jsonIntent = $jsonIntent;
+        $this->jsonIndent = $jsonIndent;
         $this->sortJson = $sortJson;
     }
 
@@ -35,7 +35,7 @@ class JsonSaver
      */
     public function saveTranslations(TranslationSet $set): StorageSaveResult
     {
-        $intent = $this->jsonIntent;
+        $indent = $this->jsonIndent;
 
         $localeCount = 0;
         $translationCount = 0;
@@ -61,10 +61,10 @@ class JsonSaver
 
             $json = preg_replace_callback(
                 '/^ +/m',
-                function ($m) use ($intent) {
-                    $intentStr = (string)str_repeat(' ', $intent);
+                function ($m) use ($indent) {
+                    $indentStr = (string)str_repeat(' ', $indent);
                     $repeat = (int)(strlen($m[0]) / 2);
-                    return str_repeat($intentStr, $repeat);
+                    return str_repeat($indentStr, $repeat);
                 },
                 $jsonString
             );

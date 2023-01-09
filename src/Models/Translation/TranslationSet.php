@@ -19,7 +19,7 @@ class TranslationSet
     /**
      * @var int
      */
-    private $jsonIntent;
+    private $jsonIndent;
 
     /**
      * @var bool
@@ -35,15 +35,15 @@ class TranslationSet
     /**
      * @param string $name
      * @param string $format
-     * @param int $jsonIntent
+     * @param int $jsonIndent
      * @param bool $sortStorage
      * @param Locale[] $locales
      */
-    public function __construct(string $name, string $format, int $jsonIntent, bool $sortStorage, array $locales)
+    public function __construct(string $name, string $format, int $jsonIndent, bool $sortStorage, array $locales)
     {
         $this->name = $name;
         $this->format = $format;
-        $this->jsonIntent = $jsonIntent;
+        $this->jsonIndent = $jsonIndent;
         $this->sortStorage = $sortStorage;
         $this->locales = $locales;
     }
@@ -68,9 +68,9 @@ class TranslationSet
     /**
      * @return int
      */
-    public function getJsonIntent(): int
+    public function getJsonIndent(): int
     {
-        return $this->jsonIntent;
+        return $this->jsonIndent;
     }
 
     /**

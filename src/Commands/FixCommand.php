@@ -41,6 +41,7 @@ class FixCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
+        $io->title('PHPUnuhi Fix');
         $this->showHeader();
 
         # -----------------------------------------------------------------
@@ -64,6 +65,8 @@ class FixCommand extends Command
 
             $io->section('Fixing Translation Set: ' . $set->getName());
 
+            $countCreated = 0;
+
             foreach ($set->getAllTranslationKeys() as $currentKey) {
 
                 foreach ($set->getLocales() as $locale) {
@@ -77,11 +80,16 @@ class FixCommand extends Command
                 }
             }
 
-            $io->note('saving translations...');
+            if ($countCreated <= 0) {
+                $io->block('nothing translated in this set...');
+                continue;
+            }
+
+            $io->block('saving translations of this sset...');
 
             $storageSaver = StorageFactory::getStorage(
                 $set->getFormat(),
-                $set->getJsonIntent(),
+                $set->getJsonIndent(),
                 $set->isSortStorage()
             );
 
