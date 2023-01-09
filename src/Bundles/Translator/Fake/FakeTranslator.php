@@ -9,13 +9,13 @@ class FakeTranslator implements TranslatorInterface
 
     /**
      * @param string $text
-     * @param string $sourceLanguage
-     * @param string $targetLanguage
+     * @param string $sourceLocale
+     * @param string $targetLocale
      * @return string
      */
-    public function translate(string $text, string $sourceLanguage, string $targetLanguage): string
+    public function translate(string $text, string $sourceLocale, string $targetLocale): string
     {
-        return $targetLanguage . '-' . $text;
+        return $targetLocale . '-' . $text;
     }
 
 }

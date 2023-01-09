@@ -10,6 +10,10 @@
 Welcome to PHPUnuhi - The easy framework to validate and manage translation files!
 
 Unuhi? This is Hawaiian for "translate" or "translation".
+
+Why did I create it? Just curiosity and because I needed something like this :)
+The framework is free, there's no guarantee or claim to anything.
+
 Now that you know this, let's get started!
 
 <!-- TOC -->
@@ -41,6 +45,7 @@ Now that you know this, let's get started!
         * [6.3.1 DeepL](#631-deepl)
         * [6.3.2 Google Cloud Translate](#632-google-cloud-translate)
         * [6.3.3 Google Web Translate](#633-google-web-translate)
+        * [6.3.4 OpenAI GTP Translate](#634-openai-gtp-translate)
 
 <!-- TOC -->
 
@@ -64,7 +69,7 @@ This makes it a perfect fit for your CI/CD pipelines.
 * Platform independent with option for different storage formats
 * Exchange formats such as CSV and HTML
 * Live WebEdit with HTML exchange format
-* Automatic translation using Google, DeepL or more
+* Automatic translation using OpenAI, DeepL, Google and more
 
 <p align="center">
    <img src="/.github/assets/supported-systems.jpg">
@@ -346,10 +351,10 @@ The following formats are currently supported.
 
 * Format: "json"
 
-| XML Set Attribute | Default | Description                                           | 
-|-------------------|---------|-------------------------------------------------------|
+| XML Set Attribute | Default | Description                                              | 
+|-------------------|---------|----------------------------------------------------------|
 | jsonIndent        | 2       | Set a custom JSON indent for the spaces [jsonIndent="4"] |
-| sort              | false   | Turn on or off the alphabetical sorting [sort="true"] |
+| sort              | false   | Turn on or off the alphabetical sorting [sort="true"]    |
 
 The JSON format means that your files are stored in separate JSON files.
 Every locale has its own JSON file.
@@ -427,7 +432,7 @@ These services usually require an API key that needs to be provided for PHPUnuhi
 
 | Command   | Argument       | Description                                           |
 |-----------|----------------|-------------------------------------------------------|
-| translate | --deepl-key    | Your DeepL API Key. [--depl-key=xyz]                  |
+| translate | --deepl-key    | Your DeepL API Key. [--deepl-key=xyz]                 |
 | translate | --deepl-formal | just provide this flag if you want a formal language. |
 
 DeepL is one of the leading translation services.
@@ -458,3 +463,21 @@ Because of this, it can happen, that a massive number of requests might lead to 
 
 This is more meant for educational purposes.
 Although it works, you should consider getting a real Google API key for commercial and serious usage of their services.
+
+#### 6.3.4 OpenAI GTP Translate
+
+* Service: "openai"
+
+| Command   | Argument     | Description     |
+|-----------|--------------|-----------------|
+| translate | --openai-key | Your OpenAI Key |
+
+This type of translator uses the latest OpenAI technology to translate your texts.
+Let AI help you to translate your texts.
+
+To use it, you need to create an API key at www.openai.com and provide it as argument.
+That's it!
+
+This was indeed a last minute addon, but it works quite good.
+If you have any tweaks, feel free to contribute :)
+

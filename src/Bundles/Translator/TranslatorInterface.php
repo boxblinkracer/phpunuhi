@@ -7,10 +7,10 @@ interface TranslatorInterface
 
     /**
      * @param string $text
-     * @param string $sourceLanguage
-     * @param string $targetLanguage
+     * @param string $sourceLocale
+     * @param string $targetLocale
      * @return string
      */
-    function translate(string $text, string $sourceLanguage, string $targetLanguage): string;
+    function translate(string $text, string $sourceLocale, string $targetLocale): string;
 
 }

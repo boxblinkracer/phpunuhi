@@ -6,6 +6,7 @@ use PHPUnuhi\Bundles\Translation\DeepL\DeeplTranslator;
 use PHPUnuhi\Bundles\Translation\Fake\FakeTranslator;
 use PHPUnuhi\Bundles\Translation\GoogleCloud\GoogleCloudTranslator;
 use PHPUnuhi\Bundles\Translation\GoogleWeb\GoogleWebTranslator;
+use PHPUnuhi\Bundles\Translation\OpenAI\OpenAITranslator;
 
 class TranslatorFactory
 {
@@ -32,6 +33,9 @@ class TranslatorFactory
 
             case 'googleweb':
                 return new GoogleWebTranslator();
+
+            case 'openai':
+                return new OpenAITranslator($apiKey);
 
             default:
                 throw new \Exception('Translator service ' . $service . ' not found in PHPUnuhi');

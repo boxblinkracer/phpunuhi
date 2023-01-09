@@ -9,11 +9,11 @@ class GoogleWebTranslator implements TranslatorInterface
 
     /**
      * @param string $text
-     * @param string $sourceLanguage
-     * @param string $targetLanguage
+     * @param string $sourceLocale
+     * @param string $targetLocale
      * @return string
      */
-    public function translate(string $text, string $sourceLanguage, string $targetLanguage): string
+    public function translate(string $text, string $sourceLocale, string $targetLocale): string
     {
         $curl = curl_init();
 
@@ -24,7 +24,7 @@ class GoogleWebTranslator implements TranslatorInterface
         $encodedText = urlencode($text);
 
         curl_setopt_array($curl, [
-            CURLOPT_URL => "https://translate.googleapis.com/translate_a/single?client=gtx&sl=" . $sourceLanguage . "&tl=" . $targetLanguage . "&hl=en-US&dt=t&dt=bd&dj=1&source=icon&tk=310461.310461&q=" . $encodedText,
+            CURLOPT_URL => "https://translate.googleapis.com/translate_a/single?client=gtx&sl=" . $sourceLocale . "&tl=" . $targetLocale . "&hl=en-US&dt=t&dt=bd&dj=1&source=icon&tk=310461.310461&q=" . $encodedText,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,

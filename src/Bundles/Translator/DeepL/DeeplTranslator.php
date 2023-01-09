@@ -31,12 +31,12 @@ class DeeplTranslator implements TranslatorInterface
 
     /**
      * @param string $text
-     * @param string $sourceLanguage
-     * @param string $targetLanguage
+     * @param string $sourceLocale
+     * @param string $targetLocale
      * @return string
      * @throws \DeepL\DeepLException
      */
-    public function translate(string $text, string $sourceLanguage, string $targetLanguage): string
+    public function translate(string $text, string $sourceLocale, string $targetLocale): string
     {
         $formalValue = ($this->formality) ? 'more' : 'less';
 
@@ -46,14 +46,14 @@ class DeeplTranslator implements TranslatorInterface
 
         $translator = new \DeepL\Translator($this->apiKey);
 
-        if ($targetLanguage === 'en') {
-            $targetLanguage = 'en-GB';
+        if ($targetLocale === 'en') {
+            $targetLocale = 'en-GB';
         }
 
         $result = $translator->translateText(
             $text,
             null,
-            $targetLanguage,
+            $targetLocale,
             [
                 'formality' => $formalValue,
             ]

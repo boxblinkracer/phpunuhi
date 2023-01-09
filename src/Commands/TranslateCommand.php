@@ -31,6 +31,7 @@ class TranslateCommand extends Command
             ->addOption('force', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('google-key', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('deepl-key', null, InputOption::VALUE_REQUIRED, '', '')
+            ->addOption('openai-key', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('deepl-formal', null, InputOption::VALUE_NONE, '', null);
 
         parent::configure();
@@ -58,13 +59,19 @@ class TranslateCommand extends Command
         $forceLocale = (string)$input->getOption('force');
         $deeplApiKey = (string)$input->getOption('deepl-key');
         $googleKey = (string)$input->getOption('google-key');
+        $openAIKey = (string)$input->getOption('openai-key');
         $formal = (bool)$input->getOption('deepl-formal');
 
         $apiKey = $deeplApiKey;
 
-        if (empty($deeplApiKey)) {
+        if (empty($apiKey)) {
             $apiKey = $googleKey;
         }
+
+        if (empty($apiKey)) {
+            $apiKey = $openAIKey;
+        }
+
 
         # -----------------------------------------------------------------
 
