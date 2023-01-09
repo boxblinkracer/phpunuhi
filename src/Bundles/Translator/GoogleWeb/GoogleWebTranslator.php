@@ -17,8 +17,14 @@ class GoogleWebTranslator implements TranslatorInterface
     {
         $curl = curl_init();
 
+        # dots are not working in urls with encode,
+        # so we replace it temporarily :)
+        $text = str_replace('.', "[[dot]]", $text);
+
+        $encodedText = urlencode($text);
+
         curl_setopt_array($curl, [
-            CURLOPT_URL => "https://translate.googleapis.com/translate_a/single?client=gtx&sl=" . $sourceLanguage . "&tl=" . $targetLanguage . "&hl=en-US&dt=t&dt=bd&dj=1&source=icon&tk=310461.310461&q=" . urlencode($text),
+            CURLOPT_URL => "https://translate.googleapis.com/translate_a/single?client=gtx&sl=" . $sourceLanguage . "&tl=" . $targetLanguage . "&hl=en-US&dt=t&dt=bd&dj=1&source=icon&tk=310461.310461&q=" . $encodedText,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -37,7 +43,11 @@ class GoogleWebTranslator implements TranslatorInterface
             return "";
         }
 
-        return (string)$json['sentences'][0]['trans'];
+        $result = (string)$json['sentences'][0]['trans'];
+
+        $result = str_replace("[[dot]]", '.', $result);
+
+        return $result;
     }
 
 
