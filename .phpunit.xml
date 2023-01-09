@@ -8,11 +8,6 @@
          executionOrder="random"
          bootstrap="./vendor/autoload.php">
 
-    <php>
-        <ini name="error_reporting" value="-1"/>
-        <server name="KERNEL_DIR" value="app/"/>
-    </php>
-
     <testsuites>
         <testsuite name="PHPUnuhi">
             <directory suffix=".php">./tests</directory>

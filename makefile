@@ -26,10 +26,10 @@ csfix: ## Starts the PHP CS Fixer
 	PHP_CS_FIXER_IGNORE_ENV=1 php ./vendor/bin/php-cs-fixer fix --config=./.php_cs.php --dry-run
 
 stan: ## Starts the PHPStan Analyser
-	@php ./vendor/bin/phpstan analyse -c ./.phpstan.neon
+	php ./vendor/bin/phpstan analyse -c ./.phpstan.neon
 
 phpunit: ## Runs all tests
-	@php ./vendor/bin/phpunit --configuration=./.phpunit.xml -v
+	XDEBUG_MODE=coverage php ./vendor/bin/phpunit --configuration=./.phpunit.xml -v --coverage-html ./.reports/phpunit/coverage
 
 #------------------------------------------------------------------------------------------------
 
