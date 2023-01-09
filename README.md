@@ -1,5 +1,5 @@
 <p align="center">
-   <img src="/.github/assets/home-logo.png">
+   <img src="/.github/assets/logo.jpg">
 </p>
 
 ![Build Status](https://github.com/boxblinkracer/phpunuhi/actions/workflows/ci_pipe.yml/badge.svg)
