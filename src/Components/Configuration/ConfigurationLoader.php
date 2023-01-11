@@ -71,7 +71,13 @@ class ConfigurationLoader
                 switch ($nodeType) {
                     case 'file':
 
-                        $fileName = (string)realpath(dirname($configFilename) . '/' . $nodeValue);
+                        $configuredFileName = dirname($configFilename) . '/' . $nodeValue;
+                        $fileName = realpath($configuredFileName);
+
+                        if ($fileName === false || !file_exists($fileName)) {
+                            throw new \Exception('Attention, translation file not found: ' . $configuredFileName);
+                        }
+
                         $localeAttr = (string)$childNode['locale'];
                         $iniSection = (string)$childNode['iniSection'];
 

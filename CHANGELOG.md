@@ -9,6 +9,10 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 - OpenAI Translator now throws exception if no API key was set
 
+### Fixed
+
+- Include referenced translation file from configuration in error message when translation file is not found
+
 ## [1.0.1]
 
 ### Fixed
