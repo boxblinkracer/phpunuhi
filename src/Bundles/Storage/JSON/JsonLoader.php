@@ -16,10 +16,6 @@ class JsonLoader
      */
     function loadTranslations(Locale $locale): void
     {
-        if (!file_exists($locale->getFilename())) {
-            throw new \Exception('Attention, translation file not found: ' . $locale->getFilename());
-        }
-
         $snippetJson = (string)file_get_contents($locale->getFilename());
 
         $foundTranslations = [];

@@ -31,12 +31,8 @@ class IniStorage implements StorageInterface
      */
     public function loadTranslations(Locale $locale): void
     {
-        if (!file_exists($locale->getFilename())) {
-            throw new \Exception('Attention, translation file not found: ' . $locale->getFilename());
-        }
-
         $iniArray = parse_ini_file($locale->getFilename(), true, INI_SCANNER_RAW);
-        
+
         if ($iniArray === false) {
             throw new \Exception('Error when loading INI file: ' . $locale->getFilename());
         }
