@@ -55,6 +55,9 @@ class StatusCommand extends Command
         $calculator = new PercentageCalculator();
 
 
+        $totalTranslations = 0;
+        $totalValidTranslations = 0;
+
         foreach ($config->getTranslationSets() as $set) {
 
             $io->section('Translation Set: ' . $set->getName());
@@ -62,11 +65,15 @@ class StatusCommand extends Command
             $countMaxLocaleKeys = count($set->getAllTranslationKeys());
             $countSetKeys = $countMaxLocaleKeys * count($set->getLocales());
 
+            $totalTranslations += $countSetKeys;
+
             $countSetValid = 0;
 
             foreach ($set->getLocales() as $locale) {
                 $countSetValid += count($locale->getValidTranslations());
             }
+
+            $totalValidTranslations += $countSetValid;
 
             $percent = $calculator->getRoundedPercentage($countSetValid, $countSetKeys);
 
@@ -90,6 +97,12 @@ class StatusCommand extends Command
                 $io->writeln("   [" . $locale->getName() . '] Coverage: ' . $percent . '% (' . $countLocaleValid . '/' . $countLocaleKeys . ')');
             }
         }
+
+        $io->section('Total Sets [' . count($config->getTranslationSets()) . ']');
+
+        $percent = $calculator->getRoundedPercentage($totalValidTranslations, $totalTranslations);
+
+        $io->writeln('   Coverage: ' . $percent . '% (' . $totalValidTranslations . '/' . $totalTranslations . ')');
 
         exit(0);
     }
