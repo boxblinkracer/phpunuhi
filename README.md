@@ -37,6 +37,7 @@ Now that you know this, let's get started!
     * [6.1 Storage Formats](#61-storage-formats)
       * [6.1.1 JSON](#611-json)
       * [6.1.2 INI](#612-ini)
+      * [6.1.3 PHP (Arrays)](#613-php--arrays-)
     * [6.2 Exchange Formats](#62-exchange-formats)
       * [6.2.1 CSV](#621-csv)
       * [6.2.2 HTML / WebEdit](#622-html--webedit)
@@ -110,8 +111,8 @@ Let's create a new **phpunuhi.xml** file (or rename it to something else).
 ```xml
 
 <phpunuhi
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/boxblinkracer/phpunuhi/main/config.xsd"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/boxblinkracer/phpunuhi/main/config.xsd"
 >
     <translations>
 
@@ -130,8 +131,8 @@ Look at this one:
 ```xml
 
 <phpunuhi
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/boxblinkracer/phpunuhi/main/config.xsd"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/boxblinkracer/phpunuhi/main/config.xsd"
 >
     <translations>
 
@@ -382,6 +383,21 @@ The INI structure across all files of a set should match.
 
 It's also possible to have all translations in a single INI file.
 For this, you might want to use the **iniSection** feature and just assign the same INI file to all locales, but with different sections.
+
+#### 6.1.3 PHP (Arrays)
+
+* Format: "php"
+
+| XML Set Attribute | Default | Description                                           | 
+|-------------------|---------|-------------------------------------------------------|
+| sort              | false   | Turn on or off the alphabetical sorting [sort="true"] |
+
+Some platforms have translations based on PHP arrays.
+This means that these files build a key-value array of translations which is then simply returned.
+
+Consuming services can then simply "require" that file and therefore load the translation array.
+
+This storage type makes sure to read and also write PHP files that return a single array object.
 
 ### 6.2 Exchange Formats
 

@@ -18,6 +18,11 @@
             <file locale="en" iniSection="en">./ini/ini_sections.ini</file>
         </set>
 
+        <set name="php" format="php" sort="true">
+            <file locale="de">./php/de.php</file>
+            <file locale="en">./php/en.php</file>
+        </set>
+
     </translations>
 
 </phpunuhi>

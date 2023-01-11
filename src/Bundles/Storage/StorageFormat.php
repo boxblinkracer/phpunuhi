@@ -15,4 +15,9 @@ interface StorageFormat
      */
     public const INI = 'ini';
 
+    /**
+     *
+     */
+    public const PHP = 'php';
+
 }

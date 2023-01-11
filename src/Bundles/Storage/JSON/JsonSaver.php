@@ -5,9 +5,13 @@ namespace PHPUnuhi\Bundles\Storage\JSON;
 use PHPUnuhi\Bundles\Storage\StorageSaveResult;
 use PHPUnuhi\Bundles\Storage\StorageSaverInterface;
 use PHPUnuhi\Models\Translation\TranslationSet;
+use PHPUnuhi\Traits\ArrayTrait;
 
 class JsonSaver
 {
+
+    use ArrayTrait;
+
 
     /**
      * @var int
@@ -73,42 +77,6 @@ class JsonSaver
         }
 
         return new StorageSaveResult($localeCount, $translationCount);
-    }
-
-    /**
-     * @param array<mixed> $array
-     * @param string $delimiter
-     * @return array<mixed>
-     */
-    private function flattenToMultiDimensional(array $array, string $delimiter = '.'): array
-    {
-        $result = [];
-        foreach ($array as $notations => $value) {
-            // extract keys
-            $keys = explode($delimiter, $notations);
-
-            if ($keys === false) {
-                $keys = [];
-            }
-
-            // reverse keys for assignments
-            $keys = array_reverse($keys);
-
-
-            // set initial value
-            $lastVal = $value;
-            foreach ($keys as $key) {
-                // wrap value with key over each iteration
-                $lastVal = [
-                    $key => $lastVal
-                ];
-            }
-
-            // merge result
-            $result = array_merge_recursive($result, $lastVal);
-        }
-
-        return $result;
     }
 
 }
