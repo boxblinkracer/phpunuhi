@@ -4,7 +4,6 @@ namespace PHPUnuhi;
 
 use Exception;
 use PHPUnuhi\Commands\ExportCommand;
-use PHPUnuhi\Commands\FixSpellingCommand;
 use PHPUnuhi\Commands\FixStructureCommand;
 use PHPUnuhi\Commands\ImportCommand;
 use PHPUnuhi\Commands\StatusCommand;
