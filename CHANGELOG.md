@@ -11,6 +11,10 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 - `config.xsd` for autocompletion in IDEs and editors. Use either from the composer dependency `vendor/boxblinkracer/phpunuhi/config.xsd` or online `https://raw.githubusercontent.com/boxblinkracer/phpunuhi/main/config.xsd`
 - Added new PHP Storage for Array based translations
 - Add coverage of all sets (total) to status command.
+- TranslatorInterfaces do now have a fixSpelling option. A new command "fix:spelling" has been introduced to let services fix misspelled translations.
+
+### Changed
+- fix command is now fix:structure command 
 
 ### Changed
 - fix command is now fix:structure command 

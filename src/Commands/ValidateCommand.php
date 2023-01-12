@@ -3,6 +3,7 @@
 namespace PHPUnuhi\Commands;
 
 
+use PHPUnuhi\Bundles\Spelling\SpellCheckerFactory;
 use PHPUnuhi\Components\Validator\Validator;
 use PHPUnuhi\Configuration\ConfigurationLoader;
 use Symfony\Component\Console\Command\Command;
@@ -24,7 +25,8 @@ class ValidateCommand extends Command
         $this
             ->setName('validate')
             ->setDescription('Validates all your translations from your configuration')
-            ->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', '');
+            ->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', '')
+            ->addOption('with-spellchecker', null, InputOption::VALUE_REQUIRED, '', '');
 
         parent::configure();
     }
@@ -46,12 +48,21 @@ class ValidateCommand extends Command
 
         $configFile = $this->getConfigFile($input);
 
+        $spellcheckerName = (string)$input->getOption('with-spellchecker');
+
         # -----------------------------------------------------------------
 
         $configLoader = new ConfigurationLoader();
         $config = $configLoader->load($configFile);
 
-        $validator = new Validator();
+
+        $spellChecker = null;
+
+        if (!empty($spellcheckerName)) {
+            $spellChecker = SpellCheckerFactory::fromService($spellcheckerName, '');
+        }
+
+        $validator = new Validator($spellChecker);
 
 
         $isAllValid = true;

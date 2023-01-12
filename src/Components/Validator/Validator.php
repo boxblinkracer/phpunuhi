@@ -2,10 +2,25 @@
 
 namespace PHPUnuhi\Components\Validator;
 
+use PHPUnuhi\Bundles\Spelling\SpellCheckerInterface;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
 class Validator
 {
+
+    /**
+     * @var SpellCheckerInterface|null
+     */
+    private $spellChecker;
+
+    /**
+     * @param SpellCheckerInterface|null $spellChecker
+     */
+    public function __construct(?SpellCheckerInterface $spellChecker)
+    {
+        $this->spellChecker = $spellChecker;
+    }
+
 
     /**
      * @param TranslationSet $set
@@ -55,6 +70,24 @@ class Validator
             }
         }
 
+
+        if ($this->spellChecker !== null) {
+            foreach ($set->getLocales() as $locale) {
+                foreach ($locale->getTranslations() as $translation) {
+
+                    $isValid = $this->spellChecker->validateSpelling($translation->getValue(), $locale->getName());
+
+                    if (!$isValid) {
+                        echo "Found misspelled translation in this file: " . PHP_EOL;
+                        echo "  - " . $locale->getFilename() . PHP_EOL;
+                        echo '           [x]: ' . $translation->getKey() . ': ' . $translation->getValue() . PHP_EOL;
+                        echo PHP_EOL;
+                        $isValid = false;
+                    }
+                }
+            }
+
+        }
         return $isValid;
     }
 

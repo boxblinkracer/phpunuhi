@@ -30,6 +30,7 @@ class AppManager
         $application->add(new ImportCommand());
         $application->add(new TranslateCommand());
         $application->add(new FixStructureCommand());
+        $application->add(new FixSpellingCommand());
 
         $application->setDefaultCommand('list');
 

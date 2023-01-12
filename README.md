@@ -17,36 +17,37 @@ The framework is free, there's no guarantee or claim to anything.
 Now that you know this, let's get started!
 
 <!-- TOC -->
-
-* [1. Basic Concept](#1-basic-concept)
-* [2. Installation](#2-installation)
-* [3. Configuration](#3-configuration)
-* [4. Commands](#4-commands)
+  * [1. Basic Concept](#1-basic-concept)
+  * [2. Installation](#2-installation)
+  * [3. Configuration](#3-configuration)
+  * [4. Commands](#4-commands)
     * [4.1 Validate Command](#41-validate-command)
     * [4.2 Fix Structure Command](#42-fix-structure-command)
     * [4.3 Export Command](#43-export-command)
     * [4.4 Import Command](#44-import-command)
     * [4.5 Status Command](#45-status-command)
     * [4.6 Translate Command](#46-translate-command)
-* [5. Use Cases](#5-use-cases)
+    * [4.7 Fix Spelling Command](#47-fix-spelling-command)
+  * [5. Use Cases](#5-use-cases)
     * [5.1 Validation in CI pipeline](#51-validation-in-ci-pipeline)
     * [5.2 Working with external translation agencies](#52-working-with-external-translation-agencies)
     * [5.3 Live WebEdit with HTML](#53-live-webedit-with-html)
     * [5.4 Automatic Translation with Google, DeepL, ...](#54-automatic-translation-with-google-deepl-)
-* [6 Appendix](#6-appendix)
+  * [6 Appendix](#6-appendix)
     * [6.1 Storage Formats](#61-storage-formats)
-        * [6.1.1 JSON](#611-json)
-        * [6.1.2 INI](#612-ini)
-        * [6.1.3 PHP](#613-php)
+      * [6.1.1 JSON](#611-json)
+      * [6.1.2 INI](#612-ini)
+      * [6.1.3 PHP](#613-php)
     * [6.2 Exchange Formats](#62-exchange-formats)
-        * [6.2.1 CSV](#621-csv)
-        * [6.2.2 HTML / WebEdit](#622-html--webedit)
+      * [6.2.1 CSV](#621-csv)
+      * [6.2.2 HTML / WebEdit](#622-html--webedit)
     * [6.3 Translator Services](#63-translator-services)
-        * [6.3.1 DeepL](#631-deepl)
-        * [6.3.2 Google Cloud Translate](#632-google-cloud-translate)
-        * [6.3.3 Google Web Translate](#633-google-web-translate)
-        * [6.3.4 OpenAI GPT Translate](#634-openai-gpt-translate)
-
+      * [6.3.1 DeepL](#631-deepl)
+      * [6.3.2 Google Cloud Translate](#632-google-cloud-translate)
+      * [6.3.3 Google Web Translate](#633-google-web-translate)
+      * [6.3.4 OpenAI GPT Translate](#634-openai-gpt-translate)
+    * [6.4 Spell Checkers](#64-spell-checkers)
+      * [6.4.1  OpenAI GPT Translate](#641--openai-gpt-translate)
 <!-- TOC -->
 
 ## 1. Basic Concept
@@ -70,6 +71,7 @@ This makes it a perfect fit for your CI/CD pipelines.
 * Exchange formats such as CSV and HTML
 * Live WebEdit with HTML exchange format
 * Automatic translation using OpenAI (experimental), DeepL, Google and more
+* Automatic fixing of misspelled sentences with OpenAI (experimental)
 
 <p align="center">
    <img src="/.github/assets/supported-systems.jpg">
@@ -199,6 +201,20 @@ This helps against forgetting certain translations in any of your files.
    <img src="/.github/assets/validation-empty.png">
 </p>
 
+**SpellChecker Validation**
+
+The new concept of spellcheckers allows you to also validate misspelled words.
+This is experimental at the moment.
+
+If a misspelled word is found, the validation will faill.
+
+```
+php vendor/bin/phpunuhi validate --with-spellchecker=xyz
+```
+
+You can use any of the available spellchecker by just appending this argument
+
+
 ### 4.2 Fix Structure Command
 
 If your storage files are not matching, you can easily use the fixing command to make sure they are in sync.
@@ -304,6 +320,22 @@ php vendor/bin/phpunuhi translate ...  --force=en
 <p align="center">
    <img src="/.github/assets/translate.png">
 </p>
+
+### 4.7 Fix Spelling Command
+
+If you use a capable translator service that is able to fix a spelling for you, then you can use this
+command to scan all your translations for misspelled texts.
+New versions will be automatically stored in your storage.
+
+> Like so many AI approaches, there is no 100% guarantee, so please use the Git diff to verify your changes.
+
+```bash 
+# Fixes all sets of the configuration
+php vendor/bin/phpunuhi fix:spelling --service=openai ...
+
+# Fixes only a provided set of your configuration
+php vendor/bin/phpunuhi fix:spelling --set="storefront"
+```
 
 ## 5. Use Cases
 
@@ -501,3 +533,27 @@ That's it!
 This was indeed a last minute addon, but it works quite good.
 If you have any tweaks, feel free to contribute :)
 
+### 6.4 Spell Checkers
+
+Spell checkers are experimental at the moment.
+
+This concept allows you to have a special service or logic to check for misspelled words, or
+even correct those automatically for you.
+
+That means that spell checkers have both a **validate**, as well as a **fix** method that is used in
+some CLI commands
+
+#### 6.4.1  OpenAI GPT Translate
+
+* Service: "openai"
+
+| Command      | Argument     | Description     |
+|--------------|--------------|-----------------|
+| validate     | --openai-key | Your OpenAI Key |
+| fix:spelling | --openai-key | Your OpenAI Key |
+
+This type of translator uses the latest OpenAI technology to translate your texts.
+Let AI help you to translate your texts.
+
+To use it, you need to create an API key at www.openai.com and provide it as argument.
+That's it!

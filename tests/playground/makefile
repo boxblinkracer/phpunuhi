@@ -11,14 +11,20 @@ help:
 
 #------------------------------------------------------------------------------------------------
 
+list: ## Lists all commands
+	cd ../.. && php bin/phpunuhi list
+
 status: ## Status command
 	cd ../.. && php bin/phpunuhi status --configuration=./tests/playground/phpunuhi.xml
 
 validate: ## Validate command
-	cd ../.. && php bin/phpunuhi validate --configuration=./tests/playground/phpunuhi.xml
+	cd ../.. && php bin/phpunuhi validate --configuration=./tests/playground/phpunuhi.xml --with-spellchecker=openai
 
-fix: ## Fix command
-	cd ../.. && php bin/phpunuhi fix --configuration=./tests/playground/phpunuhi.xml
+structure: ## Fix structure command
+	cd ../.. && php bin/phpunuhi fix:structure --configuration=./tests/playground/phpunuhi.xml
+
+spelling: ## Fix spelling command
+	cd ../.. && php bin/phpunuhi fix:spelling --configuration=./tests/playground/phpunuhi.xml
 
 translate: ## Translate command
 	cd ../.. && php bin/phpunuhi translate --configuration=./tests/playground/phpunuhi.xml --service=googleweb
