@@ -4,8 +4,8 @@ namespace PHPUnuhi\Bundles\Translator\OpenAI;
 
 use Locale;
 use Orhanerday\OpenAi\OpenAi;
-use PHPUnuhi\Bundles\Translator\CommandOption;
 use PHPUnuhi\Bundles\Translator\TranslatorInterface;
+use PHPUnuhi\Models\Command\CommandOption;
 
 class OpenAITranslator implements TranslatorInterface
 {

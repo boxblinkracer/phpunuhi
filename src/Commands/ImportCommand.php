@@ -19,18 +19,33 @@ class ImportCommand extends Command
     use \PHPUnuhi\Traits\CommandTrait;
 
     /**
+     * @var ExchangeFactory
+     */
+    private $exchangeFactory;
+
+
+    /**
      * @return void
      */
     protected function configure()
     {
+        $this->exchangeFactory = new ExchangeFactory();
+
         $this
             ->setName('import')
             ->setDescription('Imports translations from a provided exchange file')
             ->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('format', null, InputOption::VALUE_REQUIRED, 'R', ExchangeFormat::CSV)
             ->addOption('set', null, InputOption::VALUE_REQUIRED, 'R', '')
-            ->addOption('file', null, InputOption::VALUE_REQUIRED, '', '')
-            ->addOption('csv-delimiter', null, InputOption::VALUE_REQUIRED, '', '');
+            ->addOption('file', null, InputOption::VALUE_REQUIRED, '', '');
+
+        foreach ($this->exchangeFactory->getAllOptions() as $option) {
+            if ($option->hasValue()) {
+                $this->addOption($option->getName(), null, InputOption::VALUE_REQUIRED, '');
+            } else {
+                $this->addOption($option->getName(), null, InputOption::VALUE_NONE, '');
+            }
+        }
 
         parent::configure();
     }
@@ -54,14 +69,6 @@ class ImportCommand extends Command
         $importFilename = (string)$input->getOption('file');
         $importExchangeFormat = (string)$input->getOption('format');
         $setName = (string)$input->getOption('set');
-
-        # arguments for individual exchange exporters
-        $delimiter = (string)$input->getOption('csv-delimiter');
-
-        if (empty($delimiter)) {
-            $delimiter = ',';
-        }
-
 
         # adjust correct file path, required for PHAR loading
         $cur_dir = explode('\\', (string)getcwd());
@@ -88,15 +95,11 @@ class ImportCommand extends Command
             }
 
             # get correct storage saver from our current set
-            $storageSaver = StorageFactory::getStorage(
-                $set->getFormat(),
-                $set->getJsonIndent(),
-                $set->isSortStorage()
-            );
+            $storageSaver = StorageFactory::getStorage($set->getFormat(), $set->getJsonIndent(), $set->isSortStorage());
 
             # build the correct importer for our exchange format
             # and pass on the matching storage saver of our current ste
-            $importer = ExchangeFactory::getImporterFromFormat($importExchangeFormat, $storageSaver, $delimiter);
+            $importer = $this->exchangeFactory->getExchange($importExchangeFormat, $storageSaver, $input->getOptions());
 
             $result = $importer->import($set, $importFilename);
         }

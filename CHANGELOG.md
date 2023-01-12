@@ -16,6 +16,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 - fix command is now fix:structure command
 - Update TranslatorInterface for a better dynamic registration approach. Also options can now be dynamically registered for different CLI commands.
+- Import and Export interfaces for Exchange formats are now combined as ExchangeFormat. The interface is now also designed to allow dynamic CLI commands and dynamic registration + lookup.
 
 ### Fixed
 

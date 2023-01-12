@@ -2,55 +2,70 @@
 
 namespace PHPUnuhi\Bundles\Exchange;
 
-use PHPUnuhi\Bundles\Exchange\CSV\CSVExporter;
-use PHPUnuhi\Bundles\Exchange\CSV\CSVImporter;
-use PHPUnuhi\Bundles\Exchange\HTML\HTMLExporter;
-use PHPUnuhi\Bundles\Exchange\HTML\HTMLImporter;
+use PHPUnuhi\Bundles\Exchange\CSV\CSVExchange;
+use PHPUnuhi\Bundles\Exchange\HTML\HTMLExchange;
 use PHPUnuhi\Bundles\Storage\StorageInterface;
-use PHPUnuhi\Bundles\Storage\StorageSaverInterface;
+use PHPUnuhi\Models\Command\CommandOption;
 
 class ExchangeFactory
 {
 
     /**
-     * @param string $format
-     * @param StorageInterface $storage
-     * @param string $delimiter
-     * @return ImportInterface
-     * @throws \Exception
+     * @var ExchangeInterface[]
      */
-    public static function getImporterFromFormat(string $format, StorageInterface $storage, string $delimiter): ImportInterface
+    private $exchangeServices;
+
+
+    /**
+     *
+     */
+    public function __construct()
     {
-        switch (strtolower($format)) {
-            case ExchangeFormat::CSV:
-                return new CSVImporter($storage, $delimiter);
+        $this->exchangeServices = [];
 
-            case ExchangeFormat::HTML:
-                return new HTMLImporter($storage);
+        $this->exchangeServices[] = new CSVExchange();
+        $this->exchangeServices[] = new HTMLExchange();
+    }
 
-            default:
-                throw new \Exception('No importer found for ExchangeFormat: ' . $format);
+
+    /**
+     * @return CommandOption[]
+     */
+    public function getAllOptions(): array
+    {
+        $options = [];
+
+        foreach ($this->exchangeServices as $exchangeService) {
+            $options = array_merge($exchangeService->getOptions(), $options);
         }
+
+        return $options;
     }
 
     /**
      * @param string $format
-     * @param string $delimiter
-     * @return ExportInterface
+     * @param StorageInterface $storage
+     * @param array<mixed> $options
+     * @return ExchangeInterface
      * @throws \Exception
      */
-    public static function getExporterFromFormat(string $format, string $delimiter): ExportInterface
+    public function getExchange(string $format, StorageInterface $storage, array $options): ExchangeInterface
     {
-        switch (strtolower($format)) {
-            case ExchangeFormat::CSV:
-                return new CSVExporter($delimiter);
-
-            case ExchangeFormat::HTML:
-                return new HTMLExporter();
-
-            default:
-                throw new \Exception('No exporter found for ExchangeFormat: ' . $format);
+        if (empty($format)) {
+            throw new \Exception('No format name provided for the Exchange service');
         }
+
+        foreach ($this->exchangeServices as $exchangeService) {
+
+            if ($exchangeService->getName() === $format) {
+                $exchangeService->setStorage($storage);
+                $exchangeService->setOptionValues($options);
+
+                return $exchangeService;
+            }
+        }
+
+        throw new \Exception('No Exchange service found for format: ' . $format);
     }
 
 }

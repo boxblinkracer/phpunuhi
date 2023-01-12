@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPUnuhi\Bundles\Translator;
+namespace PHPUnuhi\Models\Command;
 
 class CommandOption
 {

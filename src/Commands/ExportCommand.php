@@ -4,6 +4,7 @@ namespace PHPUnuhi\Commands;
 
 use PHPUnuhi\Bundles\Exchange\ExchangeFactory;
 use PHPUnuhi\Bundles\Exchange\ExchangeFormat;
+use PHPUnuhi\Bundles\Storage\StorageFactory;
 use PHPUnuhi\Configuration\ConfigurationLoader;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -17,18 +18,33 @@ class ExportCommand extends Command
     use \PHPUnuhi\Traits\CommandTrait;
 
     /**
+     * @var ExchangeFactory
+     */
+    private $exchangeFactory;
+
+
+    /**
      * @return void
      */
     protected function configure()
     {
+        $this->exchangeFactory = new ExchangeFactory();
+
         $this
             ->setName('export')
             ->setDescription('Exports all or specific translations into an exchange file')
             ->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('set', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('dir', null, InputOption::VALUE_REQUIRED, '', '')
-            ->addOption('format', null, InputOption::VALUE_REQUIRED, '', ExchangeFormat::CSV)
-            ->addOption('csv-delimiter', null, InputOption::VALUE_REQUIRED, '', '');
+            ->addOption('format', null, InputOption::VALUE_REQUIRED, '', ExchangeFormat::CSV);
+
+        foreach ($this->exchangeFactory->getAllOptions() as $option) {
+            if ($option->hasValue()) {
+                $this->addOption($option->getName(), null, InputOption::VALUE_REQUIRED, '');
+            } else {
+                $this->addOption($option->getName(), null, InputOption::VALUE_NONE, '');
+            }
+        }
 
         parent::configure();
     }
@@ -53,26 +69,16 @@ class ExportCommand extends Command
         $setName = (string)$input->getOption('set');
         $outputDir = (string)$input->getOption('dir');
 
-        # arguments for individual exchange exporters
-        $delimiter = (string)$input->getOption('csv-delimiter');
-
-        if (empty($delimiter)) {
-            $delimiter = ',';
-        }
-
 
         $cur_dir = explode('\\', (string)getcwd());
         $workingDir = $cur_dir[count($cur_dir) - 1];
         $outputDir = $workingDir . '/' . $outputDir;
-
 
         # -----------------------------------------------------------------
 
         $configLoader = new ConfigurationLoader();
 
         $config = $configLoader->load($configFile);
-
-        $exporter = ExchangeFactory::getExporterFromFormat($exportExchangeFormat, $delimiter);
 
         foreach ($config->getTranslationSets() as $set) {
 
@@ -82,6 +88,10 @@ class ExportCommand extends Command
             }
 
             $io->section('Translation Set: ' . $set->getName());
+
+            $storage = StorageFactory::getStorage($set->getFormat(), $set->getJsonIndent(), $set->isSortStorage());
+
+            $exporter = $this->exchangeFactory->getExchange($exportExchangeFormat, $storage, $input->getOptions());
 
             $exporter->export($set, $outputDir);
         }

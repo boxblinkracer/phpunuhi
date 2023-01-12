@@ -2,8 +2,8 @@
 
 namespace PHPUnuhi\Bundles\Translator\GoogleWeb;
 
-use PHPUnuhi\Bundles\Translator\CommandOption;
 use PHPUnuhi\Bundles\Translator\TranslatorInterface;
+use PHPUnuhi\Models\Command\CommandOption;
 
 class GoogleWebTranslator implements TranslatorInterface
 {

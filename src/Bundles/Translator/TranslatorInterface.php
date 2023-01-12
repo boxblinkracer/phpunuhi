@@ -2,6 +2,8 @@
 
 namespace PHPUnuhi\Bundles\Translator;
 
+use PHPUnuhi\Models\Command\CommandOption;
+
 interface TranslatorInterface
 {
 

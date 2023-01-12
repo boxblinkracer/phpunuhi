@@ -2,14 +2,12 @@
 
 namespace PHPUnuhi\Bundles\Exchange\CSV;
 
-use PHPUnuhi\Bundles\Exchange\ImportInterface;
 use PHPUnuhi\Bundles\Exchange\ImportResult;
 use PHPUnuhi\Bundles\Storage\StorageInterface;
-use PHPUnuhi\Bundles\Storage\StorageSaverInterface;
 use PHPUnuhi\Models\Translation\Translation;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
-class CSVImporter implements ImportInterface
+class CSVImporter
 {
 
     /**

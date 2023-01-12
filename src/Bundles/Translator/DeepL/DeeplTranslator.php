@@ -2,8 +2,8 @@
 
 namespace PHPUnuhi\Bundles\Translator\DeepL;
 
-use PHPUnuhi\Bundles\Translator\CommandOption;
 use PHPUnuhi\Bundles\Translator\TranslatorInterface;
+use PHPUnuhi\Models\Command\CommandOption;
 
 class DeeplTranslator implements TranslatorInterface
 {

@@ -7,6 +7,7 @@ use PHPUnuhi\Bundles\Translator\Fake\FakeTranslator;
 use PHPUnuhi\Bundles\Translator\GoogleCloud\GoogleCloudTranslator;
 use PHPUnuhi\Bundles\Translator\GoogleWeb\GoogleWebTranslator;
 use PHPUnuhi\Bundles\Translator\OpenAI\OpenAITranslator;
+use PHPUnuhi\Models\Command\CommandOption;
 
 class TranslatorFactory
 {

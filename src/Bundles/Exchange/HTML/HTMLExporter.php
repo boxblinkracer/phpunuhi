@@ -2,11 +2,10 @@
 
 namespace PHPUnuhi\Bundles\Exchange\HTML;
 
-use PHPUnuhi\Bundles\Exchange\ExportInterface;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
-class HTMLExporter implements ExportInterface
+class HTMLExporter
 {
 
     /**

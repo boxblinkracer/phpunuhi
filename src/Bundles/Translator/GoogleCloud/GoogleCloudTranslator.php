@@ -3,8 +3,8 @@
 namespace PHPUnuhi\Bundles\Translator\GoogleCloud;
 
 use Google\Cloud\Translate\V2\TranslateClient;
-use PHPUnuhi\Bundles\Translator\CommandOption;
 use PHPUnuhi\Bundles\Translator\TranslatorInterface;
+use PHPUnuhi\Models\Command\CommandOption;
 
 class GoogleCloudTranslator implements TranslatorInterface
 {

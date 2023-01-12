@@ -2,10 +2,9 @@
 
 namespace PHPUnuhi\Bundles\Exchange\CSV;
 
-use PHPUnuhi\Bundles\Exchange\ExportInterface;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
-class CSVExporter implements ExportInterface
+class CSVExporter
 {
 
     /**
@@ -70,7 +69,6 @@ class CSVExporter implements ExportInterface
         if (!file_exists($outputDir)) {
             mkdir($outputDir, 0775, true);
         }
-
 
 
         $csvFilename = $outputDir . '/' . $set->getName() . '.csv';
