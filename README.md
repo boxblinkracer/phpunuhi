@@ -17,35 +17,36 @@ The framework is free, there's no guarantee or claim to anything.
 Now that you know this, let's get started!
 
 <!-- TOC -->
-  * [1. Basic Concept](#1-basic-concept)
-  * [2. Installation](#2-installation)
-  * [3. Configuration](#3-configuration)
-  * [4. Commands](#4-commands)
+
+* [1. Basic Concept](#1-basic-concept)
+* [2. Installation](#2-installation)
+* [3. Configuration](#3-configuration)
+* [4. Commands](#4-commands)
     * [4.1 Validate Command](#41-validate-command)
-      * [4.1.1 Validations](#411-validations)
-    * [4.2 Fix Command](#42-fix-command)
+    * [4.2 Fix Structure Command](#42-fix-structure-command)
     * [4.3 Export Command](#43-export-command)
     * [4.4 Import Command](#44-import-command)
-    * [4.5 Translate Command](#45-translate-command)
-    * [4.6 Status Command](#46-status-command)
-  * [5. Use Cases](#5-use-cases)
+    * [4.5 Status Command](#45-status-command)
+    * [4.6 Translate Command](#46-translate-command)
+* [5. Use Cases](#5-use-cases)
     * [5.1 Validation in CI pipeline](#51-validation-in-ci-pipeline)
     * [5.2 Working with external translation agencies](#52-working-with-external-translation-agencies)
     * [5.3 Live WebEdit with HTML](#53-live-webedit-with-html)
     * [5.4 Automatic Translation with Google, DeepL, ...](#54-automatic-translation-with-google-deepl-)
-  * [6 Appendix](#6-appendix)
+* [6 Appendix](#6-appendix)
     * [6.1 Storage Formats](#61-storage-formats)
-      * [6.1.1 JSON](#611-json)
-      * [6.1.2 INI](#612-ini)
-      * [6.1.3 PHP (Arrays)](#613-php--arrays-)
+        * [6.1.1 JSON](#611-json)
+        * [6.1.2 INI](#612-ini)
+        * [6.1.3 PHP](#613-php)
     * [6.2 Exchange Formats](#62-exchange-formats)
-      * [6.2.1 CSV](#621-csv)
-      * [6.2.2 HTML / WebEdit](#622-html--webedit)
+        * [6.2.1 CSV](#621-csv)
+        * [6.2.2 HTML / WebEdit](#622-html--webedit)
     * [6.3 Translator Services](#63-translator-services)
-      * [6.3.1 DeepL](#631-deepl)
-      * [6.3.2 Google Cloud Translate](#632-google-cloud-translate)
-      * [6.3.3 Google Web Translate](#633-google-web-translate)
-      * [6.3.4 OpenAI GPT Translate](#634-openai-gpt-translate)
+        * [6.3.1 DeepL](#631-deepl)
+        * [6.3.2 Google Cloud Translate](#632-google-cloud-translate)
+        * [6.3.3 Google Web Translate](#633-google-web-translate)
+        * [6.3.4 OpenAI GPT Translate](#634-openai-gpt-translate)
+
 <!-- TOC -->
 
 ## 1. Basic Concept
@@ -68,7 +69,7 @@ This makes it a perfect fit for your CI/CD pipelines.
 * Platform independent with option for different storage formats
 * Exchange formats such as CSV and HTML
 * Live WebEdit with HTML exchange format
-* Automatic translation using OpenAI, DeepL, Google and more
+* Automatic translation using OpenAI (experimental), DeepL, Google and more
 
 <p align="center">
    <img src="/.github/assets/supported-systems.jpg">
@@ -180,8 +181,6 @@ php vendor/bin/phpunuhi validate
 php vendor/bin/phpunuhi validate --configuration=./translations.xml
 ```
 
-#### 4.1.1 Validations
-
 **Invalid structure**
 
 The command will check if all files of a translation set have the **same structure**.
@@ -200,7 +199,7 @@ This helps against forgetting certain translations in any of your files.
    <img src="/.github/assets/validation-empty.png">
 </p>
 
-### 4.2 Fix Command
+### 4.2 Fix Structure Command
 
 If your storage files are not matching, you can easily use the fixing command to make sure they are in sync.
 Please note, that this will only create empty translations so that the structure is the same.
@@ -209,15 +208,16 @@ The final translations are not 100% valid in the end...only existing!
 
 ```bash 
 # Fixes all sets of the configuration
-php vendor/bin/phpunuhi fix 
+php vendor/bin/phpunuhi fix:structure
 
 # Fixes only a provided set of your configuration
-php vendor/bin/phpunuhi fix --set="storefront"
+php vendor/bin/phpunuhi fix:structure --set="storefront"
 ```
 
 <p align="center">
    <img src="/.github/assets/fix.png">
 </p>
+
 
 ### 4.3 Export Command
 
@@ -261,7 +261,19 @@ php vendor/bin/phpunuhi import --set=storefront --file=storefront.csv
 php vendor/bin/phpunuhi import ... --format=html
 ```
 
-### 4.5 Translate Command
+### 4.5 Status Command
+
+Use this command to get the coverage status of your translations.
+
+```bash 
+php vendor/bin/phpunuhi status 
+```
+
+<p align="center">
+   <img src="/.github/assets/status.png">
+</p>
+
+### 4.6 Translate Command
 
 PHPUnuhi includes the option to use external services to automatically translate missing values for you.
 
@@ -291,18 +303,6 @@ php vendor/bin/phpunuhi translate ...  --force=en
 
 <p align="center">
    <img src="/.github/assets/translate.png">
-</p>
-
-### 4.6 Status Command
-
-Use this command to get the coverage status of your translations.
-
-```bash 
-php vendor/bin/phpunuhi status 
-```
-
-<p align="center">
-   <img src="/.github/assets/status.png">
 </p>
 
 ## 5. Use Cases
@@ -384,7 +384,7 @@ The INI structure across all files of a set should match.
 It's also possible to have all translations in a single INI file.
 For this, you might want to use the **iniSection** feature and just assign the same INI file to all locales, but with different sections.
 
-#### 6.1.3 PHP (Arrays)
+#### 6.1.3 PHP
 
 * Format: "php"
 

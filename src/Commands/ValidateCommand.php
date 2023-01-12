@@ -14,7 +14,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class ValidateCommand extends Command
 {
 
-    use CommandTrait;
+    use \PHPUnuhi\Traits\CommandTrait;
 
     /**
      * @return void

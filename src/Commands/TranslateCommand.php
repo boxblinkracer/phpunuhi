@@ -3,6 +3,7 @@
 namespace PHPUnuhi\Commands;
 
 use PHPUnuhi\Bundles\Storage\StorageFactory;
+use PHPUnuhi\Bundles\Translation\SpellCheckerFactory;
 use PHPUnuhi\Bundles\Translation\TranslatorFactory;
 use PHPUnuhi\Configuration\ConfigurationLoader;
 use PHPUnuhi\Exceptions\TranslationNotFoundException;
@@ -15,7 +16,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class TranslateCommand extends Command
 {
 
-    use CommandTrait;
+    use \PHPUnuhi\Traits\CommandTrait;
+
 
     /**
      * @return void
@@ -26,13 +28,11 @@ class TranslateCommand extends Command
             ->setName('translate')
             ->setDescription('Translate all your translations by using one of our translation services')
             ->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', '')
-            ->addOption('service', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('set', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('force', null, InputOption::VALUE_REQUIRED, '', '')
-            ->addOption('google-key', null, InputOption::VALUE_REQUIRED, '', '')
-            ->addOption('deepl-key', null, InputOption::VALUE_REQUIRED, '', '')
-            ->addOption('openai-key', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('deepl-formal', null, InputOption::VALUE_NONE, '', null);
+
+        $this->addTranslatorServiceOptions($this);
 
         parent::configure();
     }

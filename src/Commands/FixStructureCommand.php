@@ -12,10 +12,10 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class FixCommand extends Command
+class FixStructureCommand extends Command
 {
 
-    use CommandTrait;
+    use \PHPUnuhi\Traits\CommandTrait;
 
     /**
      * @return void
@@ -23,8 +23,8 @@ class FixCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('fix')
-            ->setDescription('Fixes the structure of your translation sets')
+            ->setName('fix:structure')
+            ->setDescription('Fixes the structure of your translation sets.')
             ->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('set', null, InputOption::VALUE_REQUIRED, '', '');
 
@@ -41,7 +41,7 @@ class FixCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $io->title('PHPUnuhi Fix');
+        $io->title('PHPUnuhi Fix Structure');
         $this->showHeader();
 
         # -----------------------------------------------------------------

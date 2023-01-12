@@ -16,7 +16,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class ImportCommand extends Command
 {
 
-    use CommandTrait;
+    use \PHPUnuhi\Traits\CommandTrait;
 
     /**
      * @return void

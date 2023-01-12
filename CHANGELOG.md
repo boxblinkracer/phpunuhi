@@ -12,6 +12,9 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 - Added new PHP Storage for Array based translations
 - Add coverage of all sets (total) to status command.
 
+### Changed
+- fix command is now fix:structure command 
+
 ### Fixed
 
 - Include referenced translation file from configuration in error message when translation file is not found

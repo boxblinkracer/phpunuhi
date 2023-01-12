@@ -14,7 +14,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class ExportCommand extends Command
 {
 
-    use CommandTrait;
+    use \PHPUnuhi\Traits\CommandTrait;
 
     /**
      * @return void
