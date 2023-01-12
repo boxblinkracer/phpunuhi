@@ -13,7 +13,9 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 - Add coverage of all sets (total) to status command.
 
 ### Changed
-- fix command is now fix:structure command 
+
+- fix command is now fix:structure command
+- Update TranslatorInterface for a better dynamic registration approach. Also options can now be dynamically registered for different CLI commands.
 
 ### Fixed
 

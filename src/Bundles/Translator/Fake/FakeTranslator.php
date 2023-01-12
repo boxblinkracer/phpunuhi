@@ -1,11 +1,36 @@
 <?php
 
-namespace PHPUnuhi\Bundles\Translation\Fake;
+namespace PHPUnuhi\Bundles\Translator\Fake;
 
-use PHPUnuhi\Bundles\Translation\TranslatorInterface;
+use PHPUnuhi\Bundles\Translator\CommandOption;
+use PHPUnuhi\Bundles\Translator\TranslatorInterface;
 
 class FakeTranslator implements TranslatorInterface
 {
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return 'fake';
+    }
+
+    /**
+     * @return CommandOption[]
+     */
+    public function getOptions(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param array<mixed> $options
+     * @return void
+     */
+    public function setOptionValues(array $options): void
+    {
+    }
 
     /**
      * @param string $text

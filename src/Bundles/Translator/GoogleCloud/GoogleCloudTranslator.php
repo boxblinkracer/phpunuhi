@@ -1,9 +1,10 @@
 <?php
 
-namespace PHPUnuhi\Bundles\Translation\GoogleCloud;
+namespace PHPUnuhi\Bundles\Translator\GoogleCloud;
 
 use Google\Cloud\Translate\V2\TranslateClient;
-use PHPUnuhi\Bundles\Translation\TranslatorInterface;
+use PHPUnuhi\Bundles\Translator\CommandOption;
+use PHPUnuhi\Bundles\Translator\TranslatorInterface;
 
 class GoogleCloudTranslator implements TranslatorInterface
 {
@@ -13,14 +14,38 @@ class GoogleCloudTranslator implements TranslatorInterface
      */
     private $apiKey;
 
+
     /**
-     * @param string $apiKey
+     * @return string
      */
-    public function __construct(string $apiKey)
+    public function getName(): string
     {
-        $this->apiKey = $apiKey;
+        return 'googlecloud';
     }
 
+    /**
+     * @return CommandOption[]
+     */
+    public function getOptions(): array
+    {
+        return [
+            new CommandOption('google-key', true),
+        ];
+    }
+
+    /**
+     * @param array<mixed> $options
+     * @return void
+     * @throws \Exception
+     */
+    public function setOptionValues(array $options): void
+    {
+        $this->apiKey = (string)$options['google-key'];
+
+        if (empty($this->apiKey)) {
+            throw new \Exception('Please provide your API key for GoogleCloud');
+        }
+    }
 
     /**
      * @param string $text
@@ -30,10 +55,6 @@ class GoogleCloudTranslator implements TranslatorInterface
      */
     public function translate(string $text, string $sourceLocale, string $targetLocale): string
     {
-        if (empty($this->apiKey)) {
-            throw new \Exception('Please provide your API key for GoogleCloud');
-        }
-
         $translate = new TranslateClient([
             'key' => $this->apiKey
         ]);

@@ -1,8 +1,9 @@
 <?php
 
-namespace PHPUnuhi\Bundles\Translation\DeepL;
+namespace PHPUnuhi\Bundles\Translator\DeepL;
 
-use PHPUnuhi\Bundles\Translation\TranslatorInterface;
+use PHPUnuhi\Bundles\Translator\CommandOption;
+use PHPUnuhi\Bundles\Translator\TranslatorInterface;
 
 class DeeplTranslator implements TranslatorInterface
 {
@@ -19,15 +20,38 @@ class DeeplTranslator implements TranslatorInterface
 
 
     /**
-     * @param string $apiKey
-     * @param bool $formality
+     * @return string
      */
-    public function __construct(string $apiKey, bool $formality)
+    public function getName(): string
     {
-        $this->apiKey = $apiKey;
-        $this->formality = $formality;
+        return 'deepl';
     }
 
+    /**
+     * @return CommandOption[]
+     */
+    public function getOptions(): array
+    {
+        return [
+            new CommandOption('deepl-key', true),
+            new CommandOption('deepl-formal', false),
+        ];
+    }
+
+    /**
+     * @param array<mixed> $options
+     * @return void
+     * @throws \Exception
+     */
+    public function setOptionValues(array $options): void
+    {
+        $this->apiKey = (string)$options['deepl-key'];
+        $this->formality = (bool)$options['deepl-formal'];
+
+        if (empty($this->apiKey)) {
+            throw new \Exception('Please provide your API key for DeepL');
+        }
+    }
 
     /**
      * @param string $text
@@ -39,10 +63,6 @@ class DeeplTranslator implements TranslatorInterface
     public function translate(string $text, string $sourceLocale, string $targetLocale): string
     {
         $formalValue = ($this->formality) ? 'more' : 'less';
-
-        if (empty($this->apiKey)) {
-            throw new \Exception('Please provide your API key for DeepL');
-        }
 
         $translator = new \DeepL\Translator($this->apiKey);
 

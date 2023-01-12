@@ -1,45 +1,72 @@
 <?php
 
-namespace PHPUnuhi\Bundles\Translation;
+namespace PHPUnuhi\Bundles\Translator;
 
-use PHPUnuhi\Bundles\Translation\DeepL\DeeplTranslator;
-use PHPUnuhi\Bundles\Translation\Fake\FakeTranslator;
-use PHPUnuhi\Bundles\Translation\GoogleCloud\GoogleCloudTranslator;
-use PHPUnuhi\Bundles\Translation\GoogleWeb\GoogleWebTranslator;
-use PHPUnuhi\Bundles\Translation\OpenAI\OpenAITranslator;
+use PHPUnuhi\Bundles\Translator\DeepL\DeeplTranslator;
+use PHPUnuhi\Bundles\Translator\Fake\FakeTranslator;
+use PHPUnuhi\Bundles\Translator\GoogleCloud\GoogleCloudTranslator;
+use PHPUnuhi\Bundles\Translator\GoogleWeb\GoogleWebTranslator;
+use PHPUnuhi\Bundles\Translator\OpenAI\OpenAITranslator;
 
 class TranslatorFactory
 {
 
     /**
+     * @var TranslatorInterface[]
+     */
+    private $translators;
+
+
+    public function __construct()
+    {
+        $this->translators = [];
+
+        $this->translators[] = new FakeTranslator();
+        $this->translators[] = new DeeplTranslator();
+        $this->translators[] = new OpenAITranslator();
+        $this->translators[] = new GoogleWebTranslator();
+        $this->translators[] = new GoogleCloudTranslator();
+    }
+
+
+    /**
+     * @return CommandOption[]
+     */
+    public function getAllOptions(): array
+    {
+        $options = [];
+
+        foreach ($this->translators as $translator) {
+            $options = array_merge($translator->getOptions(), $options);
+        }
+
+        return $options;
+    }
+
+    /**
      * @param string $service
-     * @param string $apiKey
-     * @param bool $formal
+     * @param array<mixed> $options
      * @return TranslatorInterface
      * @throws \Exception
      */
-    public static function fromService(string $service, string $apiKey, bool $formal): TranslatorInterface
+    public function fromService(string $service, array $options): TranslatorInterface
     {
-        switch (strtolower($service)) {
-
-            case 'fake':
-                return new FakeTranslator();
-
-            case 'deepl':
-                return new DeeplTranslator($apiKey, $formal);
-
-            case 'googlecloud':
-                return new GoogleCloudTranslator($apiKey);
-
-            case 'googleweb':
-                return new GoogleWebTranslator();
-
-            case 'openai':
-                return new OpenAITranslator($apiKey);
-
-            default:
-                throw new \Exception('Translator service ' . $service . ' not found in PHPUnuhi');
+        if (empty($service)) {
+            throw new \Exception('No translator name provided.');
         }
+
+        foreach ($this->translators as $translator) {
+
+            if ($translator->getName() === $service) {
+                # configure our translator with the
+                # provided option values
+                $translator->setOptionValues($options);
+
+                return $translator;
+            }
+        }
+
+        throw new \Exception('No translator found with name: ' . $service);
     }
 
 }

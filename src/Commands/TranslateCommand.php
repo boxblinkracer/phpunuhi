@@ -3,8 +3,7 @@
 namespace PHPUnuhi\Commands;
 
 use PHPUnuhi\Bundles\Storage\StorageFactory;
-use PHPUnuhi\Bundles\Translation\SpellCheckerFactory;
-use PHPUnuhi\Bundles\Translation\TranslatorFactory;
+use PHPUnuhi\Bundles\Translator\TranslatorFactory;
 use PHPUnuhi\Configuration\ConfigurationLoader;
 use PHPUnuhi\Exceptions\TranslationNotFoundException;
 use Symfony\Component\Console\Command\Command;
@@ -20,19 +19,33 @@ class TranslateCommand extends Command
 
 
     /**
+     * @var TranslatorFactory
+     */
+    private $translatorFactory;
+
+
+    /**
      * @return void
      */
     protected function configure()
     {
+        $this->translatorFactory = new TranslatorFactory();
+
         $this
             ->setName('translate')
             ->setDescription('Translate all your translations by using one of our translation services')
             ->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', '')
+            ->addOption('service', null, InputOption::VALUE_REQUIRED, 'The translator service you want to use', '')
             ->addOption('set', null, InputOption::VALUE_REQUIRED, '', '')
-            ->addOption('force', null, InputOption::VALUE_REQUIRED, '', '')
-            ->addOption('deepl-formal', null, InputOption::VALUE_NONE, '', null);
+            ->addOption('force', null, InputOption::VALUE_REQUIRED, 'a specific locale that you want to force to be translated', '');
 
-        $this->addTranslatorServiceOptions($this);
+        foreach ($this->translatorFactory->getAllOptions() as $option) {
+            if ($option->hasValue()) {
+                $this->addOption($option->getName(), null, InputOption::VALUE_REQUIRED, '');
+            } else {
+                $this->addOption($option->getName(), null, InputOption::VALUE_NONE, '');
+            }
+        }
 
         parent::configure();
     }
@@ -57,34 +70,16 @@ class TranslateCommand extends Command
         $service = (string)$input->getOption('service');
         $setName = (string)$input->getOption('set');
         $forceLocale = (string)$input->getOption('force');
-        $deeplApiKey = (string)$input->getOption('deepl-key');
-        $googleKey = (string)$input->getOption('google-key');
-        $openAIKey = (string)$input->getOption('openai-key');
-        $formal = (bool)$input->getOption('deepl-formal');
-
-        $apiKey = $deeplApiKey;
-
-        if (empty($apiKey)) {
-            $apiKey = $googleKey;
-        }
-
-        if (empty($apiKey)) {
-            $apiKey = $openAIKey;
-        }
-
 
         # -----------------------------------------------------------------
-
-        if (empty($service)) {
-            throw new \Exception('No service provided for translation! Please set a service with argument --service=xyz');
-        }
 
         $configLoader = new ConfigurationLoader();
         $config = $configLoader->load($configFile);
 
 
-        $translator = TranslatorFactory::fromService($service, $apiKey, $formal);
+        $translator = $this->translatorFactory->fromService($service, $input->getOptions());
 
+        # -----------------------------------------------------------------
 
         $translatedCount = 0;
         $translateFailedCount = 0;

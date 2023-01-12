@@ -1,10 +1,11 @@
 <?php
 
-namespace PHPUnuhi\Bundles\Translation\OpenAI;
+namespace PHPUnuhi\Bundles\Translator\OpenAI;
 
 use Locale;
 use Orhanerday\OpenAi\OpenAi;
-use PHPUnuhi\Bundles\Translation\TranslatorInterface;
+use PHPUnuhi\Bundles\Translator\CommandOption;
+use PHPUnuhi\Bundles\Translator\TranslatorInterface;
 
 class OpenAITranslator implements TranslatorInterface
 {
@@ -16,11 +17,35 @@ class OpenAITranslator implements TranslatorInterface
 
 
     /**
-     * @param string $apiKey
+     * @return string
      */
-    public function __construct(string $apiKey)
+    public function getName(): string
     {
-        $this->apiKey = $apiKey;
+        return 'openai';
+    }
+
+
+    /**
+     * @return CommandOption[]
+     */
+    public function getOptions(): array
+    {
+        return [
+            new CommandOption('openai-key', true),
+        ];
+    }
+
+    /**
+     * @param string[] $options
+     * @return void
+     */
+    public function setOptionValues(array $options): void
+    {
+        $this->apiKey = (string)$options['openai-key'];
+
+        if (empty($this->apiKey)) {
+            throw new \Exception('OpenAI API Key must not be empty. Please provide a key');
+        }
     }
 
 
@@ -33,10 +58,6 @@ class OpenAITranslator implements TranslatorInterface
      */
     public function translate(string $text, string $sourceLocale, string $targetLocale): string
     {
-        if (empty($this->apiKey)) {
-            throw new \Exception('OpenAI API Key must not be empty. Please provide a key');
-        }
-
         $languageName = Locale::getDisplayLanguage($targetLocale);
 
         $prompt = "Translate this into " . $languageName . ":" . $text;

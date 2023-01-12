@@ -1,11 +1,37 @@
 <?php
 
-namespace PHPUnuhi\Bundles\Translation\GoogleWeb;
+namespace PHPUnuhi\Bundles\Translator\GoogleWeb;
 
-use PHPUnuhi\Bundles\Translation\TranslatorInterface;
+use PHPUnuhi\Bundles\Translator\CommandOption;
+use PHPUnuhi\Bundles\Translator\TranslatorInterface;
 
 class GoogleWebTranslator implements TranslatorInterface
 {
+
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return 'googleweb';
+    }
+
+    /**
+     * @return CommandOption[]
+     */
+    public function getOptions(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param array<mixed> $options
+     * @return void
+     */
+    public function setOptionValues(array $options): void
+    {
+    }
 
     /**
      * @param string $text
