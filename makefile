@@ -15,7 +15,7 @@ install: ## Installs all prod dependencies
 	composer install --no-dev
 
 dev: ## Installs all dev dependencies
-	composer install
+	composer install --ignore-platform-req=ext-intl
 
 clean: ## Clears all dependencies
 	rm -rf vendor/*
@@ -26,7 +26,7 @@ csfix: ## Starts the PHP CS Fixer
 	PHP_CS_FIXER_IGNORE_ENV=1 php ./vendor/bin/php-cs-fixer fix --config=./.php_cs.php --dry-run
 
 stan: ## Starts the PHPStan Analyser
-	php ./vendor/bin/phpstan analyse -c ./.phpstan.neon
+	php ./vendor/bin/phpstan analyse --memory-limit 1G -c ./.phpstan.neon
 
 phpunit: ## Runs all tests
 	XDEBUG_MODE=coverage php ./vendor/bin/phpunit --configuration=./.phpunit.xml -v --coverage-html ./.reports/phpunit/coverage
