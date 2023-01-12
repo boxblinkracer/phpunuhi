@@ -17,8 +17,8 @@ status: ## Status command
 validate: ## Validate command
 	cd ../.. && php bin/phpunuhi validate --configuration=./tests/playground/phpunuhi.xml
 
-fix: ## Fix command
-	cd ../.. && php bin/phpunuhi fix --configuration=./tests/playground/phpunuhi.xml
+structure: ## Fix command
+	cd ../.. && php bin/phpunuhi fix:structure --configuration=./tests/playground/phpunuhi.xml
 
 translate: ## Translate command
 	cd ../.. && php bin/phpunuhi translate --configuration=./tests/playground/phpunuhi.xml --service=googleweb
@@ -27,7 +27,7 @@ export: ## Export command
 	cd ../.. && php bin/phpunuhi export --configuration=./tests/playground/phpunuhi.xml --dir=./tests/playground/.exports
 
 html: ## Export command with HTML
-	cd ../.. && php bin/phpunuhi export --configuration=./tests/playground/phpunuhi.xml --dir=./tests/playground/.exports --format=html
+	cd ../.. && php bin/phpunuhi export --configuration=./tests/playground/phpunuhi.xml --set=json --dir=./tests/playground/.exports --format=html
 
 import: ## Import command
-	cd ../.. && php bin/phpunuhi import --configuration=./tests/playground/phpunuhi.xml --set=storefront --file=./tests/playground/.exports/storefront.csv
+	cd ../.. && php bin/phpunuhi import --configuration=./tests/playground/phpunuhi.xml --set=json --file=./tests/playground/.exports/json.csv
