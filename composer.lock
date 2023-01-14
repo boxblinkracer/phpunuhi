@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2c7d48626bc4a73a5c686edd18c57cee",
+    "content-hash": "207e247d97ee389710a66daaf07ef777",
     "packages": [
         {
             "name": "deeplcom/deepl-php",
@@ -305,16 +305,16 @@
         },
         {
             "name": "google/common-protos",
-            "version": "v3.1.0",
+            "version": "v3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/common-protos-php.git",
-                "reference": "5634c15f2ac5dbf2e3fd5ff7400d77661ab1b0d4"
+                "reference": "57d4ad36cc48cc0369123042908013ef2a86bb98"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/common-protos-php/zipball/5634c15f2ac5dbf2e3fd5ff7400d77661ab1b0d4",
-                "reference": "5634c15f2ac5dbf2e3fd5ff7400d77661ab1b0d4",
+                "url": "https://api.github.com/repos/googleapis/common-protos-php/zipball/57d4ad36cc48cc0369123042908013ef2a86bb98",
+                "reference": "57d4ad36cc48cc0369123042908013ef2a86bb98",
                 "shasum": ""
             },
             "require": {
@@ -351,9 +351,9 @@
             ],
             "support": {
                 "issues": "https://github.com/googleapis/common-protos-php/issues",
-                "source": "https://github.com/googleapis/common-protos-php/tree/v3.1.0"
+                "source": "https://github.com/googleapis/common-protos-php/tree/v3.2.0"
             },
-            "time": "2022-10-05T23:22:51+00:00"
+            "time": "2023-01-12T16:51:46+00:00"
         },
         {
             "name": "google/gax",
@@ -3144,16 +3144,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.9.8",
+            "version": "1.9.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "45411d15bf85a33b4a8ee9b75a6e82998c9adb97"
+                "reference": "60f3d68481eef216199eae7a2603cd5fe124d464"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/45411d15bf85a33b4a8ee9b75a6e82998c9adb97",
-                "reference": "45411d15bf85a33b4a8ee9b75a6e82998c9adb97",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/60f3d68481eef216199eae7a2603cd5fe124d464",
+                "reference": "60f3d68481eef216199eae7a2603cd5fe124d464",
                 "shasum": ""
             },
             "require": {
@@ -3183,7 +3183,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.9.8"
+                "source": "https://github.com/phpstan/phpstan/tree/1.9.11"
             },
             "funding": [
                 {
@@ -3199,7 +3199,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-01-08T21:26:18+00:00"
+            "time": "2023-01-12T14:04:13+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
