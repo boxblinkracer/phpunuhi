@@ -16,13 +16,21 @@ class Translation
     private $value;
 
     /**
+     * @var string
+     */
+    private $group;
+
+
+    /**
      * @param string $key
      * @param string $value
+     * @param string $group
      */
-    public function __construct(string $key, string $value)
+    public function __construct(string $key, string $value, string $group)
     {
         $this->key = $key;
         $this->value = $value;
+        $this->group = $group;
     }
 
     /**
@@ -39,6 +47,14 @@ class Translation
     public function getValue(): string
     {
         return $this->value;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGroup(): string
+    {
+        return $this->group;
     }
 
     /**

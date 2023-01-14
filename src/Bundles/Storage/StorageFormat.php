@@ -20,4 +20,9 @@ interface StorageFormat
      */
     public const PHP = 'php';
 
+    /**
+     *
+     */
+    public const SHOPWARE6 = 'shopware6';
+
 }

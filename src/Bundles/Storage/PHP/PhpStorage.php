@@ -32,18 +32,20 @@ class PhpStorage implements StorageInterface
      * @param Locale $locale
      * @return void
      */
-    public function loadTranslations(Locale $locale): void
+    public function loadTranslations(TranslationSet $set): void
     {
-        $arrayData = require($locale->getFilename());
+        foreach ($set->getLocales() as $locale) {
+            $arrayData = require($locale->getFilename());
 
-        if (!is_array($arrayData)) {
-            $arrayData = [];
-        }
+            if (!is_array($arrayData)) {
+                $arrayData = [];
+            }
 
-        $foundTranslationsFlat = $this->getFlatArray($arrayData);
+            $foundTranslationsFlat = $this->getFlatArray($arrayData);
 
-        foreach ($foundTranslationsFlat as $key => $value) {
-            $locale->addTranslation($key, $value);
+            foreach ($foundTranslationsFlat as $key => $value) {
+                $locale->addTranslation($key, $value, '');
+            }
         }
     }
 

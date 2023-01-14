@@ -9,10 +9,10 @@ interface StorageInterface
 {
 
     /**
-     * @param Locale $locale
+     * @param TranslationSet $set
      * @return void
      */
-    function loadTranslations(Locale $locale): void;
+    function loadTranslations(TranslationSet $set): void;
 
     /**
      * @param TranslationSet $set

@@ -1,0 +1,21 @@
+# Makefile  Project
+
+.PHONY: help
+.DEFAULT_GOAL := help
+
+
+#------------------------------------------------------------------------------------------------
+
+help:
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+
+#------------------------------------------------------------------------------------------------
+
+status: ## Status command
+	cd ../../.. && php bin/phpunuhi status --configuration=./tests/playground/shopware6/phpunuhi.xml
+
+validate: ## Validate command
+	cd ../../.. && php bin/phpunuhi validate --configuration=./tests/playground/shopware6/phpunuhi.xml
+
+csv: ## Exports a CSV
+	cd ../../.. && php bin/phpunuhi export --configuration=./tests/playground/shopware6/phpunuhi.xml --format=csv --dir=./tests/playground/shopware6/.exports

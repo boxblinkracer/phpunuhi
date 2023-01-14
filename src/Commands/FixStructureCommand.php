@@ -74,7 +74,7 @@ class FixStructureCommand extends Command
                         $locale->findTranslation($currentKey);
                     } catch (TranslationNotFoundException $ex) {
                         $io->writeln('   [+] create translation: [' . $locale->getName() . '] ' . $currentKey);
-                        $locale->addTranslation($currentKey, '');
+                        $locale->addTranslation($currentKey, '', '');
                         $countCreated++;
                     }
                 }

@@ -35,7 +35,7 @@ class JsonLoader
         $foundTranslationsFlat = $this->getFlatArray($foundTranslations);
 
         foreach ($foundTranslationsFlat as $key => $value) {
-            $locale->addTranslation($key, $value);
+            $locale->addTranslation($key, $value, '');
         }
     }
 

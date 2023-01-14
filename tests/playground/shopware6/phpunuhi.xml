@@ -1,0 +1,20 @@
+<phpunuhi
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/boxblinkracer/phpunuhi/main/config.xsd"
+>
+
+    <translations>
+
+        <set name="Products" format="shopware6" sw6Entity="product">
+            <file locale="English"></file>
+            <file locale="Deutsch"></file>
+        </set>
+
+        <set name="Salutations" format="shopware6" sw6Entity="salutation">
+            <file locale="English"></file>
+            <file locale="Deutsch"></file>
+        </set>
+
+    </translations>
+
+</phpunuhi>

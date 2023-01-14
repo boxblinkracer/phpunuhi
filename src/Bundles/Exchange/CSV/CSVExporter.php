@@ -2,6 +2,7 @@
 
 namespace PHPUnuhi\Bundles\Exchange\CSV;
 
+use PHPUnuhi\Exceptions\TranslationNotFoundException;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
 class CSVExporter
@@ -11,6 +12,7 @@ class CSVExporter
      * @var string
      */
     private $delimiter;
+
 
     /**
      * @param string $delimiter
@@ -28,60 +30,99 @@ class CSVExporter
      */
     public function export(TranslationSet $set, string $outputDir): void
     {
-        $allEntries = [];
+        $csvExportLines = [];
 
+        # ----------------------------------------------------------------------------------------
+
+        $sortedLanguagesColumns = [];
+
+        # collect available languages
+        # in the correct sorting of the columns
         foreach ($set->getLocales() as $locale) {
-
-            $fileBase = basename($locale->getFilename());
-
-            foreach ($locale->getTranslations() as $translation) {
-                $allEntries[$translation->getKey()][$fileBase] = $translation->getValue();
-            }
+            $sortedLanguagesColumns[] = $locale->getExchangeIdentifier();
         }
 
+        # ----------------------------------------------------------------------------------------
+        # BUILD HEADER LINE
 
         $headerLine = [];
         $headerLine[] = 'Key';
 
-        foreach ($set->getLocales() as $locale) {
-            $headerLine[] = $locale->getExchangeIdentifier();
+        if ($set->hasGroups()) {
+            $headerLine[] = 'Group';
         }
 
-        $lines = [];
-        $lines[] = $headerLine;
+        foreach ($sortedLanguagesColumns as $col) {
+            $headerLine[] = $col;
+        }
 
-        foreach ($allEntries as $key => $values) {
+        $csvExportLines[] = $headerLine;
 
-            $headerLine = [];
-            $headerLine[] = $key;
-            foreach ($values as $value) {
-                $headerLine[] = $value;
+        # ----------------------------------------------------------------------------------------
+        # BUILD DATA LINES
+
+        foreach ($set->getAllTranslationKeys() as $key) {
+
+            $keyRow = [];
+            $keyRow[] = $key;
+
+            $groupAdded = false;
+
+            # use the same sorting as our header line
+            foreach ($sortedLanguagesColumns as $colName) {
+
+                foreach ($set->getLocales() as $locale) {
+
+                    # only use the one from our current column
+                    if ($locale->getExchangeIdentifier() !== $colName) {
+                        continue;
+                    }
+
+                    try {
+
+                        # search for our translation
+                        # and add the value if found
+                        $trans = $locale->findTranslation($key);
+
+                        if (!empty($trans->getGroup()) && !$groupAdded) {
+                            $keyRow[] = $trans->getGroup();
+                            $groupAdded = true;
+                        }
+
+                        $keyRow[] = $trans->getValue();
+
+                    } catch (TranslationNotFoundException $ex) {
+                        # if we have no translation, add an empty value
+                        $keyRow[] = '';
+                    }
+                }
             }
 
-            $lines[] = $headerLine;
+            # append to CSV lines
+            $csvExportLines[] = $keyRow;
         }
+
+        # ----------------------------------------------------------------------------------------
+        # WRITE CSV lines
 
         if (empty($outputDir)) {
             $outputDir = '.';
         }
 
-
         if (!file_exists($outputDir)) {
             mkdir($outputDir, 0775, true);
         }
 
-
         $csvFilename = $outputDir . '/' . $set->getName() . '.csv';
-
 
         if (file_exists($csvFilename)) {
             unlink($csvFilename);
         }
 
-        $f = fopen($csvFilename, 'a');
+        $f = fopen($csvFilename, 'ab');
 
         if ($f !== false) {
-            foreach ($lines as $row) {
+            foreach ($csvExportLines as $row) {
                 fputcsv($f, $row, $this->delimiter);
             }
             fclose($f);

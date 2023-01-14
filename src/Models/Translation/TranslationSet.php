@@ -27,6 +27,11 @@ class TranslationSet
     private $sortStorage;
 
     /**
+     * @var string
+     */
+    private $sw6Entity;
+
+    /**
      * @var Locale[]
      */
     private $locales;
@@ -37,14 +42,16 @@ class TranslationSet
      * @param string $format
      * @param int $jsonIndent
      * @param bool $sortStorage
-     * @param Locale[] $locales
+     * @param string $sw6Entity
+     * @param array $locales
      */
-    public function __construct(string $name, string $format, int $jsonIndent, bool $sortStorage, array $locales)
+    public function __construct(string $name, string $format, int $jsonIndent, bool $sortStorage, string $sw6Entity, array $locales)
     {
         $this->name = $name;
         $this->format = $format;
         $this->jsonIndent = $jsonIndent;
         $this->sortStorage = $sortStorage;
+        $this->sw6Entity = $sw6Entity;
         $this->locales = $locales;
     }
 
@@ -74,6 +81,14 @@ class TranslationSet
     }
 
     /**
+     * @return string
+     */
+    public function getSw6Entity(): string
+    {
+        return $this->sw6Entity;
+    }
+
+    /**
      * @return bool
      */
     public function isSortStorage(): bool
@@ -87,6 +102,22 @@ class TranslationSet
     public function getLocales(): array
     {
         return $this->locales;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasGroups(): bool
+    {
+        foreach ($this->locales as $locale) {
+            foreach ($locale->getTranslations() as $translation) {
+                if (!empty($translation->getGroup())) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     /**

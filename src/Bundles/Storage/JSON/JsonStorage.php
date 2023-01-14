@@ -36,9 +36,11 @@ class JsonStorage implements StorageInterface
      * @return void
      * @throws \Exception
      */
-    public function loadTranslations(Locale $locale): void
+    public function loadTranslations(TranslationSet $set): void
     {
-        $this->loader->loadTranslations($locale);
+        foreach ($set->getLocales() as $locale) {
+            $this->loader->loadTranslations($locale);
+        }
     }
 
     /**

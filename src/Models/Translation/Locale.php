@@ -90,13 +90,15 @@ class Locale
     /**
      * @param string $key
      * @param string $value
+     * @param string $group
      * @return Translation
      */
-    public function addTranslation(string $key, string $value): Translation
+    public function addTranslation(string $key, string $value, string $group): Translation
     {
         $translation = new Translation(
             $key,
-            $value
+            $value,
+            $group
         );
 
         $this->translations[] = $translation;

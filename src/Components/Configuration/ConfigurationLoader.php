@@ -44,6 +44,7 @@ class ConfigurationLoader
             $name = trim((string)$xmlSet['name']);
             $format = trim((string)$xmlSet['format']);
             $jsonIndent = trim((string)$xmlSet['jsonIndent']);
+            $sw6Entity = trim((string)$xmlSet['sw6Entity']);
             $sortStorage = trim((string)$xmlSet['sort']);
 
             if (empty($format)) {
@@ -98,16 +99,14 @@ class ConfigurationLoader
             }
 
             # create our new set
-            $set = new TranslationSet($name, $format, (int)$jsonIndent, (bool)$sortStorage, $foundLocales);
+            $set = new TranslationSet($name, $format, (int)$jsonIndent, (bool)$sortStorage, $sw6Entity, $foundLocales);
 
 
             $translationLoader = StorageFactory::getStorage($set->getFormat(), $set->getJsonIndent(), $set->isSortStorage());
 
             # now iterate through our locales
             # and load the translation files for it
-            foreach ($set->getLocales() as $locale) {
-                $translationLoader->loadTranslations($locale);
-            }
+            $translationLoader->loadTranslations($set);
 
             $suites[] = $set;
         }

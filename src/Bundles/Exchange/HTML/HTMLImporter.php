@@ -72,7 +72,7 @@ class HTMLImporter
 
             foreach ($foundData as $data) {
                 if ($data['locale'] === $locale->getExchangeIdentifier()) {
-                    $newTranslations[] = new Translation($data['key'], $data['value']);
+                    $newTranslations[] = new Translation($data['key'], $data['value'], '');
                 }
             }
 

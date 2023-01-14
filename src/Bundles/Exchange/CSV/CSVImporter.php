@@ -107,7 +107,7 @@ class CSVImporter
 
                 # create translations
                 foreach ($csvTranslations as $csvTranslationKey => $csvTranslationValue) {
-                    $translationsForLocale[] = new Translation($csvTranslationKey, (string)$csvTranslationValue);
+                    $translationsForLocale[] = new Translation($csvTranslationKey, (string)$csvTranslationValue, '');
                 }
 
                 $locale->setTranslations($translationsForLocale);

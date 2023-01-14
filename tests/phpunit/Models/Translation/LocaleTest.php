@@ -75,10 +75,10 @@ class LocaleTest extends TestCase
     public function testGetTranslationKeys()
     {
         $locale = new Locale('', '', '');
-        $locale->addTranslation('title', 'Titel');
+        $locale->addTranslation('title', 'Titel', '');
         # add description twice
-        $locale->addTranslation('description', '');
-        $locale->addTranslation('description', '');
+        $locale->addTranslation('description', '', '');
+        $locale->addTranslation('description', '', '');
 
         $this->assertCount(2, $locale->getTranslationKeys());
     }
@@ -90,9 +90,9 @@ class LocaleTest extends TestCase
     {
         $locale = new Locale('', '', '');
         # valid
-        $locale->addTranslation('title', 'Titel');
+        $locale->addTranslation('title', 'Titel', '');
         # invalid
-        $locale->addTranslation('description', '');
+        $locale->addTranslation('description', '', '');
 
         $this->assertCount(1, $locale->getValidTranslations());
     }
@@ -103,8 +103,8 @@ class LocaleTest extends TestCase
     public function testGetTranslations()
     {
         $locale = new Locale('', '', '');
-        $locale->addTranslation('title', 'Titel');
-        $locale->addTranslation('description', '');
+        $locale->addTranslation('title', 'Titel', '');
+        $locale->addTranslation('description', '', '');
 
         $this->assertCount(2, $locale->getTranslations());
     }
