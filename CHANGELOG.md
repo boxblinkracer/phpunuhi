@@ -3,14 +3,14 @@
 All notable changes of SVRUnit releases are documented in this file
 using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
-## [unreleased]
+## [1.1.0]
 
 ### Added
 
-- OpenAI Translator now throws exception if no API key was set
-- `config.xsd` for autocompletion in IDEs and editors. Use either from the composer dependency `vendor/boxblinkracer/phpunuhi/config.xsd` or online `https://raw.githubusercontent.com/boxblinkracer/phpunuhi/main/config.xsd`
-- Added new PHP Storage for array based translations
-- Add coverage of all sets (total) to status command.
+- Add new `config.xsd` for configuration file to use autocompletion in IDEs and editors. Use either from the composer dependency `vendor/boxblinkracer/phpunuhi/config.xsd` or online `https://raw.githubusercontent.com/boxblinkracer/phpunuhi/main/config.xsd`
+- Add new "PHP" Storage for array based translations
+- Add coverage result of all sets (total) to status command.
+- OpenAI Translator and other translators now throw exceptions if no API key was set
 
 ### Changed
 
