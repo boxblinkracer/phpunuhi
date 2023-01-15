@@ -4,7 +4,6 @@ namespace PHPUnuhi\Bundles\Exchange\CSV\Services;
 
 use PHPUnuhi\Bundles\Exchange\ImportEntry;
 use PHPUnuhi\Bundles\Exchange\ImportResult;
-use PHPUnuhi\Models\Translation\TranslationSet;
 use PHPUnuhi\Traits\StringTrait;
 
 class CSVImporter
