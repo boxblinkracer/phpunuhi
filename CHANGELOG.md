@@ -9,8 +9,10 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 - Add new **list:translations** command to see all IDs of Translation-Sets
 - Add new **Filters** with allow and exclude lists. This also supports wildards with '*'
-- Add new Shopware 6 Storage format with full support of entities.
 - Add new **groups** of translations. This is required for a 3rd dimension. E.g. translations of products where every product has multiple rows with properties and different languages (columns).
+- Add option to inject **PHP** server variables that can be used in different areas.
+- Add Dbal/Connection to be used in MySQL driven storage formats.
+- Add new Shopware 6 Storage format with full support of entities.
 
 ### Changed
 
