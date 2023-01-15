@@ -2,9 +2,10 @@
 
 namespace PHPUnuhi\Bundles\Storage\JSON;
 
+use PHPUnuhi\Bundles\Storage\JSON\Services\JsonLoader;
+use PHPUnuhi\Bundles\Storage\JSON\Services\JsonSaver;
 use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Bundles\Storage\StorageSaveResult;
-use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
 class JsonStorage implements StorageInterface

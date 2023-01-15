@@ -74,7 +74,7 @@ class TranslationSaver
 
                 $entityId = str_replace($entity . '_', '', $translation->getGroup());
 
-                if (!$set->getFilter()->isKeyAllowed($translation->getName())) {
+                if (!$set->getFilter()->isKeyAllowed($translation->getKey())) {
                     continue;
                 }
 
@@ -83,7 +83,7 @@ class TranslationSaver
                         $entity,
                         $entityId,
                         $currentLanguageID,
-                        $translation->getName(),
+                        $translation->getKey(),
                         $translation->getValue()
                     );
 

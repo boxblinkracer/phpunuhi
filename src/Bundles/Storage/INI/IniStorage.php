@@ -4,7 +4,6 @@ namespace PHPUnuhi\Bundles\Storage\INI;
 
 use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Bundles\Storage\StorageSaveResult;
-use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
 class IniStorage implements StorageInterface
@@ -67,9 +66,7 @@ class IniStorage implements StorageInterface
         $localeCount = 0;
         $translationCount = 0;
 
-
         $fileContents = [];
-
 
         foreach ($set->getLocales() as $locale) {
 
@@ -80,14 +77,12 @@ class IniStorage implements StorageInterface
                 $content .= PHP_EOL;
             }
 
-
             if ($locale->getIniSection() !== '') {
                 $content .= "[" . $locale->getIniSection() . "]" . PHP_EOL;
                 $content .= PHP_EOL;
             }
 
             $localeCount++;
-
 
             $preparedTranslations = [];
 
@@ -100,15 +95,12 @@ class IniStorage implements StorageInterface
             }
 
             foreach ($preparedTranslations as $key => $value) {
-
                 $content .= $key . '="' . $value . '"' . PHP_EOL;
-
                 $translationCount++;
             }
 
             $fileContents[$locale->getFilename()] = $content;
         }
-
 
         foreach ($fileContents as $filename => $content) {
             file_put_contents($filename, $content);

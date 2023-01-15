@@ -8,7 +8,7 @@ class Translation
     /**
      * @var string
      */
-    private $name;
+    private $key;
 
     /**
      * @var string
@@ -22,35 +22,39 @@ class Translation
 
 
     /**
-     * @param string $name
+     * @param string $key
      * @param string $value
      * @param string $group
      */
-    public function __construct(string $name, string $value, string $group)
+    public function __construct(string $key, string $value, string $group)
     {
-        $this->name = $name;
+        $this->key = $key;
         $this->value = $value;
         $this->group = $group;
     }
 
     /**
+     * Gets the ID of the translation.
+     * This one is unique within a locale.
      * @return string
      */
     public function getID(): string
     {
         if (!empty($this->group)) {
-            return $this->group . '.' . $this->name;
+            return $this->group . '.' . $this->key;
         }
 
-        return $this->name;
+        return $this->key;
     }
 
     /**
+     * Gets the property key of the translation.
+     * This one might not be unique in a locale.
      * @return string
      */
-    public function getName(): string
+    public function getKey(): string
     {
-        return $this->name;
+        return $this->key;
     }
 
     /**

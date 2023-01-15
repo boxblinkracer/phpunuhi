@@ -127,15 +127,15 @@ class Locale
      */
     public function getTranslationIDs(): array
     {
-        $keys = [];
+        $ids = [];
 
         foreach ($this->getTranslations() as $translation) {
-            if (!in_array($translation->getID(), $keys)) {
-                $keys[] = $translation->getID();
+            if (!in_array($translation->getID(), $ids)) {
+                $ids[] = $translation->getID();
             }
         }
 
-        return $keys;
+        return $ids;
     }
 
     /**

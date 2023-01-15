@@ -71,7 +71,7 @@ class CSVExporter
             # and add the readable name
             foreach ($set->getLocales() as $locale) {
                 $trans = $locale->findTranslation($key);
-                $keyRow[] = $trans->getName();
+                $keyRow[] = $trans->getKey();
                 break;
             }
 

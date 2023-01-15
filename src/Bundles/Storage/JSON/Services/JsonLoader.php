@@ -1,8 +1,7 @@
 <?php
 
-namespace PHPUnuhi\Bundles\Storage\JSON;
+namespace PHPUnuhi\Bundles\Storage\JSON\Services;
 
-use PHPUnuhi\Bundles\Storage\StorageLoaderInterface;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Traits\ArrayTrait;
 
