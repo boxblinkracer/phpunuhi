@@ -21,16 +21,16 @@ class StorageFactory
     public static function getStorage(string $format, int $jsonIndent, bool $sortStorage): StorageInterface
     {
         switch (strtolower($format)) {
-            case StorageFormat::JSON:
+            case 'json':
                 return new JsonStorage($jsonIndent, $sortStorage);
 
-            case StorageFormat::INI:
+            case 'ini':
                 return new IniStorage($sortStorage);
 
-            case StorageFormat::PHP:
+            case 'php':
                 return new PhpStorage($sortStorage);
 
-            case StorageFormat::SHOPWARE6:
+            case 'shopware6':
                 return new Shopware6Storage();
 
             default:

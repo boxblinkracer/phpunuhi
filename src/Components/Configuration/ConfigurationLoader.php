@@ -61,7 +61,7 @@ class ConfigurationLoader
             $sortStorage = trim((string)$xmlSet['sort']);
 
             if (empty($format)) {
-                $format = StorageFormat::JSON;
+                $format = 'json';
             }
 
             if (empty($jsonIndent)) {
