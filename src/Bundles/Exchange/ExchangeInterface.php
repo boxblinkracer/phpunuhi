@@ -24,19 +24,12 @@ interface ExchangeInterface
     function getOptions(): array;
 
     /**
-     * Sets the used Storage object for the exchange
-     * @param StorageInterface $storage
-     * @return void
-     */
-    function setStorage(StorageInterface $storage): void;
-
-    /**
      * Sets the CLI options for this service.
      * Please assign all API keys and other configurations in here.
      * @param array<mixed> $options
      * @return void
      */
-    function setOptionValues(array $options) : void;
+    function setOptionValues(array $options): void;
 
     /**
      * @param TranslationSet $set
@@ -48,8 +41,8 @@ interface ExchangeInterface
     /**
      * @param TranslationSet $set
      * @param string $filename
-     * @return ImportResult
+     * @return void
      */
-    function import(TranslationSet $set, string $filename): ImportResult;
+    function import(TranslationSet $set, string $filename): void;
 
 }

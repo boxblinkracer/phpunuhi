@@ -6,6 +6,8 @@ use PHPUnuhi\Bundles\Exchange\ExchangeFactory;
 use PHPUnuhi\Bundles\Exchange\ExchangeFormat;
 use PHPUnuhi\Bundles\Exchange\ImportResult;
 use PHPUnuhi\Bundles\Storage\StorageFactory;
+use PHPUnuhi\Bundles\Storage\StorageSaveResult;
+use PHPUnuhi\Components\Filter\FilterHandler;
 use PHPUnuhi\Configuration\ConfigurationLoader;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -88,6 +90,8 @@ class ImportCommand extends Command
 
         $result = null;
 
+        $filterHandler = new FilterHandler();
+
         foreach ($config->getTranslationSets() as $set) {
 
             if ($setName !== $set->getName()) {
@@ -99,13 +103,19 @@ class ImportCommand extends Command
 
             # build the correct importer for our exchange format
             # and pass on the matching storage saver of our current ste
-            $importer = $this->exchangeFactory->getExchange($importExchangeFormat, $storageSaver, $input->getOptions());
+            $importer = $this->exchangeFactory->getExchange($importExchangeFormat, $input->getOptions());
 
-            $result = $importer->import($set, $importFilename);
+            $importer->import($set, $importFilename);
+
+            # filter away data
+            $filterHandler->applyFilter($set);
+
+            # save our data
+            $result = $storageSaver->saveTranslations($set);
         }
 
-        if ($result instanceof ImportResult) {
-            $io->success('Imported ' . $result->getCountTranslations() . ' translations of ' . $result->getCountLocales() . ' locales for set: ' . $setName);
+        if ($result instanceof StorageSaveResult) {
+            $io->success('Imported ' . $result->getSavedTranslations() . ' translations of ' . $result->getSavedLocales() . ' locales for set: ' . $setName);
             exit(0);
         }
 

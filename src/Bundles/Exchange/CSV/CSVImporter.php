@@ -2,18 +2,11 @@
 
 namespace PHPUnuhi\Bundles\Exchange\CSV;
 
-use PHPUnuhi\Bundles\Exchange\ImportResult;
-use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Models\Translation\Translation;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
 class CSVImporter
 {
-
-    /**
-     * @var StorageInterface
-     */
-    private $storage;
 
     /**
      * @var string
@@ -22,12 +15,10 @@ class CSVImporter
 
 
     /**
-     * @param StorageInterface $storage
      * @param string $delimiter
      */
-    public function __construct(StorageInterface $storage, string $delimiter)
+    public function __construct(string $delimiter)
     {
-        $this->storage = $storage;
         $this->delimiter = $delimiter;
     }
 
@@ -35,31 +26,23 @@ class CSVImporter
     /**
      * @param TranslationSet $set
      * @param string $filename
-     * @return ImportResult
+     * @return void
      * @throws \Exception
      */
-    public function import(TranslationSet $set, string $filename): ImportResult
+    public function import(TranslationSet $set, string $filename): void
     {
         # first import our translations from our CSV file
         # into our TranslationSet
-        $set = $this->importTranslations($set, $filename);
-
-        # now save the set with the new values
-        $result = $this->storage->saveTranslations($set);
-
-        return new ImportResult(
-            $result->getSavedLocales(),
-            $result->getSavedTranslations()
-        );
+        $this->importTranslations($set, $filename);
     }
 
     /**
      * @param TranslationSet $set
      * @param string $filename
-     * @return TranslationSet
+     * @return void
      * @throws \Exception
      */
-    private function importTranslations(TranslationSet $set, string $filename): TranslationSet
+    private function importTranslations(TranslationSet $set, string $filename): void
     {
         $translationFileValues = [];
         $headerFiles = [];
@@ -113,8 +96,6 @@ class CSVImporter
                 $locale->setTranslations($translationsForLocale);
             }
         }
-
-        return $set;
     }
 
 }

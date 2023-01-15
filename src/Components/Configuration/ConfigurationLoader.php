@@ -4,6 +4,7 @@ namespace PHPUnuhi\Configuration;
 
 use PHPUnuhi\Bundles\Storage\StorageFactory;
 use PHPUnuhi\Bundles\Storage\StorageFormat;
+use PHPUnuhi\Components\Filter\FilterHandler;
 use PHPUnuhi\Models\Configuration\Configuration;
 use PHPUnuhi\Models\Translation\Filter;
 use PHPUnuhi\Models\Translation\Locale;
@@ -15,10 +16,17 @@ class ConfigurationLoader
 {
 
     /**
+     * @var FilterHandler
+     */
+    private $filterHandler;
+
+
+    /**
      *
      */
     public function __construct()
     {
+        $this->filterHandler = new FilterHandler();
     }
 
 
@@ -135,6 +143,10 @@ class ConfigurationLoader
             # now iterate through our locales
             # and load the translation files for it
             $translationLoader->loadTranslations($set);
+
+            # remove fields that must not be existing
+            # because of our allow or exclude list
+            $this->filterHandler->applyFilter($set);
 
             $suites[] = $set;
         }

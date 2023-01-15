@@ -171,5 +171,22 @@ class Locale
         return $list;
     }
 
+    /**
+     * @param string $id
+     * @return void
+     */
+    public function removeFilter(string $id): void
+    {
+        $tmpList = [];
+
+        foreach ($this->translations as $translation) {
+
+            if ($translation->getID() !== $id) {
+                $tmpList[] = $translation;
+            }
+        }
+
+        $this->translations = $tmpList;
+    }
 }
 

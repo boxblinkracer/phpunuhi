@@ -12,12 +12,6 @@ class HTMLExchange implements ExchangeInterface
 {
 
     /**
-     * @var StorageInterface
-     */
-    private $storage;
-
-
-    /**
      * @return string
      */
     public function getName(): string
@@ -32,15 +26,6 @@ class HTMLExchange implements ExchangeInterface
     {
         return [
         ];
-    }
-
-    /**
-     * @param StorageInterface $storage
-     * @return void
-     */
-    public function setStorage(StorageInterface $storage): void
-    {
-        $this->storage = $storage;
     }
 
     /**
@@ -65,14 +50,13 @@ class HTMLExchange implements ExchangeInterface
     /**
      * @param TranslationSet $set
      * @param string $filename
-     * @return ImportResult
+     * @return void
      * @throws \Exception
      */
-    public function import(TranslationSet $set, string $filename): ImportResult
+    public function import(TranslationSet $set, string $filename): void
     {
-        $importer = new HTMLImporter($this->storage);
-
-        return $importer->import($set, $filename);
+        $importer = new HTMLImporter();
+        $importer->import($set, $filename);
     }
 
 }

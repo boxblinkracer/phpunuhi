@@ -44,12 +44,11 @@ class ExchangeFactory
 
     /**
      * @param string $format
-     * @param StorageInterface $storage
      * @param array<mixed> $options
      * @return ExchangeInterface
      * @throws \Exception
      */
-    public function getExchange(string $format, StorageInterface $storage, array $options): ExchangeInterface
+    public function getExchange(string $format, array $options): ExchangeInterface
     {
         if (empty($format)) {
             throw new \Exception('No format name provided for the Exchange service');
@@ -58,7 +57,6 @@ class ExchangeFactory
         foreach ($this->exchangeServices as $exchangeService) {
 
             if ($exchangeService->getName() === $format) {
-                $exchangeService->setStorage($storage);
                 $exchangeService->setOptionValues($options);
 
                 return $exchangeService;

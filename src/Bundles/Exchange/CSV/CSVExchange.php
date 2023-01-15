@@ -12,11 +12,6 @@ class CSVExchange implements ExchangeInterface
 {
 
     /**
-     * @var StorageInterface
-     */
-    private $storage;
-
-    /**
      * @var string
      */
     private $csvDelimiter;
@@ -38,15 +33,6 @@ class CSVExchange implements ExchangeInterface
         return [
             new CommandOption('csv-delimiter', true),
         ];
-    }
-
-    /**
-     * @param StorageInterface $storage
-     * @return void
-     */
-    public function setStorage(StorageInterface $storage): void
-    {
-        $this->storage = $storage;
     }
 
     /**
@@ -76,14 +62,13 @@ class CSVExchange implements ExchangeInterface
     /**
      * @param TranslationSet $set
      * @param string $filename
-     * @return ImportResult
+     * @return void
      * @throws \Exception
      */
-    public function import(TranslationSet $set, string $filename): ImportResult
+    public function import(TranslationSet $set, string $filename): void
     {
-        $importer = new CSVImporter($this->storage, $this->csvDelimiter);
-
-        return $importer->import($set, $filename);
+        $importer = new CSVImporter($this->csvDelimiter);
+        $importer->import($set, $filename);
     }
 
 }

@@ -41,7 +41,7 @@ class Translation
     public function getID(): string
     {
         if (!empty($this->group)) {
-            return $this->group . '.' . $this->key;
+            return 'group--' . $this->group . '.' . $this->key;
         }
 
         return $this->key;
