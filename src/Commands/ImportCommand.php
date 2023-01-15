@@ -107,7 +107,8 @@ class ImportCommand extends Command
             # and pass on the matching storage saver of our current ste
             $importer = $this->exchangeFactory->getExchange($importExchangeFormat, $input->getOptions());
 
-            $importData = $importer->import($set, $importFilename);
+            # import our provided file
+            $importData = $importer->import($importFilename);
             $this->updateTranslationSet($set, $importData);
 
             # filter away data

@@ -29,12 +29,11 @@ class CSVImporter
 
 
     /**
-     * @param TranslationSet $set
      * @param string $filename
      * @return ImportResult
      * @throws \Exception
      */
-    public function import(TranslationSet $set, string $filename): ImportResult
+    public function import(string $filename): ImportResult
     {
         $headerFiles = [];
         $importData = [];

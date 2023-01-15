@@ -4,7 +4,6 @@ namespace PHPUnuhi\Bundles\Exchange;
 
 use PHPUnuhi\Bundles\Exchange\CSV\CSVExchange;
 use PHPUnuhi\Bundles\Exchange\HTML\HTMLExchange;
-use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Models\Command\CommandOption;
 
 class ExchangeFactory

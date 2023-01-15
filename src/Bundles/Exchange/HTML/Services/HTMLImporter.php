@@ -14,11 +14,10 @@ class HTMLImporter
     use StringTrait;
 
     /**
-     * @param TranslationSet $set
      * @param string $filename
      * @return ImportResult
      */
-    public function import(TranslationSet $set, string $filename): ImportResult
+    public function import(string $filename): ImportResult
     {
         $foundData = [];
 

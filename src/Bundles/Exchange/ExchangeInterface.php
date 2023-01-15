@@ -39,10 +39,9 @@ interface ExchangeInterface
     function export(TranslationSet $set, string $outputDir): void;
 
     /**
-     * @param TranslationSet $set
      * @param string $filename
      * @return ImportResult
      */
-    function import(TranslationSet $set, string $filename): ImportResult;
+    function import(string $filename): ImportResult;
 
 }
