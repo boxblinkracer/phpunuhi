@@ -79,7 +79,6 @@ class HTMLImporter
             $locale->setTranslations($newTranslations);
         }
 
-
         $result = $this->storage->saveTranslations($set);
 
         return new ImportResult($result->getSavedLocales(), $result->getSavedTranslations());
