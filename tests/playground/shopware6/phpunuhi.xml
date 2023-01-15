@@ -18,6 +18,7 @@
                 <exclude>
                     <key>custom_fields</key>
                     <key>custom_search_keywords</key>
+                    <key>meta_*</key>
                 </exclude>
             </filter>
             <locale locale="en-GB"></locale>

@@ -57,14 +57,41 @@ class Filter
      */
     public function isKeyAllowed(string $key): bool
     {
-        # if we have an allow list,
-        # then only verify this
+
         if (count($this->fieldsAllow) > 0) {
-            return in_array($key, $this->fieldsAllow);
+            foreach ($this->fieldsAllow as $fieldPattern) {
+                if ($this->stringMatchWithWildcard($key, $fieldPattern)) {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         # otherwise check if its at least not excluded
-        return !in_array($key, $this->fieldsExclude);
+        foreach ($this->fieldsExclude as $fieldPattern) {
+            if ($this->stringMatchWithWildcard($key, $fieldPattern)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @param $wildcard_pattern
+     * @param $haystack
+     * @return false|int
+     */
+    private function stringMatchWithWildcard($haystack, $wildcard_pattern)
+    {
+        $regex = str_replace(
+            array("\*", "\?"), // wildcard chars
+            array('.*', '.'),   // regexp chars
+            preg_quote($wildcard_pattern, '/')
+        );
+
+        return preg_match('/^' . $regex . '$/is', $haystack);
     }
 
 }
