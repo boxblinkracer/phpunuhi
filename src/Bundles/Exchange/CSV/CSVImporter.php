@@ -2,7 +2,8 @@
 
 namespace PHPUnuhi\Bundles\Exchange\CSV;
 
-use PHPUnuhi\Models\Translation\Translation;
+use PHPUnuhi\Bundles\Exchange\ImportEntry;
+use PHPUnuhi\Bundles\Exchange\ImportResult;
 use PHPUnuhi\Models\Translation\TranslationSet;
 use PHPUnuhi\Traits\StringTrait;
 
@@ -30,27 +31,13 @@ class CSVImporter
     /**
      * @param TranslationSet $set
      * @param string $filename
-     * @return void
+     * @return ImportResult
      * @throws \Exception
      */
-    public function import(TranslationSet $set, string $filename): void
+    public function import(TranslationSet $set, string $filename): ImportResult
     {
-        # first import our translations from our CSV file
-        # into our TranslationSet
-        $this->importTranslations($set, $filename);
-    }
-
-    /**
-     * @param TranslationSet $set
-     * @param string $filename
-     * @return void
-     * @throws \Exception
-     */
-    private function importTranslations(TranslationSet $set, string $filename): void
-    {
-        $translationFileValues = [];
         $headerFiles = [];
-
+        $importData = [];
 
         $csvFile = fopen($filename, 'r');
 
@@ -68,7 +55,7 @@ class CSVImporter
                 $startIndex = 1;
 
                 if (in_array('Group', $headerFiles)) {
-                    $group = 'group--' . $row[0] . '.';
+                    $group = $row[0];
                     $key = $row[1];
                     $startIndex = 2;
                 } else {
@@ -80,11 +67,16 @@ class CSVImporter
 
                     $value = $row[$i];
 
-                    $transFile = (string)$headerFiles[$i];
+                    $localeExchangeID = (string)$headerFiles[$i];
 
-                    if ($transFile !== '') {
-                        $transKey = $group . $key;
-                        $translationFileValues[$transFile][$transKey] = $value;
+                    if ($localeExchangeID !== '') {
+
+                        $importData[] = new ImportEntry(
+                            (string)$localeExchangeID,
+                            (string)$key,
+                            (string)$group,
+                            (string)$value
+                        );
                     }
                 }
             }
@@ -92,34 +84,7 @@ class CSVImporter
 
         fclose($csvFile);
 
-        foreach ($translationFileValues as $identifier => $csvTranslations) {
-
-            $translationsForLocale = [];
-
-            # search filename form locales
-            foreach ($set->getLocales() as $locale) {
-
-                if ($locale->getExchangeIdentifier() !== $identifier) {
-                    continue;
-                }
-
-                # create translations
-                foreach ($csvTranslations as $csvTranslationKey => $csvTranslationValue) {
-
-                    $group = '';
-                    if ($this->stringStartsWith($csvTranslationKey, 'group--')) {
-                        $group = explode('.', $csvTranslationKey)[0];
-                        $group = str_replace('group--', '', $group);
-
-                        $csvTranslationKey = str_replace('group--' . $group . '.', '', $csvTranslationKey);
-                    }
-
-                    $translationsForLocale[] = new Translation($csvTranslationKey, (string)$csvTranslationValue, $group);
-                }
-
-                $locale->setTranslations($translationsForLocale);
-            }
-        }
+        return new ImportResult($importData);
     }
 
 }

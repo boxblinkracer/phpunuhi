@@ -62,13 +62,13 @@ class CSVExchange implements ExchangeInterface
     /**
      * @param TranslationSet $set
      * @param string $filename
-     * @return void
+     * @return ImportResult
      * @throws \Exception
      */
-    public function import(TranslationSet $set, string $filename): void
+    public function import(TranslationSet $set, string $filename): ImportResult
     {
         $importer = new CSVImporter($this->csvDelimiter);
-        $importer->import($set, $filename);
+        return $importer->import($set, $filename);
     }
 
 }

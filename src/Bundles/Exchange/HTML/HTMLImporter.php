@@ -2,7 +2,8 @@
 
 namespace PHPUnuhi\Bundles\Exchange\HTML;
 
-use PHPUnuhi\Models\Translation\Translation;
+use PHPUnuhi\Bundles\Exchange\ImportEntry;
+use PHPUnuhi\Bundles\Exchange\ImportResult;
 use PHPUnuhi\Models\Translation\TranslationSet;
 use PHPUnuhi\Traits\StringTrait;
 use SplFileObject;
@@ -15,9 +16,9 @@ class HTMLImporter
     /**
      * @param TranslationSet $set
      * @param string $filename
-     * @return void
+     * @return ImportResult
      */
-    public function import(TranslationSet $set, string $filename): void
+    public function import(TranslationSet $set, string $filename): ImportResult
     {
         $foundData = [];
 
@@ -58,29 +59,15 @@ class HTMLImporter
 
             $value = explode('=', $line)[1];
 
-
-            $foundData[] = [
-                'key' => $key,
-                'group' => $group,
-                'locale' => $localeID,
-                'value' => $value,
-            ];
+            $foundData[] = new ImportEntry(
+                $localeID,
+                $key,
+                $group,
+                $value
+            );
         }
 
-
-        foreach ($set->getLocales() as $locale) {
-
-            $newTranslations = [];
-
-            foreach ($foundData as $data) {
-                if ($data['locale'] === $locale->getExchangeIdentifier()) {
-                    $newTranslations[] = new Translation($data['key'], $data['value'], $data['group']);
-                }
-            }
-
-            $locale->setTranslations($newTranslations);
-        }
+        return new ImportResult($foundData);
     }
-
 
 }

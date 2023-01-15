@@ -50,13 +50,13 @@ class HTMLExchange implements ExchangeInterface
     /**
      * @param TranslationSet $set
      * @param string $filename
-     * @return void
+     * @return ImportResult
      * @throws \Exception
      */
-    public function import(TranslationSet $set, string $filename): void
+    public function import(TranslationSet $set, string $filename): ImportResult
     {
         $importer = new HTMLImporter();
-        $importer->import($set, $filename);
+        return $importer->import($set, $filename);
     }
 
 }

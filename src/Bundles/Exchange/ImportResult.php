@@ -6,39 +6,25 @@ class ImportResult
 {
 
     /**
-     * @var int
+     * @var ImportEntry[]
      */
-    private $countLocales;
+    private $entries;
+
 
     /**
-     * @var int
+     * @param ImportEntry[] $entries
      */
-    private $countTranslations;
-
-    /**
-     * @param int $countLocales
-     * @param int $countTranslations
-     */
-    public function __construct(int $countLocales, int $countTranslations)
+    public function __construct(array $entries)
     {
-        $this->countLocales = $countLocales;
-        $this->countTranslations = $countTranslations;
+        $this->entries = $entries;
     }
 
     /**
-     * @return int
+     * @return ImportEntry[]
      */
-    public function getCountLocales(): int
+    public function getEntries(): array
     {
-        return $this->countLocales;
-    }
-
-    /**
-     * @return int
-     */
-    public function getCountTranslations(): int
-    {
-        return $this->countTranslations;
+        return $this->entries;
     }
 
 }

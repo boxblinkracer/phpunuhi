@@ -9,6 +9,8 @@ use PHPUnuhi\Bundles\Storage\StorageFactory;
 use PHPUnuhi\Bundles\Storage\StorageSaveResult;
 use PHPUnuhi\Components\Filter\FilterHandler;
 use PHPUnuhi\Configuration\ConfigurationLoader;
+use PHPUnuhi\Models\Translation\TranslationSet;
+use SebastianBergmann\CodeCoverage\Report\PHP;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -105,7 +107,8 @@ class ImportCommand extends Command
             # and pass on the matching storage saver of our current ste
             $importer = $this->exchangeFactory->getExchange($importExchangeFormat, $input->getOptions());
 
-            $importer->import($set, $importFilename);
+            $importData = $importer->import($set, $importFilename);
+            $this->updateTranslationSet($set, $importData);
 
             # filter away data
             $filterHandler->applyFilter($set);
@@ -121,6 +124,32 @@ class ImportCommand extends Command
 
         $io->error('No sets found with name: ' . $setName);
         exit(1);
+    }
+
+    /**
+     * @param TranslationSet $set
+     * @param ImportResult $importData
+     * @return void
+     */
+    private function updateTranslationSet(TranslationSet $set, ImportResult $importData): void
+    {
+        foreach ($importData->getEntries() as $entry) {
+
+            foreach ($set->getLocales() as $locale) {
+
+                if ($entry->getLocaleExchangeID() !== $locale->getExchangeIdentifier()) {
+                    continue;
+                }
+
+                foreach ($locale->getTranslations() as $translation) {
+
+                    if ($translation->getKey() === $entry->getKey() && $translation->getGroup() === $entry->getGroup()) {
+
+                        $translation->setValue($entry->getValue());
+                    }
+                }
+            }
+        }
     }
 
 } 
