@@ -63,7 +63,14 @@ class HTMLExporter
 
         $html .= "<thead>";
         $html .= "<tr>";
+
+        if ($set->hasGroups()) {
+            $html .= "<th>Group</th>";
+        }
+
         $html .= "<th>Keys (" . count($set->getAllTranslationEntryIDs()) . ")</th>";
+
+
         foreach ($set->getLocales() as $locale) {
             $html .= "<th>";
             $html .= $locale->getName();
@@ -73,15 +80,37 @@ class HTMLExporter
         $html .= "</thead>";
 
         $html .= "<tbody>";
-        foreach ($set->getAllTranslationEntryIDs() as $key) {
+
+        $previosuGroup = '';
+
+        foreach ($set->getAllTranslationEntryIDs() as $id) {
 
             $html .= "<tr>";
 
-            $html .= "<td>" . $key . "</td>";
 
             foreach ($set->getLocales() as $locale) {
 
-                $value = $this->getTranslationValue($locale, $key);
+                $translation = $locale->findTranslation($id);
+
+                if ($set->hasGroups()) {
+                    if ($translation->getGroup() !== $previosuGroup) {
+                        $html .= "<td>" . $translation->getGroup() . "</td>";
+                        $previosuGroup = $translation->getGroup();
+                    } else {
+                        $html .= "<td></td>";
+                    }
+                }
+
+                $html .= "<td>" . $translation->getKey() . "</td>";
+
+                break;
+            }
+
+
+            foreach ($set->getLocales() as $locale) {
+
+
+                $value = $this->getTranslationValue($locale, $id);
 
                 $value = htmlentities($value);
 
@@ -90,7 +119,7 @@ class HTMLExporter
                 $html .= '
                         <td>
                             <input 
-                                id="' . $key . '--' . $locale->getExchangeIdentifier() . '" 
+                                id="' . $id . '--' . $locale->getExchangeIdentifier() . '" 
                                 class="translation textfield ' . $wasEmpty . '" 
                                 type="text" 
                                 onchange="onTextfieldChanged(this)"
