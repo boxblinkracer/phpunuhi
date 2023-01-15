@@ -106,7 +106,7 @@ class TranslationLoader
 
                     # create a unique identifier for our translation
                     # it should contain our entity as well as the property
-                    $translationKey = 'sw6_' . $entity . '_' . $entityId . '.' . $property;
+                    $translationKey = $property;
 
                     # the value might either be a string or binary
                     # make sure to always use raw string

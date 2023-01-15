@@ -8,7 +8,7 @@ class Translation
     /**
      * @var string
      */
-    private $key;
+    private $name;
 
     /**
      * @var string
@@ -22,13 +22,13 @@ class Translation
 
 
     /**
-     * @param string $key
+     * @param string $name
      * @param string $value
      * @param string $group
      */
-    public function __construct(string $key, string $value, string $group)
+    public function __construct(string $name, string $value, string $group)
     {
-        $this->key = $key;
+        $this->name = $name;
         $this->value = $value;
         $this->group = $group;
     }
@@ -38,7 +38,19 @@ class Translation
      */
     public function getKey(): string
     {
-        return $this->key;
+        if (!empty($this->group)) {
+            return $this->group . '_' . $this->name;
+        }
+
+        return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
     }
 
     /**
