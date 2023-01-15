@@ -39,6 +39,14 @@ class ConfigurationLoader
 
         $suites = [];
 
+        foreach ($xmlSettings->php->children() as $xmlSet) {
+
+            $name = trim((string)$xmlSet['name']);
+            $value = trim((string)$xmlSet['value']);
+
+            $_SERVER[$name] = $value;
+        }
+
         /** @var SimpleXMLElement $xmlSet */
         foreach ($xmlSettings->translations->children() as $xmlSet) {
 

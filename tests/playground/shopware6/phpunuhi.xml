@@ -3,6 +3,14 @@
         xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/boxblinkracer/phpunuhi/main/config.xsd"
 >
 
+    <php>
+        <var name="DB_HOST" value="127.0.0.1"/>
+        <var name="DB_PORT" value="3306"/>
+        <var name="DB_USER" value="root"/>
+        <var name="DB_PASSWD" value="root"/>
+        <var name="DB_DBNAME" value="shopware"/>
+    </php>
+
     <translations>
 
         <set name="Products" format="shopware6" sw6Entity="product">

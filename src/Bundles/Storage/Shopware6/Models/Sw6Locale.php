@@ -2,7 +2,7 @@
 
 namespace PHPUnuhi\Bundles\Storage\Shopware6\Models;
 
-class Locale
+class Sw6Locale
 {
 
     /**

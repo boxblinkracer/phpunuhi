@@ -4,7 +4,7 @@ namespace PHPUnuhi\Bundles\Storage\Shopware6\Repository;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Result;
-use PHPUnuhi\Bundles\Storage\Shopware6\Models\Locale;
+use PHPUnuhi\Bundles\Storage\Shopware6\Models\Sw6Locale;
 use PHPUnuhi\Traits\BinaryTrait;
 
 class LanguageRepository
@@ -27,7 +27,7 @@ class LanguageRepository
     }
 
     /**
-     * @return Locale[]
+     * @return Sw6Locale[]
      * @throws \Doctrine\DBAL\Exception
      */
     public function getLanguages(): array
@@ -54,7 +54,7 @@ class LanguageRepository
 
         foreach ($dbRows as $row) {
 
-            $list[] = new Locale(
+            $list[] = new Sw6Locale(
                 $this->binaryToString((string)$row['langId']),
                 (string)$row['langName'],
                 (string)$row['locCode']
