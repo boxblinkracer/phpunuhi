@@ -30,4 +30,4 @@ translate: ## Translate
 	cd ../../.. && php bin/phpunuhi translate --configuration=./tests/playground/shopware6/phpunuhi.xml --service=googleweb
 
 import: ## Import
-	cd ../../.. && php bin/phpunuhi import --configuration=./tests/playground/shopware6/phpunuhi.xml --set=shipping --format=html --file=./tests/playground/shopware6/.exports/import.html.txt
+	cd ../../.. && php bin/phpunuhi import --configuration=./tests/playground/shopware6/phpunuhi.xml --set=products --format=csv --file=./tests/playground/shopware6/.exports/products.csv

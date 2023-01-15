@@ -13,7 +13,7 @@
 
     <translations>
 
-        <set name="Products" format="shopware6" sw6Entity="product">
+        <set name="products" format="shopware6" sw6Entity="product">
             <filter>
                 <exclude>
                     <key>custom_fields</key>

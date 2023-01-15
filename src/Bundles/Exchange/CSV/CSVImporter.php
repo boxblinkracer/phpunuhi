@@ -4,9 +4,13 @@ namespace PHPUnuhi\Bundles\Exchange\CSV;
 
 use PHPUnuhi\Models\Translation\Translation;
 use PHPUnuhi\Models\Translation\TranslationSet;
+use PHPUnuhi\Traits\StringTrait;
 
 class CSVImporter
 {
+
+    use StringTrait;
+
 
     /**
      * @var string
@@ -61,21 +65,32 @@ class CSVImporter
                 $headerFiles = $row;
             } else {
 
-                for ($i = 1; $i <= count($row) - 1; $i++) {
+                $startIndex = 1;
+
+                if (in_array('Group', $headerFiles)) {
+                    $group = 'group--' . $row[0] . '.';
+                    $key = $row[1];
+                    $startIndex = 2;
+                } else {
                     $key = $row[0];
+                    $group = '';
+                }
+
+                for ($i = $startIndex; $i <= count($row) - 1; $i++) {
+
                     $value = $row[$i];
 
                     $transFile = (string)$headerFiles[$i];
 
                     if ($transFile !== '') {
-                        $translationFileValues[$transFile][$key] = $value;
+                        $transKey = $group . $key;
+                        $translationFileValues[$transFile][$transKey] = $value;
                     }
                 }
             }
         }
 
         fclose($csvFile);
-
 
         foreach ($translationFileValues as $identifier => $csvTranslations) {
 
@@ -90,7 +105,16 @@ class CSVImporter
 
                 # create translations
                 foreach ($csvTranslations as $csvTranslationKey => $csvTranslationValue) {
-                    $translationsForLocale[] = new Translation($csvTranslationKey, (string)$csvTranslationValue, '');
+
+                    $group = '';
+                    if ($this->stringStartsWith($csvTranslationKey, 'group--')) {
+                        $group = explode('.', $csvTranslationKey)[0];
+                        $group = str_replace('group--', '', $group);
+
+                        $csvTranslationKey = str_replace('group--' . $group . '.', '', $csvTranslationKey);
+                    }
+
+                    $translationsForLocale[] = new Translation($csvTranslationKey, (string)$csvTranslationValue, $group);
                 }
 
                 $locale->setTranslations($translationsForLocale);

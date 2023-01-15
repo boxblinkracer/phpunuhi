@@ -46,11 +46,12 @@ class CSVExporter
         # BUILD HEADER LINE
 
         $headerLine = [];
-        $headerLine[] = 'Key';
 
         if ($set->hasGroups()) {
             $headerLine[] = 'Group';
         }
+
+        $headerLine[] = 'Key';
 
         foreach ($sortedLanguagesColumns as $col) {
             $headerLine[] = $col;
@@ -64,13 +65,17 @@ class CSVExporter
         foreach ($set->getAllTranslationEntryIDs() as $key) {
 
             $keyRow = [];
-            $groupAdded = false;
 
             # build our key entry with just the name
             # so based on our unique key, weg fetch any translation
             # and add the readable name
             foreach ($set->getLocales() as $locale) {
                 $trans = $locale->findTranslation($key);
+
+                if (!empty($trans->getGroup())) {
+                    $keyRow[] = $trans->getGroup();
+                }
+
                 $keyRow[] = $trans->getKey();
                 break;
             }
@@ -90,11 +95,6 @@ class CSVExporter
                         # search for our translation
                         # and add the value if found
                         $trans = $locale->findTranslation($key);
-
-                        if (!empty($trans->getGroup()) && !$groupAdded) {
-                            $keyRow[] = $trans->getGroup();
-                            $groupAdded = true;
-                        }
 
                         $keyRow[] = $trans->getValue();
 

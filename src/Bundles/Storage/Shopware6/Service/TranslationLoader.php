@@ -91,10 +91,6 @@ class TranslationLoader
                 # as separate translation entries within our current group.
                 foreach ($dbRow as $property => $value) {
 
-                    if (!$set->getFilter()->isKeyAllowed($property)) {
-                        continue;
-                    }
-
                     # also exclude a few things hardcoded because they just make no sense
                     if (in_array($property, Shopware6Storage::FIELD_BLACKLIST)) {
                         continue;

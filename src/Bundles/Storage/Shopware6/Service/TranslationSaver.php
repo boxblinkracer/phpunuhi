@@ -51,9 +51,7 @@ class TranslationSaver
             throw new ConfigurationException('No entity configured for Shopware6 Translation-Set: ' . $set->getName());
         }
 
-
         $entity = $set->getSw6Entity();
-        $entityIdKey = $entity . '_id';
 
         $allDbLanguages = $this->repoLanguages->getLanguages();
 
@@ -73,10 +71,6 @@ class TranslationSaver
             foreach ($locale->getTranslations() as $translation) {
 
                 $entityId = str_replace($entity . '_', '', $translation->getGroup());
-
-                if (!$set->getFilter()->isKeyAllowed($translation->getKey())) {
-                    continue;
-                }
 
                 try {
                     $this->repoTranslations->updateTranslation(
