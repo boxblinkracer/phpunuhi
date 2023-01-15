@@ -6,13 +6,30 @@
     <translations>
 
         <set name="Products" format="shopware6" sw6Entity="product">
-            <file locale="English"></file>
-            <file locale="Deutsch"></file>
+            <filter>
+                <exclude>
+                    <key>custom_fields</key>
+                    <key>custom_search_keywords</key>
+                </exclude>
+            </filter>
+            <locale locale="en-GB"></locale>
+            <locale locale="de-DE"></locale>
         </set>
 
         <set name="Salutations" format="shopware6" sw6Entity="salutation">
-            <file locale="English"></file>
-            <file locale="Deutsch"></file>
+            <filter>
+                <include>
+                    <key>display_name</key>
+                    <key>letter_name</key>
+                </include>
+            </filter>
+            <locale locale="en-GB"></locale>
+            <locale locale="de-DE"></locale>
+        </set>
+
+        <set name="Shipping Methods" format="shopware6" sw6Entity="shipping_method">
+            <locale locale="en-GB"></locale>
+            <locale locale="de-DE"></locale>
         </set>
 
     </translations>

@@ -6,7 +6,7 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Result;
 use PHPUnuhi\Traits\BinaryTrait;
 
-class TranslationRepository
+class EntityRepository
 {
 
     use BinaryTrait;
@@ -27,15 +27,22 @@ class TranslationRepository
 
     /**
      * @param string $entity
+     * @param string $id
      * @return array<mixed>
      * @throws \Doctrine\DBAL\Exception
      */
-    public function getTranslations(string $entity): array
+    public function getEntity(string $entity, string $id): array
     {
         $qb = $this->connection->createQueryBuilder();
 
         $qb->select('*')
-            ->from($entity . '_translation', 't');
+            ->from($entity, 't')
+            ->where('id = :id')
+            ->setParameters(
+                [
+                    ':id' => $id,
+                ]
+            );
 
         $result = $qb->execute();
 
@@ -43,13 +50,9 @@ class TranslationRepository
             return [];
         }
 
-        $dbRows = $result->fetchAll();
+        $dbRow = $result->fetch();
 
-        if ($dbRows !== (array)$dbRows) {
-            throw new \Exception('not found!');
-        }
-
-        return $dbRows;
+        return $dbRow;
     }
 
 }

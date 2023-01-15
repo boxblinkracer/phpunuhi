@@ -29,7 +29,7 @@ class PhpStorage implements StorageInterface
 
 
     /**
-     * @param Locale $locale
+     * @param TranslationSet $set
      * @return void
      */
     public function loadTranslations(TranslationSet $set): void

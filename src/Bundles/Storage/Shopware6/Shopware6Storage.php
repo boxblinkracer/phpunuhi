@@ -4,8 +4,8 @@ namespace PHPUnuhi\Bundles\Storage\Shopware6;
 
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Connection;
+use PHPUnuhi\Bundles\Storage\Shopware6\Repository\EntityTranslationRepository;
 use PHPUnuhi\Bundles\Storage\Shopware6\Repository\LanguageRepository;
-use PHPUnuhi\Bundles\Storage\Shopware6\Repository\TranslationRepository;
 use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Bundles\Storage\StorageSaveResult;
 use PHPUnuhi\Models\Translation\Locale;
@@ -52,7 +52,7 @@ class Shopware6Storage implements StorageInterface
 
 
     /**
-     * @param Locale $locale
+     * @param TranslationSet $set
      * @return void
      * @throws \Doctrine\DBAL\Exception
      */
@@ -63,14 +63,28 @@ class Shopware6Storage implements StorageInterface
         }
 
         $repoLanguages = new LanguageRepository($this->connection);
-        $repoTranslations = new TranslationRepository($this->connection);
+        $repoTranslations = new EntityTranslationRepository($this->connection);
 
         $entity = $set->getSw6Entity();
         $entityIdKey = $entity . '_id';
 
+
+        $allLanguages = $repoLanguages->getLanguages();
+
+
         foreach ($set->getLocales() as $locale) {
 
-            $shopwareLanugageId = $repoLanguages->findIdByName($locale->getName());
+            $shopwareLanugageId = null;
+            foreach ($allLanguages as $langEntity) {
+                if ($langEntity->getLocaleName() === $locale->getName()) {
+                    $shopwareLanugageId = $langEntity->getLanguageId();
+                    break;
+                }
+            }
+
+            if ($shopwareLanugageId === null) {
+                throw new \Exception('no language found for locale: ' . $locale->getName());
+            }
 
             $dbTranslations = $repoTranslations->getTranslations($entity);
 
@@ -93,6 +107,11 @@ class Shopware6Storage implements StorageInterface
 
                 foreach ($dbRow as $property => $value) {
 
+                    if (!$set->getFilter()->isKeyAllowed($property)) {
+                        continue;
+                    }
+
+                    # also exclude a few things hardcoded because they just make no sense
                     if (in_array($property, self::FIELD_BLACKLIST)) {
                         continue;
                     }
@@ -100,6 +119,7 @@ class Shopware6Storage implements StorageInterface
                     if ($this->stringEndsWith($property, '_id')) {
                         continue;
                     }
+
 
                     $rawValue = ($this->isBinary($value)) ? $this->binaryToString($value) : (string)$value;
 

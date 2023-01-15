@@ -4,10 +4,9 @@ namespace PHPUnuhi\Bundles\Storage\Shopware6\Repository;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Result;
-use PHPUnuhi\Bundles\Storage\Shopware6\Models\Locale;
 use PHPUnuhi\Traits\BinaryTrait;
 
-class LanguageRepository
+class EntityTranslationRepository
 {
 
     use BinaryTrait;
@@ -27,16 +26,16 @@ class LanguageRepository
     }
 
     /**
-     * @return Locale[]
+     * @param string $entity
+     * @return array<mixed>
      * @throws \Doctrine\DBAL\Exception
      */
-    public function getLanguages(): array
+    public function getTranslations(string $entity): array
     {
         $qb = $this->connection->createQueryBuilder();
 
-        $qb->select('l.id as langId', 'l.name as langName', 'lc.code as locCode')
-            ->from('language', 'l')
-            ->join('l', 'locale', 'lc', 'lc.id = l.locale_id');
+        $qb->select('*')
+            ->from($entity . '_translation', 't');
 
         $result = $qb->execute();
 
@@ -50,18 +49,7 @@ class LanguageRepository
             throw new \Exception('not found!');
         }
 
-        $list = [];
-
-        foreach ($dbRows as $row) {
-
-            $list[] = new Locale(
-                $this->binaryToString((string)$row['langId']),
-                (string)$row['langName'],
-                (string)$row['locCode']
-            );
-        }
-
-        return $list;
+        return $dbRows;
     }
 
 }

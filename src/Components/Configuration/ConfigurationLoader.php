@@ -5,6 +5,7 @@ namespace PHPUnuhi\Configuration;
 use PHPUnuhi\Bundles\Storage\StorageFactory;
 use PHPUnuhi\Bundles\Storage\StorageFormat;
 use PHPUnuhi\Models\Configuration\Configuration;
+use PHPUnuhi\Models\Translation\Filter;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
 use SimpleXMLElement;
@@ -61,6 +62,8 @@ class ConfigurationLoader
 
             $foundLocales = [];
 
+            $filter = new Filter();
+
             /** @var SimpleXMLElement $childNode */
             foreach ($xmlSet->children() as $childNode) {
 
@@ -70,7 +73,13 @@ class ConfigurationLoader
                 $locale = null;
 
                 switch ($nodeType) {
+
+                    case 'filter':
+                        $filter = $this->loadFilter($childNode);
+                        break;
+
                     case 'file':
+                    case 'locale':
 
                         $configuredFileName = dirname($configFilename) . '/' . $nodeValue;
                         $fileName = realpath($configuredFileName);
@@ -99,8 +108,15 @@ class ConfigurationLoader
             }
 
             # create our new set
-            $set = new TranslationSet($name, $format, (int)$jsonIndent, (bool)$sortStorage, $sw6Entity, $foundLocales);
-
+            $set = new TranslationSet(
+                $name,
+                $format,
+                (int)$jsonIndent,
+                (bool)$sortStorage,
+                $sw6Entity,
+                $foundLocales,
+                $filter
+            );
 
             $translationLoader = StorageFactory::getStorage($set->getFormat(), $set->getJsonIndent(), $set->isSortStorage());
 
@@ -118,6 +134,34 @@ class ConfigurationLoader
         return $config;
     }
 
+    /**
+     * @param SimpleXMLElement $filterNode
+     * @return Filter
+     */
+    private function loadFilter(SimpleXMLElement $filterNode): Filter
+    {
+        $filter = new Filter();
+
+        $nodeAllows = $filterNode->include;
+        $nodeExcludes = $filterNode->exclude;
+
+        $nodeAllowsKeys = $nodeAllows->key;
+        $nodeExcludeKeys = $nodeExcludes->key;
+
+        if ($nodeAllowsKeys !== null) {
+            foreach ($nodeAllowsKeys as $key) {
+                $filter->addAllowKey((string)$key);
+            }
+        }
+
+        if ($nodeExcludeKeys !== null) {
+            foreach ($nodeExcludeKeys as $key) {
+                $filter->addExcludeKey((string)$key);
+            }
+        }
+
+        return $filter;
+    }
 
     /**
      * @param Configuration $configuration

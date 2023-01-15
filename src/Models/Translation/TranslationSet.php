@@ -36,6 +36,11 @@ class TranslationSet
      */
     private $locales;
 
+    /**
+     * @var Filter
+     */
+    private $filter;
+
 
     /**
      * @param string $name
@@ -43,9 +48,10 @@ class TranslationSet
      * @param int $jsonIndent
      * @param bool $sortStorage
      * @param string $sw6Entity
-     * @param array $locales
+     * @param Locale[] $locales
+     * @param Filter $filter
      */
-    public function __construct(string $name, string $format, int $jsonIndent, bool $sortStorage, string $sw6Entity, array $locales)
+    public function __construct(string $name, string $format, int $jsonIndent, bool $sortStorage, string $sw6Entity, array $locales, Filter $filter)
     {
         $this->name = $name;
         $this->format = $format;
@@ -53,6 +59,8 @@ class TranslationSet
         $this->sortStorage = $sortStorage;
         $this->sw6Entity = $sw6Entity;
         $this->locales = $locales;
+
+        $this->filter = $filter;
     }
 
 
@@ -70,6 +78,14 @@ class TranslationSet
     public function getFormat(): string
     {
         return $this->format;
+    }
+
+    /**
+     * @return Filter
+     */
+    public function getFilter(): Filter
+    {
+        return $this->filter;
     }
 
     /**

@@ -32,7 +32,7 @@ class JsonStorage implements StorageInterface
     }
 
     /**
-     * @param Locale $locale
+     * @param TranslationSet $set
      * @return void
      * @throws \Exception
      */
