@@ -61,7 +61,7 @@ class CSVExporter
         # ----------------------------------------------------------------------------------------
         # BUILD DATA LINES
 
-        foreach ($set->getAllTranslationKeys() as $key) {
+        foreach ($set->getAllTranslationIDs() as $key) {
 
             $keyRow = [];
             $groupAdded = false;

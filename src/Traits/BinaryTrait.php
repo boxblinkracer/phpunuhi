@@ -21,6 +21,15 @@ trait BinaryTrait
     }
 
     /**
+     * @param string $text
+     * @return string
+     */
+    protected function stringtoBinary(string $text): string
+    {
+        return pack('H*', $text);
+    }
+
+    /**
      * @param mixed $str
      * @return bool
      */

@@ -67,7 +67,7 @@ class FixStructureCommand extends Command
 
             $countCreated = 0;
 
-            foreach ($set->getAllTranslationKeys() as $currentKey) {
+            foreach ($set->getAllTranslationIDs() as $currentKey) {
 
                 foreach ($set->getLocales() as $locale) {
                     try {

@@ -79,19 +79,19 @@ class Filter
     }
 
     /**
-     * @param $wildcard_pattern
-     * @param $haystack
-     * @return false|int
+     * @param string $haystack
+     * @param string $wildcard_pattern
+     * @return bool
      */
-    private function stringMatchWithWildcard($haystack, $wildcard_pattern)
+    private function stringMatchWithWildcard(string $haystack, string $wildcard_pattern): bool
     {
         $regex = str_replace(
-            array("\*", "\?"), // wildcard chars
-            array('.*', '.'),   // regexp chars
+            ["\*", "\?"], // wildcard chars
+            ['.*', '.'],   // regexp chars
             preg_quote($wildcard_pattern, '/')
         );
 
-        return preg_match('/^' . $regex . '$/is', $haystack);
+        return (bool)preg_match('/^' . $regex . '$/is', $haystack);
     }
 
 }

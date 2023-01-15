@@ -6,6 +6,7 @@ use Exception;
 use PHPUnuhi\Commands\ExportCommand;
 use PHPUnuhi\Commands\FixStructureCommand;
 use PHPUnuhi\Commands\ImportCommand;
+use PHPUnuhi\Commands\ListTranslationsCommand;
 use PHPUnuhi\Commands\StatusCommand;
 use PHPUnuhi\Commands\TranslateCommand;
 use PHPUnuhi\Commands\ValidateCommand;
@@ -29,6 +30,7 @@ class AppManager
         $application->add(new ImportCommand());
         $application->add(new TranslateCommand());
         $application->add(new FixStructureCommand());
+        $application->add(new ListTranslationsCommand());
 
         $application->setDefaultCommand('list');
 

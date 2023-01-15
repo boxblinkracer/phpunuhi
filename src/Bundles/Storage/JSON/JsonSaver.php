@@ -51,7 +51,7 @@ class JsonSaver
             $saveValues = [];
 
             foreach ($locale->getTranslations() as $translation) {
-                $saveValues[$translation->getKey()] = $translation->getValue();
+                $saveValues[$translation->getID()] = $translation->getValue();
                 $translationCount++;
             }
 

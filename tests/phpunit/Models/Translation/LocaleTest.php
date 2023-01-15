@@ -80,7 +80,7 @@ class LocaleTest extends TestCase
         $locale->addTranslation('description', '', '');
         $locale->addTranslation('description', '', '');
 
-        $this->assertCount(2, $locale->getTranslationKeys());
+        $this->assertCount(2, $locale->getTranslationIDs());
     }
 
     /**

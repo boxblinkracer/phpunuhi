@@ -15,7 +15,7 @@ class TranslationTest extends TestCase
     {
         $translation = new Translation('title', 'Titel', '');
 
-        $this->assertEquals('title', $translation->getKey());
+        $this->assertEquals('title', $translation->getID());
     }
 
     /**

@@ -62,7 +62,7 @@ class StatusCommand extends Command
 
             $io->section('Translation Set: ' . $set->getName());
 
-            $countMaxLocaleKeys = count($set->getAllTranslationKeys());
+            $countMaxLocaleKeys = count($set->getAllTranslationIDs());
             $countSetKeys = $countMaxLocaleKeys * count($set->getLocales());
 
             $totalTranslations += $countSetKeys;
@@ -81,7 +81,7 @@ class StatusCommand extends Command
 
 
             foreach ($set->getLocales() as $locale) {
-                $countLocaleKeys = count($locale->getTranslationKeys());
+                $countLocaleKeys = count($locale->getTranslationIDs());
 
                 if ($countLocaleKeys === 0) {
                     # if our current locale has no keys

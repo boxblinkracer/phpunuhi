@@ -75,7 +75,7 @@ class PhpStorage implements StorageInterface
 
 
             foreach ($locale->getTranslations() as $translation) {
-                $saveValues[$translation->getKey()] = $translation->getValue();
+                $saveValues[$translation->getID()] = $translation->getValue();
                 $translationCount++;
             }
 

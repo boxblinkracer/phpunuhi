@@ -19,3 +19,9 @@ validate: ## Validate command
 
 csv: ## Exports a CSV
 	cd ../../.. && php bin/phpunuhi export --configuration=./tests/playground/shopware6/phpunuhi.xml --format=csv --dir=./tests/playground/shopware6/.exports
+
+list: ## List Translate
+	cd ../../.. && php bin/phpunuhi list:translations --configuration=./tests/playground/shopware6/phpunuhi.xml
+
+translate: ## Translate
+	cd ../../.. && php bin/phpunuhi translate --configuration=./tests/playground/shopware6/phpunuhi.xml --service=googleweb

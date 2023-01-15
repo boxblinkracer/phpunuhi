@@ -36,10 +36,10 @@ class Translation
     /**
      * @return string
      */
-    public function getKey(): string
+    public function getID(): string
     {
         if (!empty($this->group)) {
-            return $this->group . '_' . $this->name;
+            return $this->group . '.' . $this->name;
         }
 
         return $this->name;

@@ -3,7 +3,9 @@
 namespace PHPUnuhi\Bundles\Storage\Shopware6\Repository;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\ParameterType;
 use Doctrine\DBAL\Result;
+use Doctrine\DBAL\Types\Type;
 use PHPUnuhi\Traits\BinaryTrait;
 
 class EntityTranslationRepository
@@ -52,4 +54,28 @@ class EntityTranslationRepository
         return $dbRows;
     }
 
+    /**
+     * @param string $entity
+     * @param string $entityId
+     * @param string $languageId
+     * @param string $field
+     * @param string $value
+     * @return void
+     * @throws \Doctrine\DBAL\Exception
+     */
+    public function updateTranslation(string $entity, string $entityId, string $languageId, string $field, string $value): void
+    {
+        $sql = '
+           UPDATE ' . $entity . '_translation  
+            SET ' . $field . ' = :value
+            WHERE ' . $entity . '_id = :entityID AND language_id = :languageId';
+
+        $this->connection->executeQuery($sql,
+            [
+                'value' => $value,
+                'entityID' => $this->stringtoBinary($entityId),
+                'languageId' => $this->stringtoBinary($languageId),
+            ]
+        );
+    }
 }

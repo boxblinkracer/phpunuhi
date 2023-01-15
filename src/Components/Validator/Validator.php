@@ -15,11 +15,11 @@ class Validator
     {
         $isValid = true;
 
-        $allKeys = $set->getAllTranslationKeys();
+        $allKeys = $set->getAllTranslationIDs();
 
         foreach ($set->getLocales() as $locale) {
 
-            $localeKeys = $locale->getTranslationKeys();
+            $localeKeys = $locale->getTranslationIDs();
 
             # verify if our current locale has the same structure
             # as our global suite keys list
@@ -48,7 +48,7 @@ class Validator
                 if ($translation->isEmpty()) {
                     echo "Found empty translation in this file: " . PHP_EOL;
                     echo "  - " . $locale->getFilename() . PHP_EOL;
-                    echo '           [x]: ' . $translation->getKey() . PHP_EOL;
+                    echo '           [x]: ' . $translation->getID() . PHP_EOL;
                     echo PHP_EOL;
                     $isValid = false;
                 }

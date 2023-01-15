@@ -125,13 +125,13 @@ class Locale
     /**
      * @return array<string>
      */
-    public function getTranslationKeys(): array
+    public function getTranslationIDs(): array
     {
         $keys = [];
 
         foreach ($this->getTranslations() as $translation) {
-            if (!in_array($translation->getKey(), $keys)) {
-                $keys[] = $translation->getKey();
+            if (!in_array($translation->getID(), $keys)) {
+                $keys[] = $translation->getID();
             }
         }
 
@@ -139,20 +139,20 @@ class Locale
     }
 
     /**
-     * @param string $searchKey
+     * @param string $searchID
      * @return Translation
      * @throws TranslationNotFoundException
      */
-    public function findTranslation(string $searchKey): Translation
+    public function findTranslation(string $searchID): Translation
     {
         foreach ($this->getTranslations() as $translation) {
 
-            if ($translation->getKey() === $searchKey) {
+            if ($translation->getID() === $searchID) {
                 return $translation;
             }
         }
 
-        throw new TranslationNotFoundException('No existing translation found for key: ' . $searchKey);
+        throw new TranslationNotFoundException('No existing translation found for ID: ' . $searchID);
     }
 
     /**

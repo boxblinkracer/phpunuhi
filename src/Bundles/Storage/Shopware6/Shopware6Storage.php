@@ -5,6 +5,7 @@ namespace PHPUnuhi\Bundles\Storage\Shopware6;
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Connection;
 use PHPUnuhi\Bundles\Storage\Shopware6\Service\TranslationLoader;
+use PHPUnuhi\Bundles\Storage\Shopware6\Service\TranslationSaver;
 use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Bundles\Storage\StorageSaveResult;
 use PHPUnuhi\Models\Translation\TranslationSet;
@@ -21,6 +22,11 @@ class Shopware6Storage implements StorageInterface
      * @var TranslationLoader
      */
     private $loader;
+
+    /**
+     * @var TranslationSaver
+     */
+    private $saver;
 
 
     public const FIELD_BLACKLIST = [
@@ -49,6 +55,7 @@ class Shopware6Storage implements StorageInterface
         );
 
         $this->loader = new TranslationLoader($this->connection);
+        $this->saver = new TranslationSaver($this->connection);
     }
 
 
@@ -68,7 +75,7 @@ class Shopware6Storage implements StorageInterface
      */
     public function saveTranslations(TranslationSet $set): StorageSaveResult
     {
-        return new StorageSaveResult(0, 0);
+        return $this->saver->saveTranslations($set);
     }
 
 }
