@@ -3,8 +3,9 @@
 namespace PHPUnuhi\Bundles\Exchange\HTML;
 
 use PHPUnuhi\Bundles\Exchange\ExchangeInterface;
+use PHPUnuhi\Bundles\Exchange\HTML\Services\HTMLExporter;
+use PHPUnuhi\Bundles\Exchange\HTML\Services\HTMLImporter;
 use PHPUnuhi\Bundles\Exchange\ImportResult;
-use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Models\Command\CommandOption;
 use PHPUnuhi\Models\Translation\TranslationSet;
 

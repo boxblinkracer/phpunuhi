@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPUnuhi\Bundles\Exchange\HTML;
+namespace PHPUnuhi\Bundles\Exchange\HTML\Services;
 
 use PHPUnuhi\Bundles\Exchange\ImportEntry;
 use PHPUnuhi\Bundles\Exchange\ImportResult;

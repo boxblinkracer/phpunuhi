@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPUnuhi\Bundles\Exchange\CSV;
+namespace PHPUnuhi\Bundles\Exchange\CSV\Services;
 
 use PHPUnuhi\Exceptions\TranslationNotFoundException;
 use PHPUnuhi\Models\Translation\TranslationSet;

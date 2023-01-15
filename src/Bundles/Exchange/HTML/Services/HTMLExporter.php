@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPUnuhi\Bundles\Exchange\HTML;
+namespace PHPUnuhi\Bundles\Exchange\HTML\Services;
 
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;

@@ -31,3 +31,4 @@ translate: ## Translate
 
 import: ## Import
 	cd ../../.. && php bin/phpunuhi import --configuration=./tests/playground/shopware6/phpunuhi.xml --set=products --format=csv --file=./tests/playground/shopware6/.exports/products.csv
+	cd ../../.. && php bin/phpunuhi import --configuration=./tests/playground/shopware6/phpunuhi.xml --set=shipping --format=html --file=./tests/playground/shopware6/.exports/import.html.txt
