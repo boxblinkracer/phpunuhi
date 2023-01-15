@@ -3,6 +3,19 @@
 All notable changes of SVRUnit releases are documented in this file
 using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
+## [unreleased]
+
+### Added
+
+- Add new **list:translations** command to see all IDs of Translation-Sets
+- Add new **Filters** with allow and exclude lists. This also supports wildards with '*'
+- Add new Shopware 6 Storage format with full support of entities.
+- Add new **groups** of translations. This is required for a 3rd dimension. E.g. translations of products where every product has multiple rows with properties and different languages (columns).
+
+### Changed
+
+- Changed the technical usage of the translation **key** to an **ID**. The ID is the unique identifier within a locale, and the key the plain name of the translation which can exist multiple times in a locale.
+
 ## [1.1.0]
 
 ### Added

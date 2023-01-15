@@ -141,7 +141,7 @@ class TranslationSet
     /**
      * @return array<mixed>
      */
-    public function getAllTranslationIDs(): array
+    public function getAllTranslationEntryIDs(): array
     {
         $allIDs = [];
 

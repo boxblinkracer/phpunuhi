@@ -95,11 +95,11 @@ class TranslateCommand extends Command
 
             $io->section('Translation Set: ' . $set->getName());
 
-            $allKeys = $set->getAllTranslationIDs();
+            $allIDs = $set->getAllTranslationEntryIDs();
 
-            # first iterate through keys
-            # then we have all keys next to each other for better comparing on CLI
-            foreach ($allKeys as $currentKey) {
+            # first iterate through ids
+            # then we have all ids next to each other for better comparing on CLI
+            foreach ($allIDs as $currentID) {
 
                 foreach ($set->getLocales() as $locale) {
 
@@ -110,7 +110,7 @@ class TranslateCommand extends Command
                     }
 
                     try {
-                        $currentTranslation = $locale->findTranslation($currentKey);
+                        $currentTranslation = $locale->findTranslation($currentID);
                     } catch (TranslationNotFoundException $ex) {
                         # if no translation exits
                         # then skip this one
@@ -121,7 +121,7 @@ class TranslateCommand extends Command
                     if ($forceLocale || $currentTranslation->isEmpty()) {
 
                         try {
-                            $existingData = $set->findAnyExistingTranslation($currentKey);
+                            $existingData = $set->findAnyExistingTranslation($currentID);
                         } catch (TranslationNotFoundException $ex) {
                             # if no translation exits
                             # then skip this one

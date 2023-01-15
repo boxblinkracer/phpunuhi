@@ -37,6 +37,11 @@
         </set>
 
         <set name="Shipping Methods" format="shopware6" sw6Entity="shipping_method">
+            <filter>
+                <exclude>
+                    <key>custom_fields</key>
+                </exclude>
+            </filter>
             <locale locale="en-GB"></locale>
             <locale locale="de-DE"></locale>
         </set>

@@ -63,7 +63,7 @@ class HTMLExporter
 
         $html .= "<thead>";
         $html .= "<tr>";
-        $html .= "<th>Keys (" . count($set->getAllTranslationIDs()) . ")</th>";
+        $html .= "<th>Keys (" . count($set->getAllTranslationEntryIDs()) . ")</th>";
         foreach ($set->getLocales() as $locale) {
             $html .= "<th>";
             $html .= $locale->getName();
@@ -73,7 +73,7 @@ class HTMLExporter
         $html .= "</thead>";
 
         $html .= "<tbody>";
-        foreach ($set->getAllTranslationIDs() as $key) {
+        foreach ($set->getAllTranslationEntryIDs() as $key) {
 
             $html .= "<tr>";
 

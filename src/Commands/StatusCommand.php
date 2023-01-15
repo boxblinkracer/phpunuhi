@@ -62,10 +62,10 @@ class StatusCommand extends Command
 
             $io->section('Translation Set: ' . $set->getName());
 
-            $countMaxLocaleKeys = count($set->getAllTranslationIDs());
-            $countSetKeys = $countMaxLocaleKeys * count($set->getLocales());
+            $countMaxLocaleIDs = count($set->getAllTranslationEntryIDs());
+            $countSetIDs = $countMaxLocaleIDs * count($set->getLocales());
 
-            $totalTranslations += $countSetKeys;
+            $totalTranslations += $countSetIDs;
 
             $countSetValid = 0;
 
@@ -75,26 +75,26 @@ class StatusCommand extends Command
 
             $totalValidTranslations += $countSetValid;
 
-            $percent = $calculator->getRoundedPercentage($countSetValid, $countSetKeys);
+            $percent = $calculator->getRoundedPercentage($countSetValid, $countSetIDs);
 
-            $io->writeln("Coverage: " . $percent . '% (' . $countSetValid . '/' . $countSetKeys . ')');
+            $io->writeln("Coverage: " . $percent . '% (' . $countSetValid . '/' . $countSetIDs . ')');
 
 
             foreach ($set->getLocales() as $locale) {
-                $countLocaleKeys = count($locale->getTranslationIDs());
+                $countLocaleIDs = count($locale->getTranslationIDs());
 
-                if ($countLocaleKeys === 0) {
-                    # if our current locale has no keys
-                    # then show 0,00 %, and also show the maximum number of keys as coverage possibility
-                    $io->writeln("   [" . $locale->getName() . "] Coverage: 0% (0/" . $countMaxLocaleKeys . ")");
+                if ($countLocaleIDs === 0) {
+                    # if our current locale has no ID
+                    # then show 0,00 %, and also show the maximum number of IDs as coverage possibility
+                    $io->writeln("   [" . $locale->getName() . "] Coverage: 0% (0/" . $countMaxLocaleIDs . ")");
                     continue;
                 }
 
                 $countLocaleValid = count($locale->getValidTranslations());
 
-                $percent = $calculator->getRoundedPercentage($countLocaleValid, $countLocaleKeys);
+                $percent = $calculator->getRoundedPercentage($countLocaleValid, $countLocaleIDs);
 
-                $io->writeln("   [" . $locale->getName() . '] Coverage: ' . $percent . '% (' . $countLocaleValid . '/' . $countLocaleKeys . ')');
+                $io->writeln("   [" . $locale->getName() . '] Coverage: ' . $percent . '% (' . $countLocaleValid . '/' . $countLocaleIDs . ')');
             }
         }
 
