@@ -11,14 +11,14 @@ class Configuration
     /**
      * @var array<TranslationSet>
      */
-    private $translationSuites;
+    private $sets;
 
     /**
-     * @param TranslationSet[] $translationSuites
+     * @param TranslationSet[] $sets
      */
-    public function __construct(array $translationSuites)
+    public function __construct(array $sets)
     {
-        $this->translationSuites = $translationSuites;
+        $this->sets = $sets;
     }
 
     /**
@@ -26,7 +26,7 @@ class Configuration
      */
     public function getTranslationSets()
     {
-        return $this->translationSuites;
+        return $this->sets;
     }
 
 }

@@ -19,19 +19,9 @@ class TranslationSet
     private $format;
 
     /**
-     * @var int
+     * @var Attribute[]
      */
-    private $jsonIndent;
-
-    /**
-     * @var bool
-     */
-    private $sortStorage;
-
-    /**
-     * @var string
-     */
-    private $entity;
+    private $attributes;
 
     /**
      * @var Locale[]
@@ -47,22 +37,17 @@ class TranslationSet
     /**
      * @param string $name
      * @param string $format
-     * @param int $jsonIndent
-     * @param bool $sortStorage
-     * @param string $sw6Entity
      * @param Locale[] $locales
      * @param Filter $filter
+     * @param Attribute[] $attributes
      */
-    public function __construct(string $name, string $format, int $jsonIndent, bool $sortStorage, string $sw6Entity, array $locales, Filter $filter)
+    public function __construct(string $name, string $format, array $locales, Filter $filter, array $attributes)
     {
         $this->name = $name;
         $this->format = $format;
-        $this->jsonIndent = $jsonIndent;
-        $this->sortStorage = $sortStorage;
-        $this->entity = $sw6Entity;
         $this->locales = $locales;
-
         $this->filter = $filter;
+        $this->attributes = $attributes;
     }
 
 
@@ -91,27 +76,26 @@ class TranslationSet
     }
 
     /**
-     * @return int
+     * @return Attribute[]
      */
-    public function getJsonIndent(): int
+    public function getAttributes(): array
     {
-        return $this->jsonIndent;
+        return $this->attributes;
     }
 
     /**
+     * @param string $name
      * @return string
      */
-    public function getEntity(): string
+    public function getAttributeValue(string $name): string
     {
-        return $this->entity;
-    }
+        foreach ($this->attributes as $attribute) {
+            if ($attribute->getName() === $name) {
+                return $attribute->getValue();
+            }
+        }
 
-    /**
-     * @return bool
-     */
-    public function isSortStorage(): bool
-    {
-        return $this->sortStorage;
+        return '';
     }
 
     /**

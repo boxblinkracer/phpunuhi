@@ -6,6 +6,7 @@ use PHPUnuhi\Bundles\Storage\StorageFactory;
 use PHPUnuhi\Components\Filter\FilterHandler;
 use PHPUnuhi\Exceptions\ConfigurationException;
 use PHPUnuhi\Models\Configuration\Configuration;
+use PHPUnuhi\Models\Translation\Attribute;
 use PHPUnuhi\Models\Translation\Filter;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
@@ -93,21 +94,15 @@ class ConfigurationLoader
 
             $name = trim((string)$xmlSet['name']);
             $format = trim((string)$xmlSet['format']);
-            $jsonIndent = trim((string)$xmlSet['jsonIndent']);
-            $entity = trim((string)$xmlSet['entity']);
-            $sortStorage = trim((string)$xmlSet['sort']);
 
-            if (empty($format)) {
-                $format = 'json';
+            $setAttributes = [];
+            $nodeAttributes = $xmlSet->attributes();
+            if ($nodeAttributes !== null) {
+                foreach ($nodeAttributes as $attrName => $value) {
+                    $setAttributes[] = new Attribute($attrName, $value);
+                }
             }
 
-            if (empty($jsonIndent)) {
-                $jsonIndent = "2";
-            }
-
-            if (empty($sortStorage)) {
-                $sortStorage = "false";
-            }
 
             $foundLocales = [];
 
@@ -118,6 +113,7 @@ class ConfigurationLoader
 
                 $nodeType = $childNode->getName();
                 $nodeValue = (string)$childNode[0];
+
 
                 $locale = null;
 
@@ -162,14 +158,12 @@ class ConfigurationLoader
             $set = new TranslationSet(
                 $name,
                 $format,
-                (int)$jsonIndent,
-                (bool)$sortStorage,
-                $entity,
                 $foundLocales,
-                $filter
+                $filter,
+                $setAttributes
             );
 
-            $translationLoader = StorageFactory::getStorage($set->getFormat(), $set->getJsonIndent(), $set->isSortStorage());
+            $translationLoader = StorageFactory::getStorage($set);
 
             # now iterate through our locales
             # and load the translation files for it

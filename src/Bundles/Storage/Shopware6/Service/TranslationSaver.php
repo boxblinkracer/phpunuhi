@@ -49,11 +49,11 @@ class TranslationSaver
      */
     public function saveTranslations(TranslationSet $set): StorageSaveResult
     {
-        if (empty($set->getEntity())) {
+        $entity = $set->getAttributeValue('entity');
+
+        if (empty($entity)) {
             throw new ConfigurationException('No entity configured for Shopware6 Translation-Set: ' . $set->getName());
         }
-
-        $entity = $set->getEntity();
 
         $allDbLanguages = $this->repoLanguages->getLanguages();
 

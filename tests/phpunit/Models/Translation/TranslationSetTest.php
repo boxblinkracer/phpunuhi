@@ -3,6 +3,7 @@
 namespace phpunit\Models\Translation;
 
 use PHPUnit\Framework\TestCase;
+use PHPUnuhi\Models\Translation\Attribute;
 use PHPUnuhi\Models\Translation\Filter;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
@@ -15,7 +16,11 @@ class TranslationSetTest extends TestCase
      */
     public function testName()
     {
-        $set = new TranslationSet('storefront', 'json', 0, true, '', [], new Filter());
+        $attributes = [];
+        $filter = new Filter();
+        $locales = [];
+
+        $set = new TranslationSet('storefront', 'json', $locales, $filter, $attributes);
 
         $this->assertEquals('storefront', $set->getName());
     }
@@ -25,7 +30,12 @@ class TranslationSetTest extends TestCase
      */
     public function testFormat()
     {
-        $set = new TranslationSet('storefront', 'json', 0, true, '', [], new Filter());
+        $attributes = [];
+        $filter = new Filter();
+        $locales = [];
+
+
+        $set = new TranslationSet('storefront', 'json', $locales, $filter, $attributes);
 
         $this->assertEquals('json', $set->getFormat());
     }
@@ -33,21 +43,17 @@ class TranslationSetTest extends TestCase
     /**
      * @return void
      */
-    public function testJsonIndent()
+    public function testAttributeValue()
     {
-        $set = new TranslationSet('storefront', 'json', 2, true, '', [], new Filter());
+        $attributes = [];
+        $attributes[] = new Attribute('indent', '2');
 
-        $this->assertEquals(2, $set->getJsonIndent());
-    }
+        $filter = new Filter();
+        $locales = [];
 
-    /**
-     * @return void
-     */
-    public function testSort()
-    {
-        $set = new TranslationSet('storefront', 'json', 2, true, '', [], new Filter());
+        $set = new TranslationSet('storefront', 'json', $locales, $filter, $attributes);
 
-        $this->assertEquals(true, $set->isSortStorage());
+        $this->assertEquals('2', $set->getAttributeValue('indent'));
     }
 
     /**
@@ -55,11 +61,14 @@ class TranslationSetTest extends TestCase
      */
     public function testGetLocales()
     {
+        $attributes = [];
+        $filter = new Filter();
+
         $locales = [];
         $locales[] = new Locale('', '', '');
         $locales[] = new Locale('', '', '');
 
-        $set = new TranslationSet('storefront', 'json', 0, true, '', $locales, new Filter());
+        $set = new TranslationSet('storefront', 'json', $locales, $filter, $attributes);
 
         $this->assertCount(2, $set->getLocales());
     }

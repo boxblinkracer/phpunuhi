@@ -87,11 +87,7 @@ class FixStructureCommand extends Command
 
             $io->block('saving translations of this sset...');
 
-            $storageSaver = StorageFactory::getStorage(
-                $set->getFormat(),
-                $set->getJsonIndent(),
-                $set->isSortStorage()
-            );
+            $storageSaver = StorageFactory::getStorage($set);
 
             $storageSaver->saveTranslations($set);
         }

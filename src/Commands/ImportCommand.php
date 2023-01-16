@@ -101,7 +101,7 @@ class ImportCommand extends Command
             }
 
             # get correct storage saver from our current set
-            $storageSaver = StorageFactory::getStorage($set->getFormat(), $set->getJsonIndent(), $set->isSortStorage());
+            $storageSaver = StorageFactory::getStorage($set);
 
             # build the correct importer for our exchange format
             # and pass on the matching storage saver of our current ste

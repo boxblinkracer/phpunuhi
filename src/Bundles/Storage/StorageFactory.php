@@ -6,35 +6,46 @@ use PHPUnuhi\Bundles\Storage\INI\IniStorage;
 use PHPUnuhi\Bundles\Storage\JSON\JsonStorage;
 use PHPUnuhi\Bundles\Storage\PHP\PhpStorage;
 use PHPUnuhi\Bundles\Storage\Shopware6\Shopware6Storage;
+use PHPUnuhi\Exceptions\ConfigurationException;
+use PHPUnuhi\Models\Translation\TranslationSet;
 
 
 class StorageFactory
 {
 
     /**
-     * @param string $format
-     * @param int $jsonIndent
-     * @param bool $sortStorage
+     * @param TranslationSet $set
      * @return StorageInterface
-     * @throws \Exception
+     * @throws ConfigurationException
      */
-    public static function getStorage(string $format, int $jsonIndent, bool $sortStorage): StorageInterface
+    public static function getStorage(TranslationSet $set): StorageInterface
     {
+        $format = $set->getFormat();
+
+        if (empty($format)) {
+            $format = 'json';
+        }
+
         switch (strtolower($format)) {
             case 'json':
-                return new JsonStorage($jsonIndent, $sortStorage);
+                $indent = $set->getAttributeValue('jsonIndent');
+                $indent = ($indent === '') ? '2' : $indent;
+                $sort = (bool)$set->getAttributeValue('sort');
+                return new JsonStorage((int)$indent, $sort);
 
             case 'ini':
-                return new IniStorage($sortStorage);
+                $sort = (bool)$set->getAttributeValue('sort');
+                return new IniStorage($sort);
 
             case 'php':
-                return new PhpStorage($sortStorage);
+                $sort = (bool)$set->getAttributeValue('sort');
+                return new PhpStorage($sort);
 
             case 'shopware6':
                 return new Shopware6Storage();
 
             default:
-                throw new \Exception('No storage found for format: ' . $format);
+                throw new ConfigurationException('No storage found for format: ' . $format);
         }
     }
 
