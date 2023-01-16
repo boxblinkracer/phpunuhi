@@ -22,7 +22,7 @@ class FilterHandler
             foreach ($translations as $translation) {
 
                 if (!$filter->isKeyAllowed($translation->getKey())) {
-                    $locale->removeFilter($translation->getID());
+                    $locale->removeTranslation($translation->getID());
                 }
             }
         }

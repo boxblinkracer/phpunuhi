@@ -175,7 +175,7 @@ class Locale
      * @param string $id
      * @return void
      */
-    public function removeFilter(string $id): void
+    public function removeTranslation(string $id): void
     {
         $tmpList = [];
 
