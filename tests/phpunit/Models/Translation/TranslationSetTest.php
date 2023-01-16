@@ -3,8 +3,8 @@
 namespace phpunit\Models\Translation;
 
 use PHPUnit\Framework\TestCase;
-use PHPUnuhi\Models\Translation\Attribute;
-use PHPUnuhi\Models\Translation\Filter;
+use PHPUnuhi\Models\Configuration\Attribute;
+use PHPUnuhi\Models\Configuration\Filter;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
 

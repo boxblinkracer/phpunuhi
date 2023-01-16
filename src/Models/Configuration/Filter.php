@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPUnuhi\Models\Translation;
+namespace PHPUnuhi\Models\Configuration;
 
 class Filter
 {

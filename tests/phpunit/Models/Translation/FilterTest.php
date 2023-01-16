@@ -3,7 +3,7 @@
 namespace phpunit\Models\Translation;
 
 use PHPUnit\Framework\TestCase;
-use PHPUnuhi\Models\Translation\Filter;
+use PHPUnuhi\Models\Configuration\Filter;
 
 class FilterTest extends TestCase
 {
