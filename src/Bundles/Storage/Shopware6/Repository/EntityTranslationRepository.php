@@ -5,7 +5,10 @@ namespace PHPUnuhi\Bundles\Storage\Shopware6\Repository;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\ParameterType;
 use Doctrine\DBAL\Result;
+use Doctrine\DBAL\Schema\Column;
 use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\Types;
+use PHPUnuhi\Bundles\Storage\Shopware6\Models\UpdateField;
 use PHPUnuhi\Traits\BinaryTrait;
 
 class EntityTranslationRepository
@@ -58,24 +61,63 @@ class EntityTranslationRepository
      * @param string $entity
      * @param string $entityId
      * @param string $languageId
-     * @param string $field
-     * @param string $value
+     * @param UpdateField[] $fieldValues
      * @return void
      * @throws \Doctrine\DBAL\Exception
      */
-    public function updateTranslation(string $entity, string $entityId, string $languageId, string $field, string $value): void
+    public function updateTranslationRow(string $entity, string $entityId, string $languageId, array $fieldValues): void
     {
-        $sql = '
-           UPDATE ' . $entity . '_translation  
-            SET ' . $field . ' = :value
-            WHERE ' . $entity . '_id = :entityID AND language_id = :languageId';
+        $tableName = $entity . '_translation';
 
-        $this->connection->executeQuery($sql,
-            [
-                'value' => $value,
-                'entityID' => $this->stringtoBinary($entityId),
-                'languageId' => $this->stringtoBinary($languageId),
-            ]
-        );
+        $jsonFields = $this->getJsonFields($tableName);
+
+        $qb = $this->connection->createQueryBuilder();
+        $qb->update($tableName);
+
+        # now iterate through our parameter fields
+        # unfortunately, we have to assign NULL for every empty JSON field-value.
+        # otherwise we get a JSON empty-document error
+        foreach ($fieldValues as $data) {
+
+            $valueKey = 'value_' . $data->getField();
+            $value = $data->getValue();
+
+            # make sure empty JSON fields are NULL
+            if ($value === '' && in_array($data->getField(), $jsonFields)) {
+                $value = NULL;
+            }
+
+            $qb->set($data->getField(), ':' . $valueKey);
+            $qb->setParameter($valueKey, $value);
+        }
+
+        $qb->where($qb->expr()->eq($entity . '_id', ':id'))
+            ->andWhere($qb->expr()->eq('language_id', ':langId'))
+            ->setParameter('id', $this->stringToBinary($entityId), Types::BINARY)
+            ->setParameter('langId', $this->stringToBinary($languageId), Types::BINARY);
+
+        $qb->executeQuery();
     }
+
+    /**
+     * @param string $table
+     * @return string[]
+     * @throws \Doctrine\DBAL\Exception
+     */
+    private function getJsonFields(string $table): array
+    {
+        $sm = $this->connection->createSchemaManager();
+        $columns = $sm->listTableColumns($table);
+
+        $jsonFields = [];
+
+        foreach ($columns as $column) {
+            if ($column->getType()->getName() === 'json') {
+                $jsonFields[] = $column->getName();
+            }
+        }
+
+        return $jsonFields;
+    }
+
 }

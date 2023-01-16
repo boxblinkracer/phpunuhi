@@ -11,22 +11,22 @@ trait BinaryTrait
      */
     protected function binaryToString(string $binaryHex): string
     {
-        $parts = unpack("H*", $binaryHex);
-
-        if ($parts === false) {
-            return '';
-        }
-
-        return implode($parts);
+        return bin2hex($binaryHex);
     }
 
     /**
      * @param string $text
      * @return string
      */
-    protected function stringtoBinary(string $text): string
+    protected function stringToBinary(string $text): string
     {
-        return pack('H*', $text);
+        $result = hex2bin($text);
+
+        if ($result === false) {
+            return '';
+        }
+
+        return $result;
     }
 
     /**

@@ -2,7 +2,6 @@
 
 namespace PHPUnuhi\Bundles\Storage\Shopware6;
 
-use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Connection;
 use PHPUnuhi\Bundles\Storage\Shopware6\Service\TranslationLoader;
 use PHPUnuhi\Bundles\Storage\Shopware6\Service\TranslationSaver;
@@ -52,6 +51,7 @@ class Shopware6Storage implements StorageInterface
      * @param TranslationSet $set
      * @return void
      * @throws \Doctrine\DBAL\Exception
+     * @throws \PHPUnuhi\Exceptions\ConfigurationException
      */
     public function loadTranslations(TranslationSet $set): void
     {
@@ -61,6 +61,8 @@ class Shopware6Storage implements StorageInterface
     /**
      * @param TranslationSet $set
      * @return StorageSaveResult
+     * @throws \Doctrine\DBAL\Exception
+     * @throws \PHPUnuhi\Exceptions\ConfigurationException
      */
     public function saveTranslations(TranslationSet $set): StorageSaveResult
     {

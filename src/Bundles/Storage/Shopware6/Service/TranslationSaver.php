@@ -4,11 +4,13 @@ namespace PHPUnuhi\Bundles\Storage\Shopware6\Service;
 
 use Doctrine\DBAL\Connection;
 use PHPUnuhi\Bundles\Storage\Shopware6\Models\Sw6Locale;
+use PHPUnuhi\Bundles\Storage\Shopware6\Models\UpdateField;
 use PHPUnuhi\Bundles\Storage\Shopware6\Repository\EntityTranslationRepository;
 use PHPUnuhi\Bundles\Storage\Shopware6\Repository\LanguageRepository;
 use PHPUnuhi\Bundles\Storage\StorageSaveResult;
 use PHPUnuhi\Exceptions\ConfigurationException;
 use PHPUnuhi\Models\Translation\Locale;
+use PHPUnuhi\Models\Translation\Translation;
 use PHPUnuhi\Models\Translation\TranslationSet;
 use PHPUnuhi\Traits\BinaryTrait;
 use PHPUnuhi\Traits\StringTrait;
@@ -68,23 +70,35 @@ class TranslationSaver
 
             $localeCount++;
 
+            $entityUpdateData = [];
+
+            # improve MySQL update by adding all translations
+            # of a single entity to just 1 SQL statement
             foreach ($locale->getTranslations() as $translation) {
+                $entityUpdateData[$translation->getGroup()][] = $translation;
+            }
 
-                $entityId = str_replace($entity . '_', '', $translation->getGroup());
+            # now that we have grouped them,
+            # build a single SQL udpate statement for every entity (group)
+            foreach ($entityUpdateData as $group => $translations) {
 
-                try {
-                    $this->repoTranslations->updateTranslation(
-                        $entity,
-                        $entityId,
-                        $currentLanguageID,
-                        $translation->getKey(),
-                        $translation->getValue()
-                    );
+                $fields = [];
+                $entityId = '';
 
-                    $translationCount++;
-                } catch (\Exception $ex) {
-
+                /** @var Translation $translation */
+                foreach ($translations as $translation) {
+                    $fields[] = new UpdateField($translation->getKey(), $translation->getValue());
+                    $entityId = str_replace($entity . '_', '', $translation->getGroup());
                 }
+
+                $this->repoTranslations->updateTranslationRow(
+                    $entity,
+                    $entityId,
+                    $currentLanguageID,
+                    $fields
+                );
+
+                $translationCount++;
             }
         }
 
