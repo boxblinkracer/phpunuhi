@@ -24,7 +24,6 @@
     },
     "require": {
         "php": ">=7.2",
-        "ext-curl": "*",
         "ext-simplexml": "*",
         "deeplcom/deepl-php": "^1.2",
         "doctrine/dbal": "^3.5",
