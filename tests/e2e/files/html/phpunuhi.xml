@@ -3,8 +3,8 @@
     <translations>
 
         <set name="storefront" format="json">
-            <file locale="de">./de.json</file>
-            <file locale="en">./en.json</file>
+            <locale locale="de">./de.json</locale>
+            <locale locale="en">./en.json</locale>
         </set>
 
     </translations>
