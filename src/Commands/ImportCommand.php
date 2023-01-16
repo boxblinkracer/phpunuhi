@@ -6,7 +6,11 @@ use PHPUnuhi\Bundles\Exchange\ExchangeFactory;
 use PHPUnuhi\Bundles\Exchange\ExchangeFormat;
 use PHPUnuhi\Bundles\Exchange\ImportResult;
 use PHPUnuhi\Bundles\Storage\StorageFactory;
+use PHPUnuhi\Bundles\Storage\StorageSaveResult;
+use PHPUnuhi\Components\Filter\FilterHandler;
 use PHPUnuhi\Configuration\ConfigurationLoader;
+use PHPUnuhi\Models\Translation\TranslationSet;
+use SebastianBergmann\CodeCoverage\Report\PHP;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -88,6 +92,8 @@ class ImportCommand extends Command
 
         $result = null;
 
+        $filterHandler = new FilterHandler();
+
         foreach ($config->getTranslationSets() as $set) {
 
             if ($setName !== $set->getName()) {
@@ -99,18 +105,52 @@ class ImportCommand extends Command
 
             # build the correct importer for our exchange format
             # and pass on the matching storage saver of our current ste
-            $importer = $this->exchangeFactory->getExchange($importExchangeFormat, $storageSaver, $input->getOptions());
+            $importer = $this->exchangeFactory->getExchange($importExchangeFormat, $input->getOptions());
 
-            $result = $importer->import($set, $importFilename);
+            # import our provided file
+            $importData = $importer->import($importFilename);
+            $this->updateTranslationSet($set, $importData);
+
+            # filter away data
+            $filterHandler->applyFilter($set);
+
+            # save our data
+            $result = $storageSaver->saveTranslations($set);
         }
 
-        if ($result instanceof ImportResult) {
-            $io->success('Imported ' . $result->getCountTranslations() . ' translations of ' . $result->getCountLocales() . ' locales for set: ' . $setName);
+        if ($result instanceof StorageSaveResult) {
+            $io->success('Imported ' . $result->getSavedTranslations() . ' translations of ' . $result->getSavedLocales() . ' locales for set: ' . $setName);
             exit(0);
         }
 
         $io->error('No sets found with name: ' . $setName);
         exit(1);
+    }
+
+    /**
+     * @param TranslationSet $set
+     * @param ImportResult $importData
+     * @return void
+     */
+    private function updateTranslationSet(TranslationSet $set, ImportResult $importData): void
+    {
+        foreach ($importData->getEntries() as $entry) {
+
+            foreach ($set->getLocales() as $locale) {
+
+                if ($entry->getLocaleExchangeID() !== $locale->getExchangeIdentifier()) {
+                    continue;
+                }
+
+                foreach ($locale->getTranslations() as $translation) {
+
+                    if ($translation->getKey() === $entry->getKey() && $translation->getGroup() === $entry->getGroup()) {
+
+                        $translation->setValue($entry->getValue());
+                    }
+                }
+            }
+        }
     }
 
 } 

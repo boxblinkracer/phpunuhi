@@ -13,9 +13,9 @@ class TranslationTest extends TestCase
      */
     public function testKey()
     {
-        $translation = new Translation('title', 'Titel');
+        $translation = new Translation('title', 'Titel', '');
 
-        $this->assertEquals('title', $translation->getKey());
+        $this->assertEquals('title', $translation->getID());
     }
 
     /**
@@ -23,7 +23,7 @@ class TranslationTest extends TestCase
      */
     public function testValue()
     {
-        $translation = new Translation('title', 'Titel');
+        $translation = new Translation('title', 'Titel', '');
 
         $this->assertEquals('Titel', $translation->getValue());
     }
@@ -33,7 +33,7 @@ class TranslationTest extends TestCase
      */
     public function testIsEmptyWithSpaces()
     {
-        $translation = new Translation('title', '   ');
+        $translation = new Translation('title', '   ', '');
 
         $this->assertEquals(true, $translation->isEmpty());
     }
@@ -43,11 +43,21 @@ class TranslationTest extends TestCase
      */
     public function testSetValue()
     {
-        $translation = new Translation('title', '   ');
+        $translation = new Translation('title', '   ', '');
         $translation->setValue('abc');
 
         $this->assertEquals('abc', $translation->getValue());
     }
 
+    /**
+     * @return void
+     */
+    public function testGroup()
+    {
+        $translation = new Translation('title', '   ', 'product-123');
+        $translation->setValue('abc');
+
+        $this->assertEquals('product-123', $translation->getGroup());
+    }
 
 }

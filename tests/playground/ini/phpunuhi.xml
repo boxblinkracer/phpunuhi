@@ -1,0 +1,20 @@
+<phpunuhi
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/boxblinkracer/phpunuhi/main/config.xsd"
+>
+
+    <translations>
+
+        <set name="ini" format="ini" sort="true">
+            <file locale="de">./de.ini</file>
+            <file locale="en">./en.ini</file>
+        </set>
+
+        <set name="ini_sections" format="ini" sort="true">
+            <file locale="de" iniSection="de">./ini_sections.ini</file>
+            <file locale="en" iniSection="en">./ini_sections.ini</file>
+        </set>
+
+    </translations>
+
+</phpunuhi>

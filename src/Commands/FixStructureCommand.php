@@ -67,14 +67,14 @@ class FixStructureCommand extends Command
 
             $countCreated = 0;
 
-            foreach ($set->getAllTranslationKeys() as $currentKey) {
+            foreach ($set->getAllTranslationEntryIDs() as $currentID) {
 
                 foreach ($set->getLocales() as $locale) {
                     try {
-                        $locale->findTranslation($currentKey);
+                        $locale->findTranslation($currentID);
                     } catch (TranslationNotFoundException $ex) {
-                        $io->writeln('   [+] create translation: [' . $locale->getName() . '] ' . $currentKey);
-                        $locale->addTranslation($currentKey, '');
+                        $io->writeln('   [+] create translation: [' . $locale->getName() . '] ' . $currentID);
+                        $locale->addTranslation($currentID, '', '');
                         $countCreated++;
                     }
                 }

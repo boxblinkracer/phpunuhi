@@ -1,8 +1,7 @@
 <?php
 
-namespace PHPUnuhi\Bundles\Storage\JSON;
+namespace PHPUnuhi\Bundles\Storage\JSON\Services;
 
-use PHPUnuhi\Bundles\Storage\StorageLoaderInterface;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Traits\ArrayTrait;
 
@@ -35,7 +34,7 @@ class JsonLoader
         $foundTranslationsFlat = $this->getFlatArray($foundTranslations);
 
         foreach ($foundTranslationsFlat as $key => $value) {
-            $locale->addTranslation($key, $value);
+            $locale->addTranslation($key, $value, '');
         }
     }
 

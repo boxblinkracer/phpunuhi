@@ -90,13 +90,15 @@ class Locale
     /**
      * @param string $key
      * @param string $value
+     * @param string $group
      * @return Translation
      */
-    public function addTranslation(string $key, string $value): Translation
+    public function addTranslation(string $key, string $value, string $group): Translation
     {
         $translation = new Translation(
             $key,
-            $value
+            $value,
+            $group
         );
 
         $this->translations[] = $translation;
@@ -123,34 +125,34 @@ class Locale
     /**
      * @return array<string>
      */
-    public function getTranslationKeys(): array
+    public function getTranslationIDs(): array
     {
-        $keys = [];
+        $ids = [];
 
         foreach ($this->getTranslations() as $translation) {
-            if (!in_array($translation->getKey(), $keys)) {
-                $keys[] = $translation->getKey();
+            if (!in_array($translation->getID(), $ids)) {
+                $ids[] = $translation->getID();
             }
         }
 
-        return $keys;
+        return $ids;
     }
 
     /**
-     * @param string $searchKey
+     * @param string $searchID
      * @return Translation
      * @throws TranslationNotFoundException
      */
-    public function findTranslation(string $searchKey): Translation
+    public function findTranslation(string $searchID): Translation
     {
         foreach ($this->getTranslations() as $translation) {
 
-            if ($translation->getKey() === $searchKey) {
+            if ($translation->getID() === $searchID) {
                 return $translation;
             }
         }
 
-        throw new TranslationNotFoundException('No existing translation found for key: ' . $searchKey);
+        throw new TranslationNotFoundException('No existing translation found for ID: ' . $searchID);
     }
 
     /**
@@ -169,5 +171,22 @@ class Locale
         return $list;
     }
 
+    /**
+     * @param string $id
+     * @return void
+     */
+    public function removeFilter(string $id): void
+    {
+        $tmpList = [];
+
+        foreach ($this->translations as $translation) {
+
+            if ($translation->getID() !== $id) {
+                $tmpList[] = $translation;
+            }
+        }
+
+        $this->translations = $tmpList;
+    }
 }
 

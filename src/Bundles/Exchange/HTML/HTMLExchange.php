@@ -3,19 +3,14 @@
 namespace PHPUnuhi\Bundles\Exchange\HTML;
 
 use PHPUnuhi\Bundles\Exchange\ExchangeInterface;
+use PHPUnuhi\Bundles\Exchange\HTML\Services\HTMLExporter;
+use PHPUnuhi\Bundles\Exchange\HTML\Services\HTMLImporter;
 use PHPUnuhi\Bundles\Exchange\ImportResult;
-use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Models\Command\CommandOption;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
 class HTMLExchange implements ExchangeInterface
 {
-
-    /**
-     * @var StorageInterface
-     */
-    private $storage;
-
 
     /**
      * @return string
@@ -32,15 +27,6 @@ class HTMLExchange implements ExchangeInterface
     {
         return [
         ];
-    }
-
-    /**
-     * @param StorageInterface $storage
-     * @return void
-     */
-    public function setStorage(StorageInterface $storage): void
-    {
-        $this->storage = $storage;
     }
 
     /**
@@ -63,16 +49,14 @@ class HTMLExchange implements ExchangeInterface
     }
 
     /**
-     * @param TranslationSet $set
      * @param string $filename
      * @return ImportResult
      * @throws \Exception
      */
-    public function import(TranslationSet $set, string $filename): ImportResult
+    public function import(string $filename): ImportResult
     {
-        $importer = new HTMLImporter($this->storage);
-
-        return $importer->import($set, $filename);
+        $importer = new HTMLImporter();
+        return $importer->import($filename);
     }
 
 }

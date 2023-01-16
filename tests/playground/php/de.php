@@ -4,7 +4,7 @@ return [
     "sub" => [
         "sub2" => "ein brandneuer Untertitel",
         "subsub" => [
-            "test" => "tab",
+            "test" => "Subtitle Text",
         ],
     ],
     "title" => "Dies ist ein Titel",

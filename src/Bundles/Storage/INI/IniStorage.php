@@ -4,7 +4,6 @@ namespace PHPUnuhi\Bundles\Storage\INI;
 
 use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Bundles\Storage\StorageSaveResult;
-use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
 class IniStorage implements StorageInterface
@@ -26,33 +25,36 @@ class IniStorage implements StorageInterface
 
 
     /**
-     * @param Locale $locale
+     * @param TranslationSet $set
      * @return void
+     * @throws \Exception
      */
-    public function loadTranslations(Locale $locale): void
+    public function loadTranslations(TranslationSet $set): void
     {
-        $iniArray = parse_ini_file($locale->getFilename(), true, INI_SCANNER_RAW);
+        foreach ($set->getLocales() as $locale) {
 
-        if ($iniArray === false) {
-            throw new \Exception('Error when loading INI file: ' . $locale->getFilename());
-        }
+            $iniArray = parse_ini_file($locale->getFilename(), true, INI_SCANNER_RAW);
 
-        foreach ($iniArray as $key => $value) {
+            if ($iniArray === false) {
+                throw new \Exception('Error when loading INI file: ' . $locale->getFilename());
+            }
 
-            if (is_array($value)) {
-                # we have a section
-                if ($key === $locale->getIniSection()) {
-                    foreach ($value as $transKey => $transValue) {
-                        $locale->addTranslation($transKey, $transValue);
+            foreach ($iniArray as $key => $value) {
+
+                if (is_array($value)) {
+                    # we have a section
+                    if ($key === $locale->getIniSection()) {
+                        foreach ($value as $transKey => $transValue) {
+                            $locale->addTranslation($transKey, $transValue, '');
+                        }
                     }
-                }
 
-            } else {
-                # we just have a plain value
-                $locale->addTranslation($key, $value);
+                } else {
+                    # we just have a plain value
+                    $locale->addTranslation($key, $value, '');
+                }
             }
         }
-
     }
 
     /**
@@ -64,9 +66,7 @@ class IniStorage implements StorageInterface
         $localeCount = 0;
         $translationCount = 0;
 
-
         $fileContents = [];
-
 
         foreach ($set->getLocales() as $locale) {
 
@@ -77,7 +77,6 @@ class IniStorage implements StorageInterface
                 $content .= PHP_EOL;
             }
 
-
             if ($locale->getIniSection() !== '') {
                 $content .= "[" . $locale->getIniSection() . "]" . PHP_EOL;
                 $content .= PHP_EOL;
@@ -85,11 +84,10 @@ class IniStorage implements StorageInterface
 
             $localeCount++;
 
-
             $preparedTranslations = [];
 
             foreach ($locale->getTranslations() as $translation) {
-                $preparedTranslations[$translation->getKey()] = $translation->getValue();
+                $preparedTranslations[$translation->getID()] = $translation->getValue();
             }
 
             if ($this->sortIni) {
@@ -97,15 +95,12 @@ class IniStorage implements StorageInterface
             }
 
             foreach ($preparedTranslations as $key => $value) {
-
                 $content .= $key . '="' . $value . '"' . PHP_EOL;
-
                 $translationCount++;
             }
 
             $fileContents[$locale->getFilename()] = $content;
         }
-
 
         foreach ($fileContents as $filename => $content) {
             file_put_contents($filename, $content);

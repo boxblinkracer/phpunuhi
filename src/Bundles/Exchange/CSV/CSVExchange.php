@@ -2,19 +2,15 @@
 
 namespace PHPUnuhi\Bundles\Exchange\CSV;
 
+use PHPUnuhi\Bundles\Exchange\CSV\Services\CSVExporter;
+use PHPUnuhi\Bundles\Exchange\CSV\Services\CSVImporter;
 use PHPUnuhi\Bundles\Exchange\ExchangeInterface;
 use PHPUnuhi\Bundles\Exchange\ImportResult;
-use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Models\Command\CommandOption;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
 class CSVExchange implements ExchangeInterface
 {
-
-    /**
-     * @var StorageInterface
-     */
-    private $storage;
 
     /**
      * @var string
@@ -38,15 +34,6 @@ class CSVExchange implements ExchangeInterface
         return [
             new CommandOption('csv-delimiter', true),
         ];
-    }
-
-    /**
-     * @param StorageInterface $storage
-     * @return void
-     */
-    public function setStorage(StorageInterface $storage): void
-    {
-        $this->storage = $storage;
     }
 
     /**
@@ -74,16 +61,14 @@ class CSVExchange implements ExchangeInterface
     }
 
     /**
-     * @param TranslationSet $set
      * @param string $filename
      * @return ImportResult
      * @throws \Exception
      */
-    public function import(TranslationSet $set, string $filename): ImportResult
+    public function import(string $filename): ImportResult
     {
-        $importer = new CSVImporter($this->storage, $this->csvDelimiter);
-
-        return $importer->import($set, $filename);
+        $importer = new CSVImporter($this->csvDelimiter);
+        return $importer->import($filename);
     }
 
 }

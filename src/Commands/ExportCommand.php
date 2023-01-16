@@ -89,9 +89,7 @@ class ExportCommand extends Command
 
             $io->section('Translation Set: ' . $set->getName());
 
-            $storage = StorageFactory::getStorage($set->getFormat(), $set->getJsonIndent(), $set->isSortStorage());
-
-            $exporter = $this->exchangeFactory->getExchange($exportExchangeFormat, $storage, $input->getOptions());
+            $exporter = $this->exchangeFactory->getExchange($exportExchangeFormat, $input->getOptions());
 
             $exporter->export($set, $outputDir);
         }

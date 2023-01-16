@@ -2,9 +2,10 @@
 
 namespace PHPUnuhi\Bundles\Storage\JSON;
 
+use PHPUnuhi\Bundles\Storage\JSON\Services\JsonLoader;
+use PHPUnuhi\Bundles\Storage\JSON\Services\JsonSaver;
 use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Bundles\Storage\StorageSaveResult;
-use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
 class JsonStorage implements StorageInterface
@@ -32,13 +33,15 @@ class JsonStorage implements StorageInterface
     }
 
     /**
-     * @param Locale $locale
+     * @param TranslationSet $set
      * @return void
      * @throws \Exception
      */
-    public function loadTranslations(Locale $locale): void
+    public function loadTranslations(TranslationSet $set): void
     {
-        $this->loader->loadTranslations($locale);
+        foreach ($set->getLocales() as $locale) {
+            $this->loader->loadTranslations($locale);
+        }
     }
 
     /**

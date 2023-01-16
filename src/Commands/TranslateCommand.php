@@ -95,11 +95,11 @@ class TranslateCommand extends Command
 
             $io->section('Translation Set: ' . $set->getName());
 
-            $allKeys = $set->getAllTranslationKeys();
+            $allIDs = $set->getAllTranslationEntryIDs();
 
-            # first iterate through keys
-            # then we have all keys next to each other for better comparing on CLI
-            foreach ($allKeys as $currentKey) {
+            # first iterate through ids
+            # then we have all ids next to each other for better comparing on CLI
+            foreach ($allIDs as $currentID) {
 
                 foreach ($set->getLocales() as $locale) {
 
@@ -110,7 +110,7 @@ class TranslateCommand extends Command
                     }
 
                     try {
-                        $currentTranslation = $locale->findTranslation($currentKey);
+                        $currentTranslation = $locale->findTranslation($currentID);
                     } catch (TranslationNotFoundException $ex) {
                         # if no translation exits
                         # then skip this one
@@ -119,7 +119,14 @@ class TranslateCommand extends Command
 
                     # translate if we either force it or only if our value is empty
                     if ($forceLocale || $currentTranslation->isEmpty()) {
-                        $existingData = $set->findAnyExistingTranslation($currentKey);
+
+                        try {
+                            $existingData = $set->findAnyExistingTranslation($currentID);
+                        } catch (TranslationNotFoundException $ex) {
+                            # if no translation exits
+                            # then skip this one
+                            continue;
+                        }
 
                         $existingLocale = $existingData['locale'];
                         $existingTranslation = $existingData['translation'];
@@ -130,7 +137,7 @@ class TranslateCommand extends Command
                             $locale->getName()
                         );
 
-                        $io->writeln('   [~] translating "' . $currentTranslation->getKey() . '" (' . $locale->getName() . ') => ' . $newTranslation);
+                        $io->writeln('   [~] translating "' . $currentTranslation->getID() . '" (' . $locale->getName() . ') => ' . $newTranslation);
 
                         if (!empty($newTranslation)) {
                             $translatedCount++;

@@ -3,8 +3,10 @@
 namespace PHPUnuhi\Configuration;
 
 use PHPUnuhi\Bundles\Storage\StorageFactory;
-use PHPUnuhi\Bundles\Storage\StorageFormat;
+use PHPUnuhi\Components\Filter\FilterHandler;
+use PHPUnuhi\Exceptions\ConfigurationException;
 use PHPUnuhi\Models\Configuration\Configuration;
+use PHPUnuhi\Models\Translation\Filter;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
 use SimpleXMLElement;
@@ -14,17 +16,24 @@ class ConfigurationLoader
 {
 
     /**
+     * @var FilterHandler
+     */
+    private $filterHandler;
+
+
+    /**
      *
      */
     public function __construct()
     {
+        $this->filterHandler = new FilterHandler();
     }
 
 
     /**
      * @param string $configFilename
      * @return Configuration
-     * @throws \Exception
+     * @throws ConfigurationException
      */
     public function load(string $configFilename)
     {
@@ -35,19 +44,61 @@ class ConfigurationLoader
             throw new \Exception('Error when loading configuration. Invalid XML: ' . $configFilename);
         }
 
+        # load ENV variables
+        $this->loadPHPEnvironment($xmlSettings);
 
+        # load translation-sets
+        $suites = $this->loadTranslations($xmlSettings, $configFilename);
+
+        # create and validate
+        # the configuration object
+        $config = new Configuration($suites);
+        $this->validateConfig($config);
+
+        return $config;
+    }
+
+    /**
+     * @param SimpleXMLElement $rootNode
+     * @return void
+     * @throws ConfigurationException
+     */
+    private function loadPHPEnvironment(SimpleXMLElement $rootNode): void
+    {
+        $phpNodeValues = $rootNode->php->children();
+
+        if ($phpNodeValues === null) {
+            return;
+        }
+
+        foreach ($rootNode->php->env as $xmlSet) {
+            $name = trim((string)$xmlSet['name']);
+            $value = trim((string)$xmlSet['value']);
+            putenv("{$name}={$value}");
+        }
+    }
+
+    /**
+     * @param SimpleXMLElement $rootNode
+     * @param string $configFilename
+     * @return TranslationSet[]
+     * @throws \Exception
+     */
+    private function loadTranslations(SimpleXMLElement $rootNode, string $configFilename): array
+    {
         $suites = [];
 
         /** @var SimpleXMLElement $xmlSet */
-        foreach ($xmlSettings->translations->children() as $xmlSet) {
+        foreach ($rootNode->translations->children() as $xmlSet) {
 
             $name = trim((string)$xmlSet['name']);
             $format = trim((string)$xmlSet['format']);
             $jsonIndent = trim((string)$xmlSet['jsonIndent']);
+            $entity = trim((string)$xmlSet['entity']);
             $sortStorage = trim((string)$xmlSet['sort']);
 
             if (empty($format)) {
-                $format = StorageFormat::JSON;
+                $format = 'json';
             }
 
             if (empty($jsonIndent)) {
@@ -60,6 +111,8 @@ class ConfigurationLoader
 
             $foundLocales = [];
 
+            $filter = new Filter();
+
             /** @var SimpleXMLElement $childNode */
             foreach ($xmlSet->children() as $childNode) {
 
@@ -69,7 +122,13 @@ class ConfigurationLoader
                 $locale = null;
 
                 switch ($nodeType) {
+
+                    case 'filter':
+                        $filter = $this->loadFilter($childNode);
+                        break;
+
                     case 'file':
+                    case 'locale':
 
                         $configuredFileName = dirname($configFilename) . '/' . $nodeValue;
                         $fileName = realpath($configuredFileName);
@@ -98,27 +157,60 @@ class ConfigurationLoader
             }
 
             # create our new set
-            $set = new TranslationSet($name, $format, (int)$jsonIndent, (bool)$sortStorage, $foundLocales);
-
+            $set = new TranslationSet(
+                $name,
+                $format,
+                (int)$jsonIndent,
+                (bool)$sortStorage,
+                $entity,
+                $foundLocales,
+                $filter
+            );
 
             $translationLoader = StorageFactory::getStorage($set->getFormat(), $set->getJsonIndent(), $set->isSortStorage());
 
             # now iterate through our locales
             # and load the translation files for it
-            foreach ($set->getLocales() as $locale) {
-                $translationLoader->loadTranslations($locale);
-            }
+            $translationLoader->loadTranslations($set);
+
+            # remove fields that must not be existing
+            # because of our allow or exclude list
+            $this->filterHandler->applyFilter($set);
 
             $suites[] = $set;
         }
 
-        $config = new Configuration($suites);
-
-        $this->validateConfig($config);
-
-        return $config;
+        return $suites;
     }
 
+    /**
+     * @param SimpleXMLElement $filterNode
+     * @return Filter
+     */
+    private function loadFilter(SimpleXMLElement $filterNode): Filter
+    {
+        $filter = new Filter();
+
+        $nodeAllows = $filterNode->include;
+        $nodeExcludes = $filterNode->exclude;
+
+        $nodeAllowsKeys = $nodeAllows->key;
+        $nodeExcludeKeys = $nodeExcludes->key;
+
+        if ($nodeAllowsKeys !== null) {
+            foreach ($nodeAllowsKeys as $key) {
+                $filter->addAllowKey((string)$key);
+            }
+        }
+
+        if ($nodeExcludeKeys !== null) {
+            foreach ($nodeExcludeKeys as $key) {
+                $filter->addExcludeKey((string)$key);
+            }
+        }
+
+        return $filter;
+    }
 
     /**
      * @param Configuration $configuration

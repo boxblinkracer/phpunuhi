@@ -26,7 +26,7 @@ trait CommandTrait
      */
     protected function getConfigFile(InputInterface $input): string
     {
-        $configFile = (string)$input->getOption('configuration');
+        $configFile = (string)$input->getOption('configuration') . '';
 
         if (empty($configFile)) {
             $configFile = 'phpunuhi.xml';

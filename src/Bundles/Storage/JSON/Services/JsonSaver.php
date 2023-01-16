@@ -1,13 +1,13 @@
 <?php
 
-namespace PHPUnuhi\Bundles\Storage\JSON;
+namespace PHPUnuhi\Bundles\Storage\JSON\Services;
 
 use PHPUnuhi\Bundles\Storage\StorageSaveResult;
-use PHPUnuhi\Bundles\Storage\StorageSaverInterface;
 use PHPUnuhi\Models\Translation\TranslationSet;
 use PHPUnuhi\Traits\ArrayTrait;
 
-class JsonSaver
+class
+JsonSaver
 {
 
     use ArrayTrait;
@@ -51,7 +51,7 @@ class JsonSaver
             $saveValues = [];
 
             foreach ($locale->getTranslations() as $translation) {
-                $saveValues[$translation->getKey()] = $translation->getValue();
+                $saveValues[$translation->getID()] = $translation->getValue();
                 $translationCount++;
             }
 

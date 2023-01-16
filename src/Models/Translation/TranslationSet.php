@@ -3,6 +3,8 @@
 namespace PHPUnuhi\Models\Translation;
 
 
+use PHPUnuhi\Exceptions\TranslationNotFoundException;
+
 class TranslationSet
 {
 
@@ -27,9 +29,19 @@ class TranslationSet
     private $sortStorage;
 
     /**
+     * @var string
+     */
+    private $entity;
+
+    /**
      * @var Locale[]
      */
     private $locales;
+
+    /**
+     * @var Filter
+     */
+    private $filter;
 
 
     /**
@@ -37,15 +49,20 @@ class TranslationSet
      * @param string $format
      * @param int $jsonIndent
      * @param bool $sortStorage
+     * @param string $sw6Entity
      * @param Locale[] $locales
+     * @param Filter $filter
      */
-    public function __construct(string $name, string $format, int $jsonIndent, bool $sortStorage, array $locales)
+    public function __construct(string $name, string $format, int $jsonIndent, bool $sortStorage, string $sw6Entity, array $locales, Filter $filter)
     {
         $this->name = $name;
         $this->format = $format;
         $this->jsonIndent = $jsonIndent;
         $this->sortStorage = $sortStorage;
+        $this->entity = $sw6Entity;
         $this->locales = $locales;
+
+        $this->filter = $filter;
     }
 
 
@@ -66,11 +83,27 @@ class TranslationSet
     }
 
     /**
+     * @return Filter
+     */
+    public function getFilter(): Filter
+    {
+        return $this->filter;
+    }
+
+    /**
      * @return int
      */
     public function getJsonIndent(): int
     {
         return $this->jsonIndent;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEntity(): string
+    {
+        return $this->entity;
     }
 
     /**
@@ -90,34 +123,50 @@ class TranslationSet
     }
 
     /**
-     * @return array<mixed>
+     * @return bool
      */
-    public function getAllTranslationKeys(): array
+    public function hasGroups(): bool
     {
-        $allKeys = [];
-
         foreach ($this->locales as $locale) {
-            foreach ($locale->getTranslationKeys() as $key) {
-                if (!in_array($key, $allKeys)) {
-                    $allKeys[] = $key;
+            foreach ($locale->getTranslations() as $translation) {
+                if (!empty($translation->getGroup())) {
+                    return true;
                 }
             }
         }
-        return $allKeys;
+
+        return false;
     }
 
     /**
-     * @param string $searchKey
+     * @return array<mixed>
+     */
+    public function getAllTranslationEntryIDs(): array
+    {
+        $allIDs = [];
+
+        foreach ($this->locales as $locale) {
+            foreach ($locale->getTranslationIDs() as $key) {
+                if (!in_array($key, $allIDs)) {
+                    $allIDs[] = $key;
+                }
+            }
+        }
+        return $allIDs;
+    }
+
+    /**
+     * @param string $searchID
      * @return array<mixed>
      * @throws \Exception
      */
-    public function findAnyExistingTranslation(string $searchKey): array
+    public function findAnyExistingTranslation(string $searchID): array
     {
         foreach ($this->locales as $locale) {
 
             foreach ($locale->getTranslations() as $translation) {
 
-                if ($translation->getKey() === $searchKey && !$translation->isEmpty()) {
+                if ($translation->getID() === $searchID && !$translation->isEmpty()) {
                     # should be an object, just too lazy atm
                     return [
                         'locale' => $locale->getName(),
@@ -127,7 +176,7 @@ class TranslationSet
             }
         }
 
-        throw new \Exception('No valid translation found for key: ' . $searchKey);
+        throw new TranslationNotFoundException('No valid translation found for ID: ' . $searchID);
     }
 
 }

@@ -1,0 +1,51 @@
+<phpunuhi
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/boxblinkracer/phpunuhi/main/config.xsd"
+>
+
+    <php>
+        <env name="DB_HOST" value="127.0.0.1"/>
+        <env name="DB_PORT" value="3306"/>
+        <env name="DB_USER" value="root"/>
+        <env name="DB_PASSWD" value="root"/>
+        <env name="DB_DBNAME" value="shopware"/>
+    </php>
+
+    <translations>
+
+        <set name="products" format="shopware6" entity="product">
+            <filter>
+                <exclude>
+                    <key>custom_fields</key>
+                    <key>custom_search_keywords</key>
+                    <key>meta_*</key>
+                </exclude>
+            </filter>
+            <locale locale="en-GB"></locale>
+            <locale locale="de-DE"></locale>
+        </set>
+
+        <set name="salutations" format="shopware6" entity="salutation">
+            <filter>
+                <include>
+                    <key>display_name</key>
+                    <key>letter_name</key>
+                </include>
+            </filter>
+            <locale locale="en-GB"></locale>
+            <locale locale="de-DE"></locale>
+        </set>
+
+        <set name="shipping" format="shopware6" entity="shipping_method">
+            <filter>
+                <exclude>
+                    <key>custom_fields</key>
+                </exclude>
+            </filter>
+            <locale locale="en-GB"></locale>
+            <locale locale="de-DE"></locale>
+        </set>
+
+    </translations>
+
+</phpunuhi>
