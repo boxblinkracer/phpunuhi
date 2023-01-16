@@ -22,10 +22,6 @@ class StorageFactory
     {
         $format = $set->getFormat();
 
-        if (empty($format)) {
-            $format = 'json';
-        }
-
         switch (strtolower($format)) {
             case 'json':
                 $indent = $set->getAttributeValue('jsonIndent');

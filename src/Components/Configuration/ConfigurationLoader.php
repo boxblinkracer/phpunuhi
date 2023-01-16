@@ -95,6 +95,10 @@ class ConfigurationLoader
             $name = trim((string)$xmlSet['name']);
             $format = trim((string)$xmlSet['format']);
 
+            if (empty($format)) {
+                $format = 'json';
+            }
+
             $setAttributes = [];
             $nodeAttributes = $xmlSet->attributes();
             if ($nodeAttributes !== null) {
