@@ -4,16 +4,16 @@
 >
 
     <php>
-        <var name="DB_HOST" value="127.0.0.1"/>
-        <var name="DB_PORT" value="3306"/>
-        <var name="DB_USER" value="root"/>
-        <var name="DB_PASSWD" value="root"/>
-        <var name="DB_DBNAME" value="shopware"/>
+        <env name="DB_HOST" value="127.0.0.1"/>
+        <env name="DB_PORT" value="3306"/>
+        <env name="DB_USER" value="root"/>
+        <env name="DB_PASSWD" value="root"/>
+        <env name="DB_DBNAME" value="shopware"/>
     </php>
 
     <translations>
 
-        <set name="products" format="shopware6" sw6Entity="product">
+        <set name="products" format="shopware6" entity="product">
             <filter>
                 <exclude>
                     <key>custom_fields</key>
@@ -25,7 +25,7 @@
             <locale locale="de-DE"></locale>
         </set>
 
-        <set name="Salutations" format="shopware6" sw6Entity="salutation">
+        <set name="salutations" format="shopware6" entity="salutation">
             <filter>
                 <include>
                     <key>display_name</key>
@@ -36,7 +36,7 @@
             <locale locale="de-DE"></locale>
         </set>
 
-        <set name="shipping" format="shopware6" sw6Entity="shipping_method">
+        <set name="shipping" format="shopware6" entity="shipping_method">
             <filter>
                 <exclude>
                     <key>custom_fields</key>

@@ -49,12 +49,12 @@ class TranslationLoader
      */
     public function loadTranslations(TranslationSet $set): void
     {
-        if (empty($set->getSw6Entity())) {
+        if (empty($set->getEntity())) {
             throw new ConfigurationException('No entity configured for Shopware6 Translation-Set: ' . $set->getName());
         }
 
 
-        $entity = $set->getSw6Entity();
+        $entity = $set->getEntity();
         $entityIdKey = $entity . '_id';
 
 

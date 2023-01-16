@@ -9,6 +9,7 @@ use PHPUnuhi\Bundles\Storage\Shopware6\Service\TranslationSaver;
 use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Bundles\Storage\StorageSaveResult;
 use PHPUnuhi\Models\Translation\TranslationSet;
+use PHPUnuhi\Services\Connection\ConnectionFactory;
 
 class Shopware6Storage implements StorageInterface
 {
@@ -40,19 +41,7 @@ class Shopware6Storage implements StorageInterface
      */
     public function __construct()
     {
-        $config = new Configuration();
-
-        $this->connection = \Doctrine\DBAL\DriverManager::getConnection(
-            [
-                'host' => $_SERVER['DB_HOST'],
-                'port' => $_SERVER['DB_PORT'],
-                'user' => $_SERVER['DB_USER'],
-                'password' => $_SERVER['DB_PASSWD'],
-                'dbname' => $_SERVER['DB_DBNAME'],
-                'driver' => 'pdo_mysql',
-            ],
-            $config
-        );
+        $this->connection = (new ConnectionFactory())->fromEnv();
 
         $this->loader = new TranslationLoader($this->connection);
         $this->saver = new TranslationSaver($this->connection);

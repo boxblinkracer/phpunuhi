@@ -31,7 +31,7 @@ class TranslationSet
     /**
      * @var string
      */
-    private $sw6Entity;
+    private $entity;
 
     /**
      * @var Locale[]
@@ -59,7 +59,7 @@ class TranslationSet
         $this->format = $format;
         $this->jsonIndent = $jsonIndent;
         $this->sortStorage = $sortStorage;
-        $this->sw6Entity = $sw6Entity;
+        $this->entity = $sw6Entity;
         $this->locales = $locales;
 
         $this->filter = $filter;
@@ -101,9 +101,9 @@ class TranslationSet
     /**
      * @return string
      */
-    public function getSw6Entity(): string
+    public function getEntity(): string
     {
-        return $this->sw6Entity;
+        return $this->entity;
     }
 
     /**

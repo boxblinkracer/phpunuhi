@@ -3,8 +3,8 @@
 namespace PHPUnuhi\Configuration;
 
 use PHPUnuhi\Bundles\Storage\StorageFactory;
-use PHPUnuhi\Bundles\Storage\StorageFormat;
 use PHPUnuhi\Components\Filter\FilterHandler;
+use PHPUnuhi\Exceptions\ConfigurationException;
 use PHPUnuhi\Models\Configuration\Configuration;
 use PHPUnuhi\Models\Translation\Filter;
 use PHPUnuhi\Models\Translation\Locale;
@@ -33,7 +33,7 @@ class ConfigurationLoader
     /**
      * @param string $configFilename
      * @return Configuration
-     * @throws \Exception
+     * @throws ConfigurationException
      */
     public function load(string $configFilename)
     {
@@ -44,28 +44,57 @@ class ConfigurationLoader
             throw new \Exception('Error when loading configuration. Invalid XML: ' . $configFilename);
         }
 
+        # load ENV variables
+        $this->loadPHPEnvironment($xmlSettings);
 
-        $suites = [];
+        # load translation-sets
+        $suites = $this->loadTranslations($xmlSettings, $configFilename);
 
-        $phpNodeValues = $xmlSettings->php->children();
-        if ($phpNodeValues !== null) {
-            foreach ($phpNodeValues as $xmlSet) {
+        # create and validate
+        # the configuration object
+        $config = new Configuration($suites);
+        $this->validateConfig($config);
 
-                $name = trim((string)$xmlSet['name']);
-                $value = trim((string)$xmlSet['value']);
+        return $config;
+    }
 
-                $_SERVER[$name] = $value;
-            }
+    /**
+     * @param SimpleXMLElement $rootNode
+     * @return void
+     * @throws ConfigurationException
+     */
+    private function loadPHPEnvironment(SimpleXMLElement $rootNode): void
+    {
+        $phpNodeValues = $rootNode->php->children();
+
+        if ($phpNodeValues === null) {
+            return;
         }
 
+        foreach ($rootNode->php->env as $xmlSet) {
+            $name = trim((string)$xmlSet['name']);
+            $value = trim((string)$xmlSet['value']);
+            putenv("{$name}={$value}");
+        }
+    }
+
+    /**
+     * @param SimpleXMLElement $rootNode
+     * @param string $configFilename
+     * @return TranslationSet[]
+     * @throws \Exception
+     */
+    private function loadTranslations(SimpleXMLElement $rootNode, string $configFilename): array
+    {
+        $suites = [];
 
         /** @var SimpleXMLElement $xmlSet */
-        foreach ($xmlSettings->translations->children() as $xmlSet) {
+        foreach ($rootNode->translations->children() as $xmlSet) {
 
             $name = trim((string)$xmlSet['name']);
             $format = trim((string)$xmlSet['format']);
             $jsonIndent = trim((string)$xmlSet['jsonIndent']);
-            $sw6Entity = trim((string)$xmlSet['sw6Entity']);
+            $entity = trim((string)$xmlSet['entity']);
             $sortStorage = trim((string)$xmlSet['sort']);
 
             if (empty($format)) {
@@ -133,7 +162,7 @@ class ConfigurationLoader
                 $format,
                 (int)$jsonIndent,
                 (bool)$sortStorage,
-                $sw6Entity,
+                $entity,
                 $foundLocales,
                 $filter
             );
@@ -151,11 +180,7 @@ class ConfigurationLoader
             $suites[] = $set;
         }
 
-        $config = new Configuration($suites);
-
-        $this->validateConfig($config);
-
-        return $config;
+        return $suites;
     }
 
     /**
