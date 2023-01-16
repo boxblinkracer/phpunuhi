@@ -127,7 +127,6 @@ class ConfigurationLoader
                         $filter = $this->loadFilter($childNode);
                         break;
 
-                    case 'file':
                     case 'locale':
 
                         $configuredFileName = dirname($configFilename) . '/' . $nodeValue;
@@ -146,6 +145,9 @@ class ConfigurationLoader
 
                         $locale = new Locale($localeAttr, $fileName, $iniSection);
                         break;
+
+                    case 'file':
+                        throw new ConfigurationException('Children from type "file" are not possible anymore. Please use <locale>');
 
                     default:
                         throw new \Exception('child element not recognized in translation set: ' . $name);

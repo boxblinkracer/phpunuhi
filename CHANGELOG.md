@@ -17,6 +17,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 ### Changed
 
 - Changed the technical usage of the translation **key** to an **ID**. The ID is the unique identifier within a locale, and the key the plain name of the translation which can exist multiple times in a locale.
+- Removed **<file>** nodes in locale. Please use **<locale>** instead.
 
 ## [1.1.0]
 
