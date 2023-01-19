@@ -199,7 +199,7 @@ class ConfigurationLoader
 
         if ($nodeAllowsKeys !== null) {
             foreach ($nodeAllowsKeys as $key) {
-                $filter->addAllowKey((string)$key);
+                $filter->addIncludeKey((string)$key);
             }
         }
 

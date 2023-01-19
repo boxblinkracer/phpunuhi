@@ -29,7 +29,7 @@ class Filter
      * @param string $key
      * @return void
      */
-    public function addAllowKey(string $key): void
+    public function addIncludeKey(string $key): void
     {
         if (in_array($key, $this->fieldsAllow)) {
             return;
@@ -57,14 +57,12 @@ class Filter
      */
     public function isKeyAllowed(string $key): bool
     {
-
         if (count($this->fieldsAllow) > 0) {
             foreach ($this->fieldsAllow as $fieldPattern) {
                 if ($this->stringMatchWithWildcard($key, $fieldPattern)) {
                     return true;
                 }
             }
-
             return false;
         }
 
