@@ -4,6 +4,7 @@ namespace PHPUnuhi\Bundles\Exchange\CSV;
 
 use PHPUnuhi\Bundles\Exchange\CSV\Services\CSVExporter;
 use PHPUnuhi\Bundles\Exchange\CSV\Services\CSVImporter;
+use PHPUnuhi\Bundles\Exchange\CSV\Services\CSVWriterInterface;
 use PHPUnuhi\Bundles\Exchange\ExchangeInterface;
 use PHPUnuhi\Bundles\Exchange\ImportResult;
 use PHPUnuhi\Models\Command\CommandOption;
@@ -13,9 +14,25 @@ class CSVExchange implements ExchangeInterface
 {
 
     /**
+     * @var CSVWriterInterface
+     */
+    private $csvWriter;
+
+    /**
      * @var string
      */
     private $csvDelimiter;
+
+
+    /**
+     * @param CSVWriterInterface $csvWriter
+     */
+    public function __construct(CSVWriterInterface $csvWriter)
+    {
+        $this->csvWriter = $csvWriter;
+
+        $this->csvDelimiter = ',';
+    }
 
 
     /**
@@ -56,7 +73,7 @@ class CSVExchange implements ExchangeInterface
      */
     public function export(TranslationSet $set, string $outputDir): void
     {
-        $exporter = new CSVExporter($this->csvDelimiter);
+        $exporter = new CSVExporter($this->csvWriter, $this->csvDelimiter);
         $exporter->export($set, $outputDir);
     }
 

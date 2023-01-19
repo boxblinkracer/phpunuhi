@@ -3,6 +3,7 @@
 namespace PHPUnuhi\Bundles\Exchange;
 
 use PHPUnuhi\Bundles\Exchange\CSV\CSVExchange;
+use PHPUnuhi\Bundles\Exchange\CSV\Services\CSVWriter;
 use PHPUnuhi\Bundles\Exchange\HTML\HTMLExchange;
 use PHPUnuhi\Models\Command\CommandOption;
 
@@ -22,7 +23,7 @@ class ExchangeFactory
     {
         $this->exchangeServices = [];
 
-        $this->exchangeServices[] = new CSVExchange();
+        $this->exchangeServices[] = new CSVExchange(new CSVWriter());
         $this->exchangeServices[] = new HTMLExchange();
     }
 

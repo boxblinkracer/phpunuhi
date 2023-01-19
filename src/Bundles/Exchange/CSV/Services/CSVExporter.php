@@ -9,16 +9,23 @@ class CSVExporter
 {
 
     /**
+     * @var CSVWriterInterface
+     */
+    private $csvWriter;
+
+    /**
      * @var string
      */
     private $delimiter;
 
 
     /**
+     * @param CSVWriterInterface $csvWriter
      * @param string $delimiter
      */
-    public function __construct(string $delimiter)
+    public function __construct(CSVWriterInterface $csvWriter, string $delimiter)
     {
+        $this->csvWriter = $csvWriter;
         $this->delimiter = $delimiter;
     }
 
@@ -123,20 +130,19 @@ class CSVExporter
         $csvFilename = $outputDir . '/' . $set->getName() . '.csv';
 
         if (file_exists($csvFilename)) {
-            unlink($csvFilename);
+            $this->csvWriter->deleteFile($csvFilename);
         }
 
-        $f = fopen($csvFilename, 'ab');
+        $f = $this->csvWriter->open($csvFilename);
 
         if ($f !== false) {
             foreach ($csvExportLines as $row) {
-                fputcsv($f, $row, $this->delimiter);
+                $this->csvWriter->writeLine($f, $row, $this->delimiter);
             }
-            fclose($f);
+            $this->csvWriter->close($f);
         }
 
         echo '   [+] generated file: ' . $csvFilename . PHP_EOL . PHP_EOL;
-
     }
 
 }
