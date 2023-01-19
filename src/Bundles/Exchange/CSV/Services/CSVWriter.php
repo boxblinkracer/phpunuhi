@@ -17,7 +17,7 @@ class CSVWriter implements CSVWriterInterface
 
     /**
      * @param string $filename
-     * @return resource|void
+     * @return false|resource
      */
     public function open(string $filename)
     {
@@ -26,7 +26,7 @@ class CSVWriter implements CSVWriterInterface
 
     /**
      * @param $file
-     * @param array $row
+     * @param array<mixed> $row
      * @param string $delimiter
      * @return void
      */
