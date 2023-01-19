@@ -66,11 +66,10 @@ translation services (Google, DeepL, OpenAI). This makes PHPUnuhi a great compos
 
 ```mermaid
   graph TD;
-      Storage Format--> Exchange Format;
-      Storage Format-->Translation Service;
-      Exchange Format-->Storage Format;
+      Storage Format --> Exchange Format;
+      Storage Format --> Translation Service;
+      Exchange Format --> Storage Format;
 ```
-
 
 **Key Benefits**
 
