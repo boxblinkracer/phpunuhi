@@ -2,11 +2,12 @@ version: "3.0"
 
 services:
 
-  build:
-    container_name: dev
+  phpunuhi:
+    container_name: phpunuhi
     image: php:7.4
     volumes:
       - "../:/app"
+    working_dir: /app
     entrypoint:
       - /bin/sh
       - "/app/docker/boot.sh"
