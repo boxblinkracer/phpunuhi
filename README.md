@@ -17,37 +17,39 @@ The framework is free, there's no guarantee or claim to anything.
 Now that you know this, let's get started!
 
 <!-- TOC -->
-  * [1. Basic Concept](#1-basic-concept)
-  * [2. Installation](#2-installation)
-  * [3. Configuration](#3-configuration)
-  * [4. Commands](#4-commands)
+
+* [1. Basic Concept](#1-basic-concept)
+* [2. Installation](#2-installation)
+* [3. Configuration](#3-configuration)
+* [4. Commands](#4-commands)
     * [4.1 Validate Command](#41-validate-command)
     * [4.2 Fix Structure Command](#42-fix-structure-command)
     * [4.3 Export Command](#43-export-command)
     * [4.4 Import Command](#44-import-command)
     * [4.5 Status Command](#45-status-command)
     * [4.6 Translate Command](#46-translate-command)
-  * [5. Use Cases](#5-use-cases)
+* [5. Use Cases](#5-use-cases)
     * [5.1 Validation in CI pipeline](#51-validation-in-ci-pipeline)
     * [5.2 Working with external translation agencies](#52-working-with-external-translation-agencies)
     * [5.3 Live WebEdit with HTML](#53-live-webedit-with-html)
     * [5.4 Automatic Translation with Google, DeepL, ...](#54-automatic-translation-with-google-deepl-)
-  * [6 Appendix](#6-appendix)
+* [6 Appendix](#6-appendix)
     * [6.1 Storage Formats](#61-storage-formats)
-      * [6.1.1 JSON](#611-json)
-      * [6.1.2 INI](#612-ini)
-      * [6.1.3 PHP](#613-php)
-      * [6.1.4 Shopware 6 (Database)](#614-shopware-6--database-)
+        * [6.1.1 JSON](#611-json)
+        * [6.1.2 INI](#612-ini)
+        * [6.1.3 PHP](#613-php)
+        * [6.1.4 Shopware 6 (Database)](#614-shopware-6--database-)
     * [6.2 Filters](#62-filters)
     * [6.3 Groups](#63-groups)
     * [6.4 Exchange Formats](#64-exchange-formats)
-      * [6.4.1 CSV](#641-csv)
-      * [6.4.2 HTML / WebEdit](#642-html--webedit)
+        * [6.4.1 CSV](#641-csv)
+        * [6.4.2 HTML / WebEdit](#642-html--webedit)
     * [6.5 Translator Services](#65-translator-services)
-      * [6.5.1 DeepL](#651-deepl)
-      * [6.5.2 Google Cloud Translate](#652-google-cloud-translate)
-      * [6.5.3 Google Web Translate](#653-google-web-translate)
-      * [6.5.4 OpenAI GPT Translate](#654-openai-gpt-translate)
+        * [6.5.1 DeepL](#651-deepl)
+        * [6.5.2 Google Cloud Translate](#652-google-cloud-translate)
+        * [6.5.3 Google Web Translate](#653-google-web-translate)
+        * [6.5.4 OpenAI GPT Translate](#654-openai-gpt-translate)
+
 <!-- TOC -->
 
 ## 1. Basic Concept
@@ -431,7 +433,7 @@ The Shopware 6 format allows you to use PHPUnuhi directly on the database and th
 What do we mean with entities? These are real objects of the platform, stored within the database.
 This means **products**, **salutations**, **shipping methods** and more. Basically, everything that has a **_translation** table in the database.
 
-Just imagine running the **status command** and see a translation coverage of all your products in your shop. Nice, isn't it?
+Just imagine running the **status command** and see a translation coverage of all your products in your shop. Nice, isn't it? Or let DeepL translate your data automatically?!
 
 ### 6.2 Filters
 
