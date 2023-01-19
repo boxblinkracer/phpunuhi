@@ -3,9 +3,7 @@
 namespace PHPUnuhi\Traits;
 
 use PHPUnuhi\PHPUnuhi;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 
 trait CommandTrait
 {
@@ -36,19 +34,6 @@ trait CommandTrait
         $workingDir = $cur_dir[count($cur_dir) - 1];
 
         return $workingDir . '/' . $configFile;
-    }
-
-    /**
-     * @param Command $command
-     * @return void
-     */
-    protected function addTranslatorServiceOptions(Command $command)
-    {
-        $command->addOption('service', null, InputOption::VALUE_REQUIRED, '', '');
-
-        $command->addOption('google-key', null, InputOption::VALUE_REQUIRED, '', '');
-        $command->addOption('deepl-key', null, InputOption::VALUE_REQUIRED, '', '');
-        $command->addOption('openai-key', null, InputOption::VALUE_REQUIRED, '', '');
     }
 
 }
