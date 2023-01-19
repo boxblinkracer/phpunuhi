@@ -1,17 +1,17 @@
 <?php
 
-namespace PHPUnuhi\Commands;
+namespace PHPUnuhi\Commands\Core;
 
-use PHPUnuhi\Bundles\Exchange\ExchangeFormat;
+
+use PHPUnuhi\Components\Validator\Validator;
 use PHPUnuhi\Configuration\ConfigurationLoader;
-use PHPUnuhi\Services\Maths\PercentageCalculator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class ListTranslationsCommand extends Command
+class ValidateCommand extends Command
 {
 
     use \PHPUnuhi\Traits\CommandTrait;
@@ -22,8 +22,8 @@ class ListTranslationsCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('list:translations')
-            ->setDescription('')
+            ->setName('validate')
+            ->setDescription('Validates all your translations from your configuration')
             ->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', '');
 
         parent::configure();
@@ -32,14 +32,14 @@ class ListTranslationsCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return int
+     * @return int|void
      * @throws \Exception
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
 
-        $io->title('PHPUnuhi List Translations');
+        $io->title('PHPUnuhi Validate');
         $this->showHeader();
 
         # -----------------------------------------------------------------
@@ -51,17 +51,32 @@ class ListTranslationsCommand extends Command
         $configLoader = new ConfigurationLoader();
         $config = $configLoader->load($configFile);
 
+        $validator = new Validator();
+
+
+        $isAllValid = true;
 
         foreach ($config->getTranslationSets() as $set) {
 
             $io->section('Translation Set: ' . $set->getName());
 
-            foreach ($set->getAllTranslationEntryIDs() as $id) {
-                $io->writeln('   [~] ' . $id);
+            $isValid = $validator->validate($set);
+
+            if ($isValid) {
+                $io->block('Set is valid!');
+            } else {
+                $io->note('Set is not valid!');
+                $isAllValid = false;
             }
         }
 
-        exit(0);
+        if ($isAllValid) {
+            $io->success('All translations are valid!');
+            exit(0);
+        }
+
+        $io->error('Translations are not valid!');
+        exit(1);
     }
 
 }

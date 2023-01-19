@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPUnuhi\Commands;
+namespace PHPUnuhi\Commands\Translation;
 
 use PHPUnuhi\Bundles\Storage\StorageFactory;
 use PHPUnuhi\Bundles\Translator\TranslatorFactory;

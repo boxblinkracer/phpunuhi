@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPUnuhi\Commands;
+namespace PHPUnuhi\Commands\Exchange;
 
 use PHPUnuhi\Bundles\Exchange\ExchangeFactory;
 use PHPUnuhi\Bundles\Exchange\ExchangeFormat;
@@ -10,7 +10,6 @@ use PHPUnuhi\Bundles\Storage\StorageSaveResult;
 use PHPUnuhi\Components\Filter\FilterHandler;
 use PHPUnuhi\Configuration\ConfigurationLoader;
 use PHPUnuhi\Models\Translation\TranslationSet;
-use SebastianBergmann\CodeCoverage\Report\PHP;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;

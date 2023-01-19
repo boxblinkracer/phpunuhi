@@ -3,13 +3,13 @@
 namespace PHPUnuhi;
 
 use Exception;
-use PHPUnuhi\Commands\ExportCommand;
-use PHPUnuhi\Commands\FixStructureCommand;
-use PHPUnuhi\Commands\ImportCommand;
-use PHPUnuhi\Commands\ListTranslationsCommand;
-use PHPUnuhi\Commands\StatusCommand;
-use PHPUnuhi\Commands\TranslateCommand;
-use PHPUnuhi\Commands\ValidateCommand;
+use PHPUnuhi\Commands\Core\FixStructureCommand;
+use PHPUnuhi\Commands\Core\ListTranslationsCommand;
+use PHPUnuhi\Commands\Core\StatusCommand;
+use PHPUnuhi\Commands\Core\ValidateCommand;
+use PHPUnuhi\Commands\Exchange\ExportCommand;
+use PHPUnuhi\Commands\Exchange\ImportCommand;
+use PHPUnuhi\Commands\Translation\TranslateCommand;
 use Symfony\Component\Console\Application;
 
 class AppManager

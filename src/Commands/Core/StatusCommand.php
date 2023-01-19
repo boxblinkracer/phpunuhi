@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPUnuhi\Commands;
+namespace PHPUnuhi\Commands\Core;
 
 use PHPUnuhi\Bundles\Exchange\ExchangeFormat;
 use PHPUnuhi\Configuration\ConfigurationLoader;
