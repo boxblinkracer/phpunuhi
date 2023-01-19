@@ -51,17 +51,26 @@ Now that you know this, let's get started!
 
 ## 1. Basic Concept
 
-This is a framework that helps you to **validate and maintain translation files**.
+This is a framework that helps you to **validate and maintain translations**.
 
 Although it's not dependent on a specific platform, you can use it perfectly with Shopware 6 and other platforms.
 
 For example, Shopware 6 has snippets based on JSON files.
 If you develop plugins for this platform, you can build translation sets in PHPUnuhi that contain all your files for the individual languages, like EN, DE, NL, and whatever you support.
 PHPUnuhi helps you to make sure you didn't forget any translations, screwed up structures across your language files and even
-helps you to export and import your translations.
+helps you to export and import or translate your entries.
 
-One of the benefits is, that this framework does not require anything else than your translation files.
-This makes it a perfect fit for your CI/CD pipelines.
+One of the benefits of this framework is the approach of decoupled **Storage formats**, **Exchange formats** and *Translation services**.
+You can combine any storage format (JSON, INI, DB, ...) with any exchange format for import + exports (CSV, HTML, ...) or use any of the provided
+translation services (Google, DeepL, OpenAI). This makes PHPUnuhi a great composable framework for translations.
+
+```mermaid
+  graph TD;
+      Storage Format--> Exchange Format;
+      Storage Format-->Translation Service;
+      Exchange Format-->Storage Format;
+```
+
 
 **Key Benefits**
 
