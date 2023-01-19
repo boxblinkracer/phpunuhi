@@ -17,36 +17,37 @@ The framework is free, there's no guarantee or claim to anything.
 Now that you know this, let's get started!
 
 <!-- TOC -->
-
-* [1. Basic Concept](#1-basic-concept)
-* [2. Installation](#2-installation)
-* [3. Configuration](#3-configuration)
-* [4. Commands](#4-commands)
+  * [1. Basic Concept](#1-basic-concept)
+  * [2. Installation](#2-installation)
+  * [3. Configuration](#3-configuration)
+  * [4. Commands](#4-commands)
     * [4.1 Validate Command](#41-validate-command)
     * [4.2 Fix Structure Command](#42-fix-structure-command)
     * [4.3 Export Command](#43-export-command)
     * [4.4 Import Command](#44-import-command)
     * [4.5 Status Command](#45-status-command)
     * [4.6 Translate Command](#46-translate-command)
-* [5. Use Cases](#5-use-cases)
+  * [5. Use Cases](#5-use-cases)
     * [5.1 Validation in CI pipeline](#51-validation-in-ci-pipeline)
     * [5.2 Working with external translation agencies](#52-working-with-external-translation-agencies)
     * [5.3 Live WebEdit with HTML](#53-live-webedit-with-html)
     * [5.4 Automatic Translation with Google, DeepL, ...](#54-automatic-translation-with-google-deepl-)
-* [6 Appendix](#6-appendix)
+  * [6 Appendix](#6-appendix)
     * [6.1 Storage Formats](#61-storage-formats)
-        * [6.1.1 JSON](#611-json)
-        * [6.1.2 INI](#612-ini)
-        * [6.1.3 PHP](#613-php)
-    * [6.2 Exchange Formats](#62-exchange-formats)
-        * [6.2.1 CSV](#621-csv)
-        * [6.2.2 HTML / WebEdit](#622-html--webedit)
-    * [6.3 Translator Services](#63-translator-services)
-        * [6.3.1 DeepL](#631-deepl)
-        * [6.3.2 Google Cloud Translate](#632-google-cloud-translate)
-        * [6.3.3 Google Web Translate](#633-google-web-translate)
-        * [6.3.4 OpenAI GPT Translate](#634-openai-gpt-translate)
-
+      * [6.1.1 JSON](#611-json)
+      * [6.1.2 INI](#612-ini)
+      * [6.1.3 PHP](#613-php)
+      * [6.1.4 Shopware 6 (Database)](#614-shopware-6--database-)
+    * [6.2 Filters](#62-filters)
+    * [6.3 Groups](#63-groups)
+    * [6.4 Exchange Formats](#64-exchange-formats)
+      * [6.4.1 CSV](#641-csv)
+      * [6.4.2 HTML / WebEdit](#642-html--webedit)
+    * [6.5 Translator Services](#65-translator-services)
+      * [6.5.1 DeepL](#651-deepl)
+      * [6.5.2 Google Cloud Translate](#652-google-cloud-translate)
+      * [6.5.3 Google Web Translate](#653-google-web-translate)
+      * [6.5.4 OpenAI GPT Translate](#654-openai-gpt-translate)
 <!-- TOC -->
 
 ## 1. Basic Concept
@@ -60,9 +61,9 @@ If you develop plugins for this platform, you can build translation sets in PHPU
 PHPUnuhi helps you to make sure you didn't forget any translations, screwed up structures across your language files and even
 helps you to export and import or translate your entries.
 
-One of the benefits of this framework is the approach of decoupled **Storage formats**, **Exchange formats** and *Translation services**.
+One of the benefits of this framework is the approach of decoupled **Storage formats**, **Exchange formats** and **Translation services**.
 You can combine any storage format (JSON, INI, DB, ...) with any exchange format for import + exports (CSV, HTML, ...) or use any of the provided
-translation services (Google, DeepL, OpenAI). This makes PHPUnuhi a great composable framework for translations.
+translation services (Google, DeepL, OpenAI). This makes PHPUnuhi a great **composable framework for translations**.
 
 ```mermaid
   graph TD;
@@ -75,7 +76,7 @@ translation services (Google, DeepL, OpenAI). This makes PHPUnuhi a great compos
 **Key Benefits**
 
 * Validates structure and content
-* Platform independent with option for different storage formats
+* Platform independent and composable framework with different components.
 * Exchange formats such as CSV and HTML
 * Live WebEdit with HTML exchange format
 * Automatic translation using OpenAI (experimental), DeepL, Google and more
@@ -166,6 +167,16 @@ Look at this one:
             <file locale="en" iniSection="en">./snippets/full.ini</file>
         </set>
 
+        <set name="Products" format="shopware6">
+            <filter>
+                <exclude>
+                    <key>meta_*</key>
+                </exclude>
+            </filter>
+            <locale locale="de-DE"></locale>
+            <locale locale="en-GB"></locale>
+        </set>
+
     </translations>
 </phpunuhi>
 ```
@@ -226,7 +237,6 @@ php vendor/bin/phpunuhi fix:structure --set="storefront"
 <p align="center">
    <img src="/.github/assets/fix.png">
 </p>
-
 
 ### 4.3 Export Command
 
@@ -408,7 +418,60 @@ Consuming services can then simply "require" that file and therefore load the tr
 
 This storage type makes sure to read and also write PHP files that return a single array object.
 
-### 6.2 Exchange Formats
+#### 6.1.4 Shopware 6 (Database)
+
+* Format: "shopware6"
+
+| XML Set Attribute | Default | Description                                               | 
+|-------------------|---------|-----------------------------------------------------------|
+| entity            |         | The entity your Translation-Set covers [entity="product"] |
+
+The Shopware 6 format allows you to use PHPUnuhi directly on the database and the Shopware entities.
+
+What do we mean with entities? These are real objects of the platform, stored within the database.
+This means **products**, **salutations**, **shipping methods** and more. Basically, everything that has a **_translation** table in the database.
+
+Just imagine running the **status command** and see a translation coverage of all your products in your shop. Nice, isn't it?
+
+### 6.2 Filters
+
+It's possible to use filters to modify the list of covered translation keys.
+
+You can either use a **include** or **exclude** list.
+Include means, only these fields will be loaded, and exclude means, everything except those fields.
+A combination is not possible.
+
+You can also use **placeholders** using the * character.
+
+```xml
+
+<set>
+    <filter>
+        <include></include>
+        <exclude>
+            <key>custom_fields</key>
+            <key>meta_*</key>
+        </exclude>
+    </filter>
+</set>
+```
+
+### 6.3 Groups
+
+Some storage formats automatically bundle translations into groups.
+This means, that more translations belong to one "thing".
+That thing depends on the type of storage format.
+
+For instance, in Shopware 6, a group is a "entity".
+So for a Translation-Set on "products", 1 group stands for a specific product, and has multiple translations for the different product properties.
+
+If a group is detected, the exchange formats, should handle these in a correct way.
+A CSV format, has a separate column for groups, and the import should also work correctly.
+
+The HTML format on the other hand, shows a matching style in the table, so you know that the
+translations all belong to this group.
+
+### 6.4 Exchange Formats
 
 Exchange formats define how you export and import translation data.
 The main purpose is to send it out to a translation company or just someone else,
@@ -416,7 +479,7 @@ and be able to import it back into your system again.
 
 The following formats are currently supported.
 
-#### 6.2.1 CSV
+#### 6.4.1 CSV
 
 * Format: "csv"
 
@@ -436,7 +499,7 @@ Every translation key has its own row, and all locale-values have their own colu
    <img src="/.github/assets/csv.png">
 </p>
 
-#### 6.2.2 HTML / WebEdit
+#### 6.4.2 HTML / WebEdit
 
 * Format: "html"
 
@@ -450,12 +513,12 @@ you can import again into your system with the format **html** in PHPUnuhi.
    <img src="/.github/assets/html.png">
 </p>
 
-### 6.3 Translator Services
+### 6.5 Translator Services
 
 Translators are supported (external) services that automatically translate empty values for you.
 These services usually require an API key that needs to be provided for PHPUnuhi.
 
-#### 6.3.1 DeepL
+#### 6.5.1 DeepL
 
 * Service: "deepl"
 
@@ -471,7 +534,7 @@ DeepL allows you to either translate to a formal or informal language.
 This option is only available for some target languages, just like "German" ("du" vs. "Sie").
 You can request a formal language by simply applying the argument "--deepl-formal" to the translate command.
 
-#### 6.3.2 Google Cloud Translate
+#### 6.5.2 Google Cloud Translate
 
 * Service: "googlecloud"
 
@@ -482,7 +545,7 @@ You can request a formal language by simply applying the argument "--deepl-forma
 Google Cloud Translation allows you to use the AI services of Google.
 If you have an API Key, you can easily provide it with the corresponding argument when running the translation command.
 
-#### 6.3.3 Google Web Translate
+#### 6.5.3 Google Web Translate
 
 * Service: "googleweb"
 
@@ -493,7 +556,7 @@ Because of this, it can happen, that a massive number of requests might lead to 
 This is more meant for educational purposes.
 Although it works, you should consider getting a real Google API key for commercial and serious usage of their services.
 
-#### 6.3.4 OpenAI GPT Translate
+#### 6.5.4 OpenAI GPT Translate
 
 * Service: "openai"
 
