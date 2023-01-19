@@ -68,7 +68,7 @@ class HTMLExporter
             $html .= "<th>Group</th>";
         }
 
-        $html .= "<th>Keys (" . count($set->getAllTranslationEntryIDs()) . ")</th>";
+        $html .= "<th>Keys (" . count($set->getAllTranslationIDs()) . ")</th>";
 
 
         foreach ($set->getLocales() as $locale) {
@@ -83,7 +83,7 @@ class HTMLExporter
 
         $previosuGroup = '';
 
-        foreach ($set->getAllTranslationEntryIDs() as $id) {
+        foreach ($set->getAllTranslationIDs() as $id) {
 
             $html .= "<tr>";
 

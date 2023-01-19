@@ -62,7 +62,7 @@ class StatusCommand extends Command
 
             $io->section('Translation Set: ' . $set->getName());
 
-            $countMaxLocaleIDs = count($set->getAllTranslationEntryIDs());
+            $countMaxLocaleIDs = count($set->getAllTranslationIDs());
             $countSetIDs = $countMaxLocaleIDs * count($set->getLocales());
 
             $totalTranslations += $countSetIDs;

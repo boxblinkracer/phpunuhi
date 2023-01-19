@@ -54,7 +54,7 @@ class ListTranslationsCommand extends Command
 
             $io->section('Translation Set: ' . $set->getName());
 
-            foreach ($set->getAllTranslationEntryIDs() as $id) {
+            foreach ($set->getAllTranslationIDs() as $id) {
                 $io->writeln('   [~] ' . $id);
             }
         }

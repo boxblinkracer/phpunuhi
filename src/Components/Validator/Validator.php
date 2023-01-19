@@ -15,7 +15,7 @@ class Validator
     {
         $isValid = true;
 
-        $allKeys = $set->getAllTranslationEntryIDs();
+        $allKeys = $set->getAllTranslationIDs();
 
         foreach ($set->getLocales() as $locale) {
 

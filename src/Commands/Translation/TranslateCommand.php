@@ -95,7 +95,7 @@ class TranslateCommand extends Command
 
             $io->section('Translation Set: ' . $set->getName());
 
-            $allIDs = $set->getAllTranslationEntryIDs();
+            $allIDs = $set->getAllTranslationIDs();
 
             # first iterate through ids
             # then we have all ids next to each other for better comparing on CLI
