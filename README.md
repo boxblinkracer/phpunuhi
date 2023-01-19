@@ -7,7 +7,7 @@
 ![GitHub commits since latest release (by date)](https://img.shields.io/github/commits-since/boxblinkracer/phpunuhi/latest)
 ![Build Status](https://github.com/boxblinkracer/phpunuhi/actions/workflows/nightly_build.yml/badge.svg)
 
-Welcome to PHPUnuhi - The easy composable framework to validate and manage translation!
+Welcome to PHPUnuhi - The easy composable framework to validate and manage translations!
 
 Unuhi? This is Hawaiian for "translate" or "translation".
 
