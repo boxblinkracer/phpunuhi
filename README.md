@@ -6,6 +6,7 @@
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/boxblinkracer/phpunuhi)
 ![GitHub commits since latest release (by date)](https://img.shields.io/github/commits-since/boxblinkracer/phpunuhi/latest)
 ![Build Status](https://github.com/boxblinkracer/phpunuhi/actions/workflows/nightly_build.yml/badge.svg)
+![Packagist Downloads](https://img.shields.io/packagist/dt/boxblinkracer/phpunuhi?color=green&logo=packagist)
 
 Welcome to PHPUnuhi - The easy composable framework to validate and manage translations!
 
@@ -17,39 +18,38 @@ The framework is free, there's no guarantee or claim to anything.
 Now that you know this, let's get started!
 
 <!-- TOC -->
-
-* [1. Basic Concept](#1-basic-concept)
-* [2. Installation](#2-installation)
-* [3. Configuration](#3-configuration)
-* [4. Commands](#4-commands)
+  * [1. Basic Concept](#1-basic-concept)
+  * [2. Installation](#2-installation)
+  * [3. Configuration](#3-configuration)
+  * [4. Commands](#4-commands)
     * [4.1 Validate Command](#41-validate-command)
     * [4.2 Fix Structure Command](#42-fix-structure-command)
     * [4.3 Export Command](#43-export-command)
     * [4.4 Import Command](#44-import-command)
     * [4.5 Status Command](#45-status-command)
     * [4.6 Translate Command](#46-translate-command)
-* [5. Use Cases](#5-use-cases)
+  * [5. Use Cases](#5-use-cases)
     * [5.1 Validation in CI pipeline](#51-validation-in-ci-pipeline)
     * [5.2 Working with external translation agencies](#52-working-with-external-translation-agencies)
     * [5.3 Live WebEdit with HTML](#53-live-webedit-with-html)
     * [5.4 Automatic Translation with Google, DeepL, ...](#54-automatic-translation-with-google-deepl-)
-* [6 Appendix](#6-appendix)
-    * [6.1 Storage Formats](#61-storage-formats)
-        * [6.1.1 JSON](#611-json)
-        * [6.1.2 INI](#612-ini)
-        * [6.1.3 PHP](#613-php)
-        * [6.1.4 Shopware 6 (Database)](#614-shopware-6--database-)
-    * [6.2 Filters](#62-filters)
-    * [6.3 Groups](#63-groups)
-    * [6.4 Exchange Formats](#64-exchange-formats)
-        * [6.4.1 CSV](#641-csv)
-        * [6.4.2 HTML / WebEdit](#642-html--webedit)
-    * [6.5 Translator Services](#65-translator-services)
-        * [6.5.1 DeepL](#651-deepl)
-        * [6.5.2 Google Cloud Translate](#652-google-cloud-translate)
-        * [6.5.3 Google Web Translate](#653-google-web-translate)
-        * [6.5.4 OpenAI GPT Translate](#654-openai-gpt-translate)
-
+  * [6. Warning](#6-warning)
+  * [7. Appendix](#7-appendix)
+    * [7.1 Storage Formats](#71-storage-formats)
+      * [7.1.1 JSON](#711-json)
+      * [7.1.2 INI](#712-ini)
+      * [7.1.3 PHP](#713-php)
+      * [7.1.4 Shopware 6](#714-shopware-6)
+    * [7.2 Filters](#72-filters)
+    * [7.3 Groups](#73-groups)
+    * [7.4 Exchange Formats](#74-exchange-formats)
+      * [7.4.1 CSV](#741-csv)
+      * [7.4.2 HTML / WebEdit](#742-html--webedit)
+    * [7.5 Translator Services](#75-translator-services)
+      * [7.5.1 DeepL](#751-deepl)
+      * [7.5.2 Google Cloud Translate](#752-google-cloud-translate)
+      * [7.5.3 Google Web Translate](#753-google-web-translate)
+      * [7.5.4 OpenAI GPT Translate](#754-openai-gpt-translate)
 <!-- TOC -->
 
 ## 1. Basic Concept
@@ -112,9 +112,10 @@ You can create different **Translation-Sets** in a configuration.
 
 A single **Translation-Set** contains one or more **locales**.
 
-Every locale is defined by a **single file** that contains the actual **translations** in this locale.
+A locale is usually defined by a **single file** that contains the actual **translations** in this locale.
+But depending on the used storage format, it could also automatically search something in the database, etc.
 
-This means, a single **Translation-Set** consists of **multiple files** that should all match in their structure,
+This means, a single **Translation-Set** consists of **multiple locales** that should all match in their structure,
 but have different values for their translations.
 
 How you define such a Translation-Set is totally up to you.
@@ -130,8 +131,10 @@ Let's create a new **phpunuhi.xml** file (or rename it to something else).
     <translations>
 
         <set name="Storefront">
-            <file locale="de">./snippets/storefront/de.json</file>
-            <file locale="en">./snippets/storefront/en.json</file>
+            <locales>
+                <locale name="de">./snippets/storefront/de.json</locale>
+                <locale name="en">./snippets/storefront/en.json</locale>
+            </locales>
         </set>
 
     </translations>
@@ -149,34 +152,29 @@ Look at this one:
 >
     <translations>
 
-        <set name="Storefront">
-            <file locale="de">./snippets/storefront/de.json</file>
-            <file locale="en">./snippets/storefront/en.json</file>
+        <set name="Storefront JSON">
+            <format>
+                <json indent="4" sort="true"></json>
+            </format>
+            <locales>
+                <locale name="de">./snippets/de.json</locale>
+                <locale name="en">./snippets/en.json</locale>
+            </locales>
         </set>
 
-        <set name="Admin" format="json" sort="true" jsonIndent="4">
-            <file locale="de">./snippets/admin/de.json</file>
-            <file locale="en">./snippets/admin/en.json</file>
-        </set>
-
-        <set name="Frontend INI" format="ini" sort="true">
-            <file locale="de">./snippets/admin/de.ini</file>
-            <file locale="en">./snippets/admin/en.ini</file>
-        </set>
-
-        <set name="Frontend Single INI" format="ini">
-            <file locale="de" iniSection="de">./snippets/full.ini</file>
-            <file locale="en" iniSection="en">./snippets/full.ini</file>
-        </set>
-
-        <set name="Products" format="shopware6">
+        <set name="Products">
+            <format>
+                <shopware6 entity="product"></shopware6>
+            </format>
             <filter>
                 <exclude>
                     <key>meta_*</key>
                 </exclude>
             </filter>
-            <locale locale="de-DE"></locale>
-            <locale locale="en-GB"></locale>
+            <locales>
+                <locale name="de-DE"></locale>
+                <locale name="en-GB"></locale>
+            </locales>
         </set>
 
     </translations>
@@ -364,39 +362,55 @@ Provide your API key (if required for service) and see the magic happening.
 
 > A double check and approval in your version control would still be a good thing.
 
-## 6 Appendix
+## 6. Warning
 
-### 6.1 Storage Formats
+Please keep these things in mind:
+
+* Translations services are not always correct! Please always verify automatically translated texts.
+* If you are using a storage format that is directly connected to a database, make sure to create a backup before importing translations!
+
+## 7. Appendix
+
+### 7.1 Storage Formats
 
 Storage formats define how your translations are stored.
 Every format has its own loading and saving implementation.
 
 The following formats are currently supported.
 
-#### 6.1.1 JSON
+#### 7.1.1 JSON
 
-* Format: "json"
-
-| XML Set Attribute | Default | Description                                              | 
-|-------------------|---------|----------------------------------------------------------|
-| jsonIndent        | 2       | Set a custom JSON indent for the spaces [jsonIndent="4"] |
-| sort              | false   | Turn on or off the alphabetical sorting [sort="true"]    |
+| Format Attributes | Default | Description                             | 
+|-------------------|---------|-----------------------------------------|
+| indent            | 2       | Set a custom JSON indent for the spaces |
+| sort              | false   | Turn on or off the alphabetical sorting |
 
 The JSON format means that your files are stored in separate JSON files.
 Every locale has its own JSON file.
 The JSON structure across all files of a set should match.
 
-#### 6.1.2 INI
+```xml
 
-* Format: "ini"
+<set name="sample">
+    <format>
+        <json indent="4" sort="true"></json>
+    </format>
+    <locales>
+        <locale name="de">./snippets/de.json</locale>
+        <locale name="en">./snippets/en.json</locale>
+    </locales>
+</set>
+```
 
-| XML Set Attribute | Default | Description                                           | 
-|-------------------|---------|-------------------------------------------------------|
-| sort              | false   | Turn on or off the alphabetical sorting [sort="true"] |
+#### 7.1.2 INI
 
-| XML File Attribute | Default | Description                                  | 
-|--------------------|---------|----------------------------------------------|
-| iniSection         |         | Section name of the locale [iniSection="de"] |
+| Format Attributes | Default | Description                             | 
+|-------------------|---------|-----------------------------------------|
+| sort              | false   | Turn on or off the alphabetical sorting |
+
+| Locale Attribute | Default | Description                                  | 
+|------------------|---------|----------------------------------------------|
+| iniSection       |         | Section name of the locale [iniSection="de"] |
 
 The INI format means that your files are stored in separate INI files.
 Every locale has its own INI file.
@@ -405,13 +419,34 @@ The INI structure across all files of a set should match.
 It's also possible to have all translations in a single INI file.
 For this, you might want to use the **iniSection** feature and just assign the same INI file to all locales, but with different sections.
 
-#### 6.1.3 PHP
+```xml
 
-* Format: "php"
+<set name="sample">
+    <format>
+        <ini sort="true"></ini>
+    </format>
+    <locales>
+        <locale name="de">./snippets/de.ini</locale>
+        <locale name="en">./snippets/en.ini</locale>
+    </locales>
+</set>
 
-| XML Set Attribute | Default | Description                                           | 
-|-------------------|---------|-------------------------------------------------------|
-| sort              | false   | Turn on or off the alphabetical sorting [sort="true"] |
+<set name="sample">
+<format>
+    <ini indent="4" sort="true"></ini>
+</format>
+<locales>
+    <locale name="de" iniSection="de-DE">./snippets/snippets.ini</locale>
+    <locale name="en" iniSection="en-GB">./snippets/snippets.ini</locale>
+</locales>
+</set>
+```
+
+#### 7.1.3 PHP
+
+| Format Attributes | Default | Description                             | 
+|-------------------|---------|-----------------------------------------|
+| sort              | false   | Turn on or off the alphabetical sorting |
 
 Some platforms have translations based on PHP arrays.
 This means that these files build a key-value array of translations which is then simply returned.
@@ -420,13 +455,24 @@ Consuming services can then simply "require" that file and therefore load the tr
 
 This storage type makes sure to read and also write PHP files that return a single array object.
 
-#### 6.1.4 Shopware 6 (Database)
+```xml
 
-* Format: "shopware6"
+<set name="sample">
+    <format>
+        <php sort="true"></php>
+    </format>
+    <locales>
+        <locale name="de">./snippets/de.php</locale>
+        <locale name="en">./snippets/en.php</locale>
+    </locales>
+</set>
+```
 
-| XML Set Attribute | Default | Description                                               | 
-|-------------------|---------|-----------------------------------------------------------|
-| entity            |         | The entity your Translation-Set covers [entity="product"] |
+#### 7.1.4 Shopware 6
+
+| Format Attributes | Default | Description                            | 
+|-------------------|---------|----------------------------------------|
+| entity            |         | The entity your Translation-Set covers |
 
 The Shopware 6 format allows you to use PHPUnuhi directly on the database and the Shopware entities.
 
@@ -435,7 +481,20 @@ This means **products**, **salutations**, **shipping methods** and more. Basical
 
 Just imagine running the **status command** and see a translation coverage of all your products in your shop. Nice, isn't it? Or let DeepL translate your data automatically?!
 
-### 6.2 Filters
+```xml
+
+<set name="sample">
+    <format>
+        <shopware6 entity="product"></shopware6>
+    </format>
+    <locales>
+        <locale name="de-DE"></locale>
+        <locale name="en-GB"></locale>
+    </locales>
+</set>
+```
+
+### 7.2 Filters
 
 It's possible to use filters to modify the list of covered translation keys.
 
@@ -458,7 +517,7 @@ You can also use **placeholders** using the * character.
 </set>
 ```
 
-### 6.3 Groups
+### 7.3 Groups
 
 Some storage formats automatically bundle translations into groups.
 This means, that more translations belong to one "thing".
@@ -473,7 +532,7 @@ A CSV format, has a separate column for groups, and the import should also work 
 The HTML format on the other hand, shows a matching style in the table, so you know that the
 translations all belong to this group.
 
-### 6.4 Exchange Formats
+### 7.4 Exchange Formats
 
 Exchange formats define how you export and import translation data.
 The main purpose is to send it out to a translation company or just someone else,
@@ -481,7 +540,7 @@ and be able to import it back into your system again.
 
 The following formats are currently supported.
 
-#### 6.4.1 CSV
+#### 7.4.1 CSV
 
 * Format: "csv"
 
@@ -501,7 +560,7 @@ Every translation key has its own row, and all locale-values have their own colu
    <img src="/.github/assets/csv.png">
 </p>
 
-#### 6.4.2 HTML / WebEdit
+#### 7.4.2 HTML / WebEdit
 
 * Format: "html"
 
@@ -515,12 +574,12 @@ you can import again into your system with the format **html** in PHPUnuhi.
    <img src="/.github/assets/html.png">
 </p>
 
-### 6.5 Translator Services
+### 7.5 Translator Services
 
 Translators are supported (external) services that automatically translate empty values for you.
 These services usually require an API key that needs to be provided for PHPUnuhi.
 
-#### 6.5.1 DeepL
+#### 7.5.1 DeepL
 
 * Service: "deepl"
 
@@ -536,7 +595,7 @@ DeepL allows you to either translate to a formal or informal language.
 This option is only available for some target languages, just like "German" ("du" vs. "Sie").
 You can request a formal language by simply applying the argument "--deepl-formal" to the translate command.
 
-#### 6.5.2 Google Cloud Translate
+#### 7.5.2 Google Cloud Translate
 
 * Service: "googlecloud"
 
@@ -547,7 +606,7 @@ You can request a formal language by simply applying the argument "--deepl-forma
 Google Cloud Translation allows you to use the AI services of Google.
 If you have an API Key, you can easily provide it with the corresponding argument when running the translation command.
 
-#### 6.5.3 Google Web Translate
+#### 7.5.3 Google Web Translate
 
 * Service: "googleweb"
 
@@ -558,7 +617,7 @@ Because of this, it can happen, that a massive number of requests might lead to 
 This is more meant for educational purposes.
 Although it works, you should consider getting a real Google API key for commercial and serious usage of their services.
 
-#### 6.5.4 OpenAI GPT Translate
+#### 7.5.4 OpenAI GPT Translate
 
 * Service: "openai"
 
