@@ -1,0 +1,20 @@
+<phpunuhi
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../config.xsd"
+>
+
+    <translations>
+
+        <set name="php">
+            <format>
+                <php sort="true"/>
+            </format>
+            <locales>
+                <locale name="de">./de.php</locale>
+                <locale name="en">./en.php</locale>
+            </locales>
+        </set>
+
+    </translations>
+
+</phpunuhi>

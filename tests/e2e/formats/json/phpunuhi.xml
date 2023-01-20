@@ -1,0 +1,22 @@
+<phpunuhi
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../config.xsd"
+>
+
+    <translations>
+
+        <set name="json">
+            <format>
+                <json indent="2" sort="true"/>
+            </format>
+            <locales>
+                <locale name="de">./de.json</locale>
+                <locale name="en">./en.json</locale>
+                <locale name="nl">./nl.json</locale>
+            </locales>
+
+        </set>
+
+    </translations>
+
+</phpunuhi>

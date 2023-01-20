@@ -1,0 +1,30 @@
+<phpunuhi
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../config.xsd"
+>
+
+    <translations>
+
+        <set name="ini">
+            <format>
+                <ini sort="true"/>
+            </format>
+            <locales>
+                <locale name="de">./de.ini</locale>
+                <locale name="en">./en.ini</locale>
+            </locales>
+        </set>
+
+        <set name="ini_sections">
+            <format>
+                <ini sort="true"/>
+            </format>
+            <locales>
+                <locale name="de" iniSection="de">./ini_sections.ini</locale>
+                <locale name="en" iniSection="en">./ini_sections.ini</locale>
+            </locales>
+        </set>
+
+    </translations>
+
+</phpunuhi>
