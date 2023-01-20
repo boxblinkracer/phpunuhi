@@ -7,6 +7,17 @@ class CSVWriter implements CSVWriterInterface
 
 
     /**
+     * @param string $outputDir
+     * @return void
+     */
+    public function prepareDirectory(string $outputDir): void
+    {
+        if (!file_exists($outputDir)) {
+            mkdir($outputDir, 0775, true);
+        }
+    }
+
+    /**
      * @param string $filename
      * @return void
      */

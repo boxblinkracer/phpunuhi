@@ -123,9 +123,7 @@ class CSVExporter
             $outputDir = '.';
         }
 
-        if (!file_exists($outputDir)) {
-            mkdir($outputDir, 0775, true);
-        }
+        $this->csvWriter->prepareDirectory($outputDir);
 
         $csvFilename = $outputDir . '/' . $set->getName() . '.csv';
 

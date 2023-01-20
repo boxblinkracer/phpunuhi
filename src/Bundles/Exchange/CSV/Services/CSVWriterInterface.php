@@ -6,6 +6,12 @@ interface CSVWriterInterface
 {
 
     /**
+     * @param string $outputDir
+     * @return void
+     */
+    function prepareDirectory(string $outputDir): void;
+
+    /**
      * @param string $filename
      * @return void
      */

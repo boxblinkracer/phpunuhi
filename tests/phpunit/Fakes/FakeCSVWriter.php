@@ -21,6 +21,15 @@ class FakeCSVWriter implements CSVWriterInterface
         $this->writtenLines = [];
     }
 
+
+    /**
+     * @param string $outputDir
+     * @return void
+     */
+    public function prepareDirectory(string $outputDir): void
+    {
+    }
+
     /**
      * @return array|string[]
      */
