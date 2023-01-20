@@ -48,6 +48,14 @@ class Shopware6Storage implements StorageInterface
 
 
     /**
+     * @return bool
+     */
+    public function supportsFilters(): bool
+    {
+        return true;
+    }
+
+    /**
      * @param TranslationSet $set
      * @return void
      * @throws \Doctrine\DBAL\Exception

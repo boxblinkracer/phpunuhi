@@ -8,6 +8,11 @@ interface StorageInterface
 {
 
     /**
+     * @return bool
+     */
+    function supportsFilters(): bool;
+
+    /**
      * @param TranslationSet $set
      * @return void
      */

@@ -32,6 +32,15 @@ class JsonStorage implements StorageInterface
         $this->saver = new JsonSaver($indent, $sort);
     }
 
+
+    /**
+     * @return bool
+     */
+    public function supportsFilters(): bool
+    {
+        return false;
+    }
+
     /**
      * @param TranslationSet $set
      * @return void

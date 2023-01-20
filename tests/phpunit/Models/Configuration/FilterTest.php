@@ -11,6 +11,23 @@ class FilterTest extends TestCase
     /**
      * @return void
      */
+    public function testHasFilters()
+    {
+        $filter = new Filter();
+        $this->assertEquals(false, $filter->hasFilters());
+
+        $filter = new Filter();
+        $filter->addIncludeKey('custom_field*');
+        $this->assertEquals(true, $filter->hasFilters());
+
+        $filter = new Filter();
+        $filter->addExcludeKey('custom_field*');
+        $this->assertEquals(true, $filter->hasFilters());
+    }
+
+    /**
+     * @return void
+     */
     public function testIncludeKey()
     {
         $filter = new Filter();

@@ -25,6 +25,14 @@ class IniStorage implements StorageInterface
 
 
     /**
+     * @return bool
+     */
+    public function supportsFilters(): bool
+    {
+        return false;
+    }
+
+    /**
      * @param TranslationSet $set
      * @return void
      * @throws \Exception
