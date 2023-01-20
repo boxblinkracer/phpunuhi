@@ -1,97 +1,141 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:element name="phpunuhi" type="phpunuhiType"/>
-  <xs:complexType name="envType">
-    <xs:simpleContent>
-      <xs:extension base="xs:string">
-        <xs:attribute type="xs:string" name="name" use="optional"/>
-        <xs:attribute type="xs:string" name="value" use="optional"/>
-      </xs:extension>
-    </xs:simpleContent>
-  </xs:complexType>
-  <xs:complexType name="phpType" mixed="true">
-    <xs:sequence>
-      <xs:element type="envType" name="env" maxOccurs="unbounded" minOccurs="0"/>
-    </xs:sequence>
-    <xs:attribute type="xs:string" name="indent" use="optional"/>
-    <xs:attribute type="xs:string" name="sort" use="optional"/>
-  </xs:complexType>
-  <xs:complexType name="jsonType">
-    <xs:simpleContent>
-      <xs:extension base="xs:string">
-        <xs:attribute type="xs:string" name="indent"/>
-        <xs:attribute type="xs:string" name="sort"/>
-      </xs:extension>
-    </xs:simpleContent>
-  </xs:complexType>
-  <xs:complexType name="formatType">
-    <xs:sequence>
-      <xs:element type="jsonType" name="json" minOccurs="0"/>
-      <xs:element type="iniType" name="ini" minOccurs="0"/>
-      <xs:element type="phpType" name="php" minOccurs="0"/>
-      <xs:element type="shopware6Type" name="shopware6" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="localeType">
-    <xs:simpleContent>
-      <xs:extension base="xs:string">
-        <xs:attribute type="xs:string" name="name" use="optional"/>
-        <xs:attribute type="xs:string" name="iniSection" use="optional"/>
-      </xs:extension>
-    </xs:simpleContent>
-  </xs:complexType>
-  <xs:complexType name="localesType">
-    <xs:sequence>
-      <xs:element type="localeType" name="locale" maxOccurs="unbounded" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="setType">
-    <xs:sequence>
-      <xs:element type="formatType" name="format"/>
-      <xs:element type="filterType" name="filter" minOccurs="0"/>
-      <xs:element type="localesType" name="locales"/>
-    </xs:sequence>
-    <xs:attribute type="xs:string" name="name" use="optional"/>
-  </xs:complexType>
-  <xs:complexType name="iniType">
-    <xs:simpleContent>
-      <xs:extension base="xs:string">
-        <xs:attribute type="xs:string" name="sort"/>
-      </xs:extension>
-    </xs:simpleContent>
-  </xs:complexType>
-  <xs:complexType name="shopware6Type">
-    <xs:simpleContent>
-      <xs:extension base="xs:string">
-        <xs:attribute type="xs:string" name="entity"/>
-      </xs:extension>
-    </xs:simpleContent>
-  </xs:complexType>
-  <xs:complexType name="includeType">
-    <xs:sequence>
-      <xs:element type="xs:string" name="key"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="excludeType">
-    <xs:sequence>
-      <xs:element type="xs:string" name="key"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="filterType">
-    <xs:sequence>
-      <xs:element type="includeType" name="include"/>
-      <xs:element type="excludeType" name="exclude"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="translationsType">
-    <xs:sequence>
-      <xs:element type="setType" name="set" maxOccurs="unbounded" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="phpunuhiType">
-    <xs:sequence>
-      <xs:element type="phpType" name="php"/>
-      <xs:element type="translationsType" name="translations"/>
-    </xs:sequence>
-  </xs:complexType>
+<xs:schema
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified"
+>
+
+    <xs:element name="phpunuhi">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="php" type="typePHP" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="translations" type="typeTranslations" minOccurs="1" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+
+        <!-- names of Translation-Sets must be unique -->
+        <xs:unique name="uniqueSetName">
+            <xs:selector xpath="translations/set"/>
+            <xs:field xpath="@name"/>
+        </xs:unique>
+
+    </xs:element>
+
+    <!-- ================================================================================================================================ -->
+    <!-- PHP ENV -->
+
+    <xs:complexType name="typePHP">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="env" type="typePHPEnv" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="typePHPEnv">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="name" type="xs:string" use="required"/>
+                <xs:attribute name="value" type="xs:string" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <!-- ================================================================================================================================ -->
+    <!-- TRANSLATION-SETS -->
+
+    <xs:complexType name="typeTranslations">
+        <xs:choice minOccurs="1" maxOccurs="unbounded">
+            <xs:element name="set" type="typeTranslationSet" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="typeTranslationSet">
+        <xs:choice minOccurs="1" maxOccurs="unbounded">
+            <xs:element name="format" type="typeFormat" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="filter" type="typeFilter" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="locales" type="typeLocales" minOccurs="1" maxOccurs="1"/>
+        </xs:choice>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <!-- ================================================================================================================================ -->
+    <!-- FILTER -->
+
+    <xs:complexType name="typeFilter">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="include" type="typeFilterKey" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="exclude" type="typeFilterKey" minOccurs="0" maxOccurs="1"/>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="typeFilterKey">
+        <xs:choice minOccurs="0" maxOccurs="1">
+            <xs:element name="key" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:choice>
+    </xs:complexType>
+
+    <!-- ================================================================================================================================ -->
+    <!-- LOCALES -->
+
+    <xs:complexType name="typeLocales">
+        <xs:choice minOccurs="1" maxOccurs="unbounded">
+            <xs:element name="locale" type="typeLocale" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="typeLocale">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="name" type="xs:string" use="required"/>
+                <xs:attribute name="iniSection" type="xs:string" use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <!-- ================================================================================================================================ -->
+    <!-- STORAGE FORMATS -->
+
+    <xs:complexType name="typeFormat">
+        <xs:choice minOccurs="1" maxOccurs="1">
+            <xs:element name="json" type="typeFormatJSON" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="ini" type="typeFormatINI" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="php" type="typeFormatPHP" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="shopware6" type="typeFormatShopware6" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="typeFormatJSON">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="indent" type="xs:string" use="optional"/>
+                <xs:attribute name="sort" type="xs:boolean" use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="typeFormatINI">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="sort" type="xs:boolean" use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="typeFormatPHP">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="indent" type="xs:string" use="optional"/>
+                <xs:attribute name="sort" type="xs:boolean" use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="typeFormatShopware6">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="entity" type="xs:string" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <!-- ================================================================================================================================ -->
+
 </xs:schema>

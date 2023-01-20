@@ -42,7 +42,7 @@ class ConfigurationLoader
         $xmlSettings = simplexml_load_string($xmlString);
 
         if (!$xmlSettings instanceof SimpleXMLElement) {
-            throw new \Exception('Error when loading configuration. Invalid XML: ' . $configFilename);
+            throw new ConfigurationException('Error when loading configuration. Invalid XML: ' . $configFilename);
         }
 
         # load ENV variables
@@ -92,86 +92,60 @@ class ConfigurationLoader
         /** @var SimpleXMLElement $xmlSet */
         foreach ($rootNode->translations->children() as $xmlSet) {
 
-            $name = trim((string)$xmlSet['name']);
-            $format = trim((string)$xmlSet['format']);
+            $setName = trim((string)$xmlSet['name']);
+            $nodeFormat = $xmlSet->format;
+            $nodeLocales = $xmlSet->locales;
+            $nodeFilter = $xmlSet->filter;
 
-            if (empty($format)) {
-                $format = 'json';
-            }
 
+            # default values
+            $setFormat = 'json';
             $setAttributes = [];
-            $nodeAttributes = $xmlSet->attributes();
-            if ($nodeAttributes !== null) {
-                foreach ($nodeAttributes as $attrName => $value) {
-                    $setAttributes[] = new Attribute($attrName, $value);
-                }
+            $setLocales = [];
+            $setFilter = new Filter();
+
+
+            if ($nodeFormat !== null) {
+                $formatData = $this->parseFormat($nodeFormat);
+                $setFormat = $formatData['format'];
+                $setAttributes = $formatData['attributes'];
+            }
+
+            if ($nodeFilter !== null) {
+                $setFilter = $this->loadFilter($nodeFilter);
+            }
+
+            if ($nodeLocales !== null) {
+                $setLocales = $this->loadLocales($nodeLocales, $configFilename);
             }
 
 
-            $foundLocales = [];
-
-            $filter = new Filter();
-
-            /** @var SimpleXMLElement $childNode */
-            foreach ($xmlSet->children() as $childNode) {
-
-                $nodeType = $childNode->getName();
-                $nodeValue = (string)$childNode[0];
-
-
-                $locale = null;
-
-                switch ($nodeType) {
-
-                    case 'filter':
-                        $filter = $this->loadFilter($childNode);
-                        break;
-
-                    case 'locale':
-
-                        $configuredFileName = dirname($configFilename) . '/' . $nodeValue;
-                        $fileName = realpath($configuredFileName);
-
-                        if ($fileName === false || !file_exists($fileName)) {
-                            throw new \Exception('Attention, translation file not found: ' . $configuredFileName);
-                        }
-
-                        $localeAttr = (string)$childNode['locale'];
-                        $iniSection = (string)$childNode['iniSection'];
-
-                        if (trim($localeAttr) === '') {
-                            throw new \Exception('empty locale values are not allowed in set: ' . $configFilename);
-                        }
-
-                        $locale = new Locale($localeAttr, $fileName, $iniSection);
-                        break;
-
-                    case 'file':
-                        throw new ConfigurationException('Children from type "file" are not possible anymore. Please use <locale>');
-
-                    default:
-                        throw new \Exception('child element not recognized in translation set: ' . $name);
-                }
-
-                if ($locale instanceof Locale) {
-                    $foundLocales[] = $locale;
-                }
-            }
-
-            # create our new set
             $set = new TranslationSet(
-                $name,
-                $format,
-                $foundLocales,
-                $filter,
+                $setName,
+                $setFormat,
+                $setLocales,
+                $setFilter,
                 $setAttributes
             );
 
-            $translationLoader = StorageFactory::getStorage($set);
+            $storage = StorageFactory::getStorage($set);
+
+
+            # some storages do not support filtering
+            # so make sure to throw an exception if we have a filter config.
+            # this is because filters are also used in imports (at least affects imports)
+            # which means that they would lead to removed keys on FILE-type storages.
+            if (!$storage->supportsFilters()) {
+
+                if ($set->getFilter()->hasFilters()) {
+                    throw new ConfigurationException('Filters are not allowed for storage format: ' . $setFormat);
+                }
+            }
+
 
             # now iterate through our locales
             # and load the translation files for it
-            $translationLoader->loadTranslations($set);
+            $storage->loadTranslations($set);
 
             # remove fields that must not be existing
             # because of our allow or exclude list
@@ -181,6 +155,35 @@ class ConfigurationLoader
         }
 
         return $suites;
+    }
+
+
+    /**
+     * @param SimpleXMLElement $rootFormat
+     * @return array<mixed>
+     * @throws \Exception
+     */
+    private function parseFormat(SimpleXMLElement $rootFormat)
+    {
+        $children = get_object_vars($rootFormat);
+
+        if (count($children) <= 0) {
+            throw new \Exception('No format provided');
+        }
+
+        if (count($children) >= 2) {
+            throw new \Exception('Only 1 format allowed');
+        }
+
+        foreach ($children as $formatTag => $formatElement) {
+            $format = $formatTag;
+            $setAttributes = $this->getAttributes($formatElement);
+
+            return [
+                'format' => $format,
+                'attributes' => $setAttributes,
+            ];
+        }
     }
 
     /**
@@ -194,8 +197,8 @@ class ConfigurationLoader
         $nodeAllows = $filterNode->include;
         $nodeExcludes = $filterNode->exclude;
 
-        $nodeAllowsKeys = $nodeAllows->key;
-        $nodeExcludeKeys = $nodeExcludes->key;
+        $nodeAllowsKeys = ($nodeAllows !== null) ? $nodeAllows->key : null;
+        $nodeExcludeKeys = ($nodeExcludes !== null) ? $nodeExcludes->key : null;
 
         if ($nodeAllowsKeys !== null) {
             foreach ($nodeAllowsKeys as $key) {
@@ -213,6 +216,50 @@ class ConfigurationLoader
     }
 
     /**
+     * @param SimpleXMLElement $rootLocales
+     * @param string $configFilename
+     * @return array<mixed>
+     * @throws ConfigurationException
+     */
+    private function loadLocales(SimpleXMLElement $rootLocales, string $configFilename): array
+    {
+        $foundLocales = [];
+
+        foreach ($rootLocales->children() as $nodeLocale) {
+
+            $nodeType = $nodeLocale->getName();
+            $innerValue = (string)$nodeLocale[0];
+
+            if ($nodeType !== 'locale') {
+                throw new ConfigurationException('only <locale> elements are allowed in the locales node. found: ' . $nodeType);
+            }
+
+            $localeName = (string)$nodeLocale['name'];
+            $localeFile = '';
+            $iniSection = (string)$nodeLocale['iniSection'];
+
+
+            if (trim($localeName) === '') {
+                throw new ConfigurationException('empty locale attributes are not allowed in set: ' . $configFilename);
+            }
+
+            if ($innerValue !== '') {
+                # for now treat inner value as file
+                $configuredFileName = dirname($configFilename) . '/' . $innerValue;
+                $localeFile = realpath($configuredFileName);
+
+                if ($localeFile === false || !file_exists($localeFile)) {
+                    throw new ConfigurationException('Attention, translation file not found: ' . $configuredFileName);
+                }
+            }
+
+            $foundLocales[] = new Locale($localeName, $localeFile, $iniSection);
+        }
+
+        return $foundLocales;
+    }
+
+    /**
      * @param Configuration $configuration
      * @return void
      * @throws \Exception
@@ -224,15 +271,15 @@ class ConfigurationLoader
         foreach ($configuration->getTranslationSets() as $set) {
 
             if ($set->getName() === '') {
-                throw new \Exception('TranslationSet has no name. This is required!');
+                throw new ConfigurationException('TranslationSet has no name. This is required!');
             }
 
             if ($set->getFormat() === '') {
-                throw new \Exception('TranslationSet has no format. This is required!');
+                throw new ConfigurationException('TranslationSet has no format. This is required!');
             }
 
             if (in_array($set->getName(), $foundSets)) {
-                throw new \Exception('TranslationSet "' . $set->getName() . '" has already been found');
+                throw new ConfigurationException('TranslationSet "' . $set->getName() . '" has already been found');
             }
 
             $foundSets[] = $set->getName();
@@ -243,15 +290,11 @@ class ConfigurationLoader
             foreach ($set->getLocales() as $locale) {
 
                 if ($locale->getName() === '') {
-                    throw new \Exception('Locale has no name. This is required!');
-                }
-
-                if ($locale->getFilename() === '') {
-                    throw new \Exception('Locale has no filename. This is required!');
+                    throw new ConfigurationException('Locale has no name. This is required!');
                 }
 
                 if (in_array($locale->getName(), $foundLocales)) {
-                    throw new \Exception('Locale "' . $locale->getName() . '" has already been found in Translation-Set: ' . $set->getName());
+                    throw new ConfigurationException('Locale "' . $locale->getName() . '" has already been found in Translation-Set: ' . $set->getName());
                 }
 
                 $foundLocales[] = $locale->getName();
@@ -259,4 +302,20 @@ class ConfigurationLoader
         }
     }
 
+    /**
+     * @param SimpleXMLElement $node
+     * @return array<mixed>
+     */
+    private function getAttributes(SimpleXMLElement $node)
+    {
+        $setAttributes = [];
+        $nodeAttributes = $node->attributes();
+        if ($nodeAttributes !== null) {
+            foreach ($nodeAttributes as $attrName => $value) {
+                $setAttributes[] = new Attribute($attrName, $value);
+            }
+        }
+
+        return $setAttributes;
+    }
 }

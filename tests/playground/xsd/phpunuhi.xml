@@ -15,7 +15,7 @@
 
         <set name="json">
             <format>
-                <json indent="2" sort="true"></json>
+                <json indent="2" sort="true"/>
             </format>
             <locales>
                 <locale name="de">./snippets/storefront/de.json</locale>
@@ -25,7 +25,7 @@
 
         <set name="ini">
             <format>
-                <ini sort="true"></ini>
+                <ini sort="true"/>
             </format>
             <locales>
                 <locale name="de" iniSection="de">./snippets/storefront/de.json</locale>
@@ -35,7 +35,7 @@
 
         <set name="php">
             <format>
-                <php indent="2" sort="true"></php>
+                <php indent="2" sort="true"/>
             </format>
             <locales>
                 <locale name="de">./snippets/storefront/de.php</locale>
@@ -45,7 +45,7 @@
 
         <set name="shopware6">
             <format>
-                <shopware6 entity="product"></shopware6>
+                <shopware6 entity="product"/>
             </format>
             <filter>
                 <include>
@@ -56,8 +56,8 @@
                 </exclude>
             </filter>
             <locales>
-                <locale name="de"></locale>
-                <locale name="en"></locale>
+                <locale name="de"/>
+                <locale name="en"/>
             </locales>
         </set>
 

@@ -18,6 +18,8 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 - Changed the technical usage of the translation **key** to an **ID**. The ID is the unique identifier within a locale, and the key the plain name of the translation which can exist multiple times in a locale.
 - Removed **<file>** nodes in locale. Please use **<locale>** instead.
+- **<locales>** is now required as wrapper for locales. This helps to make the configuration cleaner.
+- Storage formats do now have to be inside a **<format**> tag instead of configuring it a attribute in a Translation-Set. Also the format is now a custom XML node to allow a better XSD experience.
 
 ## [1.1.0]
 

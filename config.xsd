@@ -1,113 +1,141 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema
-    xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    elementFormDefault="qualified"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified"
 >
+
     <xs:element name="phpunuhi">
         <xs:complexType>
             <xs:sequence>
-                <xs:element
-                    name="translations"
-                    type="translation"
-                    maxOccurs="unbounded"
-                    minOccurs="1"
-                />
+                <xs:element name="php" type="typePHP" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="translations" type="typeTranslations" minOccurs="1" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
 
-        <!-- Set names shall be unique -->
+        <!-- names of Translation-Sets must be unique -->
         <xs:unique name="uniqueSetName">
             <xs:selector xpath="translations/set"/>
             <xs:field xpath="@name"/>
         </xs:unique>
+
     </xs:element>
 
-    <xs:complexType name="translation">
-        <xs:choice
-            minOccurs="1"
-            maxOccurs="unbounded"
-        >
-            <xs:element
-                name="set"
-                type="set"
-                minOccurs="1"
-                maxOccurs="unbounded"
-            />
+    <!-- ================================================================================================================================ -->
+    <!-- PHP ENV -->
+
+    <xs:complexType name="typePHP">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="env" type="typePHPEnv" minOccurs="0" maxOccurs="unbounded"/>
         </xs:choice>
     </xs:complexType>
-    <xs:complexType name="set">
-        <xs:choice
-            minOccurs="1"
-            maxOccurs="unbounded"
-        >
-            <xs:element
-                name="file"
-                type="file"
-                maxOccurs="unbounded"
-                minOccurs="1"
-            />
-        </xs:choice>
 
-        <xs:attribute
-            name="name"
-            type="xs:string"
-            use="required"
-        />
-        <xs:attribute
-            name="format"
-            type="formatCode"
-            default="json"
-            use="optional"
-        />
-        <xs:attribute
-            name="sort"
-            type="xs:boolean"
-            default="false"
-            use="optional"
-        />
-
-        <!-- format="json" specific -->
-        <xs:attribute
-            name="jsonIndent"
-            type="xs:positiveInteger"
-            default="2"
-            use="optional"
-        />
-    </xs:complexType>
-    <xs:complexType name="file">
+    <xs:complexType name="typePHPEnv">
         <xs:simpleContent>
             <xs:extension base="xs:string">
-                <xs:attribute
-                    name="locale"
-                    type="localeCode"
-                    use="required"
-                />
-
-                <!-- format="ini" specific -->
-                <xs:attribute
-                    name="iniSection"
-                    type="xs:string"
-                    use="optional"
-                />
+                <xs:attribute name="name" type="xs:string" use="required"/>
+                <xs:attribute name="value" type="xs:string" use="required"/>
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>
 
-    <!-- literals -->
-    <xs:simpleType name="formatCode">
-        <xs:restriction base="xs:string">
-            <xs:enumeration value="json"/>
-            <xs:enumeration value="ini"/>
-        </xs:restriction>
-    </xs:simpleType>
-    <xs:simpleType name="localeCode">
-        <xs:restriction base="xs:string">
-            <xs:pattern value="[a-z]{2}(-[A-Z]{2})?"/>
-        </xs:restriction>
-    </xs:simpleType>
-    <xs:simpleType name="nonEmptyString">
-        <xs:restriction base="xs:string">
-            <xs:pattern value="[a-zA-Z][a-zA-Z0-9]*"/>
-        </xs:restriction>
-    </xs:simpleType>
+    <!-- ================================================================================================================================ -->
+    <!-- TRANSLATION-SETS -->
+
+    <xs:complexType name="typeTranslations">
+        <xs:choice minOccurs="1" maxOccurs="unbounded">
+            <xs:element name="set" type="typeTranslationSet" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="typeTranslationSet">
+        <xs:choice minOccurs="1" maxOccurs="unbounded">
+            <xs:element name="format" type="typeFormat" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="filter" type="typeFilter" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="locales" type="typeLocales" minOccurs="1" maxOccurs="1"/>
+        </xs:choice>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <!-- ================================================================================================================================ -->
+    <!-- FILTER -->
+
+    <xs:complexType name="typeFilter">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="include" type="typeFilterKey" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="exclude" type="typeFilterKey" minOccurs="0" maxOccurs="1"/>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="typeFilterKey">
+        <xs:choice minOccurs="0" maxOccurs="1">
+            <xs:element name="key" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:choice>
+    </xs:complexType>
+
+    <!-- ================================================================================================================================ -->
+    <!-- LOCALES -->
+
+    <xs:complexType name="typeLocales">
+        <xs:choice minOccurs="1" maxOccurs="unbounded">
+            <xs:element name="locale" type="typeLocale" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="typeLocale">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="name" type="xs:string" use="required"/>
+                <xs:attribute name="iniSection" type="xs:string" use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <!-- ================================================================================================================================ -->
+    <!-- STORAGE FORMATS -->
+
+    <xs:complexType name="typeFormat">
+        <xs:choice minOccurs="1" maxOccurs="1">
+            <xs:element name="json" type="typeFormatJSON" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="ini" type="typeFormatINI" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="php" type="typeFormatPHP" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="shopware6" type="typeFormatShopware6" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="typeFormatJSON">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="indent" type="xs:string" use="optional"/>
+                <xs:attribute name="sort" type="xs:boolean" use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="typeFormatINI">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="sort" type="xs:boolean" use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="typeFormatPHP">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="indent" type="xs:string" use="optional"/>
+                <xs:attribute name="sort" type="xs:boolean" use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="typeFormatShopware6">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="entity" type="xs:string" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <!-- ================================================================================================================================ -->
+
 </xs:schema>
