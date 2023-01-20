@@ -12,3 +12,4 @@
 /tests/e2e/.export
 /tests/playground/.exports
 /tests/playground/shopware6/.exports
+/tests/e2e/.exports
