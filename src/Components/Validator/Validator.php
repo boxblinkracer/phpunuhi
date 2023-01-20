@@ -28,7 +28,10 @@ class Validator
             if (!$structureValid) {
 
                 echo "Found different structure in this file: " . PHP_EOL;
-                echo "  - " . $locale->getFilename() . PHP_EOL;
+                echo "  - " . $locale->getName() . PHP_EOL;
+                if (!empty($locale->getFilename())) {
+                    echo "    " . $locale->getFilename() . PHP_EOL;
+                }
 
                 $filtered = $this->getDiff($localeKeys, $allKeys);
 
@@ -46,9 +49,17 @@ class Validator
             foreach ($locale->getTranslations() as $translation) {
 
                 if ($translation->isEmpty()) {
-                    echo "Found empty translation in this file: " . PHP_EOL;
-                    echo "  - " . $locale->getFilename() . PHP_EOL;
-                    echo '           [x]: ' . $translation->getID() . PHP_EOL;
+                    echo "Found empty translation in locale: " . $locale->getName() . PHP_EOL;
+                    if (!empty($locale->getFilename())) {
+                        echo "  - " . $locale->getFilename() . PHP_EOL;
+                    }
+
+                    if ($translation->getGroup() !== '') {
+                        echo '           [x]: ' . $translation->getGroup() . ' (group) => ' . $translation->getKey() . PHP_EOL;
+                    } else {
+                        echo '           [x]: ' . $translation->getID() . PHP_EOL;
+                    }
+
                     echo PHP_EOL;
                     $isValid = false;
                 }
