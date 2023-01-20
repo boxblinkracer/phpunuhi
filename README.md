@@ -432,13 +432,13 @@ For this, you might want to use the **iniSection** feature and just assign the s
 </set>
 
 <set name="sample">
-<format>
-    <ini indent="4" sort="true"></ini>
-</format>
-<locales>
-    <locale name="de" iniSection="de-DE">./snippets/snippets.ini</locale>
-    <locale name="en" iniSection="en-GB">./snippets/snippets.ini</locale>
-</locales>
+    <format>
+        <ini indent="4" sort="true"></ini>
+    </format>
+    <locales>
+        <locale name="de" iniSection="de-DE">./snippets/snippets.ini</locale>
+        <locale name="en" iniSection="en-GB">./snippets/snippets.ini</locale>
+    </locales>
 </set>
 ```
 
