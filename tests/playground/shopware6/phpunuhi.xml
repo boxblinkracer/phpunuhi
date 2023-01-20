@@ -1,6 +1,6 @@
 <phpunuhi
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/boxblinkracer/phpunuhi/main/config.xsd"
+        xsi:noNamespaceSchemaLocation="../xsd/phpunuhi.xsd"
 >
 
     <php>
@@ -13,7 +13,10 @@
 
     <translations>
 
-        <set name="products" format="shopware6" entity="product">
+        <set name="products">
+            <format>
+                <shopware6 entity="product"/>
+            </format>
             <filter>
                 <exclude>
                     <key>custom_fields</key>
@@ -21,30 +24,12 @@
                     <key>meta_*</key>
                 </exclude>
             </filter>
-            <locale locale="en-GB"></locale>
-            <locale locale="de-DE"></locale>
+            <locales>
+                <locale name="en-GB"/>
+                <locale name="de-DE"/>
+            </locales>
         </set>
 
-        <set name="salutations" format="shopware6" entity="salutation">
-            <filter>
-                <include>
-                    <key>display_name</key>
-                    <key>letter_name</key>
-                </include>
-            </filter>
-            <locale locale="en-GB"></locale>
-            <locale locale="de-DE"></locale>
-        </set>
-
-        <set name="shipping" format="shopware6" entity="shipping_method">
-            <filter>
-                <exclude>
-                    <key>custom_fields</key>
-                </exclude>
-            </filter>
-            <locale locale="en-GB"></locale>
-            <locale locale="de-DE"></locale>
-        </set>
 
     </translations>
 

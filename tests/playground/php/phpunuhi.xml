@@ -1,13 +1,18 @@
 <phpunuhi
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/boxblinkracer/phpunuhi/main/config.xsd"
+        xsi:noNamespaceSchemaLocation="../xsd/phpunuhi.xsd"
 >
 
     <translations>
 
-        <set name="php" format="php" sort="true">
-            <file locale="de">./de.php</file>
-            <file locale="en">./en.php</file>
+        <set name="php">
+            <format>
+                <php sort="true"/>
+            </format>
+            <locales>
+                <locale name="de">./de.php</locale>
+                <locale name="en">./en.php</locale>
+            </locales>
         </set>
 
     </translations>
