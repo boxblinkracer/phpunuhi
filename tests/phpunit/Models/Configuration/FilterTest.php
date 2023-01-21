@@ -96,4 +96,32 @@ class FilterTest extends TestCase
         $this->assertEquals(false, $isAllowedFieldB);
     }
 
+    /**
+     * @return void
+     */
+    public function testIncludeCanBeIncludedMultipleTimes()
+    {
+        $filter = new Filter();
+        $filter->addIncludeKey('abc');
+        $filter->addIncludeKey('abc');
+
+        $isAllowed = $filter->isKeyAllowed('abc');
+
+        $this->assertEquals(true, $isAllowed);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIncludeCanBeExcludedMultipleTimes()
+    {
+        $filter = new Filter();
+        $filter->addExcludeKey('abc');
+        $filter->addExcludeKey('abc');
+
+        $isAllowed = $filter->isKeyAllowed('abc');
+
+        $this->assertEquals(false, $isAllowed);
+    }
+
 }
