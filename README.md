@@ -18,38 +18,40 @@ The framework is free, there's no guarantee or claim to anything.
 Now that you know this, let's get started!
 
 <!-- TOC -->
-  * [1. Basic Concept](#1-basic-concept)
-  * [2. Installation](#2-installation)
-  * [3. Configuration](#3-configuration)
-  * [4. Commands](#4-commands)
+
+* [1. Basic Concept](#1-basic-concept)
+* [2. Installation](#2-installation)
+* [3. Configuration](#3-configuration)
+* [4. Commands](#4-commands)
     * [4.1 Validate Command](#41-validate-command)
     * [4.2 Fix Structure Command](#42-fix-structure-command)
     * [4.3 Export Command](#43-export-command)
     * [4.4 Import Command](#44-import-command)
     * [4.5 Status Command](#45-status-command)
     * [4.6 Translate Command](#46-translate-command)
-  * [5. Use Cases](#5-use-cases)
+* [5. Use Cases](#5-use-cases)
     * [5.1 Validation in CI pipeline](#51-validation-in-ci-pipeline)
     * [5.2 Working with external translation agencies](#52-working-with-external-translation-agencies)
     * [5.3 Live WebEdit with HTML](#53-live-webedit-with-html)
     * [5.4 Automatic Translation with Google, DeepL, ...](#54-automatic-translation-with-google-deepl-)
-  * [6. Warning](#6-warning)
-  * [7. Appendix](#7-appendix)
+* [6. Warning](#6-warning)
+* [7. Appendix](#7-appendix)
     * [7.1 Storage Formats](#71-storage-formats)
-      * [7.1.1 JSON](#711-json)
-      * [7.1.2 INI](#712-ini)
-      * [7.1.3 PHP](#713-php)
-      * [7.1.4 Shopware 6](#714-shopware-6)
+        * [7.1.1 JSON](#711-json)
+        * [7.1.2 INI](#712-ini)
+        * [7.1.3 PHP](#713-php)
+        * [7.1.4 Shopware 6](#714-shopware-6)
     * [7.2 Filters](#72-filters)
     * [7.3 Groups](#73-groups)
     * [7.4 Exchange Formats](#74-exchange-formats)
-      * [7.4.1 CSV](#741-csv)
-      * [7.4.2 HTML / WebEdit](#742-html--webedit)
+        * [7.4.1 CSV](#741-csv)
+        * [7.4.2 HTML / WebEdit](#742-html--webedit)
     * [7.5 Translator Services](#75-translator-services)
-      * [7.5.1 DeepL](#751-deepl)
-      * [7.5.2 Google Cloud Translate](#752-google-cloud-translate)
-      * [7.5.3 Google Web Translate](#753-google-web-translate)
-      * [7.5.4 OpenAI GPT Translate](#754-openai-gpt-translate)
+        * [7.5.1 DeepL](#751-deepl)
+        * [7.5.2 Google Cloud Translate](#752-google-cloud-translate)
+        * [7.5.3 Google Web Translate](#753-google-web-translate)
+        * [7.5.4 OpenAI GPT Translate](#754-openai-gpt-translate)
+
 <!-- TOC -->
 
 ## 1. Basic Concept
@@ -154,7 +156,7 @@ Look at this one:
 
         <set name="Storefront JSON">
             <format>
-                <json indent="4" sort="true"></json>
+                <json indent="4" sort="true"/>
             </format>
             <locales>
                 <locale name="de">./snippets/de.json</locale>
@@ -164,7 +166,7 @@ Look at this one:
 
         <set name="Products">
             <format>
-                <shopware6 entity="product"></shopware6>
+                <shopware6 entity="product"/>
             </format>
             <filter>
                 <exclude>
@@ -172,8 +174,8 @@ Look at this one:
                 </exclude>
             </filter>
             <locales>
-                <locale name="de-DE"></locale>
-                <locale name="en-GB"></locale>
+                <locale name="de-DE"/>
+                <locale name="en-GB"/>
             </locales>
         </set>
 
@@ -191,7 +193,7 @@ Some storage formats, such as JSON, have individual attributes that can be defin
 
 ### 4.1 Validate Command
 
-Start the validation of your translation files by running this command:
+Start the validation of your translations by running this command:
 
 ```bash 
 # loads configuration phpunuhi.xml as default
@@ -203,7 +205,7 @@ php vendor/bin/phpunuhi validate --configuration=./translations.xml
 
 **Invalid structure**
 
-The command will check if all files of a translation set have the **same structure**.
+The command will check if all locales of a Translation-Set have the **same structure**.
 If not, you might have forgotten something ;)
 
 <p align="center">
@@ -213,7 +215,7 @@ If not, you might have forgotten something ;)
 **Missing translations**
 
 If missing translations (**empty values**) are found, the validation process will fail.
-This helps against forgetting certain translations in any of your files.
+This helps against forgetting certain translations in any of your locales.
 
 <p align="center">
    <img src="/.github/assets/validation-empty.png">
@@ -221,7 +223,7 @@ This helps against forgetting certain translations in any of your files.
 
 ### 4.2 Fix Structure Command
 
-If your storage files are not matching, you can easily use the fixing command to make sure they are in sync.
+If your storage is not matching, you can easily use the fixing command to make sure they are in sync.
 Please note, that this will only create empty translations so that the structure is the same.
 
 The final translations are not 100% valid in the end...only existing!
@@ -268,7 +270,7 @@ php vendor/bin/phpunuhi export ... --set="storefront"
 ### 4.4 Import Command
 
 You can import your translations **from a CSV file** or other supported exchange formats.
-This will automatically update the storage files (JSON, ...) that have been assigned to the imported translation set.
+This will automatically update the storage (JSON, ...) that has been assigned to the imported translation set.
 
 > It's recommended to use version control to verify changes, before approving them.
 
@@ -352,7 +354,7 @@ This cronjob could trigger the HTML export of PHPUnuhi with an output directory 
 That HTML file might then be exposed with something like this **https://stage.my-shop.com/snippets**.
 
 Everyone who wants to either see all translations, or even modify them, can easily do this in their browser.
-And because you use a cronjob to generate the file, it's always automatically updated.
+And because you use a cronjob to generate the HTML, it's always automatically updated.
 
 ### 5.4 Automatic Translation with Google, DeepL, ...
 
@@ -393,7 +395,7 @@ The JSON structure across all files of a set should match.
 
 <set name="sample">
     <format>
-        <json indent="4" sort="true"></json>
+        <json indent="4" sort="true"/>
     </format>
     <locales>
         <locale name="de">./snippets/de.json</locale>
@@ -423,7 +425,7 @@ For this, you might want to use the **iniSection** feature and just assign the s
 
 <set name="sample">
     <format>
-        <ini sort="true"></ini>
+        <ini sort="true"/>
     </format>
     <locales>
         <locale name="de">./snippets/de.ini</locale>
@@ -432,13 +434,13 @@ For this, you might want to use the **iniSection** feature and just assign the s
 </set>
 
 <set name="sample">
-    <format>
-        <ini indent="4" sort="true"></ini>
-    </format>
-    <locales>
-        <locale name="de" iniSection="de-DE">./snippets/snippets.ini</locale>
-        <locale name="en" iniSection="en-GB">./snippets/snippets.ini</locale>
-    </locales>
+<format>
+    <ini indent="4" sort="true"/>
+</format>
+<locales>
+    <locale name="de" iniSection="de-DE">./snippets/snippets.ini</locale>
+    <locale name="en" iniSection="en-GB">./snippets/snippets.ini</locale>
+</locales>
 </set>
 ```
 
@@ -459,7 +461,7 @@ This storage type makes sure to read and also write PHP files that return a sing
 
 <set name="sample">
     <format>
-        <php sort="true"></php>
+        <php sort="true"/>
     </format>
     <locales>
         <locale name="de">./snippets/de.php</locale>
@@ -485,11 +487,11 @@ Just imagine running the **status command** and see a translation coverage of al
 
 <set name="sample">
     <format>
-        <shopware6 entity="product"></shopware6>
+        <shopware6 entity="product"/>
     </format>
     <locales>
-        <locale name="de-DE"></locale>
-        <locale name="en-GB"></locale>
+        <locale name="de-DE"/>
+        <locale name="en-GB"/>
     </locales>
 </set>
 ```
@@ -508,7 +510,9 @@ You can also use **placeholders** using the * character.
 
 <set>
     <filter>
-        <include></include>
+        <include>
+            <key>name</key>
+        </include>
         <exclude>
             <key>custom_fields</key>
             <key>meta_*</key>
