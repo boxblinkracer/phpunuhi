@@ -10,7 +10,7 @@ trait StringTrait
      * @param string $search
      * @return bool
      */
-    protected function stringContains(string $string, string $search): bool
+    protected function stringDoesContain(string $string, string $search): bool
     {
         return (strpos($string, $search) !== false);
     }
@@ -20,7 +20,7 @@ trait StringTrait
      * @param string $startString
      * @return bool
      */
-    protected function stringStartsWith(string $string, string $startString): bool
+    protected function stringDoesStartsWith(string $string, string $startString): bool
     {
         $len = strlen($startString);
         return (substr($string, 0, $len) === $startString);
@@ -31,10 +31,10 @@ trait StringTrait
      * @param string $endString
      * @return bool
      */
-    protected function stringEndsWith(string $string, string $endString): bool
+    protected function stringDoesEndsWith(string $string, string $endString): bool
     {
         $len = strlen($endString);
-        if ($len == 0) {
+        if ($len === 0) {
             return true;
         }
         return (substr($string, -$len) === $endString);

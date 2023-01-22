@@ -96,7 +96,7 @@ class TranslationLoader
                         continue;
                     }
 
-                    if ($this->stringEndsWith($property, '_id')) {
+                    if ($this->stringDoesEndsWith($property, '_id')) {
                         continue;
                     }
 

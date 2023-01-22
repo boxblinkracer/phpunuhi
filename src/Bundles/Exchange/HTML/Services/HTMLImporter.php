@@ -42,7 +42,7 @@ class HTMLImporter
             $group = '';
             $localeID = '';
 
-            if ($this->stringStartsWith($fullKeyWithLocale, 'group--')) {
+            if ($this->stringDoesStartsWith($fullKeyWithLocale, 'group--')) {
 
                 $group = explode('.', $fullKeyWithLocale)[0];
                 $group = str_replace('group--', '', $group);
@@ -50,7 +50,7 @@ class HTMLImporter
                 $key = str_replace('group--' . $group . '.', '', $fullKeyWithLocale);
             }
 
-            if ($this->stringContains($key, '--')) {
+            if ($this->stringDoesContain($key, '--')) {
                 $localeID = explode('--', $key)[1];
                 $key = explode('--', $key)[0];
             }
