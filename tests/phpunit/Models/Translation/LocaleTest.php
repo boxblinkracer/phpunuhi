@@ -4,6 +4,7 @@ namespace phpunit\Models\Translation;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Models\Translation\Locale;
+use PHPUnuhi\Models\Translation\Translation;
 
 class LocaleTest extends TestCase
 {
@@ -107,6 +108,23 @@ class LocaleTest extends TestCase
         $locale->addTranslation('description', '', '');
 
         $this->assertCount(2, $locale->getTranslations());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSetTranslations()
+    {
+        $locale = new Locale('', '', '');
+
+        $this->assertCount(0, $locale->getTranslations());
+
+        $translations = [];
+        $translations[] = new Translation('', '', '');
+
+        $locale->setTranslations($translations);
+
+        $this->assertCount(1, $locale->getTranslations());
     }
 
 }
