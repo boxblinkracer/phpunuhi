@@ -29,6 +29,7 @@ Now that you know this, let's get started!
     * [4.4 Import Command](#44-import-command)
     * [4.5 Status Command](#45-status-command)
     * [4.6 Translate Command](#46-translate-command)
+    * [4.7 List Translations Command](#47-list-translations-command)
 * [5. Use Cases](#5-use-cases)
     * [5.1 Validation in CI pipeline](#51-validation-in-ci-pipeline)
     * [5.2 Working with external translation agencies](#52-working-with-external-translation-agencies)
@@ -326,6 +327,15 @@ php vendor/bin/phpunuhi translate ...  --force=en
 <p align="center">
    <img src="/.github/assets/translate.png">
 </p>
+
+### 4.7 List Translations Command
+
+This command allows you to output all available translation keys in your Translation-Sets.
+Use this to debug and analyzse your translations.
+
+```bash 
+php vendor/bin/phpunuhi list:translations 
+```
 
 ## 5. Use Cases
 
