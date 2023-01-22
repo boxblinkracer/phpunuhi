@@ -91,7 +91,7 @@ class PhpStorage implements StorageInterface
                 ksort($saveValues);
             }
 
-            $tmpArray = $this->flattenToMultiDimensional($saveValues, '.');
+            $tmpArray = $this->getMultiDimensionalArray($saveValues, '.');
 
             $content .= $this->buildArray($tmpArray, 1);
 

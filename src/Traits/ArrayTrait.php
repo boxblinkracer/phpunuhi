@@ -32,7 +32,7 @@ trait ArrayTrait
      * @param string $delimiter
      * @return array<mixed>
      */
-    protected function flattenToMultiDimensional(array $array, string $delimiter = '.'): array
+    protected function getMultiDimensionalArray(array $array, string $delimiter = '.'): array
     {
         $result = [];
         foreach ($array as $notations => $value) {

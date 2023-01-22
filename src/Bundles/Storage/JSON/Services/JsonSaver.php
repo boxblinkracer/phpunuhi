@@ -59,7 +59,7 @@ JsonSaver
                 ksort($saveValues);
             }
 
-            $tmpArray = $this->flattenToMultiDimensional($saveValues, '.');
+            $tmpArray = $this->getMultiDimensionalArray($saveValues, '.');
 
             $jsonString = (string)json_encode($tmpArray, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 
