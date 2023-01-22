@@ -29,5 +29,8 @@ html: ## Exports a HTML
 csv: ## Exports a CSV
 	cd ../../.. && php bin/phpunuhi export --configuration=./tests/playground/json/phpunuhi.xml --format=csv --dir=./tests/playground/json/.exports
 
+csvimport: ## Imports a CSV
+	cd ../../.. && php bin/phpunuhi import --configuration=./tests/playground/json/phpunuhi.xml --format=csv --set=json --file=./tests/playground/json/.exports/json.csv
+
 translate: ## Translate
 	cd ../../.. && php bin/phpunuhi translate --configuration=./tests/playground/json/phpunuhi.xml --service=googleweb
