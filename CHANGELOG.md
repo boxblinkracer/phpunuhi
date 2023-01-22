@@ -21,6 +21,10 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 - **<locales>** is now required as wrapper for locales. This helps to make the configuration cleaner.
 - Storage formats do now have to be inside a **<format**> tag instead of configuring it a attribute in a Translation-Set. Also the format is now a custom XML node to allow a better XSD experience.
 
+### Fixed
+
+- DeepL does not support **formality** options for all languages. This has been fixed by only applying the option for allowed languages.
+
 ## [1.1.0]
 
 ### Added

@@ -18,6 +18,20 @@ class DeeplTranslator implements TranslatorInterface
      */
     private $formality;
 
+    /**
+     *
+     */
+    public const ALLOWED_FORMALITY = [
+        'de',
+        'nl',
+        'fr',
+        'it',
+        'pl',
+        'ru',
+        'es',
+        'pt'
+    ];
+
 
     /**
      * @return string
@@ -69,14 +83,24 @@ class DeeplTranslator implements TranslatorInterface
         if ($targetLocale === 'en') {
             $targetLocale = 'en-GB';
         }
+        if ($targetLocale === 'de-DE') {
+            $targetLocale = 'de';
+        }
+
+
+        $options = [
+
+        ];
+
+        if (in_array($targetLocale, self::ALLOWED_FORMALITY)) {
+            $options['formality'] = $formalValue;
+        }
 
         $result = $translator->translateText(
             $text,
             null,
             $targetLocale,
-            [
-                'formality' => $formalValue,
-            ]
+            $options
         );
 
         if (is_array($result)) {
