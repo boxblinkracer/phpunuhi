@@ -43,14 +43,15 @@ Now that you know this, let's get started!
         * [7.1.4 Shopware 6](#714-shopware-6)
     * [7.2 Filters](#72-filters)
     * [7.3 Groups](#73-groups)
-    * [7.4 Exchange Formats](#74-exchange-formats)
-        * [7.4.1 CSV](#741-csv)
-        * [7.4.2 HTML / WebEdit](#742-html--webedit)
-    * [7.5 Translator Services](#75-translator-services)
-        * [7.5.1 DeepL](#751-deepl)
-        * [7.5.2 Google Cloud Translate](#752-google-cloud-translate)
-        * [7.5.3 Google Web Translate](#753-google-web-translate)
-        * [7.5.4 OpenAI GPT Translate](#754-openai-gpt-translate)
+    * [7.4 PHP ENV Variables](#74-php-env-variables)
+    * [7.5 Exchange Formats](#75-exchange-formats)
+        * [7.5.1 CSV](#751-csv)
+        * [7.5.2 HTML / WebEdit](#752-html--webedit)
+    * [7.6 Translator Services](#76-translator-services)
+        * [7.6.1 DeepL](#761-deepl)
+        * [7.6.2 Google Cloud Translate](#762-google-cloud-translate)
+        * [7.6.3 Google Web Translate](#763-google-web-translate)
+        * [7.6.4 OpenAI GPT Translate](#764-openai-gpt-translate)
 
 <!-- TOC -->
 
@@ -483,17 +484,34 @@ This means **products**, **salutations**, **shipping methods** and more. Basical
 
 Just imagine running the **status command** and see a translation coverage of all your products in your shop. Nice, isn't it? Or let DeepL translate your data automatically?!
 
+To access the database of Shopware, you can either make sure the ENV variables for the connection are correctly set up,
+or provide your custom credentials in the **php** section of the configuration XML.
+
 ```xml
 
-<set name="sample">
-    <format>
-        <shopware6 entity="product"/>
-    </format>
-    <locales>
-        <locale name="de-DE"/>
-        <locale name="en-GB"/>
-    </locales>
-</set>
+<phpunuhi>
+    <php>
+        <env name="DB_HOST" value="127.0.0.1"/>
+        <env name="DB_PORT" value="3306"/>
+        <env name="DB_USER" value=""/>
+        <env name="DB_PASSWD" value=""/>
+        <env name="DB_DBNAME" value="shopware"/>
+    </php>
+
+    <translations>
+
+        <set name="Products">
+            <format>
+                <shopware6 entity="product"/>
+            </format>
+            <locales>
+                <locale name="de-DE"/>
+                <locale name="en-GB"/>
+            </locales>
+        </set>
+
+    </translations>
+</phpunuhi>
 ```
 
 ### 7.2 Filters
@@ -536,7 +554,26 @@ A CSV format, has a separate column for groups, and the import should also work 
 The HTML format on the other hand, shows a matching style in the table, so you know that the
 translations all belong to this group.
 
-### 7.4 Exchange Formats
+### 7.4 PHP ENV Variables
+
+The XML configuration allows you to create custom ENV variables.
+Depending on the components you use in PHPUnuhi, some require specific ENV variables, such as the Shopware 6 database connection.
+These can either be set by exporting the ENV variable on your server, or by simply providing them in the XML configuration.
+
+```xml
+
+<phpunuhi>
+    <php>
+        <env name="DB_HOST" value="127.0.0.1"/>
+        <env name="DB_PORT" value="3306"/>
+        <env name="DB_USER" value=""/>
+        <env name="DB_PASSWD" value=""/>
+        <env name="DB_DBNAME" value="shopware"/>
+    </php>
+</phpunuhi>
+```
+
+### 7.5 Exchange Formats
 
 Exchange formats define how you export and import translation data.
 The main purpose is to send it out to a translation company or just someone else,
@@ -544,7 +581,7 @@ and be able to import it back into your system again.
 
 The following formats are currently supported.
 
-#### 7.4.1 CSV
+#### 7.5.1 CSV
 
 * Format: "csv"
 
@@ -564,7 +601,7 @@ Every translation key has its own row, and all locale-values have their own colu
    <img src="/.github/assets/csv.png">
 </p>
 
-#### 7.4.2 HTML / WebEdit
+#### 7.5.2 HTML / WebEdit
 
 * Format: "html"
 
@@ -578,12 +615,12 @@ you can import again into your system with the format **html** in PHPUnuhi.
    <img src="/.github/assets/html.png">
 </p>
 
-### 7.5 Translator Services
+### 7.6 Translator Services
 
 Translators are supported (external) services that automatically translate empty values for you.
 These services usually require an API key that needs to be provided for PHPUnuhi.
 
-#### 7.5.1 DeepL
+#### 7.6.1 DeepL
 
 * Service: "deepl"
 
@@ -599,7 +636,7 @@ DeepL allows you to either translate to a formal or informal language.
 This option is only available for some target languages, just like "German" ("du" vs. "Sie").
 You can request a formal language by simply applying the argument "--deepl-formal" to the translate command.
 
-#### 7.5.2 Google Cloud Translate
+#### 7.6.2 Google Cloud Translate
 
 * Service: "googlecloud"
 
@@ -610,7 +647,7 @@ You can request a formal language by simply applying the argument "--deepl-forma
 Google Cloud Translation allows you to use the AI services of Google.
 If you have an API Key, you can easily provide it with the corresponding argument when running the translation command.
 
-#### 7.5.3 Google Web Translate
+#### 7.6.3 Google Web Translate
 
 * Service: "googleweb"
 
@@ -621,7 +658,7 @@ Because of this, it can happen, that a massive number of requests might lead to 
 This is more meant for educational purposes.
 Although it works, you should consider getting a real Google API key for commercial and serious usage of their services.
 
-#### 7.5.4 OpenAI GPT Translate
+#### 7.6.4 OpenAI GPT Translate
 
 * Service: "openai"
 
