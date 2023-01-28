@@ -50,9 +50,7 @@ class EntityRepository
             return [];
         }
 
-        $dbRow = $result->fetch();
-
-        return $dbRow;
+        return $result->fetch();
     }
 
 }

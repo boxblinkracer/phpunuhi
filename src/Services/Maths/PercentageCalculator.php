@@ -6,17 +6,17 @@ class PercentageCalculator
 {
 
     /**
-     * @param int $a
-     * @param int $b
+     * @param int $numberExisting
+     * @param int $numberTotal
      * @return float
      */
-    public function getRoundedPercentage(int $a, int $b): float
+    public function getRoundedPercentage(int $numberExisting, int $numberTotal): float
     {
-        if ($b === 0) {
+        if ($numberTotal === 0) {
             return 0;
         }
 
-        $percent = ($a / $b) * 100;
+        $percent = ($numberExisting / $numberTotal) * 100;
 
         return round($percent, 2);
     }

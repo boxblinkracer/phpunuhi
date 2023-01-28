@@ -37,7 +37,6 @@ phpinsights: ## Starts PHPInsights
 #------------------------------------------------------------------------------------------------
 
 pr: ## Runs and prepares everything for a pull request
-	php vendor/bin/phpinsights analyse --fix --no-interaction
 	PHP_CS_FIXER_IGNORE_ENV=1 php ./vendor/bin/php-cs-fixer fix --config=./.php_cs.php
 	@make phpunit -B
 	@make stan -B

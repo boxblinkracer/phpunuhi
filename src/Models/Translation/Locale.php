@@ -63,8 +63,6 @@ class Locale
      */
     public function getExchangeIdentifier(): string
     {
-        $id = "";
-
         if (!empty($this->name)) {
             $id = $this->name;
         } else {
@@ -74,9 +72,7 @@ class Locale
         # we use this also in technical environments
         # such as class and id names in HTML
         # so we need to remove spaces
-        $id = str_replace(' ', '-', $id);
-
-        return $id;
+        return str_replace(' ', '-', $id);
     }
 
     /**

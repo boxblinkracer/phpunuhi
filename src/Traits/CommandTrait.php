@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Traits;
 
 use PHPUnuhi\PHPUnuhi;
@@ -24,7 +26,11 @@ trait CommandTrait
      */
     protected function getConfigFile(InputInterface $input): string
     {
-        $configFile = (string)$input->getOption('configuration') . '';
+        $configFile = $input->getOption('configuration');
+
+        if (!is_string($configFile)) {
+            $configFile = '';
+        }
 
         if (empty($configFile)) {
             $configFile = 'phpunuhi.xml';
@@ -34,6 +40,22 @@ trait CommandTrait
         $workingDir = $cur_dir[count($cur_dir) - 1];
 
         return $workingDir . '/' . $configFile;
+    }
+
+    /**
+     * @param string $name
+     * @param InputInterface $input
+     * @return string
+     */
+    protected function getConfigStringValue(string $name, InputInterface $input): string
+    {
+        $value = $input->getOption($name);
+
+        if (!is_string($value)) {
+            return '';
+        }
+
+        return $value;
     }
 
 }

@@ -77,9 +77,10 @@ class Validator
      */
     private function isStructureEqual($a, $b)
     {
-        return (is_array($b)
+        return (
+            is_array($b)
             && is_array($a)
-            && count($a) == count($b)
+            && count($a) === count($b)
             && array_diff($a, $b) === array_diff($b, $a)
         );
     }

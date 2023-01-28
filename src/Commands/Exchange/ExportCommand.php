@@ -64,9 +64,9 @@ class ExportCommand extends Command
         # -----------------------------------------------------------------
 
         $configFile = $this->getConfigFile($input);
-        $exportExchangeFormat = (string)$input->getOption('format');
-        $setName = (string)$input->getOption('set');
-        $outputDir = (string)$input->getOption('dir');
+        $exportExchangeFormat = $this->getConfigStringValue('format', $input);
+        $setName = $this->getConfigStringValue('set', $input);
+        $outputDir = $this->getConfigStringValue('dir', $input);
 
 
         $cur_dir = explode('\\', (string)getcwd());

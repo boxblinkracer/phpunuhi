@@ -19,7 +19,7 @@ interface TranslatorInterface
      * whenever this service is used in a command
      * @return CommandOption[]
      */
-    public  function getOptions(): array;
+    public function getOptions(): array;
 
     /**
      * Sets the CLI options for this service.
@@ -27,7 +27,7 @@ interface TranslatorInterface
      * @param array<mixed> $options
      * @return mixed
      */
-    public  function setOptionValues(array $options);
+    public function setOptionValues(array $options);
 
     /**
      * Translates the given text from the source locale into the target locale.

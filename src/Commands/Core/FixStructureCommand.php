@@ -47,7 +47,7 @@ class FixStructureCommand extends Command
         # -----------------------------------------------------------------
 
         $configFile = $this->getConfigFile($input);
-        $setName = (string)$input->getOption('set');
+        $setName = $this->getConfigStringValue('set', $input);
 
         # -----------------------------------------------------------------
 

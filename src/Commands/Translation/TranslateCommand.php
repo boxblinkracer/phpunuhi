@@ -67,9 +67,9 @@ class TranslateCommand extends Command
 
         $configFile = $this->getConfigFile($input);
 
-        $service = (string)$input->getOption('service');
-        $setName = (string)$input->getOption('set');
-        $forceLocale = (string)$input->getOption('force');
+        $service = $this->getConfigStringValue('service', $input);
+        $setName = $this->getConfigStringValue('set', $input);
+        $forceLocale = $this->getConfigStringValue('force', $input);
 
         # -----------------------------------------------------------------
 

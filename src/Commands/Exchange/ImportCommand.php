@@ -69,9 +69,9 @@ class ImportCommand extends Command
         # -----------------------------------------------------------------
 
         $configFile = $this->getConfigFile($input);
-        $importFilename = (string)$input->getOption('file');
-        $importExchangeFormat = (string)$input->getOption('format');
-        $setName = (string)$input->getOption('set');
+        $importFilename = $this->getConfigStringValue('file', $input);
+        $importExchangeFormat = $this->getConfigStringValue('format', $input);
+        $setName = $this->getConfigStringValue('set', $input);
 
         # adjust correct file path, required for PHAR loading
         $cur_dir = explode('\\', (string)getcwd());

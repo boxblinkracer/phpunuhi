@@ -9,19 +9,19 @@ interface CSVWriterInterface
      * @param string $outputDir
      * @return void
      */
-    function prepareDirectory(string $outputDir): void;
+    public function prepareDirectory(string $outputDir): void;
 
     /**
      * @param string $filename
      * @return void
      */
-    function deleteFile(string $filename): void;
+    public function deleteFile(string $filename): void;
 
     /**
      * @param string $filename
      * @return resource
      */
-    function open(string $filename);
+    public function open(string $filename);
 
     /**
      * @param resource $file
@@ -29,12 +29,12 @@ interface CSVWriterInterface
      * @param string $delimiter
      * @return void
      */
-    function writeLine($file, array $row, string $delimiter): void;
+    public function writeLine($file, array $row, string $delimiter): void;
 
     /**
      * @param resource $file
      * @return void
      */
-    function close($file): void;
+    public function close($file): void;
 
 }
