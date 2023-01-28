@@ -31,9 +31,13 @@ stan: ## Starts the PHPStan Analyser
 phpunit: ## Runs all tests
 	XDEBUG_MODE=coverage php ./vendor/bin/phpunit --configuration=./.phpunit.xml -v --coverage-html ./.reports/phpunit/coverage
 
+phpinsights: ## Starts PHPInsights
+	@php -d memory_limit=2000M vendor/bin/phpinsights --no-interaction
+
 #------------------------------------------------------------------------------------------------
 
 pr: ## Runs and prepares everything for a pull request
+	php vendor/bin/phpinsights analyse --fix --no-interaction
 	PHP_CS_FIXER_IGNORE_ENV=1 php ./vendor/bin/php-cs-fixer fix --config=./.php_cs.php
 	@make phpunit -B
 	@make stan -B
