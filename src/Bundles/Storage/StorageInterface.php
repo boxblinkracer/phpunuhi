@@ -10,18 +10,18 @@ interface StorageInterface
     /**
      * @return bool
      */
-    function supportsFilters(): bool;
+    public function supportsFilters(): bool;
 
     /**
      * @param TranslationSet $set
      * @return void
      */
-    function loadTranslations(TranslationSet $set): void;
+    public function loadTranslations(TranslationSet $set): void;
 
     /**
      * @param TranslationSet $set
      * @return StorageSaveResult
      */
-    function saveTranslations(TranslationSet $set): StorageSaveResult;
+    public function saveTranslations(TranslationSet $set): StorageSaveResult;
 
 }

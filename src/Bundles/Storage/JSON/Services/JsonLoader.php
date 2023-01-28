@@ -17,7 +17,7 @@ class JsonLoader
      * @return void
      * @throws \Exception
      */
-    function loadTranslations(Locale $locale): void
+    public function loadTranslations(Locale $locale): void
     {
         $snippetJson = (string)file_get_contents($locale->getFilename());
 

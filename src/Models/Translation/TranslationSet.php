@@ -2,7 +2,6 @@
 
 namespace PHPUnuhi\Models\Translation;
 
-
 use PHPUnuhi\Exceptions\TranslationNotFoundException;
 use PHPUnuhi\Models\Configuration\Attribute;
 use PHPUnuhi\Models\Configuration\Filter;

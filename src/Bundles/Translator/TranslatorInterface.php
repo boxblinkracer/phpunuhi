@@ -12,14 +12,14 @@ interface TranslatorInterface
      * identify this service
      * @return string
      */
-    function getName(): string;
+    public function getName(): string;
 
     /**
      * Gets a list of available CLI options
      * whenever this service is used in a command
      * @return CommandOption[]
      */
-    function getOptions(): array;
+    public  function getOptions(): array;
 
     /**
      * Sets the CLI options for this service.
@@ -27,7 +27,7 @@ interface TranslatorInterface
      * @param array<mixed> $options
      * @return mixed
      */
-    function setOptionValues(array $options);
+    public  function setOptionValues(array $options);
 
     /**
      * Translates the given text from the source locale into the target locale.
@@ -36,6 +36,6 @@ interface TranslatorInterface
      * @param string $targetLocale
      * @return string
      */
-    function translate(string $text, string $sourceLocale, string $targetLocale): string;
+    public function translate(string $text, string $sourceLocale, string $targetLocale): string;
 
 }

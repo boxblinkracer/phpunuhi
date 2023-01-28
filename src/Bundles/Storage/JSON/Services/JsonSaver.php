@@ -6,8 +6,7 @@ use PHPUnuhi\Bundles\Storage\StorageSaveResult;
 use PHPUnuhi\Models\Translation\TranslationSet;
 use PHPUnuhi\Traits\ArrayTrait;
 
-class
-JsonSaver
+class JsonSaver
 {
 
     use ArrayTrait;

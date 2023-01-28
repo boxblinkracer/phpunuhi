@@ -14,14 +14,14 @@ interface ExchangeInterface
      * identify this service
      * @return string
      */
-    function getName(): string;
+    public   function getName(): string;
 
     /**
      * Gets a list of available CLI options
      * whenever this service is used in a command
      * @return CommandOption[]
      */
-    function getOptions(): array;
+    public  function getOptions(): array;
 
     /**
      * Sets the CLI options for this service.
@@ -29,19 +29,19 @@ interface ExchangeInterface
      * @param array<mixed> $options
      * @return void
      */
-    function setOptionValues(array $options): void;
+    public  function setOptionValues(array $options): void;
 
     /**
      * @param TranslationSet $set
      * @param string $outputDir
      * @return void
      */
-    function export(TranslationSet $set, string $outputDir): void;
+    public  function export(TranslationSet $set, string $outputDir): void;
 
     /**
      * @param string $filename
      * @return ImportResult
      */
-    function import(string $filename): ImportResult;
+    public  function import(string $filename): ImportResult;
 
 }
