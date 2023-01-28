@@ -30,6 +30,15 @@
             </locales>
         </set>
 
+        <set name="snippets">
+            <format>
+                <shopware6 entity="snippet"/>
+            </format>
+            <locales>
+                <locale name="en-GB"/>
+                <locale name="de-DE"/>
+            </locales>
+        </set>
 
     </translations>
 
