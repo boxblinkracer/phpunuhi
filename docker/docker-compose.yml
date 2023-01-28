@@ -4,7 +4,7 @@ services:
 
   phpunuhi:
     container_name: phpunuhi
-    image: php:7.4
+    image: dockware/flex:latest
     volumes:
       - "../:/app"
     working_dir: /app
