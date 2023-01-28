@@ -15,7 +15,7 @@ status: ## Status command
 	cd ../../.. && php bin/phpunuhi status --configuration=./tests/playground/shopware6/phpunuhi.xml
 
 list: ## List available translation IDs
-	cd ../../.. && php bin/phpunuhi list:translations --configuration=./tests/playground/ini/phpunuhi.xml
+	cd ../../.. && php bin/phpunuhi list:translations --configuration=./tests/playground/shopware6/phpunuhi.xml
 
 validate: ## Validate command
 	cd ../../.. && php bin/phpunuhi validate --configuration=./tests/playground/shopware6/phpunuhi.xml

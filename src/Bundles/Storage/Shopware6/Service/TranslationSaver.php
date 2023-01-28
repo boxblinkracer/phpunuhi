@@ -7,6 +7,7 @@ use PHPUnuhi\Bundles\Storage\Shopware6\Models\Sw6Locale;
 use PHPUnuhi\Bundles\Storage\Shopware6\Models\UpdateField;
 use PHPUnuhi\Bundles\Storage\Shopware6\Repository\EntityTranslationRepository;
 use PHPUnuhi\Bundles\Storage\Shopware6\Repository\LanguageRepository;
+use PHPUnuhi\Bundles\Storage\Shopware6\Repository\SnippetRepository;
 use PHPUnuhi\Bundles\Storage\StorageSaveResult;
 use PHPUnuhi\Exceptions\ConfigurationException;
 use PHPUnuhi\Models\Translation\Locale;
@@ -31,6 +32,11 @@ class TranslationSaver
      */
     private $repoTranslations;
 
+    /**
+     * @var SnippetRepository
+     */
+    private $repoSnippets;
+
 
     /**
      * @param Connection $connection
@@ -39,6 +45,7 @@ class TranslationSaver
     {
         $this->repoLanguages = new LanguageRepository($connection);
         $this->repoTranslations = new EntityTranslationRepository($connection);
+        $this->repoSnippets = new SnippetRepository($connection);
     }
 
     /**
@@ -55,6 +62,70 @@ class TranslationSaver
             throw new ConfigurationException('No entity configured for Shopware6 Translation-Set: ' . $set->getName());
         }
 
+        if (strtolower($entity) === 'snippet') {
+            return $this->saveSnippets($set);
+        }
+
+        return $this->saveEntities($entity, $set);
+    }
+
+
+    /**
+     * @param TranslationSet $set
+     * @return StorageSaveResult
+     * @throws \Doctrine\DBAL\Exception
+     */
+    private function saveSnippets(TranslationSet $set): StorageSaveResult
+    {
+        $localeCount = 0;
+        $translationCount = 0;
+
+
+        $allSnippetSets = $this->repoSnippets->getSnippetSets();
+
+        foreach ($set->getLocales() as $locale) {
+
+            $localeCount++;
+
+            $foundSnippetSet = null;
+            foreach ($allSnippetSets as $snippetSet) {
+                # search for ID
+                if ($snippetSet->getIso() === $locale->getName()) {
+                    $foundSnippetSet = $snippetSet;
+                    break;
+                }
+            }
+
+            if ($foundSnippetSet === null) {
+                throw new \Exception('No Snippet Set found in Shopware for locale: ' . $locale->getName());
+            }
+
+            foreach ($locale->getTranslations() as $translation) {
+
+                $this->repoSnippets->updateSnippet(
+                    $translation->getKey(),
+                    $foundSnippetSet->getId(),
+                    $translation->getValue()
+                );
+
+                $translationCount++;
+            }
+        }
+
+        return new StorageSaveResult(
+            $localeCount,
+            $translationCount
+        );
+    }
+
+    /**
+     * @param string $entity
+     * @param TranslationSet $set
+     * @return StorageSaveResult
+     * @throws \Doctrine\DBAL\Exception
+     */
+    private function saveEntities(string $entity, TranslationSet $set): StorageSaveResult
+    {
         $allDbLanguages = $this->repoLanguages->getLanguages();
 
         $localeCount = 0;
@@ -79,7 +150,7 @@ class TranslationSaver
             }
 
             # now that we have grouped them,
-            # build a single SQL udpate statement for every entity (group)
+            # build a single SQL update statement for every entity (group)
             foreach ($entityUpdateData as $group => $translations) {
 
                 $fields = [];

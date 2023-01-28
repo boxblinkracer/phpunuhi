@@ -3,6 +3,12 @@
 All notable changes of SVRUnit releases are documented in this file
 using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
+### [unreleased]
+
+### Added
+
+- Add support for **database snippets** in Shopware 6 storage using the entity name **snippet**.
+
 ## [1.2.0]
 
 ### Added

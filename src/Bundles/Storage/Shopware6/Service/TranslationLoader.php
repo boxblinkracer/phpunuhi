@@ -3,9 +3,11 @@
 namespace PHPUnuhi\Bundles\Storage\Shopware6\Service;
 
 use Doctrine\DBAL\Connection;
+use PHPUnuhi\Bundles\Storage\Shopware6\Models\SnippetSet;
 use PHPUnuhi\Bundles\Storage\Shopware6\Models\Sw6Locale;
 use PHPUnuhi\Bundles\Storage\Shopware6\Repository\EntityTranslationRepository;
 use PHPUnuhi\Bundles\Storage\Shopware6\Repository\LanguageRepository;
+use PHPUnuhi\Bundles\Storage\Shopware6\Repository\SnippetRepository;
 use PHPUnuhi\Bundles\Storage\Shopware6\Shopware6Storage;
 use PHPUnuhi\Exceptions\ConfigurationException;
 use PHPUnuhi\Models\Translation\Locale;
@@ -28,7 +30,12 @@ class TranslationLoader
     /**
      * @var EntityTranslationRepository
      */
-    private $repoTranslations;
+    private $repoEntityTranslations;
+
+    /**
+     * @var SnippetRepository
+     */
+    private $repoSnippets;
 
 
     /**
@@ -37,7 +44,8 @@ class TranslationLoader
     public function __construct(Connection $connection)
     {
         $this->repoLanguages = new LanguageRepository($connection);
-        $this->repoTranslations = new EntityTranslationRepository($connection);
+        $this->repoEntityTranslations = new EntityTranslationRepository($connection);
+        $this->repoSnippets = new SnippetRepository($connection);
     }
 
 
@@ -55,11 +63,66 @@ class TranslationLoader
             throw new ConfigurationException('No entity configured for Shopware6 Translation-Set: ' . $set->getName());
         }
 
+        if (strtolower($entity) === 'snippet') {
+            $this->loadSnippets($set);
+        } else {
+            $this->loadEntities($entity, $set);
+        }
+    }
+
+
+    /**
+     * @param TranslationSet $set
+     * @return void
+     * @throws \Doctrine\DBAL\Exception
+     */
+    private function loadSnippets(TranslationSet $set): void
+    {
+        $allSnippets = $this->repoSnippets->getSnippets();
+        $allSnippetSets = $this->repoSnippets->getSnippetSets();
+
+        foreach ($set->getLocales() as $locale) {
+
+            foreach ($allSnippets as $snippet) {
+
+                $foundSet = null;
+                foreach ($allSnippetSets as $snippetSet) {
+                    if ($snippetSet->getId() === $snippet->getSnippetSetId()) {
+                        $foundSet = $snippetSet;
+                        break;
+                    }
+                }
+
+                if ($foundSet === null) {
+                    continue;
+                }
+
+                if ($foundSet->getIso() !== $locale->getName()) {
+                    continue;
+                }
+
+                $locale->addTranslation(
+                    $snippet->getKey(),
+                    $snippet->getValue(),
+                    ''
+                );
+            }
+        }
+
+    }
+
+    /**
+     * @param string $entity
+     * @param TranslationSet $set
+     * @return void
+     * @throws \Doctrine\DBAL\Exception
+     */
+    private function loadEntities(string $entity, TranslationSet $set): void
+    {
         $entityIdKey = $entity . '_id';
 
-
         $allDbLanguages = $this->repoLanguages->getLanguages();
-        $allDbTranslations = $this->repoTranslations->getTranslations($entity);
+        $allDbTranslations = $this->repoEntityTranslations->getTranslations($entity);
 
         foreach ($set->getLocales() as $locale) {
 
@@ -113,6 +176,7 @@ class TranslationLoader
             }
         }
     }
+
 
     /**
      * @param Locale $locale
