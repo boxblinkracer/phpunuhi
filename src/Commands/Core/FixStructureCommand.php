@@ -85,7 +85,7 @@ class FixStructureCommand extends Command
                 continue;
             }
 
-            $io->block('saving translations of this sset...');
+            $io->block('saving translations of this set...');
 
             $storageSaver = StorageFactory::getStorage($set);
 
