@@ -8,6 +8,9 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 ### Added
 
 - Add support for **database snippets** in Shopware 6 storage using the entity name **snippet**.
+### Fixed
+
+- Fixed problems with broken "Umlaute" in Shopware 6 entities storage
 
 ## [1.2.0]
 

@@ -87,6 +87,8 @@ class EntityTranslationRepository
                 $value = NULL;
             }
 
+            $value = utf8_decode($value);
+
             $qb->set($data->getField(), ':' . $valueKey);
             $qb->setParameter($valueKey, $value);
         }
