@@ -3,6 +3,7 @@
 namespace PHPUnuhi\Bundles\Storage\Shopware6\Service;
 
 use Doctrine\DBAL\Connection;
+use PHPUnuhi\Bundles\Storage\Shopware6\Exception\SnippetNotFoundException;
 use PHPUnuhi\Bundles\Storage\Shopware6\Models\Sw6Locale;
 use PHPUnuhi\Bundles\Storage\Shopware6\Models\UpdateField;
 use PHPUnuhi\Bundles\Storage\Shopware6\Repository\EntityTranslationRepository;
@@ -102,11 +103,28 @@ class TranslationSaver
 
             foreach ($locale->getTranslations() as $translation) {
 
-                $this->repoSnippets->updateSnippet(
-                    $translation->getKey(),
-                    $foundSnippetSet->getId(),
-                    $translation->getValue()
-                );
+                try {
+
+                    $existingSnippet = $this->repoSnippets->getSnippet($translation->getKey(), $foundSnippetSet->getId());
+
+                    $this->repoSnippets->updateSnippet(
+                        $translation->getKey(),
+                        $foundSnippetSet->getId(),
+                        $translation->getValue()
+                    );
+                } catch (SnippetNotFoundException $ex) {
+
+                    $existingSnippet = $this->repoSnippets->getSnippetByKey($translation->getKey());
+
+                    $this->repoSnippets->insertSnippet(
+                        $translation->getKey(),
+                        $foundSnippetSet->getId(),
+                        $translation->getValue(),
+                        $existingSnippet->getAuthor(),
+                        $existingSnippet->getCustomFields()
+                    );
+                }
+
 
                 $translationCount++;
             }

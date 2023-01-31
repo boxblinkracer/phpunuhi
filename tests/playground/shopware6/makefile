@@ -20,6 +20,9 @@ list: ## List available translation IDs
 validate: ## Validate command
 	cd ../../.. && php bin/phpunuhi validate --configuration=./tests/playground/shopware6/phpunuhi.xml
 
+structure: ## Fix Structure
+	cd ../../.. && php bin/phpunuhi fix:structure --configuration=./tests/playground/shopware6/phpunuhi.xml
+
 csv: ## Exports a CSV
 	cd ../../.. && php bin/phpunuhi export --configuration=./tests/playground/shopware6/phpunuhi.xml --format=csv --dir=./tests/playground/shopware6/.exports
 

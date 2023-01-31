@@ -8,6 +8,8 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 ### Added
 
 - Add support for **database snippets** in Shopware 6 storage using the entity name **snippet**.
+- The Shopware 6 storage format does now support "fix:structure" for snippet entities. Missing snippets will now be automatically generated with empty values.
+
 ### Fixed
 
 - Fixed problems with broken "Umlaute" in Shopware 6 entities storage

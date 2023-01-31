@@ -31,19 +31,27 @@ class Snippet
     private $author;
 
     /**
+     * @var string
+     */
+    private $customFields;
+
+
+    /**
      * @param string $id
      * @param string $snippetSetId
      * @param string $key
      * @param string $value
      * @param string $author
+     * @param string $customFields
      */
-    public function __construct(string $id, string $snippetSetId, string $key, string $value, string $author)
+    public function __construct(string $id, string $snippetSetId, string $key, string $value, string $author, string $customFields)
     {
         $this->id = $id;
         $this->snippetSetId = $snippetSetId;
         $this->key = $key;
         $this->value = $value;
         $this->author = $author;
+        $this->customFields = $customFields;
     }
 
     /**
@@ -84,6 +92,14 @@ class Snippet
     public function getAuthor(): string
     {
         return $this->author;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomFields(): string
+    {
+        return $this->customFields;
     }
 
 }
