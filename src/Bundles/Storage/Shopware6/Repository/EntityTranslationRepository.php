@@ -82,12 +82,13 @@ class EntityTranslationRepository
             $valueKey = 'value_' . $data->getField();
             $value = $data->getValue();
 
+            $value = utf8_decode($value);
+
             # make sure empty JSON fields are NULL
             if ($value === '' && in_array($data->getField(), $jsonFields)) {
                 $value = NULL;
             }
 
-            $value = utf8_decode($value);
 
             $qb->set($data->getField(), ':' . $valueKey);
             $qb->setParameter($valueKey, $value);
