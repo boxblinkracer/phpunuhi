@@ -490,12 +490,15 @@ This storage type makes sure to read and also write PHP files that return a sing
 The Shopware 6 format allows you to use PHPUnuhi directly on the database and the Shopware entities.
 
 What do we mean with entities? These are real objects of the platform, stored within the database.
-This means **products**, **salutations**, **shipping methods** and more. Basically, everything that has a **_translation** table in the database.
+This means **snippets**, **products**, **salutations**, **shipping methods** and more. Basically, everything that has a **_translation** table in the database.
 
 Just imagine running the **status command** and see a translation coverage of all your products in your shop. Nice, isn't it? Or let DeepL translate your data automatically?!
 
 To access the database of Shopware, you can either make sure the ENV variables for the connection are correctly set up,
 or provide your custom credentials in the **php** section of the configuration XML.
+
+Please keep in mind, snippets are handled in a different way in the database.
+To make life easier for you, we've added a fake entity name **snippet** that automatically connects to the snippet table instead of an entity translation table.
 
 ```xml
 
@@ -513,6 +516,16 @@ or provide your custom credentials in the **php** section of the configuration X
         <set name="Products">
             <format>
                 <shopware6 entity="product"/>
+            </format>
+            <locales>
+                <locale name="de-DE"/>
+                <locale name="en-GB"/>
+            </locales>
+        </set>
+
+        <set name="Snippets">
+            <format>
+                <shopware6 entity="snippet"/>
             </format>
             <locales>
                 <locale name="de-DE"/>
