@@ -70,4 +70,14 @@ class StringTraitTest extends TestCase
         $this->assertEquals(false, $contains);
     }
 
+    /**
+     * @return void
+     */
+    public function testStringEndsWithEmptySearchString()
+    {
+        $contains = $this->stringDoesEndsWith('this is a text', '');
+
+        $this->assertEquals(true, $contains);
+    }
+
 }

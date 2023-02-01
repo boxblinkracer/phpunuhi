@@ -58,4 +58,44 @@ class ArrayTraitTest extends TestCase
         $this->assertEquals($expected, $dimensional);
     }
 
+    /**
+     * @return void
+     */
+    public function testGetMultiDimensionalWithDifferentDelimiter()
+    {
+        $array = [
+            'card.title' => 'Title',
+            'card2,title' => 'Title 2',
+        ];
+
+        $expected = [
+            'card.title' => 'Title',
+            'card2' => [
+                'title' => 'Title 2',
+            ]
+        ];
+
+        $dimensional = $this->getMultiDimensionalArray($array, ',');
+
+        $this->assertEquals($expected, $dimensional);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetMultiDimensionalWithEmptyDelimiter()
+    {
+        $array = [
+            'card.title' => 'Title',
+        ];
+
+        $expected = [
+            'card.title' => 'Title',
+        ];
+
+        $dimensional = $this->getMultiDimensionalArray($array, '');
+
+        $this->assertEquals($expected, $dimensional);
+    }
+
 }

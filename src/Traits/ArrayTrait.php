@@ -36,18 +36,18 @@ trait ArrayTrait
      */
     protected function getMultiDimensionalArray(array $array, string $delimiter = '.'): array
     {
+        if ($delimiter === '') {
+            return $array;
+        }
+
         $result = [];
         foreach ($array as $notations => $value) {
+
             // extract keys
             $keys = explode($delimiter, $notations);
 
-            if ($keys === false) {
-                $keys = [];
-            }
-
             // reverse keys for assignments
             $keys = array_reverse($keys);
-
 
             // set initial value
             $lastVal = $value;
