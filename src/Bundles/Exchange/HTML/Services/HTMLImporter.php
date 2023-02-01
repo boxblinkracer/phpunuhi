@@ -4,6 +4,7 @@ namespace PHPUnuhi\Bundles\Exchange\HTML\Services;
 
 use PHPUnuhi\Bundles\Exchange\ImportEntry;
 use PHPUnuhi\Bundles\Exchange\ImportResult;
+use PHPUnuhi\Services\GroupName\GroupNameService;
 use PHPUnuhi\Traits\StringTrait;
 use SplFileObject;
 
@@ -19,6 +20,8 @@ class HTMLImporter
     public function import(string $filename): ImportResult
     {
         $foundData = [];
+
+        $groupNameService = new GroupNameService();
 
         foreach (new SplFileObject($filename) as $line) {
 
@@ -38,17 +41,9 @@ class HTMLImporter
 
             $fullKeyWithLocale = explode('=', $line)[0];
 
-            $key = '';
-            $group = '';
             $localeID = '';
-
-            if ($this->stringDoesStartsWith($fullKeyWithLocale, 'group--')) {
-
-                $group = explode('.', $fullKeyWithLocale)[0];
-                $group = str_replace('group--', '', $group);
-
-                $key = str_replace('group--' . $group . '.', '', $fullKeyWithLocale);
-            }
+            $group = $groupNameService->getGroupID($fullKeyWithLocale);
+            $key = $groupNameService->getPropertyName($fullKeyWithLocale);
 
             if ($this->stringDoesContain($key, '--')) {
                 $localeID = explode('--', $key)[1];

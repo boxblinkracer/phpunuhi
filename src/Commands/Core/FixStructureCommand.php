@@ -6,6 +6,7 @@ namespace PHPUnuhi\Commands\Core;
 use PHPUnuhi\Bundles\Storage\StorageFactory;
 use PHPUnuhi\Configuration\ConfigurationLoader;
 use PHPUnuhi\Exceptions\TranslationNotFoundException;
+use PHPUnuhi\Services\GroupName\GroupNameService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -57,6 +58,8 @@ class FixStructureCommand extends Command
 
         $countCreated = 0;
 
+        $groupNameService = new GroupNameService();
+
         foreach ($config->getTranslationSets() as $set) {
 
             if (!empty($setName) && $setName !== $set->getName()) {
@@ -73,8 +76,17 @@ class FixStructureCommand extends Command
                     try {
                         $locale->findTranslation($currentID);
                     } catch (TranslationNotFoundException $ex) {
+
+                        $groupName = $groupNameService->getGroupID($currentID);
+                        $propertyKey = $groupNameService->getPropertyName($currentID);
                         $io->writeln('   [+] create translation: [' . $locale->getName() . '] ' . $currentID);
-                        $locale->addTranslation($currentID, '', '');
+
+                        $locale->addTranslation(
+                            $propertyKey,
+                            '',
+                            $groupName
+                        );
+
                         $countCreated++;
                     }
                 }
