@@ -61,6 +61,39 @@ class EntityTranslationRepository
      * @param string $entity
      * @param string $entityId
      * @param string $languageId
+     * @return array<mixed>|null
+     * @throws \Doctrine\DBAL\Exception
+     */
+    public function getTranslationRow(string $entity, string $entityId, string $languageId): ?array
+    {
+        $qb = $this->connection->createQueryBuilder();
+
+        $qb->select('*')
+            ->from($entity . '_translation', 't')
+            ->where($qb->expr()->eq($entity . '_id', ':id'))
+            ->andWhere($qb->expr()->eq('language_id', ':langId'))
+            ->setParameter('id', $this->stringToBinary($entityId))
+            ->setParameter('langId', $this->stringToBinary($languageId));
+
+        $result = $qb->execute();
+
+        if (!$result instanceof Result) {
+            return null;
+        }
+
+        $dbRow = $result->fetch();
+
+        if ($dbRow !== (array)$dbRow) {
+            return null;
+        }
+
+        return $dbRow;
+    }
+
+    /**
+     * @param string $entity
+     * @param string $entityId
+     * @param string $languageId
      * @param UpdateField[] $fieldValues
      * @return void
      * @throws \Doctrine\DBAL\Exception

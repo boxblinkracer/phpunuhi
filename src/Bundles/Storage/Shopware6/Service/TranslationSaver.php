@@ -14,6 +14,7 @@ use PHPUnuhi\Exceptions\ConfigurationException;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\Translation;
 use PHPUnuhi\Models\Translation\TranslationSet;
+use PHPUnuhi\Services\GroupName\GroupNameService;
 use PHPUnuhi\Traits\BinaryTrait;
 use PHPUnuhi\Traits\StringTrait;
 
@@ -149,6 +150,9 @@ class TranslationSaver
         $localeCount = 0;
         $translationCount = 0;
 
+        $groupNameService = new GroupNameService();
+
+
         foreach ($set->getLocales() as $locale) {
 
             $currentLanguageID = $this->getShopwareLanguageId($locale, $allDbLanguages);
@@ -180,6 +184,14 @@ class TranslationSaver
                     $entityId = str_replace($entity . '_', '', $translation->getGroup());
                 }
 
+                # check if even existing
+                $existingRow = $this->repoTranslations->getTranslationRow($entity, $entityId, $currentLanguageID);
+
+                if ($existingRow === null) {
+                    echo "   [!] Translation not existing. PHPUnuhi cannot create new entries at the moment: " . $entity . '_' . $entityId . PHP_EOL;
+                    continue;
+                }
+
                 $this->repoTranslations->updateTranslationRow(
                     $entity,
                     $entityId,
@@ -190,6 +202,8 @@ class TranslationSaver
                 $translationCount++;
             }
         }
+
+        echo PHP_EOL;
 
         return new StorageSaveResult(
             $localeCount,
