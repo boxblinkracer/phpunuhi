@@ -82,14 +82,6 @@ class StatusCommand extends Command
 
             foreach ($set->getLocales() as $locale) {
                 $countLocaleIDs = count($locale->getTranslationIDs());
-
-                if ($countLocaleIDs === 0) {
-                    # if our current locale has no ID
-                    # then show 0,00 %, and also show the maximum number of IDs as coverage possibility
-                    $io->writeln("   [" . $locale->getName() . "] Coverage: 0% (0/" . $countMaxLocaleIDs . ")");
-                    continue;
-                }
-
                 $countLocaleValid = count($locale->getValidTranslations());
 
                 $percent = $calculator->getRoundedPercentage($countLocaleValid, $countLocaleIDs);
