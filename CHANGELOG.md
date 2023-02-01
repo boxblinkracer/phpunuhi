@@ -13,6 +13,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 ### Fixed
 
 - Fixed problems with broken "Umlaute" in Shopware 6 entities storage
+- Fix problem with wrong translation coverage. A set with 0/0 was displayed as 0% coverage, but it's actually 100%.
 
 ## [1.2.0]
 

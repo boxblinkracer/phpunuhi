@@ -32,4 +32,16 @@ class PercentageCalculatorTest extends TestCase
         $this->assertEquals(0, $result);
     }
 
+    /**
+     *
+     */
+    public function testEmptyMeansFull()
+    {
+        $calculator = new PercentageCalculator();
+
+        $result = $calculator->getRoundedPercentage(0, 0);
+
+        $this->assertEquals(100, $result);
+    }
+
 }
