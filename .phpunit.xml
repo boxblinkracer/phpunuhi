@@ -16,10 +16,11 @@
 
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./</directory>
+            <directory suffix=".php">./src</directory>
             <exclude>
                 <file>./src/index.php</file>
                 <file>./.php_cs.php</file>
+                <file>./phpinsights</file>
                 <directory suffix=".php">./build</directory>
                 <directory suffix=".php">./scripts</directory>
                 <directory suffix=".php">./tests</directory>
