@@ -81,6 +81,10 @@ class FixStructureCommand extends Command
                         $propertyKey = $groupNameService->getPropertyName($currentID);
                         $io->writeln('   [+] create translation: [' . $locale->getName() . '] ' . $currentID);
 
+                        # if we have no separate group ID, then do NOT create it!
+                        # this is for storage formats without group
+                        $groupName = ($groupName === $propertyKey) ? '' : $groupName;
+
                         $locale->addTranslation(
                             $propertyKey,
                             '',
