@@ -31,6 +31,10 @@ class JsonLoader
             }
         }
 
+        if ($foundTranslations === null) {
+            $foundTranslations = [];
+        }
+
         $foundTranslationsFlat = $this->getFlatArray($foundTranslations);
 
         foreach ($foundTranslationsFlat as $key => $value) {
