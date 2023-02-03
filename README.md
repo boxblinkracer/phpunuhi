@@ -44,15 +44,16 @@ Now that you know this, let's get started!
         * [7.1.4 Shopware 6](#714-shopware-6)
     * [7.2 Filters](#72-filters)
     * [7.3 Groups](#73-groups)
-    * [7.4 PHP ENV Variables](#74-php-env-variables)
-    * [7.5 Exchange Formats](#75-exchange-formats)
-        * [7.5.1 CSV](#751-csv)
-        * [7.5.2 HTML / WebEdit](#752-html--webedit)
-    * [7.6 Translator Services](#76-translator-services)
-        * [7.6.1 DeepL](#761-deepl)
-        * [7.6.2 Google Cloud Translate](#762-google-cloud-translate)
-        * [7.6.3 Google Web Translate](#763-google-web-translate)
-        * [7.6.4 OpenAI GPT Translate](#764-openai-gpt-translate)
+    * [7.4 Case Styles](#74-case-styles)
+    * [7.5 PHP ENV Variables](#75-php-env-variables)
+    * [7.6 Exchange Formats](#76-exchange-formats)
+        * [7.6.1 CSV](#761-csv)
+        * [7.6.2 HTML / WebEdit](#762-html--webedit)
+    * [7.7 Translator Services](#77-translator-services)
+        * [7.7.1 DeepL](#771-deepl)
+        * [7.7.2 Google Cloud Translate](#772-google-cloud-translate)
+        * [7.7.3 Google Web Translate](#773-google-web-translate)
+        * [7.7.4 OpenAI GPT Translate](#774-openai-gpt-translate)
 
 <!-- TOC -->
 
@@ -81,7 +82,8 @@ translation services (Google, DeepL, OpenAI). This makes PHPUnuhi a great **comp
 
 **Key Benefits**
 
-* Validates structure and content
+* Validates structure and content of translations
+* Keep consistent keys with validations based on CamelCase, KebabCase and more
 * Platform independent and composable framework with different components.
 * Exchange formats such as CSV and HTML
 * Live WebEdit with HTML exchange format
@@ -222,6 +224,11 @@ This helps against forgetting certain translations in any of your locales.
 <p align="center">
    <img src="/.github/assets/validation-empty.png">
 </p>
+
+**Invalid Case-Styles**
+
+If you have provided a list of allowed case-styles, the validation command will automatically test
+if all your translation keys, match your provided case styles.
 
 ### 4.2 Fix Structure Command
 
@@ -577,7 +584,35 @@ A CSV format, has a separate column for groups, and the import should also work 
 The HTML format on the other hand, shows a matching style in the table, so you know that the
 translations all belong to this group.
 
-### 7.4 PHP ENV Variables
+### 7.4 Case Styles
+
+To keep consistency across all your translation keys, it's possible to set a list of allowed case styles.
+The **validate** command, will automatically test, if all your translation keys match at least one of the provided styles.
+
+If no style is provided, then case-style tests are skipped.
+
+The following styles are possible:
+
+* camel
+* pascal
+* kebab
+* lower
+* upper
+* snake
+* start
+* constant
+
+```xml
+
+<set>
+    <styles>
+        <style>pascal</style>
+        <style>kebab</style>
+    </styles>
+</set>
+```
+
+### 7.5 PHP ENV Variables
 
 The XML configuration allows you to create custom ENV variables.
 Depending on the components you use in PHPUnuhi, some require specific ENV variables, such as the Shopware 6 database connection.
@@ -596,7 +631,7 @@ These can either be set by exporting the ENV variable on your server, or by simp
 </phpunuhi>
 ```
 
-### 7.5 Exchange Formats
+### 7.6 Exchange Formats
 
 Exchange formats define how you export and import translation data.
 The main purpose is to send it out to a translation company or just someone else,
@@ -604,7 +639,7 @@ and be able to import it back into your system again.
 
 The following formats are currently supported.
 
-#### 7.5.1 CSV
+#### 7.6.1 CSV
 
 * Format: "csv"
 
@@ -624,7 +659,7 @@ Every translation key has its own row, and all locale-values have their own colu
    <img src="/.github/assets/csv.png">
 </p>
 
-#### 7.5.2 HTML / WebEdit
+#### 7.6.2 HTML / WebEdit
 
 * Format: "html"
 
@@ -638,12 +673,12 @@ you can import again into your system with the format **html** in PHPUnuhi.
    <img src="/.github/assets/html.png">
 </p>
 
-### 7.6 Translator Services
+### 7.7 Translator Services
 
 Translators are supported (external) services that automatically translate empty values for you.
 These services usually require an API key that needs to be provided for PHPUnuhi.
 
-#### 7.6.1 DeepL
+#### 7.7.1 DeepL
 
 * Service: "deepl"
 
@@ -659,7 +694,7 @@ DeepL allows you to either translate to a formal or informal language.
 This option is only available for some target languages, just like "German" ("du" vs. "Sie").
 You can request a formal language by simply applying the argument "--deepl-formal" to the translate command.
 
-#### 7.6.2 Google Cloud Translate
+#### 7.7.2 Google Cloud Translate
 
 * Service: "googlecloud"
 
@@ -670,7 +705,7 @@ You can request a formal language by simply applying the argument "--deepl-forma
 Google Cloud Translation allows you to use the AI services of Google.
 If you have an API Key, you can easily provide it with the corresponding argument when running the translation command.
 
-#### 7.6.3 Google Web Translate
+#### 7.7.3 Google Web Translate
 
 * Service: "googleweb"
 
@@ -681,7 +716,7 @@ Because of this, it can happen, that a massive number of requests might lead to 
 This is more meant for educational purposes.
 Although it works, you should consider getting a real Google API key for commercial and serious usage of their services.
 
-#### 7.6.4 OpenAI GPT Translate
+#### 7.7.4 OpenAI GPT Translate
 
 * Service: "openai"
 

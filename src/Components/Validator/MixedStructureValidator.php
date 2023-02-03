@@ -2,16 +2,34 @@
 
 namespace PHPUnuhi\Components\Validator;
 
+use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Models\Translation\TranslationSet;
+use Symfony\Component\Console\Output\OutputInterface;
 
-class Validator
+class MixedStructureValidator implements ValidatorInterface
 {
+
+
+    /**
+     * @var OutputInterface
+     */
+    private $output;
+
+
+    /**
+     * @param OutputInterface $output
+     */
+    public function __construct(OutputInterface $output)
+    {
+        $this->output = $output;
+    }
 
     /**
      * @param TranslationSet $set
+     * @param StorageInterface $storage
      * @return bool
      */
-    public function validate(TranslationSet $set): bool
+    public function validate(TranslationSet $set, StorageInterface $storage): bool
     {
         $isValid = true;
 
@@ -27,42 +45,20 @@ class Validator
 
             if (!$structureValid) {
 
-                echo "Found different structure in this file: " . PHP_EOL;
-                echo "  - " . $locale->getName() . PHP_EOL;
+                $this->output->writeln("[STRUCTURE] Found different structure in this file: ");
+                $this->output->writeln("  - " . $locale->getName());
                 if (!empty($locale->getFilename())) {
-                    echo "    " . $locale->getFilename() . PHP_EOL;
+                    $this->output->writeln("    " . $locale->getFilename());
                 }
 
                 $filtered = $this->getDiff($localeKeys, $allKeys);
 
                 foreach ($filtered as $key) {
-                    echo '           [x]: ' . $key . PHP_EOL;
+                    $this->output->writeln('           [x]: ' . $key);
                 }
-                echo PHP_EOL;
+                $this->output->writeln('');
 
                 $isValid = false;
-            }
-        }
-
-
-        foreach ($set->getLocales() as $locale) {
-            foreach ($locale->getTranslations() as $translation) {
-
-                if ($translation->isEmpty()) {
-                    echo "Found empty translation in locale: " . $locale->getName() . PHP_EOL;
-                    if (!empty($locale->getFilename())) {
-                        echo "  - " . $locale->getFilename() . PHP_EOL;
-                    }
-
-                    if ($translation->getGroup() !== '') {
-                        echo '           [x]: ' . $translation->getGroup() . ' (group) => ' . $translation->getKey() . PHP_EOL;
-                    } else {
-                        echo '           [x]: ' . $translation->getID() . PHP_EOL;
-                    }
-
-                    echo PHP_EOL;
-                    $isValid = false;
-                }
             }
         }
 
@@ -97,4 +93,5 @@ class Validator
 
         return array_merge($diffA, $diffB);
     }
+
 }

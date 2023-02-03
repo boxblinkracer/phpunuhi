@@ -20,7 +20,7 @@ class FilterHandlerTest extends TestCase
      *
      * @return void
      */
-    public function testApplayFilter()
+    public function testApplyFilter()
     {
         $handler = new FilterHandler();
 
@@ -42,6 +42,7 @@ class FilterHandlerTest extends TestCase
             'json',
             [$localesDE, $localesEN],
             $filter,
+            [],
             []
         );
 

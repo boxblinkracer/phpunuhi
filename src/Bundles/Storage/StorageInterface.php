@@ -13,6 +13,11 @@ interface StorageInterface
     public function supportsFilters(): bool;
 
     /**
+     * @return StorageHierarchy
+     */
+    public function getHierarchy(): StorageHierarchy;
+
+    /**
      * @param TranslationSet $set
      * @return void
      */

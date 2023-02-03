@@ -4,6 +4,7 @@ namespace PHPUnuhi\Bundles\Storage\JSON;
 
 use PHPUnuhi\Bundles\Storage\JSON\Services\JsonLoader;
 use PHPUnuhi\Bundles\Storage\JSON\Services\JsonSaver;
+use PHPUnuhi\Bundles\Storage\StorageHierarchy;
 use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Bundles\Storage\StorageSaveResult;
 use PHPUnuhi\Models\Translation\TranslationSet;
@@ -42,14 +43,27 @@ class JsonStorage implements StorageInterface
     }
 
     /**
+     * @return StorageHierarchy
+     */
+    public function getHierarchy(): StorageHierarchy
+    {
+        return new StorageHierarchy(
+            true,
+            '.'
+        );
+    }
+
+    /**
      * @param TranslationSet $set
      * @return void
      * @throws \Exception
      */
     public function loadTranslations(TranslationSet $set): void
     {
+        $delimiter = $this->getHierarchy()->getDelimiter();
+
         foreach ($set->getLocales() as $locale) {
-            $this->loader->loadTranslations($locale);
+            $this->loader->loadTranslations($locale, $delimiter);
         }
     }
 
@@ -59,7 +73,9 @@ class JsonStorage implements StorageInterface
      */
     public function saveTranslations(TranslationSet $set): StorageSaveResult
     {
-        return $this->saver->saveTranslations($set);
+        $delimiter = $this->getHierarchy()->getDelimiter();
+
+        return $this->saver->saveTranslations($set, $delimiter);
     }
 
 }

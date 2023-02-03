@@ -34,9 +34,10 @@ class JsonSaver
 
     /**
      * @param TranslationSet $set
+     * @param string $delimiter
      * @return StorageSaveResult
      */
-    public function saveTranslations(TranslationSet $set): StorageSaveResult
+    public function saveTranslations(TranslationSet $set, string $delimiter): StorageSaveResult
     {
         $indent = $this->jsonIndent;
 
@@ -58,7 +59,7 @@ class JsonSaver
                 ksort($saveValues);
             }
 
-            $tmpArray = $this->getMultiDimensionalArray($saveValues, '.');
+            $tmpArray = $this->getMultiDimensionalArray($saveValues, $delimiter);
 
             $jsonString = (string)json_encode($tmpArray, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 

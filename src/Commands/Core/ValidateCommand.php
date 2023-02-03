@@ -3,7 +3,10 @@
 namespace PHPUnuhi\Commands\Core;
 
 
-use PHPUnuhi\Components\Validator\Validator;
+use PHPUnuhi\Bundles\Storage\StorageFactory;
+use PHPUnuhi\Components\Validator\CaseStyleValidator;
+use PHPUnuhi\Components\Validator\EmptyContentValidator;
+use PHPUnuhi\Components\Validator\MixedStructureValidator;
 use PHPUnuhi\Configuration\ConfigurationLoader;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -51,21 +54,51 @@ class ValidateCommand extends Command
         $configLoader = new ConfigurationLoader();
         $config = $configLoader->load($configFile);
 
-        $validator = new Validator();
-
 
         $isAllValid = true;
 
+        $validators = [];
+        $validators[] = new CaseStyleValidator($output);
+        $validators[] = new MixedStructureValidator($output);
+        $validators[] = new EmptyContentValidator($output);
+
         foreach ($config->getTranslationSets() as $set) {
 
-            $io->section('Translation Set: ' . $set->getName());
+            $io->section('Translation-Set: ' . $set->getName());
 
-            $isValid = $validator->validate($set);
 
-            if ($isValid) {
-                $io->block('Set is valid!');
+            $io->writeln('  -------------------------------------------------------------');
+            $io->writeln('   Configuration for Translation-Set:');
+
+            if (count($set->getCasingStyles()) > 0) {
+                $styles = implode(', ', $set->getCasingStyles());
             } else {
-                $io->note('Set is not valid!');
+                $styles = 'none';
+            }
+
+            $io->writeln('      [~] Case-styles: ' . $styles);
+            $io->writeln('  -------------------------------------------------------------');
+            $io->writeln('');
+            $io->writeln("");
+
+
+            $storage = StorageFactory::getStorage($set);
+
+            $allValidatorsValid = true;
+
+            foreach ($validators as $validator) {
+
+                $isValid = $validator->validate($set, $storage);
+
+                if (!$isValid) {
+                    $allValidatorsValid = false;
+                }
+            }
+
+            if ($allValidatorsValid) {
+                $io->block('Translation-Set is valid!');
+            } else {
+                $io->note('Translation-Set is not valid!');
                 $isAllValid = false;
             }
         }
@@ -75,7 +108,7 @@ class ValidateCommand extends Command
             exit(0);
         }
 
-        $io->error('Translations are not valid!');
+        $io->error('Not all translations are valid!');
         exit(1);
     }
 

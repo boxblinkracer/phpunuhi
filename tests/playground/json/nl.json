@@ -1,7 +1,6 @@
 {
     "card": {
-        "description": "Dit is het overzicht van alle algemene punten.",
-        "title": "Algemeen"
+        "titleTest": "Over het algemeen"
     },
-    "title": "Welkom"
+    "kebab-title": "Over het algemeen"
 }

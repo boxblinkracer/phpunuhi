@@ -5,6 +5,7 @@ namespace PHPUnuhi\Bundles\Storage\Shopware6;
 use Doctrine\DBAL\Connection;
 use PHPUnuhi\Bundles\Storage\Shopware6\Service\TranslationLoader;
 use PHPUnuhi\Bundles\Storage\Shopware6\Service\TranslationSaver;
+use PHPUnuhi\Bundles\Storage\StorageHierarchy;
 use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Bundles\Storage\StorageSaveResult;
 use PHPUnuhi\Models\Translation\TranslationSet;
@@ -53,6 +54,17 @@ class Shopware6Storage implements StorageInterface
     public function supportsFilters(): bool
     {
         return true;
+    }
+
+    /**
+     * @return StorageHierarchy
+     */
+    public function getHierarchy(): StorageHierarchy
+    {
+        return new StorageHierarchy(
+            false,
+            ''
+        );
     }
 
     /**
