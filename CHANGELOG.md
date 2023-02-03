@@ -3,7 +3,7 @@
 All notable changes of SVRUnit releases are documented in this file
 using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
-### [unreleased]
+### [1.3.0]
 
 ### Added
 
@@ -16,7 +16,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 - Fixed problems with broken "Umlaute" in Shopware 6 entities storage
 - Fix problem with wrong translation coverage. A set with 0/0 was displayed as 0% coverage, but it's actually 100%.
 - Fix problem with "fix:structure" when creating new snippets for translations-sets with groups. It accidentally used the full ID instead of the correct key name for the "key" identifier.
-- Fix crash when parsing invalid json files. 
+- Fix crash when parsing invalid json files.
 
 ## [1.2.0]
 
