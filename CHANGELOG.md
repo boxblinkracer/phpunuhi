@@ -3,7 +3,17 @@
 All notable changes of SVRUnit releases are documented in this file
 using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
-### [1.3.0]
+## [unreleased]
+
+### Added
+
+- Add new **case-styles** for translations. This allows you to validate against translation keys. Select from a wide range of styles like CamelCase, PascalCase, KebabCase and more.
+
+### Fixed
+
+- Fixed wrong "created" count on **fix:structure**. It showed 0 created if the last translation-set didn't get any new translations.
+
+## [1.3.0]
 
 ### Added
 

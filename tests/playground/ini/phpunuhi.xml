@@ -9,6 +9,9 @@
             <format>
                 <ini sort="true"/>
             </format>
+            <styles>
+                <style>camel</style>
+            </styles>
             <locales>
                 <locale name="de">./de.ini</locale>
                 <locale name="en">./en.ini</locale>

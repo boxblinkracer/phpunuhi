@@ -2,6 +2,7 @@
 
 namespace PHPUnuhi\Bundles\Storage\INI;
 
+use PHPUnuhi\Bundles\Storage\StorageHierarchy;
 use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Bundles\Storage\StorageSaveResult;
 use PHPUnuhi\Models\Translation\TranslationSet;
@@ -32,6 +33,16 @@ class IniStorage implements StorageInterface
         return false;
     }
 
+    /**
+     * @return StorageHierarchy
+     */
+    public function getHierarchy(): StorageHierarchy
+    {
+        return new StorageHierarchy(
+            false,
+            ''
+        );
+    }
     /**
      * @param TranslationSet $set
      * @return void

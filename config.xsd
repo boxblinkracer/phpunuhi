@@ -51,6 +51,7 @@
         <xs:choice minOccurs="1" maxOccurs="unbounded">
             <xs:element name="format" type="typeFormat" minOccurs="1" maxOccurs="1"/>
             <xs:element name="filter" type="typeFilter" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="styles" type="typeStyle" minOccurs="0" maxOccurs="1"/>
             <xs:element name="locales" type="typeLocales" minOccurs="1" maxOccurs="1"/>
         </xs:choice>
         <xs:attribute name="name" type="xs:string" use="required"/>
@@ -71,6 +72,28 @@
             <xs:element name="key" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
         </xs:choice>
     </xs:complexType>
+
+    <!-- ================================================================================================================================ -->
+    <!-- STYLE -->
+
+    <xs:complexType name="typeStyle">
+        <xs:choice minOccurs="0" maxOccurs="1">
+            <xs:element name="style" type="styleOptions" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:simpleType name="styleOptions">
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="camel"/>
+            <xs:enumeration value="snake"/>
+            <xs:enumeration value="kebab"/>
+            <xs:enumeration value="lower"/>
+            <xs:enumeration value="upper"/>
+            <xs:enumeration value="constant"/>
+            <xs:enumeration value="pascal"/>
+            <xs:enumeration value="start"/>
+        </xs:restriction>
+    </xs:simpleType>
 
     <!-- ================================================================================================================================ -->
     <!-- LOCALES -->

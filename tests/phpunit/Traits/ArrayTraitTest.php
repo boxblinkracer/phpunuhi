@@ -29,7 +29,7 @@ class ArrayTraitTest extends TestCase
             'content.description' => 'this is my description',
         ];
 
-        $flat = $this->getFlatArray($array);
+        $flat = $this->getFlatArray($array, '.');
 
         $this->assertEquals($expected, $flat);
     }
@@ -53,7 +53,7 @@ class ArrayTraitTest extends TestCase
             ]
         ];
 
-        $dimensional = $this->getMultiDimensionalArray($array);
+        $dimensional = $this->getMultiDimensionalArray($array, '.');
 
         $this->assertEquals($expected, $dimensional);
     }

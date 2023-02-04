@@ -68,7 +68,7 @@ class FixStructureCommand extends Command
 
             $io->section('Fixing Translation Set: ' . $set->getName());
 
-            $countCreated = 0;
+            $countSetCreated = 0;
 
             foreach ($set->getAllTranslationIDs() as $currentID) {
 
@@ -91,12 +91,13 @@ class FixStructureCommand extends Command
                             $groupName
                         );
 
+                        $countSetCreated++;
                         $countCreated++;
                     }
                 }
             }
 
-            if ($countCreated <= 0) {
+            if ($countSetCreated <= 0) {
                 $io->block('nothing translated in this set...');
                 continue;
             }

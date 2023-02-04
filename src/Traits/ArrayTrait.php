@@ -9,18 +9,19 @@ trait ArrayTrait
 
     /**
      * @param array<mixed> $array
-     * @param string $prefix
+     * @param string $delimiter
+     * @param string $rootPrefix
      * @return array<mixed>
      */
-    protected function getFlatArray(array $array, string $prefix = ''): array
+    protected function getFlatArray(array $array, string $delimiter, string $rootPrefix = ''): array
     {
         $result = [];
 
         foreach ($array as $key => $value) {
-            $new_key = $prefix . (empty($prefix) ? '' : '.') . $key;
+            $new_key = $rootPrefix . (empty($rootPrefix) ? '' : $delimiter) . $key;
 
             if (is_array($value)) {
-                $result = array_merge($result, $this->getFlatArray($value, $new_key));
+                $result = array_merge($result, $this->getFlatArray($value, $delimiter, $new_key));
             } else {
                 $result[$new_key] = $value;
             }
@@ -34,7 +35,7 @@ trait ArrayTrait
      * @param string $delimiter
      * @return array<mixed>
      */
-    protected function getMultiDimensionalArray(array $array, string $delimiter = '.'): array
+    protected function getMultiDimensionalArray(array $array, string $delimiter): array
     {
         if ($delimiter === '') {
             return $array;

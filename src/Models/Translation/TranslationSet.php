@@ -34,6 +34,11 @@ class TranslationSet
      */
     private $filter;
 
+    /**
+     * @var string[]
+     */
+    private $casingStyles;
+
 
     /**
      * @param string $name
@@ -41,14 +46,16 @@ class TranslationSet
      * @param Locale[] $locales
      * @param Filter $filter
      * @param Attribute[] $attributes
+     * @param string[] $styles
      */
-    public function __construct(string $name, string $format, array $locales, Filter $filter, array $attributes)
+    public function __construct(string $name, string $format, array $locales, Filter $filter, array $attributes, array $styles)
     {
         $this->name = $name;
         $this->format = $format;
         $this->locales = $locales;
         $this->filter = $filter;
         $this->attributes = $attributes;
+        $this->casingStyles = $styles;
     }
 
 
@@ -105,6 +112,14 @@ class TranslationSet
     public function getLocales(): array
     {
         return $this->locales;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getCasingStyles(): array
+    {
+        return $this->casingStyles;
     }
 
     /**

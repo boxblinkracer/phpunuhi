@@ -1,7 +1,6 @@
 {
     "card": {
-        "description": "Das ist die Übersicht aller allgemeinen Punkte.",
-        "title": "Allgemein"
+        "titleTest": "Allgemein"
     },
-    "title": "Herzlich willkommen"
+    "kebab-title": "Allgemein"
 }

@@ -96,6 +96,7 @@ class ConfigurationLoader
             $nodeFormat = $xmlSet->format;
             $nodeLocales = $xmlSet->locales;
             $nodeFilter = $xmlSet->filter;
+            $nodeStyles = $xmlSet->styles;
 
 
             # default values
@@ -103,7 +104,7 @@ class ConfigurationLoader
             $setAttributes = [];
             $setLocales = [];
             $setFilter = new Filter();
-
+            $casingStyles = [];
 
             if ($nodeFormat !== null) {
                 $formatData = $this->parseFormat($nodeFormat);
@@ -119,13 +120,17 @@ class ConfigurationLoader
                 $setLocales = $this->loadLocales($nodeLocales, $configFilename);
             }
 
+            if ($nodeStyles !== null) {
+                $casingStyles = $this->loadStyles($nodeStyles);
+            }
 
             $set = new TranslationSet(
                 $setName,
                 $setFormat,
                 $setLocales,
                 $setFilter,
-                $setAttributes
+                $setAttributes,
+                $casingStyles
             );
 
             $storage = StorageFactory::getStorage($set);
@@ -213,6 +218,31 @@ class ConfigurationLoader
         }
 
         return $filter;
+    }
+
+
+    /**
+     * @param SimpleXMLElement $stylesNode
+     * @return array<mixed>
+     */
+    private function loadStyles(SimpleXMLElement $stylesNode): array
+    {
+        $styles = [];
+
+        if ($stylesNode->style === null) {
+            return [];
+        }
+
+        foreach ($stylesNode->style as $style) {
+
+            $styleName = (string)$style;
+
+            if (!in_array($styleName, $styles)) {
+                $styles[] = $styleName;
+            }
+        }
+
+        return $styles;
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace PHPUnuhi\Bundles\Storage\PHP;
 
+use PHPUnuhi\Bundles\Storage\StorageHierarchy;
 use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Bundles\Storage\StorageSaveResult;
 use PHPUnuhi\Models\Translation\Locale;
@@ -37,11 +38,24 @@ class PhpStorage implements StorageInterface
     }
 
     /**
+     * @return StorageHierarchy
+     */
+    public function getHierarchy(): StorageHierarchy
+    {
+        return new StorageHierarchy(
+            true,
+            '.'
+        );
+    }
+
+    /**
      * @param TranslationSet $set
      * @return void
      */
     public function loadTranslations(TranslationSet $set): void
     {
+        $delimiter = $this->getHierarchy()->getDelimiter();
+
         foreach ($set->getLocales() as $locale) {
             $arrayData = require($locale->getFilename());
 
@@ -49,7 +63,7 @@ class PhpStorage implements StorageInterface
                 $arrayData = [];
             }
 
-            $foundTranslationsFlat = $this->getFlatArray($arrayData);
+            $foundTranslationsFlat = $this->getFlatArray($arrayData, $delimiter);
 
             foreach ($foundTranslationsFlat as $key => $value) {
                 $locale->addTranslation($key, $value, '');
@@ -65,6 +79,8 @@ class PhpStorage implements StorageInterface
     {
         $localeCount = 0;
         $translationCount = 0;
+
+        $delimiter = $this->getHierarchy()->getDelimiter();
 
 
         foreach ($set->getLocales() as $locale) {
@@ -91,7 +107,7 @@ class PhpStorage implements StorageInterface
                 ksort($saveValues);
             }
 
-            $tmpArray = $this->getMultiDimensionalArray($saveValues, '.');
+            $tmpArray = $this->getMultiDimensionalArray($saveValues, $delimiter);
 
             $content .= $this->buildArray($tmpArray, 1);
 

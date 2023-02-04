@@ -14,10 +14,10 @@ class JsonLoader
 
     /**
      * @param Locale $locale
+     * @param string $delimiter
      * @return void
-     * @throws \Exception
      */
-    public function loadTranslations(Locale $locale): void
+    public function loadTranslations(Locale $locale, string $delimiter): void
     {
         $snippetJson = (string)file_get_contents($locale->getFilename());
 
@@ -35,7 +35,7 @@ class JsonLoader
             $foundTranslations = [];
         }
 
-        $foundTranslationsFlat = $this->getFlatArray($foundTranslations);
+        $foundTranslationsFlat = $this->getFlatArray($foundTranslations, $delimiter);
 
         foreach ($foundTranslationsFlat as $key => $value) {
             $locale->addTranslation($key, $value, '');
