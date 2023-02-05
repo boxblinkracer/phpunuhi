@@ -103,7 +103,6 @@ class TranslateCommand extends Command
 
                 foreach ($set->getLocales() as $locale) {
 
-
                     # if we have configured to only translate a specific locale then skip other locales
                     if (!empty($forceLocale) && $forceLocale !== $locale->getName()) {
                         continue;
@@ -123,8 +122,8 @@ class TranslateCommand extends Command
                         try {
                             $existingData = $set->findAnyExistingTranslation($currentID);
                         } catch (TranslationNotFoundException $ex) {
-                            # if no translation exits
-                            # then skip this one
+                            # if no translation exits then skip this one
+                            $io->writeln('   [?] no existing translation found in any of the locales for key: ' . $currentTranslation->getID());
                             continue;
                         }
 
