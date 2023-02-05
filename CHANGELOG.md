@@ -9,6 +9,11 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 - Add new **case-styles** for translations. This allows you to validate against translation keys. Select from a wide range of styles like CamelCase, PascalCase, KebabCase and more.
 
+### Changed
+
+- Improved **output of the validation** command. Errors are now shown in a more compact and meaningful way.
+- The **translate** command now shows a warning if auto-translation is not possible because no existing translation has been found as base-value.
+
 ### Fixed
 
 - Fixed wrong "created" count on **fix:structure**. It showed 0 created if the last translation-set didn't get any new translations.

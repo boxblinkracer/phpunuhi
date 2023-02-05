@@ -6,7 +6,7 @@ namespace PHPUnuhi\Commands\Core;
 use PHPUnuhi\Bundles\Storage\StorageFactory;
 use PHPUnuhi\Components\Validator\CaseStyleValidator;
 use PHPUnuhi\Components\Validator\EmptyContentValidator;
-use PHPUnuhi\Components\Validator\MixedStructureValidator;
+use PHPUnuhi\Components\Validator\MissingStructureValidator;
 use PHPUnuhi\Configuration\ConfigurationLoader;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -58,17 +58,19 @@ class ValidateCommand extends Command
         $isAllValid = true;
 
         $validators = [];
-        $validators[] = new CaseStyleValidator($output);
-        $validators[] = new MixedStructureValidator($output);
-        $validators[] = new EmptyContentValidator($output);
+
+        $validators[] = new MissingStructureValidator();
+        $validators[] = new CaseStyleValidator();
+        $validators[] = new EmptyContentValidator();
+
+        $errorCount = 0;
 
         foreach ($config->getTranslationSets() as $set) {
 
             $io->section('Translation-Set: ' . $set->getName());
 
-
-            $io->writeln('  -------------------------------------------------------------');
-            $io->writeln('   Configuration for Translation-Set:');
+            $io->writeln('-------------------------------------------------------------');
+            $io->writeln(' Configuration for Translation-Set:');
 
             if (count($set->getCasingStyles()) > 0) {
                 $styles = implode(', ', $set->getCasingStyles());
@@ -76,30 +78,32 @@ class ValidateCommand extends Command
                 $styles = 'none';
             }
 
-            $io->writeln('      [~] Case-styles: ' . $styles);
-            $io->writeln('  -------------------------------------------------------------');
+            $io->writeln('   * Case-styles: ' . $styles);
+            $io->writeln('-------------------------------------------------------------');
             $io->writeln('');
-            $io->writeln("");
-
 
             $storage = StorageFactory::getStorage($set);
 
-            $allValidatorsValid = true;
 
             foreach ($validators as $validator) {
 
-                $isValid = $validator->validate($set, $storage);
+                $result = $validator->validate($set, $storage);
 
-                if (!$isValid) {
-                    $allValidatorsValid = false;
+                if (!$result->isValid()) {
+                    $isAllValid = false;
+
+                    foreach ($result->getErrors() as $error) {
+                        $errorCount++;
+
+                        $io->writeln('#' . $errorCount . ' [' . $error->getClassification() . "] " . $error->getMessage());
+                        $io->writeln('   - Locale: ' . $error->getLocale());
+                        if (!empty($error->getFilename())) {
+                            $io->writeln("   - File: " . $error->getFilename());
+                        }
+                        $io->writeln('       [x]: ' . $error->getIdentifier());
+                        $io->writeln('');
+                    }
                 }
-            }
-
-            if ($allValidatorsValid) {
-                $io->block('Translation-Set is valid!');
-            } else {
-                $io->note('Translation-Set is not valid!');
-                $isAllValid = false;
             }
         }
 
@@ -108,7 +112,7 @@ class ValidateCommand extends Command
             exit(0);
         }
 
-        $io->error('Not all translations are valid!');
+        $io->error('Found ' . $errorCount . ' errors!');
         exit(1);
     }
 

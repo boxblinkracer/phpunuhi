@@ -3,37 +3,23 @@
 namespace PHPUnuhi\Components\Validator;
 
 use PHPUnuhi\Bundles\Storage\StorageInterface;
+use PHPUnuhi\Components\Validator\Model\ValidationError;
+use PHPUnuhi\Components\Validator\Model\ValidationResult;
 use PHPUnuhi\Models\Translation\TranslationSet;
-use Symfony\Component\Console\Output\OutputInterface;
 
-class MixedStructureValidator implements ValidatorInterface
+class MissingStructureValidator implements ValidatorInterface
 {
-
-
-    /**
-     * @var OutputInterface
-     */
-    private $output;
-
-
-    /**
-     * @param OutputInterface $output
-     */
-    public function __construct(OutputInterface $output)
-    {
-        $this->output = $output;
-    }
 
     /**
      * @param TranslationSet $set
      * @param StorageInterface $storage
-     * @return bool
+     * @return ValidationResult
      */
-    public function validate(TranslationSet $set, StorageInterface $storage): bool
+    public function validate(TranslationSet $set, StorageInterface $storage): ValidationResult
     {
-        $isValid = true;
-
         $allKeys = $set->getAllTranslationIDs();
+
+        $validationErrors = [];
 
         foreach ($set->getLocales() as $locale) {
 
@@ -45,24 +31,21 @@ class MixedStructureValidator implements ValidatorInterface
 
             if (!$structureValid) {
 
-                $this->output->writeln("[STRUCTURE] Found different structure in this file: ");
-                $this->output->writeln("  - " . $locale->getName());
-                if (!empty($locale->getFilename())) {
-                    $this->output->writeln("    " . $locale->getFilename());
-                }
-
                 $filtered = $this->getDiff($localeKeys, $allKeys);
 
                 foreach ($filtered as $key) {
-                    $this->output->writeln('           [x]: ' . $key);
+                    $validationErrors[] = new ValidationError(
+                        'STRUCTURE',
+                        'Found missing structure in locale',
+                        $locale->getName(),
+                        $locale->getFilename(),
+                        $key
+                    );
                 }
-                $this->output->writeln('');
-
-                $isValid = false;
             }
         }
 
-        return $isValid;
+        return new ValidationResult($validationErrors);
     }
 
 

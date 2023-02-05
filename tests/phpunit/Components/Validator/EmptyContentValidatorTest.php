@@ -8,7 +8,6 @@ use PHPUnuhi\Components\Validator\EmptyContentValidator;
 use PHPUnuhi\Models\Configuration\Filter;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
-use Symfony\Component\Console\Output\NullOutput;
 
 
 class EmptyContentValidatorTest extends TestCase
@@ -25,7 +24,7 @@ class EmptyContentValidatorTest extends TestCase
      */
     protected function setUp(): void
     {
-        $this->validator = new EmptyContentValidator(new NullOutput());
+        $this->validator = new EmptyContentValidator();
     }
 
 
@@ -47,9 +46,9 @@ class EmptyContentValidatorTest extends TestCase
 
         $storage = new JsonStorage(3, true);
 
-        $isValid = $this->validator->validate($set, $storage);
+        $result = $this->validator->validate($set, $storage);
 
-        $this->assertEquals(true, $isValid);
+        $this->assertEquals(true, $result->isValid());
     }
 
     /**
@@ -70,9 +69,9 @@ class EmptyContentValidatorTest extends TestCase
 
         $storage = new JsonStorage(3, true);
 
-        $isValid = $this->validator->validate($set, $storage);
+        $result = $this->validator->validate($set, $storage);
 
-        $this->assertEquals(false, $isValid);
+        $this->assertEquals(false, $result->isValid());
     }
 
 

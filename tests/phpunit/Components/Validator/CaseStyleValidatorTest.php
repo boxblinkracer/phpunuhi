@@ -4,12 +4,10 @@ namespace phpunit\Components\Validator;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Bundles\Storage\JSON\JsonStorage;
-use PHPUnuhi\Components\Filter\FilterHandler;
 use PHPUnuhi\Components\Validator\CaseStyleValidator;
 use PHPUnuhi\Models\Configuration\Filter;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
-use Symfony\Component\Console\Output\NullOutput;
 
 
 class CaseStyleValidatorTest extends TestCase
@@ -44,7 +42,7 @@ class CaseStyleValidatorTest extends TestCase
         $this->localeEN->addTranslation('card.btnCancel', 'Cancel', 'group1');
         $this->localeEN->addTranslation('card.btnOK', 'OK', 'group1');
 
-        $this->validator = new CaseStyleValidator(new NullOutput());
+        $this->validator = new CaseStyleValidator();
     }
 
 
@@ -57,9 +55,9 @@ class CaseStyleValidatorTest extends TestCase
         $storage = new JsonStorage(3, true);
         $set = $this->buildSet(['snake', 'camel']);
 
-        $isValid = $this->validator->validate($set, $storage);
+        $result = $this->validator->validate($set, $storage);
 
-        $this->assertEquals(true, $isValid);
+        $this->assertEquals(true, $result->isValid());
     }
 
     /**
@@ -71,9 +69,9 @@ class CaseStyleValidatorTest extends TestCase
         $storage = new JsonStorage(3, true);
         $set = $this->buildSet(['snake']);
 
-        $isValid = $this->validator->validate($set, $storage);
+        $result = $this->validator->validate($set, $storage);
 
-        $this->assertEquals(false, $isValid);
+        $this->assertEquals(false, $result->isValid());
     }
 
 

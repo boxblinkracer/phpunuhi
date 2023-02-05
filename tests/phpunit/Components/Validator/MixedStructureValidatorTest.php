@@ -4,18 +4,17 @@ namespace phpunit\Components\Validator;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Bundles\Storage\JSON\JsonStorage;
-use PHPUnuhi\Components\Validator\MixedStructureValidator;
+use PHPUnuhi\Components\Validator\MissingStructureValidator;
 use PHPUnuhi\Models\Configuration\Filter;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
-use Symfony\Component\Console\Output\NullOutput;
 
 
 class MixedStructureValidatorTest extends TestCase
 {
 
     /**
-     * @var MixedStructureValidator
+     * @var MissingStructureValidator
      */
     private $validator;
 
@@ -25,7 +24,7 @@ class MixedStructureValidatorTest extends TestCase
      */
     protected function setUp(): void
     {
-        $this->validator = new MixedStructureValidator(new NullOutput());
+        $this->validator = new MissingStructureValidator();
     }
 
 
@@ -47,9 +46,9 @@ class MixedStructureValidatorTest extends TestCase
 
         $storage = new JsonStorage(3, true);
 
-        $isValid = $this->validator->validate($set, $storage);
+        $result = $this->validator->validate($set, $storage);
 
-        $this->assertEquals(true, $isValid);
+        $this->assertEquals(true, $result->isValid());
     }
 
     /**
@@ -70,9 +69,9 @@ class MixedStructureValidatorTest extends TestCase
         $storage = new JsonStorage(3, true);
 
 
-        $isValid = $this->validator->validate($set, $storage);
+        $result = $this->validator->validate($set, $storage);
 
-        $this->assertEquals(false, $isValid);
+        $this->assertEquals(false, $result->isValid());
     }
 
 

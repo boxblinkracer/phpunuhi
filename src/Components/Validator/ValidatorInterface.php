@@ -3,6 +3,7 @@
 namespace PHPUnuhi\Components\Validator;
 
 use PHPUnuhi\Bundles\Storage\StorageInterface;
+use PHPUnuhi\Components\Validator\Model\ValidationResult;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
 interface ValidatorInterface
@@ -11,8 +12,8 @@ interface ValidatorInterface
     /**
      * @param TranslationSet $set
      * @param StorageInterface $storage
-     * @return bool
+     * @return ValidationResult
      */
-    public function validate(TranslationSet $set, StorageInterface $storage): bool;
+    public function validate(TranslationSet $set, StorageInterface $storage): ValidationResult;
 
 }
