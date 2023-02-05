@@ -18,7 +18,7 @@ list: ## List available translation IDs
 	cd ../../.. && php bin/phpunuhi list:translations --configuration=./tests/playground/ini/phpunuhi.xml
 
 validate: ## Validate command
-	cd ../../.. && php bin/phpunuhi validate --configuration=./tests/playground/ini/phpunuhi.xml
+	cd ../../.. && php bin/phpunuhi validate --configuration=./tests/playground/ini/phpunuhi.xml  --report-format=junit --report-dir=./tests/playground/ini/.exports
 
 structure: ## Fix Structure
 	cd ../../.. && php bin/phpunuhi fix:structure --configuration=./tests/playground/ini/phpunuhi.xml

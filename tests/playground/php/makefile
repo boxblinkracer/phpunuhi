@@ -18,7 +18,7 @@ list: ## List available translation IDs
 	cd ../../.. && php bin/phpunuhi list:translations --configuration=./tests/playground/ini/phpunuhi.xml
 
 validate: ## Validate command
-	cd ../../.. && php bin/phpunuhi validate --configuration=./tests/playground/php/phpunuhi.xml
+	cd ../../.. && php bin/phpunuhi validate --configuration=./tests/playground/php/phpunuhi.xml  --report-format=junit --report-dir=./tests/playground/php/.exports
 
 csv: ## Exports a CSV
 	cd ../../.. && php bin/phpunuhi export --configuration=./tests/playground/php/phpunuhi.xml --format=csv --dir=./tests/playground/php/.exports

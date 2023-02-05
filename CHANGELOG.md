@@ -8,6 +8,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 ### Added
 
 - Add new **case-styles** for translations. This allows you to validate against translation keys. Select from a wide range of styles like CamelCase, PascalCase, KebabCase and more.
+- Add new **junit** reporter for the validation command. This creates a JUnit XML file that can be used in upcoming processes.
 
 ### Changed
 

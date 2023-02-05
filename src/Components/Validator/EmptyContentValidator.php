@@ -5,6 +5,7 @@ namespace PHPUnuhi\Components\Validator;
 use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Components\Validator\Model\ValidationError;
 use PHPUnuhi\Components\Validator\Model\ValidationResult;
+use PHPUnuhi\Components\Validator\Model\ValidationTest;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
 class EmptyContentValidator implements ValidatorInterface
@@ -17,10 +18,17 @@ class EmptyContentValidator implements ValidatorInterface
      */
     public function validate(TranslationSet $set, StorageInterface $storage): ValidationResult
     {
-        $validationErrors = [];
+        $tests = [];
+        $errors = [];
 
         foreach ($set->getLocales() as $locale) {
             foreach ($locale->getTranslations() as $translation) {
+
+                $tests[] = new ValidationTest(
+                    $locale->getName(),
+                    'Test existing translation of key: ' . $translation->getKey(),
+                    !$translation->isEmpty()
+                );
 
                 if ($translation->isEmpty()) {
 
@@ -30,7 +38,7 @@ class EmptyContentValidator implements ValidatorInterface
                         $identifier = $translation->getID();
                     }
 
-                    $validationErrors[] = new ValidationError(
+                    $errors[] = new ValidationError(
                         'EMPTY',
                         'Found empty translation',
                         $locale->getName(),
@@ -41,7 +49,7 @@ class EmptyContentValidator implements ValidatorInterface
             }
         }
 
-        return new ValidationResult($validationErrors);
+        return new ValidationResult($tests, $errors);
     }
 
 }

@@ -5,6 +5,7 @@ namespace PHPUnuhi\Components\Validator;
 use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Components\Validator\Model\ValidationError;
 use PHPUnuhi\Components\Validator\Model\ValidationResult;
+use PHPUnuhi\Components\Validator\Model\ValidationTest;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
 class MissingStructureValidator implements ValidatorInterface
@@ -19,7 +20,8 @@ class MissingStructureValidator implements ValidatorInterface
     {
         $allKeys = $set->getAllTranslationIDs();
 
-        $validationErrors = [];
+        $tests = [];
+        $errors = [];
 
         foreach ($set->getLocales() as $locale) {
 
@@ -29,23 +31,40 @@ class MissingStructureValidator implements ValidatorInterface
             # as our global suite keys list
             $structureValid = $this->isStructureEqual($localeKeys, $allKeys);
 
+
+            $same = $this->getSame($localeKeys, $allKeys);
+
             if (!$structureValid) {
 
                 $filtered = $this->getDiff($localeKeys, $allKeys);
 
                 foreach ($filtered as $key) {
-                    $validationErrors[] = new ValidationError(
+                    $errors[] = new ValidationError(
                         'STRUCTURE',
                         'Found missing structure in locale',
                         $locale->getName(),
                         $locale->getFilename(),
                         $key
                     );
+
+                    $tests[] = new ValidationTest(
+                        $locale->getName(),
+                        'Text structure of key: ' . $key,
+                        false
+                    );
                 }
+            }
+
+            foreach ($same as $key) {
+                $tests[] = new ValidationTest(
+                    $locale->getName(),
+                    'Text structure of key: ' . $key,
+                    true
+                );
             }
         }
 
-        return new ValidationResult($validationErrors);
+        return new ValidationResult($tests, $errors);
     }
 
 
@@ -73,6 +92,19 @@ class MissingStructureValidator implements ValidatorInterface
     {
         $diffA = array_diff($a, $b);
         $diffB = array_diff($b, $a);
+
+        return array_merge($diffA, $diffB);
+    }
+
+    /**
+     * @param array<mixed> $a
+     * @param array<mixed> $b
+     * @return array<mixed>
+     */
+    private function getSame(array $a, array $b): array
+    {
+        $diffA = array_intersect($a, $b);
+        $diffB = array_intersect($b, $a);
 
         return array_merge($diffA, $diffB);
     }

@@ -6,6 +6,7 @@ use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Components\Validator\CaseStyle\CaseStyleValidatorFactory;
 use PHPUnuhi\Components\Validator\Model\ValidationError;
 use PHPUnuhi\Components\Validator\Model\ValidationResult;
+use PHPUnuhi\Components\Validator\Model\ValidationTest;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
 class CaseStyleValidator implements ValidatorInterface
@@ -27,7 +28,8 @@ class CaseStyleValidator implements ValidatorInterface
         $hierarchy = $storage->getHierarchy();
 
 
-        $validationErrors = [];
+        $tests = [];
+        $errors = [];
 
 
         foreach ($set->getCasingStyles() as $style) {
@@ -72,8 +74,14 @@ class CaseStyleValidator implements ValidatorInterface
                     $isKeyCaseValid = false;
                 }
 
+                $tests[] = new ValidationTest(
+                    $locale->getName(),
+                    'Test case-style of key: ' . $translation->getKey(),
+                    $isKeyCaseValid
+                );
+
                 if (!$isKeyCaseValid) {
-                    $validationErrors[] = new ValidationError(
+                    $errors[] = new ValidationError(
                         'CASE-STYLE',
                         'Invalid case-style for key',
                         $locale->getName(),
@@ -85,7 +93,7 @@ class CaseStyleValidator implements ValidatorInterface
             }
         }
 
-        return new ValidationResult($validationErrors);
+        return new ValidationResult($tests, $errors);
     }
 
 }

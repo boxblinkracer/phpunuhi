@@ -4,6 +4,10 @@ namespace PHPUnuhi\Commands\Core;
 
 
 use PHPUnuhi\Bundles\Storage\StorageFactory;
+use PHPUnuhi\Components\Reporter\JUnit\JUnitReporter;
+use PHPUnuhi\Components\Reporter\Model\ReportResult;
+use PHPUnuhi\Components\Reporter\Model\SuiteResult;
+use PHPUnuhi\Components\Reporter\Model\TestResult;
 use PHPUnuhi\Components\Validator\CaseStyleValidator;
 use PHPUnuhi\Components\Validator\EmptyContentValidator;
 use PHPUnuhi\Components\Validator\MissingStructureValidator;
@@ -27,7 +31,9 @@ class ValidateCommand extends Command
         $this
             ->setName('validate')
             ->setDescription('Validates all your translations from your configuration')
-            ->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', '');
+            ->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', '')
+            ->addOption('report-format', null, InputOption::VALUE_REQUIRED, 'The report format for a generated report', '')
+            ->addOption('report-dir', null, InputOption::VALUE_REQUIRED, 'The report output directory for a generated report', '');
 
         parent::configure();
     }
@@ -48,6 +54,8 @@ class ValidateCommand extends Command
         # -----------------------------------------------------------------
 
         $configFile = $this->getConfigFile($input);
+        $reportFormat = $this->getConfigStringValue('report-format', $input);
+        $reportDir = $this->getConfigStringValue('report-dir', $input);
 
         # -----------------------------------------------------------------
 
@@ -64,6 +72,27 @@ class ValidateCommand extends Command
         $validators[] = new EmptyContentValidator();
 
         $errorCount = 0;
+
+        $reportResult = new ReportResult();
+
+
+        $reporter = null;
+
+        if (!empty($reportFormat)) {
+
+            if ($reportFormat !== 'junit') {
+                throw new \Exception('Unknown report format: ' . $reportFormat);
+            }
+
+            $reportFileDir = dirname($configFile);
+
+            if (!empty($reportDir)) {
+                $reportFileDir = $reportDir;
+            }
+
+            $reporter = new JUnitReporter($reportFileDir . '/junit.xml');
+        }
+
 
         foreach ($config->getTranslationSets() as $set) {
 
@@ -85,6 +114,8 @@ class ValidateCommand extends Command
             $storage = StorageFactory::getStorage($set);
 
 
+            $suiteResult = new SuiteResult($set->getName());
+
             foreach ($validators as $validator) {
 
                 $result = $validator->validate($set, $storage);
@@ -104,8 +135,24 @@ class ValidateCommand extends Command
                         $io->writeln('');
                     }
                 }
+
+                foreach ($result->getTests() as $test) {
+                    $testResult = new TestResult($test->getTitle(), $test->isSuccess());
+
+                    $suiteResult->addTestResult($testResult);
+                }
             }
+
+            $reportResult->addSuite($suiteResult);
         }
+
+
+        if ($reporter !== null) {
+            $io->section('generating report...');
+            $reporter->generate($reportResult);
+            $io->writeln('generated: ' . $reporter->getFilename());
+        }
+
 
         if ($isAllValid) {
             $io->success('All translations are valid!');
