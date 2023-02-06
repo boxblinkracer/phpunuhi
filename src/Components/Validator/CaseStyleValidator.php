@@ -47,6 +47,7 @@ class CaseStyleValidator implements ValidatorInterface
             foreach ($locale->getTranslations() as $translation) {
 
                 $isKeyCaseValid = true;
+                $invalidKeyPart = '';
 
                 if ($hierarchy->isMultiLevel()) {
                     $keyParts = explode($hierarchy->getDelimiter(), $translation->getKey());
@@ -58,21 +59,25 @@ class CaseStyleValidator implements ValidatorInterface
                     $keyParts = [];
                 }
 
-                $pathValid = true;
+                $pathValid = false;
 
-                foreach ($caseValidators as $caseValidator) {
+                foreach ($keyParts as $part) {
 
-                    $pathValid = true;
-                    foreach ($keyParts as $part) {
-                        $isCaseValid = $caseValidator->isValid($part);
+                    foreach ($caseValidators as $caseValidator) {
 
-                        if (!$isCaseValid) {
-                            $pathValid = false;
+                        $isPartValid = $caseValidator->isValid($part);
+
+                        if ($isPartValid) {
+                            $pathValid = true;
+                            $invalidKeyPart = '';
                             break;
                         }
+
+                        $pathValid = false;
+                        $invalidKeyPart = $part;
                     }
 
-                    if ($pathValid) {
+                    if (!$pathValid) {
                         break;
                     }
                 }
@@ -86,14 +91,14 @@ class CaseStyleValidator implements ValidatorInterface
                     'Test case-style of key: ' . $translation->getKey(),
                     $locale->getFilename(),
                     $this->getTypeIdentifier(),
-                    'Translation key ' . $translation->getKey() . ' is not a valid case-style',
+                    'Translation key ' . $translation->getKey() . ' has part with invalid case-style: ' . $invalidKeyPart,
                     $isKeyCaseValid
                 );
 
                 if (!$isKeyCaseValid) {
                     $errors[] = new ValidationError(
                         $this->getTypeIdentifier(),
-                        'Invalid case-style for key',
+                        'Invalid case-style for key: ' . $invalidKeyPart,
                         $locale->getName(),
                         $locale->getFilename(),
                         $translation->getKey()

@@ -37,10 +37,12 @@ class CaseStyleValidatorTest extends TestCase
         $this->localeDE = new Locale('de-DE', '', '');
         $this->localeDE->addTranslation('card.btnCancel', 'Abbrechen', 'group1');
         $this->localeDE->addTranslation('card.btnOK', 'OK', 'group1');
+        $this->localeDE->addTranslation('global.businessEvents.mollie_checkout_order_success', 'Order Success', '');
 
         $this->localeEN = new Locale('en-GB', '', '');
         $this->localeEN->addTranslation('card.btnCancel', 'Cancel', 'group1');
         $this->localeEN->addTranslation('card.btnOK', 'OK', 'group1');
+        $this->localeEN->addTranslation('global.businessEvents.mollie_checkout_order_success', 'Order Success', '');
 
         $this->validator = new CaseStyleValidator();
     }
