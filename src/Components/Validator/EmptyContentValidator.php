@@ -12,6 +12,14 @@ class EmptyContentValidator implements ValidatorInterface
 {
 
     /**
+     * @return string
+     */
+    public function getTypeIdentifier(): string
+    {
+        return 'EMPTY_CONTENT';
+    }
+
+    /**
      * @param TranslationSet $set
      * @param StorageInterface $storage
      * @return ValidationResult
@@ -28,7 +36,8 @@ class EmptyContentValidator implements ValidatorInterface
                     $locale->getName(),
                     'Test existing translation of key: ' . $translation->getKey(),
                     $locale->getFilename(),
-                    'EMPTY',
+                    $this->getTypeIdentifier(),
+                    'Translation for key ' . $translation->getKey() . ' does not have a value',
                     !$translation->isEmpty()
                 );
 
@@ -41,7 +50,7 @@ class EmptyContentValidator implements ValidatorInterface
                     }
 
                     $errors[] = new ValidationError(
-                        'EMPTY',
+                        $this->getTypeIdentifier(),
                         'Found empty translation',
                         $locale->getName(),
                         $locale->getFilename(),

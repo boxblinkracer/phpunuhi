@@ -21,6 +21,11 @@ class TestResult
     private $failureType;
 
     /**
+     * @var string
+     */
+    private $failureMessage;
+
+    /**
      * @var bool
      */
     private $success;
@@ -30,13 +35,15 @@ class TestResult
      * @param string $name
      * @param string $className
      * @param string $failureType
+     * @param string $failureMessage
      * @param bool $success
      */
-    public function __construct(string $name, string $className, string $failureType, bool $success)
+    public function __construct(string $name, string $className, string $failureType, string $failureMessage, bool $success)
     {
         $this->name = $name;
         $this->className = $className;
         $this->failureType = $failureType;
+        $this->failureMessage = $failureMessage;
         $this->success = $success;
     }
 
@@ -63,6 +70,14 @@ class TestResult
     public function getFailureType(): string
     {
         return $this->failureType;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFailureMessage(): string
+    {
+        return $this->failureMessage;
     }
 
     /**

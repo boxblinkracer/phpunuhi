@@ -26,6 +26,11 @@ class ValidationTest
     private $classification;
 
     /**
+     * @var string
+     */
+    private $failureMessage;
+
+    /**
      * @var bool
      */
     private $success;
@@ -36,14 +41,16 @@ class ValidationTest
      * @param string $title
      * @param string $filename
      * @param string $classification
+     * @param string $failureMessage
      * @param bool $success
      */
-    public function __construct(string $locale, string $title, string $filename, string $classification, bool $success)
+    public function __construct(string $locale, string $title, string $filename, string $classification, string $failureMessage, bool $success)
     {
         $this->locale = $locale;
         $this->title = $title;
         $this->filename = $filename;
         $this->classification = $classification;
+        $this->failureMessage = $failureMessage;
         $this->success = $success;
     }
 
@@ -69,6 +76,14 @@ class ValidationTest
     public function getClassification(): string
     {
         return $this->classification;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFailureMessage(): string
+    {
+        return $this->failureMessage;
     }
 
     /**

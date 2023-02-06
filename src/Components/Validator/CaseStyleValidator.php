@@ -12,6 +12,13 @@ use PHPUnuhi\Models\Translation\TranslationSet;
 class CaseStyleValidator implements ValidatorInterface
 {
 
+    /**
+     * @return string
+     */
+    public function getTypeIdentifier(): string
+    {
+        return 'CASE_STYLE';
+    }
 
     /**
      * @param TranslationSet $set
@@ -78,13 +85,14 @@ class CaseStyleValidator implements ValidatorInterface
                     $locale->getName(),
                     'Test case-style of key: ' . $translation->getKey(),
                     $locale->getFilename(),
-                    'CASE-STYLE',
+                    $this->getTypeIdentifier(),
+                    'Translation key ' . $translation->getKey() . ' is not a valid case-style',
                     $isKeyCaseValid
                 );
 
                 if (!$isKeyCaseValid) {
                     $errors[] = new ValidationError(
-                        'CASE-STYLE',
+                        $this->getTypeIdentifier(),
                         'Invalid case-style for key',
                         $locale->getName(),
                         $locale->getFilename(),

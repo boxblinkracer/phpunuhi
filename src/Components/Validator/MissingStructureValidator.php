@@ -12,6 +12,15 @@ class MissingStructureValidator implements ValidatorInterface
 {
 
     /**
+     * @return string
+     */
+    public function getTypeIdentifier(): string
+    {
+        return 'STRUCTURE';
+    }
+
+
+    /**
      * @param TranslationSet $set
      * @param StorageInterface $storage
      * @return ValidationResult
@@ -40,7 +49,7 @@ class MissingStructureValidator implements ValidatorInterface
 
                 foreach ($filtered as $key) {
                     $errors[] = new ValidationError(
-                        'STRUCTURE',
+                        $this->getTypeIdentifier(),
                         'Found missing structure in locale',
                         $locale->getName(),
                         $locale->getFilename(),
@@ -51,7 +60,8 @@ class MissingStructureValidator implements ValidatorInterface
                         $locale->getName(),
                         'Text structure of key: ' . $key,
                         $locale->getFilename(),
-                        'STRUCTURE',
+                        $this->getTypeIdentifier(),
+                        'Translation key ' . $key . ' is not found in locale ' . $locale->getName(),
                         false
                     );
                 }
@@ -62,7 +72,8 @@ class MissingStructureValidator implements ValidatorInterface
                     $locale->getName(),
                     'Text structure of key: ' . $key,
                     $locale->getFilename(),
-                    'STRUCTURE',
+                    $this->getTypeIdentifier(),
+                    '',
                     true
                 );
             }

@@ -10,6 +10,11 @@ interface ValidatorInterface
 {
 
     /**
+     * @return string
+     */
+    public function getTypeIdentifier(): string;
+
+    /**
      * @param TranslationSet $set
      * @param StorageInterface $storage
      * @return ValidationResult
