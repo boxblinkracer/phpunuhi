@@ -48,6 +48,14 @@ class CaseStyleValidatorTest extends TestCase
 
     /**
      * @return void
+     */
+    public function testTypeIdentifier(): void
+    {
+        $this->assertEquals('CASE_STYLE', $this->validator->getTypeIdentifier());
+    }
+
+    /**
+     * @return void
      * @throws \Exception
      */
     public function testValidCases(): void

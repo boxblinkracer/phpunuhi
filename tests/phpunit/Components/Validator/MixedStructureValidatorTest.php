@@ -30,6 +30,14 @@ class MixedStructureValidatorTest extends TestCase
 
     /**
      * @return void
+     */
+    public function testTypeIdentifier(): void
+    {
+        $this->assertEquals('STRUCTURE', $this->validator->getTypeIdentifier());
+    }
+
+    /**
+     * @return void
      * @throws \Exception
      */
     public function testAllValid(): void

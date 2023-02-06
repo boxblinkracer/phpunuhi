@@ -30,6 +30,14 @@ class EmptyContentValidatorTest extends TestCase
 
     /**
      * @return void
+     */
+    public function testTypeIdentifier(): void
+    {
+        $this->assertEquals('EMPTY_CONTENT', $this->validator->getTypeIdentifier());
+    }
+
+    /**
+     * @return void
      * @throws \Exception
      */
     public function testAllValid(): void
