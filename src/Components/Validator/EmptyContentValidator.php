@@ -28,6 +28,7 @@ class EmptyContentValidator implements ValidatorInterface
                     $locale->getName(),
                     'Test existing translation of key: ' . $translation->getKey(),
                     $locale->getFilename(),
+                    'EMPTY',
                     !$translation->isEmpty()
                 );
 

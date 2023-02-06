@@ -140,6 +140,7 @@ class ValidateCommand extends Command
                     $testResult = new TestResult(
                         $test->getTitle(),
                         basename($test->getFilename()),
+                        $test->getClassification(),
                         $test->isSuccess()
                     );
 

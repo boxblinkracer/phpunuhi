@@ -51,6 +51,7 @@ class MissingStructureValidator implements ValidatorInterface
                         $locale->getName(),
                         'Text structure of key: ' . $key,
                         $locale->getFilename(),
+                        'STRUCTURE',
                         false
                     );
                 }
@@ -61,6 +62,7 @@ class MissingStructureValidator implements ValidatorInterface
                     $locale->getName(),
                     'Text structure of key: ' . $key,
                     $locale->getFilename(),
+                    'STRUCTURE',
                     true
                 );
             }

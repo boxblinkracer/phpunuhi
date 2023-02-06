@@ -52,7 +52,7 @@ class JUnitReporter
                 $content .= '<testcase name="' . $test->getName() . '" classname="' . $test->getClassName() . '">';
 
                 if (!$test->isSuccess()) {
-                    $content .= '<failure message="Test is not successful"></failure>';
+                    $content .= '<failure type="' . $test->getFailureType() . '" message="Test is not successful"></failure>';
                 }
 
                 $content .= '</testcase>';
