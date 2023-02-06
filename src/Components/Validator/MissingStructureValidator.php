@@ -50,6 +50,7 @@ class MissingStructureValidator implements ValidatorInterface
                     $tests[] = new ValidationTest(
                         $locale->getName(),
                         'Text structure of key: ' . $key,
+                        $locale->getFilename(),
                         false
                     );
                 }
@@ -59,6 +60,7 @@ class MissingStructureValidator implements ValidatorInterface
                 $tests[] = new ValidationTest(
                     $locale->getName(),
                     'Text structure of key: ' . $key,
+                    $locale->getFilename(),
                     true
                 );
             }

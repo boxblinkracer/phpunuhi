@@ -11,6 +11,11 @@ class TestResult
     private $name;
 
     /**
+     * @var string
+     */
+    private $className;
+
+    /**
      * @var bool
      */
     private $success;
@@ -18,11 +23,13 @@ class TestResult
 
     /**
      * @param string $name
+     * @param string $className
      * @param bool $success
      */
-    public function __construct(string $name, bool $success)
+    public function __construct(string $name, string $className, bool $success)
     {
         $this->name = $name;
+        $this->className = $className;
         $this->success = $success;
     }
 
@@ -33,6 +40,14 @@ class TestResult
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getClassName(): string
+    {
+        return $this->className;
     }
 
     /**

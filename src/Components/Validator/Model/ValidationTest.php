@@ -16,6 +16,11 @@ class ValidationTest
     private $title;
 
     /**
+     * @var string
+     */
+    private $filename;
+
+    /**
      * @var bool
      */
     private $success;
@@ -24,12 +29,14 @@ class ValidationTest
     /**
      * @param string $locale
      * @param string $title
+     * @param string $filename
      * @param bool $success
      */
-    public function __construct(string $locale, string $title, bool $success)
+    public function __construct(string $locale, string $title, string $filename, bool $success)
     {
         $this->locale = $locale;
         $this->title = $title;
+        $this->filename = $filename;
         $this->success = $success;
     }
 
@@ -39,6 +46,14 @@ class ValidationTest
     public function getTitle(): string
     {
         return '[' . $this->locale . '] ' . $this->title;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFilename(): string
+    {
+        return $this->filename;
     }
 
     /**

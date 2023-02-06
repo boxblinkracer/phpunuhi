@@ -14,7 +14,6 @@
             </styles>
             <locales>
                 <locale name="de">./de.json</locale>
-                <locale name="en">./en.json</locale>
                 <locale name="nl">./nl.json</locale>
             </locales>
 

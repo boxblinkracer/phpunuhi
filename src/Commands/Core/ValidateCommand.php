@@ -137,7 +137,11 @@ class ValidateCommand extends Command
                 }
 
                 foreach ($result->getTests() as $test) {
-                    $testResult = new TestResult($test->getTitle(), $test->isSuccess());
+                    $testResult = new TestResult(
+                        $test->getTitle(),
+                        basename($test->getFilename()),
+                        $test->isSuccess()
+                    );
 
                     $suiteResult->addTestResult($testResult);
                 }

@@ -32,7 +32,6 @@ class JUnitReporter
     }
 
 
-
     /**
      * @param ReportResult $report
      * @return void
@@ -50,7 +49,7 @@ class JUnitReporter
 
             foreach ($suite->getTests() as $test) {
 
-                $content .= '<testcase name="' . $test->getName() . '">';
+                $content .= '<testcase name="' . $test->getName() . '" classname="' . $test->getClassName() . '">';
 
                 if (!$test->isSuccess()) {
                     $content .= '<failure message="Test is not successful"></failure>';
