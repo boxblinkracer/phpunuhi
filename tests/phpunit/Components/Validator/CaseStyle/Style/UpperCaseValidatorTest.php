@@ -44,6 +44,7 @@ class UpperCaseValidatorTest extends TestCase
         return [
             [true, 'TEXTSTYLE'],
             [true, 'TEXT-STYLE'],
+            [true, 'TEXT-STYLE'],
             [false, 'text-style'],
             [false, 'text'],
             [false, 'textStyle'],

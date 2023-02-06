@@ -89,7 +89,6 @@
             <xs:enumeration value="kebab"/>
             <xs:enumeration value="lower"/>
             <xs:enumeration value="upper"/>
-            <xs:enumeration value="constant"/>
             <xs:enumeration value="pascal"/>
             <xs:enumeration value="start"/>
         </xs:restriction>

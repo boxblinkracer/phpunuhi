@@ -602,7 +602,6 @@ The following styles are possible:
 * upper
 * snake
 * start
-* constant
 
 ```xml
 
