@@ -84,6 +84,19 @@ class CaseStyleValidatorTest extends TestCase
         $this->assertEquals(false, $result->isValid());
     }
 
+    /**
+     * @return void
+     * @throws \Exception
+     */
+    public function testValidCasesWithoutSetStyles(): void
+    {
+        $storage = new JsonStorage(3, true);
+        $set = $this->buildSet([]);
+
+        $result = $this->validator->validate($set, $storage);
+
+        $this->assertEquals(true, $result->isValid());
+    }
 
     /**
      * @param array $caseStyles

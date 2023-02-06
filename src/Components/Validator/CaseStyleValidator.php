@@ -61,6 +61,10 @@ class CaseStyleValidator implements ValidatorInterface
 
                 $pathValid = false;
 
+                if (count($caseValidators) <= 0) {
+                    $pathValid = true;
+                }
+
                 foreach ($keyParts as $part) {
 
                     foreach ($caseValidators as $caseValidator) {
