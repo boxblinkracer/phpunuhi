@@ -12,6 +12,8 @@ use PHPUnuhi\Components\Validator\CaseStyleValidator;
 use PHPUnuhi\Components\Validator\EmptyContentValidator;
 use PHPUnuhi\Components\Validator\MissingStructureValidator;
 use PHPUnuhi\Configuration\ConfigurationLoader;
+use PHPUnuhi\Traits\CommandTrait;
+use PHPUnuhi\Traits\StringTrait;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -21,7 +23,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class ValidateCommand extends Command
 {
 
-    use \PHPUnuhi\Traits\CommandTrait;
+    use CommandTrait;
+    use StringTrait;
+
 
     /**
      * @return void
@@ -33,7 +37,7 @@ class ValidateCommand extends Command
             ->setDescription('Validates all your translations from your configuration')
             ->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('report-format', null, InputOption::VALUE_REQUIRED, 'The report format for a generated report', '')
-            ->addOption('report-dir', null, InputOption::VALUE_REQUIRED, 'The report output directory for a generated report', '');
+            ->addOption('report-output', null, InputOption::VALUE_REQUIRED, 'The report output filename for the generated report', '');
 
         parent::configure();
     }
@@ -55,7 +59,7 @@ class ValidateCommand extends Command
 
         $configFile = $this->getConfigFile($input);
         $reportFormat = $this->getConfigStringValue('report-format', $input);
-        $reportDir = $this->getConfigStringValue('report-dir', $input);
+        $reportFilename = $this->getConfigStringValue('report-output', $input);
 
         # -----------------------------------------------------------------
 
@@ -86,11 +90,17 @@ class ValidateCommand extends Command
 
             $reportFileDir = dirname($configFile);
 
-            if (!empty($reportDir)) {
-                $reportFileDir = $reportDir;
+            if (empty($reportFilename)) {
+                $reportFileDir .= '/junit.xml';
+            } else {
+                $reportFileDir = $reportFilename;
             }
 
-            $reporter = new JUnitReporter($reportFileDir . '/junit.xml');
+            if (!$this->stringDoesEndsWith($reportFileDir, '.xml')) {
+                $reportFileDir .= '.xml';
+            }
+
+            $reporter = new JUnitReporter($reportFileDir);
         }
 
 

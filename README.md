@@ -206,7 +206,7 @@ php vendor/bin/phpunuhi validate
 php vendor/bin/phpunuhi validate --configuration=./translations.xml
 
 # generate a junit report in a custom folder
-php vendor/bin/phpunuhi validate --report-format=junit --report-dir=.reports
+php vendor/bin/phpunuhi validate --report-format=junit --report-output=.reports/junit.xml
 ```
 
 **Invalid structure**
@@ -739,8 +739,8 @@ If you have any tweaks, feel free to contribute :)
 It's possible to generate reports after running a **validation** command. This helps you to use
 the results in different systems and platforms.
 
-The validation command has 2 arguments **--report-format=xyz** and **--report-dir=abc** to provide
-a certain format and a custom output directory. Use this to generate reports based on validation results.
+The validation command has 2 arguments **--report-format=xyz** and **--report-output=abc** to provide
+a certain format and a custom output filename. Use this to generate reports based on validation results.
 
 #### 7.8.1 JUnit Report
 
