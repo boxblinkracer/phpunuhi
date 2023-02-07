@@ -3,6 +3,12 @@
 All notable changes of SVRUnit releases are documented in this file
 using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
+## [unreleased]
+
+### Changed
+
+- Downgrade to **doctrine/dbal v2.13.x** to match the DBAL version of Shopware 6.
+
 ## [1.4.0]
 
 ### Added

@@ -26,7 +26,6 @@ class ConnectionFactory
             'driver' => 'pdo_mysql',
         ];
 
-        /** @phpstan-ignore-next-line */
         return DriverManager::getConnection($params, $config);
     }
 

@@ -132,17 +132,16 @@ class EntityTranslationRepository
             ->setParameter('id', $this->stringToBinary($entityId), Types::BINARY)
             ->setParameter('langId', $this->stringToBinary($languageId), Types::BINARY);
 
-        $qb->executeQuery();
+        $qb->execute();
     }
 
     /**
      * @param string $table
-     * @return string[]
-     * @throws \Doctrine\DBAL\Exception
+     * @return array<mixed>
      */
     private function getJsonFields(string $table): array
     {
-        $sm = $this->connection->createSchemaManager();
+        $sm = $this->connection->getSchemaManager();
         $columns = $sm->listTableColumns($table);
 
         $jsonFields = [];

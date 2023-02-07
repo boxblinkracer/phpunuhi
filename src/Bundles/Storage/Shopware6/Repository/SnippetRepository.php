@@ -186,7 +186,7 @@ class SnippetRepository
             ->setParameter('setId', $this->stringToBinary($snippetSetId), Types::BINARY)
             ->setParameter('value', $value);
 
-        $qb->executeQuery();
+        $qb->execute();
     }
 
     /**
@@ -230,7 +230,7 @@ class SnippetRepository
                 'createdAt' => $now->format('Y-m-d H:i:s'),
             ]);
 
-        $qb->executeQuery();
+        $qb->execute();
     }
 
     /**
