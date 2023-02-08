@@ -2,8 +2,7 @@
 
 namespace PHPUnuhi\Bundles\Storage\Shopware6\Repository;
 
-use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Result;
+use PDO;
 use PHPUnuhi\Bundles\Storage\Shopware6\Models\Sw6Locale;
 use PHPUnuhi\Traits\BinaryTrait;
 
@@ -13,44 +12,34 @@ class LanguageRepository
     use BinaryTrait;
 
     /**
-     * @var Connection
+     * @var \PDO
      */
-    private $connection;
+    private $pdo;
 
 
     /**
-     * @param Connection $connection
+     * @param \PDO $pdo
      */
-    public function __construct(Connection $connection)
+    public function __construct(\PDO $pdo)
     {
-        $this->connection = $connection;
+        $this->pdo = $pdo;
     }
 
     /**
      * @return Sw6Locale[]
-     * @throws \Doctrine\DBAL\Exception
      */
     public function getLanguages(): array
     {
-        $qb = $this->connection->createQueryBuilder();
+        $stmt = $this->pdo->prepare('SELECT l.id as langId, l.name as langName, lc.code as locCode FROM language l INNER JOIN locale lc ON lc.id = l.locale_id');
+        $stmt->execute();
 
-        $qb->select('l.id as langId', 'l.name as langName', 'lc.code as locCode')
-            ->from('language', 'l')
-            ->join('l', 'locale', 'lc', 'lc.id = l.locale_id');
-
-        $result = $qb->execute();
-
-        if (!$result instanceof Result) {
-            return [];
-        }
-
-        $dbRows = $result->fetchAll();
-
-        if ($dbRows !== (array)$dbRows) {
-            throw new \Exception('not found!');
-        }
+        $dbRows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         $list = [];
+
+        if (!is_array($dbRows)) {
+            return $list;
+        }
 
         foreach ($dbRows as $row) {
 

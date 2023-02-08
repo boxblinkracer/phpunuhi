@@ -2,31 +2,28 @@
 
 namespace PHPUnuhi\Services\Connection;
 
-use Doctrine\DBAL\Configuration;
-use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\DriverManager;
+use PDO;
 
 class ConnectionFactory
 {
 
     /**
-     * @return Connection
-     * @throws \Doctrine\DBAL\Exception
+     * @return PDO
      */
-    public function fromEnv(): Connection
+    public function pdoFromEnv(): PDO
     {
-        $config = new Configuration();
+        $host = (string)getenv('DB_HOST');
+        $port = (string)getenv('DB_PORT');
+        $user = (string)getenv('DB_USER');
+        $pwd = (string)getenv('DB_PASSWD');
+        $dbName = (string)getenv('DB_DBNAME');
 
-        $params = [
-            'host' => (string)getenv('DB_HOST'),
-            'port' => (string)getenv('DB_PORT'),
-            'user' => (string)getenv('DB_USER'),
-            'password' => (string)getenv('DB_PASSWD'),
-            'dbname' => (string)getenv('DB_DBNAME'),
-            'driver' => 'pdo_mysql',
-        ];
+        $pdo = new PDO('mysql:host=' . $host . ';port=' . $port . ';dbname=' . $dbName . ';charset=utf8', $user, $pwd);
 
-        return DriverManager::getConnection($params, $config);
+        $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $pdo->setAttribute(PDO::MYSQL_ATTR_INIT_COMMAND, "SET NAMES 'utf8'");
+
+        return $pdo;
     }
 
 }

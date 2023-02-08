@@ -2,12 +2,7 @@
 
 namespace PHPUnuhi\Bundles\Storage\Shopware6\Repository;
 
-use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\ParameterType;
-use Doctrine\DBAL\Result;
-use Doctrine\DBAL\Schema\Column;
-use Doctrine\DBAL\Types\Type;
-use Doctrine\DBAL\Types\Types;
+use PDO;
 use PHPUnuhi\Bundles\Storage\Shopware6\Models\UpdateField;
 use PHPUnuhi\Traits\BinaryTrait;
 
@@ -17,44 +12,36 @@ class EntityTranslationRepository
     use BinaryTrait;
 
     /**
-     * @var Connection
+     * @var \PDO
      */
-    private $connection;
+    private $pdo;
 
 
     /**
-     * @param Connection $connection
+     * @param \PDO $pdo
      */
-    public function __construct(Connection $connection)
+    public function __construct(\PDO $pdo)
     {
-        $this->connection = $connection;
+        $this->pdo = $pdo;
     }
 
     /**
      * @param string $entity
      * @return array<mixed>
-     * @throws \Doctrine\DBAL\Exception
      */
     public function getTranslations(string $entity): array
     {
-        $qb = $this->connection->createQueryBuilder();
+        $stmt = $this->pdo->prepare('SELECT * FROM ' . $entity . '_translation');
 
-        $qb->select('*')
-            ->from($entity . '_translation', 't');
+        $stmt->execute();
 
-        $result = $qb->execute();
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        if (!$result instanceof Result) {
+        if (!is_array($rows)) {
             return [];
         }
 
-        $dbRows = $result->fetchAll();
-
-        if ($dbRows !== (array)$dbRows) {
-            throw new \Exception('not found!');
-        }
-
-        return $dbRows;
+        return $rows;
     }
 
     /**
@@ -62,32 +49,23 @@ class EntityTranslationRepository
      * @param string $entityId
      * @param string $languageId
      * @return array<mixed>|null
-     * @throws \Doctrine\DBAL\Exception
      */
     public function getTranslationRow(string $entity, string $entityId, string $languageId): ?array
     {
-        $qb = $this->connection->createQueryBuilder();
+        $stmt = $this->pdo->prepare('SELECT * FROM ' . $entity . '_translation WHERE ' . $entity . '_id = :id AND language_id = :langId');
 
-        $qb->select('*')
-            ->from($entity . '_translation', 't')
-            ->where($qb->expr()->eq($entity . '_id', ':id'))
-            ->andWhere($qb->expr()->eq('language_id', ':langId'))
-            ->setParameter('id', $this->stringToBinary($entityId))
-            ->setParameter('langId', $this->stringToBinary($languageId));
+        $stmt->execute([
+            ':id' => $this->stringToBinary($entityId),
+            ':langId' => $this->stringToBinary($languageId),
+        ]);
 
-        $result = $qb->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (!$result instanceof Result) {
+        if (!is_array($row)) {
             return null;
         }
 
-        $dbRow = $result->fetch();
-
-        if ($dbRow !== (array)$dbRow) {
-            return null;
-        }
-
-        return $dbRow;
+        return $row;
     }
 
     /**
@@ -96,7 +74,6 @@ class EntityTranslationRepository
      * @param string $languageId
      * @param UpdateField[] $fieldValues
      * @return void
-     * @throws \Doctrine\DBAL\Exception
      */
     public function updateTranslationRow(string $entity, string $entityId, string $languageId, array $fieldValues): void
     {
@@ -104,8 +81,13 @@ class EntityTranslationRepository
 
         $jsonFields = $this->getJsonFields($tableName);
 
-        $qb = $this->connection->createQueryBuilder();
-        $qb->update($tableName);
+
+        $params = [
+            ':id' => $this->stringToBinary($entityId),
+            ':langId' => $this->stringToBinary($languageId),
+        ];
+
+        $sqlFieldParts = [];
 
         # now iterate through our parameter fields
         # unfortunately, we have to assign NULL for every empty JSON field-value.
@@ -122,17 +104,15 @@ class EntityTranslationRepository
                 $value = NULL;
             }
 
-
-            $qb->set($data->getField(), ':' . $valueKey);
-            $qb->setParameter($valueKey, $value);
+            $sqlFieldParts[] = $data->getField() . '= :' . $valueKey;
+            $params[':' . $valueKey] = $value;
         }
 
-        $qb->where($qb->expr()->eq($entity . '_id', ':id'))
-            ->andWhere($qb->expr()->eq('language_id', ':langId'))
-            ->setParameter('id', $this->stringToBinary($entityId), Types::BINARY)
-            ->setParameter('langId', $this->stringToBinary($languageId), Types::BINARY);
+        $setSql = implode(', ', $sqlFieldParts);
 
-        $qb->execute();
+        $stmt = $this->pdo->prepare('UPDATE ' . $entity . '_translation SET ' . $setSql . ' WHERE ' . $entity . '_id = :id AND language_id = :langId');
+
+        $stmt->execute($params);
     }
 
     /**
@@ -141,14 +121,20 @@ class EntityTranslationRepository
      */
     private function getJsonFields(string $table): array
     {
-        $sm = $this->connection->getSchemaManager();
-        $columns = $sm->listTableColumns($table);
+        $stm = $this->pdo->prepare("DESCRIBE " . $table);
+        $stm->execute();
+
+        $columns = $stm->fetchAll(PDO::FETCH_ASSOC);
 
         $jsonFields = [];
 
+        if (!is_array($columns)) {
+            return $jsonFields;
+        }
+
         foreach ($columns as $column) {
-            if ($column->getType()->getName() === 'json') {
-                $jsonFields[] = $column->getName();
+            if ($column['Type'] === 'json') {
+                $jsonFields[] = $column['Field'];
             }
         }
 

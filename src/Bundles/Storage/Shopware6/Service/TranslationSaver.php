@@ -2,7 +2,6 @@
 
 namespace PHPUnuhi\Bundles\Storage\Shopware6\Service;
 
-use Doctrine\DBAL\Connection;
 use PHPUnuhi\Bundles\Storage\Shopware6\Exception\SnippetNotFoundException;
 use PHPUnuhi\Bundles\Storage\Shopware6\Models\Sw6Locale;
 use PHPUnuhi\Bundles\Storage\Shopware6\Models\UpdateField;
@@ -41,20 +40,19 @@ class TranslationSaver
 
 
     /**
-     * @param Connection $connection
+     * @param \PDO $pdo
      */
-    public function __construct(Connection $connection)
+    public function __construct(\PDO $pdo)
     {
-        $this->repoLanguages = new LanguageRepository($connection);
-        $this->repoTranslations = new EntityTranslationRepository($connection);
-        $this->repoSnippets = new SnippetRepository($connection);
+        $this->repoLanguages = new LanguageRepository($pdo);
+        $this->repoTranslations = new EntityTranslationRepository($pdo);
+        $this->repoSnippets = new SnippetRepository($pdo);
     }
 
     /**
      * @param TranslationSet $set
      * @return StorageSaveResult
      * @throws ConfigurationException
-     * @throws \Doctrine\DBAL\Exception
      */
     public function saveTranslations(TranslationSet $set): StorageSaveResult
     {
@@ -75,7 +73,6 @@ class TranslationSaver
     /**
      * @param TranslationSet $set
      * @return StorageSaveResult
-     * @throws \Doctrine\DBAL\Exception
      */
     private function saveSnippets(TranslationSet $set): StorageSaveResult
     {
@@ -141,7 +138,6 @@ class TranslationSaver
      * @param string $entity
      * @param TranslationSet $set
      * @return StorageSaveResult
-     * @throws \Doctrine\DBAL\Exception
      */
     private function saveEntities(string $entity, TranslationSet $set): StorageSaveResult
     {

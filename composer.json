@@ -27,9 +27,9 @@
     },
     "require": {
         "php": ">=7.2",
+        "ext-pdo": "*",
         "ext-simplexml": "*",
         "deeplcom/deepl-php": "^1.2",
-        "doctrine/dbal": "^2.13.9",
         "google/cloud-translate": "^1.12",
         "orhanerday/open-ai": "^3.4",
         "symfony/console": "*"

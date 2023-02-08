@@ -2,8 +2,6 @@
 
 namespace PHPUnuhi\Bundles\Storage\Shopware6\Service;
 
-use Doctrine\DBAL\Connection;
-use PHPUnuhi\Bundles\Storage\Shopware6\Models\SnippetSet;
 use PHPUnuhi\Bundles\Storage\Shopware6\Models\Sw6Locale;
 use PHPUnuhi\Bundles\Storage\Shopware6\Repository\EntityTranslationRepository;
 use PHPUnuhi\Bundles\Storage\Shopware6\Repository\LanguageRepository;
@@ -39,13 +37,13 @@ class TranslationLoader
 
 
     /**
-     * @param Connection $connection
+     * @param \PDO $pdo
      */
-    public function __construct(Connection $connection)
+    public function __construct(\PDO $pdo)
     {
-        $this->repoLanguages = new LanguageRepository($connection);
-        $this->repoEntityTranslations = new EntityTranslationRepository($connection);
-        $this->repoSnippets = new SnippetRepository($connection);
+        $this->repoLanguages = new LanguageRepository($pdo);
+        $this->repoEntityTranslations = new EntityTranslationRepository($pdo);
+        $this->repoSnippets = new SnippetRepository($pdo);
     }
 
 
@@ -53,7 +51,6 @@ class TranslationLoader
      * @param TranslationSet $set
      * @return void
      * @throws ConfigurationException
-     * @throws \Doctrine\DBAL\Exception
      */
     public function loadTranslations(TranslationSet $set): void
     {
@@ -74,7 +71,6 @@ class TranslationLoader
     /**
      * @param TranslationSet $set
      * @return void
-     * @throws \Doctrine\DBAL\Exception
      */
     private function loadSnippets(TranslationSet $set): void
     {
@@ -115,7 +111,6 @@ class TranslationLoader
      * @param string $entity
      * @param TranslationSet $set
      * @return void
-     * @throws \Doctrine\DBAL\Exception
      */
     private function loadEntities(string $entity, TranslationSet $set): void
     {

@@ -2,9 +2,7 @@
 
 namespace PHPUnuhi\Bundles\Storage\Shopware6\Repository;
 
-use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Result;
-use Doctrine\DBAL\Types\Types;
+use PDO;
 use PHPUnuhi\Bundles\Storage\Shopware6\Exception\SnippetNotFoundException;
 use PHPUnuhi\Bundles\Storage\Shopware6\Models\Snippet;
 use PHPUnuhi\Bundles\Storage\Shopware6\Models\SnippetSet;
@@ -17,38 +15,31 @@ class SnippetRepository
     use BinaryTrait;
 
     /**
-     * @var Connection
+     * @var \PDO
      */
-    private $connection;
+    private $pdo;
 
 
     /**
-     * @param Connection $connection
+     * @param \PDO $pdo
      */
-    public function __construct(Connection $connection)
+    public function __construct(\PDO $pdo)
     {
-        $this->connection = $connection;
+        $this->pdo = $pdo;
     }
 
 
     /**
      * @return SnippetSet[]
-     * @throws \Doctrine\DBAL\Exception
+     * @throws \Exception
      */
     public function getSnippetSets(): array
     {
-        $qb = $this->connection->createQueryBuilder();
+        $stmt = $this->pdo->prepare('SELECT * FROM snippet_set');
 
-        $qb->select('s.*')
-            ->from('snippet_set', 's');
+        $stmt->execute();
 
-        $result = $qb->execute();
-
-        if (!$result instanceof Result) {
-            return [];
-        }
-
-        $dbRows = $result->fetchAll();
+        $dbRows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         if ($dbRows !== (array)$dbRows) {
             throw new \Exception('not found!');
@@ -70,22 +61,15 @@ class SnippetRepository
 
     /**
      * @return Snippet[]
-     * @throws \Doctrine\DBAL\Exception
+     * @throws \Exception
      */
     public function getSnippets(): array
     {
-        $qb = $this->connection->createQueryBuilder();
+        $stmt = $this->pdo->prepare('SELECT * FROM snippet');
 
-        $qb->select('s.*')
-            ->from('snippet', 's');
+        $stmt->execute();
 
-        $result = $qb->execute();
-
-        if (!$result instanceof Result) {
-            return [];
-        }
-
-        $dbRows = $result->fetchAll();
+        $dbRows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         if ($dbRows !== (array)$dbRows) {
             throw new \Exception('not found!');
@@ -94,7 +78,6 @@ class SnippetRepository
         $list = [];
 
         foreach ($dbRows as $row) {
-
             $list[] = $this->toEntity($row);
         }
 
@@ -106,26 +89,17 @@ class SnippetRepository
      * @param string $snippetSetId
      * @return Snippet
      * @throws SnippetNotFoundException
-     * @throws \Doctrine\DBAL\Exception
      */
     public function getSnippet(string $key, string $snippetSetId): Snippet
     {
-        $qb = $this->connection->createQueryBuilder();
+        $stmt = $this->pdo->prepare('SELECT * FROM snippet WHERE translation_key = :key AND snippet_set_id = :setId');
 
-        $qb->select('s.*')
-            ->from('snippet', 's')
-            ->where($qb->expr()->eq('translation_key', ':key'))
-            ->andWhere($qb->expr()->eq('snippet_set_id', ':setId'))
-            ->setParameter('key', $key)
-            ->setParameter('setId', $this->stringToBinary($snippetSetId), Types::BINARY);
+        $stmt->execute([
+            'key' => $key,
+            'setId' => $this->stringToBinary($snippetSetId)
+        ]);
 
-        $result = $qb->execute();
-
-        if (!$result instanceof Result) {
-            throw new SnippetNotFoundException('Snippet with key ' . $key . ' not found in set: ' . $snippetSetId);
-        }
-
-        $row = $result->fetch();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($row !== (array)$row) {
             throw new SnippetNotFoundException('Snippet with key ' . $key . ' not found in set: ' . $snippetSetId);
@@ -138,24 +112,16 @@ class SnippetRepository
      * @param string $key
      * @return Snippet
      * @throws SnippetNotFoundException
-     * @throws \Doctrine\DBAL\Exception
      */
     public function getSnippetByKey(string $key): Snippet
     {
-        $qb = $this->connection->createQueryBuilder();
+        $stmt = $this->pdo->prepare('SELECT * FROM snippet WHERE translation_key = :key');
 
-        $qb->select('s.*')
-            ->from('snippet', 's')
-            ->where($qb->expr()->eq('translation_key', ':key'))
-            ->setParameter('key', $key);
+        $stmt->execute([
+            'key' => $key,
+        ]);
 
-        $result = $qb->execute();
-
-        if (!$result instanceof Result) {
-            throw new SnippetNotFoundException('Snippet with key ' . $key);
-        }
-
-        $row = $result->fetch();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($row !== (array)$row) {
             throw new SnippetNotFoundException('Snippet with key ' . $key);
@@ -170,23 +136,16 @@ class SnippetRepository
      * @param string $snippetSetId
      * @param string $value
      * @return void
-     * @throws \Doctrine\DBAL\Exception
      */
     public function updateSnippet(string $key, string $snippetSetId, string $value): void
     {
-        $qb = $this->connection->createQueryBuilder();
+        $stmt = $this->pdo->prepare('UPDATE snippet SET value = :value WHERE translation_key = :key AND snippet_set_id = :setId');
 
-        $value = utf8_decode($value);
-
-        $qb->update('snippet')
-            ->set('value', ':value')
-            ->where($qb->expr()->eq('translation_key', ':key'))
-            ->andWhere($qb->expr()->eq('snippet_set_id', ':setId'))
-            ->setParameter('key', $key)
-            ->setParameter('setId', $this->stringToBinary($snippetSetId), Types::BINARY)
-            ->setParameter('value', $value);
-
-        $qb->execute();
+        $stmt->execute([
+            'value' => $value,
+            'key' => $key,
+            'setId' => $this->stringToBinary($snippetSetId),
+        ]);
     }
 
     /**
@@ -196,41 +155,32 @@ class SnippetRepository
      * @param string $author
      * @param string $customFields
      * @return void
-     * @throws \Doctrine\DBAL\Exception
+     * @throws \Exception
      */
     public function insertSnippet(string $key, string $snippetSetId, string $value, string $author, string $customFields): void
     {
-        $qb = $this->connection->createQueryBuilder();
-
         if ($customFields === '') {
             $customFields = null;
         }
 
-        $value = utf8_decode($value);
-
         $now = new \DateTime('now');
 
-        $qb->insert('snippet')
-            ->values([
-                'id' => ':id',
-                'translation_key' => ':key',
-                'value' => ':value',
-                'author' => ':author',
-                'snippet_set_id' => ':snippetSetId',
-                'custom_fields' => ':customFields',
-                'created_at' => ':createdAt',
-            ])
-            ->setParameters([
-                'id' => $this->stringToBinary(Uuid::randomHex()),
-                'key' => $key,
-                'value' => $value,
-                'author' => $author,
-                'snippetSetId' => $this->stringToBinary($snippetSetId),
-                'customFields' => $customFields,
-                'createdAt' => $now->format('Y-m-d H:i:s'),
-            ]);
+        $stmt = $this->pdo->prepare("
+            INSERT INTO snippet (id, translation_key, `value`, author, snippet_set_id, custom_fields, created_at)
+            VALUES (:id, :translation_key, :value, :author, :snippet_set_id, :custom_fields, :created_at)
+        ");
 
-        $qb->execute();
+        $params = [
+            ':id' => $this->stringToBinary(Uuid::randomHex()),
+            ':translation_key' => $key,
+            ':value' => $value,
+            ':author' => $author,
+            ':snippet_set_id' => $this->stringToBinary($snippetSetId),
+            ':custom_fields' => $customFields,
+            ':created_at' => $now->format('Y-m-d H:i:s'),
+        ];
+
+        $stmt->execute($params);
     }
 
     /**

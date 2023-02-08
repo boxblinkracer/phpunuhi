@@ -7,7 +7,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 ### Changed
 
-- Downgrade to **doctrine/dbal v2.13.x** to match the DBAL version of Shopware 6.
+- Switched from **doctrine/dbal** to plain PDO to allow a wider range of integrations without a dependency to a specific dbal version.
 
 ## [1.4.0]
 

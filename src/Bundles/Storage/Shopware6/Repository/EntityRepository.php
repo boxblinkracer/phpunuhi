@@ -2,8 +2,7 @@
 
 namespace PHPUnuhi\Bundles\Storage\Shopware6\Repository;
 
-use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Result;
+use PDO;
 use PHPUnuhi\Traits\BinaryTrait;
 
 class EntityRepository
@@ -12,45 +11,34 @@ class EntityRepository
     use BinaryTrait;
 
     /**
-     * @var Connection
+     * @var \PDO
      */
-    private $connection;
+    private $pdo;
 
 
     /**
-     * @param Connection $connection
+     * @param \PDO $pdo
      */
-    public function __construct(Connection $connection)
+    public function __construct(\PDO $pdo)
     {
-        $this->connection = $connection;
+        $this->pdo = $pdo;
     }
 
     /**
      * @param string $entity
      * @param string $id
      * @return array<mixed>
-     * @throws \Doctrine\DBAL\Exception
      */
     public function getEntity(string $entity, string $id): array
     {
-        $qb = $this->connection->createQueryBuilder();
+        $stmt = $this->pdo->prepare('SELECT * FROM :tableName WHERE id = :id');
 
-        $qb->select('*')
-            ->from($entity, 't')
-            ->where('id = :id')
-            ->setParameters(
-                [
-                    ':id' => $id,
-                ]
-            );
+        $stmt->execute([
+            'tableName' => $entity,
+            'id' => $id
+        ]);
 
-        $result = $qb->execute();
-
-        if (!$result instanceof Result) {
-            return [];
-        }
-
-        return $result->fetch();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
 }
