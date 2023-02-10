@@ -9,6 +9,10 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 - Switched from **doctrine/dbal** to plain PDO to allow a wider range of integrations without a dependency to a specific dbal version.
 
+### Fixed
+
+- Fixed wrong header output of version number in CLI commands
+
 ## [1.4.0]
 
 ### Added
