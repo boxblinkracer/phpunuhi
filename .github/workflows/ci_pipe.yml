@@ -131,7 +131,7 @@ jobs:
 
   svrunit:
     name: SVRUnit Tests
-    needs: [ build ]
+    needs: install_dev
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
