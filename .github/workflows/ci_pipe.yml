@@ -77,8 +77,6 @@ jobs:
       - name: Run PHPUnit
         run: make phpunit -B
 
-  # ------------------------------------------------------------------------------------------------------------------------
-
   phpstan:
     name: PHPStan Analyzer
     needs: install_dev
@@ -129,6 +127,8 @@ jobs:
       - name: Run PHP CS Fixer
         run: make csfix -B
 
+  # ------------------------------------------------------------------------------------------------------------------------
+
   svrunit:
     name: SVRUnit Tests
     needs: install_dev
@@ -141,18 +141,13 @@ jobs:
         with:
           php-version: 7.4
 
-      - name: Mount Cache
-        uses: actions/cache@v3
-        with:
-          key: cache-${{ github.run_id }}
-          path: |
-            build
-            vendor
-
-      - name: Build Binaries
+      - name: Build PHAR
         run: make build -B
 
-      - name: Start Tests
+      - name: Install SVRUnit
+        run: make dev -B
+
+      - name: Start SVRUnit
         run: |
           make svrunit -B
 
