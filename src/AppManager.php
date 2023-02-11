@@ -22,7 +22,7 @@ class AppManager
      */
     public static function run(array $arguments)
     {
-        $application = new Application('PHPUnuhi', PHPUnuhi::VERSION);
+        $application = new Application('PHPUnuhi', PHPUnuhi::getVersion());
 
         $application->add(new StatusCommand());
         $application->add(new ValidateCommand());
