@@ -129,35 +129,6 @@ jobs:
       - name: Run PHP CS Fixer
         run: make csfix -B
 
-  # ------------------------------------------------------------------------------------------------------------------------
-
-  build:
-    name: Build Binaries
-    needs: [ syntax_checks, unit_tests, phpstan, phpcsfixer ]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Clone Code
-        uses: actions/checkout@v3
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 7.4
-          ini-values: phar.readonly=OFF
-
-      - name: Mount Cache
-        uses: actions/cache@v3
-        with:
-          key: cache-build-${{ github.run_id }}
-          path: |
-            build
-            vendor
-
-      - name: Build Binaries
-        run: make build -B
-
-  # ------------------------------------------------------------------------------------------------------------------------
-
   svrunit:
     name: SVRUnit Tests
     needs: [ build ]
@@ -170,16 +141,16 @@ jobs:
         with:
           php-version: 7.4
 
-      - name: Mount Binary PHAR Cache
+      - name: Mount Cache
         uses: actions/cache@v3
         with:
-          key: cache-build-${{ github.run_id }}
+          key: cache-${{ github.run_id }}
           path: |
             build
+            vendor
 
-      - name: Install SVRUnit
-        run: |
-          make dev -B
+      - name: Build Binaries
+        run: make build -B
 
       - name: Start Tests
         run: |
@@ -204,10 +175,37 @@ jobs:
 
   # ------------------------------------------------------------------------------------------------------------------------
 
+  build:
+    name: Build Binaries
+    needs: [ syntax_checks, unit_tests, phpstan, phpcsfixer, svrunit ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone Code
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4
+          ini-values: phar.readonly=OFF
+
+      - name: Mount Cache
+        uses: actions/cache@v3
+        with:
+          key: cache-build-${{ github.run_id }}
+          path: |
+            build
+            vendor
+
+      - name: Build Binaries
+        run: make build -B
+
+  # ------------------------------------------------------------------------------------------------------------------------
+
   packagist:
     name: Update Packagist
     runs-on: ubuntu-latest
-    needs: [ svrunit ]
+    needs: [ build ]
     steps:
 
       - uses: actions/checkout@v3
