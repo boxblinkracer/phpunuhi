@@ -131,7 +131,7 @@ jobs:
 
   svrunit:
     name: SVRUnit Tests
-    needs: [ syntax_checks, unit_tests, phpstan, phpcsfixer, svrunit ]
+    needs: [ syntax_checks, unit_tests, phpstan, phpcsfixer ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
