@@ -34,6 +34,9 @@ phpunit: ## Runs all tests
 phpinsights: ## Starts PHPInsights
 	@php -d memory_limit=2000M vendor/bin/phpinsights --no-interaction
 
+svrunit: ## Runs all SVRUnit tests
+	php vendor/bin/svrunit test --configuration=./svrunit.xml --debug --report-junit --report-html
+
 #------------------------------------------------------------------------------------------------
 
 pr: ## Runs and prepares everything for a pull request

@@ -15,3 +15,6 @@
 /tests/e2e/.exports
 /tests/playground/json/.exports
 /tests/playground/ini/.exports
+/svrunit.phar
+/.svrunit
+/tests/svrunit/.exports

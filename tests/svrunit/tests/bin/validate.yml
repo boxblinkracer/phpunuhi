@@ -1,0 +1,10 @@
+commands:
+  - name: "Validate JSON"
+    command: "php bin/phpunuhi validate --configuration=./tests/svrunit/formats/json/phpunuhi.xml"
+    expected: "All translations are valid"
+  - name: "Validate INI"
+    command: "php bin/phpunuhi validate --configuration=./tests/svrunit/formats/ini/phpunuhi.xml"
+    expected: "All translations are valid"
+  - name: "Validate PHP"
+    command: "php bin/phpunuhi validate --configuration=./tests/svrunit/formats/php/phpunuhi.xml"
+    expected: "All translations are valid"

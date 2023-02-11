@@ -38,7 +38,8 @@
         "friendsofphp/php-cs-fixer": "^2.18",
         "nunomaduro/phpinsights": "^1.14",
         "phpstan/phpstan": "*",
-        "phpunit/phpunit": "^8.5"
+        "phpunit/phpunit": "^8.5",
+        "svrunit/svrunit": "dev-main"
     },
     "autoload": {
         "classmap": [

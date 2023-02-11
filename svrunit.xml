@@ -1,0 +1,13 @@
+<svrunit >
+    <testsuites>
+
+        <testsuite name="bin">
+            <directory>tests/svrunit/tests/bin</directory>
+        </testsuite>
+
+        <testsuite name="phar">
+            <directory>tests/svrunit/tests/phar</directory>
+        </testsuite>
+
+    </testsuites >
+</svrunit >

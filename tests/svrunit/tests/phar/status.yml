@@ -1,0 +1,10 @@
+commands:
+  - name: "Status JSON"
+    command: "php ./build/phpunuhi.phar status --configuration=./tests/svrunit/formats/json/phpunuhi.xml"
+    expected: " Coverage: 100%"
+  - name: "Status INI"
+    command: "php ./build/phpunuhi.phar status --configuration=./tests/svrunit/formats/ini/phpunuhi.xml"
+    expected: " Coverage: 100%"
+  - name: "Status PHP"
+    command: "php ./build/phpunuhi.phar status --configuration=./tests/svrunit/formats/php/phpunuhi.xml"
+    expected: " Coverage: 100%"
