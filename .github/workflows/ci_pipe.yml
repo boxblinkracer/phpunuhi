@@ -165,7 +165,7 @@ jobs:
         uses: dorny/test-reporter@v1
         if: always()
         with:
-          name: SVRUnit Tests
+          name: SVRUnit Report
           path: .reports/report.xml
           reporter: jest-junit
 
