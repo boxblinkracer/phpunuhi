@@ -150,8 +150,8 @@ jobs:
 
   # ------------------------------------------------------------------------------------------------------------------------
 
-  test_bin:
-    name: E2E Tests | bin/phpunuhi
+  svrunit:
+    name: SVRUnit Tests
     runs-on: ubuntu-latest
     needs: [ build ]
     steps:
@@ -173,32 +173,7 @@ jobs:
 
       - name: Start Tests
         run: |
-          cd tests/e2e && make bin -B
-
-  test_phar:
-    name: E2E Tests | phpunuhi.phar
-    runs-on: ubuntu-latest
-    needs: [ build ]
-    steps:
-
-      - uses: actions/checkout@v3
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 7.4
-
-      - name: Mount Cache
-        uses: actions/cache@v3
-        with:
-          key: cache-build-${{ github.run_id }}
-          path: |
-            build
-            vendor
-
-      - name: Start Tests
-        run: |
-          cd tests/e2e && make phar -B
+          cd tests/e2e && make svrunit -B
 
   # ------------------------------------------------------------------------------------------------------------------------
 
