@@ -1,7 +1,7 @@
 commands:
-  - name: "Correct version"
+  - name: "php bin/phpunuhi --version"
     command: "php bin/phpunuhi --version --configuration=./tests/svrunit/formats/json/phpunuhi.xml"
     expected: "PHPUnuhi 1.4.0"
-  - name: "Correct header in CLI command"
+  - name: "Version in header of: php bin/phpunuhi status"
     command: "php bin/phpunuhi status --configuration=./tests/svrunit/formats/json/phpunuhi.xml"
     expected: "PHPUnuhi Framework, v1.4.0"
