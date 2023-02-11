@@ -72,6 +72,10 @@ class ConfigurationLoader
             return;
         }
 
+        if ($rootNode->php->env === null) {
+            return;
+        }
+
         foreach ($rootNode->php->env as $xmlSet) {
             $name = trim((string)$xmlSet['name']);
             $value = trim((string)$xmlSet['value']);
