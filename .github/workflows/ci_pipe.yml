@@ -131,7 +131,7 @@ jobs:
 
   svrunit:
     name: SVRUnit Tests
-    needs: install_dev
+    needs: [ syntax_checks, unit_tests, phpstan, phpcsfixer, svrunit ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -140,6 +140,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: 7.4
+          ini-values: phar.readonly=OFF
 
       - name: Build PHAR
         run: make build -B
@@ -172,7 +173,7 @@ jobs:
 
   build:
     name: Build Binaries
-    needs: [ syntax_checks, unit_tests, phpstan, phpcsfixer, svrunit ]
+    needs: [ svrunit ]
     runs-on: ubuntu-latest
     steps:
       - name: Clone Code
