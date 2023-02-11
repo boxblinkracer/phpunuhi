@@ -171,4 +171,4 @@ jobs:
 
       - name: Start Tests
         run: |
-          cd tests/e2e && make svrunit -B
+          make svrunit -B
