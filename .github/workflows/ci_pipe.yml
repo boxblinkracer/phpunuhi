@@ -183,6 +183,23 @@ jobs:
         run: |
           cd tests/e2e && make svrunit -B
 
+      - name: Store SVRUnit Report
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: svrunit_report
+          retention-days: 3
+          path: |
+            .reports
+
+      - name: Build JUnit Report
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: SVRUnit Tests
+          path: .reports/report.xml
+          reporter: jest-junit
+
   # ------------------------------------------------------------------------------------------------------------------------
 
   packagist:
