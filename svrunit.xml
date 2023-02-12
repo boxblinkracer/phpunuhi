@@ -5,7 +5,7 @@
             <directory>tests/svrunit/tests</directory>
         </testsuite>
 
-        <testsuite name="phar" executable="php ./build/svrunit.phar">
+        <testsuite name="phar" executable="php ./build/phpunuhi.phar">
             <directory>tests/svrunit/tests</directory>
         </testsuite>
 
