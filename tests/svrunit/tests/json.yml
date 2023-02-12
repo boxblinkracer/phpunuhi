@@ -1,7 +1,10 @@
 commands:
-  - name: "Status JSON"
+  - name: "Status"
     command: "(($EXEC)) status --configuration=./tests/svrunit/formats/json/phpunuhi.xml"
     expected: "Coverage: 100%"
-  - name: "Validate JSON"
+  - name: "Validate"
     command: "(($EXEC)) validate --configuration=./tests/svrunit/formats/json/phpunuhi.xml"
     expected: "All translations are valid"
+  - name: "Export"
+    command: "(($EXEC)) export --configuration=./tests/svrunit/formats/json/phpunuhi.xml --dir=.svrunit"
+    expected: "All translations exported"
