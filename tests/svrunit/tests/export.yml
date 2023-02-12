@@ -1,0 +1,10 @@
+commands:
+  - name: "Export JSON"
+    command: "(($EXEC)) export --configuration=./tests/svrunit/formats/json/phpunuhi.xml --dir=.svrunit"
+    expected: "All translations exported"
+  - name: "Export INI"
+    command: "(($EXEC)) export --configuration=./tests/svrunit/formats/ini/phpunuhi.xml --dir=.svrunit"
+    expected: "All translations exported"
+  - name: "Export PHP"
+    command: "(($EXEC)) export --configuration=./tests/svrunit/formats/php/phpunuhi.xml --dir=.svrunit"
+    expected: "All translations exported"

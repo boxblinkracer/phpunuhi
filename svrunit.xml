@@ -1,13 +1,13 @@
-<svrunit >
+<svrunit>
     <testsuites>
 
-        <testsuite name="bin">
-            <directory>tests/svrunit/tests/bin</directory>
+        <testsuite name="bin" executable="php bin/phpunuhi">
+            <directory>tests/svrunit/tests</directory>
         </testsuite>
 
-        <testsuite name="phar">
-            <directory>tests/svrunit/tests/phar</directory>
+        <testsuite name="phar" executable="php ./build/svrunit.phar">
+            <directory>tests/svrunit/tests</directory>
         </testsuite>
 
-    </testsuites >
-</svrunit >
+    </testsuites>
+</svrunit>

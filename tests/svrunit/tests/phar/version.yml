@@ -1,7 +1,0 @@
-commands:
-  - name: "php ./build/phpunuhi.phar --version"
-    command: "php ./build/phpunuhi.phar --version --configuration=./tests/svrunit/formats/json/phpunuhi.xml"
-    expected: "PHPUnuhi 1.4.0"
-  - name: "Version in header of: php ./build/phpunuhi.phar status"
-    command: "php ./build/phpunuhi.phar status --configuration=./tests/svrunit/formats/json/phpunuhi.xml"
-    expected: "PHPUnuhi Framework, v1.4.0"

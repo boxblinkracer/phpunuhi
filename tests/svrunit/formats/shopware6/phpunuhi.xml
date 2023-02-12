@@ -1,0 +1,28 @@
+<phpunuhi
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../config.xsd"
+>
+
+    <php>
+        <env name="DB_HOST" value="127.0.0.1"/>
+        <env name="DB_PORT" value="3306"/>
+        <env name="DB_USER" value="root"/>
+        <env name="DB_PASSWD" value="root"/>
+        <env name="DB_DBNAME" value="shopware"/>
+    </php>
+
+    <translations>
+
+        <set name="products">
+            <format>
+                <shopware6 entity="product"/>
+            </format>
+            <locales>
+                <locale name="en-GB"/>
+                <locale name="de-DE"/>
+            </locales>
+        </set>
+
+    </translations>
+
+</phpunuhi>
