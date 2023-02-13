@@ -6,6 +6,7 @@ use PHPUnuhi\Bundles\Storage\StorageFactory;
 use PHPUnuhi\Components\Filter\FilterHandler;
 use PHPUnuhi\Exceptions\ConfigurationException;
 use PHPUnuhi\Models\Configuration\Attribute;
+use PHPUnuhi\Models\Configuration\CaseStyle;
 use PHPUnuhi\Models\Configuration\Configuration;
 use PHPUnuhi\Models\Configuration\Filter;
 use PHPUnuhi\Models\Translation\Locale;
@@ -227,7 +228,7 @@ class ConfigurationLoader
 
     /**
      * @param SimpleXMLElement $stylesNode
-     * @return array<mixed>
+     * @return CaseStyle[]
      */
     private function loadStyles(SimpleXMLElement $stylesNode): array
     {
@@ -239,11 +240,18 @@ class ConfigurationLoader
 
         foreach ($stylesNode->style as $style) {
 
-            $styleName = (string)$style;
+            $attributes = $style->attributes();
 
-            if (!in_array($styleName, $styles)) {
-                $styles[] = $styleName;
+            $styleName = (string)$style;
+            $styleLevel = ($attributes instanceof SimpleXMLElement) ? (string)$attributes->level : '';
+
+            $caseStyle = new CaseStyle($styleName);
+
+            if (!empty($styleLevel)) {
+                $caseStyle->setLevel((int)$styleLevel);
             }
+
+            $styles[] = $caseStyle;
         }
 
         return $styles;

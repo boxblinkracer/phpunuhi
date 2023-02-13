@@ -32,4 +32,28 @@ class GroupNameServiceTest extends TestCase
         $this->assertEquals('pack_unit_plural', $propertyKey);
     }
 
+    /**
+     * @return void
+     */
+    public function testInvalidGroupId()
+    {
+        $service = new GroupNameService();
+
+        $propertyKey = $service->getGroupID('no-group--1');
+
+        $this->assertEquals('no-group--1', $propertyKey);
+    }
+
+    /**
+     * @return void
+     */
+    public function testInvalidGroupName()
+    {
+        $service = new GroupNameService();
+
+        $propertyKey = $service->getPropertyName('no-group--1');
+
+        $this->assertEquals('no-group--1', $propertyKey);
+    }
+
 }

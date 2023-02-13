@@ -4,6 +4,7 @@ namespace PHPUnuhi\Models\Translation;
 
 use PHPUnuhi\Exceptions\TranslationNotFoundException;
 use PHPUnuhi\Models\Configuration\Attribute;
+use PHPUnuhi\Models\Configuration\CaseStyle;
 use PHPUnuhi\Models\Configuration\Filter;
 
 class TranslationSet
@@ -35,7 +36,7 @@ class TranslationSet
     private $filter;
 
     /**
-     * @var string[]
+     * @var CaseStyle[]
      */
     private $casingStyles;
 
@@ -46,7 +47,7 @@ class TranslationSet
      * @param Locale[] $locales
      * @param Filter $filter
      * @param Attribute[] $attributes
-     * @param string[] $styles
+     * @param CaseStyle[] $styles
      */
     public function __construct(string $name, string $format, array $locales, Filter $filter, array $attributes, array $styles)
     {
@@ -115,7 +116,7 @@ class TranslationSet
     }
 
     /**
-     * @return string[]
+     * @return CaseStyle[]
      */
     public function getCasingStyles(): array
     {

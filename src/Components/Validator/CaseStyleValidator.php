@@ -30,17 +30,19 @@ class CaseStyleValidator implements ValidatorInterface
     {
         $caseValidatorFactory = new CaseStyleValidatorFactory();
 
-        $caseValidators = [];
-
         $hierarchy = $storage->getHierarchy();
-
 
         $tests = [];
         $errors = [];
 
+        $caseStyles = $set->getCasingStyles();
 
-        foreach ($set->getCasingStyles() as $style) {
-            $caseValidators[] = $caseValidatorFactory->fromIdentifier($style);
+        $stylesHaveLevel = false;
+        foreach ($caseStyles as $style) {
+            if ($style->hasLevel()) {
+                $stylesHaveLevel = true;
+                break;
+            }
         }
 
         foreach ($set->getLocales() as $locale) {
@@ -61,13 +63,34 @@ class CaseStyleValidator implements ValidatorInterface
 
                 $pathValid = false;
 
-                if (count($caseValidators) <= 0) {
+                if (count($caseStyles) <= 0) {
                     $pathValid = true;
                 }
 
+                $partLevel = 0;
+
                 foreach ($keyParts as $part) {
 
-                    foreach ($caseValidators as $caseValidator) {
+                    $invalidKeyPart = $part;
+
+                    foreach ($caseStyles as $caseStyle) {
+
+                        if ($caseStyle->hasLevel() && $caseStyle->getLevel() !== $partLevel) {
+                            continue;
+                        }
+
+                        # if we have levels somewhere,
+                        # then make sure global keys are only checked if we dont have specific styles for our level
+                        if ($stylesHaveLevel && !$caseStyle->hasLevel()) {
+                            # check if we have another style for our level
+                            foreach ($caseStyles as $tmpStyle) {
+                                if ($tmpStyle->hasLevel() && $tmpStyle->getLevel() === $partLevel) {
+                                    continue 2;
+                                }
+                            }
+                        }
+
+                        $caseValidator = $caseValidatorFactory->fromIdentifier($caseStyle->getName());
 
                         $isPartValid = $caseValidator->isValid($part);
 
@@ -84,6 +107,8 @@ class CaseStyleValidator implements ValidatorInterface
                     if (!$pathValid) {
                         break;
                     }
+
+                    $partLevel++;
                 }
 
                 if (!$pathValid) {
@@ -95,14 +120,14 @@ class CaseStyleValidator implements ValidatorInterface
                     'Test case-style of key: ' . $translation->getKey(),
                     $locale->getFilename(),
                     $this->getTypeIdentifier(),
-                    'Translation key ' . $translation->getKey() . ' has part with invalid case-style: ' . $invalidKeyPart,
+                    'Translation key ' . $translation->getKey() . ' has part with invalid case-style: ' . $invalidKeyPart . ' at level: ' . $partLevel,
                     $isKeyCaseValid
                 );
 
                 if (!$isKeyCaseValid) {
                     $errors[] = new ValidationError(
                         $this->getTypeIdentifier(),
-                        'Invalid case-style for key: ' . $invalidKeyPart,
+                        'Invalid case-style for key: ' . $invalidKeyPart . ' at level: ' . $partLevel,
                         $locale->getName(),
                         $locale->getFilename(),
                         $translation->getKey()

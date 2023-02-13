@@ -10,7 +10,8 @@
                 <json indent="2" sort="true"/>
             </format>
             <styles>
-                <style>kebab</style>
+                <style level="0">kebab</style>
+                <style level="1">camel</style>
             </styles>
             <locales>
                 <locale name="de">./de.json</locale>

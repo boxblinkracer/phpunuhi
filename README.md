@@ -615,6 +615,25 @@ The following styles are possible:
 </set>
 ```
 
+In addition to global case-styles, you can also set specific styles on **specific levels** if you have a multi-hierarchy storage such as JSON or PHP.
+
+You can even mix it with styles that do not have a level.
+In that case, styles without levels, are globally checked for every level that does not already have a specific style for its level.
+
+Here is an example that would be "valid" for this key: **global.businessEvents.mollie_checkout_order_success**.
+Pascal case is only checked on level 1, and not on 0 and 2.
+
+```xml
+
+<set>
+    <styles>
+        <style level="0">snake</style>
+        <style level="2">snake</style>
+        <style>pascal</style>
+    </styles>
+</set>
+```
+
 ### 7.5 PHP ENV Variables
 
 The XML configuration allows you to create custom ENV variables.

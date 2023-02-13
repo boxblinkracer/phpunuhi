@@ -82,7 +82,15 @@
         </xs:choice>
     </xs:complexType>
 
-    <xs:simpleType name="styleOptions">
+    <xs:complexType name="styleOptions">
+        <xs:simpleContent>
+            <xs:extension base="styleOptionValueType">
+                <xs:attribute name="level" type="xs:int" use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="styleOptionValueType">
         <xs:restriction base="xs:token">
             <xs:enumeration value="camel"/>
             <xs:enumeration value="snake"/>

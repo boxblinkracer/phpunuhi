@@ -112,7 +112,11 @@ class ValidateCommand extends Command
             $io->writeln(' Configuration for Translation-Set:');
 
             if (count($set->getCasingStyles()) > 0) {
-                $styles = implode(', ', $set->getCasingStyles());
+                $caseNames = [];
+                foreach ($set->getCasingStyles() as $caseStyle) {
+                    $caseNames[] = $caseStyle->getName();
+                }
+                $styles = implode(', ', $caseNames);
             } else {
                 $styles = 'none';
             }

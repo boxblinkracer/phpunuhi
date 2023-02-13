@@ -5,6 +5,10 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 ## [unreleased]
 
+### Added
+
+- Add new **level** for case-style validations. This helps to set specific styles on some levels within a multi-hierarchy translation format, such as JSON or PHP.
+
 ### Changed
 
 - Switched from **doctrine/dbal** to plain PDO to allow a wider range of integrations without a dependency to a specific dbal version.

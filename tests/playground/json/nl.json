@@ -1,6 +1,6 @@
 {
-    "card": {
-        "titleTest": "Over het algemeen"
-    },
-    "kebab-title": "Over het algemeen"
+  "card-section": {
+    "titleTest": "Over het algemeen"
+  },
+  "kebab-title": "Over het algemeen"
 }
