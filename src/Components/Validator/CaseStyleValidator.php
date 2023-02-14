@@ -115,16 +115,18 @@ class CaseStyleValidator implements ValidatorInterface
                     $isKeyCaseValid = false;
                 }
 
+                $testPassed = $isKeyCaseValid;
+
                 $tests[] = new ValidationTest(
                     $locale->getName(),
                     'Test case-style of key: ' . $translation->getKey(),
                     $locale->getFilename(),
                     $this->getTypeIdentifier(),
                     'Translation key ' . $translation->getKey() . ' has part with invalid case-style: ' . $invalidKeyPart . ' at level: ' . $partLevel,
-                    $isKeyCaseValid
+                    $testPassed
                 );
 
-                if (!$isKeyCaseValid) {
+                if (!$testPassed) {
                     $errors[] = new ValidationError(
                         $this->getTypeIdentifier(),
                         'Invalid case-style for key: ' . $invalidKeyPart . ' at level: ' . $partLevel,

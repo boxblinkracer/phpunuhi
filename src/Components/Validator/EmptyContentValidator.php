@@ -32,31 +32,34 @@ class EmptyContentValidator implements ValidatorInterface
         foreach ($set->getLocales() as $locale) {
             foreach ($locale->getTranslations() as $translation) {
 
+                $testPassed = !$translation->isEmpty();
+
                 $tests[] = new ValidationTest(
                     $locale->getName(),
                     'Test existing translation of key: ' . $translation->getKey(),
                     $locale->getFilename(),
                     $this->getTypeIdentifier(),
                     'Translation for key ' . $translation->getKey() . ' does not have a value',
-                    !$translation->isEmpty()
+                    $testPassed
                 );
 
-                if ($translation->isEmpty()) {
-
-                    if ($translation->getGroup() !== '') {
-                        $identifier = $translation->getGroup() . ' (group) => ' . $translation->getKey();
-                    } else {
-                        $identifier = $translation->getID();
-                    }
-
-                    $errors[] = new ValidationError(
-                        $this->getTypeIdentifier(),
-                        'Found empty translation',
-                        $locale->getName(),
-                        $locale->getFilename(),
-                        $identifier
-                    );
+                if ($testPassed) {
+                    continue;
                 }
+
+                if ($translation->getGroup() !== '') {
+                    $identifier = $translation->getGroup() . ' (group) => ' . $translation->getKey();
+                } else {
+                    $identifier = $translation->getID();
+                }
+
+                $errors[] = new ValidationError(
+                    $this->getTypeIdentifier(),
+                    'Found empty translation',
+                    $locale->getName(),
+                    $locale->getFilename(),
+                    $identifier
+                );
             }
         }
 
