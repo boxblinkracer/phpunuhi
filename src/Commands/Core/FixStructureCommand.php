@@ -97,11 +97,6 @@ class FixStructureCommand extends Command
                 }
             }
 
-            if ($countSetCreated <= 0) {
-                $io->block('nothing translated in this set...');
-                continue;
-            }
-
             $io->block('saving translations of this set...');
 
             $storageSaver = StorageFactory::getStorage($set);

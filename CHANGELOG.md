@@ -3,6 +3,11 @@
 All notable changes of SVRUnit releases are documented in this file
 using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
+## [unreleased]
+
+### Changed
+
+- The **fix:structure** command is now also called if no translations where created. This helps to re-write files and fix indention, sortings and more.
 ## [1.5.0]
 
 ### Added
