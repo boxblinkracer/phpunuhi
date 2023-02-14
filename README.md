@@ -5,7 +5,6 @@
 ![Build Status](https://github.com/boxblinkracer/phpunuhi/actions/workflows/ci_pipe.yml/badge.svg)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/boxblinkracer/phpunuhi)
 ![GitHub commits since latest release (by date)](https://img.shields.io/github/commits-since/boxblinkracer/phpunuhi/latest)
-![Build Status](https://github.com/boxblinkracer/phpunuhi/actions/workflows/nightly_build.yml/badge.svg)
 ![Packagist Downloads](https://img.shields.io/packagist/dt/boxblinkracer/phpunuhi?color=green&logo=packagist)
 
 Welcome to PHPUnuhi - The easy composable framework to validate and manage translations!
