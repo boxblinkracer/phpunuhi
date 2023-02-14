@@ -5,9 +5,14 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 ## [unreleased]
 
+### Added
+
+- Add new **rules** to Translation-Sets. The first rule is **nestingDepth** that allows you to validate against a maximum number of levels within a nested storage.
+
 ### Changed
 
 - The **fix:structure** command is now also called if no translations where created. This helps to re-write files and fix indention, sortings and more.
+
 ## [1.5.0]
 
 ### Added

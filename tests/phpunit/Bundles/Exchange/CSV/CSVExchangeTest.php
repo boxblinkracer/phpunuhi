@@ -37,6 +37,7 @@ class CSVExchangeTest extends TestCase
             [$localesDE, $localesEN],
             new Filter(),
             [],
+            [],
             []
         );
 
@@ -88,6 +89,7 @@ class CSVExchangeTest extends TestCase
             'json',
             [$localesDE, $localesEN],
             new Filter(),
+            [],
             [],
             []
         );

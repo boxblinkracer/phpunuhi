@@ -95,6 +95,7 @@ class MixedStructureValidatorTest extends TestCase
             $locales,
             new Filter(),
             [],
+            [],
             []
         );
     }

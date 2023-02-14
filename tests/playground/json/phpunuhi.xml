@@ -9,6 +9,9 @@
             <format>
                 <json indent="2" sort="true"/>
             </format>
+            <rules>
+                <nestingDepth>1</nestingDepth>
+            </rules>
             <styles>
                 <style level="0">kebab</style>
                 <style level="1">camel</style>

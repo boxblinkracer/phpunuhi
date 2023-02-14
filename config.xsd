@@ -51,6 +51,7 @@
         <xs:choice minOccurs="1" maxOccurs="unbounded">
             <xs:element name="format" type="typeFormat" minOccurs="1" maxOccurs="1"/>
             <xs:element name="filter" type="typeFilter" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="rules" type="typeRules" minOccurs="0" maxOccurs="1"/>
             <xs:element name="styles" type="typeStyle" minOccurs="0" maxOccurs="1"/>
             <xs:element name="locales" type="typeLocales" minOccurs="1" maxOccurs="1"/>
         </xs:choice>
@@ -70,6 +71,15 @@
     <xs:complexType name="typeFilterKey">
         <xs:choice minOccurs="0" maxOccurs="1">
             <xs:element name="key" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:choice>
+    </xs:complexType>
+
+    <!-- ================================================================================================================================ -->
+    <!-- RULES -->
+
+    <xs:complexType name="typeRules">
+        <xs:choice minOccurs="0" maxOccurs="1">
+            <xs:element name="nestingDepth" type="xs:int" minOccurs="0" maxOccurs="unbounded"/>
         </xs:choice>
     </xs:complexType>
 

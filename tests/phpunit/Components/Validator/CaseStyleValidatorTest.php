@@ -207,7 +207,8 @@ class CaseStyleValidatorTest extends TestCase
             [$locale],
             new Filter(),
             [],
-            $caseStyles
+            $caseStyles,
+            []
         );
 
         return $this->validator->validate($set, $storage);

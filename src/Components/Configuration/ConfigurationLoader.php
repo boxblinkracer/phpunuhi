@@ -9,6 +9,8 @@ use PHPUnuhi\Models\Configuration\Attribute;
 use PHPUnuhi\Models\Configuration\CaseStyle;
 use PHPUnuhi\Models\Configuration\Configuration;
 use PHPUnuhi\Models\Configuration\Filter;
+use PHPUnuhi\Models\Configuration\Rule;
+use PHPUnuhi\Models\Configuration\Rules;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
 use SimpleXMLElement;
@@ -102,7 +104,7 @@ class ConfigurationLoader
             $nodeLocales = $xmlSet->locales;
             $nodeFilter = $xmlSet->filter;
             $nodeStyles = $xmlSet->styles;
-
+            $nodeRules = $xmlSet->rules;
 
             # default values
             $setFormat = 'json';
@@ -110,6 +112,7 @@ class ConfigurationLoader
             $setLocales = [];
             $setFilter = new Filter();
             $casingStyles = [];
+            $rules = [];
 
             if ($nodeFormat !== null) {
                 $formatData = $this->parseFormat($nodeFormat);
@@ -129,13 +132,18 @@ class ConfigurationLoader
                 $casingStyles = $this->loadStyles($nodeStyles);
             }
 
+            if ($nodeRules !== null) {
+                $rules = $this->loadRules($nodeRules);
+            }
+
             $set = new TranslationSet(
                 $setName,
                 $setFormat,
                 $setLocales,
                 $setFilter,
                 $setAttributes,
-                $casingStyles
+                $casingStyles,
+                $rules
             );
 
             $storage = StorageFactory::getStorage($set);
@@ -255,6 +263,23 @@ class ConfigurationLoader
         }
 
         return $styles;
+    }
+
+    /**
+     * @param SimpleXMLElement $rulesNode
+     * @return Rule[]
+     */
+    private function loadRules(SimpleXMLElement $rulesNode): array
+    {
+        $rules = [];
+
+        $nestingDepth = $rulesNode->nestingDepth;
+
+        if ($nestingDepth !== null) {
+            $rules[] = new Rule(Rules::NESTING_DEPTH, (string)$nestingDepth);
+        }
+
+        return $rules;
     }
 
     /**

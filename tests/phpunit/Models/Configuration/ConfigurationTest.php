@@ -16,7 +16,7 @@ class ConfigurationTest extends TestCase
     public function testTranslationSets()
     {
         $sets = [];
-        $sets[] = new TranslationSet('products', 'ini', [], new Filter(), [], []);
+        $sets[] = new TranslationSet('products', 'ini', [], new Filter(), [], [], []);
 
         $config = new Configuration($sets);
 

@@ -95,6 +95,7 @@ class EmptyContentValidatorTest extends TestCase
             $locales,
             new Filter(),
             [],
+            [],
             []
         );
     }

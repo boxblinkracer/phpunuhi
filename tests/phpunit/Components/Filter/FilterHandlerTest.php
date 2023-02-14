@@ -43,6 +43,7 @@ class FilterHandlerTest extends TestCase
             [$localesDE, $localesEN],
             $filter,
             [],
+            [],
             []
         );
 

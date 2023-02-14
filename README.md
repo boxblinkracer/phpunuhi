@@ -44,18 +44,20 @@ Now that you know this, let's get started!
         * [7.1.4 Shopware 6](#714-shopware-6)
     * [7.2 Filters](#72-filters)
     * [7.3 Groups](#73-groups)
-    * [7.4 Case Styles](#74-case-styles)
-    * [7.5 PHP ENV Variables](#75-php-env-variables)
-    * [7.6 Exchange Formats](#76-exchange-formats)
-        * [7.6.1 CSV](#761-csv)
-        * [7.6.2 HTML / WebEdit](#762-html--webedit)
-    * [7.7 Translator Services](#77-translator-services)
-        * [7.7.1 DeepL](#771-deepl)
-        * [7.7.2 Google Cloud Translate](#772-google-cloud-translate)
-        * [7.7.3 Google Web Translate](#773-google-web-translate)
-        * [7.7.4 OpenAI GPT Translate](#774-openai-gpt-translate)
-    * [7.8 Validation Reports](#78-validation-reports)
-        * [7.8.1 JUnit Report](#781-junit-report)
+    * [7.4 Rules](#74-rules)
+        * [7.4.1 Nesting Depth](#741-nesting-depth)
+    * [7.5 Case Styles](#75-case-styles)
+    * [7.6 PHP ENV Variables](#76-php-env-variables)
+    * [7.7 Exchange Formats](#77-exchange-formats)
+        * [7.7.1 CSV](#771-csv)
+        * [7.7.2 HTML / WebEdit](#772-html--webedit)
+    * [7.8 Translator Services](#78-translator-services)
+        * [7.8.1 DeepL](#781-deepl)
+        * [7.8.2 Google Cloud Translate](#782-google-cloud-translate)
+        * [7.8.3 Google Web Translate](#783-google-web-translate)
+        * [7.8.4 OpenAI GPT Translate](#784-openai-gpt-translate)
+    * [7.9 Validation Reports](#79-validation-reports)
+        * [7.9.1 JUnit Report](#791-junit-report)
 
 <!-- TOC -->
 
@@ -233,6 +235,11 @@ This helps against forgetting certain translations in any of your locales.
 
 If you have provided a list of allowed case-styles, the validation command will automatically test
 if all your translation keys, match your provided case styles.
+
+**Maximum nesting levels**
+
+If you have provided a rule for nestingDepth, then the validator will also verify the nesting level
+on storages that support nesting (JSON, PHP, ...)
 
 ### 4.2 Fix Structure Command
 
@@ -588,7 +595,31 @@ A CSV format, has a separate column for groups, and the import should also work 
 The HTML format on the other hand, shows a matching style in the table, so you know that the
 translations all belong to this group.
 
-### 7.4 Case Styles
+### 7.4 Rules
+
+You can add additional rules to extend the validation of your Translation-Sets.
+Please see the list below for all supported rules.
+
+```xml
+
+<set>
+    <rules>
+        ...
+    </rules>
+</set>
+```
+
+#### 7.4.1 Nesting Depth
+
+The nesting-depth rule allows you to throw an error once the maximum depth is reached within a nested storage type.
+This helps you to keep your depth in control.
+
+```xml
+
+<nestingDepth>3</nestingDepth>
+```
+
+### 7.5 Case Styles
 
 To keep consistency across all your translation keys, it's possible to set a list of allowed case styles.
 The **validate** command, will automatically test, if all your translation keys match at least one of the provided styles.
@@ -615,7 +646,7 @@ The following styles are possible:
 </set>
 ```
 
-In addition to global case-styles, you can also set specific styles on **specific levels** if you have a multi-hierarchy storage such as JSON or PHP.
+In addition to global case-styles, you can also set specific styles on **specific levels** if you have a nested storage such as JSON or PHP.
 
 You can even mix it with styles that do not have a level.
 In that case, styles without levels, are globally checked for every level that does not already have a specific style for its level.
@@ -634,7 +665,7 @@ Pascal case is only checked on level 1, and not on 0 and 2.
 </set>
 ```
 
-### 7.5 PHP ENV Variables
+### 7.6 PHP ENV Variables
 
 The XML configuration allows you to create custom ENV variables.
 Depending on the components you use in PHPUnuhi, some require specific ENV variables, such as the Shopware 6 database connection.
@@ -653,7 +684,7 @@ These can either be set by exporting the ENV variable on your server, or by simp
 </phpunuhi>
 ```
 
-### 7.6 Exchange Formats
+### 7.7 Exchange Formats
 
 Exchange formats define how you export and import translation data.
 The main purpose is to send it out to a translation company or just someone else,
@@ -661,7 +692,7 @@ and be able to import it back into your system again.
 
 The following formats are currently supported.
 
-#### 7.6.1 CSV
+#### 7.7.1 CSV
 
 * Format: "csv"
 
@@ -681,7 +712,7 @@ Every translation key has its own row, and all locale-values have their own colu
    <img src="/.github/assets/csv.png">
 </p>
 
-#### 7.6.2 HTML / WebEdit
+#### 7.7.2 HTML / WebEdit
 
 * Format: "html"
 
@@ -695,12 +726,12 @@ you can import again into your system with the format **html** in PHPUnuhi.
    <img src="/.github/assets/html.png">
 </p>
 
-### 7.7 Translator Services
+### 7.8 Translator Services
 
 Translators are supported (external) services that automatically translate empty values for you.
 These services usually require an API key that needs to be provided for PHPUnuhi.
 
-#### 7.7.1 DeepL
+#### 7.8.1 DeepL
 
 * Service: "deepl"
 
@@ -716,7 +747,7 @@ DeepL allows you to either translate to a formal or informal language.
 This option is only available for some target languages, just like "German" ("du" vs. "Sie").
 You can request a formal language by simply applying the argument "--deepl-formal" to the translate command.
 
-#### 7.7.2 Google Cloud Translate
+#### 7.8.2 Google Cloud Translate
 
 * Service: "googlecloud"
 
@@ -727,7 +758,7 @@ You can request a formal language by simply applying the argument "--deepl-forma
 Google Cloud Translation allows you to use the AI services of Google.
 If you have an API Key, you can easily provide it with the corresponding argument when running the translation command.
 
-#### 7.7.3 Google Web Translate
+#### 7.8.3 Google Web Translate
 
 * Service: "googleweb"
 
@@ -738,7 +769,7 @@ Because of this, it can happen, that a massive number of requests might lead to 
 This is more meant for educational purposes.
 Although it works, you should consider getting a real Google API key for commercial and serious usage of their services.
 
-#### 7.7.4 OpenAI GPT Translate
+#### 7.8.4 OpenAI GPT Translate
 
 * Service: "openai"
 
@@ -755,7 +786,7 @@ That's it!
 This was indeed a last minute addon, but it works quite good.
 If you have any tweaks, feel free to contribute :)
 
-### 7.8 Validation Reports
+### 7.9 Validation Reports
 
 It's possible to generate reports after running a **validation** command. This helps you to use
 the results in different systems and platforms.
@@ -763,7 +794,7 @@ the results in different systems and platforms.
 The validation command has 2 arguments **--report-format=xyz** and **--report-output=abc** to provide
 a certain format and a custom output filename. Use this to generate reports based on validation results.
 
-#### 7.8.1 JUnit Report
+#### 7.9.1 JUnit Report
 
 You can generate a JUnit XML report by providing the following arguments when starting the validation.
 

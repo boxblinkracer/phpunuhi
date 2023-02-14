@@ -11,6 +11,7 @@ use PHPUnuhi\Components\Reporter\Model\TestResult;
 use PHPUnuhi\Components\Validator\CaseStyleValidator;
 use PHPUnuhi\Components\Validator\EmptyContentValidator;
 use PHPUnuhi\Components\Validator\MissingStructureValidator;
+use PHPUnuhi\Components\Validator\NestingValidator;
 use PHPUnuhi\Configuration\ConfigurationLoader;
 use PHPUnuhi\Traits\CommandTrait;
 use PHPUnuhi\Traits\StringTrait;
@@ -74,6 +75,7 @@ class ValidateCommand extends Command
         $validators[] = new MissingStructureValidator();
         $validators[] = new CaseStyleValidator();
         $validators[] = new EmptyContentValidator();
+        $validators[] = new NestingValidator();
 
         $errorCount = 0;
 
