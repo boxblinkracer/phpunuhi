@@ -629,7 +629,7 @@ Pascal case is only checked on level 1, and not on 0 and 2.
     <styles>
         <style level="0">snake</style>
         <style level="2">snake</style>
-        <style>pascal</style>
+        <style>camel</style>
     </styles>
 </set>
 ```
