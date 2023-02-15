@@ -47,12 +47,10 @@ svrunit: ## Runs all SVRUnit tests
 
 pr: ## Runs and prepares everything for a pull request
 	PHP_CS_FIXER_IGNORE_ENV=1 php ./vendor/bin/php-cs-fixer fix --config=./.php_cs.php
-	php vendor/bin/phpinsights analyse --fix --no-interaction --min-quality=0 --min-complexity=0 --min-architecture=0 --min-style=0
 	@make phpcheck -B
 	@make phpmin -B
 	@make phpunit -B
 	@make stan -B
-	@make phpinsights -B
 
 #------------------------------------------------------------------------------------------------
 
