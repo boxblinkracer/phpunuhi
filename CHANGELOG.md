@@ -9,6 +9,10 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 - Add new **rules** to Translation-Sets. The first rule is **nestingDepth** that allows you to validate against a maximum number of levels within a nested storage.
 
+### Fixed
+
+- Fixed problem `/usr/bin/php: bad interpreter: No such file or directory` when running on a MAC.
+
 ### Changed
 
 - The **fix:structure** command is now also called if no translations where created. This helps to re-write files and fix indention, sortings and more.
