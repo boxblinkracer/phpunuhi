@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d4c7a241b2d86664da329d72882b67bc",
+    "content-hash": "a824085b941fa71bcbc8c6df1b8641ca",
     "packages": [
         {
             "name": "deeplcom/deepl-php",
@@ -5082,12 +5082,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svrunit/svrunit.git",
-                "reference": "a00d861060056d9d2a8d313e3549a91ad75425e3"
+                "reference": "7203f34de6420b92f3c5259bba09f838ecb83da7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/svrunit/svrunit/zipball/a00d861060056d9d2a8d313e3549a91ad75425e3",
-                "reference": "a00d861060056d9d2a8d313e3549a91ad75425e3",
+                "url": "https://api.github.com/repos/svrunit/svrunit/zipball/7203f34de6420b92f3c5259bba09f838ecb83da7",
+                "reference": "7203f34de6420b92f3c5259bba09f838ecb83da7",
                 "shasum": ""
             },
             "require": {
@@ -5133,7 +5133,7 @@
                 "issues": "https://github.com/svrunit/svrunit/issues",
                 "source": "https://github.com/svrunit/svrunit/tree/main"
             },
-            "time": "2023-02-12T08:33:52+00:00"
+            "time": "2023-02-16T16:53:41+00:00"
         },
         {
             "name": "symfony/event-dispatcher",

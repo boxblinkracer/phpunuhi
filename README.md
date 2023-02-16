@@ -43,9 +43,9 @@ Now that you know this, let's get started!
         * [7.1.4 Shopware 6](#714-shopware-6)
     * [7.2 Filters](#72-filters)
     * [7.3 Groups](#73-groups)
-    * [7.4 Rules](#74-rules)
-        * [7.4.1 Nesting Depth](#741-nesting-depth)
-    * [7.5 Case Styles](#75-case-styles)
+    * [7.4 Case Styles](#74-case-styles)
+    * [7.5 Rules](#75-rules)
+        * [7.5.1 Nesting Depth](#751-nesting-depth)
     * [7.6 PHP ENV Variables](#76-php-env-variables)
     * [7.7 Exchange Formats](#77-exchange-formats)
         * [7.7.1 CSV](#771-csv)
@@ -594,31 +594,7 @@ A CSV format, has a separate column for groups, and the import should also work 
 The HTML format on the other hand, shows a matching style in the table, so you know that the
 translations all belong to this group.
 
-### 7.4 Rules
-
-You can add additional rules to extend the validation of your Translation-Sets.
-Please see the list below for all supported rules.
-
-```xml
-
-<set>
-    <rules>
-        ...
-    </rules>
-</set>
-```
-
-#### 7.4.1 Nesting Depth
-
-The nesting-depth rule allows you to throw an error once the maximum depth is reached within a nested storage type.
-This helps you to keep your depth in control.
-
-```xml
-
-<nestingDepth>3</nestingDepth>
-```
-
-### 7.5 Case Styles
+### 7.4 Case Styles
 
 To keep consistency across all your translation keys, it's possible to set a list of allowed case styles.
 The **validate** command, will automatically test, if all your translation keys match at least one of the provided styles.
@@ -662,6 +638,30 @@ Pascal case is only checked on level 1, and not on 0 and 2.
         <style>camel</style>
     </styles>
 </set>
+```
+
+### 7.5 Rules
+
+You can add additional rules to extend the validation of your Translation-Sets.
+Please see the list below for all supported rules.
+
+```xml
+
+<set>
+    <rules>
+        ...
+    </rules>
+</set>
+```
+
+#### 7.5.1 Nesting Depth
+
+The nesting-depth rule allows you to throw an error once the maximum depth is reached within a nested storage type.
+This helps you to keep your depth in control.
+
+```xml
+
+<nestingDepth>3</nestingDepth>
 ```
 
 ### 7.6 PHP ENV Variables
