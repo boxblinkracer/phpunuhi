@@ -2,6 +2,7 @@
 
 namespace PHPUnuhi\Bundles\Storage;
 
+use PHPUnuhi\Bundles\Storage\CSV\CSVStorage;
 use PHPUnuhi\Bundles\Storage\INI\IniStorage;
 use PHPUnuhi\Bundles\Storage\JSON\JsonStorage;
 use PHPUnuhi\Bundles\Storage\PHP\PhpStorage;
@@ -36,6 +37,9 @@ class StorageFactory
             case 'php':
                 $sort = (bool)$set->getAttributeValue('sort');
                 return new PhpStorage($sort);
+
+            case 'csv':
+                return new CSVStorage();
 
             case 'shopware6':
                 return new Shopware6Storage();
