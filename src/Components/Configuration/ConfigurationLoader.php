@@ -295,7 +295,7 @@ class ConfigurationLoader
         foreach ($rootLocales->children() as $nodeLocale) {
 
             $nodeType = $nodeLocale->getName();
-            $innerValue = (string)$nodeLocale[0];
+            $innerValue = trim((string)$nodeLocale[0]);
 
             if ($nodeType !== 'locale') {
                 throw new ConfigurationException('only <locale> elements are allowed in the locales node. found: ' . $nodeType);

@@ -3,6 +3,12 @@
 All notable changes of SVRUnit releases are documented in this file
 using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
+## [unreleased]
+
+### Fixed
+
+- Fix problem with locale filenames that have whitespaces before or after the filename. Trim() has been added ;)
+
 ## [1.6.0]
 
 ### Added
