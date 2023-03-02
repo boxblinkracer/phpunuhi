@@ -5,6 +5,10 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 ## [unreleased]
 
+### Added
+
+- Add new **number** case-style validator.
+
 ### Fixed
 
 - Fix problem with locale filenames that have whitespaces before or after the filename. Trim() has been added ;)

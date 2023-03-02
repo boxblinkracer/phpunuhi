@@ -6,6 +6,7 @@ use PHPUnuhi\Components\Validator\CaseStyle\Exception\CaseStyleNotFoundException
 use PHPUnuhi\Components\Validator\CaseStyle\Style\CamelCaseValidator;
 use PHPUnuhi\Components\Validator\CaseStyle\Style\KebabCaseValidator;
 use PHPUnuhi\Components\Validator\CaseStyle\Style\LowerCaseValidator;
+use PHPUnuhi\Components\Validator\CaseStyle\Style\NumberCaseValidator;
 use PHPUnuhi\Components\Validator\CaseStyle\Style\PascalCaseValidator;
 use PHPUnuhi\Components\Validator\CaseStyle\Style\SnakeCaseValidator;
 use PHPUnuhi\Components\Validator\CaseStyle\Style\StartCaseValidator;
@@ -33,6 +34,7 @@ class CaseStyleValidatorFactory
         $this->validators[] = new LowerCaseValidator();
         $this->validators[] = new UpperCaseValidator();
         $this->validators[] = new PascalCaseValidator();
+        $this->validators[] = new NumberCaseValidator();
     }
 
     /**
