@@ -2,6 +2,8 @@
 
 namespace PHPUnuhi\Components\Validator\CaseStyle\Style;
 
+use PHPUnuhi\Components\Validator\CaseStyle\CaseStyleValidatorInterface;
+
 class NumberCaseValidator implements CaseStyleValidatorInterface
 {
 
