@@ -610,6 +610,7 @@ The following styles are possible:
 * upper
 * snake
 * start
+* number
 
 ```xml
 

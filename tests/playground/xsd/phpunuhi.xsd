@@ -109,6 +109,7 @@
             <xs:enumeration value="upper"/>
             <xs:enumeration value="pascal"/>
             <xs:enumeration value="start"/>
+            <xs:enumeration value="number"/>
         </xs:restriction>
     </xs:simpleType>
 
