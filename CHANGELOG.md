@@ -8,6 +8,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 ### Added
 
 - Add new **number** case-style validator.
+- Add new **keyLength** rule. Validate a maximum length of your keys.
 
 ### Fixed
 

@@ -665,6 +665,16 @@ This helps you to keep your depth in control.
 <nestingDepth>3</nestingDepth>
 ```
 
+#### 7.5.2 Key Length
+
+The key-length rule allows you to throw an error once the maximum length of a key is reached
+
+```xml
+
+<keyLength>20</keyLength>
+```
+
+
 ### 7.6 PHP ENV Variables
 
 The XML configuration allows you to create custom ENV variables.

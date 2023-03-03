@@ -274,9 +274,14 @@ class ConfigurationLoader
         $rules = [];
 
         $nestingDepth = $rulesNode->nestingDepth;
+        $keyLength = $rulesNode->keyLength;
 
         if ($nestingDepth !== null) {
             $rules[] = new Rule(Rules::NESTING_DEPTH, (string)$nestingDepth);
+        }
+
+        if ($keyLength !== null) {
+            $rules[] = new Rule(Rules::KEY_LENGTH, (string)$keyLength);
         }
 
         return $rules;
