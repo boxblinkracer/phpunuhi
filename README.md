@@ -46,6 +46,7 @@ Now that you know this, let's get started!
     * [7.4 Case Styles](#74-case-styles)
     * [7.5 Rules](#75-rules)
         * [7.5.1 Nesting Depth](#751-nesting-depth)
+        * [7.5.2 Key Length](#752-key-length)
     * [7.6 PHP ENV Variables](#76-php-env-variables)
     * [7.7 Exchange Formats](#77-exchange-formats)
         * [7.7.1 CSV](#771-csv)
@@ -673,7 +674,6 @@ The key-length rule allows you to throw an error once the maximum length of a ke
 
 <keyLength>20</keyLength>
 ```
-
 
 ### 7.6 PHP ENV Variables
 
