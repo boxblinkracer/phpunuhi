@@ -78,9 +78,16 @@
     <!-- RULES -->
 
     <xs:complexType name="typeRules">
-        <xs:choice minOccurs="0" maxOccurs="1">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
             <xs:element name="nestingDepth" type="xs:int" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="keyLength" type="xs:int" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="disallowedTexts" type="typeDisallowedText" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="typeDisallowedText">
+        <xs:choice minOccurs="0" maxOccurs="1">
+            <xs:element name="text" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
         </xs:choice>
     </xs:complexType>
 

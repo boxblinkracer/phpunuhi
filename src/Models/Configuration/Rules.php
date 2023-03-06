@@ -15,4 +15,9 @@ interface Rules
      */
     public const KEY_LENGTH = 'keyLength';
 
+    /**
+     *
+     */
+    public const DISALLOWED_TEXT = 'disallowedTexts';
+
 }

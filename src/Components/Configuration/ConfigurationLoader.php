@@ -275,6 +275,7 @@ class ConfigurationLoader
 
         $nestingDepth = $rulesNode->nestingDepth;
         $keyLength = $rulesNode->keyLength;
+        $disallowedTexts = $rulesNode->disallowedTexts;
 
         if ($nestingDepth !== null) {
             $rules[] = new Rule(Rules::NESTING_DEPTH, (string)$nestingDepth);
@@ -282,6 +283,11 @@ class ConfigurationLoader
 
         if ($keyLength !== null) {
             $rules[] = new Rule(Rules::KEY_LENGTH, (string)$keyLength);
+        }
+
+        if ($disallowedTexts !== null) {
+            $textsArray = $disallowedTexts->text;
+            $rules[] = new Rule(Rules::DISALLOWED_TEXT, (array)$textsArray);
         }
 
         return $rules;

@@ -9,6 +9,7 @@ use PHPUnuhi\Components\Reporter\Model\ReportResult;
 use PHPUnuhi\Components\Reporter\Model\SuiteResult;
 use PHPUnuhi\Components\Reporter\Model\TestResult;
 use PHPUnuhi\Components\Validator\CaseStyleValidator;
+use PHPUnuhi\Components\Validator\DisallowedTextValidator;
 use PHPUnuhi\Components\Validator\EmptyContentValidator;
 use PHPUnuhi\Components\Validator\KeyLengthValidator;
 use PHPUnuhi\Components\Validator\MissingStructureValidator;
@@ -78,6 +79,7 @@ class ValidateCommand extends Command
         $validators[] = new EmptyContentValidator();
         $validators[] = new NestingValidator();
         $validators[] = new KeyLengthValidator();
+        $validators[] = new DisallowedTextValidator();
 
         $errorCount = 0;
 

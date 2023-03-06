@@ -11,15 +11,16 @@ class Rule
     private $name;
 
     /**
-     * @var string
+     * @var mixed
      */
     private $value;
 
+
     /**
      * @param string $name
-     * @param string $value
+     * @param mixed $value
      */
-    public function __construct(string $name, string $value)
+    public function __construct(string $name, $value)
     {
         $this->name = $name;
         $this->value = $value;
@@ -34,9 +35,9 @@ class Rule
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getValue(): string
+    public function getValue()
     {
         return $this->value;
     }

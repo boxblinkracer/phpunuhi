@@ -9,6 +9,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 - Add new **number** case-style validator.
 - Add new **keyLength** rule. Validate a maximum length of your keys.
+- Add new *disallowedTexts** rule. Provide a list of texts that must not appear in any of your translations.
 
 ### Fixed
 
