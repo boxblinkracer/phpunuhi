@@ -9,7 +9,7 @@ use PHPUnuhi\Components\Validator\Model\ValidationTest;
 use PHPUnuhi\Models\Configuration\Rules;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
-class KeyLengthValidator implements ValidatorInterface
+class RuleValidatorNestingDepth implements ValidatorInterface
 {
 
     /**
@@ -17,7 +17,7 @@ class KeyLengthValidator implements ValidatorInterface
      */
     public function getTypeIdentifier(): string
     {
-        return 'KEY_LENGTH';
+        return 'NESTING';
     }
 
 
@@ -30,53 +30,45 @@ class KeyLengthValidator implements ValidatorInterface
     {
         $hierarchy = $storage->getHierarchy();
 
+        if (!$hierarchy->isMultiLevel()) {
+            return new ValidationResult([], []);
+        }
 
         $tests = [];
         $errors = [];
 
-        $maxKeyLength = -1;
+        $maxNestingLevel = -1;
 
         foreach ($set->getRules() as $rule) {
-            if ($rule->getName() === Rules::KEY_LENGTH) {
-                $maxKeyLength = (int)$rule->getValue();
+            if ($rule->getName() === Rules::NESTING_DEPTH) {
+                $maxNestingLevel = (int)$rule->getValue();
                 break;
             }
         }
 
-        if ($maxKeyLength === -1) {
+        if ($maxNestingLevel === -1) {
             return new ValidationResult([], []);
         }
 
         foreach ($set->getLocales() as $locale) {
             foreach ($locale->getTranslations() as $translation) {
 
-                if ($hierarchy->isMultiLevel()) {
-                    $parts = explode($hierarchy->getDelimiter(), $translation->getKey());
-                    if (!is_array($parts)) {
-                        $parts = [];
-                    }
-                } else {
-                    $parts = [$translation->getKey()];
+                $parts = explode($hierarchy->getDelimiter(), $translation->getKey());
+
+                if (!is_array($parts)) {
+                    $parts = [];
                 }
 
-                $invalidKey = null;
-                foreach ($parts as $part) {
+                $currentLevels = count($parts);
 
-                    if (strlen($part) > $maxKeyLength) {
-                        $invalidKey = $part;
-                        break;
-                    }
-                }
-
-                $testPassed = ($invalidKey === null);
-                $invalidKey = (string)$invalidKey; # for output below
+                $testPassed = $currentLevels <= $maxNestingLevel;
 
                 $tests[] = new ValidationTest(
                     $locale->getName(),
-                    'Test length of key: ' . $translation->getKey(),
+                    'Test nesting level of key: ' . $translation->getKey(),
                     $locale->getFilename(),
                     $this->getTypeIdentifier(),
-                    'Maximum length of key ' . $invalidKey . ' has been reached. Length is ' . strlen($invalidKey) . ' of max allowed ' . $maxKeyLength . '.',
+                    'Translation for key ' . $translation->getKey() . ' has ' . $currentLevels . ' levels. Maximum nesting level is: ' . $maxNestingLevel,
                     $testPassed
                 );
 
@@ -92,7 +84,7 @@ class KeyLengthValidator implements ValidatorInterface
 
                 $errors[] = new ValidationError(
                     $this->getTypeIdentifier(),
-                    'Maximum length of key ' . $invalidKey . ' has been reached. Length is ' . strlen($invalidKey) . ' of max allowed ' . $maxKeyLength . '.',
+                    'Maximum nesting level of ' . $maxNestingLevel . ' has been reached. Translation has ' . $currentLevels . ' levels.',
                     $locale->getName(),
                     $locale->getFilename(),
                     $identifier

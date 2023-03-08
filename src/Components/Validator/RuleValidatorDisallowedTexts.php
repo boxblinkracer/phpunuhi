@@ -8,18 +8,21 @@ use PHPUnuhi\Components\Validator\Model\ValidationResult;
 use PHPUnuhi\Components\Validator\Model\ValidationTest;
 use PHPUnuhi\Models\Configuration\Rules;
 use PHPUnuhi\Models\Translation\TranslationSet;
+use PHPUnuhi\Traits\StringTrait;
 
-class NestingValidator implements ValidatorInterface
+class RuleValidatorDisallowedTexts implements ValidatorInterface
 {
+
+    use StringTrait;
+
 
     /**
      * @return string
      */
     public function getTypeIdentifier(): string
     {
-        return 'NESTING';
+        return 'DISALLOWED_TEXT';
     }
-
 
     /**
      * @param TranslationSet $set
@@ -28,47 +31,41 @@ class NestingValidator implements ValidatorInterface
      */
     public function validate(TranslationSet $set, StorageInterface $storage): ValidationResult
     {
-        $hierarchy = $storage->getHierarchy();
-
-        if (!$hierarchy->isMultiLevel()) {
-            return new ValidationResult([], []);
-        }
-
         $tests = [];
         $errors = [];
 
-        $maxNestingLevel = -1;
+        $disallowedWords = [];
 
         foreach ($set->getRules() as $rule) {
-            if ($rule->getName() === Rules::NESTING_DEPTH) {
-                $maxNestingLevel = (int)$rule->getValue();
+            if ($rule->getName() === Rules::DISALLOWED_TEXT) {
+                $disallowedWords = (array)$rule->getValue();
                 break;
             }
         }
 
-        if ($maxNestingLevel === -1) {
+        if (count($disallowedWords) === 0) {
             return new ValidationResult([], []);
         }
 
         foreach ($set->getLocales() as $locale) {
             foreach ($locale->getTranslations() as $translation) {
 
-                $parts = explode($hierarchy->getDelimiter(), $translation->getKey());
-
-                if (!is_array($parts)) {
-                    $parts = [];
+                $foundWord = null;
+                foreach ($disallowedWords as $disallowedWord) {
+                    if ($this->stringDoesContain($translation->getValue(), $disallowedWord)) {
+                        $foundWord = $disallowedWord;
+                        break;
+                    }
                 }
 
-                $currentLevels = count($parts);
-
-                $testPassed = $currentLevels <= $maxNestingLevel;
+                $testPassed = ($foundWord === null);
 
                 $tests[] = new ValidationTest(
                     $locale->getName(),
-                    'Test nesting level of key: ' . $translation->getKey(),
+                    'Test against disallowed text for key: ' . $translation->getKey(),
                     $locale->getFilename(),
                     $this->getTypeIdentifier(),
-                    'Translation for key ' . $translation->getKey() . ' has ' . $currentLevels . ' levels. Maximum nesting level is: ' . $maxNestingLevel,
+                    'Translation for key ' . $translation->getKey() . ' has disallowed text: ' . (string)$foundWord,
                     $testPassed
                 );
 
@@ -84,7 +81,7 @@ class NestingValidator implements ValidatorInterface
 
                 $errors[] = new ValidationError(
                     $this->getTypeIdentifier(),
-                    'Maximum nesting level of ' . $maxNestingLevel . ' has been reached. Translation has ' . $currentLevels . ' levels.',
+                    'Found disallowed text in key ' . $translation->getKey() . '. Value must not contain: ' . $foundWord,
                     $locale->getName(),
                     $locale->getFilename(),
                     $identifier

@@ -8,21 +8,18 @@ use PHPUnuhi\Components\Validator\Model\ValidationResult;
 use PHPUnuhi\Components\Validator\Model\ValidationTest;
 use PHPUnuhi\Models\Configuration\Rules;
 use PHPUnuhi\Models\Translation\TranslationSet;
-use PHPUnuhi\Traits\StringTrait;
 
-class DisallowedTextValidator implements ValidatorInterface
+class RuleValidatorKeyLength implements ValidatorInterface
 {
-
-    use StringTrait;
-
 
     /**
      * @return string
      */
     public function getTypeIdentifier(): string
     {
-        return 'DISALLOWED_TEXT';
+        return 'KEY_LENGTH';
     }
+
 
     /**
      * @param TranslationSet $set
@@ -31,41 +28,55 @@ class DisallowedTextValidator implements ValidatorInterface
      */
     public function validate(TranslationSet $set, StorageInterface $storage): ValidationResult
     {
+        $hierarchy = $storage->getHierarchy();
+
+
         $tests = [];
         $errors = [];
 
-        $disallowedWords = [];
+        $maxKeyLength = -1;
 
         foreach ($set->getRules() as $rule) {
-            if ($rule->getName() === Rules::DISALLOWED_TEXT) {
-                $disallowedWords = (array)$rule->getValue();
+            if ($rule->getName() === Rules::KEY_LENGTH) {
+                $maxKeyLength = (int)$rule->getValue();
                 break;
             }
         }
 
-        if (count($disallowedWords) === 0) {
+        if ($maxKeyLength === -1) {
             return new ValidationResult([], []);
         }
 
         foreach ($set->getLocales() as $locale) {
             foreach ($locale->getTranslations() as $translation) {
 
-                $foundWord = null;
-                foreach ($disallowedWords as $disallowedWord) {
-                    if ($this->stringDoesContain($translation->getValue(), $disallowedWord)) {
-                        $foundWord = $disallowedWord;
+                if ($hierarchy->isMultiLevel()) {
+                    $parts = explode($hierarchy->getDelimiter(), $translation->getKey());
+                    if (!is_array($parts)) {
+                        $parts = [];
+                    }
+                } else {
+                    $parts = [$translation->getKey()];
+                }
+
+                $invalidKey = null;
+                foreach ($parts as $part) {
+
+                    if (strlen($part) > $maxKeyLength) {
+                        $invalidKey = $part;
                         break;
                     }
                 }
 
-                $testPassed = ($foundWord === null);
+                $testPassed = ($invalidKey === null);
+                $invalidKey = (string)$invalidKey; # for output below
 
                 $tests[] = new ValidationTest(
                     $locale->getName(),
-                    'Test against disallowed text for key: ' . $translation->getKey(),
+                    'Test length of key: ' . $translation->getKey(),
                     $locale->getFilename(),
                     $this->getTypeIdentifier(),
-                    'Translation for key ' . $translation->getKey() . ' has disallowed text: ' . (string)$foundWord,
+                    'Maximum length of key ' . $invalidKey . ' has been reached. Length is ' . strlen($invalidKey) . ' of max allowed ' . $maxKeyLength . '.',
                     $testPassed
                 );
 
@@ -81,7 +92,7 @@ class DisallowedTextValidator implements ValidatorInterface
 
                 $errors[] = new ValidationError(
                     $this->getTypeIdentifier(),
-                    'Found disallowed text in key ' . $translation->getKey() . '. Value must not contain: ' . $foundWord,
+                    'Maximum length of key ' . $invalidKey . ' has been reached. Length is ' . strlen($invalidKey) . ' of max allowed ' . $maxKeyLength . '.',
                     $locale->getName(),
                     $locale->getFilename(),
                     $identifier

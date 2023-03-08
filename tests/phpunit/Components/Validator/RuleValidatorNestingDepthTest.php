@@ -4,8 +4,10 @@ namespace phpunit\Components\Validator;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Bundles\Storage\JSON\JsonStorage;
-use PHPUnuhi\Components\Validator\DisallowedTextValidator;
+use PHPUnuhi\Components\Validator\RuleValidatorDisallowedTexts;
 use PHPUnuhi\Components\Validator\EmptyContentValidator;
+use PHPUnuhi\Components\Validator\RuleValidatorKeyLength;
+use PHPUnuhi\Components\Validator\RuleValidatorNestingDepth;
 use PHPUnuhi\Models\Configuration\Filter;
 use PHPUnuhi\Models\Configuration\Rule;
 use PHPUnuhi\Models\Configuration\Rules;
@@ -13,11 +15,11 @@ use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
 
-class DisallowedTextsValidatorTest extends TestCase
+class RuleValidatorNestingDepthTest extends TestCase
 {
 
     /**
-     * @var DisallowedTextValidator
+     * @var RuleValidatorNestingDepth
      */
     private $validator;
 
@@ -27,7 +29,7 @@ class DisallowedTextsValidatorTest extends TestCase
      */
     protected function setUp(): void
     {
-        $this->validator = new DisallowedTextValidator();
+        $this->validator = new RuleValidatorNestingDepth();
     }
 
 
@@ -36,7 +38,7 @@ class DisallowedTextsValidatorTest extends TestCase
      */
     public function testTypeIdentifier(): void
     {
-        $this->assertEquals('DISALLOWED_TEXT', $this->validator->getTypeIdentifier());
+        $this->assertEquals('NESTING', $this->validator->getTypeIdentifier());
     }
 
     /**
@@ -46,14 +48,12 @@ class DisallowedTextsValidatorTest extends TestCase
     public function testAllValid(): void
     {
         $localeDE = new Locale('de-DE', '', '');
-        $localeDE->addTranslation('card.btnCancel', 'Abbrechen', 'group1');
-        $localeDE->addTranslation('card.btnOK', 'OK', 'group1');
+        $localeDE->addTranslation('lvl1.lvl2.level3.level4', 'Abbrechen', 'group1');
 
         $localeEN = new Locale('en-GB', '', '');
-        $localeEN->addTranslation('card.btnCancel', 'Cancel', 'group1');
-        $localeEN->addTranslation('card.btnOK', 'OK', 'group1');
+        $localeEN->addTranslation('lvl1.lvl2.level3.level4', 'Cancel', 'group1');
 
-        $set = $this->buildSet([$localeDE, $localeEN], []);
+        $set = $this->buildSet([$localeDE, $localeEN], 20);
 
         $storage = new JsonStorage(3, true);
 
@@ -66,22 +66,15 @@ class DisallowedTextsValidatorTest extends TestCase
      * @return void
      * @throws \Exception
      */
-    public function testDisallowedTextFound(): void
+    public function testNestingDepthReached(): void
     {
         $localeDE = new Locale('de-DE', '', '');
-        $localeDE->addTranslation('card.btnCancel', '', 'group1');
-        $localeDE->addTranslation('card.btnOK', 'OK', 'group1');
+        $localeDE->addTranslation('lvl1.lvl2.level3.level4', 'Abbrechen', 'group1');
 
         $localeEN = new Locale('en-GB', '', '');
-        $localeEN->addTranslation('card.btnCancel', 'Cancel', 'group1');
-        $localeEN->addTranslation('card.btnOK', '', 'group1');
+        $localeEN->addTranslation('lvl1.lvl2.level3.level4.level5', 'Cancel', 'group1');
 
-        $set = $this->buildSet(
-            [$localeDE, $localeEN],
-            [
-                'Cancel'
-            ]
-        );
+        $set = $this->buildSet([$localeDE, $localeEN], 4);
 
         $storage = new JsonStorage(3, true);
 
@@ -93,10 +86,10 @@ class DisallowedTextsValidatorTest extends TestCase
 
     /**
      * @param array $locales
-     * @param array $disallowedTexts
+     * @param int $maxDepth
      * @return TranslationSet
      */
-    private function buildSet(array $locales, array $disallowedTexts): TranslationSet
+    private function buildSet(array $locales, int $maxDepth): TranslationSet
     {
         return new TranslationSet(
             '',
@@ -106,7 +99,7 @@ class DisallowedTextsValidatorTest extends TestCase
             [],
             [],
             [
-                new Rule(Rules::DISALLOWED_TEXT, $disallowedTexts)
+                new Rule(Rules::NESTING_DEPTH, $maxDepth)
             ]
         );
     }
