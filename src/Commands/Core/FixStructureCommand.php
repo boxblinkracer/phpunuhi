@@ -68,8 +68,6 @@ class FixStructureCommand extends Command
 
             $io->section('Fixing Translation Set: ' . $set->getName());
 
-            $countSetCreated = 0;
-
             foreach ($set->getAllTranslationIDs() as $currentID) {
 
                 foreach ($set->getLocales() as $locale) {
@@ -91,7 +89,6 @@ class FixStructureCommand extends Command
                             $groupName
                         );
 
-                        $countSetCreated++;
                         $countCreated++;
                     }
                 }
