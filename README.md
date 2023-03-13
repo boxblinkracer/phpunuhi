@@ -653,6 +653,8 @@ Please see the list below for all supported rules.
 
 <set>
     <rules>
+        <duplicateContent>false</duplicateContent>
+        <nestingDepth>3</nestingDepth>
         ...
     </rules>
 </set>
