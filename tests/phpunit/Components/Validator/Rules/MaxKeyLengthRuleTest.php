@@ -1,43 +1,27 @@
 <?php
 
-namespace phpunit\Components\Validator;
+namespace phpunit\Components\Validator\Rules;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Bundles\Storage\JSON\JsonStorage;
-use PHPUnuhi\Components\Validator\RuleValidatorDisallowedTexts;
-use PHPUnuhi\Components\Validator\EmptyContentValidator;
-use PHPUnuhi\Components\Validator\RuleValidatorKeyLength;
+use PHPUnuhi\Components\Validator\Rules\MaxKeyLengthRule;
 use PHPUnuhi\Models\Configuration\Filter;
-use PHPUnuhi\Models\Configuration\Rule;
-use PHPUnuhi\Models\Configuration\Rules;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
 
-class RuleValidatorKeyLengthTest extends TestCase
+class MaxKeyLengthRuleTest extends TestCase
 {
 
-    /**
-     * @var RuleValidatorKeyLength
-     */
-    private $validator;
-
 
     /**
      * @return void
      */
-    protected function setUp(): void
+    public function getRuleIdentifier(): void
     {
-        $this->validator = new RuleValidatorKeyLength();
-    }
+        $validator = new MaxKeyLengthRule(0);
 
-
-    /**
-     * @return void
-     */
-    public function testTypeIdentifier(): void
-    {
-        $this->assertEquals('KEY_LENGTH', $this->validator->getTypeIdentifier());
+        $this->assertEquals('KEY_LENGTH', $validator->getRuleIdentifier());
     }
 
     /**
@@ -54,11 +38,13 @@ class RuleValidatorKeyLengthTest extends TestCase
         $localeEN->addTranslation('card.btnCancel', 'Cancel', 'group1');
         $localeEN->addTranslation('card.btnOK', 'OK', 'group1');
 
-        $set = $this->buildSet([$localeDE, $localeEN], 20);
+        $set = $this->buildSet([$localeDE, $localeEN]);
 
         $storage = new JsonStorage(3, true);
 
-        $result = $this->validator->validate($set, $storage);
+        $validator = new MaxKeyLengthRule(20);
+
+        $result = $validator->validate($set, $storage);
 
         $this->assertEquals(true, $result->isValid());
     }
@@ -79,11 +65,13 @@ class RuleValidatorKeyLengthTest extends TestCase
         # this is the one we are looking to fail
         $localeEN->addTranslation('card-long.short', '', 'group1');
 
-        $set = $this->buildSet([$localeDE, $localeEN], 6); # "short" +1
+        $set = $this->buildSet([$localeDE, $localeEN]);
 
         $storage = new JsonStorage(3, true);
 
-        $result = $this->validator->validate($set, $storage);
+        $validator = new MaxKeyLengthRule(6);  # "short" +1
+
+        $result = $validator->validate($set, $storage);
 
         $this->assertEquals(false, $result->isValid());
     }
@@ -94,7 +82,7 @@ class RuleValidatorKeyLengthTest extends TestCase
      * @param int $keyLength
      * @return TranslationSet
      */
-    private function buildSet(array $locales, int $keyLength): TranslationSet
+    private function buildSet(array $locales): TranslationSet
     {
         return new TranslationSet(
             '',
@@ -103,9 +91,7 @@ class RuleValidatorKeyLengthTest extends TestCase
             new Filter(),
             [],
             [],
-            [
-                new Rule(Rules::KEY_LENGTH, $keyLength)
-            ]
+            []
         );
     }
 

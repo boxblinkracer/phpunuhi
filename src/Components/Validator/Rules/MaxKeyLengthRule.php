@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPUnuhi\Components\Validator;
+namespace PHPUnuhi\Components\Validator\Rules;
 
 use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Components\Validator\Model\ValidationError;
@@ -9,15 +9,30 @@ use PHPUnuhi\Components\Validator\Model\ValidationTest;
 use PHPUnuhi\Models\Configuration\Rules;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
-class RuleValidatorNestingDepth implements ValidatorInterface
+class MaxKeyLengthRule implements RuleValidatorInterface
 {
+
+    /**
+     * @var int
+     */
+    private $maxKeyLength;
+
+
+    /**
+     * @param int $maxKeyLength
+     */
+    public function __construct(int $maxKeyLength)
+    {
+        $this->maxKeyLength = $maxKeyLength;
+    }
+
 
     /**
      * @return string
      */
-    public function getTypeIdentifier(): string
+    public function getRuleIdentifier(): string
     {
-        return 'NESTING';
+        return 'KEY_LENGTH';
     }
 
 
@@ -30,45 +45,41 @@ class RuleValidatorNestingDepth implements ValidatorInterface
     {
         $hierarchy = $storage->getHierarchy();
 
-        if (!$hierarchy->isMultiLevel()) {
-            return new ValidationResult([], []);
-        }
 
         $tests = [];
         $errors = [];
 
-        $maxNestingLevel = -1;
-
-        foreach ($set->getRules() as $rule) {
-            if ($rule->getName() === Rules::NESTING_DEPTH) {
-                $maxNestingLevel = (int)$rule->getValue();
-                break;
-            }
-        }
-
-        if ($maxNestingLevel === -1) {
-            return new ValidationResult([], []);
-        }
 
         foreach ($set->getLocales() as $locale) {
             foreach ($locale->getTranslations() as $translation) {
 
-                $parts = explode($hierarchy->getDelimiter(), $translation->getKey());
-
-                if (!is_array($parts)) {
-                    $parts = [];
+                if ($hierarchy->isMultiLevel()) {
+                    $parts = explode($hierarchy->getDelimiter(), $translation->getKey());
+                    if (!is_array($parts)) {
+                        $parts = [];
+                    }
+                } else {
+                    $parts = [$translation->getKey()];
                 }
 
-                $currentLevels = count($parts);
+                $invalidKey = null;
+                foreach ($parts as $part) {
 
-                $testPassed = $currentLevels <= $maxNestingLevel;
+                    if (strlen($part) > $this->maxKeyLength) {
+                        $invalidKey = $part;
+                        break;
+                    }
+                }
+
+                $testPassed = ($invalidKey === null);
+                $invalidKey = (string)$invalidKey; # for output below
 
                 $tests[] = new ValidationTest(
                     $locale->getName(),
-                    'Test nesting level of key: ' . $translation->getKey(),
+                    'Test length of key: ' . $translation->getKey(),
                     $locale->getFilename(),
-                    $this->getTypeIdentifier(),
-                    'Translation for key ' . $translation->getKey() . ' has ' . $currentLevels . ' levels. Maximum nesting level is: ' . $maxNestingLevel,
+                    $this->getRuleIdentifier(),
+                    'Maximum length of key ' . $invalidKey . ' has been reached. Length is ' . strlen($invalidKey) . ' of max allowed ' . $this->maxKeyLength . '.',
                     $testPassed
                 );
 
@@ -83,8 +94,8 @@ class RuleValidatorNestingDepth implements ValidatorInterface
                 }
 
                 $errors[] = new ValidationError(
-                    $this->getTypeIdentifier(),
-                    'Maximum nesting level of ' . $maxNestingLevel . ' has been reached. Translation has ' . $currentLevels . ' levels.',
+                    $this->getRuleIdentifier(),
+                    'Maximum length of key ' . $invalidKey . ' has been reached. Length is ' . strlen($invalidKey) . ' of max allowed ' . $this->maxKeyLength . '.',
                     $locale->getName(),
                     $locale->getFilename(),
                     $identifier

@@ -1,25 +1,38 @@
 <?php
 
-namespace PHPUnuhi\Components\Validator;
+namespace PHPUnuhi\Components\Validator\Rules;
 
 use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Components\Validator\Model\ValidationError;
 use PHPUnuhi\Components\Validator\Model\ValidationResult;
 use PHPUnuhi\Components\Validator\Model\ValidationTest;
-use PHPUnuhi\Models\Configuration\Rules;
 use PHPUnuhi\Models\Translation\TranslationSet;
 use PHPUnuhi\Traits\StringTrait;
 
-class RuleValidatorDisallowedTexts implements ValidatorInterface
+class DisallowedTextsRule implements RuleValidatorInterface
 {
 
     use StringTrait;
+
+    /**
+     * @var array<string>
+     */
+    private $disallowedWords;
+
+
+    /**
+     * @param string[] $disallowedWords
+     */
+    public function __construct(array $disallowedWords)
+    {
+        $this->disallowedWords = $disallowedWords;
+    }
 
 
     /**
      * @return string
      */
-    public function getTypeIdentifier(): string
+    public function getRuleIdentifier(): string
     {
         return 'DISALLOWED_TEXT';
     }
@@ -34,24 +47,11 @@ class RuleValidatorDisallowedTexts implements ValidatorInterface
         $tests = [];
         $errors = [];
 
-        $disallowedWords = [];
-
-        foreach ($set->getRules() as $rule) {
-            if ($rule->getName() === Rules::DISALLOWED_TEXT) {
-                $disallowedWords = (array)$rule->getValue();
-                break;
-            }
-        }
-
-        if (count($disallowedWords) === 0) {
-            return new ValidationResult([], []);
-        }
-
         foreach ($set->getLocales() as $locale) {
             foreach ($locale->getTranslations() as $translation) {
 
                 $foundWord = null;
-                foreach ($disallowedWords as $disallowedWord) {
+                foreach ($this->disallowedWords as $disallowedWord) {
                     if ($this->stringDoesContain($translation->getValue(), $disallowedWord)) {
                         $foundWord = $disallowedWord;
                         break;
@@ -64,7 +64,7 @@ class RuleValidatorDisallowedTexts implements ValidatorInterface
                     $locale->getName(),
                     'Test against disallowed text for key: ' . $translation->getKey(),
                     $locale->getFilename(),
-                    $this->getTypeIdentifier(),
+                    $this->getRuleIdentifier(),
                     'Translation for key ' . $translation->getKey() . ' has disallowed text: ' . (string)$foundWord,
                     $testPassed
                 );
@@ -80,7 +80,7 @@ class RuleValidatorDisallowedTexts implements ValidatorInterface
                 }
 
                 $errors[] = new ValidationError(
-                    $this->getTypeIdentifier(),
+                    $this->getRuleIdentifier(),
                     'Found disallowed text in key ' . $translation->getKey() . '. Value must not contain: ' . $foundWord,
                     $locale->getName(),
                     $locale->getFilename(),

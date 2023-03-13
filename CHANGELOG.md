@@ -3,6 +3,10 @@
 All notable changes of SVRUnit releases are documented in this file
 using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
+## [unreleased]
+
+- Refactoring RuleValidators by moving them into a separate folder and scope
+
 ## [1.7.0]
 
 ### Added

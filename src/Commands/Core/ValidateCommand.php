@@ -11,9 +11,10 @@ use PHPUnuhi\Components\Reporter\Model\TestResult;
 use PHPUnuhi\Components\Validator\CaseStyleValidator;
 use PHPUnuhi\Components\Validator\EmptyContentValidator;
 use PHPUnuhi\Components\Validator\MissingStructureValidator;
-use PHPUnuhi\Components\Validator\RuleValidatorDisallowedTexts;
-use PHPUnuhi\Components\Validator\RuleValidatorKeyLength;
-use PHPUnuhi\Components\Validator\RuleValidatorNestingDepth;
+use PHPUnuhi\Components\Validator\Rules\DisallowedTextsRule;
+use PHPUnuhi\Components\Validator\Rules\MaxKeyLengthRule;
+use PHPUnuhi\Components\Validator\Rules\NestingDepthRule;
+use PHPUnuhi\Components\Validator\RulesValidator;
 use PHPUnuhi\Configuration\ConfigurationLoader;
 use PHPUnuhi\Traits\CommandTrait;
 use PHPUnuhi\Traits\StringTrait;
@@ -77,9 +78,7 @@ class ValidateCommand extends Command
         $validators[] = new MissingStructureValidator();
         $validators[] = new CaseStyleValidator();
         $validators[] = new EmptyContentValidator();
-        $validators[] = new RuleValidatorNestingDepth();
-        $validators[] = new RuleValidatorKeyLength();
-        $validators[] = new RuleValidatorDisallowedTexts();
+        $validators[] = new RulesValidator();
 
         $errorCount = 0;
 

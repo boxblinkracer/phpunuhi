@@ -1,42 +1,27 @@
 <?php
 
-namespace phpunit\Components\Validator;
+namespace phpunit\Components\Validator\Rules;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Bundles\Storage\JSON\JsonStorage;
-use PHPUnuhi\Components\Validator\RuleValidatorDisallowedTexts;
-use PHPUnuhi\Components\Validator\EmptyContentValidator;
+use PHPUnuhi\Components\Validator\Rules\DisallowedTextsRule;
 use PHPUnuhi\Models\Configuration\Filter;
-use PHPUnuhi\Models\Configuration\Rule;
-use PHPUnuhi\Models\Configuration\Rules;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
 
-class RuleValidatorDisallowedTextsTest extends TestCase
+class DisallowedTextsRuleTest extends TestCase
 {
 
-    /**
-     * @var RuleValidatorDisallowedTexts
-     */
-    private $validator;
-
 
     /**
      * @return void
      */
-    protected function setUp(): void
+    public function getRuleIdentifier(): void
     {
-        $this->validator = new RuleValidatorDisallowedTexts();
-    }
+        $validator = new DisallowedTextsRule([]);
 
-
-    /**
-     * @return void
-     */
-    public function testTypeIdentifier(): void
-    {
-        $this->assertEquals('DISALLOWED_TEXT', $this->validator->getTypeIdentifier());
+        $this->assertEquals('DISALLOWED_TEXT', $validator->getRuleIdentifier());
     }
 
     /**
@@ -53,11 +38,12 @@ class RuleValidatorDisallowedTextsTest extends TestCase
         $localeEN->addTranslation('card.btnCancel', 'Cancel', 'group1');
         $localeEN->addTranslation('card.btnOK', 'OK', 'group1');
 
-        $set = $this->buildSet([$localeDE, $localeEN], []);
+        $set = $this->buildSet([$localeDE, $localeEN]);
 
         $storage = new JsonStorage(3, true);
 
-        $result = $this->validator->validate($set, $storage);
+        $validator = new DisallowedTextsRule([]);
+        $result = $validator->validate($set, $storage);
 
         $this->assertEquals(true, $result->isValid());
     }
@@ -76,16 +62,17 @@ class RuleValidatorDisallowedTextsTest extends TestCase
         $localeEN->addTranslation('card.btnCancel', 'Cancel', 'group1');
         $localeEN->addTranslation('card.btnOK', '', 'group1');
 
-        $set = $this->buildSet(
-            [$localeDE, $localeEN],
+        $set = $this->buildSet([$localeDE, $localeEN]);
+
+        $storage = new JsonStorage(3, true);
+
+        $validator = new DisallowedTextsRule(
             [
                 'Cancel'
             ]
         );
 
-        $storage = new JsonStorage(3, true);
-
-        $result = $this->validator->validate($set, $storage);
+        $result = $validator->validate($set, $storage);
 
         $this->assertEquals(false, $result->isValid());
     }
@@ -93,10 +80,9 @@ class RuleValidatorDisallowedTextsTest extends TestCase
 
     /**
      * @param array $locales
-     * @param array $disallowedTexts
      * @return TranslationSet
      */
-    private function buildSet(array $locales, array $disallowedTexts): TranslationSet
+    private function buildSet(array $locales): TranslationSet
     {
         return new TranslationSet(
             '',
@@ -105,9 +91,7 @@ class RuleValidatorDisallowedTextsTest extends TestCase
             new Filter(),
             [],
             [],
-            [
-                new Rule(Rules::DISALLOWED_TEXT, $disallowedTexts)
-            ]
+            []
         );
     }
 

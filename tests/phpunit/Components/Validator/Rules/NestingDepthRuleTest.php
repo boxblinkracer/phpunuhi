@@ -1,13 +1,10 @@
 <?php
 
-namespace phpunit\Components\Validator;
+namespace phpunit\Components\Validator\Rules;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Bundles\Storage\JSON\JsonStorage;
-use PHPUnuhi\Components\Validator\RuleValidatorDisallowedTexts;
-use PHPUnuhi\Components\Validator\EmptyContentValidator;
-use PHPUnuhi\Components\Validator\RuleValidatorKeyLength;
-use PHPUnuhi\Components\Validator\RuleValidatorNestingDepth;
+use PHPUnuhi\Components\Validator\Rules\NestingDepthRule;
 use PHPUnuhi\Models\Configuration\Filter;
 use PHPUnuhi\Models\Configuration\Rule;
 use PHPUnuhi\Models\Configuration\Rules;
@@ -15,30 +12,18 @@ use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
 
-class RuleValidatorNestingDepthTest extends TestCase
+class NestingDepthRuleTest extends TestCase
 {
 
-    /**
-     * @var RuleValidatorNestingDepth
-     */
-    private $validator;
-
 
     /**
      * @return void
      */
-    protected function setUp(): void
+    public function getRuleIdentifier(): void
     {
-        $this->validator = new RuleValidatorNestingDepth();
-    }
+        $validator = new NestingDepthRule(0);
 
-
-    /**
-     * @return void
-     */
-    public function testTypeIdentifier(): void
-    {
-        $this->assertEquals('NESTING', $this->validator->getTypeIdentifier());
+        $this->assertEquals('NESTING', $validator->getRuleIdentifier());
     }
 
     /**
@@ -53,11 +38,12 @@ class RuleValidatorNestingDepthTest extends TestCase
         $localeEN = new Locale('en-GB', '', '');
         $localeEN->addTranslation('lvl1.lvl2.level3.level4', 'Cancel', 'group1');
 
-        $set = $this->buildSet([$localeDE, $localeEN], 20);
+        $set = $this->buildSet([$localeDE, $localeEN]);
 
         $storage = new JsonStorage(3, true);
 
-        $result = $this->validator->validate($set, $storage);
+        $validator = new NestingDepthRule(20);
+        $result = $validator->validate($set, $storage);
 
         $this->assertEquals(true, $result->isValid());
     }
@@ -74,11 +60,12 @@ class RuleValidatorNestingDepthTest extends TestCase
         $localeEN = new Locale('en-GB', '', '');
         $localeEN->addTranslation('lvl1.lvl2.level3.level4.level5', 'Cancel', 'group1');
 
-        $set = $this->buildSet([$localeDE, $localeEN], 4);
+        $set = $this->buildSet([$localeDE, $localeEN]);
 
         $storage = new JsonStorage(3, true);
 
-        $result = $this->validator->validate($set, $storage);
+        $validator = new NestingDepthRule(4);
+        $result = $validator->validate($set, $storage);
 
         $this->assertEquals(false, $result->isValid());
     }
@@ -89,7 +76,7 @@ class RuleValidatorNestingDepthTest extends TestCase
      * @param int $maxDepth
      * @return TranslationSet
      */
-    private function buildSet(array $locales, int $maxDepth): TranslationSet
+    private function buildSet(array $locales): TranslationSet
     {
         return new TranslationSet(
             '',
@@ -98,9 +85,7 @@ class RuleValidatorNestingDepthTest extends TestCase
             new Filter(),
             [],
             [],
-            [
-                new Rule(Rules::NESTING_DEPTH, $maxDepth)
-            ]
+            []
         );
     }
 
