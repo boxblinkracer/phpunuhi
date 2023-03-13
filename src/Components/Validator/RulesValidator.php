@@ -5,6 +5,7 @@ namespace PHPUnuhi\Components\Validator;
 use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Components\Validator\Model\ValidationResult;
 use PHPUnuhi\Components\Validator\Rules\DisallowedTextsRule;
+use PHPUnuhi\Components\Validator\Rules\DuplicateContentRule;
 use PHPUnuhi\Components\Validator\Rules\MaxKeyLengthRule;
 use PHPUnuhi\Components\Validator\Rules\NestingDepthRule;
 use PHPUnuhi\Components\Validator\Rules\RuleValidatorInterface;
@@ -47,6 +48,13 @@ class RulesValidator implements ValidatorInterface
                 case Rules::DISALLOWED_TEXT:
                     $disallowedWords = (array)$rule->getValue();
                     $ruleValidators[] = new DisallowedTextsRule($disallowedWords);
+                    break;
+
+                case Rules::DUPLICATE_CONTENT:
+                    $isDuplicateAllowed = (bool)$rule->getValue();
+                    if (!$isDuplicateAllowed) {
+                        $ruleValidators[] = new DuplicateContentRule();
+                    }
                     break;
             }
         }

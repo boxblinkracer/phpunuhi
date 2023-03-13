@@ -5,6 +5,12 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 ## [unreleased]
 
+### Added
+
+- Add new **duplicateContent** rule to avoid the same translation values within a single locale.
+
+### Changed
+
 - Refactoring RuleValidators by moving them into a separate folder and scope
 
 ## [1.7.0]

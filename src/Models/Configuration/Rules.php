@@ -20,4 +20,9 @@ interface Rules
      */
     public const DISALLOWED_TEXT = 'disallowedTexts';
 
+    /**
+     *
+     */
+    public const DUPLICATE_CONTENT = 'duplicateContent';
+
 }

@@ -48,6 +48,7 @@ Now that you know this, let's get started!
         * [7.5.1 Nesting Depth](#751-nesting-depth)
         * [7.5.2 Key Length](#752-key-length)
         * [7.5.3 Disallowed Texts](#753-disallowed-texts)
+        * [7.5.4 Duplicate Content](#754-duplicate-content)
     * [7.6 PHP ENV Variables](#76-php-env-variables)
     * [7.7 Exchange Formats](#77-exchange-formats)
         * [7.7.1 CSV](#771-csv)
@@ -687,6 +688,20 @@ You can use this for anything you want, like swearing words, political incorrect
     <text>wordA</text>
     <text>wordB-phrase</text>
 </disallowedTexts>
+```
+
+#### 7.5.4 Duplicate Content
+
+Sometimes you want to keep translations clean and reduced by avoiding duplicate values within a locale.
+Just imagine the simple translation value "Save" occurring multiple times in a single locale?
+Wouldn't it be better to just have it in 1 single translation entry in your file?
+
+In this case you can use this rule.
+Once set to **false**, the validator will automatically warn you, if you have a translation value configured multiple times within a single locale.
+
+```xml
+
+<duplicateContent>false</duplicateContent>
 ```
 
 ### 7.6 PHP ENV Variables

@@ -10,7 +10,8 @@
                 <json indent="2" sort="true"/>
             </format>
             <rules>
-                <nestingDepth>1</nestingDepth>
+                <nestingDepth>3</nestingDepth>
+                <duplicateContent>false</duplicateContent>
             </rules>
             <styles>
                 <style level="0">kebab</style>

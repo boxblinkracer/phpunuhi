@@ -82,6 +82,7 @@
             <xs:element name="nestingDepth" type="xs:int" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="keyLength" type="xs:int" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="disallowedTexts" type="typeDisallowedText" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="duplicateContent" type="xs:boolean" minOccurs="0" maxOccurs="unbounded"/>
         </xs:choice>
     </xs:complexType>
 

@@ -276,6 +276,7 @@ class ConfigurationLoader
         $nestingDepth = $rulesNode->nestingDepth;
         $keyLength = $rulesNode->keyLength;
         $disallowedTexts = $rulesNode->disallowedTexts;
+        $duplicateContent = $rulesNode->duplicateContent;
 
         if ($nestingDepth !== null) {
             $rules[] = new Rule(Rules::NESTING_DEPTH, (string)$nestingDepth);
@@ -288,6 +289,11 @@ class ConfigurationLoader
         if ($disallowedTexts !== null) {
             $textsArray = $disallowedTexts->text;
             $rules[] = new Rule(Rules::DISALLOWED_TEXT, (array)$textsArray);
+        }
+
+        if ($duplicateContent !== null) {
+            $isAllowed = (strtolower($duplicateContent) === 'true');
+            $rules[] = new Rule(Rules::DUPLICATE_CONTENT, $isAllowed);
         }
 
         return $rules;
