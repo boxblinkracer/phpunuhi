@@ -6,7 +6,6 @@ use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Components\Validator\Model\ValidationError;
 use PHPUnuhi\Components\Validator\Model\ValidationResult;
 use PHPUnuhi\Components\Validator\Model\ValidationTest;
-use PHPUnuhi\Models\Configuration\Rules;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
 class MaxKeyLengthRule implements RuleValidatorInterface
@@ -45,6 +44,11 @@ class MaxKeyLengthRule implements RuleValidatorInterface
     {
         $hierarchy = $storage->getHierarchy();
 
+
+        # this is always valid
+        if ($this->maxKeyLength <= 0) {
+            return new ValidationResult([], []);
+        }
 
         $tests = [];
         $errors = [];

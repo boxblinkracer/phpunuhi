@@ -52,6 +52,28 @@ class NestingDepthRuleTest extends TestCase
      * @return void
      * @throws \Exception
      */
+    public function testLengthZeroAlwaysValid(): void
+    {
+        $localeDE = new Locale('de-DE', '', '');
+        $localeDE->addTranslation('lvl1.lvl2.level3.level4', 'Abbrechen', 'group1');
+
+        $localeEN = new Locale('en-GB', '', '');
+        $localeEN->addTranslation('lvl1.lvl2.level3.level4', 'Cancel', 'group1');
+
+        $set = $this->buildSet([$localeDE, $localeEN]);
+
+        $storage = new JsonStorage(3, true);
+
+        $validator = new NestingDepthRule(0);
+        $result = $validator->validate($set, $storage);
+
+        $this->assertEquals(true, $result->isValid());
+    }
+
+    /**
+     * @return void
+     * @throws \Exception
+     */
     public function testNestingDepthReached(): void
     {
         $localeDE = new Locale('de-DE', '', '');

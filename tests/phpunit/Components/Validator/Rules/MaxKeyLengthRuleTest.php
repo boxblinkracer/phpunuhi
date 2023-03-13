@@ -53,6 +53,30 @@ class MaxKeyLengthRuleTest extends TestCase
      * @return void
      * @throws \Exception
      */
+    public function testLengthZeroAlwaysValid(): void
+    {
+        $localeDE = new Locale('de-DE', '', '');
+        $localeDE->addTranslation('card.btnCancel', 'Abbrechen', 'group1');
+
+        $localeEN = new Locale('en-GB', '', '');
+        $localeEN->addTranslation('card.btnCancel', 'Cancel', 'group1');
+
+        $set = $this->buildSet([$localeDE, $localeEN]);
+
+        $storage = new JsonStorage(3, true);
+
+        $validator = new MaxKeyLengthRule(0);
+
+        $result = $validator->validate($set, $storage);
+
+        $this->assertEquals(true, $result->isValid());
+    }
+
+
+    /**
+     * @return void
+     * @throws \Exception
+     */
     public function testKeyLengthExceeded(): void
     {
         $localeDE = new Locale('de-DE', '', '');

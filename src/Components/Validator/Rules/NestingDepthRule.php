@@ -50,6 +50,11 @@ class NestingDepthRule implements RuleValidatorInterface
             return new ValidationResult([], []);
         }
 
+        # this is always valid
+        if ($this->maxNestingLevel <= 0) {
+            return new ValidationResult([], []);
+        }
+
         $tests = [];
         $errors = [];
 
