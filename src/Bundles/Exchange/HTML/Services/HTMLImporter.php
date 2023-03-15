@@ -42,8 +42,9 @@ class HTMLImporter
             $fullKeyWithLocale = explode('=', $line)[0];
 
             $localeID = '';
-            $group = $groupNameService->getGroupID($fullKeyWithLocale);
+
             $key = $groupNameService->getPropertyName($fullKeyWithLocale);
+            $group = $groupNameService->getGroupID($fullKeyWithLocale);
 
             if ($this->stringDoesContain($key, '--')) {
                 $localeID = explode('--', $key)[1];

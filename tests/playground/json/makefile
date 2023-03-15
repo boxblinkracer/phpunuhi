@@ -32,5 +32,8 @@ csv: ## Exports a CSV
 csvimport: ## Imports a CSV
 	cd ../../.. && php bin/phpunuhi import --configuration=./tests/playground/json/phpunuhi.xml --format=csv --set=json --file=./tests/playground/json/.exports/json.csv
 
+htmlimport: ## Imports a HTML
+	cd ../../.. && php bin/phpunuhi import --configuration=./tests/playground/json/phpunuhi.xml --format=html --set=json --file=./tests/playground/json/import.html.txt
+
 translate: ## Translate
 	cd ../../.. && php bin/phpunuhi translate --configuration=./tests/playground/json/phpunuhi.xml --service=googleweb

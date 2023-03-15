@@ -8,6 +8,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 ### Fixed
 
 - Fix bug where duplicateContent rule was automatically validated if an empty **<rule>** tag was existing without a duplicateContent rule.
+- Fix broken HTML import due to wrong GroupId recognition
 
 ## [1.8.0]
 

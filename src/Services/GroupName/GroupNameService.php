@@ -16,8 +16,10 @@ class GroupNameService
      */
     public function getGroupID(string $translationId): string
     {
-        if (!$this->stringDoesStartsWith($translationId, 'group--')) {
-            return $translationId;
+        $isGroup = $this->stringDoesStartsWith($translationId, 'group--');
+
+        if (!$isGroup) {
+            return '';
         }
 
         $group = explode('.', $translationId)[0];
