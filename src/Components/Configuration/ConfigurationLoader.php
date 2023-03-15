@@ -292,8 +292,11 @@ class ConfigurationLoader
         }
 
         if ($duplicateContent !== null) {
-            $isAllowed = (strtolower($duplicateContent) === 'true');
-            $rules[] = new Rule(Rules::DUPLICATE_CONTENT, $isAllowed);
+            $value = (strtolower($duplicateContent));
+            if ($value !== '') {
+                $isAllowed = $value !== 'false';
+                $rules[] = new Rule(Rules::DUPLICATE_CONTENT, $isAllowed);
+            }
         }
 
         return $rules;

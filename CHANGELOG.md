@@ -3,6 +3,12 @@
 All notable changes of PHPUnuhi releases are documented in this file
 using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
+## [unreleased]
+
+### Fixed
+
+- Fix bug where duplicateContent rule was automatically validated if an empty **<rule>** tag was existing without a duplicateContent rule.
+
 ## [1.8.0]
 
 ### Added
