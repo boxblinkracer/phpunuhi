@@ -33,6 +33,9 @@ class GroupNameServiceTest extends TestCase
     }
 
     /**
+     * This test verifies that an invalid group id
+     * does not return anything...because theres no ID :)
+     *
      * @return void
      */
     public function testInvalidGroupId()
@@ -41,7 +44,7 @@ class GroupNameServiceTest extends TestCase
 
         $propertyKey = $service->getGroupID('no-group--1');
 
-        $this->assertEquals('no-group--1', $propertyKey);
+        $this->assertEquals('', $propertyKey);
     }
 
     /**
