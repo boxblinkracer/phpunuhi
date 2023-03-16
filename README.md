@@ -14,6 +14,14 @@ Unuhi? This is Hawaiian for "translate" or "translation".
 Why did I create it? Just curiosity and because I needed something like this :)
 The framework is free, there's no guarantee or claim to anything.
 
+**WHAT IT IS, AND WHAT IT'S NOT!!**
+
+This is a dev-tool. It can be used improve pipelines, workflows and QA processes.
+It can also be used to get some quick start in adding languages or new sentences.
+But it is NO replacement for services or people that/who translate in a professional way with context and knowledge about the software.
+Please keep that in mind to avoid misinterpreting the goal of this framework.
+
+
 Now that you know this, let's get started!
 
 <!-- TOC -->
