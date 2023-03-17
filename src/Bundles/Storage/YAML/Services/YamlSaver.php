@@ -38,7 +38,7 @@ class YamlSaver
      */
     public function saveTranslations(TranslationSet $set, string $delimiter): StorageSaveResult
     {
-        $localeCount      = 0;
+        $localeCount = 0;
         $translationCount = 0;
 
         foreach ($set->getLocales() as $locale) {
@@ -47,6 +47,7 @@ class YamlSaver
             $saveValues = [];
 
             foreach ($locale->getTranslations() as $translation) {
+
                 $saveValues[$translation->getID()] = $translation->getValue();
                 $translationCount++;
             }
