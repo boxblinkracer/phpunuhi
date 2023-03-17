@@ -98,4 +98,31 @@ class ArrayTraitTest extends TestCase
         $this->assertEquals($expected, $dimensional);
     }
 
+    /**
+     * @return void
+     */
+    public function testGetMultiDimensionalWith2NestedLevels()
+    {
+        $array = [
+            'sub.sub2' => 'Title',
+            'sub.subsub.test' => 'Title',
+            'title' => 'Title',
+        ];
+
+        $expected = [
+            'sub' => [
+                'sub2' => 'Title',
+                'subsub' => [
+                    'test' => 'Title'
+                ]
+            ],
+            'title' => 'Title',
+        ];
+
+        $dimensional = $this->getMultiDimensionalArray($array, '.');
+
+        $this->assertEquals($expected, $dimensional);
+    }
+
+
 }
