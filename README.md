@@ -49,6 +49,7 @@ Now that you know this, let's get started!
         * [7.1.2 INI](#712-ini)
         * [7.1.3 PHP](#713-php)
         * [7.1.4 Shopware 6](#714-shopware-6)
+        * [7.1.5 YAML](#715-yaml)
     * [7.2 Filters](#72-filters)
     * [7.3 Groups](#73-groups)
     * [7.4 Case Styles](#74-case-styles)
@@ -563,6 +564,30 @@ To make life easier for you, we've added a fake entity name **snippet** that aut
 
     </translations>
 </phpunuhi>
+```
+
+#### 7.1.5 YAML
+
+| Format Attributes | Default | Description                             | 
+|-------------------|---------|-----------------------------------------|
+| indent            | 2       | Set a custom YAML indent for the spaces |
+| sort              | false   | Turn on or off the alphabetical sorting |
+
+The YAML format means that your files are stored in separate YAML files.
+Every locale has its own YAML file.
+The YAML structure across all files of a set should match.
+
+```xml
+
+<set name="sample">
+    <format>
+        <yaml indent="4" sort="true"/>
+    </format>
+    <locales>
+        <locale name="de">./snippets/de.yaml</locale>
+        <locale name="en">./snippets/en.yaml</locale>
+    </locales>
+</set>
 ```
 
 ### 7.2 Filters

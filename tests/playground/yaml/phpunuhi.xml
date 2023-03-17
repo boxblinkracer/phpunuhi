@@ -1,0 +1,20 @@
+<phpunuhi
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../xsd/phpunuhi.xsd"
+>
+
+    <translations>
+
+        <set name="yaml">
+            <format>
+                <yaml sort="true"/>
+            </format>
+            <locales>
+                <locale name="de">./de.yaml</locale>
+                <locale name="en">./en.yaml</locale>
+            </locales>
+        </set>
+
+    </translations>
+
+</phpunuhi>
