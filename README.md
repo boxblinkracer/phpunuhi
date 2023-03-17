@@ -16,7 +16,7 @@ The framework is free, there's no guarantee or claim to anything.
 
 **WHAT IT IS, AND WHAT IT'S NOT!!**
 
-This is a dev-tool. It can be used improve pipelines, workflows and QA processes.
+This is a dev-tool. It can be used to improve pipelines, workflows and QA processes.
 It can also be used to get some quick start in adding languages or new sentences.
 But it is NO replacement for services or people that/who translate in a professional way with context and knowledge about the software.
 Please keep that in mind to avoid misinterpreting the goal of this framework.
