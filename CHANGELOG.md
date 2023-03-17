@@ -13,6 +13,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 ### Changed
 
 - Improved error outputs when loading configuration files without existing translation-sets. There will now be a better error message for this.
+- Add special keyword **dev** to composer to show this is a dev-tool and ask if --dev should be used to install it. (thx @xabbuh)
 
 ## [1.8.1]
 
