@@ -58,4 +58,20 @@ trait CommandTrait
         return $value;
     }
 
+    /**
+     * @param string $name
+     * @param InputInterface $input
+     * @return bool
+     */
+    protected function getConfigBoolValue(string $name, InputInterface $input): bool
+    {
+        $value = $input->getOption($name);
+
+        if (!is_bool($value)) {
+            return false;
+        }
+
+        return $value;
+    }
+
 }

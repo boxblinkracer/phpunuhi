@@ -11,9 +11,11 @@ class HTMLExporter
     /**
      * @param TranslationSet $set
      * @param string $outputDir
+     * @param bool $onlyEmpty
      * @return void
+     * @throws \PHPUnuhi\Exceptions\TranslationNotFoundException
      */
-    public function export(TranslationSet $set, string $outputDir): void
+    public function export(TranslationSet $set, string $outputDir, bool $onlyEmpty): void
     {
         $html = "";
 
@@ -84,6 +86,17 @@ class HTMLExporter
         $previosuGroup = '';
 
         foreach ($set->getAllTranslationIDs() as $id) {
+
+
+            if ($onlyEmpty) {
+
+                $isComplete = $set->isCompletelyTranslated($id);
+
+                # if it's already complete, do not export
+                if ($isComplete) {
+                    continue;
+                }
+            }
 
             $html .= "<tr>";
 

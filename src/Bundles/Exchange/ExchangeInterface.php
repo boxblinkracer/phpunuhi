@@ -34,9 +34,10 @@ interface ExchangeInterface
     /**
      * @param TranslationSet $set
      * @param string $outputDir
+     * @param bool $onlyEmpty
      * @return void
      */
-    public function export(TranslationSet $set, string $outputDir): void;
+    public function export(TranslationSet $set, string $outputDir, bool $onlyEmpty): void;
 
     /**
      * @param string $filename

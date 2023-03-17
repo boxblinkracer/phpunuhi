@@ -35,7 +35,8 @@ class ExportCommand extends Command
             ->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('set', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('dir', null, InputOption::VALUE_REQUIRED, '', '')
-            ->addOption('format', null, InputOption::VALUE_REQUIRED, '', ExchangeFormat::CSV);
+            ->addOption('format', null, InputOption::VALUE_REQUIRED, '', ExchangeFormat::CSV)
+            ->addOption('empty', null, InputOption::VALUE_NONE, '');
 
         foreach ($this->exchangeFactory->getAllOptions() as $option) {
             if ($option->hasValue()) {
@@ -67,6 +68,7 @@ class ExportCommand extends Command
         $exportExchangeFormat = $this->getConfigStringValue('format', $input);
         $setName = $this->getConfigStringValue('set', $input);
         $outputDir = $this->getConfigStringValue('dir', $input);
+        $onlyEmpty = $this->getConfigBoolValue('empty', $input);
 
 
         $cur_dir = explode('\\', (string)getcwd());
@@ -90,7 +92,7 @@ class ExportCommand extends Command
 
             $exporter = $this->exchangeFactory->getExchange($exportExchangeFormat, $input->getOptions());
 
-            $exporter->export($set, $outputDir);
+            $exporter->export($set, $outputDir, $onlyEmpty);
         }
 
         $io->success('All translations exported!');

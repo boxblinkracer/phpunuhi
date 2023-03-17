@@ -21,7 +21,6 @@ It can also be used to get some quick start in adding languages or new sentences
 But it is NO replacement for services or people that/who translate in a professional way with context and knowledge about the software.
 Please keep that in mind to avoid misinterpreting the goal of this framework.
 
-
 Now that you know this, let's get started!
 
 <!-- TOC -->
@@ -290,6 +289,9 @@ php vendor/bin/phpunuhi export ... --dir=./exports
 
 # only export single set "storefront"
 php vendor/bin/phpunuhi export ... --set="storefront"
+
+# only export translation entries that are not yet completely translated in all locales.
+php vendor/bin/phpunuhi export ... --empty
 ```
 
 > For more options and arguments of the formats please see the appendix below!

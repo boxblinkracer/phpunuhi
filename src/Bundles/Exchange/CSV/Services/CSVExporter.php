@@ -33,9 +33,11 @@ class CSVExporter
     /**
      * @param TranslationSet $set
      * @param string $outputDir
+     * @param bool $onlyEmpty
      * @return void
+     * @throws TranslationNotFoundException
      */
-    public function export(TranslationSet $set, string $outputDir): void
+    public function export(TranslationSet $set, string $outputDir, bool $onlyEmpty): void
     {
         $csvExportLines = [];
 
@@ -69,15 +71,25 @@ class CSVExporter
         # ----------------------------------------------------------------------------------------
         # BUILD DATA LINES
 
-        foreach ($set->getAllTranslationIDs() as $key) {
+        foreach ($set->getAllTranslationIDs() as $id) {
 
             $keyRow = [];
+
+            if ($onlyEmpty) {
+
+                $isComplete = $set->isCompletelyTranslated($id);
+
+                # if it's already complete, do not export
+                if ($isComplete) {
+                    continue;
+                }
+            }
 
             # build our key entry with just the name
             # so based on our unique key, weg fetch any translation
             # and add the readable name
             foreach ($set->getLocales() as $locale) {
-                $trans = $locale->findTranslation($key);
+                $trans = $locale->findTranslation($id);
 
                 if (!empty($trans->getGroup())) {
                     $keyRow[] = $trans->getGroup();
@@ -101,7 +113,7 @@ class CSVExporter
 
                         # search for our translation
                         # and add the value if found
-                        $trans = $locale->findTranslation($key);
+                        $trans = $locale->findTranslation($id);
 
                         $keyRow[] = $trans->getValue();
 

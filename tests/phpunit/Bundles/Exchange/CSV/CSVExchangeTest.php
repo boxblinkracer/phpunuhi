@@ -41,7 +41,7 @@ class CSVExchangeTest extends TestCase
             []
         );
 
-        $csv->export($set, '');
+        $csv->export($set, '', false);
 
         $expected = [
             [
@@ -94,7 +94,7 @@ class CSVExchangeTest extends TestCase
             []
         );
 
-        $csv->export($set, '');
+        $csv->export($set, '', false);
 
         $expected = [
             [

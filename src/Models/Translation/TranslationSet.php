@@ -204,4 +204,29 @@ class TranslationSet
         throw new TranslationNotFoundException('No valid translation found for ID: ' . $searchID);
     }
 
+    /**
+     * @param string $id
+     * @return bool
+     */
+    public function isCompletelyTranslated(string $id): bool
+    {
+        $complete = true;
+
+        foreach ($this->getLocales() as $locale) {
+            try {
+                $trans = $locale->findTranslation($id);
+
+                if ($trans->isEmpty()) {
+                    $complete = false;
+                    break;
+                }
+            } catch (TranslationNotFoundException $ex) {
+                $complete = false;
+                break;
+            }
+        }
+
+        return $complete;
+    }
+
 }

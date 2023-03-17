@@ -69,12 +69,14 @@ class CSVExchange implements ExchangeInterface
     /**
      * @param TranslationSet $set
      * @param string $outputDir
+     * @param bool $onlyEmpty
      * @return void
+     * @throws \PHPUnuhi\Exceptions\TranslationNotFoundException
      */
-    public function export(TranslationSet $set, string $outputDir): void
+    public function export(TranslationSet $set, string $outputDir, bool $onlyEmpty): void
     {
         $exporter = new CSVExporter($this->csvWriter, $this->csvDelimiter);
-        $exporter->export($set, $outputDir);
+        $exporter->export($set, $outputDir, $onlyEmpty);
     }
 
     /**

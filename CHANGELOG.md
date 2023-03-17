@@ -9,6 +9,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 - Add brand new **YAML** storage format (thx @matthiashamacher)
 - Add new argument **source=xxx** to translate command. This defines what locale should be used as base language for translations.
+- Add new option **--empty** to export command. This only exports translation entries that are not yet 100% translated.
 
 ### Changed
 

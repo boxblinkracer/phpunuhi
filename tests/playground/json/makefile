@@ -24,10 +24,10 @@ structure: ## Fix Structure
 	cd ../../.. && php bin/phpunuhi fix:structure --configuration=./tests/playground/json/phpunuhi.xml
 
 html: ## Exports a HTML
-	cd ../../.. && php bin/phpunuhi export --configuration=./tests/playground/json/phpunuhi.xml --format=html --dir=./tests/playground/json/.exports
+	cd ../../.. && php bin/phpunuhi export --configuration=./tests/playground/json/phpunuhi.xml --format=html --empty --dir=./tests/playground/json/.exports
 
 csv: ## Exports a CSV
-	cd ../../.. && php bin/phpunuhi export --configuration=./tests/playground/json/phpunuhi.xml --format=csv --dir=./tests/playground/json/.exports
+	cd ../../.. && php bin/phpunuhi export --configuration=./tests/playground/json/phpunuhi.xml --format=csv --empty --dir=./tests/playground/json/.exports
 
 csvimport: ## Imports a CSV
 	cd ../../.. && php bin/phpunuhi import --configuration=./tests/playground/json/phpunuhi.xml --format=csv --set=json --file=./tests/playground/json/.exports/json.csv

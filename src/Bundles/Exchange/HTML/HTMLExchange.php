@@ -6,6 +6,7 @@ use PHPUnuhi\Bundles\Exchange\ExchangeInterface;
 use PHPUnuhi\Bundles\Exchange\HTML\Services\HTMLExporter;
 use PHPUnuhi\Bundles\Exchange\HTML\Services\HTMLImporter;
 use PHPUnuhi\Bundles\Exchange\ImportResult;
+use PHPUnuhi\Exceptions\TranslationNotFoundException;
 use PHPUnuhi\Models\Command\CommandOption;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
@@ -40,12 +41,14 @@ class HTMLExchange implements ExchangeInterface
     /**
      * @param TranslationSet $set
      * @param string $outputDir
+     * @param bool $onlyEmpty
      * @return void
+     * @throws TranslationNotFoundException
      */
-    public function export(TranslationSet $set, string $outputDir): void
+    public function export(TranslationSet $set, string $outputDir, bool $onlyEmpty): void
     {
         $exporter = new HTMLExporter();
-        $exporter->export($set, $outputDir);
+        $exporter->export($set, $outputDir, $onlyEmpty);
     }
 
     /**
