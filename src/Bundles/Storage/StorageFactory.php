@@ -6,6 +6,7 @@ use PHPUnuhi\Bundles\Storage\INI\IniStorage;
 use PHPUnuhi\Bundles\Storage\JSON\JsonStorage;
 use PHPUnuhi\Bundles\Storage\PHP\PhpStorage;
 use PHPUnuhi\Bundles\Storage\Shopware6\Shopware6Storage;
+use PHPUnuhi\Bundles\Storage\YAML\YamlStorage;
 use PHPUnuhi\Exceptions\ConfigurationException;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
@@ -36,6 +37,12 @@ class StorageFactory
             case 'php':
                 $sort = (bool)$set->getAttributeValue('sort');
                 return new PhpStorage($sort);
+
+            case 'yaml':
+                $indent = $set->getAttributeValue('yamlIndent');
+                $indent = ($indent === '') ? '2' : $indent;
+                $sort = (bool)$set->getAttributeValue('sort');
+                return new YamlStorage((int) $indent, $sort);
 
             case 'shopware6':
                 return new Shopware6Storage();
