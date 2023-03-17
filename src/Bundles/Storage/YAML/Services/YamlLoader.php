@@ -27,7 +27,8 @@ class YamlLoader
         $foundTranslationsFlat = $this->getFlatArray($arrayData, $delimiter);
 
         foreach ($foundTranslationsFlat as $key => $value) {
-            $locale->addTranslation($key, $value, '');
+            # empty yaml values are NULL, so we cast it
+            $locale->addTranslation($key, (string)$value, '');
         }
     }
 }
