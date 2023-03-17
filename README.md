@@ -71,6 +71,11 @@ Now that you know this, let's get started!
 
 <!-- TOC -->
 
+
+[![German Webinar Video](https://img.youtube.com/vi/yeWyG5R0VZs/0.jpg)](https://www.youtube.com/watch?v=yeWyG5R0VZs)
+
+> Watch the latest (German) webinar about PHPUnuhi.
+
 ## 1. Basic Concept
 
 This is a framework that helps you to **validate and maintain translations**.
