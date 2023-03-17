@@ -18,3 +18,4 @@
 /svrunit.phar
 /.svrunit
 /tests/svrunit/.exports
+/tests/playground/yaml/.exports
