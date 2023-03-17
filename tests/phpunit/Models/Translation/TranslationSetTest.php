@@ -131,11 +131,44 @@ class TranslationSetTest extends TestCase
 
         $set = new TranslationSet('storefront', 'json', $locales, $filter, $attributes, [], []);
 
-        $existing = $set->findAnyExistingTranslation('btnCancel');
+        $existing = $set->findAnyExistingTranslation('btnCancel', '');
 
         $expected = [
             'locale' => 'DE',
             'translation' => $localeDE->findTranslation('btnCancel'), # we have to get the DE version
+        ];
+
+        $this->assertEquals($expected, $existing);
+    }
+
+    /**
+     * @return void
+     * @throws \PHPUnuhi\Exceptions\TranslationNotFoundException
+     */
+    public function testFindAnyExistingTranslationWithLocale()
+    {
+        $attributes = [];
+        $filter = new Filter();
+
+
+        $localeEN = new Locale('EN', '', '');
+        $localeEN->addTranslation('btnCancel', 'Cancel', '');
+
+        $localeDE = new Locale('DE', '', '');
+        $localeDE->addTranslation('btnCancel', 'Abbrechen', '');
+
+        $localeNL = new Locale('NL', '', '');
+        $localeNL->addTranslation('btnCancel', 'Annuleren', '');
+
+        $locales = [$localeEN, $localeDE, $localeNL];
+
+        $set = new TranslationSet('storefront', 'json', $locales, $filter, $attributes, [], []);
+
+        $existing = $set->findAnyExistingTranslation('btnCancel', 'NL');
+
+        $expected = [
+            'locale' => 'NL',
+            'translation' => $localeNL->findTranslation('btnCancel'),
         ];
 
         $this->assertEquals($expected, $existing);
@@ -155,6 +188,6 @@ class TranslationSetTest extends TestCase
 
         $set = new TranslationSet('storefront', 'json', $locales, $filter, $attributes, [], []);
 
-        $set->findAnyExistingTranslation('abc');
+        $set->findAnyExistingTranslation('abc', '');
     }
 }

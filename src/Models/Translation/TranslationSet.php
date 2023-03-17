@@ -174,19 +174,27 @@ class TranslationSet
 
     /**
      * @param string $searchID
+     * @param string $searchLocale
      * @return array<mixed>
-     * @throws \Exception
+     * @throws TranslationNotFoundException
      */
-    public function findAnyExistingTranslation(string $searchID): array
+    public function findAnyExistingTranslation(string $searchID, string $searchLocale): array
     {
-        foreach ($this->locales as $locale) {
+        foreach ($this->locales as $currentLocale) {
 
-            foreach ($locale->getTranslations() as $translation) {
+            # if we have a search locale set,
+            # then only search for translations of this locale.
+            # if it does not match, continue
+            if (!empty($searchLocale) && $currentLocale->getName() !== $searchLocale) {
+                continue;
+            }
+
+            foreach ($currentLocale->getTranslations() as $translation) {
 
                 if ($translation->getID() === $searchID && !$translation->isEmpty()) {
                     # should be an object, just too lazy atm
                     return [
-                        'locale' => $locale->getName(),
+                        'locale' => $currentLocale->getName(),
                         'translation' => $translation,
                     ];
                 }

@@ -349,6 +349,10 @@ php vendor/bin/phpunuhi translate ... --set="storefront"
 
 # force the translation of "en". This will translate everything, not only empty values
 php vendor/bin/phpunuhi translate ...  --force=en
+
+# define what locale will be used as source for the translation. 
+# If not defined, any locale with an existing value will be used.
+php vendor/bin/phpunuhi translate ...  --source=en
 ```
 
 > For more options and arguments of the formats please see the appendix below!

@@ -6,6 +6,7 @@ use PHPUnuhi\Bundles\Storage\StorageFactory;
 use PHPUnuhi\Bundles\Translator\TranslatorFactory;
 use PHPUnuhi\Configuration\ConfigurationLoader;
 use PHPUnuhi\Exceptions\TranslationNotFoundException;
+use PHPUnuhi\PHPUnuhi;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -37,7 +38,8 @@ class TranslateCommand extends Command
             ->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('service', null, InputOption::VALUE_REQUIRED, 'The translator service you want to use', '')
             ->addOption('set', null, InputOption::VALUE_REQUIRED, '', '')
-            ->addOption('force', null, InputOption::VALUE_REQUIRED, 'a specific locale that you want to force to be translated', '');
+            ->addOption('force', null, InputOption::VALUE_REQUIRED, 'a specific locale that you want to force to be translated', '')
+            ->addOption('source', null, InputOption::VALUE_REQUIRED, 'Optional name of the source locale to use for the translation', '');
 
         foreach ($this->translatorFactory->getAllOptions() as $option) {
             if ($option->hasValue()) {
@@ -70,6 +72,12 @@ class TranslateCommand extends Command
         $service = $this->getConfigStringValue('service', $input);
         $setName = $this->getConfigStringValue('set', $input);
         $forceLocale = $this->getConfigStringValue('force', $input);
+        $sourceLocale = $this->getConfigStringValue('source', $input);
+
+        $io->writeln("service: " . $service);
+        $io->writeln("translation-set: " . $setName);
+        $io->writeln("source (locale): " . $sourceLocale);
+        $io->writeln("force (locale): " . $forceLocale);
 
         # -----------------------------------------------------------------
 
@@ -120,10 +128,14 @@ class TranslateCommand extends Command
                     if ($forceLocale || $currentTranslation->isEmpty()) {
 
                         try {
-                            $existingData = $set->findAnyExistingTranslation($currentID);
+                            $existingData = $set->findAnyExistingTranslation($currentID, $sourceLocale);
                         } catch (TranslationNotFoundException $ex) {
                             # if no translation exits then skip this one
-                            $io->writeln('   [?] no existing translation found in any of the locales for key: ' . $currentTranslation->getID());
+                            if (!empty($sourceLocale)) {
+                                $io->writeln('   [?] no existing translation found in locale ' . $sourceLocale . ' for key: ' . $currentTranslation->getID());
+                            } else {
+                                $io->writeln('   [?] no existing translation found in any of the locales for key: ' . $currentTranslation->getID());
+                            }
                             continue;
                         }
 

@@ -8,6 +8,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 ### Added
 
 - Add brand new **YAML** storage format (thx @matthiashamacher)
+- Add new argument **source=xxx** to translate command. This defines what locale should be used as base language for translations.
 
 ### Changed
 
