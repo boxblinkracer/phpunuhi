@@ -94,6 +94,12 @@ class ConfigurationLoader
      */
     private function loadTranslations(SimpleXMLElement $rootNode, string $configFilename): array
     {
+        $hasTranslationSets = ($rootNode->translations->children() !== null);
+
+        if (!$hasTranslationSets) {
+            throw new ConfigurationException('Invalid configuration! No translation-sets have been found!');
+        }
+
         $suites = [];
 
         /** @var SimpleXMLElement $xmlSet */

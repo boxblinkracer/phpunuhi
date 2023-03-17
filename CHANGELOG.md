@@ -9,6 +9,10 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 - Add brand new **YAML** storage format (thx @matthiashamacher)
 
+### Changed
+
+- Improved error outputs when loading configuration files without existing translation-sets. There will now be a better error message for this.
+
 ## [1.8.1]
 
 ### Fixed
