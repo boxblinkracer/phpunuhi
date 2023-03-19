@@ -1,6 +1,6 @@
 {
     "name": "boxblinkracer/phpunuhi",
-    "version": "1.8.1",
+    "version": "1.9.0",
     "license": "MIT",
     "description": "Easy tool to work with translation files for validation, exports, imports and more.",
     "homepage": "https://github.com/boxblinkracer/phpunuhi",
