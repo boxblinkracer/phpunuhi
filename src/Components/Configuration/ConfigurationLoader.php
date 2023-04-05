@@ -337,11 +337,18 @@ class ConfigurationLoader
             }
 
             if ($innerValue !== '') {
+
+                # replace our locale-name placeholders
+                $innerValue = str_replace('%locale%', $localeName, $innerValue);
+                $innerValue = str_replace('%locale_uc%', strtoupper($localeName), $innerValue);
+                $innerValue = str_replace('%locale_lc%', strtolower($localeName), $innerValue);
+
                 # for now treat inner value as file
                 $configuredFileName = dirname($configFilename) . '/' . $innerValue;
-                $localeFile = realpath($configuredFileName);
 
-                if ($localeFile === false || !file_exists($localeFile)) {
+                $localeFile = (string)realpath($configuredFileName);
+
+                if (!file_exists($localeFile)) {
                     throw new ConfigurationException('Attention, translation file not found: ' . $configuredFileName);
                 }
             }

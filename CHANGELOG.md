@@ -3,6 +3,13 @@
 All notable changes of PHPUnuhi releases are documented in this file
 using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
+
+## [unreleased]
+
+### Added
+
+- Add new placeholders **%locale%**, **%locale_lc%** and **%locale_uc%** in file name paths. This allows to reuse the name of the locale in multiple spots within the path.
+
 ## [1.9.0]
 
 ### Added

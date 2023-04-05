@@ -18,8 +18,8 @@
                 <style level="1">camel</style>
             </styles>
             <locales>
-                <locale name="de">./de.json</locale>
-                <locale name="nl">./nl.json</locale>
+                <locale name="de">./%locale%.json</locale>
+                <locale name="nl">./%locale%.json</locale>
             </locales>
 
         </set>

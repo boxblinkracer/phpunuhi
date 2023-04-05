@@ -155,6 +155,9 @@ Let's create a new **phpunuhi.xml** file (or rename it to something else).
     <translations>
 
         <set name="Storefront">
+            <format>
+                <json/>
+            </format>
             <locales>
                 <locale name="de">./snippets/storefront/de.json</locale>
                 <locale name="en">./snippets/storefront/en.json</locale>
@@ -182,7 +185,7 @@ Look at this one:
             </format>
             <locales>
                 <locale name="de">./snippets/de.json</locale>
-                <locale name="en">./snippets/en.json</locale>
+                <locale name="en">./snippets/%locale%.json</locale>
             </locales>
         </set>
 
@@ -428,6 +431,25 @@ Please keep these things in mind:
 
 Storage formats define how your translations are stored.
 Every format has its own loading and saving implementation.
+
+A storage format consists of multiple **locales**.
+Every locale is defined through a name and either a filename, or database-table (depending on format type).
+The purpose is, that every locale in a translation-set should match across those languages (all files should have the same structure for example).
+
+This is how you can define locales (with files in this sample).
+You can also use a placeholder **%locale%**, **%locale_lc%** and **%locale_uc%** in the value to make things easier for you.
+This will reuse the locale name in the filename.
+**locale_lc** is lower case and **locale_uc** is upper case.
+
+```xml
+
+<set name="sample">
+    <locales>
+        <locale name="de">./de/snippets/de.json</locale>
+        <locale name="en">./%locale%/snippets/%locale%.json</locale>
+    </locales>
+</set>
+```
 
 The following formats are currently supported.
 
