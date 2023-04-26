@@ -6,6 +6,7 @@ use PHPUnuhi\Exceptions\TranslationNotFoundException;
 use PHPUnuhi\Models\Configuration\Attribute;
 use PHPUnuhi\Models\Configuration\CaseStyle;
 use PHPUnuhi\Models\Configuration\Filter;
+use PHPUnuhi\Models\Configuration\Protection;
 use PHPUnuhi\Models\Configuration\Rule;
 
 class TranslationSet
@@ -20,6 +21,11 @@ class TranslationSet
      * @var string
      */
     private $format;
+
+    /**
+     * @var Protection
+     */
+    private $protection;
 
     /**
      * @var Attribute[]
@@ -50,16 +56,18 @@ class TranslationSet
     /**
      * @param string $name
      * @param string $format
+     * @param Protection $protection
      * @param Locale[] $locales
      * @param Filter $filter
      * @param Attribute[] $attributes
      * @param CaseStyle[] $styles
      * @param Rule[] $rules
      */
-    public function __construct(string $name, string $format, array $locales, Filter $filter, array $attributes, array $styles, array $rules)
+    public function __construct(string $name, string $format, Protection $protection, array $locales, Filter $filter, array $attributes, array $styles, array $rules)
     {
         $this->name = $name;
         $this->format = $format;
+        $this->protection = $protection;
         $this->locales = $locales;
         $this->filter = $filter;
         $this->attributes = $attributes;
@@ -82,6 +90,14 @@ class TranslationSet
     public function getFormat(): string
     {
         return $this->format;
+    }
+
+    /**
+     * @return Protection
+     */
+    public function getProtection(): Protection
+    {
+        return $this->protection;
     }
 
     /**

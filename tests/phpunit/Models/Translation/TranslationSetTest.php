@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Exceptions\TranslationNotFoundException;
 use PHPUnuhi\Models\Configuration\Attribute;
 use PHPUnuhi\Models\Configuration\Filter;
+use PHPUnuhi\Models\Configuration\Protection;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
@@ -21,7 +22,7 @@ class TranslationSetTest extends TestCase
         $filter = new Filter();
         $locales = [];
 
-        $set = new TranslationSet('storefront', 'json', $locales, $filter, $attributes, [], []);
+        $set = new TranslationSet('storefront', 'json', new Protection(), $locales, $filter, $attributes, [], []);
 
         $this->assertEquals('storefront', $set->getName());
     }
@@ -36,7 +37,7 @@ class TranslationSetTest extends TestCase
         $locales = [];
 
 
-        $set = new TranslationSet('storefront', 'json', $locales, $filter, $attributes, [], []);
+        $set = new TranslationSet('storefront', 'json', new Protection(), $locales, $filter, $attributes, [], []);
 
         $this->assertEquals('json', $set->getFormat());
     }
@@ -53,7 +54,7 @@ class TranslationSetTest extends TestCase
         $filter = new Filter();
         $locales = [];
 
-        $set = new TranslationSet('storefront', 'json', $locales, $filter, $attributes, [], []);
+        $set = new TranslationSet('storefront', 'json', new Protection(), $locales, $filter, $attributes, [], []);
 
         $expected = [
             new Attribute('indent', '2'),
@@ -74,7 +75,7 @@ class TranslationSetTest extends TestCase
         $filter = new Filter();
         $locales = [];
 
-        $set = new TranslationSet('storefront', 'json', $locales, $filter, $attributes, [], []);
+        $set = new TranslationSet('storefront', 'json', new Protection(), $locales, $filter, $attributes, [], []);
 
         $this->assertEquals('2', $set->getAttributeValue('indent'));
     }
@@ -90,7 +91,7 @@ class TranslationSetTest extends TestCase
         $filter = new Filter();
         $locales = [];
 
-        $set = new TranslationSet('storefront', 'json', $locales, $filter, $attributes, [], []);
+        $set = new TranslationSet('storefront', 'json', new Protection(), $locales, $filter, $attributes, [], []);
 
         $this->assertEquals('', $set->getAttributeValue('abc'));
     }
@@ -107,7 +108,7 @@ class TranslationSetTest extends TestCase
         $locales[] = new Locale('', '', '');
         $locales[] = new Locale('', '', '');
 
-        $set = new TranslationSet('storefront', 'json', $locales, $filter, $attributes, [], []);
+        $set = new TranslationSet('storefront', 'json', new Protection(), $locales, $filter, $attributes, [], []);
 
         $this->assertCount(2, $set->getLocales());
     }
@@ -129,7 +130,7 @@ class TranslationSetTest extends TestCase
 
         $locales = [$localeEN, $localeDE];
 
-        $set = new TranslationSet('storefront', 'json', $locales, $filter, $attributes, [], []);
+        $set = new TranslationSet('storefront', 'json', new Protection(), $locales, $filter, $attributes, [], []);
 
         $existing = $set->findAnyExistingTranslation('btnCancel', '');
 
@@ -162,7 +163,7 @@ class TranslationSetTest extends TestCase
 
         $locales = [$localeEN, $localeDE, $localeNL];
 
-        $set = new TranslationSet('storefront', 'json', $locales, $filter, $attributes, [], []);
+        $set = new TranslationSet('storefront', 'json', new Protection(), $locales, $filter, $attributes, [], []);
 
         $existing = $set->findAnyExistingTranslation('btnCancel', 'NL');
 
@@ -186,7 +187,7 @@ class TranslationSetTest extends TestCase
         $filter = new Filter();
         $locales = [];
 
-        $set = new TranslationSet('storefront', 'json', $locales, $filter, $attributes, [], []);
+        $set = new TranslationSet('storefront', 'json', new Protection(), $locales, $filter, $attributes, [], []);
 
         $set->findAnyExistingTranslation('abc', '');
     }

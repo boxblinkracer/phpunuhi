@@ -3,12 +3,12 @@
 All notable changes of PHPUnuhi releases are documented in this file
 using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
-
 ## [unreleased]
 
 ### Added
 
 - Add new placeholders **%locale%**, **%locale_lc%** and **%locale_uc%** in file name paths. This allows to reuse the name of the locale in multiple spots within the path.
+- Added new **protect** node in sets. This helps to avoid that static placeholder strings like e.g. %firstname%, ... or even static terms get accidentally translated by translation services. (thx @hhoechtl for this idea)
 
 ## [1.9.0]
 

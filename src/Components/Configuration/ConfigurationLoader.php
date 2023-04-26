@@ -9,6 +9,7 @@ use PHPUnuhi\Models\Configuration\Attribute;
 use PHPUnuhi\Models\Configuration\CaseStyle;
 use PHPUnuhi\Models\Configuration\Configuration;
 use PHPUnuhi\Models\Configuration\Filter;
+use PHPUnuhi\Models\Configuration\Protection;
 use PHPUnuhi\Models\Configuration\Rule;
 use PHPUnuhi\Models\Configuration\Rules;
 use PHPUnuhi\Models\Translation\Locale;
@@ -107,6 +108,7 @@ class ConfigurationLoader
 
             $setName = trim((string)$xmlSet['name']);
             $nodeFormat = $xmlSet->format;
+            $nodeProtection = $xmlSet->protect;
             $nodeLocales = $xmlSet->locales;
             $nodeFilter = $xmlSet->filter;
             $nodeStyles = $xmlSet->styles;
@@ -114,6 +116,7 @@ class ConfigurationLoader
 
             # default values
             $setFormat = 'json';
+            $setProtection = new Protection();
             $setAttributes = [];
             $setLocales = [];
             $setFilter = new Filter();
@@ -124,6 +127,10 @@ class ConfigurationLoader
                 $formatData = $this->parseFormat($nodeFormat);
                 $setFormat = $formatData['format'];
                 $setAttributes = $formatData['attributes'];
+            }
+
+            if ($nodeProtection !== null) {
+                $setProtection = $this->loadProtection($nodeProtection);
             }
 
             if ($nodeFilter !== null) {
@@ -145,6 +152,7 @@ class ConfigurationLoader
             $set = new TranslationSet(
                 $setName,
                 $setFormat,
+                $setProtection,
                 $setLocales,
                 $setFilter,
                 $setAttributes,
@@ -195,19 +203,50 @@ class ConfigurationLoader
             throw new \Exception('No format provided');
         }
 
-        if (count($children) >= 2) {
-            throw new \Exception('Only 1 format allowed');
-        }
+        $format = '';
+        $setAttributes = '';
 
         foreach ($children as $formatTag => $formatElement) {
+
+            if ($formatTag === '@attributes') {
+                continue;
+            }
+
             $format = $formatTag;
             $setAttributes = $this->getAttributes($formatElement);
-
-            return [
-                'format' => $format,
-                'attributes' => $setAttributes,
-            ];
         }
+
+        return [
+            'format' => $format,
+            'attributes' => $setAttributes,
+        ];
+    }
+
+    /**
+     * @param SimpleXMLElement $filterNode
+     * @return Protection
+     */
+    private function loadProtection(SimpleXMLElement $filterNode): Protection
+    {
+        $protection = new Protection();
+
+        $nodeMarkers = $filterNode->marker;
+        $nodeTerms = $filterNode->term;
+
+        foreach ($nodeMarkers as $marker) {
+            $markerStart = $this->getAttribute('start', $marker);
+            $markerEnd = $this->getAttribute('end', $marker);
+
+            $protection->addMarker($markerStart->getValue(), $markerEnd->getValue());
+        }
+
+        foreach ($nodeTerms as $term) {
+            $termValue = (string)$term;
+
+            $protection->addTerm($termValue);
+        }
+
+        return $protection;
     }
 
     /**
@@ -404,7 +443,7 @@ class ConfigurationLoader
 
     /**
      * @param SimpleXMLElement $node
-     * @return array<mixed>
+     * @return array<Attribute>
      */
     private function getAttributes(SimpleXMLElement $node)
     {
@@ -417,5 +456,25 @@ class ConfigurationLoader
         }
 
         return $setAttributes;
+    }
+
+    /**
+     * @param string $name
+     * @param SimpleXMLElement $node
+     * @return Attribute
+     */
+    private function getAttribute(string $name, SimpleXMLElement $node)
+    {
+        $setAttributes = [];
+        $nodeAttributes = $node->attributes();
+        if ($nodeAttributes !== null) {
+            foreach ($nodeAttributes as $attrName => $value) {
+                if ($attrName === $name) {
+                    return new Attribute($attrName, $value);
+                }
+            }
+        }
+
+        return new Attribute($name, '');
     }
 }

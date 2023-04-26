@@ -6,6 +6,7 @@ use phpunit\Fakes\FakeCSVWriter;
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Bundles\Exchange\CSV\CSVExchange;
 use PHPUnuhi\Models\Configuration\Filter;
+use PHPUnuhi\Models\Configuration\Protection;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
@@ -34,6 +35,7 @@ class CSVExchangeTest extends TestCase
         $set = new TranslationSet(
             '',
             'json',
+            new Protection(),
             [$localesDE, $localesEN],
             new Filter(),
             [],
@@ -87,6 +89,7 @@ class CSVExchangeTest extends TestCase
         $set = new TranslationSet(
             '',
             'json',
+            new Protection(),
             [$localesDE, $localesEN],
             new Filter(),
             [],

@@ -7,6 +7,9 @@ use PHPUnuhi\Bundles\Translator\TranslatorFactory;
 use PHPUnuhi\Configuration\ConfigurationLoader;
 use PHPUnuhi\Exceptions\TranslationNotFoundException;
 use PHPUnuhi\PHPUnuhi;
+use PHPUnuhi\Services\Placeholder\Placeholder;
+use PHPUnuhi\Services\Placeholder\PlaceholderEncoder;
+use PHPUnuhi\Services\Placeholder\PlaceholderExtractor;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -24,6 +27,16 @@ class TranslateCommand extends Command
      */
     private $translatorFactory;
 
+    /**
+     * @var PlaceholderExtractor
+     */
+    private $placeholderExtractor;
+
+    /**
+     * @var PlaceholderEncoder
+     */
+    private $placeholderEncoder;
+
 
     /**
      * @return void
@@ -31,6 +44,8 @@ class TranslateCommand extends Command
     protected function configure()
     {
         $this->translatorFactory = new TranslatorFactory();
+        $this->placeholderExtractor = new PlaceholderExtractor();
+        $this->placeholderEncoder = new PlaceholderEncoder();
 
         $this
             ->setName('translate')
@@ -141,12 +156,45 @@ class TranslateCommand extends Command
 
                         $existingLocale = $existingData['locale'];
                         $existingTranslation = $existingData['translation'];
+                        $existingValue = $existingTranslation->getValue();
 
+                        $foundPlaceholders = [];
+
+                        # -----------------------------------------------------------------------------------------------------------------------------------
+
+                        foreach ($set->getProtection()->getMarkers() as $marker) {
+                            # search for all possible placeholders that exist, like %productName%
+                            # we must not translate them (happens with DeepL, ...)
+                            $markerPlaceholders = $this->placeholderExtractor->extract(
+                                $existingValue,
+                                $marker->getStart(),
+                                $marker->getEnd()
+                            );
+
+                            $foundPlaceholders = array_merge($foundPlaceholders, $markerPlaceholders);
+                        }
+
+                        foreach ($set->getProtection()->getTerms() as $term) {
+                            # just add these as placeholders
+                            $foundPlaceholders[] = new Placeholder($term);
+                        }
+
+                        # encode the value to have something that won't get translated like //12//
+                        $existingValue = $this->placeholderEncoder->encode($existingValue, $foundPlaceholders);
+
+                        # start our third party translation service
                         $newTranslation = $translator->translate(
-                            $existingTranslation->getValue(),
+                            $existingValue,
                             $existingLocale,
                             $locale->getName()
                         );
+
+                        if (count($foundPlaceholders) > 0) {
+                            # decode our string so that we have the original placeholder values again (%productName%)
+                            $newTranslation = $this->placeholderEncoder->decode($newTranslation, $foundPlaceholders);
+                        }
+
+                        # -----------------------------------------------------------------------------------------------------------------------------------
 
                         $io->writeln('   [~] translating "' . $currentTranslation->getID() . '" (' . $locale->getName() . ') => ' . $newTranslation);
 

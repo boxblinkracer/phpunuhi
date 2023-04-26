@@ -43,31 +43,34 @@ Now that you know this, let's get started!
     * [5.4 Automatic Translation with Google, DeepL, ...](#54-automatic-translation-with-google-deepl-)
 * [6. Warning](#6-warning)
 * [7. Appendix](#7-appendix)
-    * [7.1 Storage Formats](#71-storage-formats)
-        * [7.1.1 JSON](#711-json)
-        * [7.1.2 INI](#712-ini)
-        * [7.1.3 PHP](#713-php)
-        * [7.1.4 Shopware 6](#714-shopware-6)
-        * [7.1.5 YAML](#715-yaml)
-    * [7.2 Filters](#72-filters)
-    * [7.3 Groups](#73-groups)
-    * [7.4 Case Styles](#74-case-styles)
-    * [7.5 Rules](#75-rules)
-        * [7.5.1 Nesting Depth](#751-nesting-depth)
-        * [7.5.2 Key Length](#752-key-length)
-        * [7.5.3 Disallowed Texts](#753-disallowed-texts)
-        * [7.5.4 Duplicate Content](#754-duplicate-content)
-    * [7.6 PHP ENV Variables](#76-php-env-variables)
-    * [7.7 Exchange Formats](#77-exchange-formats)
-        * [7.7.1 CSV](#771-csv)
-        * [7.7.2 HTML / WebEdit](#772-html--webedit)
-    * [7.8 Translator Services](#78-translator-services)
-        * [7.8.1 DeepL](#781-deepl)
-        * [7.8.2 Google Cloud Translate](#782-google-cloud-translate)
-        * [7.8.3 Google Web Translate](#783-google-web-translate)
-        * [7.8.4 OpenAI GPT Translate](#784-openai-gpt-translate)
-    * [7.9 Validation Reports](#79-validation-reports)
-        * [7.9.1 JUnit Report](#791-junit-report)
+    * [7.1 Locales](#71-locales)
+    * [7.2 Storage Formats](#72-storage-formats)
+        * [7.2.1 Formats](#721-formats)
+            * [7.2.1.1 JSON](#7211-json)
+            * [7.2.1.2 INI](#7212-ini)
+            * [7.2.1.3 PHP](#7213-php)
+            * [7.2.1.3 Shopware 6](#7213-shopware-6)
+            * [7.2.1.4 YAML](#7214-yaml)
+    * [7.3 Filters](#73-filters)
+    * [7.4 Groups](#74-groups)
+    * [7.5 Case Styles](#75-case-styles)
+    * [7.6 Rules](#76-rules)
+        * [7.6.1 Nesting Depth](#761-nesting-depth)
+        * [7.6.2 Key Length](#762-key-length)
+        * [7.6.3 Disallowed Texts](#763-disallowed-texts)
+        * [7.6.4 Duplicate Content](#764-duplicate-content)
+    * [7.7 PHP ENV Variables](#77-php-env-variables)
+    * [7.8 Exchange Formats](#78-exchange-formats)
+        * [7.8.1 CSV](#781-csv)
+        * [7.8.2 HTML / WebEdit](#782-html--webedit)
+    * [7.9 Translator Services](#79-translator-services)
+        * [7.9.1 DeepL](#791-deepl)
+        * [7.9.2 Google Cloud Translate](#792-google-cloud-translate)
+        * [7.9.3 Google Web Translate](#793-google-web-translate)
+        * [7.9.4 OpenAI GPT Translate](#794-openai-gpt-translate)
+    * [7.10 Validation Reports](#710-validation-reports)
+        * [7.10.1 JUnit Report](#7101-junit-report)
+    * [7.11 Protection](#711-protection)
 
 <!-- TOC -->
 
@@ -427,12 +430,9 @@ Please keep these things in mind:
 
 ## 7. Appendix
 
-### 7.1 Storage Formats
+#### 7.1 Locales
 
-Storage formats define how your translations are stored.
-Every format has its own loading and saving implementation.
-
-A storage format consists of multiple **locales**.
+Every translation set consists of multiple **locales**.
 Every locale is defined through a name and either a filename, or database-table (depending on format type).
 The purpose is, that every locale in a translation-set should match across those languages (all files should have the same structure for example).
 
@@ -451,9 +451,16 @@ This will reuse the locale name in the filename.
 </set>
 ```
 
+### 7.2 Storage Formats
+
+Storage formats define how your translations are stored.
+Every format has its own loading and saving implementation.
+
+#### 7.2.1 Formats
+
 The following formats are currently supported.
 
-#### 7.1.1 JSON
+##### 7.2.1.1 JSON
 
 | Format Attributes | Default | Description                             | 
 |-------------------|---------|-----------------------------------------|
@@ -477,7 +484,7 @@ The JSON structure across all files of a set should match.
 </set>
 ```
 
-#### 7.1.2 INI
+##### 7.2.1.2 INI
 
 | Format Attributes | Default | Description                             | 
 |-------------------|---------|-----------------------------------------|
@@ -517,7 +524,7 @@ For this, you might want to use the **iniSection** feature and just assign the s
 </set>
 ```
 
-#### 7.1.3 PHP
+##### 7.2.1.3 PHP
 
 | Format Attributes | Default | Description                             | 
 |-------------------|---------|-----------------------------------------|
@@ -543,7 +550,7 @@ This storage type makes sure to read and also write PHP files that return a sing
 </set>
 ```
 
-#### 7.1.4 Shopware 6
+##### 7.2.1.3 Shopware 6
 
 | Format Attributes | Default | Description                            | 
 |-------------------|---------|----------------------------------------|
@@ -599,7 +606,7 @@ To make life easier for you, we've added a fake entity name **snippet** that aut
 </phpunuhi>
 ```
 
-#### 7.1.5 YAML
+##### 7.2.1.4 YAML
 
 | Format Attributes | Default | Description                             | 
 |-------------------|---------|-----------------------------------------|
@@ -623,7 +630,7 @@ The YAML structure across all files of a set should match.
 </set>
 ```
 
-### 7.2 Filters
+### 7.3 Filters
 
 It's possible to use filters to modify the list of covered translation keys.
 
@@ -648,7 +655,7 @@ You can also use **placeholders** using the * character.
 </set>
 ```
 
-### 7.3 Groups
+### 7.4 Groups
 
 Some storage formats automatically bundle translations into groups.
 This means, that more translations belong to one "thing".
@@ -663,7 +670,7 @@ A CSV format, has a separate column for groups, and the import should also work 
 The HTML format on the other hand, shows a matching style in the table, so you know that the
 translations all belong to this group.
 
-### 7.4 Case Styles
+### 7.5 Case Styles
 
 To keep consistency across all your translation keys, it's possible to set a list of allowed case styles.
 The **validate** command, will automatically test, if all your translation keys match at least one of the provided styles.
@@ -710,7 +717,7 @@ Pascal case is only checked on level 1, and not on 0 and 2.
 </set>
 ```
 
-### 7.5 Rules
+### 7.6 Rules
 
 You can add additional rules to extend the validation of your Translation-Sets.
 Please see the list below for all supported rules.
@@ -726,7 +733,7 @@ Please see the list below for all supported rules.
 </set>
 ```
 
-#### 7.5.1 Nesting Depth
+#### 7.6.1 Nesting Depth
 
 The nesting-depth rule allows you to throw an error once the maximum depth is reached within a nested storage type.
 This helps you to keep your depth in control.
@@ -736,7 +743,7 @@ This helps you to keep your depth in control.
 <nestingDepth>3</nestingDepth>
 ```
 
-#### 7.5.2 Key Length
+#### 7.6.2 Key Length
 
 The key-length rule allows you to throw an error once the maximum length of a key is reached
 
@@ -745,7 +752,7 @@ The key-length rule allows you to throw an error once the maximum length of a ke
 <keyLength>20</keyLength>
 ```
 
-#### 7.5.3 Disallowed Texts
+#### 7.6.3 Disallowed Texts
 
 Provide a list of texts that must not occur in any of your translations.
 You can use this for anything you want, like swearing words, political incorrect phrases and more.
@@ -758,7 +765,7 @@ You can use this for anything you want, like swearing words, political incorrect
 </disallowedTexts>
 ```
 
-#### 7.5.4 Duplicate Content
+#### 7.6.4 Duplicate Content
 
 Sometimes you want to keep translations clean and reduced by avoiding duplicate values within a locale.
 Just imagine the simple translation value "Save" occurring multiple times in a single locale?
@@ -772,7 +779,7 @@ Once set to **false**, the validator will automatically warn you, if you have a 
 <duplicateContent>false</duplicateContent>
 ```
 
-### 7.6 PHP ENV Variables
+### 7.7 PHP ENV Variables
 
 The XML configuration allows you to create custom ENV variables.
 Depending on the components you use in PHPUnuhi, some require specific ENV variables, such as the Shopware 6 database connection.
@@ -791,7 +798,7 @@ These can either be set by exporting the ENV variable on your server, or by simp
 </phpunuhi>
 ```
 
-### 7.7 Exchange Formats
+### 7.8 Exchange Formats
 
 Exchange formats define how you export and import translation data.
 The main purpose is to send it out to a translation company or just someone else,
@@ -799,7 +806,7 @@ and be able to import it back into your system again.
 
 The following formats are currently supported.
 
-#### 7.7.1 CSV
+#### 7.8.1 CSV
 
 * Format: "csv"
 
@@ -819,7 +826,7 @@ Every translation key has its own row, and all locale-values have their own colu
    <img src="/.github/assets/csv.png">
 </p>
 
-#### 7.7.2 HTML / WebEdit
+#### 7.8.2 HTML / WebEdit
 
 * Format: "html"
 
@@ -833,12 +840,12 @@ you can import again into your system with the format **html** in PHPUnuhi.
    <img src="/.github/assets/html.png">
 </p>
 
-### 7.8 Translator Services
+### 7.9 Translator Services
 
 Translators are supported (external) services that automatically translate empty values for you.
 These services usually require an API key that needs to be provided for PHPUnuhi.
 
-#### 7.8.1 DeepL
+#### 7.9.1 DeepL
 
 * Service: "deepl"
 
@@ -854,7 +861,7 @@ DeepL allows you to either translate to a formal or informal language.
 This option is only available for some target languages, just like "German" ("du" vs. "Sie").
 You can request a formal language by simply applying the argument "--deepl-formal" to the translate command.
 
-#### 7.8.2 Google Cloud Translate
+#### 7.9.2 Google Cloud Translate
 
 * Service: "googlecloud"
 
@@ -865,7 +872,7 @@ You can request a formal language by simply applying the argument "--deepl-forma
 Google Cloud Translation allows you to use the AI services of Google.
 If you have an API Key, you can easily provide it with the corresponding argument when running the translation command.
 
-#### 7.8.3 Google Web Translate
+#### 7.9.3 Google Web Translate
 
 * Service: "googleweb"
 
@@ -876,7 +883,7 @@ Because of this, it can happen, that a massive number of requests might lead to 
 This is more meant for educational purposes.
 Although it works, you should consider getting a real Google API key for commercial and serious usage of their services.
 
-#### 7.8.4 OpenAI GPT Translate
+#### 7.9.4 OpenAI GPT Translate
 
 * Service: "openai"
 
@@ -893,7 +900,7 @@ That's it!
 This was indeed a last minute addon, but it works quite good.
 If you have any tweaks, feel free to contribute :)
 
-### 7.9 Validation Reports
+### 7.10 Validation Reports
 
 It's possible to generate reports after running a **validation** command. This helps you to use
 the results in different systems and platforms.
@@ -901,8 +908,44 @@ the results in different systems and platforms.
 The validation command has 2 arguments **--report-format=xyz** and **--report-output=abc** to provide
 a certain format and a custom output filename. Use this to generate reports based on validation results.
 
-#### 7.9.1 JUnit Report
+#### 7.10.1 JUnit Report
 
 You can generate a JUnit XML report by providing the following arguments when starting the validation.
 
 * Report Format: "junit"
+
+### 7.11 Protection
+
+PHPUnuhi allows you to configure markers or even full terms and protect them from being translated.
+Why would you need this?!
+
+Some storage formats (or even use cases) might contain placeholders inside the text value.
+This usually helps a software to replace such a placeholder with a real value.
+Here is a sample:
+
+```ruby 
+"lblGreeting": "Hi, welcome {firstname}"
+```
+
+The text contains the placeholder **{firstname}**, but the software uses this static key and replaces it with the
+real firstname of the customer. That means, this placeholder must not be translated by a translation service!
+
+The protection feature allows you to add a list of **markers** to your translation-set.
+A marker consists of the **start** and **end** text for such a placeholder.
+
+It's also possible to configure full **terms** that must not be translated.
+This is perfect if you have brand names or just any word that should not be accidentally translated.
+
+```xml
+
+<set>
+    ...
+    <protect>
+        <marker start="{" end="}"/>
+        <marker start="%" end="%"/>
+        <marker start="{%" end="%}"/>
+        <term>Shopware</term>
+        <term>iPhone</term>
+    </protect>
+</set>
+```

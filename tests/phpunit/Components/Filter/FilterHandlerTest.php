@@ -5,6 +5,7 @@ namespace phpunit\Components\Filter;
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Components\Filter\FilterHandler;
 use PHPUnuhi\Models\Configuration\Filter;
+use PHPUnuhi\Models\Configuration\Protection;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
@@ -40,6 +41,7 @@ class FilterHandlerTest extends TestCase
         $set = new TranslationSet(
             '',
             'json',
+            new Protection(),
             [$localesDE, $localesEN],
             $filter,
             [],

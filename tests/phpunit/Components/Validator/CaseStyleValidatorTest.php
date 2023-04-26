@@ -9,6 +9,7 @@ use PHPUnuhi\Components\Validator\CaseStyleValidator;
 use PHPUnuhi\Components\Validator\Model\ValidationResult;
 use PHPUnuhi\Models\Configuration\CaseStyle;
 use PHPUnuhi\Models\Configuration\Filter;
+use PHPUnuhi\Models\Configuration\Protection;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
@@ -204,6 +205,7 @@ class CaseStyleValidatorTest extends TestCase
         $set = new TranslationSet(
             '',
             'json',
+            new Protection(),
             [$locale],
             new Filter(),
             [],

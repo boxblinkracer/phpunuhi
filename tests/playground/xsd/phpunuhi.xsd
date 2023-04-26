@@ -50,12 +50,28 @@
     <xs:complexType name="typeTranslationSet">
         <xs:choice minOccurs="1" maxOccurs="unbounded">
             <xs:element name="format" type="typeFormat" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="protect" type="typeProtect" minOccurs="0" maxOccurs="1"/>
             <xs:element name="filter" type="typeFilter" minOccurs="0" maxOccurs="1"/>
             <xs:element name="rules" type="typeRules" minOccurs="0" maxOccurs="1"/>
             <xs:element name="styles" type="typeStyle" minOccurs="0" maxOccurs="1"/>
             <xs:element name="locales" type="typeLocales" minOccurs="1" maxOccurs="1"/>
         </xs:choice>
         <xs:attribute name="name" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <!-- ================================================================================================================================ -->
+    <!-- PROTECTION -->
+
+    <xs:complexType name="typeProtect">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="marker" type="typeProtectMarker" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="term" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="typeProtectMarker">
+        <xs:attribute name="start" type="xs:string" use="required"/>
+        <xs:attribute name="end" type="xs:string" use="required"/>
     </xs:complexType>
 
     <!-- ================================================================================================================================ -->
