@@ -233,17 +233,21 @@ class ConfigurationLoader
         $nodeMarkers = $filterNode->marker;
         $nodeTerms = $filterNode->term;
 
-        foreach ($nodeMarkers as $marker) {
-            $markerStart = $this->getAttribute('start', $marker);
-            $markerEnd = $this->getAttribute('end', $marker);
+        if ($nodeMarkers !== null) {
+            foreach ($nodeMarkers as $marker) {
+                $markerStart = $this->getAttribute('start', $marker);
+                $markerEnd = $this->getAttribute('end', $marker);
 
-            $protection->addMarker($markerStart->getValue(), $markerEnd->getValue());
+                $protection->addMarker($markerStart->getValue(), $markerEnd->getValue());
+            }
         }
 
-        foreach ($nodeTerms as $term) {
-            $termValue = (string)$term;
+        if ($nodeTerms !== null) {
+            foreach ($nodeTerms as $term) {
+                $termValue = (string)$term;
 
-            $protection->addTerm($termValue);
+                $protection->addTerm($termValue);
+            }
         }
 
         return $protection;
