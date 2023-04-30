@@ -9,6 +9,9 @@
             <format>
                 <json indent="2" sort="true"/>
             </format>
+            <protect>
+                <marker start="%" end="%"/>
+            </protect>
             <rules>
                 <nestingDepth>3</nestingDepth>
                 <duplicateContent>false</duplicateContent>
@@ -21,7 +24,6 @@
                 <locale name="de">./%locale%.json</locale>
                 <locale name="nl">./%locale%.json</locale>
             </locales>
-
         </set>
 
     </translations>

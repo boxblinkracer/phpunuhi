@@ -1,5 +1,6 @@
 {
     "card-section": {
+        "greeting": "Hallo %firstname%. Schön dich zu sehen!",
         "titleTest": "Allgemein"
     },
     "kebab-title": "Allgemein"
