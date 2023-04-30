@@ -8,7 +8,7 @@ class PlaceholderEncoder
     /**
      *
      */
-    private const ENCODING_MARKER = '[/';
+    public const ENCODING_MARKER = '//';
 
 
     /**
