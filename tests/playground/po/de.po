@@ -1,0 +1,9 @@
+msgid "lblTitle"
+msgstr "Wert"
+
+# comment 2
+msgid "lblTitle2"
+msgstr ""
+
+msgid "lblTitle33"
+msgstr ""

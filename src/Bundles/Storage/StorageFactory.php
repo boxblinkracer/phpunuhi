@@ -5,6 +5,7 @@ namespace PHPUnuhi\Bundles\Storage;
 use PHPUnuhi\Bundles\Storage\INI\IniStorage;
 use PHPUnuhi\Bundles\Storage\JSON\JsonStorage;
 use PHPUnuhi\Bundles\Storage\PHP\PhpStorage;
+use PHPUnuhi\Bundles\Storage\PO\PoStorage;
 use PHPUnuhi\Bundles\Storage\Shopware6\Shopware6Storage;
 use PHPUnuhi\Bundles\Storage\YAML\YamlStorage;
 use PHPUnuhi\Exceptions\ConfigurationException;
@@ -37,6 +38,9 @@ class StorageFactory
             case 'php':
                 $sort = (bool)$set->getAttributeValue('sort');
                 return new PhpStorage($sort);
+
+            case 'po':
+                return new PoStorage();
 
             case 'yaml':
                 $indent = $set->getAttributeValue('yamlIndent');

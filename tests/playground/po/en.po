@@ -1,0 +1,9 @@
+msgid "lblTitle"
+msgstr ""
+
+msgid "lblTitle2"
+msgstr ""
+msgctxt "abc"
+
+msgid "lblTitle33"
+msgstr ""
