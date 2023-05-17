@@ -1,9 +1,9 @@
 msgid "lblTitle"
-msgstr ""
+msgstr "Value"
 
 msgid "lblTitle2"
-msgstr ""
+msgstr "Table"
 msgctxt "abc"
 
 msgid "lblTitle33"
-msgstr ""
+msgstr "House"

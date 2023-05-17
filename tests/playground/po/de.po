@@ -3,7 +3,7 @@ msgstr "Wert"
 
 # comment 2
 msgid "lblTitle2"
-msgstr ""
+msgstr "Tisch"
 
 msgid "lblTitle33"
 msgstr ""

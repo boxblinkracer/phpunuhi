@@ -14,6 +14,7 @@ class PoStorage implements StorageInterface
 
     use StringTrait;
 
+
     /**
      * @return bool
      */
@@ -118,6 +119,7 @@ class PoStorage implements StorageInterface
                     $newLines[] = '';
                 }
             }
+
 
             $newLines = $this->clearLineBreaks($newLines);
 

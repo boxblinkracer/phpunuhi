@@ -48,9 +48,10 @@ Now that you know this, let's get started!
         * [7.2.1 Formats](#721-formats)
             * [7.2.1.1 JSON](#7211-json)
             * [7.2.1.2 INI](#7212-ini)
-            * [7.2.1.3 PHP](#7213-php)
-            * [7.2.1.3 Shopware 6](#7213-shopware-6)
-            * [7.2.1.4 YAML](#7214-yaml)
+            * [7.2.1.3 PO](#7213-po)
+            * [7.2.1.4 PHP](#7214-php)
+            * [7.2.1.5 Shopware 6](#7215-shopware-6)
+            * [7.2.1.6 YAML](#7216-yaml)
     * [7.3 Filters](#73-filters)
     * [7.4 Groups](#74-groups)
     * [7.5 Case Styles](#75-case-styles)
@@ -524,7 +525,27 @@ For this, you might want to use the **iniSection** feature and just assign the s
 </set>
 ```
 
-##### 7.2.1.3 PHP
+##### 7.2.1.3 PO
+
+Some platforms have translations based on PO files.
+
+This storage type makes sure to read and also write PO files.
+At the moment it only covers the **msgid** and **msgstr** fields.
+
+```xml
+
+<set name="sample">
+    <format>
+        <po/>
+    </format>
+    <locales>
+        <locale name="de">./snippets/de.php</locale>
+        <locale name="en">./snippets/en.php</locale>
+    </locales>
+</set>
+```
+
+##### 7.2.1.4 PHP
 
 | Format Attributes | Default | Description                             | 
 |-------------------|---------|-----------------------------------------|
@@ -550,7 +571,7 @@ This storage type makes sure to read and also write PHP files that return a sing
 </set>
 ```
 
-##### 7.2.1.3 Shopware 6
+##### 7.2.1.5 Shopware 6
 
 | Format Attributes | Default | Description                            | 
 |-------------------|---------|----------------------------------------|
@@ -606,7 +627,7 @@ To make life easier for you, we've added a fake entity name **snippet** that aut
 </phpunuhi>
 ```
 
-##### 7.2.1.4 YAML
+##### 7.2.1.6 YAML
 
 | Format Attributes | Default | Description                             | 
 |-------------------|---------|-----------------------------------------|
