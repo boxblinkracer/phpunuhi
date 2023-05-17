@@ -163,6 +163,7 @@
         <xs:choice minOccurs="1" maxOccurs="1">
             <xs:element name="json" type="typeFormatJSON" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="ini" type="typeFormatINI" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="po" type="typeFormatPO" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="php" type="typeFormatPHP" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="shopware6" type="typeFormatShopware6" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="yaml" type="typeFormatYAML" minOccurs="0" maxOccurs="unbounded"/>
@@ -182,6 +183,13 @@
         <xs:simpleContent>
             <xs:extension base="xs:string">
                 <xs:attribute name="sort" type="xs:boolean" use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="typeFormatPO">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>

@@ -3,6 +3,12 @@
 All notable changes of PHPUnuhi releases are documented in this file
 using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
+## [unreleased]
+
+### Added
+
+- Add first support for **PO** files. This covers the **msgid** and **msgstr** values.
+
 ## [1.10.0]
 
 ### Added
