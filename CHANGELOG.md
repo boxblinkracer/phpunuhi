@@ -8,6 +8,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 ### Added
 
 - Add first support for **PO** files. This covers the **msgid** and **msgstr** values.
+- Add new **word** count statistic to the status command.
 
 ## [1.10.0]
 

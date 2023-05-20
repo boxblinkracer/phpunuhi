@@ -329,7 +329,8 @@ php vendor/bin/phpunuhi import ... --format=html
 
 ### 4.5 Status Command
 
-Use this command to get the coverage status of your translations.
+Use this command to get statistics and reports of your translations.
+This includes the coverage and the number of found words.
 
 ```bash 
 php vendor/bin/phpunuhi status 

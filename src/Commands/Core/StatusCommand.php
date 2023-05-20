@@ -5,6 +5,7 @@ namespace PHPUnuhi\Commands\Core;
 use PHPUnuhi\Bundles\Exchange\ExchangeFormat;
 use PHPUnuhi\Configuration\ConfigurationLoader;
 use PHPUnuhi\Services\Maths\PercentageCalculator;
+use PHPUnuhi\Services\WordCounter\WordCounter;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -53,10 +54,11 @@ class StatusCommand extends Command
         $config = $configLoader->load($configFile);
 
         $calculator = new PercentageCalculator();
-
+        $wordCounter = new WordCounter();
 
         $totalTranslations = 0;
         $totalValidTranslations = 0;
+        $totalWords = 0;
 
         foreach ($config->getTranslationSets() as $set) {
 
@@ -68,17 +70,22 @@ class StatusCommand extends Command
             $totalTranslations += $countSetIDs;
 
             $countSetValid = 0;
+            $countWords = 0;
 
             foreach ($set->getLocales() as $locale) {
                 $countSetValid += count($locale->getValidTranslations());
+
+                foreach ($locale->getValidTranslations() as $translation) {
+                    $countWords += $wordCounter->getWordCount($translation->getValue());
+                }
             }
 
             $totalValidTranslations += $countSetValid;
+            $totalWords += $countWords;
 
             $percent = $calculator->getRoundedPercentage($countSetValid, $countSetIDs);
 
             $io->writeln("Coverage: " . $percent . '% (' . $countSetValid . '/' . $countSetIDs . ')');
-
 
             foreach ($set->getLocales() as $locale) {
                 $countLocaleIDs = count($locale->getTranslationIDs());
@@ -88,6 +95,20 @@ class StatusCommand extends Command
 
                 $io->writeln("   [" . $locale->getName() . '] Coverage: ' . $percent . '% (' . $countLocaleValid . '/' . $countLocaleIDs . ')');
             }
+
+
+            $io->writeln('');
+            $io->writeln("Words: " . $countWords);
+
+            foreach ($set->getLocales() as $locale) {
+
+                $tmpCountWords = 0;
+                foreach ($locale->getValidTranslations() as $translation) {
+                    $tmpCountWords += $wordCounter->getWordCount($translation->getValue());
+                }
+
+                $io->writeln("   [" . $locale->getName() . '] Words: ' . $tmpCountWords);
+            }
         }
 
         $io->section('Total Sets [' . count($config->getTranslationSets()) . ']');
@@ -95,6 +116,7 @@ class StatusCommand extends Command
         $percent = $calculator->getRoundedPercentage($totalValidTranslations, $totalTranslations);
 
         $io->writeln('   Coverage: ' . $percent . '% (' . $totalValidTranslations . '/' . $totalTranslations . ')');
+        $io->writeln('   Words: ' . $totalWords);
 
         exit(0);
     }
