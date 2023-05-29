@@ -11,6 +11,10 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 - Add new **word** count statistic to the status command.
 - Add better error output on OpenAI translation errors, like "Quota exceeded" and more.
 
+### Changed
+
+- Improved OpenAI creativity by using a new **temperature** value. This allows to control the creativity of the AI.
+
 ## [1.10.0]
 
 ### Added

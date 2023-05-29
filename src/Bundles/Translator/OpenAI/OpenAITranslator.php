@@ -65,7 +65,7 @@ class OpenAITranslator implements TranslatorInterface
         $params = [
             'model' => "text-davinci-003",
             'prompt' => $prompt,
-            'temperature' => 0,
+            'temperature' => 0.3,
             'max_tokens' => 100,
             'top_p' => 1.0,
             'frequency_penalty' => 0.0,
@@ -75,7 +75,6 @@ class OpenAITranslator implements TranslatorInterface
         $openAI = new OpenAi($this->apiKey);
 
         $complete = (string)$openAI->completion($params);
-
 
         $json = json_decode($complete, true);
 
