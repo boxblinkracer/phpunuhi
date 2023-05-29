@@ -15,6 +15,10 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 - Improved OpenAI creativity by using a new **temperature** value. This allows to control the creativity of the AI.
 
+### Fixed
+
+- Fixed problem with **[[punt]]** placeholder when using Googleweb for translations. These placeholders are now correctly converted into "."
+
 ## [1.10.0]
 
 ### Added

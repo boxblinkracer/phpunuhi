@@ -72,6 +72,7 @@ class GoogleWebTranslator implements TranslatorInterface
         $result = (string)$json['sentences'][0]['trans'];
 
         $result = str_replace("[[dot]]", '.', $result);
+        $result = str_replace("[[punt]]", '.', $result);
 
         return $result;
     }
