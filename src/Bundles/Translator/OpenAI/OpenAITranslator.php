@@ -60,7 +60,7 @@ class OpenAITranslator implements TranslatorInterface
     {
         $languageName = Locale::getDisplayLanguage($targetLocale);
 
-        $prompt = "Translate this into " . $languageName . ":" . $text;
+        $prompt = "Translate this into " . $languageName . ": " . $text;
 
         $params = [
             'model' => "text-davinci-003",
@@ -72,7 +72,6 @@ class OpenAITranslator implements TranslatorInterface
             'presence_penalty' => 0.0,
         ];
 
-
         $openAI = new OpenAi($this->apiKey);
 
         $complete = (string)$openAI->completion($params);
@@ -82,6 +81,11 @@ class OpenAITranslator implements TranslatorInterface
 
         if (!is_array($json)) {
             return '';
+        }
+
+        if (isset($json['error'])) {
+            $msg = 'OpenAI Error: ' . $json['error']['message'];
+            throw new \Exception($msg);
         }
 
         if (!isset($json['choices'])) {
