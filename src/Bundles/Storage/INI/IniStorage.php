@@ -5,6 +5,7 @@ namespace PHPUnuhi\Bundles\Storage\INI;
 use PHPUnuhi\Bundles\Storage\StorageHierarchy;
 use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Bundles\Storage\StorageSaveResult;
+use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
 class IniStorage implements StorageInterface
@@ -24,6 +25,13 @@ class IniStorage implements StorageInterface
         $this->sortIni = $sortIni;
     }
 
+    /**
+     * @return string
+     */
+    public function getFileExtension(): string
+    {
+        return 'ini';
+    }
 
     /**
      * @return bool
@@ -43,12 +51,13 @@ class IniStorage implements StorageInterface
             ''
         );
     }
+
     /**
      * @param TranslationSet $set
      * @return void
      * @throws \Exception
      */
-    public function loadTranslations(TranslationSet $set): void
+    public function loadTranslationSet(TranslationSet $set): void
     {
         foreach ($set->getLocales() as $locale) {
 
@@ -80,52 +89,83 @@ class IniStorage implements StorageInterface
      * @param TranslationSet $set
      * @return StorageSaveResult
      */
-    public function saveTranslations(TranslationSet $set): StorageSaveResult
+    public function saveTranslationSet(TranslationSet $set): StorageSaveResult
     {
         $localeCount = 0;
         $translationCount = 0;
 
-        $fileContents = [];
+        $contentBuffer = [];
 
         foreach ($set->getLocales() as $locale) {
-
-            $content = "";
-
-            if (array_key_exists($locale->getFilename(), $fileContents)) {
-                $content = $fileContents[$locale->getFilename()];
-                $content .= PHP_EOL;
-            }
-
-            if ($locale->getIniSection() !== '') {
-                $content .= "[" . $locale->getIniSection() . "]" . PHP_EOL;
-                $content .= PHP_EOL;
-            }
-
+            $translationCount += $this->buildFileContentBuffer($locale, $contentBuffer, $locale->getFilename());
             $localeCount++;
-
-            $preparedTranslations = [];
-
-            foreach ($locale->getTranslations() as $translation) {
-                $preparedTranslations[$translation->getID()] = $translation->getValue();
-            }
-
-            if ($this->sortIni) {
-                ksort($preparedTranslations);
-            }
-
-            foreach ($preparedTranslations as $key => $value) {
-                $content .= $key . '="' . $value . '"' . PHP_EOL;
-                $translationCount++;
-            }
-
-            $fileContents[$locale->getFilename()] = $content;
         }
 
-        foreach ($fileContents as $filename => $content) {
+        # we need this, because our locales might be in 1 single INI file with sections
+        # so we first build a basic content structure and then save it in
+        # either 1 or multiple files.
+        foreach ($contentBuffer as $filename => $content) {
             file_put_contents($filename, $content);
         }
 
         return new StorageSaveResult($localeCount, $translationCount);
+    }
+
+    /**
+     * @param Locale $locale
+     * @param string $filename
+     * @return StorageSaveResult
+     */
+    public function saveTranslationLocale(Locale $locale, string $filename): StorageSaveResult
+    {
+        $contentBuffer = [];
+
+        $translationCount = $this->buildFileContentBuffer($locale, $contentBuffer, $filename);
+
+        file_put_contents($filename, $contentBuffer);
+
+        return new StorageSaveResult(1, $translationCount);
+    }
+
+    /**
+     * @param Locale $locale
+     * @param array<mixed> $contentBuffer
+     * @param string $filename
+     * @return int
+     */
+    public function buildFileContentBuffer(Locale $locale, array &$contentBuffer, string $filename): int
+    {
+        $content = "";
+        $translationCount = 0;
+
+        if (array_key_exists($filename, $contentBuffer)) {
+            $content = $contentBuffer[$filename];
+            $content .= PHP_EOL;
+        }
+
+        if ($locale->getIniSection() !== '') {
+            $content .= "[" . $locale->getIniSection() . "]" . PHP_EOL;
+            $content .= PHP_EOL;
+        }
+
+        $preparedTranslations = [];
+
+        foreach ($locale->getTranslations() as $translation) {
+            $preparedTranslations[$translation->getID()] = $translation->getValue();
+        }
+
+        if ($this->sortIni) {
+            ksort($preparedTranslations);
+        }
+
+        foreach ($preparedTranslations as $key => $value) {
+            $content .= $key . '="' . $value . '"' . PHP_EOL;
+            $translationCount++;
+        }
+
+        $contentBuffer[$locale->getFilename()] = $content;
+
+        return $translationCount;
     }
 
 }

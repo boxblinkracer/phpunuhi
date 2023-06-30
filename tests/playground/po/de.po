@@ -6,4 +6,7 @@ msgid "lblTitle2"
 msgstr "Tisch"
 
 msgid "lblTitle33"
-msgstr ""
+msgstr "Haus"
+
+msgid "lblTitle4"
+msgstr "Das ist ein ganz neuer Text"

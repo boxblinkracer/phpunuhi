@@ -7,5 +7,6 @@ return [
             "test" => "Subtitle Text",
         ],
     ],
+    "tite2" => "this is a new text",
     "title" => "This is a title",
 ];

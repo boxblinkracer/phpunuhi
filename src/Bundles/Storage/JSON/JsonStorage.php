@@ -7,6 +7,7 @@ use PHPUnuhi\Bundles\Storage\JSON\Services\JsonSaver;
 use PHPUnuhi\Bundles\Storage\StorageHierarchy;
 use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Bundles\Storage\StorageSaveResult;
+use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
 class JsonStorage implements StorageInterface
@@ -33,6 +34,13 @@ class JsonStorage implements StorageInterface
         $this->saver = new JsonSaver($indent, $sort);
     }
 
+    /**
+     * @return string
+     */
+    public function getFileExtension(): string
+    {
+        return 'json';
+    }
 
     /**
      * @return bool
@@ -58,7 +66,7 @@ class JsonStorage implements StorageInterface
      * @return void
      * @throws \Exception
      */
-    public function loadTranslations(TranslationSet $set): void
+    public function loadTranslationSet(TranslationSet $set): void
     {
         $delimiter = $this->getHierarchy()->getDelimiter();
 
@@ -71,11 +79,34 @@ class JsonStorage implements StorageInterface
      * @param TranslationSet $set
      * @return StorageSaveResult
      */
-    public function saveTranslations(TranslationSet $set): StorageSaveResult
+    public function saveTranslationSet(TranslationSet $set): StorageSaveResult
     {
         $delimiter = $this->getHierarchy()->getDelimiter();
 
-        return $this->saver->saveTranslations($set, $delimiter);
+        $localeCount = 0;
+        $translationCount = 0;
+
+        foreach ($set->getLocales() as $locale) {
+            $filename = $locale->getFilename();
+            $translationCount += $this->saver->saveLocale($locale, $delimiter, $filename);
+            $localeCount++;
+        }
+
+        return new StorageSaveResult($localeCount, $translationCount);
+    }
+
+    /**
+     * @param Locale $locale
+     * @param string $filename
+     * @return StorageSaveResult
+     */
+    public function saveTranslationLocale(Locale $locale, string $filename): StorageSaveResult
+    {
+        $delimiter = $this->getHierarchy()->getDelimiter();
+
+        $translationsCount = $this->saver->saveLocale($locale, $delimiter, $filename);
+
+        return new StorageSaveResult(1, $translationsCount);
     }
 
 }

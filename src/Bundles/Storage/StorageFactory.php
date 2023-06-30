@@ -24,6 +24,17 @@ class StorageFactory
     {
         $format = $set->getFormat();
 
+        return self::getStorageByFormat($format, $set);
+    }
+
+    /**
+     * @param string $format
+     * @param TranslationSet $set
+     * @return StorageInterface
+     * @throws ConfigurationException
+     */
+    public static function getStorageByFormat(string $format, TranslationSet $set): StorageInterface
+    {
         switch (strtolower($format)) {
             case 'json':
                 $indent = $set->getAttributeValue('jsonIndent');
@@ -46,7 +57,7 @@ class StorageFactory
                 $indent = $set->getAttributeValue('yamlIndent');
                 $indent = ($indent === '') ? '2' : $indent;
                 $sort = (bool)$set->getAttributeValue('sort');
-                return new YamlStorage((int) $indent, $sort);
+                return new YamlStorage((int)$indent, $sort);
 
             case 'shopware6':
                 return new Shopware6Storage();

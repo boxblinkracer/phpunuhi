@@ -98,7 +98,7 @@ class FixStructureCommand extends Command
 
             $storageSaver = StorageFactory::getStorage($set);
 
-            $storageSaver->saveTranslations($set);
+            $storageSaver->saveTranslationSet($set);
         }
 
         $io->success($countCreated . ' translations have been created!');

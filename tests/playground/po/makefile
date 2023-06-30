@@ -25,3 +25,6 @@ structure: ## Fix Structure
 
 translate: ## Translate
 	cd ../../.. && php bin/phpunuhi translate --configuration=./tests/playground/po/phpunuhi.xml --service=googleweb
+
+migrate: ## Migrate command
+	cd ../../.. && php bin/phpunuhi migrate --configuration=./tests/playground/po/phpunuhi.xml --output=json

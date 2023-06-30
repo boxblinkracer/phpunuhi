@@ -6,6 +6,7 @@ use PHPUnuhi\Bundles\Storage\PO\Models\Block;
 use PHPUnuhi\Bundles\Storage\StorageHierarchy;
 use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Bundles\Storage\StorageSaveResult;
+use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
 use PHPUnuhi\Traits\StringTrait;
 
@@ -14,6 +15,14 @@ class PoStorage implements StorageInterface
 
     use StringTrait;
 
+
+    /**
+     * @return string
+     */
+    public function getFileExtension(): string
+    {
+        return 'po';
+    }
 
     /**
      * @return bool
@@ -39,14 +48,13 @@ class PoStorage implements StorageInterface
      * @return void
      * @throws \Exception
      */
-    public function loadTranslations(TranslationSet $set): void
+    public function loadTranslationSet(TranslationSet $set): void
     {
         foreach ($set->getLocales() as $locale) {
 
             $lines = $this->getLines($locale->getFilename());
             $blocks = $this->getBlocks($lines);
 
-            /** @var Block $block */
             foreach ($blocks as $block) {
 
                 $id = $block->getId();
@@ -62,77 +70,105 @@ class PoStorage implements StorageInterface
      * @param TranslationSet $set
      * @return StorageSaveResult
      */
-    public function saveTranslations(TranslationSet $set): StorageSaveResult
+    public function saveTranslationSet(TranslationSet $set): StorageSaveResult
     {
         $localeCount = 0;
         $translationCount = 0;
 
-        $fileContents = [];
+        $contentBuffer = [];
 
         foreach ($set->getLocales() as $locale) {
-
-            $lines = $this->getLines($locale->getFilename());
-            $blocks = $this->getBlocks($lines);
-
-            $existingKeys = [];
-            $newLines = [];
-
-            /** @var Block $block */
-            foreach ($blocks as $block) {
-
-                $id = $block->getId();
-
-                $existingKeys[] = $id;
-
-                foreach ($locale->getTranslations() as $translation) {
-                    if ($translation->getID() === $id) {
-                        $block->setMessage($translation->getValue());
-
-                        foreach ($block->getLines() as $line) {
-                            $newLines[] = $line;
-                        }
-                        $newLines[] = '';
-                        break;
-                    }
-                }
-
-                $newLines[] = '';
-            }
-
-            $newLines[] = '';
-
-            foreach ($locale->getTranslations() as $translation) {
-
-                $found = false;
-
-                foreach ($existingKeys as $existingKey) {
-                    if ($existingKey === $translation->getID()) {
-                        $found = true;
-                        break;
-                    }
-                }
-
-                if (!$found) {
-                    $newLines[] = '';
-                    $newLines[] = 'msgid "' . $translation->getID() . '"';
-                    $newLines[] = 'msgstr "' . $translation->getValue() . '"';
-                    $newLines[] = '';
-                }
-            }
-
-
-            $newLines = $this->clearLineBreaks($newLines);
-
-            $fileContents[$locale->getFilename()] = implode(PHP_EOL, $newLines);
+            $localeCount++;
+            $translationCount += $this->saveLocale($locale, $contentBuffer, $locale->getFilename());
         }
 
-        foreach ($fileContents as $filename => $content) {
+        foreach ($contentBuffer as $filename => $content) {
             file_put_contents($filename, $content);
         }
 
-        return new StorageSaveResult(0, 0);
+        return new StorageSaveResult($localeCount, $translationCount);
+
     }
 
+    /**
+     * @param Locale $locale
+     * @param string $filename
+     * @return StorageSaveResult
+     */
+    public function saveTranslationLocale(Locale $locale, string $filename): StorageSaveResult
+    {
+        $contentBuffer = [];
+
+        $translationCount = $this->saveLocale($locale, $contentBuffer, $filename);
+
+        file_put_contents($filename, $contentBuffer);
+
+        return new StorageSaveResult(1, $translationCount);
+    }
+
+    /**
+     * @param Locale $locale
+     * @param array<mixed> $contentBuffer
+     * @param string $filename
+     * @return int
+     */
+    private function saveLocale(Locale $locale, array &$contentBuffer, string $filename): int
+    {
+        $lines = $this->getLines($locale->getFilename());
+        $blocks = $this->getBlocks($lines);
+
+        $existingKeys = [];
+        $newLines = [];
+
+        foreach ($blocks as $block) {
+
+            $id = $block->getId();
+
+            $existingKeys[] = $id;
+
+            foreach ($locale->getTranslations() as $translation) {
+                if ($translation->getID() === $id) {
+                    $block->setMessage($translation->getValue());
+
+                    foreach ($block->getLines() as $line) {
+                        $newLines[] = $line;
+                    }
+                    $newLines[] = '';
+                    break;
+                }
+            }
+
+            $newLines[] = '';
+        }
+
+        $newLines[] = '';
+
+        foreach ($locale->getTranslations() as $translation) {
+
+            $found = false;
+
+            foreach ($existingKeys as $existingKey) {
+                if ($existingKey === $translation->getID()) {
+                    $found = true;
+                    break;
+                }
+            }
+
+            if (!$found) {
+                $newLines[] = '';
+                $newLines[] = 'msgid "' . $translation->getID() . '"';
+                $newLines[] = 'msgstr "' . $translation->getValue() . '"';
+                $newLines[] = '';
+            }
+        }
+
+
+        $newLines = $this->clearLineBreaks($newLines);
+
+        $contentBuffer[$filename] = implode(PHP_EOL, $newLines);
+
+        return 0;
+    }
 
     /**
      * @param array<string> $lines

@@ -37,3 +37,6 @@ htmlimport: ## Imports a HTML
 
 translate: ## Translate
 	cd ../../.. && php bin/phpunuhi translate --configuration=./tests/playground/json/phpunuhi.xml --service=googleweb
+
+migrate: ## Migrate command
+	cd ../../.. && php bin/phpunuhi migrate --configuration=./tests/playground/json/phpunuhi.xml --output=ini

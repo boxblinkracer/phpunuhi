@@ -10,14 +10,17 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 - Add first support for **PO** files. This covers the **msgid** and **msgstr** values.
 - Add new **word** count statistic to the status command.
 - Add better error output on OpenAI translation errors, like "Quota exceeded" and more.
+- Add new **migration** command, to migrate from Storage A to Storage B.
 
 ### Changed
 
 - Improved OpenAI creativity by using a new **temperature** value. This allows to control the creativity of the AI.
+- Improved **StorageInterface* definition for more future proven implementations.
 
 ### Fixed
 
-- Fixed problem with **[[punt]]** placeholder when using Googleweb for translations. These placeholders are now correctly converted into "."
+- Fixed problem with **[[punt]]** placeholder when using Googleweb for translations. These placeholders are now
+  correctly converted into "."
 
 ## [1.10.0]
 

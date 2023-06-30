@@ -2,8 +2,7 @@
 
 namespace PHPUnuhi\Bundles\Storage\JSON\Services;
 
-use PHPUnuhi\Bundles\Storage\StorageSaveResult;
-use PHPUnuhi\Models\Translation\TranslationSet;
+use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Traits\ArrayTrait;
 
 class JsonSaver
@@ -32,51 +31,47 @@ class JsonSaver
         $this->sortJson = $sortJson;
     }
 
+
     /**
-     * @param TranslationSet $set
+     * @param Locale $locale
      * @param string $delimiter
-     * @return StorageSaveResult
+     * @param string $filename
+     * @return int
      */
-    public function saveTranslations(TranslationSet $set, string $delimiter): StorageSaveResult
+    public function saveLocale(Locale $locale, string $delimiter, string $filename): int
     {
         $indent = $this->jsonIndent;
 
-        $localeCount = 0;
         $translationCount = 0;
 
-        foreach ($set->getLocales() as $locale) {
+        $saveValues = [];
 
-            $localeCount++;
-
-            $saveValues = [];
-
-            foreach ($locale->getTranslations() as $translation) {
-                $saveValues[$translation->getID()] = $translation->getValue();
-                $translationCount++;
-            }
-
-            if ($this->sortJson) {
-                ksort($saveValues);
-            }
-
-            $tmpArray = $this->getMultiDimensionalArray($saveValues, $delimiter);
-
-            $jsonString = (string)json_encode($tmpArray, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-
-            $json = preg_replace_callback(
-                '/^ +/m',
-                function ($m) use ($indent) {
-                    $indentStr = (string)str_repeat(' ', $indent);
-                    $repeat = (int)(strlen($m[0]) / 2);
-                    return str_repeat($indentStr, $repeat);
-                },
-                $jsonString
-            );
-
-            file_put_contents($locale->getFilename(), $json);
+        foreach ($locale->getTranslations() as $translation) {
+            $saveValues[$translation->getID()] = $translation->getValue();
+            $translationCount++;
         }
 
-        return new StorageSaveResult($localeCount, $translationCount);
+        if ($this->sortJson) {
+            ksort($saveValues);
+        }
+
+        $tmpArray = $this->getMultiDimensionalArray($saveValues, $delimiter);
+
+        $jsonString = (string)json_encode($tmpArray, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+        $json = preg_replace_callback(
+            '/^ +/m',
+            function ($m) use ($indent) {
+                $indentStr = (string)str_repeat(' ', $indent);
+                $repeat = (int)(strlen($m[0]) / 2);
+                return str_repeat($indentStr, $repeat);
+            },
+            $jsonString
+        );
+
+        file_put_contents($filename, $json);
+
+        return $translationCount;
     }
 
 }

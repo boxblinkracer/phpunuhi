@@ -36,6 +36,7 @@ Now that you know this, let's get started!
     * [4.5 Status Command](#45-status-command)
     * [4.6 Translate Command](#46-translate-command)
     * [4.7 List Translations Command](#47-list-translations-command)
+    * [4.8 Migration Command](#48-migration-command)
 * [5. Use Cases](#5-use-cases)
     * [5.1 Validation in CI pipeline](#51-validation-in-ci-pipeline)
     * [5.2 Working with external translation agencies](#52-working-with-external-translation-agencies)
@@ -383,6 +384,15 @@ Use this to debug and analyzse your translations.
 
 ```bash 
 php vendor/bin/phpunuhi list:translations 
+```
+
+### 4.8 Migration Command
+
+It's also possible to migrate your translations from one storage to another.
+Just use the migration command and provide the target storage as output format.
+
+```bash 
+php vendor/bin/phpunuhi migrate --output=json
 ```
 
 ## 5. Use Cases

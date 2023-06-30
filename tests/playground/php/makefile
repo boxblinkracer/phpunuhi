@@ -31,3 +31,6 @@ html: ## Exports a HTML
 
 translate: ## Translate
 	cd ../../.. && php bin/phpunuhi translate --configuration=./tests/playground/php/phpunuhi.xml --service=googleweb
+
+migrate: ## Migrate command
+	cd ../../.. && php bin/phpunuhi migrate --configuration=./tests/playground/php/phpunuhi.xml --output=json
