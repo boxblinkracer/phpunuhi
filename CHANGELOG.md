@@ -3,7 +3,7 @@
 All notable changes of PHPUnuhi releases are documented in this file
 using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
-## [unreleased]
+## [1.11.0]
 
 ### Added
 
@@ -20,7 +20,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 ### Fixed
 
-- Fixed problem with **[[punt]]** placeholder when using Googleweb for translations. These placeholders are now
+- Fixed problem with **[[punt]]** placeholder when using googleweb for translations. These placeholders are now
   correctly converted into "."
 
 ## [1.10.0]

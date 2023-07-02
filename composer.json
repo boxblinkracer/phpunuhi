@@ -1,6 +1,6 @@
 {
     "name": "boxblinkracer/phpunuhi",
-    "version": "1.10.0",
+    "version": "1.11.0",
     "license": "MIT",
     "description": "Easy tool to work with translation files for validation, exports, imports and more.",
     "homepage": "https://github.com/boxblinkracer/phpunuhi",
@@ -23,7 +23,8 @@
         "optimize-autoloader": true,
         "sort-packages": true,
         "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "php-http/discovery": true
         }
     },
     "require": {
