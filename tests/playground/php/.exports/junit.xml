@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="PHPUnuhi Translation-Sets" tests="24" failures="0">
+  <testsuite name="php" tests="24" failures="0">
+    <testcase name="[de] Text structure of key: sub.sub2" classname="de.php"/>
+    <testcase name="[de] Text structure of key: sub.subsub.test" classname="de.php"/>
+    <testcase name="[de] Text structure of key: title" classname="de.php"/>
+    <testcase name="[de] Text structure of key: sub.sub2" classname="de.php"/>
+    <testcase name="[de] Text structure of key: sub.subsub.test" classname="de.php"/>
+    <testcase name="[de] Text structure of key: title" classname="de.php"/>
+    <testcase name="[en] Text structure of key: sub.sub2" classname="en.php"/>
+    <testcase name="[en] Text structure of key: sub.subsub.test" classname="en.php"/>
+    <testcase name="[en] Text structure of key: title" classname="en.php"/>
+    <testcase name="[en] Text structure of key: sub.sub2" classname="en.php"/>
+    <testcase name="[en] Text structure of key: sub.subsub.test" classname="en.php"/>
+    <testcase name="[en] Text structure of key: title" classname="en.php"/>
+    <testcase name="[de] Test case-style of key: sub.sub2" classname="de.php"/>
+    <testcase name="[de] Test case-style of key: sub.subsub.test" classname="de.php"/>
+    <testcase name="[de] Test case-style of key: title" classname="de.php"/>
+    <testcase name="[en] Test case-style of key: sub.sub2" classname="en.php"/>
+    <testcase name="[en] Test case-style of key: sub.subsub.test" classname="en.php"/>
+    <testcase name="[en] Test case-style of key: title" classname="en.php"/>
+    <testcase name="[de] Test existing translation of key: sub.sub2" classname="de.php"/>
+    <testcase name="[de] Test existing translation of key: sub.subsub.test" classname="de.php"/>
+    <testcase name="[de] Test existing translation of key: title" classname="de.php"/>
+    <testcase name="[en] Test existing translation of key: sub.sub2" classname="en.php"/>
+    <testcase name="[en] Test existing translation of key: sub.subsub.test" classname="en.php"/>
+    <testcase name="[en] Test existing translation of key: title" classname="en.php"/>
+  </testsuite>
+</testsuites>

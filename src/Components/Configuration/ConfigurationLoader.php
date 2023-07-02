@@ -177,7 +177,7 @@ class ConfigurationLoader
 
             # now iterate through our locales
             # and load the translation files for it
-            $storage->loadTranslations($set);
+            $storage->loadTranslationSet($set);
 
             # remove fields that must not be existing
             # because of our allow or exclude list

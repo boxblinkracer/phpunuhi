@@ -1,6 +1,8 @@
 {
-  "card-section": {
-    "titleTest": "Over het algemeen"
-  },
-  "kebab-title": "Over het algemeen"
+    "card-section": {
+        "greeting": "Hallo %firstname%. Leuk je te zien!",
+        "titleTest": "Over het algemeen"
+    },
+    "kebab-title": "Over het algemeen",
+    "test234": "het meisje"
 }

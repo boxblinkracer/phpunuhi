@@ -219,7 +219,7 @@ class TranslateCommand extends Command
 
             $storageSaver = StorageFactory::getStorage($set);
 
-            $storageSaver->saveTranslations($set);
+            $storageSaver->saveTranslationSet($set);
         }
 
         if ($translateFailedCount > 0) {

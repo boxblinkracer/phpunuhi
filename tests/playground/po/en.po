@@ -7,3 +7,6 @@ msgctxt "abc"
 
 msgid "lblTitle33"
 msgstr "House"
+
+msgid "lblTitle4"
+msgstr "This is a whole new text"

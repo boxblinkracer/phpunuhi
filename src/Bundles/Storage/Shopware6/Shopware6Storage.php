@@ -7,6 +7,7 @@ use PHPUnuhi\Bundles\Storage\Shopware6\Service\TranslationSaver;
 use PHPUnuhi\Bundles\Storage\StorageHierarchy;
 use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Bundles\Storage\StorageSaveResult;
+use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
 use PHPUnuhi\Services\Connection\ConnectionFactory;
 
@@ -41,6 +42,13 @@ class Shopware6Storage implements StorageInterface
         $this->saver = new TranslationSaver($pdo);
     }
 
+    /**
+     * @return string
+     */
+    public function getFileExtension(): string
+    {
+        return '-';
+    }
 
     /**
      * @return bool
@@ -66,7 +74,7 @@ class Shopware6Storage implements StorageInterface
      * @return void
      * @throws \PHPUnuhi\Exceptions\ConfigurationException
      */
-    public function loadTranslations(TranslationSet $set): void
+    public function loadTranslationSet(TranslationSet $set): void
     {
         $this->loader->loadTranslations($set);
     }
@@ -76,9 +84,20 @@ class Shopware6Storage implements StorageInterface
      * @return StorageSaveResult
      * @throws \PHPUnuhi\Exceptions\ConfigurationException
      */
-    public function saveTranslations(TranslationSet $set): StorageSaveResult
+    public function saveTranslationSet(TranslationSet $set): StorageSaveResult
     {
         return $this->saver->saveTranslations($set);
+    }
+
+    /**
+     * @param Locale $locale
+     * @param string $filename
+     * @return StorageSaveResult
+     * @throws \Exception
+     */
+    public function saveTranslationLocale(Locale $locale, string $filename): StorageSaveResult
+    {
+        throw new \Exception('Not supported at the moment');
     }
 
 }

@@ -1,5 +1,6 @@
 sub:
-  sub2: a brand new subtitle
+  sub2: 'a brand new subtitle'
   subsub:
-    test: Subtitle Text
-title: This is a title
+    test: 'Subtitle Text'
+title: 'This is a title'
+title2: 'This is a completely new text'

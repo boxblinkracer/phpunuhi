@@ -10,4 +10,4 @@ services:
     working_dir: /app
     entrypoint:
       - /bin/sh
-      - "/app/docker/boot.sh"
+      - "/app/devops/boot.sh"

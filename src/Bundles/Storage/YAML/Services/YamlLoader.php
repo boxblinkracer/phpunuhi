@@ -16,7 +16,7 @@ class YamlLoader
      *
      * @return void
      */
-    public function loadTranslations(Locale $locale, string $delimiter): void
+    public function loadLocale(Locale $locale, string $delimiter): void
     {
         $arrayData = Yaml::parseFile($locale->getFilename());
 

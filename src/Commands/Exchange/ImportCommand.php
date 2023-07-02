@@ -114,7 +114,7 @@ class ImportCommand extends Command
             $filterHandler->applyFilter($set);
 
             # save our data
-            $result = $storageSaver->saveTranslations($set);
+            $result = $storageSaver->saveTranslationSet($set);
         }
 
         if ($result instanceof StorageSaveResult) {

@@ -2,6 +2,8 @@
 
 namespace PHPUnuhi\Bundles\Storage\PHP;
 
+use PHPUnuhi\Bundles\Storage\PHP\Services\PHPLoader;
+use PHPUnuhi\Bundles\Storage\PHP\Services\PHPSaver;
 use PHPUnuhi\Bundles\Storage\StorageHierarchy;
 use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Bundles\Storage\StorageSaveResult;
@@ -15,6 +17,16 @@ class PhpStorage implements StorageInterface
     use ArrayTrait;
 
     /**
+     * @var PHPSaver
+     */
+    private $saver;
+
+    /**
+     * @var PHPLoader
+     */
+    private $loader;
+
+    /**
      * @var bool
      */
     private $sort;
@@ -26,8 +38,18 @@ class PhpStorage implements StorageInterface
     public function __construct(bool $sort)
     {
         $this->sort = $sort;
+
+        $this->saver = new PHPSaver();
+        $this->loader = new PHPLoader();
     }
 
+    /**
+     * @return string
+     */
+    public function getFileExtension(): string
+    {
+        return 'php';
+    }
 
     /**
      * @return bool
@@ -52,100 +74,52 @@ class PhpStorage implements StorageInterface
      * @param TranslationSet $set
      * @return void
      */
-    public function loadTranslations(TranslationSet $set): void
+    public function loadTranslationSet(TranslationSet $set): void
     {
-        $delimiter = $this->getHierarchy()->getDelimiter();
-
-        foreach ($set->getLocales() as $locale) {
-            $arrayData = require($locale->getFilename());
-
-            if (!is_array($arrayData)) {
-                $arrayData = [];
-            }
-
-            $foundTranslationsFlat = $this->getFlatArray($arrayData, $delimiter);
-
-            foreach ($foundTranslationsFlat as $key => $value) {
-                $locale->addTranslation($key, $value, '');
-            }
-        }
+        $this->loader->loadTranslationSet($set, $this->getHierarchy()->getDelimiter());
     }
 
     /**
      * @param TranslationSet $set
      * @return StorageSaveResult
      */
-    public function saveTranslations(TranslationSet $set): StorageSaveResult
+    public function saveTranslationSet(TranslationSet $set): StorageSaveResult
     {
         $localeCount = 0;
         $translationCount = 0;
 
-        $delimiter = $this->getHierarchy()->getDelimiter();
-
-
         foreach ($set->getLocales() as $locale) {
 
+            $filename = $locale->getFilename();
+
+            $translationCount += $this->saver->saveLocale(
+                $locale,
+                $filename,
+                $this->getHierarchy()->getDelimiter(),
+                $this->sort
+            );
+
             $localeCount++;
-
-            $saveValues = [];
-
-
-            $content = '';
-
-            $content .= '<?php' . PHP_EOL;
-            $content .= PHP_EOL;
-
-            $content .= 'return [' . PHP_EOL;
-
-
-            foreach ($locale->getTranslations() as $translation) {
-                $saveValues[$translation->getID()] = $translation->getValue();
-                $translationCount++;
-            }
-
-            if ($this->sort) {
-                ksort($saveValues);
-            }
-
-            $tmpArray = $this->getMultiDimensionalArray($saveValues, $delimiter);
-
-            $content .= $this->buildArray($tmpArray, 1);
-
-
-            $content .= '];' . PHP_EOL;
-
-            file_put_contents($locale->getFilename(), $content);
         }
-
 
         return new StorageSaveResult($localeCount, $translationCount);
     }
 
     /**
-     * @param array<mixed> $root
-     * @param int $indent
-     * @return string
+     * @param Locale $locale
+     * @param string $filename
+     * @return StorageSaveResult
      */
-    private function buildArray(array $root, int $indent): string
+    public function saveTranslationLocale(Locale $locale, string $filename): StorageSaveResult
     {
-        $content = "";
+        $translationCount = $this->saver->saveLocale(
+            $locale,
+            $filename,
+            $this->getHierarchy()->getDelimiter(),
+            $this->sort
+        );
 
-        $indentStr = str_repeat('    ', $indent);
-
-
-        foreach ($root as $key => $value) {
-
-            if (is_array($value)) {
-                $indent += 1;
-
-                $content .= $indentStr . '"' . $key . '" => [' . PHP_EOL;
-                $content .= $this->buildArray($value, $indent);
-                $content .= $indentStr . '],' . PHP_EOL;
-            } else {
-                $content .= $indentStr . '"' . $key . '" => "' . $value . '",' . PHP_EOL;
-            }
-        }
-
-        return $content;
+        return new StorageSaveResult(1, $translationCount);
     }
+
 }
