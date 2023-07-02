@@ -19,6 +19,14 @@ class PoStorage implements StorageInterface
     /**
      * @return string
      */
+    public function getStorageName(): string
+    {
+        return 'po';
+    }
+
+    /**
+     * @return string
+     */
     public function getFileExtension(): string
     {
         return 'po';
@@ -41,6 +49,14 @@ class PoStorage implements StorageInterface
             false,
             ''
         );
+    }
+
+    /**
+     * @param TranslationSet $set
+     * @return void
+     */
+    public function configureStorage(TranslationSet $set): void
+    {
     }
 
     /**

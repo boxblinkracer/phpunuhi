@@ -217,7 +217,7 @@ class TranslateCommand extends Command
 
             $io->block('saving translations of this set...');
 
-            $storageSaver = StorageFactory::getStorage($set);
+            $storageSaver = StorageFactory::getInstance()->getStorage($set);
 
             $storageSaver->saveTranslationSet($set);
         }

@@ -130,7 +130,7 @@ class ValidateCommand extends Command
             $io->writeln('-------------------------------------------------------------');
             $io->writeln('');
 
-            $storage = StorageFactory::getStorage($set);
+            $storage = StorageFactory::getInstance()->getStorage($set);
 
 
             $suiteResult = new SuiteResult($set->getName());

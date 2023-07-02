@@ -24,11 +24,10 @@ Please keep that in mind to avoid misinterpreting the goal of this framework.
 Now that you know this, let's get started!
 
 <!-- TOC -->
-
-* [1. Basic Concept](#1-basic-concept)
-* [2. Installation](#2-installation)
-* [3. Configuration](#3-configuration)
-* [4. Commands](#4-commands)
+  * [1. Basic Concept](#1-basic-concept)
+  * [2. Installation](#2-installation)
+  * [3. Configuration](#3-configuration)
+  * [4. Commands](#4-commands)
     * [4.1 Validate Command](#41-validate-command)
     * [4.2 Fix Structure Command](#42-fix-structure-command)
     * [4.3 Export Command](#43-export-command)
@@ -37,43 +36,43 @@ Now that you know this, let's get started!
     * [4.6 Translate Command](#46-translate-command)
     * [4.7 List Translations Command](#47-list-translations-command)
     * [4.8 Migration Command](#48-migration-command)
-* [5. Use Cases](#5-use-cases)
+  * [5. Use Cases](#5-use-cases)
     * [5.1 Validation in CI pipeline](#51-validation-in-ci-pipeline)
     * [5.2 Working with external translation agencies](#52-working-with-external-translation-agencies)
     * [5.3 Live WebEdit with HTML](#53-live-webedit-with-html)
     * [5.4 Automatic Translation with Google, DeepL, ...](#54-automatic-translation-with-google-deepl-)
-* [6. Warning](#6-warning)
-* [7. Appendix](#7-appendix)
-    * [7.1 Locales](#71-locales)
+  * [6. Warning](#6-warning)
+  * [7. Appendix](#7-appendix)
+      * [7.1 Locales](#71-locales)
     * [7.2 Storage Formats](#72-storage-formats)
-        * [7.2.1 Formats](#721-formats)
-            * [7.2.1.1 JSON](#7211-json)
-            * [7.2.1.2 INI](#7212-ini)
-            * [7.2.1.3 PO](#7213-po)
-            * [7.2.1.4 PHP](#7214-php)
-            * [7.2.1.5 Shopware 6](#7215-shopware-6)
-            * [7.2.1.6 YAML](#7216-yaml)
+      * [7.2.1 Formats](#721-formats)
+        * [7.2.1.1 JSON](#7211-json)
+        * [7.2.1.2 INI](#7212-ini)
+        * [7.2.1.3 PO](#7213-po)
+        * [7.2.1.4 PHP](#7214-php)
+        * [7.2.1.5 Shopware 6](#7215-shopware-6)
+        * [7.2.1.6 YAML](#7216-yaml)
+      * [7.2.2 Custom Formats](#722-custom-formats)
     * [7.3 Filters](#73-filters)
     * [7.4 Groups](#74-groups)
     * [7.5 Case Styles](#75-case-styles)
     * [7.6 Rules](#76-rules)
-        * [7.6.1 Nesting Depth](#761-nesting-depth)
-        * [7.6.2 Key Length](#762-key-length)
-        * [7.6.3 Disallowed Texts](#763-disallowed-texts)
-        * [7.6.4 Duplicate Content](#764-duplicate-content)
+      * [7.6.1 Nesting Depth](#761-nesting-depth)
+      * [7.6.2 Key Length](#762-key-length)
+      * [7.6.3 Disallowed Texts](#763-disallowed-texts)
+      * [7.6.4 Duplicate Content](#764-duplicate-content)
     * [7.7 PHP ENV Variables](#77-php-env-variables)
     * [7.8 Exchange Formats](#78-exchange-formats)
-        * [7.8.1 CSV](#781-csv)
-        * [7.8.2 HTML / WebEdit](#782-html--webedit)
+      * [7.8.1 CSV](#781-csv)
+      * [7.8.2 HTML / WebEdit](#782-html--webedit)
     * [7.9 Translator Services](#79-translator-services)
-        * [7.9.1 DeepL](#791-deepl)
-        * [7.9.2 Google Cloud Translate](#792-google-cloud-translate)
-        * [7.9.3 Google Web Translate](#793-google-web-translate)
-        * [7.9.4 OpenAI GPT Translate](#794-openai-gpt-translate)
+      * [7.9.1 DeepL](#791-deepl)
+      * [7.9.2 Google Cloud Translate](#792-google-cloud-translate)
+      * [7.9.3 Google Web Translate](#793-google-web-translate)
+      * [7.9.4 OpenAI GPT Translate](#794-openai-gpt-translate)
     * [7.10 Validation Reports](#710-validation-reports)
-        * [7.10.1 JUnit Report](#7101-junit-report)
+      * [7.10.1 JUnit Report](#7101-junit-report)
     * [7.11 Protection](#711-protection)
-
 <!-- TOC -->
 
 
@@ -660,6 +659,17 @@ The YAML structure across all files of a set should match.
         <locale name="en">./snippets/en.yaml</locale>
     </locales>
 </set>
+```
+
+#### 7.2.2 Custom Formats
+
+It's also possible to register your custom storages.
+Create a class and implement the **StorageInterface** according to your needs.
+
+Then simply register your storage using this function:
+
+```php
+StorageFactory::getInstance()->registerStorage($myStorage);
 ```
 
 ### 7.3 Filters

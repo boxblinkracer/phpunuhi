@@ -59,10 +59,10 @@ class MigrateCommand extends Command
 
             $io->section('Translation-Set: ' . $set->getName());
 
-            $sourceStorage = StorageFactory::getStorage($set);
+            $sourceStorage = StorageFactory::getInstance()->getStorage($set);
             $sourceStorage->loadTranslationSet($set);
 
-            $targetStorage = StorageFactory::getStorageByFormat($outputFormat, $set);
+            $targetStorage = StorageFactory::getInstance()->getStorageByFormat($outputFormat, $set);
 
             foreach ($set->getLocales() as $locale) {
                 $filename = $this->getNewLocaleFilename($locale, $targetStorage);

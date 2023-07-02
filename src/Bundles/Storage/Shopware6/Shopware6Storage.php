@@ -32,14 +32,11 @@ class Shopware6Storage implements StorageInterface
 
 
     /**
-     *
+     * @return string
      */
-    public function __construct()
+    public function getStorageName(): string
     {
-        $pdo = (new ConnectionFactory())->pdoFromEnv();
-
-        $this->loader = new TranslationLoader($pdo);
-        $this->saver = new TranslationSaver($pdo);
+        return 'shopware6';
     }
 
     /**
@@ -67,6 +64,18 @@ class Shopware6Storage implements StorageInterface
             false,
             ''
         );
+    }
+
+    /**
+     * @param TranslationSet $set
+     * @return void
+     */
+    public function configureStorage(TranslationSet $set): void
+    {
+        $pdo = (new ConnectionFactory())->pdoFromEnv();
+
+        $this->loader = new TranslationLoader($pdo);
+        $this->saver = new TranslationSaver($pdo);
     }
 
     /**

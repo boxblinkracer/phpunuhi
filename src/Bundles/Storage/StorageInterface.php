@@ -9,6 +9,12 @@ interface StorageInterface
 {
 
     /**
+     * Returns a unique name for the storage.
+     * @return string
+     */
+    public function getStorageName(): string;
+
+    /**
      * Returns the file extension of the storage.
      * Just use an empty string if you are building a non-file based storage.
      *
@@ -30,8 +36,17 @@ interface StorageInterface
     public function getHierarchy(): StorageHierarchy;
 
     /**
+     * Sets configuration options for your storage.
+     * We cannot use the constructor for it because of the registering and loading inside the factory.
+     *
+     * @param TranslationSet $set
+     * @return void
+     */
+    public function configureStorage(TranslationSet $set): void;
+
+    /**
      * This function will load all translations from the provided set.
-     * Every locale should be iterated and depending on its file/database setttings, the
+     * Every locale should be iterated and depending on its file/database settings, the
      * translations should be loaded from it.
      *
      * @param TranslationSet $set

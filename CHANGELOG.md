@@ -7,6 +7,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 ### Added
 
+- Add option to register **custom storages* by using the StorageFactory **register** command.
 - Add first support for **PO** files. This covers the **msgid** and **msgstr** values.
 - Add new **word** count statistic to the status command.
 - Add better error output on OpenAI translation errors, like "Quota exceeded" and more.

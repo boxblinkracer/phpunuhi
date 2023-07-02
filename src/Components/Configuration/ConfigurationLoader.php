@@ -160,7 +160,7 @@ class ConfigurationLoader
                 $rules
             );
 
-            $storage = StorageFactory::getStorage($set);
+            $storage = StorageFactory::getInstance()->getStorage($set);
 
 
             # some storages do not support filtering

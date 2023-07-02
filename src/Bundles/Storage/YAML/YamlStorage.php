@@ -27,12 +27,11 @@ class YamlStorage implements StorageInterface
 
 
     /**
-     * @param bool $sort
+     * @return string
      */
-    public function __construct(int $indent, bool $sort)
+    public function getStorageName(): string
     {
-        $this->loader = new YamlLoader();
-        $this->saver = new YamlSaver($indent, $sort);
+        return 'yaml';
     }
 
     /**
@@ -60,6 +59,20 @@ class YamlStorage implements StorageInterface
             true,
             '.'
         );
+    }
+
+    /**
+     * @param TranslationSet $set
+     * @return void
+     */
+    public function configureStorage(TranslationSet $set): void
+    {
+        $indent = $set->getAttributeValue('yamlIndent');
+        $indent = ($indent === '') ? '2' : $indent;
+        $sort = (bool)$set->getAttributeValue('sort');
+
+        $this->loader = new YamlLoader();
+        $this->saver = new YamlSaver((int)$indent, $sort);
     }
 
     /**

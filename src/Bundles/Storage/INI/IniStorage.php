@@ -18,11 +18,11 @@ class IniStorage implements StorageInterface
 
 
     /**
-     * @param bool $sortIni
+     * @return string
      */
-    public function __construct(bool $sortIni)
+    public function getStorageName(): string
     {
-        $this->sortIni = $sortIni;
+        return 'ini';
     }
 
     /**
@@ -50,6 +50,15 @@ class IniStorage implements StorageInterface
             false,
             ''
         );
+    }
+
+    /**
+     * @param TranslationSet $set
+     * @return void
+     */
+    public function configureStorage(TranslationSet $set): void
+    {
+        $this->sortIni = (bool)$set->getAttributeValue('sort');
     }
 
     /**

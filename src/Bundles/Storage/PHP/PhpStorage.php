@@ -33,14 +33,20 @@ class PhpStorage implements StorageInterface
 
 
     /**
-     * @param bool $sort
+     *
      */
-    public function __construct(bool $sort)
+    public function __construct()
     {
-        $this->sort = $sort;
-
         $this->saver = new PHPSaver();
         $this->loader = new PHPLoader();
+    }
+
+    /**
+     * @return string
+     */
+    public function getStorageName(): string
+    {
+        return 'php';
     }
 
     /**
@@ -68,6 +74,15 @@ class PhpStorage implements StorageInterface
             true,
             '.'
         );
+    }
+
+    /**
+     * @param TranslationSet $set
+     * @return void
+     */
+    public function configureStorage(TranslationSet $set): void
+    {
+        $this->sort = (bool)$set->getAttributeValue('sort');
     }
 
     /**

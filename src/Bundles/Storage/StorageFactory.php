@@ -16,55 +16,105 @@ class StorageFactory
 {
 
     /**
-     * @param TranslationSet $set
-     * @return StorageInterface
-     * @throws ConfigurationException
+     * @var StorageFactory
      */
-    public static function getStorage(TranslationSet $set): StorageInterface
-    {
-        $format = $set->getFormat();
+    private static $instance;
 
-        return self::getStorageByFormat($format, $set);
+    /**
+     * @var StorageInterface[]
+     */
+    private $storages;
+
+
+    /**
+     * @return StorageFactory
+     */
+    public static function getInstance(): StorageFactory
+    {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
+    }
+
+
+    /**
+     *
+     */
+    public function __construct()
+    {
+        $this->resetStorages();
     }
 
     /**
-     * @param string $format
+     * @param StorageInterface $storage
+     * @return void
+     * @throws ConfigurationException
+     */
+    public function registerStorage(StorageInterface $storage): void
+    {
+        $newName = $storage->getStorageName();
+
+        foreach ($this->storages as $existingStorage) {
+            if ($existingStorage->getStorageName() === $newName) {
+                throw new ConfigurationException('Storage with name already registered: ' . $newName);
+            }
+        }
+
+        $this->storages[] = $storage;
+    }
+
+    /**
+     * Resets the registered storages to the default ones.
+     * @return void
+     */
+    public function resetStorages(): void
+    {
+        $this->storages = [];
+
+        $this->storages[] = new  JsonStorage();
+        $this->storages[] = new  IniStorage();
+        $this->storages[] = new  PhpStorage();
+        $this->storages[] = new  PoStorage();
+        $this->storages[] = new  YamlStorage();
+        $this->storages[] = new  Shopware6Storage();
+    }
+
+    /**
      * @param TranslationSet $set
      * @return StorageInterface
      * @throws ConfigurationException
      */
-    public static function getStorageByFormat(string $format, TranslationSet $set): StorageInterface
+    public function getStorage(TranslationSet $set): StorageInterface
     {
-        switch (strtolower($format)) {
-            case 'json':
-                $indent = $set->getAttributeValue('jsonIndent');
-                $indent = ($indent === '') ? '2' : $indent;
-                $sort = (bool)$set->getAttributeValue('sort');
-                return new JsonStorage((int)$indent, $sort);
+        $format = $set->getFormat();
 
-            case 'ini':
-                $sort = (bool)$set->getAttributeValue('sort');
-                return new IniStorage($sort);
+        return $this->getStorageByFormat($format, $set);
+    }
 
-            case 'php':
-                $sort = (bool)$set->getAttributeValue('sort');
-                return new PhpStorage($sort);
-
-            case 'po':
-                return new PoStorage();
-
-            case 'yaml':
-                $indent = $set->getAttributeValue('yamlIndent');
-                $indent = ($indent === '') ? '2' : $indent;
-                $sort = (bool)$set->getAttributeValue('sort');
-                return new YamlStorage((int)$indent, $sort);
-
-            case 'shopware6':
-                return new Shopware6Storage();
-
-            default:
-                throw new ConfigurationException('No storage found for format: ' . $format);
+    /**
+     * @param string $name
+     * @param TranslationSet $set
+     * @return StorageInterface
+     * @throws ConfigurationException
+     */
+    public function getStorageByFormat(string $name, TranslationSet $set): StorageInterface
+    {
+        if (empty($name)) {
+            throw new \Exception('No name provided for the Storage');
         }
+
+        foreach ($this->storages as $storage) {
+
+            if ($storage->getStorageName() === $name) {
+                $storage->configureStorage($set);
+
+                return $storage;
+            }
+        }
+
+        throw new ConfigurationException('No storage found for name: ' . $name);
     }
 
 }

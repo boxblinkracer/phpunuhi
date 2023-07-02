@@ -25,13 +25,11 @@ class JsonStorage implements StorageInterface
 
 
     /**
-     * @param int $indent
-     * @param bool $sort
+     * @return string
      */
-    public function __construct(int $indent, bool $sort)
+    public function getStorageName(): string
     {
-        $this->loader = new JsonLoader();
-        $this->saver = new JsonSaver($indent, $sort);
+        return 'json';
     }
 
     /**
@@ -59,6 +57,20 @@ class JsonStorage implements StorageInterface
             true,
             '.'
         );
+    }
+
+    /**
+     * @param TranslationSet $set
+     * @return void
+     */
+    public function configureStorage(TranslationSet $set): void
+    {
+        $indent = $set->getAttributeValue('jsonIndent');
+        $indent = ($indent === '') ? '2' : $indent;
+        $sort = (bool)$set->getAttributeValue('sort');
+
+        $this->loader = new JsonLoader();
+        $this->saver = new JsonSaver((int)$indent, $sort);
     }
 
     /**
