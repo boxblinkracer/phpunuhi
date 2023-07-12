@@ -3,6 +3,12 @@
 All notable changes of PHPUnuhi releases are documented in this file
 using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
+## [unreleased]
+
+### Added
+
+- Added new **JSON** reporter that creates a JSON file with all validation errors.
+
 ## [1.11.0]
 
 ### Added
