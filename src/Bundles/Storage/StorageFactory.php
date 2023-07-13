@@ -62,8 +62,10 @@ class StorageFactory
             }
         }
 
-        $this->storages[] = $storage;
+        $this->storages[] =$storage;
     }
+
+
 
     /**
      * Resets the registered storages to the default ones.
@@ -102,13 +104,14 @@ class StorageFactory
     public function getStorageByFormat(string $name, TranslationSet $set): StorageInterface
     {
         if (empty($name)) {
-            throw new \Exception('No name provided for the Storage');
+
+            throw new \Exception('No name provided for the Storage' );
         }
 
         foreach ($this->storages as $storage) {
 
             if ($storage->getStorageName() === $name) {
-                $storage->configureStorage($set);
+                $storage->configureStorage( $set);
 
                 return $storage;
             }

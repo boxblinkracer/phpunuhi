@@ -4,39 +4,34 @@ namespace PHPUnuhi\Components\Reporter\JUnit;
 
 use DOMDocument;
 use PHPUnuhi\Components\Reporter\Model\ReportResult;
+use PHPUnuhi\Components\Reporter\ReporterInterface;
 
-class JUnitReporter
+
+class JUnitReporter implements ReporterInterface
 {
 
     /**
-     * @var string
+     * @return string
      */
-    private $filename;
-
-
-    /**
-     * Reports constructor.
-     * @param string $filename
-     */
-    public function __construct(string $filename)
+    public function getName(): string
     {
-        $this->filename = $filename;
+        return 'junit';
     }
 
     /**
      * @return string
      */
-    public function getFilename(): string
+    public function getDefaultFilename(): string
     {
-        return $this->filename;
+        return 'junit.xml';
     }
 
-
     /**
+     * @param string $filename
      * @param ReportResult $report
      * @return void
      */
-    public function generate(ReportResult $report): void
+    public function generate(string $filename, ReportResult $report): void
     {
         $content = '<?xml version="1.0" encoding="UTF-8"?>';
 
@@ -63,7 +58,7 @@ class JUnitReporter
 
         $content .= '</testsuites>';
 
-        $path = dirname($this->filename);
+        $path = dirname($filename);
 
         if (!is_dir($path)) {
             mkdir($path);
@@ -76,17 +71,8 @@ class JUnitReporter
         $dom->loadXML($content);
         $out = $dom->saveXML();
 
-        file_put_contents($this->filename, $out);
+        file_put_contents($filename, $out);
     }
 
-    /**
-     * @return void
-     */
-    public function clear(): void
-    {
-        if (file_exists($this->filename)) {
-            unlink($this->filename);
-        }
-    }
 
 }

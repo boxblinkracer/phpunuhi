@@ -8,6 +8,7 @@ use PHPUnuhi\Components\Reporter\JUnit\JUnitReporter;
 use PHPUnuhi\Components\Reporter\Model\ReportResult;
 use PHPUnuhi\Components\Reporter\Model\SuiteResult;
 use PHPUnuhi\Components\Reporter\Model\TestResult;
+use PHPUnuhi\Components\Reporter\ReporterFactory;
 use PHPUnuhi\Components\Validator\CaseStyleValidator;
 use PHPUnuhi\Components\Validator\EmptyContentValidator;
 use PHPUnuhi\Components\Validator\MissingStructureValidator;
@@ -84,31 +85,6 @@ class ValidateCommand extends Command
 
         $reportResult = new ReportResult();
 
-
-        $reporter = null;
-
-        if (!empty($reportFormat)) {
-
-            if ($reportFormat !== 'junit') {
-                throw new \Exception('Unknown report format: ' . $reportFormat);
-            }
-
-            $reportFileDir = dirname($configFile);
-
-            if (empty($reportFilename)) {
-                $reportFileDir .= '/junit.xml';
-            } else {
-                $reportFileDir = $reportFilename;
-            }
-
-            if (!$this->stringDoesEndsWith($reportFileDir, '.xml')) {
-                $reportFileDir .= '.xml';
-            }
-
-            $reporter = new JUnitReporter($reportFileDir);
-        }
-
-
         foreach ($config->getTranslationSets() as $set) {
 
             $io->section('Translation-Set: ' . $set->getName());
@@ -172,10 +148,19 @@ class ValidateCommand extends Command
         }
 
 
-        if ($reporter !== null) {
+        if (!empty($reportFormat)) {
+
+            $reporter = ReporterFactory::getInstance()->getReporter($reportFormat);
+
+            if (empty($reportFilename)) {
+                $reportFilename = $reporter->getDefaultFilename();
+            }
+
             $io->section('generating report...');
-            $reporter->generate($reportResult);
-            $io->writeln('generated: ' . $reporter->getFilename());
+
+            $reporter->generate($reportFilename, $reportResult);
+
+            $io->writeln('generated: ' . $reportFilename);
         }
 
 
