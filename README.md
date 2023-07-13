@@ -71,6 +71,7 @@ Now that you know this, let's get started!
         * [7.9.2 Google Cloud Translate](#792-google-cloud-translate)
         * [7.9.3 Google Web Translate](#793-google-web-translate)
         * [7.9.4 OpenAI GPT Translate](#794-openai-gpt-translate)
+        * [7.9.5 Custom Translators](#795-custom-translators)
     * [7.10 Validation Reports](#710-validation-reports)
         * [7.10.1 JUnit Report](#7101-junit-report)
         * [7.10.2 JSON Report](#7102-json-report)
@@ -944,6 +945,17 @@ That's it!
 
 This was indeed a last minute addon, but it works quite good.
 If you have any tweaks, feel free to contribute :)
+
+#### 7.9.5 Custom Translators
+
+It's also possible to register your custom translators.
+Create a class and implement the **TranslatorInterface** according to your needs.
+
+Then simply register your translator using this function:
+
+```php
+TranslatorFactory::getInstance()->registerTranslator($myTranslator);
+```
 
 ### 7.10 Validation Reports
 

@@ -2,15 +2,29 @@
 
 namespace PHPUnuhi\Bundles\Translator;
 
+use PHPUnuhi\Bundles\Storage\INI\IniStorage;
+use PHPUnuhi\Bundles\Storage\JSON\JsonStorage;
+use PHPUnuhi\Bundles\Storage\PHP\PhpStorage;
+use PHPUnuhi\Bundles\Storage\PO\PoStorage;
+use PHPUnuhi\Bundles\Storage\Shopware6\Shopware6Storage;
+use PHPUnuhi\Bundles\Storage\StorageFactory;
+use PHPUnuhi\Bundles\Storage\StorageInterface;
+use PHPUnuhi\Bundles\Storage\YAML\YamlStorage;
 use PHPUnuhi\Bundles\Translator\DeepL\DeeplTranslator;
 use PHPUnuhi\Bundles\Translator\Fake\FakeTranslator;
 use PHPUnuhi\Bundles\Translator\GoogleCloud\GoogleCloudTranslator;
 use PHPUnuhi\Bundles\Translator\GoogleWeb\GoogleWebTranslator;
 use PHPUnuhi\Bundles\Translator\OpenAI\OpenAITranslator;
+use PHPUnuhi\Exceptions\ConfigurationException;
 use PHPUnuhi\Models\Command\CommandOption;
 
 class TranslatorFactory
 {
+
+    /**
+     * @var TranslatorFactory
+     */
+    private static $instance;
 
     /**
      * @var TranslatorInterface[]
@@ -18,7 +32,52 @@ class TranslatorFactory
     private $translators;
 
 
-    public function __construct()
+    /**
+     * @return TranslatorFactory
+     */
+    public static function getInstance(): TranslatorFactory
+    {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
+    }
+
+
+    /**
+     *
+     */
+    private function __construct()
+    {
+        $this->resetStorages();
+    }
+
+
+    /**
+     * @param TranslatorInterface $translator
+     * @return void
+     * @throws ConfigurationException
+     */
+    public function registerTranslator(TranslatorInterface $translator): void
+    {
+        $newName = $translator->getName();
+
+        foreach ($this->translators as $existingTranslator) {
+            if ($existingTranslator->getName() === $newName) {
+                throw new ConfigurationException('Translator with name already registered: ' . $newName);
+            }
+        }
+
+        $this->translators[] = $translator;
+    }
+
+
+    /**
+     * Resets the registered translators to the default ones.
+     * @return void
+     */
+    public function resetStorages(): void
     {
         $this->translators = [];
 

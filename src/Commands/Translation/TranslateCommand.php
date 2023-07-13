@@ -23,11 +23,6 @@ class TranslateCommand extends Command
 
 
     /**
-     * @var TranslatorFactory
-     */
-    private $translatorFactory;
-
-    /**
      * @var PlaceholderExtractor
      */
     private $placeholderExtractor;
@@ -43,7 +38,6 @@ class TranslateCommand extends Command
      */
     protected function configure()
     {
-        $this->translatorFactory = new TranslatorFactory();
         $this->placeholderExtractor = new PlaceholderExtractor();
         $this->placeholderEncoder = new PlaceholderEncoder();
 
@@ -56,7 +50,7 @@ class TranslateCommand extends Command
             ->addOption('force', null, InputOption::VALUE_REQUIRED, 'a specific locale that you want to force to be translated', '')
             ->addOption('source', null, InputOption::VALUE_REQUIRED, 'Optional name of the source locale to use for the translation', '');
 
-        foreach ($this->translatorFactory->getAllOptions() as $option) {
+        foreach (TranslatorFactory::getInstance()->getAllOptions() as $option) {
             if ($option->hasValue()) {
                 $this->addOption($option->getName(), null, InputOption::VALUE_REQUIRED, '');
             } else {
@@ -100,7 +94,7 @@ class TranslateCommand extends Command
         $config = $configLoader->load($configFile);
 
 
-        $translator = $this->translatorFactory->fromService($service, $input->getOptions());
+        $translator = TranslatorFactory::getInstance()->fromService($service, $input->getOptions());
 
         # -----------------------------------------------------------------
 
