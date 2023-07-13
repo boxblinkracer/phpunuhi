@@ -5,10 +5,24 @@ namespace PHPUnuhi\Bundles\Exchange;
 use PHPUnuhi\Bundles\Exchange\CSV\CSVExchange;
 use PHPUnuhi\Bundles\Exchange\CSV\Services\CSVWriter;
 use PHPUnuhi\Bundles\Exchange\HTML\HTMLExchange;
+use PHPUnuhi\Bundles\Storage\INI\IniStorage;
+use PHPUnuhi\Bundles\Storage\JSON\JsonStorage;
+use PHPUnuhi\Bundles\Storage\PHP\PhpStorage;
+use PHPUnuhi\Bundles\Storage\PO\PoStorage;
+use PHPUnuhi\Bundles\Storage\Shopware6\Shopware6Storage;
+use PHPUnuhi\Bundles\Storage\StorageFactory;
+use PHPUnuhi\Bundles\Storage\StorageInterface;
+use PHPUnuhi\Bundles\Storage\YAML\YamlStorage;
+use PHPUnuhi\Exceptions\ConfigurationException;
 use PHPUnuhi\Models\Command\CommandOption;
 
 class ExchangeFactory
 {
+
+    /**
+     * @var ExchangeFactory
+     */
+    private static $instance;
 
     /**
      * @var ExchangeInterface[]
@@ -17,9 +31,51 @@ class ExchangeFactory
 
 
     /**
+     * @return ExchangeFactory
+     */
+    public static function getInstance(): ExchangeFactory
+    {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
+    }
+
+
+    /**
      *
      */
-    public function __construct()
+    private function __construct()
+    {
+        $this->resetExchangeFormats();
+    }
+
+
+    /**
+     * @param ExchangeInterface $exchangeFormat
+     * @return void
+     * @throws ConfigurationException
+     */
+    public function registerExchangeFormat(ExchangeInterface $exchangeFormat): void
+    {
+        $newName = $exchangeFormat->getName();
+
+        foreach ($this->exchangeServices as $exchangeService) {
+            if ($exchangeService->getName() === $newName) {
+                throw new ConfigurationException('Exchange format with name already registered: ' . $newName);
+            }
+        }
+
+        $this->exchangeServices[] = $exchangeFormat;
+    }
+
+
+    /**
+     * Resets the registered exchange formats to the default ones.
+     * @return void
+     */
+    public function resetExchangeFormats(): void
     {
         $this->exchangeServices = [];
 

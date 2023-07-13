@@ -16,19 +16,12 @@ class ExportCommand extends Command
 
     use \PHPUnuhi\Traits\CommandTrait;
 
-    /**
-     * @var ExchangeFactory
-     */
-    private $exchangeFactory;
-
 
     /**
      * @return void
      */
     protected function configure()
     {
-        $this->exchangeFactory = new ExchangeFactory();
-
         $this
             ->setName('export')
             ->setDescription('Exports all or specific translations into an exchange file')
@@ -38,7 +31,7 @@ class ExportCommand extends Command
             ->addOption('format', null, InputOption::VALUE_REQUIRED, '', ExchangeFormat::CSV)
             ->addOption('empty', null, InputOption::VALUE_NONE, '');
 
-        foreach ($this->exchangeFactory->getAllOptions() as $option) {
+        foreach (ExchangeFactory::getInstance()->getAllOptions() as $option) {
             if ($option->hasValue()) {
                 $this->addOption($option->getName(), null, InputOption::VALUE_REQUIRED, '');
             } else {
@@ -90,7 +83,7 @@ class ExportCommand extends Command
 
             $io->section('Translation Set: ' . $set->getName());
 
-            $exporter = $this->exchangeFactory->getExchange($exportExchangeFormat, $input->getOptions());
+            $exporter = ExchangeFactory::getInstance()->getExchange($exportExchangeFormat, $input->getOptions());
 
             $exporter->export($set, $outputDir, $onlyEmpty);
         }

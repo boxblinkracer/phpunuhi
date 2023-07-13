@@ -9,6 +9,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 - Added new **JSON** reporter that creates a JSON file with all validation errors.
 - Add option to register **custom translator services* by using the TranslatorFactory **register** command.
+- Add option to register **custom exchange formats* by using the ExchangeFactory **register** command.
 
 ## [1.11.0]
 

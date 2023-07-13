@@ -21,19 +21,12 @@ class ImportCommand extends Command
 
     use \PHPUnuhi\Traits\CommandTrait;
 
-    /**
-     * @var ExchangeFactory
-     */
-    private $exchangeFactory;
-
 
     /**
      * @return void
      */
     protected function configure()
     {
-        $this->exchangeFactory = new ExchangeFactory();
-
         $this
             ->setName('import')
             ->setDescription('Imports translations from a provided exchange file')
@@ -42,7 +35,7 @@ class ImportCommand extends Command
             ->addOption('set', null, InputOption::VALUE_REQUIRED, 'R', '')
             ->addOption('file', null, InputOption::VALUE_REQUIRED, '', '');
 
-        foreach ($this->exchangeFactory->getAllOptions() as $option) {
+        foreach (ExchangeFactory::getInstance()->getAllOptions() as $option) {
             if ($option->hasValue()) {
                 $this->addOption($option->getName(), null, InputOption::VALUE_REQUIRED, '');
             } else {
@@ -104,7 +97,7 @@ class ImportCommand extends Command
 
             # build the correct importer for our exchange format
             # and pass on the matching storage saver of our current ste
-            $importer = $this->exchangeFactory->getExchange($importExchangeFormat, $input->getOptions());
+            $importer = ExchangeFactory::getInstance()->getExchange($importExchangeFormat, $input->getOptions());
 
             # import our provided file
             $importData = $importer->import($importFilename);

@@ -66,6 +66,7 @@ Now that you know this, let's get started!
     * [7.8 Exchange Formats](#78-exchange-formats)
         * [7.8.1 CSV](#781-csv)
         * [7.8.2 HTML / WebEdit](#782-html--webedit)
+        * [7.8.3 Custom Exchange Formats](#783-custom-exchange-formats)
     * [7.9 Translator Services](#79-translator-services)
         * [7.9.1 DeepL](#791-deepl)
         * [7.9.2 Google Cloud Translate](#792-google-cloud-translate)
@@ -885,6 +886,17 @@ you can import again into your system with the format **html** in PHPUnuhi.
 <p align="center">
    <img src="/.github/assets/html.png">
 </p>
+
+#### 7.8.3 Custom Exchange Formats
+
+It's also possible to register your custom exchange formats.
+Create a class and implement the **ExchangeInterface** according to your needs.
+
+Then simply register your exchange format using this function:
+
+```php
+ExchangeFactory::getInstance()->registerExchangeFormat($myFormat);
+```
 
 ### 7.9 Translator Services
 
