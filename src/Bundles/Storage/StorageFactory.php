@@ -42,7 +42,7 @@ class StorageFactory
     /**
      *
      */
-    public function __construct()
+    private function __construct()
     {
         $this->resetStorages();
     }
