@@ -35,6 +35,7 @@ class EmptyContentValidator implements ValidatorInterface
                 $testPassed = !$translation->isEmpty();
 
                 $tests[] = new ValidationTest(
+                    $translation->getKey(),
                     $locale->getName(),
                     'Test existing translation of key: ' . $translation->getKey(),
                     $locale->getFilename(),

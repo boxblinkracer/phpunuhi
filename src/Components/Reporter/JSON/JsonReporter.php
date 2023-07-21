@@ -36,7 +36,6 @@ class JsonReporter implements ReporterInterface
             'suites' => [],
         ];
 
-        /** @var SuiteResult $suite */
         foreach ($report->getSuites() as $suite) {
 
             $suiteJson = [
@@ -48,9 +47,20 @@ class JsonReporter implements ReporterInterface
 
             foreach ($suite->getTests() as $test) {
 
+                /**
+                 * {
+                 * "name": "[de] Text structure of key: app.test",
+                 * "key": "app.test",
+                 * "location": "admin.de.yaml",
+                 * "success": true,
+                 * "failureType": "STRUCTURE",
+                 * "failureMessage": ""
+                 * }
+                 */
                 $suiteJson['testCases'][] = [
                     'name' => $test->getName(),
-                    'className' => $test->getClassName(),
+                    'key' => $test->getTranslationKey(),
+                    'location' => $test->getClassName(),
                     'success' => $test->isSuccess(),
                     'failureType' => $test->getFailureType(),
                     'failureMessage' => $test->getFailureMessage(),

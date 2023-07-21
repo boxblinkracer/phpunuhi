@@ -8,6 +8,11 @@ class ValidationTest
     /**
      * @var string
      */
+    private $translationKey;
+
+    /**
+     * @var string
+     */
     private $locale;
 
     /**
@@ -37,6 +42,7 @@ class ValidationTest
 
 
     /**
+     * @param string $translationKey
      * @param string $locale
      * @param string $title
      * @param string $filename
@@ -44,14 +50,23 @@ class ValidationTest
      * @param string $failureMessage
      * @param bool $success
      */
-    public function __construct(string $locale, string $title, string $filename, string $classification, string $failureMessage, bool $success)
+    public function __construct(string $translationKey, string $locale, string $title, string $filename, string $classification, string $failureMessage, bool $success)
     {
+        $this->translationKey = $translationKey;
         $this->locale = $locale;
         $this->title = $title;
         $this->filename = $filename;
         $this->classification = $classification;
         $this->failureMessage = $failureMessage;
         $this->success = $success;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTranslationKey(): string
+    {
+        return $this->translationKey;
     }
 
     /**

@@ -101,6 +101,7 @@ class NestingDepthRule implements RuleValidatorInterface
     private function buildTestEntry(Locale $locale, string $translationKey, int $depthOfKey, bool $passed): ValidationTest
     {
         return new ValidationTest(
+            $translationKey,
             $locale->getName(),
             'Test nesting level of key: ' . $translationKey,
             $locale->getFilename(),

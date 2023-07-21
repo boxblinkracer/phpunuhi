@@ -61,6 +61,7 @@ class DisallowedTextsRule implements RuleValidatorInterface
                 $testPassed = ($foundWord === null);
 
                 $tests[] = new ValidationTest(
+                    $translation->getKey(),
                     $locale->getName(),
                     'Test against disallowed text for key: ' . $translation->getKey(),
                     $locale->getFilename(),

@@ -57,6 +57,7 @@ class MissingStructureValidator implements ValidatorInterface
                     );
 
                     $tests[] = new ValidationTest(
+                        $key,
                         $locale->getName(),
                         'Text structure of key: ' . $key,
                         $locale->getFilename(),
@@ -69,6 +70,7 @@ class MissingStructureValidator implements ValidatorInterface
 
             foreach ($same as $key) {
                 $tests[] = new ValidationTest(
+                    $key,
                     $locale->getName(),
                     'Text structure of key: ' . $key,
                     $locale->getFilename(),

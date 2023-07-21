@@ -13,6 +13,11 @@ class TestResult
     /**
      * @var string
      */
+    private $translationKey;
+
+    /**
+     * @var string
+     */
     private $className;
 
     /**
@@ -33,14 +38,16 @@ class TestResult
 
     /**
      * @param string $name
+     * @param string $translationKey
      * @param string $className
      * @param string $failureType
      * @param string $failureMessage
      * @param bool $success
      */
-    public function __construct(string $name, string $className, string $failureType, string $failureMessage, bool $success)
+    public function __construct(string $name, string $translationKey, string $className, string $failureType, string $failureMessage, bool $success)
     {
         $this->name = $name;
+        $this->translationKey = $translationKey;
         $this->className = $className;
         $this->failureType = $failureType;
         $this->failureMessage = $failureMessage;
@@ -54,6 +61,14 @@ class TestResult
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTranslationKey(): string
+    {
+        return $this->translationKey;
     }
 
     /**

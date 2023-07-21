@@ -84,6 +84,7 @@ class DuplicateContentRule implements RuleValidatorInterface
     private function buildTestEntry(Locale $locale, string $translationKey, bool $passed): ValidationTest
     {
         return new ValidationTest(
+            $translationKey,
             $locale->getName(),
             'Testing for duplicate content of key: ' . $translationKey,
             $locale->getFilename(),

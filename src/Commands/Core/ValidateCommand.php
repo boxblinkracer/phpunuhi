@@ -134,6 +134,7 @@ class ValidateCommand extends Command
                 foreach ($result->getTests() as $test) {
                     $testResult = new TestResult(
                         $test->getTitle(),
+                        $test->getTranslationKey(),
                         basename($test->getFilename()),
                         $test->getClassification(),
                         $test->getFailureMessage(),

@@ -118,6 +118,7 @@ class CaseStyleValidator implements ValidatorInterface
                 $testPassed = $isKeyCaseValid;
 
                 $tests[] = new ValidationTest(
+                    $translation->getKey(),
                     $locale->getName(),
                     'Test case-style of key: ' . $translation->getKey(),
                     $locale->getFilename(),
