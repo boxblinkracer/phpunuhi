@@ -3,13 +3,21 @@
 All notable changes of PHPUnuhi releases are documented in this file
 using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
-## [unreleased]
+## [1.12.0]
 
 ### Added
 
 - Added new **JSON** reporter that creates a JSON file with all validation errors.
 - Add option to register **custom translator services* by using the TranslatorFactory **register** command.
 - Add option to register **custom exchange formats* by using the ExchangeFactory **register** command.
+
+### Changed
+
+- Translator Services are now in charge of handling protection markers, because for some services the automatic encryption of markers would lead to problems.
+
+### Fixed
+
+- Fixed problem when using OpenAI to translate values in combination with protection markers. This should now work.
 
 ## [1.11.0]
 
