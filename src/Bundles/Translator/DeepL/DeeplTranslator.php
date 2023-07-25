@@ -4,6 +4,8 @@ namespace PHPUnuhi\Bundles\Translator\DeepL;
 
 use PHPUnuhi\Bundles\Translator\TranslatorInterface;
 use PHPUnuhi\Models\Command\CommandOption;
+use PHPUnuhi\Services\Placeholder\Placeholder;
+use PHPUnuhi\Services\Placeholder\PlaceholderEncoder;
 
 class DeeplTranslator implements TranslatorInterface
 {
@@ -31,6 +33,11 @@ class DeeplTranslator implements TranslatorInterface
         'es',
         'pt'
     ];
+
+    /**
+     * @var PlaceholderEncoder
+     */
+    private $placeholderEncoder;
 
 
     /**
@@ -65,17 +72,22 @@ class DeeplTranslator implements TranslatorInterface
         if (empty($this->apiKey)) {
             throw new \Exception('Please provide your API key for DeepL');
         }
+
+        $this->placeholderEncoder = new PlaceholderEncoder();
     }
 
     /**
      * @param string $text
      * @param string $sourceLocale
      * @param string $targetLocale
+     * @param Placeholder[] $foundPlaceholders
      * @return string
-     * @throws \DeepL\DeepLException
+     * @throws \Exception
      */
-    public function translate(string $text, string $sourceLocale, string $targetLocale): string
+    public function translate(string $text, string $sourceLocale, string $targetLocale, array $foundPlaceholders): string
     {
+        $text = $this->placeholderEncoder->encode($text, $foundPlaceholders);
+
         $formalValue = ($this->formality) ? 'more' : 'less';
 
         $translator = new \DeepL\Translator($this->apiKey);
@@ -107,7 +119,14 @@ class DeeplTranslator implements TranslatorInterface
             return $result[0]->text;
         }
 
-        return $result->text;
+        $result = $result->text;
+
+        if (count($foundPlaceholders) > 0) {
+            # decode our string so that we have the original placeholder values again (%productName%)
+            $result = $this->placeholderEncoder->decode($result, $foundPlaceholders);
+        }
+
+        return $result;
     }
 
 }

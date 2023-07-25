@@ -4,6 +4,7 @@ namespace PHPUnuhi\Bundles\Translator\Fake;
 
 use PHPUnuhi\Bundles\Translator\TranslatorInterface;
 use PHPUnuhi\Models\Command\CommandOption;
+use PHPUnuhi\Services\Placeholder\Placeholder;
 
 class FakeTranslator implements TranslatorInterface
 {
@@ -36,9 +37,11 @@ class FakeTranslator implements TranslatorInterface
      * @param string $text
      * @param string $sourceLocale
      * @param string $targetLocale
+     * @param Placeholder[] $foundPlaceholders
      * @return string
+     * @throws \Exception
      */
-    public function translate(string $text, string $sourceLocale, string $targetLocale): string
+    public function translate(string $text, string $sourceLocale, string $targetLocale, array $foundPlaceholders): string
     {
         return $targetLocale . '-' . $text;
     }

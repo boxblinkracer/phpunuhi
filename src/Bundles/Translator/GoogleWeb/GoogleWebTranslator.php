@@ -4,10 +4,16 @@ namespace PHPUnuhi\Bundles\Translator\GoogleWeb;
 
 use PHPUnuhi\Bundles\Translator\TranslatorInterface;
 use PHPUnuhi\Models\Command\CommandOption;
+use PHPUnuhi\Services\Placeholder\Placeholder;
+use PHPUnuhi\Services\Placeholder\PlaceholderEncoder;
 
 class GoogleWebTranslator implements TranslatorInterface
 {
 
+    /**
+     * @var PlaceholderEncoder
+     */
+    private $placeholderEncoder;
 
     /**
      * @return string
@@ -31,16 +37,21 @@ class GoogleWebTranslator implements TranslatorInterface
      */
     public function setOptionValues(array $options): void
     {
+        $this->placeholderEncoder = new PlaceholderEncoder();
     }
 
     /**
      * @param string $text
      * @param string $sourceLocale
      * @param string $targetLocale
+     * @param Placeholder[] $foundPlaceholders
      * @return string
+     * @throws \Exception
      */
-    public function translate(string $text, string $sourceLocale, string $targetLocale): string
+    public function translate(string $text, string $sourceLocale, string $targetLocale, array $foundPlaceholders): string
     {
+        $text = $this->placeholderEncoder->encode($text, $foundPlaceholders);
+
         $curl = curl_init();
 
         # dots are not working in urls with encode,
@@ -73,6 +84,11 @@ class GoogleWebTranslator implements TranslatorInterface
 
         $result = str_replace("[[dot]]", '.', $result);
         $result = str_replace("[[punt]]", '.', $result);
+
+        if (count($foundPlaceholders) > 0) {
+            # decode our string so that we have the original placeholder values again (%productName%)
+            $result = $this->placeholderEncoder->decode($result, $foundPlaceholders);
+        }
 
         return $result;
     }

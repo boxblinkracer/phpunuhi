@@ -6,9 +6,7 @@ use PHPUnuhi\Bundles\Storage\StorageFactory;
 use PHPUnuhi\Bundles\Translator\TranslatorFactory;
 use PHPUnuhi\Configuration\ConfigurationLoader;
 use PHPUnuhi\Exceptions\TranslationNotFoundException;
-use PHPUnuhi\PHPUnuhi;
 use PHPUnuhi\Services\Placeholder\Placeholder;
-use PHPUnuhi\Services\Placeholder\PlaceholderEncoder;
 use PHPUnuhi\Services\Placeholder\PlaceholderExtractor;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -27,11 +25,6 @@ class TranslateCommand extends Command
      */
     private $placeholderExtractor;
 
-    /**
-     * @var PlaceholderEncoder
-     */
-    private $placeholderEncoder;
-
 
     /**
      * @return void
@@ -39,7 +32,6 @@ class TranslateCommand extends Command
     protected function configure()
     {
         $this->placeholderExtractor = new PlaceholderExtractor();
-        $this->placeholderEncoder = new PlaceholderEncoder();
 
         $this
             ->setName('translate')
@@ -173,20 +165,13 @@ class TranslateCommand extends Command
                             $foundPlaceholders[] = new Placeholder($term);
                         }
 
-                        # encode the value to have something that won't get translated like //12//
-                        $existingValue = $this->placeholderEncoder->encode($existingValue, $foundPlaceholders);
-
                         # start our third party translation service
                         $newTranslation = $translator->translate(
                             $existingValue,
                             $existingLocale,
-                            $locale->getName()
+                            $locale->getName(),
+                            $foundPlaceholders
                         );
-
-                        if (count($foundPlaceholders) > 0) {
-                            # decode our string so that we have the original placeholder values again (%productName%)
-                            $newTranslation = $this->placeholderEncoder->decode($newTranslation, $foundPlaceholders);
-                        }
 
                         # -----------------------------------------------------------------------------------------------------------------------------------
 

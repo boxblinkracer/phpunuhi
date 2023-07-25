@@ -6,6 +6,8 @@ use Locale;
 use Orhanerday\OpenAi\OpenAi;
 use PHPUnuhi\Bundles\Translator\TranslatorInterface;
 use PHPUnuhi\Models\Command\CommandOption;
+use PHPUnuhi\Services\Placeholder\Placeholder;
+use PHPUnuhi\Services\Placeholder\PlaceholderEncoder;
 
 class OpenAITranslator implements TranslatorInterface
 {
@@ -36,8 +38,9 @@ class OpenAITranslator implements TranslatorInterface
     }
 
     /**
-     * @param string[] $options
+     * @param array<mixed> $options
      * @return void
+     * @throws \Exception
      */
     public function setOptionValues(array $options): void
     {
@@ -53,14 +56,16 @@ class OpenAITranslator implements TranslatorInterface
      * @param string $text
      * @param string $sourceLocale
      * @param string $targetLocale
+     * @param Placeholder[] $foundPlaceholders
      * @return string
      * @throws \Exception
      */
-    public function translate(string $text, string $sourceLocale, string $targetLocale): string
+    public function translate(string $text, string $sourceLocale, string $targetLocale, array $foundPlaceholders): string
     {
         $languageName = Locale::getDisplayLanguage($targetLocale);
 
         $prompt = "Translate this into " . $languageName . ": " . $text;
+
 
         $params = [
             'model' => "text-davinci-003",

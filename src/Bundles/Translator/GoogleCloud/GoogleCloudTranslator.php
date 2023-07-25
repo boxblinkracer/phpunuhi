@@ -5,6 +5,8 @@ namespace PHPUnuhi\Bundles\Translator\GoogleCloud;
 use Google\Cloud\Translate\V2\TranslateClient;
 use PHPUnuhi\Bundles\Translator\TranslatorInterface;
 use PHPUnuhi\Models\Command\CommandOption;
+use PHPUnuhi\Services\Placeholder\Placeholder;
+use PHPUnuhi\Services\Placeholder\PlaceholderEncoder;
 
 class GoogleCloudTranslator implements TranslatorInterface
 {
@@ -14,6 +16,10 @@ class GoogleCloudTranslator implements TranslatorInterface
      */
     private $apiKey;
 
+    /**
+     * @var PlaceholderEncoder
+     */
+    private $placeholderEncoder;
 
     /**
      * @return string
@@ -45,16 +51,22 @@ class GoogleCloudTranslator implements TranslatorInterface
         if (empty($this->apiKey)) {
             throw new \Exception('Please provide your API key for GoogleCloud');
         }
+
+        $this->placeholderEncoder = new PlaceholderEncoder();
     }
 
     /**
      * @param string $text
      * @param string $sourceLocale
      * @param string $targetLocale
+     * @param Placeholder[] $foundPlaceholders
      * @return string
+     * @throws \Exception
      */
-    public function translate(string $text, string $sourceLocale, string $targetLocale): string
+    public function translate(string $text, string $sourceLocale, string $targetLocale, array $foundPlaceholders): string
     {
+        $text = $this->placeholderEncoder->encode($text, $foundPlaceholders);
+
         $translate = new TranslateClient([
             'key' => $this->apiKey
         ]);
@@ -70,7 +82,14 @@ class GoogleCloudTranslator implements TranslatorInterface
             return '';
         }
 
-        return (string)$result['text'];
+        $result = (string)$result['text'];
+
+        if (count($foundPlaceholders) > 0) {
+            # decode our string so that we have the original placeholder values again (%productName%)
+            $result = $this->placeholderEncoder->decode($result, $foundPlaceholders);
+        }
+
+        return $result;
     }
 
 }

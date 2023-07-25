@@ -3,6 +3,7 @@
 namespace PHPUnuhi\Bundles\Translator;
 
 use PHPUnuhi\Models\Command\CommandOption;
+use PHPUnuhi\Services\Placeholder\Placeholder;
 
 interface TranslatorInterface
 {
@@ -34,8 +35,9 @@ interface TranslatorInterface
      * @param string $text
      * @param string $sourceLocale
      * @param string $targetLocale
+     * @param Placeholder[] $foundPlaceholders
      * @return string
      */
-    public function translate(string $text, string $sourceLocale, string $targetLocale): string;
+    public function translate(string $text, string $sourceLocale, string $targetLocale, array $foundPlaceholders): string;
 
 }
