@@ -9,6 +9,9 @@
 
 Welcome to PHPUnuhi - The easy composable framework to validate and manage translations!
 
+Only for PHP developers?! Absolutely NOT! This framework is for everyone who needs to manage translations in a structured way.
+It has only been developed in PHP ;)
+
 Unuhi? This is Hawaiian for "translate" or "translation".
 
 Why did I create it? Just curiosity and because I needed something like this :)
