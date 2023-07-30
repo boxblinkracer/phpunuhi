@@ -26,6 +26,15 @@
             </locales>
         </set>
 
+        <set name="json with newline">
+            <format>
+                <json indent="2" sort="true" insert-final-newline="true"/>
+            </format>
+            <locales>
+                <locale name="en">./en_newline.json</locale>
+            </locales>
+        </set>
+
     </translations>
 
 </phpunuhi>

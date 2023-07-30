@@ -22,13 +22,19 @@ class JsonSaver
     private $sortJson;
 
     /**
+     * @var bool
+     */
+    private $insertFinalNewline;
+
+    /**
      * @param int $jsonIndent
      * @param bool $sortJson
      */
-    public function __construct(int $jsonIndent, bool $sortJson)
+    public function __construct(int $jsonIndent, bool $sortJson, bool $insertFinalNewline)
     {
         $this->jsonIndent = $jsonIndent;
         $this->sortJson = $sortJson;
+        $this->insertFinalNewline = $insertFinalNewline;
     }
 
 
@@ -68,6 +74,10 @@ class JsonSaver
             },
             $jsonString
         );
+
+        if ($this->insertFinalNewline) {
+            $json .= PHP_EOL;
+        }
 
         file_put_contents($filename, $json);
 
