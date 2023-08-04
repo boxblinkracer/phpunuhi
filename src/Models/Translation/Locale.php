@@ -142,6 +142,11 @@ class Locale
         return $this->lineNumbers;
     }
 
+    /**
+     * @param string $key
+     *
+     * @return int
+     */
     public function findLineNumber(string $key): int
     {
         if (isset($this->lineNumbers[$key])) {
