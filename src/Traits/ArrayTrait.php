@@ -18,12 +18,58 @@ trait ArrayTrait
         $result = [];
 
         foreach ($array as $key => $value) {
-            $new_key = $rootPrefix . (empty($rootPrefix) ? '' : $delimiter) . $key;
+            $newKey = $rootPrefix . (empty($rootPrefix) ? '' : $delimiter) . $key;
 
             if (is_array($value)) {
-                $result = array_merge($result, $this->getFlatArray($value, $delimiter, $new_key));
+                $result = array_merge($result, $this->getFlatArray($value, $delimiter, $newKey));
             } else {
-                $result[$new_key] = $value;
+                $result[$newKey] = $value;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param array<mixed> $array
+     * @param string $delimiter
+     * @param string $rootPrefix
+     * @param int $lineNumber
+     *
+     * @return array<string, int>
+     */
+    protected function getLineNumbers(
+        array $array,
+        string $delimiter,
+        string $rootPrefix = '',
+        int $lineNumber = 0,
+        bool $closingBracket = false
+    ): array {
+        $result = [
+            '__LINE_NUMBER__' => $lineNumber
+        ];
+
+        foreach ($array as $key => $value) {
+            $result['__LINE_NUMBER__']++;
+            $newKey = $rootPrefix . (empty($rootPrefix) ? '' : $delimiter) . $key;
+
+            if (is_array($value)) {
+                $result = array_merge(
+                    $result,
+                    $this->getLineNumbers(
+                        $value,
+                        $delimiter,
+                        $newKey,
+                        $result['__LINE_NUMBER__'],
+                        $closingBracket
+                    )
+                );
+
+                if ($closingBracket) {
+                    $result['__LINE_NUMBER__']++;
+                }
+            } else {
+                $result[$newKey] = $result['__LINE_NUMBER__'];
             }
         }
 

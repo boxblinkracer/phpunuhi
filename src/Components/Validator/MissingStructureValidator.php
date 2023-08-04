@@ -61,6 +61,7 @@ class MissingStructureValidator implements ValidatorInterface
                         $locale->getName(),
                         'Text structure of key: ' . $key,
                         $locale->getFilename(),
+                        $locale->findLineNumber($key),
                         $this->getTypeIdentifier(),
                         'Translation key ' . $key . ' is not found in locale ' . $locale->getName(),
                         false
@@ -74,6 +75,7 @@ class MissingStructureValidator implements ValidatorInterface
                     $locale->getName(),
                     'Text structure of key: ' . $key,
                     $locale->getFilename(),
+                    $locale->findLineNumber($key),
                     $this->getTypeIdentifier(),
                     '',
                     true

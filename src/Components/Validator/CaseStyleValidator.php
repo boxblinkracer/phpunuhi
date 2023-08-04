@@ -122,6 +122,7 @@ class CaseStyleValidator implements ValidatorInterface
                     $locale->getName(),
                     'Test case-style of key: ' . $translation->getKey(),
                     $locale->getFilename(),
+                    $locale->findLineNumber($translation->getKey()),
                     $this->getTypeIdentifier(),
                     'Translation key ' . $translation->getKey() . ' has part with invalid case-style: ' . $invalidKeyPart . ' at level: ' . $partLevel,
                     $testPassed

@@ -83,6 +83,7 @@ class MaxKeyLengthRule implements RuleValidatorInterface
                     $locale->getName(),
                     'Test length of key: ' . $translation->getKey(),
                     $locale->getFilename(),
+                    $locale->findLineNumber($translation->getKey()),
                     $this->getRuleIdentifier(),
                     'Maximum length of key ' . $invalidKey . ' has been reached. Length is ' . strlen($invalidKey) . ' of max allowed ' . $this->maxKeyLength . '.',
                     $testPassed

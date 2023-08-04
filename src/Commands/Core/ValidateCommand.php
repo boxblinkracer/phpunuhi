@@ -136,6 +136,7 @@ class ValidateCommand extends Command
                         $test->getTitle(),
                         $test->getTranslationKey(),
                         basename($test->getFilename()),
+                        $test->getLineNumber(),
                         $test->getClassification(),
                         $test->getFailureMessage(),
                         $test->isSuccess()

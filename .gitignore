@@ -20,3 +20,4 @@
 /tests/svrunit/.exports
 /tests/playground/yaml/.exports
 /tests/playground/po/.exports
+/tests/playground/php/.exports

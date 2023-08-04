@@ -20,6 +20,9 @@ list: ## List available translation IDs
 validate: ## Validate command
 	cd ../../.. && php bin/phpunuhi validate --configuration=./tests/playground/yaml/phpunuhi.xml  --report-format=junit --report-output=./tests/playground/yaml/.exports/junit.xml
 
+validate-json: ## Validate command with json report
+	cd ../../.. && php bin/phpunuhi validate --configuration=./tests/playground/yaml/phpunuhi.xml  --report-format=json --report-output=./tests/playground/yaml/.exports/report.json
+
 csv: ## Exports a CSV
 	cd ../../.. && php bin/phpunuhi export --configuration=./tests/playground/yaml/phpunuhi.xml --format=csv --dir=./tests/playground/yaml/.exports
 

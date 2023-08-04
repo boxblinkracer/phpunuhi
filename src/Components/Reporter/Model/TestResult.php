@@ -21,6 +21,11 @@ class TestResult
     private $className;
 
     /**
+     * @var int
+     */
+    private $lineNumber;
+
+    /**
      * @var string
      */
     private $failureType;
@@ -44,11 +49,19 @@ class TestResult
      * @param string $failureMessage
      * @param bool $success
      */
-    public function __construct(string $name, string $translationKey, string $className, string $failureType, string $failureMessage, bool $success)
-    {
+    public function __construct(
+        string $name,
+        string $translationKey,
+        string $className,
+        int $lineNumber,
+        string $failureType,
+        string $failureMessage,
+        bool $success
+    ) {
         $this->name = $name;
         $this->translationKey = $translationKey;
         $this->className = $className;
+        $this->lineNumber = $lineNumber;
         $this->failureType = $failureType;
         $this->failureMessage = $failureMessage;
         $this->success = $success;
@@ -77,6 +90,14 @@ class TestResult
     public function getClassName(): string
     {
         return $this->className;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLineNumber(): int
+    {
+        return $this->lineNumber;
     }
 
     /**
