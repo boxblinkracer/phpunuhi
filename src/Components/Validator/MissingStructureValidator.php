@@ -53,7 +53,8 @@ class MissingStructureValidator implements ValidatorInterface
                         'Found missing structure in locale',
                         $locale->getName(),
                         $locale->getFilename(),
-                        $key
+                        $key,
+                        $locale->findLineNumber($key)
                     );
 
                     $tests[] = new ValidationTest(

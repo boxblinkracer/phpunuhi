@@ -60,7 +60,8 @@ class EmptyContentValidator implements ValidatorInterface
                     'Found empty translation',
                     $locale->getName(),
                     $locale->getFilename(),
-                    $identifier
+                    $identifier,
+                    $locale->findLineNumber($identifier)
                 );
             }
         }

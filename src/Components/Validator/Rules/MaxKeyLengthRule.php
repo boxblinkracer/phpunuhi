@@ -104,7 +104,8 @@ class MaxKeyLengthRule implements RuleValidatorInterface
                     'Maximum length of key ' . $invalidKey . ' has been reached. Length is ' . strlen($invalidKey) . ' of max allowed ' . $this->maxKeyLength . '.',
                     $locale->getName(),
                     $locale->getFilename(),
-                    $identifier
+                    $identifier,
+                    $locale->findLineNumber($identifier)
                 );
             }
         }
