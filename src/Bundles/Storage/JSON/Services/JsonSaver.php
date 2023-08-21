@@ -24,17 +24,17 @@ class JsonSaver
     /**
      * @var bool
      */
-    private $insertFinalNewline;
+    private $eolLast;
 
     /**
      * @param int $jsonIndent
      * @param bool $sortJson
      */
-    public function __construct(int $jsonIndent, bool $sortJson, bool $insertFinalNewline)
+    public function __construct(int $jsonIndent, bool $sortJson, bool $eolLast)
     {
         $this->jsonIndent = $jsonIndent;
         $this->sortJson = $sortJson;
-        $this->insertFinalNewline = $insertFinalNewline;
+        $this->eolLast = $eolLast;
     }
 
 
@@ -75,7 +75,7 @@ class JsonSaver
             $jsonString
         );
 
-        if ($this->insertFinalNewline) {
+        if ($this->eolLast) {
             $json .= PHP_EOL;
         }
 

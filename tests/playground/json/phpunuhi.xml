@@ -28,7 +28,7 @@
 
         <set name="json with newline">
             <format>
-                <json indent="2" sort="true" insert-final-newline="true"/>
+                <json indent="2" sort="true" eol-last="true"/>
             </format>
             <locales>
                 <locale name="en">./en_newline.json</locale>
