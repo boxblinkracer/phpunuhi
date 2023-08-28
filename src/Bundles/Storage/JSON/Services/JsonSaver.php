@@ -22,13 +22,19 @@ class JsonSaver
     private $sortJson;
 
     /**
+     * @var bool
+     */
+    private $eolLast;
+
+    /**
      * @param int $jsonIndent
      * @param bool $sortJson
      */
-    public function __construct(int $jsonIndent, bool $sortJson)
+    public function __construct(int $jsonIndent, bool $sortJson, bool $eolLast)
     {
         $this->jsonIndent = $jsonIndent;
         $this->sortJson = $sortJson;
+        $this->eolLast = $eolLast;
     }
 
 
@@ -58,16 +64,20 @@ class JsonSaver
         $tmpArray = $this->getMultiDimensionalArray($saveValues, $delimiter);
 
         $jsonString = (string)json_encode($tmpArray, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        $indentStr = (string)str_repeat(' ', $indent);
 
         $json = preg_replace_callback(
             '/^ +/m',
-            function ($m) use ($indent) {
-                $indentStr = (string)str_repeat(' ', $indent);
-                $repeat = (int)(strlen($m[0]) / 2);
+            function ($m) use ($indentStr) {
+                $repeat = (int)(strlen($m[0]) / 4);
                 return str_repeat($indentStr, $repeat);
             },
             $jsonString
         );
+
+        if ($this->eolLast) {
+            $json .= PHP_EOL;
+        }
 
         file_put_contents($filename, $json);
 

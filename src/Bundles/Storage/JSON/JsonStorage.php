@@ -68,9 +68,10 @@ class JsonStorage implements StorageInterface
         $indent = $set->getAttributeValue('jsonIndent');
         $indent = ($indent === '') ? '2' : $indent;
         $sort = (bool)$set->getAttributeValue('sort');
+        $eolLast = (bool)$set->getAttributeValue('eol-last');
 
         $this->loader = new JsonLoader();
-        $this->saver = new JsonSaver((int)$indent, $sort);
+        $this->saver = new JsonSaver((int)$indent, $sort, $eolLast);
     }
 
     /**
