@@ -70,9 +70,10 @@ class YamlStorage implements StorageInterface
         $indent = $set->getAttributeValue('yamlIndent');
         $indent = ($indent === '') ? '2' : $indent;
         $sort = (bool)$set->getAttributeValue('sort');
+        $eolLast = (bool)$set->getAttributeValue('eol-last');
 
         $this->loader = new YamlLoader();
-        $this->saver = new YamlSaver((int)$indent, $sort);
+        $this->saver = new YamlSaver((int)$indent, $sort, $eolLast);
     }
 
     /**

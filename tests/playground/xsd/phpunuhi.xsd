@@ -184,6 +184,7 @@
         <xs:simpleContent>
             <xs:extension base="xs:string">
                 <xs:attribute name="sort" type="xs:boolean" use="optional"/>
+                <xs:attribute name="eol-last" type="xs:boolean" use="optional"/>
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>
@@ -200,6 +201,7 @@
             <xs:extension base="xs:string">
                 <xs:attribute name="indent" type="xs:string" use="optional"/>
                 <xs:attribute name="sort" type="xs:boolean" use="optional"/>
+                <xs:attribute name="eol-last" type="xs:boolean" use="optional"/>
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>
@@ -217,6 +219,7 @@
             <xs:extension base="xs:string">
                 <xs:attribute name="indent" type="xs:string" use="optional"/>
                 <xs:attribute name="sort" type="xs:boolean" use="optional"/>
+                <xs:attribute name="eol-last" type="xs:boolean" use="optional"/>
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>

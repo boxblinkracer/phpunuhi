@@ -485,6 +485,7 @@ The following formats are currently supported.
 |-------------------|---------|-----------------------------------------|
 | indent            | 2       | Set a custom JSON indent for the spaces |
 | sort              | false   | Turn on or off the alphabetical sorting |
+| eol-last          | false   | Adds a new line at the end of the file  |
 
 The JSON format means that your files are stored in separate JSON files.
 Every locale has its own JSON file.
@@ -508,6 +509,7 @@ The JSON structure across all files of a set should match.
 | Format Attributes | Default | Description                             | 
 |-------------------|---------|-----------------------------------------|
 | sort              | false   | Turn on or off the alphabetical sorting |
+| eol-last          | false   | Adds a new line at the end of the file  |
 
 | Locale Attribute | Default | Description                                  | 
 |------------------|---------|----------------------------------------------|
@@ -568,6 +570,7 @@ At the moment it only covers the **msgid** and **msgstr** fields.
 | Format Attributes | Default | Description                             | 
 |-------------------|---------|-----------------------------------------|
 | sort              | false   | Turn on or off the alphabetical sorting |
+| eol-last          | false   | Adds a new line at the end of the file  |
 
 Some platforms have translations based on PHP arrays.
 This means that these files build a key-value array of translations which is then simply returned.
@@ -651,6 +654,7 @@ To make life easier for you, we've added a fake entity name **snippet** that aut
 |-------------------|---------|-----------------------------------------|
 | indent            | 2       | Set a custom YAML indent for the spaces |
 | sort              | false   | Turn on or off the alphabetical sorting |
+| eol-last          | false   | Adds a new line at the end of the file  |
 
 The YAML format means that your files are stored in separate YAML files.
 Every locale has its own YAML file.

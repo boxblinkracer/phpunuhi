@@ -16,6 +16,10 @@ class IniStorage implements StorageInterface
      */
     private $sortIni;
 
+    /**
+     * @var bool
+     */
+    private $eolLast;
 
     /**
      * @return string
@@ -59,6 +63,7 @@ class IniStorage implements StorageInterface
     public function configureStorage(TranslationSet $set): void
     {
         $this->sortIni = (bool)$set->getAttributeValue('sort');
+        $this->eolLast = (bool)$set->getAttributeValue('eol-last');
     }
 
     /**
@@ -173,6 +178,10 @@ class IniStorage implements StorageInterface
         }
 
         $contentBuffer[$locale->getFilename()] = $content;
+
+        if ($this->eolLast) {
+            $contentBuffer[$locale->getFilename()] .= PHP_EOL;
+        }
 
         return $translationCount;
     }

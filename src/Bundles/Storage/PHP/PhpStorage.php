@@ -31,13 +31,17 @@ class PhpStorage implements StorageInterface
      */
     private $sort;
 
+    /**
+     * @var bool
+     */
+    private $eolLast;
+
 
     /**
      *
      */
     public function __construct()
     {
-        $this->saver = new PHPSaver();
         $this->loader = new PHPLoader();
     }
 
@@ -83,6 +87,9 @@ class PhpStorage implements StorageInterface
     public function configureStorage(TranslationSet $set): void
     {
         $this->sort = (bool)$set->getAttributeValue('sort');
+        $this->eolLast = (bool)$set->getAttributeValue('eol-last');
+
+        $this->saver = new PHPSaver($this->eolLast);
     }
 
     /**

@@ -17,6 +17,12 @@ class PoStorage implements StorageInterface
 
 
     /**
+     * @var bool
+     */
+    private $eolLast;
+
+
+    /**
      * @return string
      */
     public function getStorageName(): string
@@ -57,6 +63,7 @@ class PoStorage implements StorageInterface
      */
     public function configureStorage(TranslationSet $set): void
     {
+        $this->eolLast = (bool)$set->getAttributeValue('eol-last');
     }
 
     /**
@@ -182,6 +189,10 @@ class PoStorage implements StorageInterface
         $newLines = $this->clearLineBreaks($newLines);
 
         $contentBuffer[$filename] = implode(PHP_EOL, $newLines);
+
+        if ($this->eolLast) {
+            $contentBuffer[$filename] .= PHP_EOL;
+        }
 
         return 0;
     }

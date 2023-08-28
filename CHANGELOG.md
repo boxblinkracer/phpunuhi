@@ -3,6 +3,12 @@
 All notable changes of PHPUnuhi releases are documented in this file
 using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
+## [unreleased]
+
+### Added
+
+- Add storage format option **eol-last** to all file based formats. This will automatically add a new line at the end of the file. (thx @JoshuaBehrens)
+
 ## [1.12.0]
 
 ### Added

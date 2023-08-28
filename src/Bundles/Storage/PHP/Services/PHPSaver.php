@@ -10,6 +10,19 @@ class PHPSaver
 
     use ArrayTrait;
 
+    /**
+     * @var bool
+     */
+    private $eolLast;
+
+    /**
+     * @param bool $eolLast
+     */
+    public function __construct(bool $eolLast)
+    {
+        $this->eolLast = $eolLast;
+    }
+
 
     /**
      * @param Locale $locale
@@ -44,6 +57,10 @@ class PHPSaver
         $content .= $this->buildArray($tmpArray, 1);
 
         $content .= '];' . PHP_EOL;
+
+        if ($this->eolLast) {
+            $content .= PHP_EOL;
+        }
 
         file_put_contents($filename, $content);
 

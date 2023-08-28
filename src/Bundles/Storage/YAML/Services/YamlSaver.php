@@ -24,14 +24,23 @@ class YamlSaver
     private $sortYaml;
 
     /**
+     * @var bool
+     */
+    private $eolLast;
+
+
+    /**
      * @param int $yamlIndent
      * @param bool $sortYaml
+     * @param bool $eolLast
      */
-    public function __construct(int $yamlIndent, bool $sortYaml)
+    public function __construct(int $yamlIndent, bool $sortYaml, bool $eolLast)
     {
         $this->yamlIndent = $yamlIndent;
         $this->sortYaml = $sortYaml;
+        $this->eolLast = $eolLast;
     }
+
 
     /**
      * @param Locale $locale
@@ -58,6 +67,10 @@ class YamlSaver
 
         // Set inline to 10 to have the most cases covered. Maybe add an option later.
         $yaml = Yaml::dump($tmpArray, 10, $this->yamlIndent);
+
+        if ($this->eolLast) {
+            $yaml .= PHP_EOL;
+        }
 
         file_put_contents($filename, $yaml);
 
