@@ -47,7 +47,11 @@ class JUnitReporter implements ReporterInterface
                 $content .= '<testcase name="' . $test->getName() . '" classname="' . $test->getClassName() . '">';
 
                 if (!$test->isSuccess()) {
-                    $content .= '<failure type="' . $test->getFailureType() . '" message="' . $test->getFailureMessage() . '"></failure>';
+                    $lineNumber = '';
+                    if (!empty($test->getLineNumber())) {
+                        $lineNumber = '. Line ' . $test->getLineNumber();
+                    }
+                    $content .= '<failure type="' . $test->getFailureType() . '" message="' . $test->getFailureMessage() . $lineNumber . '"></failure>';
                 }
 
                 $content .= '</testcase>';
