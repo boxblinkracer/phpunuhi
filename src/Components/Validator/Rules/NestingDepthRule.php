@@ -105,6 +105,7 @@ class NestingDepthRule implements RuleValidatorInterface
             $locale->getName(),
             'Test nesting level of key: ' . $translationKey,
             $locale->getFilename(),
+            $locale->findLineNumber($translationKey),
             $this->getRuleIdentifier(),
             'Translation for key ' . $translationKey . ' has ' . $depthOfKey . ' levels. Maximum nesting level is: ' . $this->maxNestingLevel,
             $passed
@@ -124,7 +125,8 @@ class NestingDepthRule implements RuleValidatorInterface
             'Maximum nesting level of ' . $this->maxNestingLevel . ' has been reached. Translation has ' . $depthOfKey . ' levels.',
             $locale->getName(),
             $locale->getFilename(),
-            $identifier
+            $identifier,
+            $locale->findLineNumber($identifier)
         );
     }
 

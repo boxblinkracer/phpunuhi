@@ -39,6 +39,7 @@ class EmptyContentValidator implements ValidatorInterface
                     $locale->getName(),
                     'Test existing translation of key: ' . $translation->getKey(),
                     $locale->getFilename(),
+                    $locale->findLineNumber($translation->getKey()),
                     $this->getTypeIdentifier(),
                     'Translation for key ' . $translation->getKey() . ' does not have a value',
                     $testPassed
@@ -59,7 +60,8 @@ class EmptyContentValidator implements ValidatorInterface
                     'Found empty translation',
                     $locale->getName(),
                     $locale->getFilename(),
-                    $identifier
+                    $identifier,
+                    $locale->findLineNumber($identifier)
                 );
             }
         }

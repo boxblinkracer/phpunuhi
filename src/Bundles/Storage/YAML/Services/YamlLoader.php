@@ -30,5 +30,9 @@ class YamlLoader
             # empty yaml values are NULL, so we cast it
             $locale->addTranslation($key, (string)$value, '');
         }
+
+        $locale->setLineNumbers(
+            $this->getLineNumbers($arrayData, $delimiter)
+        );
     }
 }

@@ -31,6 +31,10 @@ class PHPLoader
                 $locale->addTranslation($key, $value, '');
             }
 
+            // We start with three because the first three lines are the <?php tag and the return statement
+            $locale->setLineNumbers(
+                $this->getLineNumbers($arrayData, $delimiter, '', 3, true)
+            );
         }
     }
 

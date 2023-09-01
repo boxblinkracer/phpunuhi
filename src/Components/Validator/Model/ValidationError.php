@@ -30,6 +30,11 @@ class ValidationError
      */
     private $identifier;
 
+    /**
+     * @var int
+     */
+    private $lineNumber;
+
 
     /**
      * @param string $classification
@@ -37,14 +42,22 @@ class ValidationError
      * @param string $locale
      * @param string $filename
      * @param string $identifier
+     * @param int $lineNumber
      */
-    public function __construct(string $classification, string $message, string $locale, string $filename, string $identifier)
-    {
+    public function __construct(
+        string $classification,
+        string $message,
+        string $locale,
+        string $filename,
+        string $identifier,
+        int $lineNumber
+    ) {
         $this->classification = $classification;
         $this->message = $message;
         $this->locale = $locale;
         $this->filename = $filename;
         $this->identifier = $identifier;
+        $this->lineNumber = $lineNumber;
     }
 
 
@@ -88,4 +101,11 @@ class ValidationError
         return $this->identifier;
     }
 
+    /**
+     * @return int
+     */
+    public function getLineNumber(): int
+    {
+        return $this->lineNumber;
+    }
 }

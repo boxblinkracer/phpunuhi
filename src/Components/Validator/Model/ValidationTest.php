@@ -26,6 +26,11 @@ class ValidationTest
     private $filename;
 
     /**
+     * @var int
+     */
+    private $lineNumber;
+
+    /**
      * @var string
      */
     private $classification;
@@ -50,12 +55,21 @@ class ValidationTest
      * @param string $failureMessage
      * @param bool $success
      */
-    public function __construct(string $translationKey, string $locale, string $title, string $filename, string $classification, string $failureMessage, bool $success)
-    {
+    public function __construct(
+        string $translationKey,
+        string $locale,
+        string $title,
+        string $filename,
+        int $lineNumber,
+        string $classification,
+        string $failureMessage,
+        bool $success
+    ) {
         $this->translationKey = $translationKey;
         $this->locale = $locale;
         $this->title = $title;
         $this->filename = $filename;
+        $this->lineNumber = $lineNumber;
         $this->classification = $classification;
         $this->failureMessage = $failureMessage;
         $this->success = $success;
@@ -83,6 +97,11 @@ class ValidationTest
     public function getFilename(): string
     {
         return $this->filename;
+    }
+
+    public function getLineNumber(): int
+    {
+        return $this->lineNumber;
     }
 
     /**

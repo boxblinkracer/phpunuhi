@@ -88,6 +88,7 @@ class DuplicateContentRule implements RuleValidatorInterface
             $locale->getName(),
             'Testing for duplicate content of key: ' . $translationKey,
             $locale->getFilename(),
+            $locale->findLineNumber($translationKey),
             $this->getRuleIdentifier(),
             'Content of key ' . $translationKey . ' has been found multiple times within locale: ' . $locale->getName(),
             $passed
@@ -106,7 +107,8 @@ class DuplicateContentRule implements RuleValidatorInterface
             'Content of key ' . $identifier . ' has been found multiple times within locale: ' . $locale->getName(),
             $locale->getName(),
             $locale->getFilename(),
-            $identifier
+            $identifier,
+            $locale->findLineNumber($identifier)
         );
     }
 

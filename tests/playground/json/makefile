@@ -20,6 +20,9 @@ list: ## List Translate
 validate: ## Validate command
 	cd ../../.. && php bin/phpunuhi validate --configuration=./tests/playground/json/phpunuhi.xml --report-format=junit --report-output=./tests/playground/json/.exports/junit.xml
 
+validate-json: ## Validate command with json report
+	cd ../../.. && php bin/phpunuhi validate --configuration=./tests/playground/json/phpunuhi.xml --report-format=json --report-output=./tests/playground/json/.exports/report.json
+
 structure: ## Fix Structure
 	cd ../../.. && php bin/phpunuhi fix:structure --configuration=./tests/playground/json/phpunuhi.xml
 

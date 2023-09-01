@@ -27,6 +27,11 @@ class Locale
      */
     private $translations;
 
+    /**
+     * @var array<string, int>
+     */
+    private $lineNumbers;
+
 
     /**
      * @param string $name
@@ -40,6 +45,7 @@ class Locale
         $this->iniSection = $iniSection;
 
         $this->translations = [];
+        $this->lineNumbers = [];
     }
 
     /**
@@ -116,6 +122,38 @@ class Locale
     public function getTranslations(): array
     {
         return $this->translations;
+    }
+
+    /**
+     * @param array<string, int> $lineNumbers
+     *
+     * @return void
+     */
+    public function setLineNumbers(array $lineNumbers): void
+    {
+        $this->lineNumbers = $lineNumbers;
+    }
+
+    /**
+     * @return array<string, int>
+     */
+    public function getLineNumbers(): array
+    {
+        return $this->lineNumbers;
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return int
+     */
+    public function findLineNumber(string $key): int
+    {
+        if (isset($this->lineNumbers[$key])) {
+            return $this->lineNumbers[$key];
+        }
+
+        return 0;
     }
 
     /**

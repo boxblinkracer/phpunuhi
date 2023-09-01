@@ -127,4 +127,43 @@ class LocaleTest extends TestCase
         $this->assertCount(1, $locale->getTranslations());
     }
 
+    public function testSetLineNumbers()
+    {
+        $locale = new Locale('', '', '');
+
+        $this->assertCount(0, $locale->getLineNumbers());
+
+        $lineNumbers = [];
+        $lineNumbers['title'] = 1;
+
+        $locale->setLineNumbers($lineNumbers);
+
+        $this->assertCount(1, $locale->getLineNumbers());
+    }
+
+    public function testGetLineNumbers()
+    {
+        $locale = new Locale('', '', '');
+
+        $lineNumbers = [
+            'title' => 1,
+            'button' => 2,
+        ];
+        $locale->setLineNumbers($lineNumbers);
+
+        $this->assertCount(2, $locale->getLineNumbers());
+    }
+
+    public function testFindLineNumber()
+    {
+        $locale = new Locale('', '', '');
+
+        $lineNumbers = [
+            'title' => 1,
+            'button' => 2,
+        ];
+        $locale->setLineNumbers($lineNumbers);
+
+        $this->assertEquals(1, $locale->findLineNumber('title'));
+    }
 }

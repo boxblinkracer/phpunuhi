@@ -124,5 +124,76 @@ class ArrayTraitTest extends TestCase
         $this->assertEquals($expected, $dimensional);
     }
 
+    public function testGetLineNumbers()
+    {
+        $array = [
+            'title' => 'Title',
+            'content' => [
+                'headline' => 'A content',
+                'description' => 'this is my description'
+            ]
+        ];
+
+        $expected = [
+            'title' => 1,
+            'content.headline' => 3,
+            'content.description' => 4,
+            '__LINE_NUMBER__' => 4,
+        ];
+
+        $flat = $this->getLineNumbers($array, '.');
+
+        $this->assertEquals($expected, $flat);
+    }
+
+    public function testGetLineNumbersWithOffset()
+    {
+        $array = [
+            'title' => 'Title',
+            'content' => [
+                'headline' => 'A content',
+                'description' => 'this is my description'
+            ]
+        ];
+
+        $expected = [
+            'title' => 2,
+            'content.headline' => 4,
+            'content.description' => 5,
+            '__LINE_NUMBER__' => 5,
+        ];
+
+        $flat = $this->getLineNumbers($array, '.', '', 1);
+
+        $this->assertEquals($expected, $flat);
+    }
+
+    public function testGetLineNumbersWithClosingBrackets()
+    {
+        $array = [
+            'title' => 'Title',
+            'content' => [
+                'headline' => 'A content',
+                'description' => 'this is my description'
+            ],
+            'content2' => [
+                'headline' => 'A content',
+                'description' => 'this is my description'
+            ],
+        ];
+
+        $expected = [
+            'title' => 1,
+            'content.headline' => 3,
+            'content.description' => 4,
+            'content2.headline' => 7,
+            'content2.description' => 8,
+            '__LINE_NUMBER__' => 9,
+        ];
+
+        $flat = $this->getLineNumbers($array, '.', '', 0, true);
+
+        $this->assertEquals($expected, $flat);
+    }
 
 }

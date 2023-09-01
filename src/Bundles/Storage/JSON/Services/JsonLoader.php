@@ -40,6 +40,11 @@ class JsonLoader
         foreach ($foundTranslationsFlat as $key => $value) {
             $locale->addTranslation($key, $value, '');
         }
+
+        // We start with one as a properly formatted JSON file will always have the first line as the opening bracket
+        $locale->setLineNumbers(
+            $this->getLineNumbers($foundTranslations, $delimiter, '', 1, true)
+        );
     }
 
 }

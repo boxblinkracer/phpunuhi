@@ -126,6 +126,9 @@ class ValidateCommand extends Command
                         if (!empty($error->getFilename())) {
                             $io->writeln("   - File: " . $error->getFilename());
                         }
+                        if (!empty($error->getLineNumber())) {
+                            $io->writeln("   - Line: " . $error->getLineNumber());
+                        }
                         $io->writeln('       [x]: ' . $error->getIdentifier());
                         $io->writeln('');
                     }
@@ -136,6 +139,7 @@ class ValidateCommand extends Command
                         $test->getTitle(),
                         $test->getTranslationKey(),
                         basename($test->getFilename()),
+                        $test->getLineNumber(),
                         $test->getClassification(),
                         $test->getFailureMessage(),
                         $test->isSuccess()

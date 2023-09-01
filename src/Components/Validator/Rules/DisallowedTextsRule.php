@@ -65,6 +65,7 @@ class DisallowedTextsRule implements RuleValidatorInterface
                     $locale->getName(),
                     'Test against disallowed text for key: ' . $translation->getKey(),
                     $locale->getFilename(),
+                    $locale->findLineNumber($translation->getKey()),
                     $this->getRuleIdentifier(),
                     'Translation for key ' . $translation->getKey() . ' has disallowed text: ' . (string)$foundWord,
                     $testPassed
@@ -85,7 +86,8 @@ class DisallowedTextsRule implements RuleValidatorInterface
                     'Found disallowed text in key ' . $translation->getKey() . '. Value must not contain: ' . $foundWord,
                     $locale->getName(),
                     $locale->getFilename(),
-                    $identifier
+                    $identifier,
+                    $locale->findLineNumber($identifier)
                 );
             }
         }

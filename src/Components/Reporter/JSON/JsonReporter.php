@@ -61,6 +61,7 @@ class JsonReporter implements ReporterInterface
                     'name' => $test->getName(),
                     'key' => $test->getTranslationKey(),
                     'location' => $test->getClassName(),
+                    'lineNumber' => $test->getLineNumber(),
                     'success' => $test->isSuccess(),
                     'failureType' => $test->getFailureType(),
                     'failureMessage' => $test->getFailureMessage(),
