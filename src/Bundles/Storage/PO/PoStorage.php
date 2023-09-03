@@ -63,7 +63,7 @@ class PoStorage implements StorageInterface
      */
     public function configureStorage(TranslationSet $set): void
     {
-        $this->eolLast = (bool)$set->getAttributeValue('eol-last');
+        $this->eolLast = filter_var($set->getAttributeValue('eol-last'), FILTER_VALIDATE_BOOLEAN);
     }
 
     /**
@@ -180,19 +180,23 @@ class PoStorage implements StorageInterface
             if (!$found) {
                 $newLines[] = '';
                 $newLines[] = 'msgid "' . $translation->getID() . '"';
-                $newLines[] = 'msgstr "' . $translation->getValue() . '"';
-                $newLines[] = '';
+                $newLines[] = 'msgstr "' . $translation->getValue() . '"' . PHP_EOL;
             }
         }
 
 
         $newLines = $this->clearLineBreaks($newLines);
 
-        $contentBuffer[$filename] = implode(PHP_EOL, $newLines);
+        $content = implode(PHP_EOL, $newLines);
+
+        # last EOL is optional, so let's remove it first
+        $content = rtrim($content, PHP_EOL);
 
         if ($this->eolLast) {
-            $contentBuffer[$filename] .= PHP_EOL;
+            $content .= PHP_EOL;
         }
+
+        $contentBuffer[$filename] = $content;
 
         return 0;
     }

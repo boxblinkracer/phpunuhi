@@ -68,6 +68,9 @@ class YamlSaver
         // Set inline to 10 to have the most cases covered. Maybe add an option later.
         $yaml = Yaml::dump($tmpArray, 10, $this->yamlIndent);
 
+        # last EOL is optional, so let's remove it first
+        $yaml = rtrim($yaml, PHP_EOL);
+
         if ($this->eolLast) {
             $yaml .= PHP_EOL;
         }

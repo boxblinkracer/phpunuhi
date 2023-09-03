@@ -62,8 +62,8 @@ class IniStorage implements StorageInterface
      */
     public function configureStorage(TranslationSet $set): void
     {
-        $this->sortIni = (bool)$set->getAttributeValue('sort');
-        $this->eolLast = (bool)$set->getAttributeValue('eol-last');
+        $this->sortIni = filter_var($set->getAttributeValue('sort'), FILTER_VALIDATE_BOOLEAN);
+        $this->eolLast = filter_var($set->getAttributeValue('eol-last'), FILTER_VALIDATE_BOOLEAN);
     }
 
     /**
@@ -177,11 +177,14 @@ class IniStorage implements StorageInterface
             $translationCount++;
         }
 
-        $contentBuffer[$locale->getFilename()] = $content;
+        # last EOL is optional, so let's remove it first
+        $content = rtrim($content, PHP_EOL);
 
         if ($this->eolLast) {
-            $contentBuffer[$locale->getFilename()] .= PHP_EOL;
+            $content .= PHP_EOL;
         }
+
+        $contentBuffer[$locale->getFilename()] = $content;
 
         return $translationCount;
     }

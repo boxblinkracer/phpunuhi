@@ -9,6 +9,10 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 - Add storage format option **eol-last** to all file based formats. This will automatically add a new line at the end of the file. (thx @JoshuaBehrens)
 
+### Fixed
+
+- Fix broken **sort** attribute detection in storage format. Sometimes a FALSE got recognized as TRUE.
+
 ## [1.12.0]
 
 ### Added

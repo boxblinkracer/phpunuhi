@@ -86,8 +86,8 @@ class PhpStorage implements StorageInterface
      */
     public function configureStorage(TranslationSet $set): void
     {
-        $this->sort = (bool)$set->getAttributeValue('sort');
-        $this->eolLast = (bool)$set->getAttributeValue('eol-last');
+        $this->sort = filter_var($set->getAttributeValue('sort'), FILTER_VALIDATE_BOOLEAN);
+        $this->eolLast = filter_var($set->getAttributeValue('eol-last'), FILTER_VALIDATE_BOOLEAN);
 
         $this->saver = new PHPSaver($this->eolLast);
     }

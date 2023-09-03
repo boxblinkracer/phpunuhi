@@ -56,7 +56,7 @@ class PHPSaver
 
         $content .= $this->buildArray($tmpArray, 1);
 
-        $content .= '];' . PHP_EOL;
+        $content .= '];';
 
         if ($this->eolLast) {
             $content .= PHP_EOL;
