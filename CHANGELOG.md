@@ -8,6 +8,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 ### Added
 
 - Add storage format option **eol-last** to all file based formats. This will automatically add a new line at the end of the file. (thx @JoshuaBehrens)
+- Add new **line number** data to errors and reports of file based storage formats. (thx @matthiashamacher)
 
 ### Fixed
 
