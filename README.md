@@ -536,7 +536,7 @@ For this, you might want to use the **iniSection** feature and just assign the s
 
 <set name="sample">
 <format>
-    <ini indent="4" sort="true"/>
+    <ini sort="true"/>
 </format>
 <locales>
     <locale name="de" iniSection="de-DE">./snippets/snippets.ini</locale>
