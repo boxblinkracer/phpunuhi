@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace PHPUnuhi\Traits;
 
+use PHPUnuhi\Models\Configuration\Filter;
+
 trait ArrayTrait
 {
 
@@ -13,15 +15,19 @@ trait ArrayTrait
      * @param string $rootPrefix
      * @return array<mixed>
      */
-    protected function getFlatArray(array $array, string $delimiter, string $rootPrefix = ''): array
+    protected function getFlatArray(array $array, string $delimiter, string $rootPrefix = '', ?Filter $filter = null): array
     {
         $result = [];
 
         foreach ($array as $key => $value) {
+            if ($filter instanceof Filter && $filter->isKeyAllowed($key) === false) {
+                continue;
+            }
+
             $newKey = $rootPrefix . (empty($rootPrefix) ? '' : $delimiter) . $key;
 
             if (is_array($value)) {
-                $result = array_merge($result, $this->getFlatArray($value, $delimiter, $newKey));
+                $result = array_merge($result, $this->getFlatArray($value, $delimiter, $newKey, $filter));
             } else {
                 $result[$newKey] = $value;
             }
