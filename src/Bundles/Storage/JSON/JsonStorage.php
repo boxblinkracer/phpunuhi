@@ -65,7 +65,7 @@ class JsonStorage implements StorageInterface
      */
     public function configureStorage(TranslationSet $set): void
     {
-        $indent = $set->getAttributeValue('jsonIndent');
+        $indent = $set->getAttributeValue('indent');
         $indent = ($indent === '') ? '2' : $indent;
         $sort = filter_var($set->getAttributeValue('sort'), FILTER_VALIDATE_BOOLEAN);
         $eolLast = filter_var($set->getAttributeValue('eol-last'), FILTER_VALIDATE_BOOLEAN);
