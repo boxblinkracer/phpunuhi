@@ -3,11 +3,18 @@
 All notable changes of PHPUnuhi releases are documented in this file
 using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
+## [unreleased]
+
+### Fixed
+
+- Fix broken **indent** settings for JSON and YAML storages (thx @matthiashamacher)
+
 ## [1.13.0]
 
 ### Added
 
-- Add storage format option **eol-last** to all file based formats. This will automatically add a new line at the end of the file. (thx @JoshuaBehrens)
+- Add storage format option **eol-last** to all file based formats. This will automatically add a new line at the end of
+  the file. (thx @JoshuaBehrens)
 - Add new **line number** data to errors and reports of file based storage formats. (thx @matthiashamacher)
 
 ### Fixed
@@ -24,7 +31,8 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 ### Changed
 
-- Translator Services are now in charge of handling protection markers, because for some services the automatic encryption of markers would lead to problems.
+- Translator Services are now in charge of handling protection markers, because for some services the automatic
+  encryption of markers would lead to problems.
 
 ### Fixed
 
