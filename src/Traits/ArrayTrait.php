@@ -15,25 +15,45 @@ trait ArrayTrait
      * @param string $rootPrefix
      * @return array<mixed>
      */
-    protected function getFlatArray(array $array, string $delimiter, string $rootPrefix = '', ?Filter $filter = null): array
+    protected function getFlatArray(array $array, string $delimiter, string $rootPrefix = ''): array
     {
         $result = [];
 
         foreach ($array as $key => $value) {
-            if ($filter instanceof Filter && $filter->isKeyAllowed($key) === false) {
-                continue;
-            }
-
             $newKey = $rootPrefix . (empty($rootPrefix) ? '' : $delimiter) . $key;
 
             if (is_array($value)) {
-                $result = array_merge($result, $this->getFlatArray($value, $delimiter, $newKey, $filter));
+                $result = array_merge($result, $this->getFlatArray($value, $delimiter, $newKey));
             } else {
                 $result[$newKey] = $value;
             }
         }
 
         return $result;
+    }
+
+    /**
+     * @param string[] $array
+     * @param Filter $filter
+     *
+     * @return array<int, string[]>
+     */
+    protected function getFilteredResult(array $array, Filter $filter): array
+    {
+        $translations = [];
+        $filteredTranslations = [];
+
+        foreach ($array as $key => $value) {
+            if ($filter->isKeyAllowed($key, true) === true) {
+                $translations[$key] = $value;
+            }
+
+            if ($filter->isKeyAllowed($key, true) === false) {
+                $filteredTranslations[$key] = $value;
+            }
+        }
+
+        return [$translations, $filteredTranslations];
     }
 
     /**

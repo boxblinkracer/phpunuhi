@@ -71,11 +71,11 @@ class Filter
      * @param string $key
      * @return bool
      */
-    public function isKeyAllowed(string $key): bool
+    public function isKeyAllowed(string $key, bool $partial = false): bool
     {
         if (count($this->fieldsAllow) > 0) {
             foreach ($this->fieldsAllow as $fieldPattern) {
-                if ($this->stringMatchWithWildcard($key, $fieldPattern)) {
+                if ($this->stringMatchWithWildcard($key, $fieldPattern, $partial)) {
                     return true;
                 }
             }
@@ -84,7 +84,7 @@ class Filter
 
         # otherwise check if its at least not excluded
         foreach ($this->fieldsExclude as $fieldPattern) {
-            if ($this->stringMatchWithWildcard($key, $fieldPattern)) {
+            if ($this->stringMatchWithWildcard($key, $fieldPattern, $partial)) {
                 return false;
             }
         }
@@ -97,7 +97,7 @@ class Filter
      * @param string $wildcard_pattern
      * @return bool
      */
-    private function stringMatchWithWildcard(string $haystack, string $wildcard_pattern): bool
+    private function stringMatchWithWildcard(string $haystack, string $wildcard_pattern, bool $partial = false): bool
     {
         $regex = str_replace(
             ["\*", "\?"], // wildcard chars
@@ -105,7 +105,12 @@ class Filter
             preg_quote($wildcard_pattern, '/')
         );
 
-        return (bool)preg_match('/^' . $regex . '$/is', $haystack);
-    }
+        $fullRegex = '/^' . $regex . '$/is';
 
+        if ($partial === true) {
+            $fullRegex = '/' . $regex . '/is';
+        }
+
+        return (bool)preg_match($fullRegex, $haystack);
+    }
 }

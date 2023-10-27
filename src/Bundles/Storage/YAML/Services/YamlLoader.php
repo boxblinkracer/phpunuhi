@@ -35,13 +35,19 @@ class YamlLoader
             $arrayData = [];
         }
 
-        $foundTranslationsFlat = $this->getFlatArray($arrayData, $delimiter, '', $this->filter);
+        $translations = $this->getFlatArray($arrayData, $delimiter, '');
+        $filteredTranslations = [];
 
-        foreach ($foundTranslationsFlat as $key => $value) {
+        if ($this->filter instanceof Filter) {
+            [$translations, $filteredTranslations] = $this->getFilteredResult($translations, $this->filter);
+        }
+
+        foreach ($translations as $key => $value) {
             # empty yaml values are NULL, so we cast it
             $locale->addTranslation($key, (string)$value, '');
         }
 
+        $locale->setFilteredKeys($filteredTranslations);
         $locale->setLineNumbers(
             $this->getLineNumbers($arrayData, $delimiter)
         );
