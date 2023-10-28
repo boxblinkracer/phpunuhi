@@ -3,6 +3,7 @@
 namespace phpunit\Traits;
 
 use PHPUnit\Framework\TestCase;
+use PHPUnuhi\Models\Configuration\Filter;
 use PHPUnuhi\Traits\ArrayTrait;
 
 class ArrayTraitTest extends TestCase
@@ -196,4 +197,29 @@ class ArrayTraitTest extends TestCase
         $this->assertEquals($expected, $flat);
     }
 
+    public function testGetFilteredResult()
+    {
+        $array = [
+            'title' => 'Title',
+            'content.headline' => 'A content',
+            'content.description' => 'this is my description',
+            'content2.headline' => 'A content',
+            'content2.description' => 'this is my description',
+        ];
+
+        $filter = new Filter();
+        $filter->addExcludeKey('headline');
+
+        [$result, $filtered] = $this->getFilteredResult($array, $filter);
+
+        $this->assertEquals([
+            'title' => 'Title',
+            'content.description' => 'this is my description',
+            'content2.description' => 'this is my description',
+        ], $result);
+        $this->assertEquals([
+            'content.headline' => 'A content',
+            'content2.headline' => 'A content',
+        ], $filtered);
+    }
 }

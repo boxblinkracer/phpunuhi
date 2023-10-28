@@ -32,6 +32,11 @@ class Locale
      */
     private $lineNumbers;
 
+    /**
+     * @var string[]
+     */
+    private $filteredKeys;
+
 
     /**
      * @param string $name
@@ -46,6 +51,7 @@ class Locale
 
         $this->translations = [];
         $this->lineNumbers = [];
+        $this->filteredKeys = [];
     }
 
     /**
@@ -154,6 +160,29 @@ class Locale
         }
 
         return 0;
+    }
+
+    /**
+     * @param string[] $filteredKeys
+     *
+     * @return void
+     */
+    public function setFilteredKeys(array $filteredKeys): void
+    {
+        $this->filteredKeys = $filteredKeys;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getFilteredKeys(): array
+    {
+        return $this->filteredKeys;
+    }
+
+    public function hasFilteredKeys(): bool
+    {
+        return !empty($this->filteredKeys);
     }
 
     /**

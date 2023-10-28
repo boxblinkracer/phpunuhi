@@ -113,7 +113,7 @@ class FilterTest extends TestCase
     /**
      * @return void
      */
-    public function testIncludeCanBeExcludedMultipleTimes()
+    public function testExcludeCanBeExcludedMultipleTimes()
     {
         $filter = new Filter();
         $filter->addExcludeKey('abc');
@@ -124,4 +124,43 @@ class FilterTest extends TestCase
         $this->assertEquals(false, $isAllowed);
     }
 
+    public function testIsKeyAllowedInclude()
+    {
+        $filter = new Filter();
+        $filter->addIncludeKey('abc');
+
+        $isAllowed = $filter->isKeyAllowed('abc');
+
+        $this->assertEquals(true, $isAllowed);
+    }
+
+    public function testIsKeyAllowedExclude()
+    {
+        $filter = new Filter();
+        $filter->addExcludeKey('abc');
+
+        $isAllowed = $filter->isKeyAllowed('abc');
+
+        $this->assertEquals(false, $isAllowed);
+    }
+
+    public function testIsKeyAllowedPartiallyExclude()
+    {
+        $filter = new Filter();
+        $filter->addExcludeKey('abc');
+
+        $isAllowed = $filter->isKeyAllowed('xyzabcrst', true);
+
+        $this->assertEquals(false, $isAllowed);
+    }
+
+    public function testIsKeyAllowedPartiallyInclude()
+    {
+        $filter = new Filter();
+        $filter->addIncludeKey('abc');
+
+        $isAllowed = $filter->isKeyAllowed('xyzabcrst', true);
+
+        $this->assertEquals(true, $isAllowed);
+    }
 }

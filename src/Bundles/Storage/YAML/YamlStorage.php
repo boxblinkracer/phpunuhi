@@ -47,7 +47,7 @@ class YamlStorage implements StorageInterface
      */
     public function supportsFilters(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -72,7 +72,7 @@ class YamlStorage implements StorageInterface
         $sort = filter_var($set->getAttributeValue('sort'), FILTER_VALIDATE_BOOLEAN);
         $eolLast = filter_var($set->getAttributeValue('eol-last'), FILTER_VALIDATE_BOOLEAN);
 
-        $this->loader = new YamlLoader();
+        $this->loader = new YamlLoader($set->getFilter());
         $this->saver = new YamlSaver((int)$indent, $sort, $eolLast);
     }
 

@@ -54,9 +54,12 @@ class YamlSaver
         $saveValues = [];
 
         foreach ($locale->getTranslations() as $translation) {
-
             $saveValues[$translation->getID()] = $translation->getValue();
             $translationCount++;
+        }
+        // Re-add filtered keys to the array to not lose them.
+        if ($locale->hasFilteredKeys() === true) {
+            $saveValues = array_merge($saveValues, $locale->getFilteredKeys());
         }
 
         if ($this->sortYaml) {

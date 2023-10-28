@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace PHPUnuhi\Traits;
 
+use PHPUnuhi\Models\Configuration\Filter;
+
 trait ArrayTrait
 {
 
@@ -28,6 +30,30 @@ trait ArrayTrait
         }
 
         return $result;
+    }
+
+    /**
+     * @param string[] $array
+     * @param Filter $filter
+     *
+     * @return array<int, string[]>
+     */
+    protected function getFilteredResult(array $array, Filter $filter): array
+    {
+        $translations = [];
+        $filteredTranslations = [];
+
+        foreach ($array as $key => $value) {
+            if ($filter->isKeyAllowed($key, true) === true) {
+                $translations[$key] = $value;
+            }
+
+            if ($filter->isKeyAllowed($key, true) === false) {
+                $filteredTranslations[$key] = $value;
+            }
+        }
+
+        return [$translations, $filteredTranslations];
     }
 
     /**
