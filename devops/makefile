@@ -9,7 +9,7 @@
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-run: ## Installs all prod dependencies
+run: ## Starts Docker and installs all dependencies
 	docker-compose down | true;
 	docker-compose up -d
 	sleep 10
