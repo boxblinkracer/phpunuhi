@@ -7,6 +7,7 @@ use PHPUnuhi\Exceptions\TranslationNotFoundException;
 use PHPUnuhi\Models\Configuration\Attribute;
 use PHPUnuhi\Models\Configuration\Filter;
 use PHPUnuhi\Models\Configuration\Protection;
+use PHPUnuhi\Models\Configuration\Rule;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
@@ -40,6 +41,43 @@ class TranslationSetTest extends TestCase
         $set = new TranslationSet('storefront', 'json', new Protection(), $locales, $filter, $attributes, [], []);
 
         $this->assertEquals('json', $set->getFormat());
+    }
+
+    /**
+     * @return void
+     * @throws \Exception
+     */
+    public function testProtection()
+    {
+        $attributes = [];
+        $filter = new Filter();
+        $locales = [];
+        $protection = new Protection();
+
+        $protection->addTerm('protected-word');
+
+        $set = new TranslationSet('storefront', 'json', $protection, $locales, $filter, $attributes, [], []);
+
+        $this->assertEquals('protected-word', $set->getProtection()->getTerms()[0]);
+    }
+
+    /**
+     * @return void
+     * @throws \Exception
+     */
+    public function testRules()
+    {
+        $attributes = [];
+        $filter = new Filter();
+        $locales = [];
+        $protection = new Protection();
+        $rules = [
+            new Rule('test-rule', true),
+        ];
+
+        $set = new TranslationSet('storefront', 'json', $protection, $locales, $filter, $attributes, [], $rules);
+
+        $this->assertEquals('test-rule', $set->getRules()[0]->getName());
     }
 
     /**
@@ -191,4 +229,5 @@ class TranslationSetTest extends TestCase
 
         $set->findAnyExistingTranslation('abc', '');
     }
+
 }
