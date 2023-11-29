@@ -9,7 +9,8 @@
 
 Welcome to PHPUnuhi - The easy composable framework to validate and manage translations!
 
-Only for PHP developers?! Absolutely NOT! This framework is for everyone who needs to manage translations in a structured way.
+Only for PHP developers?! Absolutely NOT! This framework is for everyone who needs to manage translations in a
+structured way.
 It has only been developed in PHP ;)
 
 Unuhi? This is Hawaiian for "translate" or "translation".
@@ -21,7 +22,8 @@ The framework is free, there's no guarantee or claim to anything.
 
 This is a dev-tool. It can be used to improve pipelines, workflows and QA processes.
 It can also be used to get some quick start in adding languages or new sentences.
-But it is NO replacement for services or people that/who translate in a professional way with context and knowledge about the software.
+But it is NO replacement for services or people that/who translate in a professional way with context and knowledge
+about the software.
 Please keep that in mind to avoid misinterpreting the goal of this framework.
 
 Now that you know this, let's get started!
@@ -95,12 +97,16 @@ This is a framework that helps you to **validate and maintain translations**.
 Although it's not dependent on a specific platform, you can use it perfectly with Shopware 6 and other platforms.
 
 For example, Shopware 6 has snippets based on JSON files.
-If you develop plugins for this platform, you can build translation sets in PHPUnuhi that contain all your files for the individual languages, like EN, DE, NL, and whatever you support.
-PHPUnuhi helps you to make sure you didn't forget any translations, screwed up structures across your language files and even
+If you develop plugins for this platform, you can build translation sets in PHPUnuhi that contain all your files for the
+individual languages, like EN, DE, NL, and whatever you support.
+PHPUnuhi helps you to make sure you didn't forget any translations, screwed up structures across your language files and
+even
 helps you to export and import or translate your entries.
 
-One of the benefits of this framework is the approach of decoupled **Storage formats**, **Exchange formats** and **Translation services**.
-You can combine any storage format (JSON, INI, DB, ...) with any exchange format for import + exports (CSV, HTML, ...) or use any of the provided
+One of the benefits of this framework is the approach of decoupled **Storage formats**, **Exchange formats** and *
+*Translation services**.
+You can combine any storage format (JSON, INI, DB, ...) with any exchange format for import + exports (CSV, HTML, ...)
+or use any of the provided
 translation services (Google, DeepL, OpenAI). This makes PHPUnuhi a great **composable framework for translations**.
 
 ```mermaid
@@ -295,7 +301,8 @@ php vendor/bin/phpunuhi fix:structure --set="storefront"
 You can export your translations **into a CSV file**, a HTML WebEdit spreadsheet, or other supported exchange formats.
 These files can then be passed on to an external translator or company.
 
-Every row will contain the translation key, and every column in that row will be a different translation (in case of CSV files).
+Every row will contain the translation key, and every column in that row will be a different translation (in case of CSV
+files).
 
 ```bash 
 # default export in default exchange format CSV
@@ -357,7 +364,8 @@ The **translate** command will search for empty values in your translations.
 If an empty translation is found, it will request a translation from your external service.
 The text that will be translated in this request, is the translation from another language.
 
-For instance, if your "English" translation is empty, PHPUnuhi will find your "German" text and send it to the external service.
+For instance, if your "English" translation is empty, PHPUnuhi will find your "German" text and send it to the external
+service.
 The English result is then saved in your storage.
 
 ```bash 
@@ -426,7 +434,8 @@ import it again with the import command.
 
 If you have a test or staging system, you can even go one step further.
 Just imagine setting up a cronjob that runs after a deployment, or as scheduled job.
-This cronjob could trigger the HTML export of PHPUnuhi with an output directory to a folder that is available within your DocRoot.
+This cronjob could trigger the HTML export of PHPUnuhi with an output directory to a folder that is available within
+your DocRoot.
 That HTML file might then be exposed with something like this **https://stage.my-shop.com/snippets**.
 
 Everyone who wants to either see all translations, or even modify them, can easily do this in their browser.
@@ -445,7 +454,8 @@ Provide your API key (if required for service) and see the magic happening.
 Please keep these things in mind:
 
 * Translations services are not always correct! Please always verify automatically translated texts.
-* If you are using a storage format that is directly connected to a database, make sure to create a backup before importing translations!
+* If you are using a storage format that is directly connected to a database, make sure to create a backup before
+  importing translations!
 
 ## 7. Appendix
 
@@ -453,19 +463,24 @@ Please keep these things in mind:
 
 Every translation set consists of multiple **locales**.
 Every locale is defined through a name and either a filename, or database-table (depending on format type).
-The purpose is, that every locale in a translation-set should match across those languages (all files should have the same structure for example).
+The purpose is, that every locale in a translation-set should match across those languages (all files should have the
+same structure for example).
 
 This is how you can define locales (with files in this sample).
-You can also use a placeholder **%locale%**, **%locale_lc%** and **%locale_uc%** in the value to make things easier for you.
+You can also use a placeholder **%locale%**, **%locale_lc%** and **%locale_uc%** in the value to make things easier for
+you.
 This will reuse the locale name in the filename.
 **locale_lc** is lower case and **locale_uc** is upper case.
+
+If you have all files in the same base directory, you can also provide a placeholder for the **basePath** and
+use this one also for the directories of your files.
 
 ```xml
 
 <set name="sample">
-    <locales>
-        <locale name="de">./de/snippets/de.json</locale>
-        <locale name="en">./%locale%/snippets/%locale%.json</locale>
+    <locales basePath="./Bundles/MySuperBundle/Resources/snippets">
+        <locale name="de">%base_path%/de/snippets/de.json</locale>
+        <locale name="en">%base_path%/%locale%/snippets/%locale%.json</locale>
     </locales>
 </set>
 ```
@@ -520,7 +535,8 @@ Every locale has its own INI file.
 The INI structure across all files of a set should match.
 
 It's also possible to have all translations in a single INI file.
-For this, you might want to use the **iniSection** feature and just assign the same INI file to all locales, but with different sections.
+For this, you might want to use the **iniSection** feature and just assign the same INI file to all locales, but with
+different sections.
 
 ```xml
 
@@ -601,15 +617,18 @@ This storage type makes sure to read and also write PHP files that return a sing
 The Shopware 6 format allows you to use PHPUnuhi directly on the database and the Shopware entities.
 
 What do we mean with entities? These are real objects of the platform, stored within the database.
-This means **snippets**, **products**, **salutations**, **shipping methods** and more. Basically, everything that has a **_translation** table in the database.
+This means **snippets**, **products**, **salutations**, **shipping methods** and more. Basically, everything that has a
+**_translation** table in the database.
 
-Just imagine running the **status command** and see a translation coverage of all your products in your shop. Nice, isn't it? Or let DeepL translate your data automatically?!
+Just imagine running the **status command** and see a translation coverage of all your products in your shop. Nice,
+isn't it? Or let DeepL translate your data automatically?!
 
 To access the database of Shopware, you can either make sure the ENV variables for the connection are correctly set up,
 or provide your custom credentials in the **php** section of the configuration XML.
 
 Please keep in mind, snippets are handled in a different way in the database.
-To make life easier for you, we've added a fake entity name **snippet** that automatically connects to the snippet table instead of an entity translation table.
+To make life easier for you, we've added a fake entity name **snippet** that automatically connects to the snippet table
+instead of an entity translation table.
 
 ```xml
 
@@ -716,7 +735,8 @@ This means, that more translations belong to one "thing".
 That thing depends on the type of storage format.
 
 For instance, in Shopware 6, a group is a "entity".
-So for a Translation-Set on "products", 1 group stands for a specific product, and has multiple translations for the different product properties.
+So for a Translation-Set on "products", 1 group stands for a specific product, and has multiple translations for the
+different product properties.
 
 If a group is detected, the exchange formats, should handle these in a correct way.
 A CSV format, has a separate column for groups, and the import should also work correctly.
@@ -727,7 +747,8 @@ translations all belong to this group.
 ### 7.5 Case Styles
 
 To keep consistency across all your translation keys, it's possible to set a list of allowed case styles.
-The **validate** command, will automatically test, if all your translation keys match at least one of the provided styles.
+The **validate** command, will automatically test, if all your translation keys match at least one of the provided
+styles.
 
 If no style is provided, then case-style tests are skipped.
 
@@ -752,10 +773,12 @@ The following styles are possible:
 </set>
 ```
 
-In addition to global case-styles, you can also set specific styles on **specific levels** if you have a nested storage such as JSON or PHP.
+In addition to global case-styles, you can also set specific styles on **specific levels** if you have a nested storage
+such as JSON or PHP.
 
 You can even mix it with styles that do not have a level.
-In that case, styles without levels, are globally checked for every level that does not already have a specific style for its level.
+In that case, styles without levels, are globally checked for every level that does not already have a specific style
+for its level.
 
 Here is an example that would be "valid" for this key: **global.businessEvents.mollie_checkout_order_success**.
 Pascal case is only checked on level 1, and not on 0 and 2.
@@ -826,7 +849,8 @@ Just imagine the simple translation value "Save" occurring multiple times in a s
 Wouldn't it be better to just have it in 1 single translation entry in your file?
 
 In this case you can use this rule.
-Once set to **false**, the validator will automatically warn you, if you have a translation value configured multiple times within a single locale.
+Once set to **false**, the validator will automatically warn you, if you have a translation value configured multiple
+times within a single locale.
 
 ```xml
 
@@ -836,8 +860,10 @@ Once set to **false**, the validator will automatically warn you, if you have a 
 ### 7.7 PHP ENV Variables
 
 The XML configuration allows you to create custom ENV variables.
-Depending on the components you use in PHPUnuhi, some require specific ENV variables, such as the Shopware 6 database connection.
-These can either be set by exporting the ENV variable on your server, or by simply providing them in the XML configuration.
+Depending on the components you use in PHPUnuhi, some require specific ENV variables, such as the Shopware 6 database
+connection.
+These can either be set by exporting the ENV variable on your server, or by simply providing them in the XML
+configuration.
 
 ```xml
 
@@ -871,7 +897,8 @@ The following formats are currently supported.
 
 The CSV format is a well known and solid format for interoperability.
 You can open CSV files with Microsoft Excel, Apple Numbers as well as simple text editors or more.
-The only downside with Excel and Numbers is, that they might force you to save the updated file in their own formats (just pay attention to this).
+The only downside with Excel and Numbers is, that they might force you to save the updated file in their own formats (
+just pay attention to this).
 
 The benefit is that you can simply open all translation in a spreadsheet.
 Every translation key has its own row, and all locale-values have their own column in that row.

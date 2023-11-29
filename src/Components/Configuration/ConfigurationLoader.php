@@ -361,6 +361,9 @@ class ConfigurationLoader
     {
         $foundLocales = [];
 
+        # load optional <locale basePath=xy">
+        $basePath = $this->getAttribute('basePath', $rootLocales);
+
         foreach ($rootLocales->children() as $nodeLocale) {
 
             $nodeType = $nodeLocale->getName();
@@ -385,6 +388,11 @@ class ConfigurationLoader
                 $innerValue = str_replace('%locale%', $localeName, $innerValue);
                 $innerValue = str_replace('%locale_uc%', strtoupper($localeName), $innerValue);
                 $innerValue = str_replace('%locale_lc%', strtolower($localeName), $innerValue);
+
+                # if we have a basePath, we also need to replace any values
+                if (!empty($basePath->getValue())) {
+                    $innerValue = str_replace('%base_path%', $basePath->getValue(), $innerValue);
+                }
 
                 # for now treat inner value as file
                 $configuredFileName = dirname($configFilename) . '/' . $innerValue;
@@ -470,7 +478,9 @@ class ConfigurationLoader
     private function getAttribute(string $name, SimpleXMLElement $node)
     {
         $setAttributes = [];
+
         $nodeAttributes = $node->attributes();
+
         if ($nodeAttributes !== null) {
             foreach ($nodeAttributes as $attrName => $value) {
                 if ($attrName === $name) {

@@ -5,6 +5,11 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 ## [unreleased]
 
+### Added
+
+- Added new attribute **basePath** in `<locales>` tag. This allows you to use the placeholder **%base_path%** in
+  filenames of your locales.
+
 ### Fixed
 
 - Fix broken **indent** settings for JSON and YAML storages (thx @matthiashamacher)

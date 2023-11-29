@@ -142,18 +142,19 @@
     <!-- LOCALES -->
 
     <xs:complexType name="typeLocales">
-        <xs:choice minOccurs="1" maxOccurs="unbounded">
-            <xs:element name="locale" type="typeLocale" minOccurs="1" maxOccurs="unbounded"/>
-        </xs:choice>
-    </xs:complexType>
-
-    <xs:complexType name="typeLocale">
-        <xs:simpleContent>
-            <xs:extension base="xs:string">
-                <xs:attribute name="name" type="xs:string" use="required"/>
-                <xs:attribute name="iniSection" type="xs:string" use="optional"/>
-            </xs:extension>
-        </xs:simpleContent>
+        <xs:sequence>
+            <xs:element name="locale" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                            <xs:attribute name="name" type="xs:string" use="required"/>
+                            <xs:attribute name="iniSection" type="xs:string" use="optional"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="basePath" type="xs:string" use="optional"/>
     </xs:complexType>
 
     <!-- ================================================================================================================================ -->

@@ -20,9 +20,9 @@
                 <style level="0">kebab</style>
                 <style level="1">camel</style>
             </styles>
-            <locales>
-                <locale name="de">./%locale%.json</locale>
-                <locale name="nl">./%locale%.json</locale>
+            <locales basePath="./snippets">
+                <locale name="de">%base_path%/%locale%.json</locale>
+                <locale name="nl">%base_path%/%locale%.json</locale>
             </locales>
         </set>
 
