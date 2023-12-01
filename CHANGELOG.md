@@ -9,6 +9,8 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 - Added new attribute **basePath** in `<locales>` tag. This allows you to use the placeholder **%base_path%** in
   filenames of your locales.
+- Added option to import additional configuration files into the root configuration file using the `<import>` tag. This
+  allows to have decentralized configuration files that can be imported into the main configuration file.
 
 ### Fixed
 

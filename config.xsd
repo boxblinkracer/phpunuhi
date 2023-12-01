@@ -7,6 +7,7 @@
     <xs:element name="phpunuhi">
         <xs:complexType>
             <xs:sequence>
+                <xs:element name="imports" type="typeImports" minOccurs="0" maxOccurs="unbounded"/>
                 <xs:element name="php" type="typePHP" minOccurs="0" maxOccurs="unbounded"/>
                 <xs:element name="translations" type="typeTranslations" minOccurs="1" maxOccurs="unbounded"/>
             </xs:sequence>
@@ -19,6 +20,20 @@
         </xs:unique>
 
     </xs:element>
+
+    <!-- ================================================================================================================================ -->
+    <!-- IMPORTS -->
+
+    <!-- Define complex types -->
+    <xs:complexType name="typeImports">
+        <xs:sequence>
+            <xs:element name="import" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:attribute name="resource" type="xs:string" use="required"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
 
     <!-- ================================================================================================================================ -->
     <!-- PHP ENV -->
