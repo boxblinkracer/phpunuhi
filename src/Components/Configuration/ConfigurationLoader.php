@@ -36,37 +36,63 @@ class ConfigurationLoader
 
 
     /**
-     * @param string $configFilename
+     * @param string $rootConfigFilename
      * @return Configuration
      * @throws ConfigurationException
+     * @throws \Exception
      */
-    public function load(string $configFilename)
+    public function load(string $rootConfigFilename)
     {
-        $xmlString = (string)file_get_contents($configFilename);
-        $xmlSettings = simplexml_load_string($xmlString);
+        $rootXmlString = (string)file_get_contents($rootConfigFilename);
+        $rootXmlSettings = simplexml_load_string($rootXmlString);
 
-        if (!$xmlSettings instanceof SimpleXMLElement) {
-            throw new ConfigurationException('Error when loading configuration. Invalid XML: ' . $configFilename);
+        if (!$rootXmlSettings instanceof SimpleXMLElement) {
+            throw new ConfigurationException('Error when loading configuration. Invalid XML: ' . $rootConfigFilename);
         }
 
-        # load ENV variables
-        $this->loadPHPEnvironment($xmlSettings);
+        $rootConfigDir = dirname($rootConfigFilename) . '/';
 
-        # load translation-sets
-        $suites = $this->loadTranslations($xmlSettings, $configFilename);
+        # we might have sub imports in files with <imports>
+        # so we load the list of files to import
+        # and also add our root config file.
+        $importFiles = $this->loadImports($rootXmlSettings);
+        $importFiles[] = basename($rootConfigFilename);
 
-        # create and validate
-        # the configuration object
-        $config = new Configuration($suites);
+        $allSuites = [];
+
+        # now iterate through all our files and process
+        # every file independently, because it might have some content in it
+        foreach ($importFiles as $file) {
+
+            $fullFilename = $rootConfigDir . $file;
+
+            $fileXmlString = (string)file_get_contents($fullFilename);
+            $fileXmlNode = simplexml_load_string($fileXmlString);
+
+            if (!$fileXmlNode instanceof SimpleXMLElement) {
+                throw new ConfigurationException('Error when loading configuration. Invalid XML: ' . $fullFilename);
+            }
+
+            # load ENV variables
+            $this->loadPHPEnvironment($fileXmlNode);
+
+            # load translation-sets
+            $suites = $this->loadTranslations($fileXmlNode, $fullFilename);
+
+            $allSuites = array_merge($allSuites, $suites);
+        }
+
+        # create and validate the configuration object
+        $config = new Configuration($allSuites);
         $this->validateConfig($config);
 
         return $config;
     }
 
+
     /**
      * @param SimpleXMLElement $rootNode
      * @return void
-     * @throws ConfigurationException
      */
     private function loadPHPEnvironment(SimpleXMLElement $rootNode): void
     {
@@ -85,6 +111,26 @@ class ConfigurationLoader
             $value = trim((string)$xmlSet['value']);
             putenv("{$name}={$value}");
         }
+    }
+
+    /**
+     * @param SimpleXMLElement $rootNode
+     * @return array<mixed>
+     */
+    private function loadImports(SimpleXMLElement $rootNode)
+    {
+        $imports = [];
+
+        if ($rootNode->imports === null) {
+            return [];
+        }
+
+        foreach ($rootNode->imports as $importNode) {
+            $resource = $this->getAttribute('resource', $importNode->import);
+            $imports[] = $resource->getValue();
+        }
+
+        return $imports;
     }
 
     /**

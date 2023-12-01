@@ -3,35 +3,18 @@
         xsi:noNamespaceSchemaLocation="../xsd/phpunuhi.xsd"
 >
 
-    <translations>
+    <imports>
+        <import resource="./bundle/snippets.xml"/>
+    </imports>
 
-        <set name="json">
-            <format>
-                <json indent="2" sort="true"/>
-            </format>
-            <protect>
-                <marker start="%" end="%"/>
-            </protect>
-            <rules>
-                <nestingDepth>3</nestingDepth>
-                <duplicateContent>false</duplicateContent>
-            </rules>
-            <styles>
-                <style level="0">kebab</style>
-                <style level="1">camel</style>
-            </styles>
-            <locales basePath="./snippets">
-                <locale name="de">%base_path%/%locale%.json</locale>
-                <locale name="nl">%base_path%/%locale%.json</locale>
-            </locales>
-        </set>
+    <translations>
 
         <set name="json with newline">
             <format>
                 <json indent="2" sort="true" eol-last="true"/>
             </format>
-            <locales>
-                <locale name="en">./en_newline.json</locale>
+            <locales basePath="./snippets">
+                <locale name="en">%base_path%/%locale%_newline.json</locale>
             </locales>
         </set>
 

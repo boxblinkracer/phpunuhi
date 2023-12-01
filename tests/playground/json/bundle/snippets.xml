@@ -1,0 +1,31 @@
+<phpunuhi
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../xsd/phpunuhi.xsd"
+>
+
+    <translations>
+
+        <set name="json">
+            <format>
+                <json indent="2" sort="true"/>
+            </format>
+            <protect>
+                <marker start="%" end="%"/>
+            </protect>
+            <rules>
+                <nestingDepth>3</nestingDepth>
+                <duplicateContent>false</duplicateContent>
+            </rules>
+            <styles>
+                <style level="0">kebab</style>
+                <style level="1">camel</style>
+            </styles>
+            <locales basePath="./snippets">
+                <locale name="de">%base_path%/%locale%.json</locale>
+                <locale name="nl">%base_path%/%locale%.json</locale>
+            </locales>
+        </set>
+
+    </translations>
+
+</phpunuhi>
