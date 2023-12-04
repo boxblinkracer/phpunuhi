@@ -126,8 +126,16 @@ class ConfigurationLoader
         }
 
         foreach ($rootNode->imports as $importNode) {
-            $resource = $this->getAttribute('resource', $importNode->import);
-            $imports[] = $resource->getValue();
+            // if there is more than one import, we have to iterate through them
+            if ($importNode->import->count() > 1) {
+                foreach ($importNode->import as $import) {
+                    $resource = $this->getAttribute('resource', $import);
+                    $imports[] = $resource->getValue();
+                }
+            } else {
+                $resource = $this->getAttribute('resource', $importNode->import);
+                $imports[] = $resource->getValue();
+            }
         }
 
         return $imports;
