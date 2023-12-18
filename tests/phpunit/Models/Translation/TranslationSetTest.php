@@ -230,4 +230,45 @@ class TranslationSetTest extends TestCase
         $set->findAnyExistingTranslation('abc', '');
     }
 
+    /**
+     * This test verifies that the isCompletelyTranslated() works correctly.
+     * We start with a EN translation, the DE one is missing, so it's not completely translated.
+     * Then we add a translation that is invalid and last but not least we add a valid translation.
+     *
+     * @return void
+     */
+    public function testIsCompletelyTranslated(): void
+    {
+        $localeEN = new Locale('EN', '', '');
+        $localeEN->addTranslation('btnCancel', 'Cancel', '');
+
+        $localeDE = new Locale('DE', '', '');
+
+        $locales = [$localeEN, $localeDE];
+
+        $set = new TranslationSet(
+            'storefront',
+            'json',
+            new Protection(),
+            $locales,
+            new Filter(),
+            [],
+            [],
+            []
+        );
+
+        $isTranslated = $set->isCompletelyTranslated('btnCancel');
+        $this->assertFalse($isTranslated, 'btnCancel is not existing in DE');
+
+        $localeDE->addTranslation('btnCancel', '', '');
+
+        $isTranslated = $set->isCompletelyTranslated('btnCancel');
+        $this->assertFalse($isTranslated, 'btnCancel is still empty');
+
+        $localeDE->addTranslation('btnCancel', 'Abbrechen', '');
+
+        $isTranslated = $set->isCompletelyTranslated('btnCancel');
+        $this->assertTrue($isTranslated);
+    }
+    
 }
