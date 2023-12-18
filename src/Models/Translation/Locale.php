@@ -97,6 +97,13 @@ class Locale
      */
     public function addTranslation(string $key, string $value, string $group): Translation
     {
+        for ($i = 0; $i < count($this->translations); $i++) {
+            if ($this->translations[$i]->getID() === $key) {
+                unset($this->translations[$i]);
+                break;
+            }
+        }
+
         $translation = new Translation(
             $key,
             $value,

@@ -166,4 +166,28 @@ class LocaleTest extends TestCase
 
         $this->assertEquals(1, $locale->findLineNumber('title'));
     }
+
+    /**
+     * This test verifies that we do not add translations twice,
+     * but do correctly update them in this case.
+     *
+     * @return void
+     * @throws \PHPUnuhi\Exceptions\TranslationNotFoundException
+     */
+    public function testAddTranslationAvoidDuplicates(): void
+    {
+        $localeEN = new Locale('EN', '', '');
+
+        $this->assertCount(0, $localeEN->getTranslationIDs());
+
+        $localeEN->addTranslation('btnCancel', 'Cancel', '');
+
+        $this->assertCount(1, $localeEN->getTranslationIDs());
+
+        $localeEN->addTranslation('btnCancel', 'Abbrechen', '');
+
+        $this->assertCount(1, $localeEN->getTranslationIDs());
+        $this->assertEquals('Abbrechen', $localeEN->findTranslation('btnCancel')->getValue());
+    }
+
 }
