@@ -33,4 +33,36 @@ class BinaryTraitTest extends TestCase
         $this->assertEquals('0d1eeedd6d22436385580e2ff42431b9', $hex);
     }
 
+    /**
+     * @return void
+     */
+    public function testStringToBinaryWithEmpty()
+    {
+        $hex = $this->stringToBinary('');
+
+        $this->assertEquals('', $hex);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsBinaryTrue()
+    {
+        $binary = $this->stringToBinary('0d1eeedd6d22436385580e2ff42431b9');
+
+        $isBinary = $this->isBinary($binary);
+
+        $this->assertTrue($isBinary);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsBinaryFalse()
+    {
+        $isBinary = $this->isBinary('');
+
+        $this->assertFalse($isBinary);
+    }
+
 }

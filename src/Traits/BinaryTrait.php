@@ -22,25 +22,15 @@ trait BinaryTrait
      */
     protected function stringToBinary(string $text): string
     {
-        $result = hex2bin($text);
-
-        if ($result === false) {
-            return '';
-        }
-
-        return $result;
+        return (string)hex2bin($text);
     }
 
     /**
-     * @param mixed $str
+     * @param string $str
      * @return bool
      */
-    protected function isBinary($str): bool
+    protected function isBinary(string $str): bool
     {
-        if ($str === null) {
-            return false;
-        }
-
         return preg_match('~[^\x20-\x7E\t\r\n]~', $str) > 0;
     }
 
