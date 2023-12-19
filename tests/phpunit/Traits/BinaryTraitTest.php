@@ -13,7 +13,7 @@ class BinaryTraitTest extends TestCase
     /**
      * @return void
      */
-    public function testBinaryToString()
+    public function testBinaryToString(): void
     {
         $hex = $this->stringToBinary('0d1eeedd6d22436385580e2ff42431b9');
         $string = $this->binaryToString($hex);
@@ -24,7 +24,7 @@ class BinaryTraitTest extends TestCase
     /**
      * @return void
      */
-    public function testStringToBinary()
+    public function testStringToBinary(): void
     {
         $binary = $this->stringToBinary('0d1eeedd6d22436385580e2ff42431b9');
 
@@ -36,7 +36,7 @@ class BinaryTraitTest extends TestCase
     /**
      * @return void
      */
-    public function testStringToBinaryWithEmpty()
+    public function testStringToBinaryWithEmpty(): void
     {
         $hex = $this->stringToBinary('');
 
@@ -46,7 +46,7 @@ class BinaryTraitTest extends TestCase
     /**
      * @return void
      */
-    public function testIsBinaryTrue()
+    public function testIsBinaryTrue(): void
     {
         $binary = $this->stringToBinary('0d1eeedd6d22436385580e2ff42431b9');
 
@@ -58,7 +58,7 @@ class BinaryTraitTest extends TestCase
     /**
      * @return void
      */
-    public function testIsBinaryFalse()
+    public function testIsBinaryFalse(): void
     {
         $isBinary = $this->isBinary('');
 

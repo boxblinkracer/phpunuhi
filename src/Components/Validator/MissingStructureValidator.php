@@ -90,10 +90,10 @@ class MissingStructureValidator implements ValidatorInterface
 
     /**
      * @param mixed $a
-     * @param mixed $b
+     * @param array<mixed> $b
      * @return bool
      */
-    private function isStructureEqual($a, $b)
+    private function isStructureEqual($a, array $b): bool
     {
         return (
             is_array($b)

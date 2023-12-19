@@ -19,7 +19,7 @@ class PlaceholderEncoderTest extends TestCase
      *
      * @return void
      */
-    public function testEncodingMarker()
+    public function testEncodingMarker(): void
     {
         $this->assertEquals('//', PlaceholderEncoder::ENCODING_MARKER);
     }
@@ -28,7 +28,7 @@ class PlaceholderEncoderTest extends TestCase
      *
      * @return void
      */
-    public function testEncode()
+    public function testEncode(): void
     {
         $text = 'Hello, my name is {firstname} {lastname}! Thank you for your attention';
 
@@ -50,7 +50,7 @@ class PlaceholderEncoderTest extends TestCase
      *
      * @return void
      */
-    public function testDecode()
+    public function testDecode(): void
     {
         # marker placeholderø
         $p1 = new Placeholder("{firstname}");

@@ -30,7 +30,7 @@ class LowerCaseValidatorTest extends TestCase
     /**
      * @return void
      */
-    public function testIdentifier()
+    public function testIdentifier(): void
     {
         $this->assertEquals('lower', $this->validator->getIdentifier());
     }
@@ -53,7 +53,7 @@ class LowerCaseValidatorTest extends TestCase
      * @dataProvider getData
      * @return void
      */
-    public function testIsValid(bool $expectedValid, string $text)
+    public function testIsValid(bool $expectedValid, string $text): void
     {
         $isValid = $this->validator->isValid($text);
 

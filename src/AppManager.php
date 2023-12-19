@@ -21,7 +21,7 @@ class AppManager
      * @return void
      * @throws Exception
      */
-    public static function run(array $arguments)
+    public static function run(array $arguments): void
     {
         $application = new Application('PHPUnuhi', PHPUnuhi::getVersion());
 

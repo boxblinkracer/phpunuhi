@@ -13,7 +13,7 @@ class StringTraitTest extends TestCase
     /**
      * @return void
      */
-    public function testContainsTrue()
+    public function testContainsTrue(): void
     {
         $contains = $this->stringDoesContain('this is a text', 'text');
 
@@ -23,7 +23,7 @@ class StringTraitTest extends TestCase
     /**
      * @return void
      */
-    public function testContainsFalse()
+    public function testContainsFalse(): void
     {
         $contains = $this->stringDoesContain('this is a text', 'blub');
 
@@ -33,7 +33,7 @@ class StringTraitTest extends TestCase
     /**
      * @return void
      */
-    public function testStringStartsWithTrue()
+    public function testStringStartsWithTrue(): void
     {
         $contains = $this->stringDoesStartsWith('this is a text', 'this');
 
@@ -43,7 +43,7 @@ class StringTraitTest extends TestCase
     /**
      * @return void
      */
-    public function testStringStartsWithFalse()
+    public function testStringStartsWithFalse(): void
     {
         $contains = $this->stringDoesStartsWith('this is a text', 'is');
 
@@ -53,7 +53,7 @@ class StringTraitTest extends TestCase
     /**
      * @return void
      */
-    public function testStringEndsWithTrue()
+    public function testStringEndsWithTrue(): void
     {
         $contains = $this->stringDoesEndsWith('this is a text', 'text');
 
@@ -63,7 +63,7 @@ class StringTraitTest extends TestCase
     /**
      * @return void
      */
-    public function testStringEndsWithFalse()
+    public function testStringEndsWithFalse(): void
     {
         $contains = $this->stringDoesEndsWith('this is a text', 'this');
 
@@ -73,7 +73,7 @@ class StringTraitTest extends TestCase
     /**
      * @return void
      */
-    public function testStringEndsWithEmptySearchString()
+    public function testStringEndsWithEmptySearchString(): void
     {
         $contains = $this->stringDoesEndsWith('this is a text', '');
 

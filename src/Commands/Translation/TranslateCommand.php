@@ -56,10 +56,10 @@ class TranslateCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return int|void
-     * @throws \Exception
+     * @return int
+     * @throws \PHPUnuhi\Exceptions\ConfigurationException
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 
@@ -203,11 +203,11 @@ class TranslateCommand extends Command
 
         if ($translateFailedCount > 0) {
             $io->warning($translatedCount . ' translation(s) are updated! ' . $translateFailedCount . ' translation(s) not updated!');
-            exit(0);
+            return 0;
         }
 
         $io->success($translatedCount . ' translation(s) are updated!');
-        exit(0);
+        return 0;
     }
 
 

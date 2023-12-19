@@ -13,7 +13,7 @@ class LocaleTest extends TestCase
     /**
      * @return void
      */
-    public function testName()
+    public function testName(): void
     {
         $locale = new Locale('en GB', 'de.json', 'de-section');
 
@@ -23,7 +23,7 @@ class LocaleTest extends TestCase
     /**
      * @return void
      */
-    public function testFilename()
+    public function testFilename(): void
     {
         $locale = new Locale('en GB', './de.json', 'de-section');
 
@@ -33,7 +33,7 @@ class LocaleTest extends TestCase
     /**
      * @return void
      */
-    public function testIniSection()
+    public function testIniSection(): void
     {
         $locale = new Locale('en GB', 'de.json', 'de-section');
 
@@ -43,7 +43,7 @@ class LocaleTest extends TestCase
     /**
      * @return void
      */
-    public function testExchangeIdentifierFilename()
+    public function testExchangeIdentifierFilename(): void
     {
         $locale = new Locale('', 'de.json', '');
 
@@ -53,7 +53,7 @@ class LocaleTest extends TestCase
     /**
      * @return void
      */
-    public function testExchangeIdentifierName()
+    public function testExchangeIdentifierName(): void
     {
         $locale = new Locale('DE', 'de.json', '');
 
@@ -63,7 +63,7 @@ class LocaleTest extends TestCase
     /**
      * @return void
      */
-    public function testExchangeIdentifierHasNoSpaces()
+    public function testExchangeIdentifierHasNoSpaces(): void
     {
         $locale = new Locale('en GB', 'de.json', '');
 
@@ -73,7 +73,7 @@ class LocaleTest extends TestCase
     /**
      * @return void
      */
-    public function testGetTranslationKeys()
+    public function testGetTranslationKeys(): void
     {
         $locale = new Locale('', '', '');
         $locale->addTranslation('title', 'Titel', '');
@@ -87,7 +87,7 @@ class LocaleTest extends TestCase
     /**
      * @return void
      */
-    public function testGetValidTranslations()
+    public function testGetValidTranslations(): void
     {
         $locale = new Locale('', '', '');
         # valid
@@ -101,7 +101,7 @@ class LocaleTest extends TestCase
     /**
      * @return void
      */
-    public function testGetTranslations()
+    public function testGetTranslations(): void
     {
         $locale = new Locale('', '', '');
         $locale->addTranslation('title', 'Titel', '');
@@ -113,7 +113,7 @@ class LocaleTest extends TestCase
     /**
      * @return void
      */
-    public function testSetTranslations()
+    public function testSetTranslations(): void
     {
         $locale = new Locale('', '', '');
 
@@ -127,7 +127,7 @@ class LocaleTest extends TestCase
         $this->assertCount(1, $locale->getTranslations());
     }
 
-    public function testSetLineNumbers()
+    public function testSetLineNumbers(): void
     {
         $locale = new Locale('', '', '');
 
@@ -141,7 +141,7 @@ class LocaleTest extends TestCase
         $this->assertCount(1, $locale->getLineNumbers());
     }
 
-    public function testGetLineNumbers()
+    public function testGetLineNumbers(): void
     {
         $locale = new Locale('', '', '');
 
@@ -154,7 +154,7 @@ class LocaleTest extends TestCase
         $this->assertCount(2, $locale->getLineNumbers());
     }
 
-    public function testFindLineNumber()
+    public function testFindLineNumber(): void
     {
         $locale = new Locale('', '', '');
 

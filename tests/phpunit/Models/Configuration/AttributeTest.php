@@ -11,7 +11,7 @@ class AttributeTest extends TestCase
     /**
      * @return void
      */
-    public function testName()
+    public function testName(): void
     {
         $attr = new Attribute('format', '');
 
@@ -21,7 +21,7 @@ class AttributeTest extends TestCase
     /**
      * @return void
      */
-    public function testValue()
+    public function testValue(): void
     {
         $attr = new Attribute('format', 'ini');
 

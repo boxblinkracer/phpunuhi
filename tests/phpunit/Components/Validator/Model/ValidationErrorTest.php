@@ -32,7 +32,7 @@ class ValidationErrorTest extends TestCase
     /**
      * @return void
      */
-    public function testClassification()
+    public function testClassification(): void
     {
         $this->assertEquals('NOT_FOUND', $this->error->getClassification());
     }
@@ -40,7 +40,7 @@ class ValidationErrorTest extends TestCase
     /**
      * @return void
      */
-    public function testLocale()
+    public function testLocale(): void
     {
         $this->assertEquals('en_US', $this->error->getLocale());
     }
@@ -48,7 +48,7 @@ class ValidationErrorTest extends TestCase
     /**
      * @return void
      */
-    public function testFilename()
+    public function testFilename(): void
     {
         $this->assertEquals('en.json', $this->error->getFilename());
     }
@@ -56,7 +56,7 @@ class ValidationErrorTest extends TestCase
     /**
      * @return void
      */
-    public function testMessage()
+    public function testMessage(): void
     {
         $this->assertEquals('Translation not found', $this->error->getMessage());
     }
@@ -64,7 +64,7 @@ class ValidationErrorTest extends TestCase
     /**
      * @return void
      */
-    public function testIdentifier()
+    public function testIdentifier(): void
     {
         $this->assertEquals('ID-123', $this->error->getIdentifier());
     }
@@ -72,7 +72,7 @@ class ValidationErrorTest extends TestCase
     /**
      * @return void
      */
-    public function testLineNumber()
+    public function testLineNumber(): void
     {
         $this->assertEquals('14', $this->error->getLineNumber());
     }

@@ -28,7 +28,7 @@ class CamelCaseValidatorTest extends TestCase
     /**
      * @return void
      */
-    public function testIdentifier()
+    public function testIdentifier(): void
     {
         $this->assertEquals('camel', $this->validator->getIdentifier());
     }
@@ -52,7 +52,7 @@ class CamelCaseValidatorTest extends TestCase
      * @dataProvider getData
      * @return void
      */
-    public function testIsValid(bool $expectedValid, string $text)
+    public function testIsValid(bool $expectedValid, string $text): void
     {
         $isValid = $this->validator->isValid($text);
 

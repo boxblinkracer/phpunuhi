@@ -11,7 +11,7 @@ class PercentageCalculatorTest extends TestCase
     /**
      *
      */
-    public function testRoundedPercentage()
+    public function testRoundedPercentage(): void
     {
         $calculator = new PercentageCalculator();
 
@@ -23,7 +23,7 @@ class PercentageCalculatorTest extends TestCase
     /**
      *
      */
-    public function testRoundedPercentageDivByZero()
+    public function testRoundedPercentageDivByZero(): void
     {
         $calculator = new PercentageCalculator();
 
@@ -35,7 +35,7 @@ class PercentageCalculatorTest extends TestCase
     /**
      *
      */
-    public function testEmptyMeansFull()
+    public function testEmptyMeansFull(): void
     {
         $calculator = new PercentageCalculator();
 

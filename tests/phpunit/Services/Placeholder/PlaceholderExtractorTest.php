@@ -14,7 +14,7 @@ class PlaceholderExtractorTest extends TestCase
      *
      * @return void
      */
-    public function testBothPlaceholdersAreFound()
+    public function testBothPlaceholdersAreFound(): void
     {
         $text = 'Hello, my name is {firstname} {lastname}! Thank you for your attention';
 
@@ -33,7 +33,7 @@ class PlaceholderExtractorTest extends TestCase
      *
      * @return void
      */
-    public function testNoPlaceholdersReturnsEmptyList()
+    public function testNoPlaceholdersReturnsEmptyList(): void
     {
         $text = 'Hello! Thank you for your attention';
 
@@ -50,7 +50,7 @@ class PlaceholderExtractorTest extends TestCase
      *
      * @return void
      */
-    public function testMissingStartAndEndMarkers()
+    public function testMissingStartAndEndMarkers(): void
     {
         $text = 'Hello, my name is {firstname} lastname} {lastname';
 
@@ -68,7 +68,7 @@ class PlaceholderExtractorTest extends TestCase
      *
      * @return void
      */
-    public function testPlaceholderWithSpace()
+    public function testPlaceholderWithSpace(): void
     {
         $text = 'Hello, my name {firstname lastname}';
 

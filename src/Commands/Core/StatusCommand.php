@@ -34,9 +34,9 @@ class StatusCommand extends Command
      * @param InputInterface $input
      * @param OutputInterface $output
      * @return int
-     * @throws \Exception
+     * @throws \PHPUnuhi\Exceptions\ConfigurationException
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 
@@ -80,7 +80,7 @@ class StatusCommand extends Command
         $io->writeln('   Coverage: ' . $coverageResult->getCoverage() . '% (' . $coverageResult->getCountTranslated() . '/' . $coverageResult->getCountAll() . ')');
         $io->writeln('   Words: ' . $coverageResult->getWordCount());
 
-        exit(0);
+        return 0;
     }
 
 }

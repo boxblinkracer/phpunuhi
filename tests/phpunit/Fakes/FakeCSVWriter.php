@@ -42,7 +42,7 @@ class FakeCSVWriter implements CSVWriterInterface
      * @param string $filename
      * @return resource|void
      */
-    public function open(string $filename)
+    public function open(string $filename): void
     {
         // TODO: Implement open() method.
     }

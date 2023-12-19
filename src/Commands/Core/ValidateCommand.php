@@ -50,10 +50,11 @@ class ValidateCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return int|void
-     * @throws \Exception
+     * @return int
+     * @throws \PHPUnuhi\Components\Validator\CaseStyle\Exception\CaseStyleNotFoundException
+     * @throws \PHPUnuhi\Exceptions\ConfigurationException
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 
@@ -171,11 +172,11 @@ class ValidateCommand extends Command
 
         if ($isAllValid) {
             $io->success('All translations are valid!');
-            exit(0);
+            return 0;
         }
 
         $io->error('Found ' . $errorCount . ' errors!');
-        exit(1);
+        return 1;
     }
 
 }

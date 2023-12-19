@@ -11,7 +11,7 @@ class GroupNameServiceTest extends TestCase
     /**
      * @return void
      */
-    public function testGetGroupId()
+    public function testGetGroupId(): void
     {
         $service = new GroupNameService();
 
@@ -23,7 +23,7 @@ class GroupNameServiceTest extends TestCase
     /**
      * @return void
      */
-    public function testPropertyName()
+    public function testPropertyName(): void
     {
         $service = new GroupNameService();
 
@@ -38,7 +38,7 @@ class GroupNameServiceTest extends TestCase
      *
      * @return void
      */
-    public function testInvalidGroupId()
+    public function testInvalidGroupId(): void
     {
         $service = new GroupNameService();
 
@@ -50,7 +50,7 @@ class GroupNameServiceTest extends TestCase
     /**
      * @return void
      */
-    public function testInvalidGroupName()
+    public function testInvalidGroupName(): void
     {
         $service = new GroupNameService();
 

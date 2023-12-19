@@ -11,7 +11,7 @@ class FilterTest extends TestCase
     /**
      * @return void
      */
-    public function testHasFilters()
+    public function testHasFilters(): void
     {
         $filter = new Filter();
         $this->assertEquals(false, $filter->hasFilters());
@@ -28,7 +28,7 @@ class FilterTest extends TestCase
     /**
      * @return void
      */
-    public function testIncludeKey()
+    public function testIncludeKey(): void
     {
         $filter = new Filter();
         $filter->addIncludeKey('custom_field*');
@@ -41,7 +41,7 @@ class FilterTest extends TestCase
     /**
      * @return void
      */
-    public function testExcludeKey()
+    public function testExcludeKey(): void
     {
         $filter = new Filter();
         $filter->addExcludeKey('custom_field*');
@@ -54,7 +54,7 @@ class FilterTest extends TestCase
     /**
      * @return void
      */
-    public function testIncludeKeyWithWildcard()
+    public function testIncludeKeyWithWildcard(): void
     {
         $filter = new Filter();
         $filter->addIncludeKey('meta_*');
@@ -67,7 +67,7 @@ class FilterTest extends TestCase
     /**
      * @return void
      */
-    public function testExcludeKeyWithWildcard()
+    public function testExcludeKeyWithWildcard(): void
     {
         $filter = new Filter();
         $filter->addExcludeKey('meta_*');
@@ -83,7 +83,7 @@ class FilterTest extends TestCase
      *
      * @return void
      */
-    public function testIncludeRulesOverExclude()
+    public function testIncludeRulesOverExclude(): void
     {
         $filter = new Filter();
         $filter->addIncludeKey('field_a');
@@ -99,7 +99,7 @@ class FilterTest extends TestCase
     /**
      * @return void
      */
-    public function testIncludeCanBeIncludedMultipleTimes()
+    public function testIncludeCanBeIncludedMultipleTimes(): void
     {
         $filter = new Filter();
         $filter->addIncludeKey('abc');
@@ -113,7 +113,7 @@ class FilterTest extends TestCase
     /**
      * @return void
      */
-    public function testIncludeCanBeExcludedMultipleTimes()
+    public function testIncludeCanBeExcludedMultipleTimes(): void
     {
         $filter = new Filter();
         $filter->addExcludeKey('abc');

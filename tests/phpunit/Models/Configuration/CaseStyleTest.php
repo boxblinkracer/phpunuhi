@@ -11,7 +11,7 @@ class CaseStyleTest extends TestCase
     /**
      * @return void
      */
-    public function testName()
+    public function testName(): void
     {
         $style = new CaseStyle('pascal');
 
@@ -21,7 +21,7 @@ class CaseStyleTest extends TestCase
     /**
      * @return void
      */
-    public function testDefaultLevel()
+    public function testDefaultLevel(): void
     {
         $style = new CaseStyle('pascal');
 
@@ -31,7 +31,7 @@ class CaseStyleTest extends TestCase
     /**
      * @return void
      */
-    public function testSetLevel()
+    public function testSetLevel(): void
     {
         $style = new CaseStyle('pascal');
         $style->setLevel(0);
@@ -42,7 +42,7 @@ class CaseStyleTest extends TestCase
     /**
      * @return void
      */
-    public function testHasLevel()
+    public function testHasLevel(): void
     {
         $style = new CaseStyle('pascal');
         $style->setLevel(0);

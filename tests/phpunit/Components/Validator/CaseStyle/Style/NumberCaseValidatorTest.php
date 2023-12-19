@@ -32,7 +32,7 @@ class NumberCaseValidatorTest extends TestCase
     /**
      * @return void
      */
-    public function testIdentifier()
+    public function testIdentifier(): void
     {
         $this->assertEquals('number', $this->validator->getIdentifier());
     }
@@ -57,7 +57,7 @@ class NumberCaseValidatorTest extends TestCase
      * @dataProvider getData
      * @return void
      */
-    public function testIsValid(bool $expectedValid, string $text)
+    public function testIsValid(bool $expectedValid, string $text): void
     {
         $isValid = $this->validator->isValid($text);
 

@@ -11,7 +11,7 @@ class TranslationTest extends TestCase
     /**
      * @return void
      */
-    public function testKey()
+    public function testKey(): void
     {
         $translation = new Translation('title', 'Titel', '');
 
@@ -21,7 +21,7 @@ class TranslationTest extends TestCase
     /**
      * @return void
      */
-    public function testValue()
+    public function testValue(): void
     {
         $translation = new Translation('title', 'Titel', '');
 
@@ -31,7 +31,7 @@ class TranslationTest extends TestCase
     /**
      * @return void
      */
-    public function testIsEmptyWithSpaces()
+    public function testIsEmptyWithSpaces(): void
     {
         $translation = new Translation('title', '   ', '');
 
@@ -41,7 +41,7 @@ class TranslationTest extends TestCase
     /**
      * @return void
      */
-    public function testSetValue()
+    public function testSetValue(): void
     {
         $translation = new Translation('title', '   ', '');
         $translation->setValue('abc');
@@ -52,7 +52,7 @@ class TranslationTest extends TestCase
     /**
      * @return void
      */
-    public function testGroup()
+    public function testGroup(): void
     {
         $translation = new Translation('title', '   ', 'product-123');
         $translation->setValue('abc');

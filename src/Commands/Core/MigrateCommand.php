@@ -36,9 +36,9 @@ class MigrateCommand extends Command
      * @param InputInterface $input
      * @param OutputInterface $output
      * @return int
-     * @throws \Exception
+     * @throws \PHPUnuhi\Exceptions\ConfigurationException
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 
@@ -72,7 +72,7 @@ class MigrateCommand extends Command
 
         $io->section('Storage successfully migrated to format: ' . $outputFormat);
 
-        exit(0);
+        return 0;
     }
 
     /**

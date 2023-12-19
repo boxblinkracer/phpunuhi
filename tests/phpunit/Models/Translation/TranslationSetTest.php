@@ -17,7 +17,7 @@ class TranslationSetTest extends TestCase
     /**
      * @return void
      */
-    public function testName()
+    public function testName(): void
     {
         $attributes = [];
         $filter = new Filter();
@@ -31,7 +31,7 @@ class TranslationSetTest extends TestCase
     /**
      * @return void
      */
-    public function testFormat()
+    public function testFormat(): void
     {
         $attributes = [];
         $filter = new Filter();
@@ -47,7 +47,7 @@ class TranslationSetTest extends TestCase
      * @return void
      * @throws \Exception
      */
-    public function testProtection()
+    public function testProtection(): void
     {
         $attributes = [];
         $filter = new Filter();
@@ -65,7 +65,7 @@ class TranslationSetTest extends TestCase
      * @return void
      * @throws \Exception
      */
-    public function testRules()
+    public function testRules(): void
     {
         $attributes = [];
         $filter = new Filter();
@@ -83,7 +83,7 @@ class TranslationSetTest extends TestCase
     /**
      * @return void
      */
-    public function testAttributes()
+    public function testAttributes(): void
     {
         $attributes = [];
         $attributes[] = new Attribute('indent', '2');
@@ -105,7 +105,7 @@ class TranslationSetTest extends TestCase
     /**
      * @return void
      */
-    public function testAttributeValue()
+    public function testAttributeValue(): void
     {
         $attributes = [];
         $attributes[] = new Attribute('indent', '2');
@@ -121,7 +121,7 @@ class TranslationSetTest extends TestCase
     /**
      * @return void
      */
-    public function testGetAttributeValueNotFound()
+    public function testGetAttributeValueNotFound(): void
     {
         $attributes = [];
         $attributes[] = new Attribute('indent', '2');
@@ -137,7 +137,7 @@ class TranslationSetTest extends TestCase
     /**
      * @return void
      */
-    public function testGetLocales()
+    public function testGetLocales(): void
     {
         $attributes = [];
         $filter = new Filter();
@@ -155,7 +155,7 @@ class TranslationSetTest extends TestCase
      * @return void
      * @throws \PHPUnuhi\Exceptions\TranslationNotFoundException
      */
-    public function testFindAnyExistingTranslation()
+    public function testFindAnyExistingTranslation(): void
     {
         $attributes = [];
         $filter = new Filter();
@@ -184,7 +184,7 @@ class TranslationSetTest extends TestCase
      * @return void
      * @throws \PHPUnuhi\Exceptions\TranslationNotFoundException
      */
-    public function testFindAnyExistingTranslationWithLocale()
+    public function testFindAnyExistingTranslationWithLocale(): void
     {
         $attributes = [];
         $filter = new Filter();
@@ -217,7 +217,7 @@ class TranslationSetTest extends TestCase
      * @return void
      * @throws \Exception
      */
-    public function testFindAnyExistingTranslationNotFound()
+    public function testFindAnyExistingTranslationNotFound(): void
     {
         $this->expectException(TranslationNotFoundException::class);
 

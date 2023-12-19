@@ -21,7 +21,7 @@ class FilterHandlerTest extends TestCase
      *
      * @return void
      */
-    public function testApplyFilter()
+    public function testApplyFilter(): void
     {
         $handler = new FilterHandler();
 

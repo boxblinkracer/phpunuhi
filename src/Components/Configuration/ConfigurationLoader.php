@@ -41,7 +41,7 @@ class ConfigurationLoader
      * @throws ConfigurationException
      * @throws \Exception
      */
-    public function load(string $rootConfigFilename)
+    public function load(string $rootConfigFilename): \PHPUnuhi\Models\Configuration\Configuration
     {
         $rootXmlString = (string)file_get_contents($rootConfigFilename);
         $rootXmlSettings = simplexml_load_string($rootXmlString);
@@ -117,7 +117,7 @@ class ConfigurationLoader
      * @param SimpleXMLElement $rootNode
      * @return array<mixed>
      */
-    private function loadImports(SimpleXMLElement $rootNode)
+    private function loadImports(SimpleXMLElement $rootNode): array
     {
         $imports = [];
 
@@ -247,7 +247,7 @@ class ConfigurationLoader
      * @return array<mixed>
      * @throws \Exception
      */
-    private function parseFormat(SimpleXMLElement $rootFormat)
+    private function parseFormat(SimpleXMLElement $rootFormat): array
     {
         $children = get_object_vars($rootFormat);
 
@@ -442,7 +442,7 @@ class ConfigurationLoader
                 $innerValue = str_replace('%locale_lc%', strtolower($localeName), $innerValue);
 
                 # if we have a basePath, we also need to replace any values
-                if (!empty($basePath->getValue())) {
+                if ($basePath->getValue() !== '' && $basePath->getValue() !== '0') {
                     $innerValue = str_replace('%base_path%', $basePath->getValue(), $innerValue);
                 }
 
@@ -467,7 +467,7 @@ class ConfigurationLoader
      * @return void
      * @throws \Exception
      */
-    private function validateConfig(Configuration $configuration)
+    private function validateConfig(Configuration $configuration): void
     {
         $foundSets = [];
 
@@ -509,7 +509,7 @@ class ConfigurationLoader
      * @param SimpleXMLElement $node
      * @return array<Attribute>
      */
-    private function getAttributes(SimpleXMLElement $node)
+    private function getAttributes(SimpleXMLElement $node): array
     {
         $setAttributes = [];
         $nodeAttributes = $node->attributes();
@@ -527,7 +527,7 @@ class ConfigurationLoader
      * @param SimpleXMLElement $node
      * @return Attribute
      */
-    private function getAttribute(string $name, SimpleXMLElement $node)
+    private function getAttribute(string $name, SimpleXMLElement $node): \PHPUnuhi\Models\Configuration\Attribute
     {
         $nodeAttributes = $node->attributes();
 

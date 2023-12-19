@@ -11,7 +11,7 @@ class PlaceholderTest extends TestCase
     /**
      * @return void
      */
-    public function testId()
+    public function testId(): void
     {
         $ph = new Placeholder('test');
 
@@ -21,7 +21,7 @@ class PlaceholderTest extends TestCase
     /**
      * @return void
      */
-    public function testValue()
+    public function testValue(): void
     {
         $ph = new Placeholder('{firstname}');
 

@@ -18,7 +18,7 @@ class CSVExchangeTest extends TestCase
      * The export does not consider groups
      * @return void
      */
-    public function testExportWithoutGroups()
+    public function testExportWithoutGroups(): void
     {
         $fakeWriter = new FakeCSVWriter();
 
@@ -71,7 +71,7 @@ class CSVExchangeTest extends TestCase
      * The export considers groups
      * @return void
      */
-    public function testExportWithGroups()
+    public function testExportWithGroups(): void
     {
         $fakeWriter = new FakeCSVWriter();
 

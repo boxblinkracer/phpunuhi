@@ -50,9 +50,9 @@ class ImportCommand extends Command
      * @param InputInterface $input
      * @param OutputInterface $output
      * @return int
-     * @throws \Exception
+     * @throws \PHPUnuhi\Exceptions\ConfigurationException
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 
@@ -112,11 +112,11 @@ class ImportCommand extends Command
 
         if ($result instanceof StorageSaveResult) {
             $io->success('Imported ' . $result->getSavedTranslations() . ' translations of ' . $result->getSavedLocales() . ' locales for set: ' . $setName);
-            exit(0);
+            return 0;
         }
 
         $io->error('No sets found with name: ' . $setName);
-        exit(1);
+        return 1;
     }
 
     /**

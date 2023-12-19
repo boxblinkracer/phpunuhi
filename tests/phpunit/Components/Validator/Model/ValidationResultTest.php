@@ -48,7 +48,7 @@ class ValidationResultTest extends TestCase
     /**
      * @return void
      */
-    public function testGetTests()
+    public function testGetTests(): void
     {
         $this->assertCount(1, $this->result->getTests());
     }
@@ -56,7 +56,7 @@ class ValidationResultTest extends TestCase
     /**
      * @return void
      */
-    public function testGetErrors()
+    public function testGetErrors(): void
     {
         $this->assertCount(1, $this->result->getErrors());
     }

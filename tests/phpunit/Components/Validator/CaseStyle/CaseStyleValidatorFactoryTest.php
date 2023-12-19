@@ -15,7 +15,7 @@ class CaseStyleValidatorFactoryTest extends TestCase
      * @return void
      * @throws CaseStyleNotFoundException
      */
-    public function testUnknownIdentifierThrowsException()
+    public function testUnknownIdentifierThrowsException(): void
     {
         $factory = new CaseStyleValidatorFactory('', [], '');
 
@@ -28,7 +28,7 @@ class CaseStyleValidatorFactoryTest extends TestCase
      * @return void
      * @throws CaseStyleNotFoundException
      */
-    public function testValidatorFound()
+    public function testValidatorFound(): void
     {
         $factory = new CaseStyleValidatorFactory('', [], '');
 

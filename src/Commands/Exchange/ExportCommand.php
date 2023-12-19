@@ -46,9 +46,9 @@ class ExportCommand extends Command
      * @param InputInterface $input
      * @param OutputInterface $output
      * @return int
-     * @throws \Exception
+     * @throws \PHPUnuhi\Exceptions\ConfigurationException
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 
@@ -89,7 +89,7 @@ class ExportCommand extends Command
         }
 
         $io->success('All translations exported!');
-        exit(0);
+        return 0;
     }
 
 }

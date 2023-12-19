@@ -60,7 +60,7 @@ class CoverageServiceTest extends TestCase
     /**
      * @return void
      */
-    public function testGetCoverage()
+    public function testGetCoverage(): void
     {
         $service = new CoverageService();
 

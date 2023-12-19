@@ -11,7 +11,7 @@ class CommandOptionTest extends TestCase
     /**
      * @return void
      */
-    public function testName()
+    public function testName(): void
     {
         $option = new CommandOption('delimiter', ',');
 
@@ -21,7 +21,7 @@ class CommandOptionTest extends TestCase
     /**
      * @return void
      */
-    public function testHasValue()
+    public function testHasValue(): void
     {
         $option = new CommandOption('delimiter', ',');
 
@@ -31,7 +31,7 @@ class CommandOptionTest extends TestCase
     /**
      * @return void
      */
-    public function testHasNoValue()
+    public function testHasNoValue(): void
     {
         $option = new CommandOption('delimiter', '');
 

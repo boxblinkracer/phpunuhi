@@ -35,7 +35,7 @@ class ValidationTestTest extends TestCase
     /**
      * @return void
      */
-    public function testFilename()
+    public function testFilename(): void
     {
         $this->assertEquals('en.json', $this->test->getFilename());
     }
@@ -43,7 +43,7 @@ class ValidationTestTest extends TestCase
     /**
      * @return void
      */
-    public function testLineNumber()
+    public function testLineNumber(): void
     {
         $this->assertEquals(15, $this->test->getLineNumber());
     }
@@ -51,7 +51,7 @@ class ValidationTestTest extends TestCase
     /**
      * @return void
      */
-    public function testClassification()
+    public function testClassification(): void
     {
         $this->assertEquals('EXISTING', $this->test->getClassification());
     }
@@ -59,7 +59,7 @@ class ValidationTestTest extends TestCase
     /**
      * @return void
      */
-    public function testTitle()
+    public function testTitle(): void
     {
         $this->assertEquals('[en_US] Testing btnCancel', $this->test->getTitle());
     }
@@ -67,7 +67,7 @@ class ValidationTestTest extends TestCase
     /**
      * @return void
      */
-    public function testFailureMessage()
+    public function testFailureMessage(): void
     {
         $this->assertEquals('It was not existing', $this->test->getFailureMessage());
     }
@@ -75,7 +75,7 @@ class ValidationTestTest extends TestCase
     /**
      * @return void
      */
-    public function testTranslationKey()
+    public function testTranslationKey(): void
     {
         $this->assertEquals('btnCancel', $this->test->getTranslationKey());
     }
@@ -83,7 +83,7 @@ class ValidationTestTest extends TestCase
     /**
      * @return void
      */
-    public function testSuccess()
+    public function testSuccess(): void
     {
         $this->assertTrue($this->test->isSuccess());
     }

@@ -29,7 +29,7 @@ echo ">> build complete...";
  * @param $dir
  * @return bool
  */
-function deleteDirectory($dir)
+function deleteDirectory(string $dir): bool
 {
     if (!file_exists($dir)) {
         return true;

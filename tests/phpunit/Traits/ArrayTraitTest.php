@@ -13,7 +13,7 @@ class ArrayTraitTest extends TestCase
     /**
      * @return void
      */
-    public function testGetFlatArray()
+    public function testGetFlatArray(): void
     {
         $array = [
             'title' => 'Title',
@@ -37,7 +37,7 @@ class ArrayTraitTest extends TestCase
     /**
      * @return void
      */
-    public function testGetMultiDimensionalArray()
+    public function testGetMultiDimensionalArray(): void
     {
         $array = [
             'title' => 'Title',
@@ -61,7 +61,7 @@ class ArrayTraitTest extends TestCase
     /**
      * @return void
      */
-    public function testGetMultiDimensionalWithDifferentDelimiter()
+    public function testGetMultiDimensionalWithDifferentDelimiter(): void
     {
         $array = [
             'card.title' => 'Title',
@@ -83,7 +83,7 @@ class ArrayTraitTest extends TestCase
     /**
      * @return void
      */
-    public function testGetMultiDimensionalWithEmptyDelimiter()
+    public function testGetMultiDimensionalWithEmptyDelimiter(): void
     {
         $array = [
             'card.title' => 'Title',
@@ -101,7 +101,7 @@ class ArrayTraitTest extends TestCase
     /**
      * @return void
      */
-    public function testGetMultiDimensionalWith2NestedLevels()
+    public function testGetMultiDimensionalWith2NestedLevels(): void
     {
         $array = [
             'sub.sub2' => 'Title',
@@ -124,7 +124,7 @@ class ArrayTraitTest extends TestCase
         $this->assertEquals($expected, $dimensional);
     }
 
-    public function testGetLineNumbers()
+    public function testGetLineNumbers(): void
     {
         $array = [
             'title' => 'Title',
@@ -146,7 +146,7 @@ class ArrayTraitTest extends TestCase
         $this->assertEquals($expected, $flat);
     }
 
-    public function testGetLineNumbersWithOffset()
+    public function testGetLineNumbersWithOffset(): void
     {
         $array = [
             'title' => 'Title',
@@ -168,7 +168,7 @@ class ArrayTraitTest extends TestCase
         $this->assertEquals($expected, $flat);
     }
 
-    public function testGetLineNumbersWithClosingBrackets()
+    public function testGetLineNumbersWithClosingBrackets(): void
     {
         $array = [
             'title' => 'Title',

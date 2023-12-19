@@ -12,7 +12,7 @@ class DeepLTranslatorTest extends TestCase
     /**
      * @return void
      */
-    public function testAllowedFormality()
+    public function testAllowedFormality(): void
     {
         $expected = [
             'de',
