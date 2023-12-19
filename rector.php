@@ -25,21 +25,8 @@ return static function (RectorConfig $rectorConfig): void {
         SetList::STRICT_BOOLEANS,
         SetList::TYPE_DECLARATION,
         SetList::EARLY_RETURN,
+        SetList::INSTANCEOF,
     ]);
-
-  #  public const PRIVATIZATION = __DIR__ . '/../../../config/set/privatization.php';
-    /**
-     * @var string
-     */
-  #  public const TYPE_DECLARATION = __DIR__ . '/../../../config/set/type-declaration.php';
-    /**
-     * @var string
-     */
-  #  public const EARLY_RETURN = __DIR__ . '/../../../config/set/early-return.php';
-    /**
-     * @var string
-     */
-  #  public const INSTANCEOF = __DIR__ . '/../../../config/set/instanceof.php';
 
     $rectorConfig->skip([
         RemoveUselessReturnTagRector::class,
