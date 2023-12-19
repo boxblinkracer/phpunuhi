@@ -50,6 +50,7 @@ build: ##1 Builds PHPUnuhi and creates phpunuhi.phar
 #------------------------------------------------------------------------------------------------
 
 pr: ##2 Runs and prepares everything for a pull request
+	php vendor/bin/rector process
 	PHP_CS_FIXER_IGNORE_ENV=1 php ./vendor/bin/php-cs-fixer fix --config=./.php_cs.php
 	@make phpcheck -B
 	@make phpmin -B
@@ -73,6 +74,9 @@ stan: ##3 Starts the PHPStan Analyser
 
 phpmnd: ##3 Runs the checks for magic numbers
 	php ./vendor/bin/phpmnd ./src
+
+rector: ##3 Runs the Rector checks in dry run
+	php vendor/bin/rector process --dry-run
 
 phpunit: ##3 Runs all tests
 	XDEBUG_MODE=coverage php ./vendor/bin/phpunit --configuration=./.phpunit.xml -v --coverage-html ./.reports/phpunit/coverage --coverage-clover ./.reports/phpunit/clover/index.xml
