@@ -15,14 +15,6 @@ class Protection
      */
     private $terms = [];
 
-
-    /**
-     *
-     */
-    public function __construct()
-    {
-    }
-
     /**
      * @param string $start
      * @param string $end

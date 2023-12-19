@@ -12,14 +12,6 @@ class ReportResult
 
 
     /**
-     *
-     */
-    public function __construct()
-    {
-    }
-
-
-    /**
      * @param SuiteResult $result
      * @return void
      */

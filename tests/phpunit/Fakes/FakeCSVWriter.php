@@ -14,14 +14,6 @@ class FakeCSVWriter implements CSVWriterInterface
 
 
     /**
-     *
-     */
-    public function __construct()
-    {
-    }
-
-
-    /**
      * @param string $outputDir
      * @return void
      */

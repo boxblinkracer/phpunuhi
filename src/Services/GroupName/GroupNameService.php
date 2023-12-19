@@ -24,7 +24,7 @@ class GroupNameService
 
         $group = explode('.', $translationId)[0];
 
-        return (string)str_replace('group--', '', $group);
+        return str_replace('group--', '', $group);
     }
 
     /**
@@ -40,7 +40,7 @@ class GroupNameService
         $group = explode('.', $translationId)[0];
         $group = str_replace('group--', '', $group);
 
-        return (string)str_replace('group--' . $group . '.', '', $translationId);
+        return str_replace('group--' . $group . '.', '', $translationId);
     }
 
 }

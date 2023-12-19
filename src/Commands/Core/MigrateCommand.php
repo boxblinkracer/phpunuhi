@@ -86,7 +86,6 @@ class MigrateCommand extends Command
 
         $directory = pathinfo($originalFilename, PATHINFO_DIRNAME);
         $pureName = pathinfo($locale->getFilename(), PATHINFO_FILENAME);
-        $extension = pathinfo($locale->getFilename(), PATHINFO_EXTENSION);
 
         # also add ini section if existing
         $newFile = $directory . '/' . $pureName;
@@ -95,9 +94,7 @@ class MigrateCommand extends Command
             $newFile .= '_' . $locale->getIniSection();
         }
 
-        $newFile .= '.' . $targetStorage->getFileExtension();
-
-        return $newFile;
+        return $newFile . ('.' . $targetStorage->getFileExtension());
     }
 
 }

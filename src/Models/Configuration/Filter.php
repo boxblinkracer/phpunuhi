@@ -15,14 +15,6 @@ class Filter
      */
     private $fieldsExclude = [];
 
-
-    /**
-     *
-     */
-    public function __construct()
-    {
-    }
-
     /**
      * @return bool
      */

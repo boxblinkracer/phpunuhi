@@ -70,7 +70,7 @@ class CSVImporter
                     if ($localeExchangeID !== '') {
 
                         $importData[] = new ImportEntry(
-                            (string)$localeExchangeID,
+                            $localeExchangeID,
                             (string)$key,
                             (string)$group,
                             (string)$value

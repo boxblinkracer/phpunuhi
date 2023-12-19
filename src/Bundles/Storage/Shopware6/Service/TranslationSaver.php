@@ -146,9 +146,6 @@ class TranslationSaver
         $localeCount = 0;
         $translationCount = 0;
 
-        $groupNameService = new GroupNameService();
-
-
         foreach ($set->getLocales() as $locale) {
 
             $currentLanguageID = $this->getShopwareLanguageId($locale, $allDbLanguages);
@@ -184,7 +181,7 @@ class TranslationSaver
                 $existingRow = $this->repoTranslations->getTranslationRow($entity, $entityId, $currentLanguageID);
 
                 if ($existingRow === null) {
-                    echo "   [!] Translation not existing. PHPUnuhi cannot create new entries at the moment: " . $entity . '_' . $entityId . PHP_EOL;
+                    echo "   [!] Translation not existing (Group: " . $group . "). PHPUnuhi cannot create new entries at the moment: " . $entity . '_' . $entityId . PHP_EOL;
                     continue;
                 }
 

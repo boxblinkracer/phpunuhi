@@ -531,8 +531,6 @@ class ConfigurationLoader
      */
     private function getAttribute(string $name, SimpleXMLElement $node)
     {
-        $setAttributes = [];
-
         $nodeAttributes = $node->attributes();
 
         if ($nodeAttributes !== null) {
