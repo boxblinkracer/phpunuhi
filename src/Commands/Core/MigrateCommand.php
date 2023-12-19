@@ -90,7 +90,7 @@ class MigrateCommand extends Command
         # also add ini section if existing
         $newFile = $directory . '/' . $pureName;
 
-        if (!empty($locale->getIniSection())) {
+        if ($locale->getIniSection() !== '' && $locale->getIniSection() !== '0') {
             $newFile .= '_' . $locale->getIniSection();
         }
 

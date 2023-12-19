@@ -23,12 +23,7 @@ class Filter
         if (count($this->fieldsAllow) > 0) {
             return true;
         }
-
-        if (count($this->fieldsExclude) > 0) {
-            return true;
-        }
-
-        return false;
+        return count($this->fieldsExclude) > 0;
     }
 
     /**

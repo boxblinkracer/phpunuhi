@@ -18,7 +18,7 @@ trait ArrayTrait
         $result = [];
 
         foreach ($array as $key => $value) {
-            $newKey = $rootPrefix . (empty($rootPrefix) ? '' : $delimiter) . $key;
+            $newKey = $rootPrefix . ($rootPrefix === '' || $rootPrefix === '0' ? '' : $delimiter) . $key;
 
             if (is_array($value)) {
                 $result = array_merge($result, $this->getFlatArray($value, $delimiter, $newKey));
@@ -48,7 +48,7 @@ trait ArrayTrait
 
         foreach ($array as $key => $value) {
             $result['__LINE_NUMBER__']++;
-            $newKey = $rootPrefix . (empty($rootPrefix) ? '' : $delimiter) . $key;
+            $newKey = $rootPrefix . ($rootPrefix === '' || $rootPrefix === '0' ? '' : $delimiter) . $key;
 
             if (is_array($value)) {
                 $result = array_merge(

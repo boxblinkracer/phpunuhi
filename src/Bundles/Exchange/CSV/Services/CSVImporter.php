@@ -45,7 +45,7 @@ class CSVImporter
 
         while ($row = fgetcsv($csvFile, 0, $this->delimiter)) {
 
-            if (count($headerFiles) === 0) {
+            if ($headerFiles === []) {
                 # header line
                 $headerFiles = $row;
             } else {

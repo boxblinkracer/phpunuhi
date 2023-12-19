@@ -153,11 +153,11 @@ class ValidateCommand extends Command
         }
 
 
-        if (!empty($reportFormat)) {
+        if ($reportFormat !== '' && $reportFormat !== '0') {
 
             $reporter = ReporterFactory::getInstance()->getReporter($reportFormat);
 
-            if (empty($reportFilename)) {
+            if ($reportFilename === '' || $reportFilename === '0') {
                 $reportFilename = $reporter->getDefaultFilename();
             }
 

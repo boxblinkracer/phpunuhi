@@ -73,7 +73,7 @@ class ImportCommand extends Command
 
         # -----------------------------------------------------------------
 
-        if (empty($setName)) {
+        if ($setName === '' || $setName === '0') {
             throw new \Exception('Please provide a Translation-Set name that will be imported with argument --set=xyz');
         }
 

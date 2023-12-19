@@ -56,7 +56,7 @@ class TranslationLoader
     {
         $entity = $set->getAttributeValue('entity');
 
-        if (empty($entity)) {
+        if ($entity === '' || $entity === '0') {
             throw new ConfigurationException('No entity configured for Shopware6 Translation-Set: ' . $set->getName());
         }
 
@@ -123,7 +123,7 @@ class TranslationLoader
 
             $currentLanguageID = $this->getShopwareLanguageId($locale, $allDbLanguages);
 
-            if (empty($currentLanguageID)) {
+            if ($currentLanguageID === '' || $currentLanguageID === '0') {
                 throw new \Exception('no language found for locale: ' . $locale->getName());
             }
 

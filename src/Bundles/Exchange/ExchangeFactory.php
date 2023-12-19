@@ -106,7 +106,7 @@ class ExchangeFactory
      */
     public function getExchange(string $format, array $options): ExchangeInterface
     {
-        if (empty($format)) {
+        if ($format === '' || $format === '0') {
             throw new \Exception('No format name provided for the Exchange service');
         }
 

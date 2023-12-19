@@ -46,7 +46,7 @@ class OpenAITranslator implements TranslatorInterface
     {
         $this->apiKey = (string)$options['openai-key'];
 
-        if (empty($this->apiKey)) {
+        if ($this->apiKey === '' || $this->apiKey === '0') {
             throw new \Exception('OpenAI API Key must not be empty. Please provide a key');
         }
     }

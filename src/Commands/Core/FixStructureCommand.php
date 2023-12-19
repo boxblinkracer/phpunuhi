@@ -62,7 +62,7 @@ class FixStructureCommand extends Command
 
         foreach ($config->getTranslationSets() as $set) {
 
-            if (!empty($setName) && $setName !== $set->getName()) {
+            if ($setName !== '' && $setName !== '0' && $setName !== $set->getName()) {
                 continue;
             }
 

@@ -103,7 +103,7 @@ class StorageFactory
      */
     public function getStorageByFormat(string $name, TranslationSet $set): StorageInterface
     {
-        if (empty($name)) {
+        if ($name === '' || $name === '0') {
 
             throw new \Exception('No name provided for the Storage' );
         }

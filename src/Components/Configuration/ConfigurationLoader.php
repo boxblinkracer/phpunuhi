@@ -221,11 +221,9 @@ class ConfigurationLoader
             # so make sure to throw an exception if we have a filter config.
             # this is because filters are also used in imports (at least affects imports)
             # which means that they would lead to removed keys on FILE-type storages.
-            if (!$storage->supportsFilters()) {
+            if (!$storage->supportsFilters() && $set->getFilter()->hasFilters()) {
 
-                if ($set->getFilter()->hasFilters()) {
-                    throw new ConfigurationException('Filters are not allowed for storage format: ' . $setFormat);
-                }
+                throw new ConfigurationException('Filters are not allowed for storage format: ' . $setFormat);
             }
 
 
@@ -358,7 +356,7 @@ class ConfigurationLoader
 
             $caseStyle = new CaseStyle($styleName);
 
-            if (!empty($styleLevel)) {
+            if ($styleLevel !== '' && $styleLevel !== '0') {
                 $caseStyle->setLevel((int)$styleLevel);
             }
 

@@ -60,7 +60,7 @@ class ReporterFactory
      */
     public function getReporter(string $name): ReporterInterface
     {
-        if (empty($name)) {
+        if ($name === '' || $name === '0') {
 
             throw new \Exception('No name provided for the Reporter');
         }

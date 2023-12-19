@@ -263,17 +263,14 @@ class PoStorage implements StorageInterface
 
         foreach ($lines as $line) {
 
-            if (!empty($line)) {
-
-                if (!$inBlock) {
-                    # start new block
-                    $inBlock = true;
-                    $currentBlockLines = [];
-                }
+            if (!empty($line) && !$inBlock) {
+                # start new block
+                $inBlock = true;
+                $currentBlockLines = [];
             }
 
             if (empty($line)) {
-                if (!empty($currentBlockLines)) {
+                if ($currentBlockLines !== []) {
                     $blocks[] = new Block($currentBlockLines);
                 }
                 $currentBlockLines = [];
@@ -283,7 +280,7 @@ class PoStorage implements StorageInterface
             }
         }
 
-        if (!empty($currentBlockLines)) {
+        if ($currentBlockLines !== []) {
             $blocks[] = new Block($currentBlockLines);
         }
 

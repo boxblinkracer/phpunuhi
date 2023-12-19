@@ -59,7 +59,7 @@ class CSVExchange implements ExchangeInterface
     {
         $this->csvDelimiter = (string)$options['csv-delimiter'];
 
-        if (empty($this->csvDelimiter)) {
+        if ($this->csvDelimiter === '' || $this->csvDelimiter === '0') {
             $this->csvDelimiter = ',';
         }
     }

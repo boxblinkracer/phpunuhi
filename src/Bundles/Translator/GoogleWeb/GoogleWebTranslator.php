@@ -85,7 +85,7 @@ class GoogleWebTranslator implements TranslatorInterface
         $result = str_replace("[[dot]]", '.', $result);
         $result = str_replace("[[punt]]", '.', $result);
 
-        if (count($foundPlaceholders) > 0) {
+        if ($foundPlaceholders !== []) {
             # decode our string so that we have the original placeholder values again (%productName%)
             $result = $this->placeholderEncoder->decode($result, $foundPlaceholders);
         }

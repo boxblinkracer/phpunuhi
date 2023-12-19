@@ -66,11 +66,7 @@ class Locale
      */
     public function getExchangeIdentifier(): string
     {
-        if (!empty($this->name)) {
-            $id = $this->name;
-        } else {
-            $id = basename($this->filename);
-        }
+        $id = empty($this->name) ? basename($this->filename) : $this->name;
 
         # we use this also in technical environments
         # such as class and id names in HTML
@@ -94,7 +90,8 @@ class Locale
      */
     public function addTranslation(string $key, string $value, string $group): Translation
     {
-        for ($i = 0; $i < count($this->translations); $i++) {
+        $counter = count($this->translations);
+        for ($i = 0; $i < $counter; $i++) {
             if ($this->translations[$i]->getID() === $key) {
                 unset($this->translations[$i]);
                 break;

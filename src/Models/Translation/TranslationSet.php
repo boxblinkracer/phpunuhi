@@ -201,7 +201,7 @@ class TranslationSet
             # if we have a search locale set,
             # then only search for translations of this locale.
             # if it does not match, continue
-            if (!empty($searchLocale) && $currentLocale->getName() !== $searchLocale) {
+            if ($searchLocale !== '' && $searchLocale !== '0' && $currentLocale->getName() !== $searchLocale) {
                 continue;
             }
 

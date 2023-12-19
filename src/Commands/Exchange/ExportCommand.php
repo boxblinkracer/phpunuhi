@@ -77,7 +77,7 @@ class ExportCommand extends Command
         foreach ($config->getTranslationSets() as $set) {
 
             # if we have configured to only export a single suite then skip all others
-            if (!empty($setName) && $setName !== $set->getName()) {
+            if ($setName !== '' && $setName !== '0' && $setName !== $set->getName()) {
                 continue;
             }
 

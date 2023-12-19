@@ -111,7 +111,7 @@ class TranslatorFactory
      */
     public function fromService(string $service, array $options): TranslatorInterface
     {
-        if (empty($service)) {
+        if ($service === '' || $service === '0') {
             throw new \Exception('No translator name provided.');
         }
 

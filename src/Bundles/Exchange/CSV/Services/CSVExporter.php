@@ -131,7 +131,7 @@ class CSVExporter
         # ----------------------------------------------------------------------------------------
         # WRITE CSV lines
 
-        if (empty($outputDir)) {
+        if ($outputDir === '' || $outputDir === '0') {
             $outputDir = '.';
         }
 

@@ -23,7 +23,7 @@ class JsonLoader
 
         $foundTranslations = [];
 
-        if (!empty($snippetJson)) {
+        if ($snippetJson !== '' && $snippetJson !== '0') {
             $foundTranslations = json_decode($snippetJson, true);
 
             if ($foundTranslations === false) {

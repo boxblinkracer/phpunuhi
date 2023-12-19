@@ -69,7 +69,7 @@ class DeeplTranslator implements TranslatorInterface
         $this->apiKey = (string)$options['deepl-key'];
         $this->formality = (bool)$options['deepl-formal'];
 
-        if (empty($this->apiKey)) {
+        if ($this->apiKey === '' || $this->apiKey === '0') {
             throw new \Exception('Please provide your API key for DeepL');
         }
 
@@ -121,7 +121,7 @@ class DeeplTranslator implements TranslatorInterface
 
         $result = $result->text;
 
-        if (count($foundPlaceholders) > 0) {
+        if ($foundPlaceholders !== []) {
             # decode our string so that we have the original placeholder values again (%productName%)
             $result = $this->placeholderEncoder->decode($result, $foundPlaceholders);
         }

@@ -98,7 +98,7 @@ class TranslateCommand extends Command
             $translatedInSet = 0;
 
             # if we have configured to only translate a specific set then skip others
-            if (!empty($setName) && $setName !== $set->getName()) {
+            if ($setName !== '' && $setName !== '0' && $setName !== $set->getName()) {
                 continue;
             }
 
@@ -113,7 +113,7 @@ class TranslateCommand extends Command
                 foreach ($set->getLocales() as $locale) {
 
                     # if we have configured to only translate a specific locale then skip other locales
-                    if (!empty($forceLocale) && $forceLocale !== $locale->getName()) {
+                    if ($forceLocale !== '' && $forceLocale !== '0' && $forceLocale !== $locale->getName()) {
                         continue;
                     }
 
@@ -132,7 +132,7 @@ class TranslateCommand extends Command
                             $existingData = $set->findAnyExistingTranslation($currentID, $sourceLocale);
                         } catch (TranslationNotFoundException $ex) {
                             # if no translation exits then skip this one
-                            if (!empty($sourceLocale)) {
+                            if ($sourceLocale !== '' && $sourceLocale !== '0') {
                                 $io->writeln('   [?] no existing translation found in locale ' . $sourceLocale . ' for key: ' . $currentTranslation->getID());
                             } else {
                                 $io->writeln('   [?] no existing translation found in any of the locales for key: ' . $currentTranslation->getID());
@@ -177,7 +177,7 @@ class TranslateCommand extends Command
 
                         $io->writeln('   [~] translating "' . $currentTranslation->getID() . '" (' . $locale->getName() . ') => ' . $newTranslation);
 
-                        if (!empty($newTranslation)) {
+                        if ($newTranslation !== '' && $newTranslation !== '0') {
                             $translatedCount++;
                             $translatedInSet++;
 

@@ -22,7 +22,7 @@ class StartCaseValidator implements CaseStyleValidatorInterface
      */
     public function isValid(string $text): bool
     {
-        $regex = "/^(([A-Z][a-z]*|[0-9]+)[\s])*([A-Z][a-z]*|[0-9]+)$|^$/";
+        $regex = "/^(([A-Z][a-z]*|\\d+)[\\s])*([A-Z][a-z]*|\\d+)\$|^\$/";
 
         $count = preg_match($regex, $text);
 
