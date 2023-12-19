@@ -22,7 +22,7 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->sets([
         SetList::DEAD_CODE,
         SetList::CODE_QUALITY,
-
+        SetList::STRICT_BOOLEANS,
     ]);
 
     $rectorConfig->skip([
