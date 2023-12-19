@@ -45,6 +45,7 @@
         "phpstan/phpstan": "*",
         "phpunit/phpunit": "^8.5",
         "povils/phpmnd": "^3.3",
+        "rregeer/phpunit-coverage-check": "^0.3.1",
         "squizlabs/php_codesniffer": "^3.7",
         "svrunit/svrunit": "dev-main"
     },

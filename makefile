@@ -4,6 +4,12 @@
 .DEFAULT_GOAL := help
 
 
+# -------------------------------------------------------
+PHP_MIN_VERSION := 7.2
+PHPUNIT_MIN_COVERAGE := 30
+# -------------------------------------------------------
+
+
 #------------------------------------------------------------------------------------------------
 
 help:
@@ -57,7 +63,7 @@ phpcheck: ##3 Starts the PHP syntax checks
 	@find ./src -name '*.php' | xargs -n 1 -P4 php -l
 
 phpmin: ##3 Starts the PHP compatibility checks
-	@php vendor/bin/phpcs -p --standard=PHPCompatibility --extensions=php --runtime-set testVersion 7.2 ./src
+	@php vendor/bin/phpcs -p --standard=PHPCompatibility --extensions=php --runtime-set testVersion $(PHP_MIN_VERSION) ./src
 
 csfix: ##3 Starts the PHP CS Fixer
 	PHP_CS_FIXER_IGNORE_ENV=1 php ./vendor/bin/php-cs-fixer fix --config=./.php_cs.php --dry-run
@@ -69,7 +75,8 @@ phpmnd: ##3 Runs the checks for magic numbers
 	php ./vendor/bin/phpmnd ./src
 
 phpunit: ##3 Runs all tests
-	XDEBUG_MODE=coverage php ./vendor/bin/phpunit --configuration=./.phpunit.xml -v --coverage-html ./.reports/phpunit/coverage
+	XDEBUG_MODE=coverage php ./vendor/bin/phpunit --configuration=./.phpunit.xml -v --coverage-html ./.reports/phpunit/coverage --coverage-clover ./.reports/phpunit/clover/index.xml
+	php vendor/bin/coverage-check ./.reports/phpunit/clover/index.xml $(PHPUNIT_MIN_COVERAGE)
 
 phpinsights: ##3 Starts PHPInsights
 	@php -d memory_limit=2000M vendor/bin/phpinsights --no-interaction
