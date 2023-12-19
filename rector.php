@@ -13,8 +13,6 @@ use Rector\Set\ValueObject\SetList;
 
 return static function (RectorConfig $rectorConfig): void {
 
-    $rectorConfig->phpVersion(PhpVersion::PHP_72);
-
     $rectorConfig->paths([
         __DIR__ . '/bin',
         __DIR__ . '/scripts',
@@ -22,6 +20,9 @@ return static function (RectorConfig $rectorConfig): void {
         __DIR__ . '/tests',
     ]);
 
+    $rectorConfig->phpVersion(PhpVersion::PHP_72);
+
+    $rectorConfig->importNames();
 
     $rectorConfig->sets([
         SetList::DEAD_CODE,
