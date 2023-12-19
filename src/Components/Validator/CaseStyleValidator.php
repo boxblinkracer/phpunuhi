@@ -84,9 +84,13 @@ class CaseStyleValidator implements ValidatorInterface
                         if ($stylesHaveLevel && !$caseStyle->hasLevel()) {
                             # check if we have another style for our level
                             foreach ($caseStyles as $tmpStyle) {
-                                if ($tmpStyle->hasLevel() && $tmpStyle->getLevel() === $partLevel) {
-                                    continue 2;
+                                if (!$tmpStyle->hasLevel()) {
+                                    continue;
                                 }
+                                if ($tmpStyle->getLevel() !== $partLevel) {
+                                    continue;
+                                }
+                                continue 2;
                             }
                         }
 

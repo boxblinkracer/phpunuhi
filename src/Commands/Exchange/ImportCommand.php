@@ -135,11 +135,13 @@ class ImportCommand extends Command
                 }
 
                 foreach ($locale->getTranslations() as $translation) {
-
-                    if ($translation->getKey() === $entry->getKey() && $translation->getGroup() === $entry->getGroup()) {
-
-                        $translation->setValue($entry->getValue());
+                    if ($translation->getKey() !== $entry->getKey()) {
+                        continue;
                     }
+                    if ($translation->getGroup() !== $entry->getGroup()) {
+                        continue;
+                    }
+                    $translation->setValue($entry->getValue());
                 }
             }
         }

@@ -206,14 +206,17 @@ class TranslationSet
             }
 
             foreach ($currentLocale->getTranslations() as $translation) {
-
-                if ($translation->getID() === $searchID && !$translation->isEmpty()) {
-                    # should be an object, just too lazy atm
-                    return [
-                        'locale' => $currentLocale->getName(),
-                        'translation' => $translation,
-                    ];
+                if ($translation->getID() !== $searchID) {
+                    continue;
                 }
+                if ($translation->isEmpty()) {
+                    continue;
+                }
+                # should be an object, just too lazy atm
+                return [
+                    'locale' => $currentLocale->getName(),
+                    'translation' => $translation,
+                ];
             }
         }
 

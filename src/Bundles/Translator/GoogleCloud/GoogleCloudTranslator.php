@@ -86,7 +86,7 @@ class GoogleCloudTranslator implements TranslatorInterface
 
         if ($foundPlaceholders !== []) {
             # decode our string so that we have the original placeholder values again (%productName%)
-            $result = $this->placeholderEncoder->decode($result, $foundPlaceholders);
+            return $this->placeholderEncoder->decode($result, $foundPlaceholders);
         }
 
         return $result;
