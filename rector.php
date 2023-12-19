@@ -18,12 +18,11 @@ return static function (RectorConfig $rectorConfig): void {
         __DIR__ . '/tests',
     ]);
 
-    // register a single rule
-    $rectorConfig->rule(InlineConstructorDefaultToPropertyRector::class);
 
-    // define sets of rules
     $rectorConfig->sets([
-        SetList::DEAD_CODE
+        SetList::DEAD_CODE,
+        SetList::CODE_QUALITY,
+
     ]);
 
     $rectorConfig->skip([
