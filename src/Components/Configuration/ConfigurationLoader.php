@@ -2,6 +2,7 @@
 
 namespace PHPUnuhi\Configuration;
 
+use Exception;
 use PHPUnuhi\Bundles\Storage\StorageFactory;
 use PHPUnuhi\Components\Filter\FilterHandler;
 use PHPUnuhi\Exceptions\ConfigurationException;
@@ -39,9 +40,9 @@ class ConfigurationLoader
      * @param string $rootConfigFilename
      * @return Configuration
      * @throws ConfigurationException
-     * @throws \Exception
+     * @throws Exception
      */
-    public function load(string $rootConfigFilename): \PHPUnuhi\Models\Configuration\Configuration
+    public function load(string $rootConfigFilename): Configuration
     {
         $rootXmlString = (string)file_get_contents($rootConfigFilename);
         $rootXmlSettings = simplexml_load_string($rootXmlString);
@@ -145,7 +146,7 @@ class ConfigurationLoader
      * @param SimpleXMLElement $rootNode
      * @param string $configFilename
      * @return TranslationSet[]
-     * @throws \Exception
+     * @throws Exception
      */
     private function loadTranslations(SimpleXMLElement $rootNode, string $configFilename): array
     {
@@ -245,14 +246,14 @@ class ConfigurationLoader
     /**
      * @param SimpleXMLElement $rootFormat
      * @return array<mixed>
-     * @throws \Exception
+     * @throws Exception
      */
     private function parseFormat(SimpleXMLElement $rootFormat): array
     {
         $children = get_object_vars($rootFormat);
 
         if (count($children) <= 0) {
-            throw new \Exception('No format provided');
+            throw new Exception('No format provided');
         }
 
         $format = '';
@@ -465,7 +466,7 @@ class ConfigurationLoader
     /**
      * @param Configuration $configuration
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     private function validateConfig(Configuration $configuration): void
     {
@@ -527,7 +528,7 @@ class ConfigurationLoader
      * @param SimpleXMLElement $node
      * @return Attribute
      */
-    private function getAttribute(string $name, SimpleXMLElement $node): \PHPUnuhi\Models\Configuration\Attribute
+    private function getAttribute(string $name, SimpleXMLElement $node): Attribute
     {
         $nodeAttributes = $node->attributes();
 

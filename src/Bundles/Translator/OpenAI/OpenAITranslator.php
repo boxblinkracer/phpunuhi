@@ -2,6 +2,7 @@
 
 namespace PHPUnuhi\Bundles\Translator\OpenAI;
 
+use Exception;
 use Locale;
 use Orhanerday\OpenAi\OpenAi;
 use PHPUnuhi\Bundles\Translator\TranslatorInterface;
@@ -40,14 +41,14 @@ class OpenAITranslator implements TranslatorInterface
     /**
      * @param array<mixed> $options
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function setOptionValues(array $options): void
     {
         $this->apiKey = (string)$options['openai-key'];
 
         if ($this->apiKey === '' || $this->apiKey === '0') {
-            throw new \Exception('OpenAI API Key must not be empty. Please provide a key');
+            throw new Exception('OpenAI API Key must not be empty. Please provide a key');
         }
     }
 
@@ -58,7 +59,7 @@ class OpenAITranslator implements TranslatorInterface
      * @param string $targetLocale
      * @param Placeholder[] $foundPlaceholders
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
     public function translate(string $text, string $sourceLocale, string $targetLocale, array $foundPlaceholders): string
     {
@@ -89,7 +90,7 @@ class OpenAITranslator implements TranslatorInterface
 
         if (isset($json['error'])) {
             $msg = 'OpenAI Error: ' . $json['error']['message'];
-            throw new \Exception($msg);
+            throw new Exception($msg);
         }
 
         if (!isset($json['choices'])) {

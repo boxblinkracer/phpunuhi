@@ -2,6 +2,7 @@
 
 namespace PHPUnuhi\Bundles\Storage\INI;
 
+use Exception;
 use PHPUnuhi\Bundles\Storage\StorageHierarchy;
 use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Bundles\Storage\StorageSaveResult;
@@ -69,7 +70,7 @@ class IniStorage implements StorageInterface
     /**
      * @param TranslationSet $set
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function loadTranslationSet(TranslationSet $set): void
     {
@@ -78,7 +79,7 @@ class IniStorage implements StorageInterface
             $iniArray = parse_ini_file($locale->getFilename(), true, INI_SCANNER_RAW);
 
             if ($iniArray === false) {
-                throw new \Exception('Error when loading INI file: ' . $locale->getFilename());
+                throw new Exception('Error when loading INI file: ' . $locale->getFilename());
             }
 
             foreach ($iniArray as $key => $value) {

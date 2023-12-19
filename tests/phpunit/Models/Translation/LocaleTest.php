@@ -2,6 +2,7 @@
 
 namespace phpunit\Models\Translation;
 
+use PHPUnuhi\Exceptions\TranslationNotFoundException;
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\Translation;
@@ -172,7 +173,7 @@ class LocaleTest extends TestCase
      * but do correctly update them in this case.
      *
      * @return void
-     * @throws \PHPUnuhi\Exceptions\TranslationNotFoundException
+     * @throws TranslationNotFoundException
      */
     public function testAddTranslationAvoidDuplicates(): void
     {

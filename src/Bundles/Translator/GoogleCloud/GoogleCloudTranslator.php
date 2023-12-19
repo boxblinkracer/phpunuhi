@@ -2,6 +2,7 @@
 
 namespace PHPUnuhi\Bundles\Translator\GoogleCloud;
 
+use Exception;
 use Google\Cloud\Translate\V2\TranslateClient;
 use PHPUnuhi\Bundles\Translator\TranslatorInterface;
 use PHPUnuhi\Models\Command\CommandOption;
@@ -42,14 +43,14 @@ class GoogleCloudTranslator implements TranslatorInterface
     /**
      * @param array<mixed> $options
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function setOptionValues(array $options): void
     {
         $this->apiKey = (string)$options['google-key'];
 
         if ($this->apiKey === '' || $this->apiKey === '0') {
-            throw new \Exception('Please provide your API key for GoogleCloud');
+            throw new Exception('Please provide your API key for GoogleCloud');
         }
 
         $this->placeholderEncoder = new PlaceholderEncoder();
@@ -61,7 +62,7 @@ class GoogleCloudTranslator implements TranslatorInterface
      * @param string $targetLocale
      * @param Placeholder[] $foundPlaceholders
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
     public function translate(string $text, string $sourceLocale, string $targetLocale, array $foundPlaceholders): string
     {

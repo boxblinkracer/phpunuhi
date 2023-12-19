@@ -2,6 +2,7 @@
 
 namespace phpunit\Components\Validator;
 
+use Exception;
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Bundles\Storage\JSON\JsonStorage;
 use PHPUnuhi\Components\Validator\CaseStyle\Exception\CaseStyleNotFoundException;
@@ -42,7 +43,7 @@ class CaseStyleValidatorTest extends TestCase
 
     /**
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function testValidMixedCases(): void
     {
@@ -59,7 +60,7 @@ class CaseStyleValidatorTest extends TestCase
 
     /**
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function testInvalidCases(): void
     {
@@ -75,7 +76,7 @@ class CaseStyleValidatorTest extends TestCase
 
     /**
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function testMixedWithLevels(): void
     {
@@ -103,7 +104,7 @@ class CaseStyleValidatorTest extends TestCase
      * This is only valid because level 0 + 2 are snake-validated, and the rest is globally validated with camel.
      *
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function testMixedWithMissingLevels(): void
     {
@@ -132,7 +133,7 @@ class CaseStyleValidatorTest extends TestCase
      * pascal, so it's still not valid.
      *
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function testGlobalStylesNotValidatedForExistingLevels(): void
     {
@@ -154,7 +155,7 @@ class CaseStyleValidatorTest extends TestCase
      * Our 2nd level has an invalid style, so this should break.
      *
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function testMixedWithInvalidLevels(): void
     {
@@ -177,7 +178,7 @@ class CaseStyleValidatorTest extends TestCase
 
     /**
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function testValidCasesWithoutSetStyles(): void
     {

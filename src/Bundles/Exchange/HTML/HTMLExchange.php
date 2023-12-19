@@ -2,6 +2,7 @@
 
 namespace PHPUnuhi\Bundles\Exchange\HTML;
 
+use Exception;
 use PHPUnuhi\Bundles\Exchange\ExchangeInterface;
 use PHPUnuhi\Bundles\Exchange\HTML\Services\HTMLExporter;
 use PHPUnuhi\Bundles\Exchange\HTML\Services\HTMLImporter;
@@ -54,7 +55,7 @@ class HTMLExchange implements ExchangeInterface
     /**
      * @param string $filename
      * @return ImportResult
-     * @throws \Exception
+     * @throws Exception
      */
     public function import(string $filename): ImportResult
     {

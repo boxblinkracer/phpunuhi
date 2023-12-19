@@ -2,6 +2,7 @@
 
 namespace phpunit\Components\Validator\Rules;
 
+use Exception;
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Bundles\Storage\JSON\JsonStorage;
 use PHPUnuhi\Components\Validator\Rules\DuplicateContentRule;
@@ -26,7 +27,7 @@ class DuplicateContentRuleTest extends TestCase
 
     /**
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function testAllValid(): void
     {
@@ -49,7 +50,7 @@ class DuplicateContentRuleTest extends TestCase
 
     /**
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function testDuplicateInDifferentLocalesIsValid(): void
     {
@@ -72,7 +73,7 @@ class DuplicateContentRuleTest extends TestCase
 
     /**
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function testKeyLengthExceeded(): void
     {

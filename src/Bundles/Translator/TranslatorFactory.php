@@ -2,6 +2,7 @@
 
 namespace PHPUnuhi\Bundles\Translator;
 
+use Exception;
 use PHPUnuhi\Bundles\Storage\INI\IniStorage;
 use PHPUnuhi\Bundles\Storage\JSON\JsonStorage;
 use PHPUnuhi\Bundles\Storage\PHP\PhpStorage;
@@ -107,12 +108,12 @@ class TranslatorFactory
      * @param string $service
      * @param array<mixed> $options
      * @return TranslatorInterface
-     * @throws \Exception
+     * @throws Exception
      */
     public function fromService(string $service, array $options): TranslatorInterface
     {
         if ($service === '' || $service === '0') {
-            throw new \Exception('No translator name provided.');
+            throw new Exception('No translator name provided.');
         }
 
         foreach ($this->translators as $translator) {
@@ -126,7 +127,7 @@ class TranslatorFactory
             }
         }
 
-        throw new \Exception('No translator found with name: ' . $service);
+        throw new Exception('No translator found with name: ' . $service);
     }
 
 }

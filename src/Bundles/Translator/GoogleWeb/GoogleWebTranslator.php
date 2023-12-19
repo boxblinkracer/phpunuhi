@@ -2,6 +2,7 @@
 
 namespace PHPUnuhi\Bundles\Translator\GoogleWeb;
 
+use Exception;
 use PHPUnuhi\Bundles\Translator\TranslatorInterface;
 use PHPUnuhi\Models\Command\CommandOption;
 use PHPUnuhi\Services\Placeholder\Placeholder;
@@ -46,7 +47,7 @@ class GoogleWebTranslator implements TranslatorInterface
      * @param string $targetLocale
      * @param Placeholder[] $foundPlaceholders
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
     public function translate(string $text, string $sourceLocale, string $targetLocale, array $foundPlaceholders): string
     {

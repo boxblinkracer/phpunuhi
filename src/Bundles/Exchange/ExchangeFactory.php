@@ -2,6 +2,7 @@
 
 namespace PHPUnuhi\Bundles\Exchange;
 
+use Exception;
 use PHPUnuhi\Bundles\Exchange\CSV\CSVExchange;
 use PHPUnuhi\Bundles\Exchange\CSV\Services\CSVWriter;
 use PHPUnuhi\Bundles\Exchange\HTML\HTMLExchange;
@@ -102,12 +103,12 @@ class ExchangeFactory
      * @param string $format
      * @param array<mixed> $options
      * @return ExchangeInterface
-     * @throws \Exception
+     * @throws Exception
      */
     public function getExchange(string $format, array $options): ExchangeInterface
     {
         if ($format === '' || $format === '0') {
-            throw new \Exception('No format name provided for the Exchange service');
+            throw new Exception('No format name provided for the Exchange service');
         }
 
         foreach ($this->exchangeServices as $exchangeService) {
@@ -119,7 +120,7 @@ class ExchangeFactory
             }
         }
 
-        throw new \Exception('No Exchange service found for format: ' . $format);
+        throw new Exception('No Exchange service found for format: ' . $format);
     }
 
 }

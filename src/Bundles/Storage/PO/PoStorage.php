@@ -2,6 +2,7 @@
 
 namespace PHPUnuhi\Bundles\Storage\PO;
 
+use Exception;
 use PHPUnuhi\Bundles\Storage\PO\Models\Block;
 use PHPUnuhi\Bundles\Storage\StorageHierarchy;
 use PHPUnuhi\Bundles\Storage\StorageInterface;
@@ -69,7 +70,7 @@ class PoStorage implements StorageInterface
     /**
      * @param TranslationSet $set
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function loadTranslationSet(TranslationSet $set): void
     {

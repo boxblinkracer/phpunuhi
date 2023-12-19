@@ -2,6 +2,7 @@
 
 namespace phpunit\Bundles\Storage;
 
+use PHPUnuhi\Exceptions\ConfigurationException;
 use phpunit\Fakes\FakeStorage;
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Bundles\Storage\StorageFactory;
@@ -42,7 +43,7 @@ class StorageFactoryTest extends TestCase
      * This test verifies that we can successfully register a new storage
      * and that it will be returned correctly when accessing it.
      * @return void
-     * @throws \PHPUnuhi\Exceptions\ConfigurationException
+     * @throws ConfigurationException
      */
     public function testGetCustomStorage(): void
     {
@@ -58,7 +59,7 @@ class StorageFactoryTest extends TestCase
      * This test verifies that we can successfully register a new storage
      * and that it will be returned for the provided set correctly.
      * @return void
-     * @throws \PHPUnuhi\Exceptions\ConfigurationException
+     * @throws ConfigurationException
      */
     public function testGetCustomStorageBySet(): void
     {

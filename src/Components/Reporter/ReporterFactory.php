@@ -2,6 +2,7 @@
 
 namespace PHPUnuhi\Components\Reporter;
 
+use Exception;
 use PHPUnuhi\Components\Reporter\JSON\JsonReporter;
 use PHPUnuhi\Components\Reporter\JUnit\JUnitReporter;
 use PHPUnuhi\Exceptions\ConfigurationException;
@@ -62,7 +63,7 @@ class ReporterFactory
     {
         if ($name === '' || $name === '0') {
 
-            throw new \Exception('No name provided for the Reporter');
+            throw new Exception('No name provided for the Reporter');
         }
 
         foreach ($this->reporters as $reporter) {

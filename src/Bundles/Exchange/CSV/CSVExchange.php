@@ -2,11 +2,13 @@
 
 namespace PHPUnuhi\Bundles\Exchange\CSV;
 
+use Exception;
 use PHPUnuhi\Bundles\Exchange\CSV\Services\CSVExporter;
 use PHPUnuhi\Bundles\Exchange\CSV\Services\CSVImporter;
 use PHPUnuhi\Bundles\Exchange\CSV\Services\CSVWriterInterface;
 use PHPUnuhi\Bundles\Exchange\ExchangeInterface;
 use PHPUnuhi\Bundles\Exchange\ImportResult;
+use PHPUnuhi\Exceptions\TranslationNotFoundException;
 use PHPUnuhi\Models\Command\CommandOption;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
@@ -69,7 +71,7 @@ class CSVExchange implements ExchangeInterface
      * @param string $outputDir
      * @param bool $onlyEmpty
      * @return void
-     * @throws \PHPUnuhi\Exceptions\TranslationNotFoundException
+     * @throws TranslationNotFoundException
      */
     public function export(TranslationSet $set, string $outputDir, bool $onlyEmpty): void
     {
@@ -80,7 +82,7 @@ class CSVExchange implements ExchangeInterface
     /**
      * @param string $filename
      * @return ImportResult
-     * @throws \Exception
+     * @throws Exception
      */
     public function import(string $filename): ImportResult
     {

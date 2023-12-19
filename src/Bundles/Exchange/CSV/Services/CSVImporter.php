@@ -2,6 +2,7 @@
 
 namespace PHPUnuhi\Bundles\Exchange\CSV\Services;
 
+use Exception;
 use PHPUnuhi\Bundles\Exchange\ImportEntry;
 use PHPUnuhi\Bundles\Exchange\ImportResult;
 use PHPUnuhi\Traits\StringTrait;
@@ -30,7 +31,7 @@ class CSVImporter
     /**
      * @param string $filename
      * @return ImportResult
-     * @throws \Exception
+     * @throws Exception
      */
     public function import(string $filename): ImportResult
     {
@@ -40,7 +41,7 @@ class CSVImporter
         $csvFile = fopen($filename, 'r');
 
         if ($csvFile === false) {
-            throw new \Exception('Error when opening CSV file: ' . $filename);
+            throw new Exception('Error when opening CSV file: ' . $filename);
         }
 
         while ($row = fgetcsv($csvFile, 0, $this->delimiter)) {

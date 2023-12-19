@@ -2,6 +2,7 @@
 
 namespace PHPUnuhi\Commands\Exchange;
 
+use Exception;
 use PHPUnuhi\Bundles\Exchange\ExchangeFactory;
 use PHPUnuhi\Bundles\Exchange\ExchangeFormat;
 use PHPUnuhi\Bundles\Exchange\ImportResult;
@@ -9,7 +10,9 @@ use PHPUnuhi\Bundles\Storage\StorageFactory;
 use PHPUnuhi\Bundles\Storage\StorageSaveResult;
 use PHPUnuhi\Components\Filter\FilterHandler;
 use PHPUnuhi\Configuration\ConfigurationLoader;
+use PHPUnuhi\Exceptions\ConfigurationException;
 use PHPUnuhi\Models\Translation\TranslationSet;
+use PHPUnuhi\Traits\CommandTrait;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -19,7 +22,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class ImportCommand extends Command
 {
 
-    use \PHPUnuhi\Traits\CommandTrait;
+    use CommandTrait;
 
 
     /**
@@ -50,7 +53,7 @@ class ImportCommand extends Command
      * @param InputInterface $input
      * @param OutputInterface $output
      * @return int
-     * @throws \PHPUnuhi\Exceptions\ConfigurationException
+     * @throws ConfigurationException
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -74,7 +77,7 @@ class ImportCommand extends Command
         # -----------------------------------------------------------------
 
         if ($setName === '' || $setName === '0') {
-            throw new \Exception('Please provide a Translation-Set name that will be imported with argument --set=xyz');
+            throw new Exception('Please provide a Translation-Set name that will be imported with argument --set=xyz');
         }
 
 

@@ -2,6 +2,8 @@
 
 namespace PHPUnuhi\Bundles\Storage\Shopware6\Repository;
 
+use DateTime;
+use Exception;
 use PDO;
 use PHPUnuhi\Bundles\Storage\Shopware6\Exception\SnippetNotFoundException;
 use PHPUnuhi\Bundles\Storage\Shopware6\Models\Snippet;
@@ -23,7 +25,7 @@ class SnippetRepository
     /**
      * @param \PDO $pdo
      */
-    public function __construct(\PDO $pdo)
+    public function __construct(PDO $pdo)
     {
         $this->pdo = $pdo;
     }
@@ -31,7 +33,7 @@ class SnippetRepository
 
     /**
      * @return SnippetSet[]
-     * @throws \Exception
+     * @throws Exception
      */
     public function getSnippetSets(): array
     {
@@ -42,7 +44,7 @@ class SnippetRepository
         $dbRows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         if ($dbRows !== (array)$dbRows) {
-            throw new \Exception('not found!');
+            throw new Exception('not found!');
         }
 
         $list = [];
@@ -61,7 +63,7 @@ class SnippetRepository
 
     /**
      * @return Snippet[]
-     * @throws \Exception
+     * @throws Exception
      */
     public function getSnippets(): array
     {
@@ -72,7 +74,7 @@ class SnippetRepository
         $dbRows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         if ($dbRows !== (array)$dbRows) {
-            throw new \Exception('not found!');
+            throw new Exception('not found!');
         }
 
         $list = [];
@@ -155,7 +157,7 @@ class SnippetRepository
      * @param string $author
      * @param string $customFields
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function insertSnippet(string $key, string $snippetSetId, string $value, string $author, string $customFields): void
     {
@@ -163,7 +165,7 @@ class SnippetRepository
             $customFields = null;
         }
 
-        $now = new \DateTime('now');
+        $now = new DateTime('now');
 
         $stmt = $this->pdo->prepare("
             INSERT INTO snippet (id, translation_key, `value`, author, snippet_set_id, custom_fields, created_at)

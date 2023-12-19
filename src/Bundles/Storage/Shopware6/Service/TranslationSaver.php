@@ -2,6 +2,8 @@
 
 namespace PHPUnuhi\Bundles\Storage\Shopware6\Service;
 
+use Exception;
+use PDO;
 use PHPUnuhi\Bundles\Storage\Shopware6\Exception\SnippetNotFoundException;
 use PHPUnuhi\Bundles\Storage\Shopware6\Models\Sw6Locale;
 use PHPUnuhi\Bundles\Storage\Shopware6\Models\UpdateField;
@@ -40,9 +42,9 @@ class TranslationSaver
 
 
     /**
-     * @param \PDO $pdo
+     * @param PDO $pdo
      */
-    public function __construct(\PDO $pdo)
+    public function __construct(PDO $pdo)
     {
         $this->repoLanguages = new LanguageRepository($pdo);
         $this->repoTranslations = new EntityTranslationRepository($pdo);
@@ -96,7 +98,7 @@ class TranslationSaver
             }
 
             if ($foundSnippetSet === null) {
-                throw new \Exception('No Snippet Set found in Shopware for locale: ' . $locale->getName());
+                throw new Exception('No Snippet Set found in Shopware for locale: ' . $locale->getName());
             }
 
             foreach ($locale->getTranslations() as $translation) {
@@ -151,7 +153,7 @@ class TranslationSaver
             $currentLanguageID = $this->getShopwareLanguageId($locale, $allDbLanguages);
 
             if ($currentLanguageID === '' || $currentLanguageID === '0') {
-                throw new \Exception('no language found for locale: ' . $locale->getName());
+                throw new Exception('no language found for locale: ' . $locale->getName());
             }
 
             $localeCount++;

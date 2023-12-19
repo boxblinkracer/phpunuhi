@@ -5,9 +5,11 @@ namespace PHPUnuhi\Commands\Translation;
 use PHPUnuhi\Bundles\Storage\StorageFactory;
 use PHPUnuhi\Bundles\Translator\TranslatorFactory;
 use PHPUnuhi\Configuration\ConfigurationLoader;
+use PHPUnuhi\Exceptions\ConfigurationException;
 use PHPUnuhi\Exceptions\TranslationNotFoundException;
 use PHPUnuhi\Services\Placeholder\Placeholder;
 use PHPUnuhi\Services\Placeholder\PlaceholderExtractor;
+use PHPUnuhi\Traits\CommandTrait;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -17,7 +19,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class TranslateCommand extends Command
 {
 
-    use \PHPUnuhi\Traits\CommandTrait;
+    use CommandTrait;
 
 
     /**
@@ -57,7 +59,7 @@ class TranslateCommand extends Command
      * @param InputInterface $input
      * @param OutputInterface $output
      * @return int
-     * @throws \PHPUnuhi\Exceptions\ConfigurationException
+     * @throws ConfigurationException
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {

@@ -2,6 +2,7 @@
 
 namespace phpunit\Models\Translation;
 
+use Exception;
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Exceptions\TranslationNotFoundException;
 use PHPUnuhi\Models\Configuration\Attribute;
@@ -45,7 +46,7 @@ class TranslationSetTest extends TestCase
 
     /**
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function testProtection(): void
     {
@@ -63,7 +64,7 @@ class TranslationSetTest extends TestCase
 
     /**
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function testRules(): void
     {
@@ -153,7 +154,7 @@ class TranslationSetTest extends TestCase
 
     /**
      * @return void
-     * @throws \PHPUnuhi\Exceptions\TranslationNotFoundException
+     * @throws TranslationNotFoundException
      */
     public function testFindAnyExistingTranslation(): void
     {
@@ -182,7 +183,7 @@ class TranslationSetTest extends TestCase
 
     /**
      * @return void
-     * @throws \PHPUnuhi\Exceptions\TranslationNotFoundException
+     * @throws TranslationNotFoundException
      */
     public function testFindAnyExistingTranslationWithLocale(): void
     {
@@ -215,7 +216,7 @@ class TranslationSetTest extends TestCase
 
     /**
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function testFindAnyExistingTranslationNotFound(): void
     {

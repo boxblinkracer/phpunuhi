@@ -9,6 +9,7 @@ use PHPUnuhi\Components\Reporter\Model\ReportResult;
 use PHPUnuhi\Components\Reporter\Model\SuiteResult;
 use PHPUnuhi\Components\Reporter\Model\TestResult;
 use PHPUnuhi\Components\Reporter\ReporterFactory;
+use PHPUnuhi\Components\Validator\CaseStyle\Exception\CaseStyleNotFoundException;
 use PHPUnuhi\Components\Validator\CaseStyleValidator;
 use PHPUnuhi\Components\Validator\EmptyContentValidator;
 use PHPUnuhi\Components\Validator\MissingStructureValidator;
@@ -17,6 +18,7 @@ use PHPUnuhi\Components\Validator\Rules\MaxKeyLengthRule;
 use PHPUnuhi\Components\Validator\Rules\NestingDepthRule;
 use PHPUnuhi\Components\Validator\RulesValidator;
 use PHPUnuhi\Configuration\ConfigurationLoader;
+use PHPUnuhi\Exceptions\ConfigurationException;
 use PHPUnuhi\Traits\CommandTrait;
 use PHPUnuhi\Traits\StringTrait;
 use Symfony\Component\Console\Command\Command;
@@ -51,8 +53,8 @@ class ValidateCommand extends Command
      * @param InputInterface $input
      * @param OutputInterface $output
      * @return int
-     * @throws \PHPUnuhi\Components\Validator\CaseStyle\Exception\CaseStyleNotFoundException
-     * @throws \PHPUnuhi\Exceptions\ConfigurationException
+     * @throws CaseStyleNotFoundException
+     * @throws ConfigurationException
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {

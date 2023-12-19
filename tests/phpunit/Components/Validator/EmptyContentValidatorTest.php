@@ -2,6 +2,7 @@
 
 namespace phpunit\Components\Validator;
 
+use Exception;
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Bundles\Storage\JSON\JsonStorage;
 use PHPUnuhi\Components\Validator\EmptyContentValidator;
@@ -39,7 +40,7 @@ class EmptyContentValidatorTest extends TestCase
 
     /**
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function testAllValid(): void
     {
@@ -62,7 +63,7 @@ class EmptyContentValidatorTest extends TestCase
 
     /**
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function testEmptyContentFound(): void
     {

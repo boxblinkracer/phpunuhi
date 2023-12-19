@@ -2,6 +2,8 @@
 
 namespace PHPUnuhi\Bundles\Translator\DeepL;
 
+use DeepL\Translator;
+use Exception;
 use PHPUnuhi\Bundles\Translator\TranslatorInterface;
 use PHPUnuhi\Models\Command\CommandOption;
 use PHPUnuhi\Services\Placeholder\Placeholder;
@@ -62,7 +64,7 @@ class DeeplTranslator implements TranslatorInterface
     /**
      * @param array<mixed> $options
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function setOptionValues(array $options): void
     {
@@ -70,7 +72,7 @@ class DeeplTranslator implements TranslatorInterface
         $this->formality = (bool)$options['deepl-formal'];
 
         if ($this->apiKey === '' || $this->apiKey === '0') {
-            throw new \Exception('Please provide your API key for DeepL');
+            throw new Exception('Please provide your API key for DeepL');
         }
 
         $this->placeholderEncoder = new PlaceholderEncoder();
@@ -82,7 +84,7 @@ class DeeplTranslator implements TranslatorInterface
      * @param string $targetLocale
      * @param Placeholder[] $foundPlaceholders
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
     public function translate(string $text, string $sourceLocale, string $targetLocale, array $foundPlaceholders): string
     {
@@ -90,7 +92,7 @@ class DeeplTranslator implements TranslatorInterface
 
         $formalValue = ($this->formality) ? 'more' : 'less';
 
-        $translator = new \DeepL\Translator($this->apiKey);
+        $translator = new Translator($this->apiKey);
 
         if ($targetLocale === 'en') {
             $targetLocale = 'en-GB';

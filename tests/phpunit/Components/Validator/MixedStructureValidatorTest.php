@@ -2,6 +2,7 @@
 
 namespace phpunit\Components\Validator;
 
+use Exception;
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Bundles\Storage\JSON\JsonStorage;
 use PHPUnuhi\Components\Validator\MissingStructureValidator;
@@ -39,7 +40,7 @@ class MixedStructureValidatorTest extends TestCase
 
     /**
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function testAllValid(): void
     {
@@ -62,7 +63,7 @@ class MixedStructureValidatorTest extends TestCase
 
     /**
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function testMixedStructureFound(): void
     {

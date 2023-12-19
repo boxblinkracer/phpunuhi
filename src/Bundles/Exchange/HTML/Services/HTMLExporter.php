@@ -2,6 +2,7 @@
 
 namespace PHPUnuhi\Bundles\Exchange\HTML\Services;
 
+use PHPUnuhi\Exceptions\TranslationNotFoundException;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
@@ -13,7 +14,7 @@ class HTMLExporter
      * @param string $outputDir
      * @param bool $onlyEmpty
      * @return void
-     * @throws \PHPUnuhi\Exceptions\TranslationNotFoundException
+     * @throws TranslationNotFoundException
      */
     public function export(TranslationSet $set, string $outputDir, bool $onlyEmpty): void
     {

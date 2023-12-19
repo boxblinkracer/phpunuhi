@@ -4,6 +4,7 @@ namespace PHPUnuhi\Components\Validator;
 
 use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Components\Validator\CaseStyle\CaseStyleValidatorFactory;
+use PHPUnuhi\Components\Validator\CaseStyle\Exception\CaseStyleNotFoundException;
 use PHPUnuhi\Components\Validator\Model\ValidationError;
 use PHPUnuhi\Components\Validator\Model\ValidationResult;
 use PHPUnuhi\Components\Validator\Model\ValidationTest;
@@ -24,7 +25,7 @@ class CaseStyleValidator implements ValidatorInterface
      * @param TranslationSet $set
      * @param StorageInterface $storage
      * @return ValidationResult
-     * @throws CaseStyle\Exception\CaseStyleNotFoundException
+     * @throws CaseStyleNotFoundException
      */
     public function validate(TranslationSet $set, StorageInterface $storage): ValidationResult
     {

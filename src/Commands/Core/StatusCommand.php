@@ -4,7 +4,9 @@ namespace PHPUnuhi\Commands\Core;
 
 use PHPUnuhi\Bundles\Exchange\ExchangeFormat;
 use PHPUnuhi\Configuration\ConfigurationLoader;
+use PHPUnuhi\Exceptions\ConfigurationException;
 use PHPUnuhi\Services\Coverage\CoverageService;
+use PHPUnuhi\Traits\CommandTrait;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -14,7 +16,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class StatusCommand extends Command
 {
 
-    use \PHPUnuhi\Traits\CommandTrait;
+    use CommandTrait;
 
     /**
      * @return void
@@ -34,7 +36,7 @@ class StatusCommand extends Command
      * @param InputInterface $input
      * @param OutputInterface $output
      * @return int
-     * @throws \PHPUnuhi\Exceptions\ConfigurationException
+     * @throws ConfigurationException
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {

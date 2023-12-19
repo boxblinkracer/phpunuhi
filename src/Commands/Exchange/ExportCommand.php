@@ -5,6 +5,8 @@ namespace PHPUnuhi\Commands\Exchange;
 use PHPUnuhi\Bundles\Exchange\ExchangeFactory;
 use PHPUnuhi\Bundles\Exchange\ExchangeFormat;
 use PHPUnuhi\Configuration\ConfigurationLoader;
+use PHPUnuhi\Exceptions\ConfigurationException;
+use PHPUnuhi\Traits\CommandTrait;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -14,7 +16,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class ExportCommand extends Command
 {
 
-    use \PHPUnuhi\Traits\CommandTrait;
+    use CommandTrait;
 
 
     /**
@@ -46,7 +48,7 @@ class ExportCommand extends Command
      * @param InputInterface $input
      * @param OutputInterface $output
      * @return int
-     * @throws \PHPUnuhi\Exceptions\ConfigurationException
+     * @throws ConfigurationException
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {

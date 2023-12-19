@@ -2,6 +2,7 @@
 
 namespace PHPUnuhi\Bundles\Storage;
 
+use Exception;
 use PHPUnuhi\Bundles\Storage\INI\IniStorage;
 use PHPUnuhi\Bundles\Storage\JSON\JsonStorage;
 use PHPUnuhi\Bundles\Storage\PHP\PhpStorage;
@@ -105,7 +106,7 @@ class StorageFactory
     {
         if ($name === '' || $name === '0') {
 
-            throw new \Exception('No name provided for the Storage' );
+            throw new Exception('No name provided for the Storage' );
         }
 
         foreach ($this->storages as $storage) {

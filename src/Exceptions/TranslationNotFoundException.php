@@ -2,7 +2,8 @@
 
 namespace PHPUnuhi\Exceptions;
 
-class TranslationNotFoundException extends \Exception
+use Exception;
+class TranslationNotFoundException extends Exception
 {
 
 }

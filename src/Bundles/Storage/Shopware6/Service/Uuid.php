@@ -2,13 +2,14 @@
 
 namespace PHPUnuhi\Bundles\Storage\Shopware6\Service;
 
+use Exception;
 class Uuid
 {
 
 
     /**
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
     public static function randomHex(): string
     {

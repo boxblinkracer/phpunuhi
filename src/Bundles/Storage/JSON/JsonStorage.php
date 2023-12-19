@@ -2,6 +2,7 @@
 
 namespace PHPUnuhi\Bundles\Storage\JSON;
 
+use Exception;
 use PHPUnuhi\Bundles\Storage\JSON\Services\JsonLoader;
 use PHPUnuhi\Bundles\Storage\JSON\Services\JsonSaver;
 use PHPUnuhi\Bundles\Storage\StorageHierarchy;
@@ -77,7 +78,7 @@ class JsonStorage implements StorageInterface
     /**
      * @param TranslationSet $set
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function loadTranslationSet(TranslationSet $set): void
     {
