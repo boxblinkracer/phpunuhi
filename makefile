@@ -49,6 +49,7 @@ pr: ##2 Runs and prepares everything for a pull request
 	@make phpmin -B
 	@make phpunit -B
 	@make stan -B
+	@make phpmnd -B
 
 #------------------------------------------------------------------------------------------------
 
@@ -63,6 +64,9 @@ csfix: ##3 Starts the PHP CS Fixer
 
 stan: ##3 Starts the PHPStan Analyser
 	php ./vendor/bin/phpstan analyse --memory-limit 1G -c ./.phpstan.neon
+
+phpmnd: ##3 Runs the checks for magic numbers
+	php ./vendor/bin/phpmnd ./src
 
 phpunit: ##3 Runs all tests
 	XDEBUG_MODE=coverage php ./vendor/bin/phpunit --configuration=./.phpunit.xml -v --coverage-html ./.reports/phpunit/coverage

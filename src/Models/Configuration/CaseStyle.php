@@ -5,6 +5,8 @@ namespace PHPUnuhi\Models\Configuration;
 class CaseStyle
 {
 
+    private const MIN_LEVEL = 0;
+
     /**
      * @var string
      */
@@ -38,7 +40,7 @@ class CaseStyle
      */
     public function hasLevel(): bool
     {
-        return $this->level > -1;
+        return $this->level >= self::MIN_LEVEL;
     }
 
     /**

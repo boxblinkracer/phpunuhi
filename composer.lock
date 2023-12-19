@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "230871cceb2d980e97e6f5d66184e334",
+    "content-hash": "3b4d1037c3f11d05febc29d5198e5529",
     "packages": [
         {
             "name": "deeplcom/deepl-php",
@@ -3420,6 +3420,62 @@
             "time": "2023-07-30T15:38:18+00:00"
         },
         {
+            "name": "nikic/php-parser",
+            "version": "v4.18.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nikic/PHP-Parser.git",
+                "reference": "1bcbb2179f97633e98bbbc87044ee2611c7d7999"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/1bcbb2179f97633e98bbbc87044ee2611c7d7999",
+                "reference": "1bcbb2179f97633e98bbbc87044ee2611c7d7999",
+                "shasum": ""
+            },
+            "require": {
+                "ext-tokenizer": "*",
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "ircmaxell/php-yacc": "^0.0.7",
+                "phpunit/phpunit": "^6.5 || ^7.0 || ^8.0 || ^9.0"
+            },
+            "bin": [
+                "bin/php-parse"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.9-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PhpParser\\": "lib/PhpParser"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Nikita Popov"
+                }
+            ],
+            "description": "A PHP parser written in PHP",
+            "keywords": [
+                "parser",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/nikic/PHP-Parser/issues",
+                "source": "https://github.com/nikic/PHP-Parser/tree/v4.18.0"
+            },
+            "time": "2023-12-10T21:03:43+00:00"
+        },
+        {
             "name": "nunomaduro/phpinsights",
             "version": "v1.14.1",
             "source": {
@@ -3741,6 +3797,107 @@
             },
             "abandoned": true,
             "time": "2020-10-14T08:39:05+00:00"
+        },
+        {
+            "name": "php-parallel-lint/php-console-color",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-parallel-lint/PHP-Console-Color.git",
+                "reference": "7adfefd530aa2d7570ba87100a99e2483a543b88"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-parallel-lint/PHP-Console-Color/zipball/7adfefd530aa2d7570ba87100a99e2483a543b88",
+                "reference": "7adfefd530aa2d7570ba87100a99e2483a543b88",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "replace": {
+                "jakub-onderka/php-console-color": "*"
+            },
+            "require-dev": {
+                "php-parallel-lint/php-code-style": "^2.0",
+                "php-parallel-lint/php-parallel-lint": "^1.0",
+                "php-parallel-lint/php-var-dump-check": "0.*",
+                "phpunit/phpunit": "^4.8.36 || ^5.7.21 || ^6.0 || ^7.0 || ^8.0 || ^9.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PHP_Parallel_Lint\\PhpConsoleColor\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Jakub Onderka",
+                    "email": "jakub.onderka@gmail.com"
+                }
+            ],
+            "description": "Simple library for creating colored console ouput.",
+            "support": {
+                "issues": "https://github.com/php-parallel-lint/PHP-Console-Color/issues",
+                "source": "https://github.com/php-parallel-lint/PHP-Console-Color/tree/v1.0.1"
+            },
+            "time": "2021-12-25T06:49:29+00:00"
+        },
+        {
+            "name": "php-parallel-lint/php-console-highlighter",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-parallel-lint/PHP-Console-Highlighter.git",
+                "reference": "5b4803384d3303cf8e84141039ef56c8a123138d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-parallel-lint/PHP-Console-Highlighter/zipball/5b4803384d3303cf8e84141039ef56c8a123138d",
+                "reference": "5b4803384d3303cf8e84141039ef56c8a123138d",
+                "shasum": ""
+            },
+            "require": {
+                "ext-tokenizer": "*",
+                "php": ">=5.3.2",
+                "php-parallel-lint/php-console-color": "^1.0.1"
+            },
+            "replace": {
+                "jakub-onderka/php-console-highlighter": "*"
+            },
+            "require-dev": {
+                "php-parallel-lint/php-code-style": "^2.0",
+                "php-parallel-lint/php-parallel-lint": "^1.0",
+                "php-parallel-lint/php-var-dump-check": "0.*",
+                "phpunit/phpunit": "^4.8.36 || ^5.7.21 || ^6.0 || ^7.0 || ^8.0 || ^9.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PHP_Parallel_Lint\\PhpConsoleHighlighter\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jakub Onderka",
+                    "email": "acci@acci.cz",
+                    "homepage": "http://www.acci.cz/"
+                }
+            ],
+            "description": "Highlight PHP code in terminal",
+            "support": {
+                "issues": "https://github.com/php-parallel-lint/PHP-Console-Highlighter/issues",
+                "source": "https://github.com/php-parallel-lint/PHP-Console-Highlighter/tree/v1.0.0"
+            },
+            "time": "2022-02-18T08:23:19+00:00"
         },
         {
             "name": "phpcompatibility/php-compatibility",
@@ -4366,6 +4523,58 @@
                 }
             ],
             "time": "2023-12-01T16:52:15+00:00"
+        },
+        {
+            "name": "povils/phpmnd",
+            "version": "v3.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/povils/phpmnd.git",
+                "reference": "77a4db834aacbb20ee429d65db7a4df58ab5e3f9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/povils/phpmnd/zipball/77a4db834aacbb20ee429d65db7a4df58ab5e3f9",
+                "reference": "77a4db834aacbb20ee429d65db7a4df58ab5e3f9",
+                "shasum": ""
+            },
+            "require": {
+                "nikic/php-parser": "^4.13",
+                "php": "^7.4 || ^8.0",
+                "php-parallel-lint/php-console-highlighter": "^1.0",
+                "phpunit/php-timer": "^2.0||^3.0||^4.0||^5.0||^6.0",
+                "symfony/console": "^4.4 || ^5.0 || ^6.0 || ^7.0",
+                "symfony/finder": "^4.4 || ^5.0 || ^6.0 || ^7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.5",
+                "squizlabs/php_codesniffer": "^2.8.1||^3.5"
+            },
+            "bin": [
+                "bin/phpmnd"
+            ],
+            "type": "application",
+            "autoload": {
+                "psr-4": {
+                    "Povils\\PHPMND\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Povilas Susinskas",
+                    "email": "povilassusinskas@gmail.com"
+                }
+            ],
+            "description": "A tool to detect Magic numbers in codebase",
+            "support": {
+                "issues": "https://github.com/povils/phpmnd/issues",
+                "source": "https://github.com/povils/phpmnd/tree/v3.3.0"
+            },
+            "time": "2023-11-24T09:41:36+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
