@@ -3,6 +3,7 @@
 namespace PHPUnuhi\Components\Reporter;
 
 use Exception;
+use InvalidArgumentException;
 use PHPUnuhi\Components\Reporter\JSON\JsonReporter;
 use PHPUnuhi\Components\Reporter\JUnit\JUnitReporter;
 use PHPUnuhi\Exceptions\ConfigurationException;
@@ -49,8 +50,8 @@ class ReporterFactory
     {
         $this->reporters = [];
 
-        $this->reporters[] = new  JUnitReporter();
-        $this->reporters[] = new  JsonReporter();
+        $this->reporters[] = new JUnitReporter();
+        $this->reporters[] = new JsonReporter();
     }
 
 
@@ -63,7 +64,7 @@ class ReporterFactory
     {
         if ($name === '' || $name === '0') {
 
-            throw new Exception('No name provided for the Reporter');
+            throw new InvalidArgumentException('No name provided for the Reporter');
         }
 
         foreach ($this->reporters as $reporter) {
