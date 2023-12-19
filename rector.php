@@ -24,6 +24,7 @@ return static function (RectorConfig $rectorConfig): void {
         SetList::CODE_QUALITY,
         SetList::STRICT_BOOLEANS,
         SetList::TYPE_DECLARATION,
+        SetList::EARLY_RETURN,
     ]);
 
   #  public const PRIVATIZATION = __DIR__ . '/../../../config/set/privatization.php';
