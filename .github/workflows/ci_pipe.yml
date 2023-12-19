@@ -160,6 +160,29 @@ jobs:
         # -----------------------------------
       - name: Run Test
         run: make phpmnd -B
+
+  rector:
+    name: Rector Analyzer
+    needs: install_dev
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        # -----------------------------------
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4
+        # -----------------------------------
+      - name: Mount Cache
+        uses: actions/cache@v3
+        with:
+          key: cache-dev-${{ github.run_id }}
+          path: |
+            vendor
+        # -----------------------------------
+      - name: Run Rector
+        run: make rector -B
+
   # ------------------------------------------------------------------------------------------------------------------------
 
   svrunit:
