@@ -8,12 +8,12 @@ class Protection
     /**
      * @var Marker[]
      */
-    private $markers;
+    private $markers = [];
 
     /**
      * @var string[]
      */
-    private $terms;
+    private $terms = [];
 
 
     /**
@@ -21,8 +21,6 @@ class Protection
      */
     public function __construct()
     {
-        $this->markers = [];
-        $this->terms = [];
     }
 
     /**

@@ -25,12 +25,12 @@ class Locale
     /**
      * @var Translation[]
      */
-    private $translations;
+    private $translations = [];
 
     /**
      * @var array<string, int>
      */
-    private $lineNumbers;
+    private $lineNumbers = [];
 
 
     /**
@@ -43,9 +43,6 @@ class Locale
         $this->name = $name;
         $this->filename = $filename;
         $this->iniSection = $iniSection;
-
-        $this->translations = [];
-        $this->lineNumbers = [];
     }
 
     /**

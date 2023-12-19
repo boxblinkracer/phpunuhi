@@ -10,7 +10,7 @@ class FakeCSVWriter implements CSVWriterInterface
     /**
      * @var array<mixed>
      */
-    private $writtenLines;
+    private $writtenLines = [];
 
 
     /**
@@ -18,7 +18,6 @@ class FakeCSVWriter implements CSVWriterInterface
      */
     public function __construct()
     {
-        $this->writtenLines = [];
     }
 
 

@@ -13,7 +13,7 @@ class SuiteResult
     /**
      * @var TestResult[]
      */
-    private $tests;
+    private $tests = [];
 
     /**
      * @param string $name
@@ -21,7 +21,6 @@ class SuiteResult
     public function __construct(string $name)
     {
         $this->name = $name;
-        $this->tests = [];
     }
 
     /**

@@ -8,12 +8,12 @@ class Filter
     /**
      * @var string[]
      */
-    private $fieldsAllow;
+    private $fieldsAllow = [];
 
     /**
      * @var string[]
      */
-    private $fieldsExclude;
+    private $fieldsExclude = [];
 
 
     /**
@@ -21,8 +21,6 @@ class Filter
      */
     public function __construct()
     {
-        $this->fieldsAllow = [];
-        $this->fieldsExclude = [];
     }
 
     /**

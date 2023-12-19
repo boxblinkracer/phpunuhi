@@ -21,7 +21,7 @@ class CSVExchange implements ExchangeInterface
     /**
      * @var string
      */
-    private $csvDelimiter;
+    private $csvDelimiter = ',';
 
 
     /**
@@ -30,8 +30,6 @@ class CSVExchange implements ExchangeInterface
     public function __construct(CSVWriterInterface $csvWriter)
     {
         $this->csvWriter = $csvWriter;
-
-        $this->csvDelimiter = ',';
     }
 
 

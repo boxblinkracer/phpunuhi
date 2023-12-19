@@ -8,7 +8,7 @@ class ReportResult
     /**
      * @var SuiteResult[]
      */
-    private $suites;
+    private $suites = [];
 
 
     /**
@@ -16,7 +16,6 @@ class ReportResult
      */
     public function __construct()
     {
-        $this->suites = [];
     }
 
 

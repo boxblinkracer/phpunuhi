@@ -15,7 +15,7 @@ class CaseStyle
     /**
      * @var int
      */
-    private $level;
+    private $level = -1;
 
     /**
      * @param string $name
@@ -23,8 +23,6 @@ class CaseStyle
     public function __construct(string $name)
     {
         $this->name = $name;
-
-        $this->level = -1;
     }
 
     /**

@@ -18,7 +18,7 @@ class CaseStyleValidatorFactory
     /**
      * @var CaseStyleValidatorInterface[]
      */
-    private $validators;
+    private $validators = [];
 
 
     /**
@@ -26,7 +26,6 @@ class CaseStyleValidatorFactory
      */
     public function __construct()
     {
-        $this->validators = [];
         $this->validators[] = new KebabCaseValidator();
         $this->validators[] = new SnakeCaseValidator();
         $this->validators[] = new CamelCaseValidator();
