@@ -2,11 +2,12 @@
 
 namespace PHPUnuhi\Components\Reporter;
 
-use Exception;
 use InvalidArgumentException;
 use PHPUnuhi\Components\Reporter\JSON\JsonReporter;
 use PHPUnuhi\Components\Reporter\JUnit\JUnitReporter;
 use PHPUnuhi\Exceptions\ConfigurationException;
+use PHPUnuhi\Services\Writers\Directory\DirectoryWriter;
+use PHPUnuhi\Services\Writers\Xml\XmlWriter;
 
 class ReporterFactory
 {
@@ -50,7 +51,7 @@ class ReporterFactory
     {
         $this->reporters = [];
 
-        $this->reporters[] = new JUnitReporter();
+        $this->reporters[] = new JUnitReporter(new DirectoryWriter(), new XmlWriter());
         $this->reporters[] = new JsonReporter();
     }
 

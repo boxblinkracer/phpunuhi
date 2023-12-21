@@ -2,13 +2,36 @@
 
 namespace PHPUnuhi\Components\Reporter\JUnit;
 
-use DOMDocument;
 use PHPUnuhi\Components\Reporter\Model\ReportResult;
 use PHPUnuhi\Components\Reporter\ReporterInterface;
+use PHPUnuhi\Services\Writers\Directory\DirectoryWriterInterface;
+use PHPUnuhi\Services\Writers\Xml\XmlWriterInterface;
 
 
 class JUnitReporter implements ReporterInterface
 {
+
+    /**
+     * @var DirectoryWriterInterface
+     */
+    private $directoryWriter;
+
+    /**
+     * @var XmlWriterInterface
+     */
+    private $xmlWriter;
+
+
+    /**
+     * @param DirectoryWriterInterface $directoryWriter
+     * @param XmlWriterInterface $xmlWriter
+     */
+    public function __construct(DirectoryWriterInterface $directoryWriter, XmlWriterInterface $xmlWriter)
+    {
+        $this->directoryWriter = $directoryWriter;
+        $this->xmlWriter = $xmlWriter;
+    }
+
 
     /**
      * @return string
@@ -65,17 +88,10 @@ class JUnitReporter implements ReporterInterface
         $path = dirname($filename);
 
         if (!is_dir($path)) {
-            mkdir($path);
+            $this->directoryWriter->createDirectory($path);
         }
 
-        $dom = new DOMDocument();
-        $dom->preserveWhiteSpace = false;
-        $dom->formatOutput = true;
-
-        $dom->loadXML($content);
-        $out = $dom->saveXML();
-
-        file_put_contents($filename, $out);
+        $this->xmlWriter->saveXml($filename, $content);
     }
 
 
