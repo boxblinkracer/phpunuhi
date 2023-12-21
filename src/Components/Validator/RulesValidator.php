@@ -30,6 +30,10 @@ class RulesValidator implements ValidatorInterface
      */
     public function validate(TranslationSet $set, StorageInterface $storage): ValidationResult
     {
+        if (count($set->getAllTranslationIDs()) === 0) {
+            return new ValidationResult([], []);
+        }
+
         $ruleValidators = [];
 
         foreach ($set->getRules() as $rule) {

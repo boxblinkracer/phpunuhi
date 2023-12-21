@@ -73,7 +73,7 @@ class EmptyContentValidatorTest extends TestCase
 
         $localeEN = new Locale('en-GB', '', '');
         $localeEN->addTranslation('card.btnCancel', 'Cancel', 'group1');
-        $localeEN->addTranslation('card.btnOK', '', 'group1');
+        $localeEN->addTranslation('card.btnOK', '', ''); # also use without group
 
         $set = $this->buildSet([$localeDE, $localeEN]);
 
