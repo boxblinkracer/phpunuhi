@@ -68,7 +68,7 @@ class OpenAITranslator implements TranslatorInterface
 
 
         $params = [
-            'model' => "text-davinci-003",
+            'model' => "gpt-3.5-turbo-instruct",
             'prompt' => $prompt,
             'temperature' => 0.3,
             'max_tokens' => 100,
