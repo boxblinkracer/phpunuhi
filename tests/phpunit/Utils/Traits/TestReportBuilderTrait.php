@@ -14,12 +14,12 @@ trait TestReportBuilderTrait
     protected function buildTestResult(bool $success): TestResult
     {
         return new TestResult(
-            '',
-            '',
-            '',
+            'Fake Test',
+            'btnTitle',
+            'CONTENT_VALIDATOR',
             2,
-            '',
-            '',
+            'MISSING_VALUE',
+            'The value is missing',
             $success
         );
     }

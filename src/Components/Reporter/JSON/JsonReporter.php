@@ -5,9 +5,33 @@ namespace PHPUnuhi\Components\Reporter\JSON;
 use PHPUnuhi\Components\Reporter\Model\ReportResult;
 use PHPUnuhi\Components\Reporter\Model\SuiteResult;
 use PHPUnuhi\Components\Reporter\ReporterInterface;
+use PHPUnuhi\Services\Writers\Directory\DirectoryWriterInterface;
+use PHPUnuhi\Services\Writers\File\FileWriterInterface;
 
 class JsonReporter implements ReporterInterface
 {
+
+    /**
+     * @var DirectoryWriterInterface
+     */
+    private $directoryWriter;
+
+    /**
+     * @var FileWriterInterface
+     */
+    private $fileWriter;
+
+
+    /**
+     * @param DirectoryWriterInterface $directoryWriter
+     * @param FileWriterInterface $fileWriter
+     */
+    public function __construct(DirectoryWriterInterface $directoryWriter, FileWriterInterface $fileWriter)
+    {
+        $this->directoryWriter = $directoryWriter;
+        $this->fileWriter = $fileWriter;
+    }
+
 
     /**
      * @return string
@@ -74,12 +98,12 @@ class JsonReporter implements ReporterInterface
         $path = dirname($filename);
 
         if (!is_dir($path)) {
-            mkdir($path);
+            $this->directoryWriter->createDirectory($path);
         }
 
         $json = json_encode($content, JSON_PRETTY_PRINT);
 
-        file_put_contents($filename, $json);
+        $this->fileWriter->writeFile($filename, $json);
     }
 
 }

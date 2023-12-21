@@ -110,10 +110,10 @@ class JUnitReporterTest extends TestCase
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites name="PHPUnuhi Translation-Sets" tests="2" failures="1">
     <testsuite name="Storefront" tests="2" failures="1">
-        <testcase name="" classname="">
+        <testcase name="FakeTest" classname="CONTENT_VALIDATOR">
         </testcase>
-        <testcase name="" classname="">
-            <failure type="" message=". Line 2"></failure>
+        <testcase name="FakeTest" classname="CONTENT_VALIDATOR">
+            <failure type="MISSING_VALUE" message="The value is missing . Line 2"></failure>
         </testcase>
     </testsuite>
 </testsuites>

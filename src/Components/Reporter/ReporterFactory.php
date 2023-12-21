@@ -7,6 +7,7 @@ use PHPUnuhi\Components\Reporter\JSON\JsonReporter;
 use PHPUnuhi\Components\Reporter\JUnit\JUnitReporter;
 use PHPUnuhi\Exceptions\ConfigurationException;
 use PHPUnuhi\Services\Writers\Directory\DirectoryWriter;
+use PHPUnuhi\Services\Writers\File\FileWriter;
 use PHPUnuhi\Services\Writers\Xml\XmlWriter;
 
 class ReporterFactory
@@ -51,8 +52,10 @@ class ReporterFactory
     {
         $this->reporters = [];
 
-        $this->reporters[] = new JUnitReporter(new DirectoryWriter(), new XmlWriter());
-        $this->reporters[] = new JsonReporter();
+        $dirWriter = new DirectoryWriter();
+
+        $this->reporters[] = new JUnitReporter($dirWriter, new XmlWriter());
+        $this->reporters[] = new JsonReporter($dirWriter, new FileWriter());
     }
 
 
