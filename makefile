@@ -38,6 +38,7 @@ dev: ##1 Installs all dev dependencies
 
 clean: ##1 Clears all dependencies
 	rm -rf vendor/*
+	rm -rf .reports
 
 build: ##1 Builds PHPUnuhi and creates phpunuhi.phar
 	@make install -B
