@@ -96,7 +96,7 @@ jobs:
         run: make phpunit -B
 
   infection:
-    name: Unit Tests
+    name: Mutation Tests
     needs: unit_tests
     runs-on: ubuntu-latest
     steps:
