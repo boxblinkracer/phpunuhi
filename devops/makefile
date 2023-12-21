@@ -13,6 +13,7 @@ run: ## Starts Docker and installs all dependencies
 	docker-compose down | true;
 	docker-compose up -d
 	sleep 10
+	docker exec -it phpunuhi bash -c 'cd /app/devops/scripts && sh install.sh'
 	docker exec -it phpunuhi bash -c 'cd /app && make dev'
 	docker exec -it phpunuhi bash -c 'cd /app && make'
 	docker exec -it phpunuhi bash

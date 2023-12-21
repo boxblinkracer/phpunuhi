@@ -8,6 +8,6 @@ services:
     volumes:
       - "../:/app"
     working_dir: /app
-    entrypoint:
-      - /bin/sh
-      - "/app/devops/boot.sh"
+    environment:
+      - PHP_VERSION=8.2
+      - XDEBUG_ENABLED=1
