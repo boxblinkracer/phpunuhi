@@ -2,8 +2,8 @@
 
 namespace phpunit\Models\Translation;
 
-use PHPUnuhi\Exceptions\TranslationNotFoundException;
 use PHPUnit\Framework\TestCase;
+use PHPUnuhi\Exceptions\TranslationNotFoundException;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\Translation;
 

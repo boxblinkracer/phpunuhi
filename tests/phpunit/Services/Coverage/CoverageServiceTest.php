@@ -8,7 +8,6 @@ use PHPUnuhi\Models\Configuration\Protection;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
 use PHPUnuhi\Services\Coverage\CoverageService;
-use PHPUnuhi\Services\Coverage\Models\CoverageSet;
 
 class CoverageServiceTest extends TestCase
 {

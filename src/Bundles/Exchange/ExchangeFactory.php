@@ -6,14 +6,6 @@ use Exception;
 use PHPUnuhi\Bundles\Exchange\CSV\CSVExchange;
 use PHPUnuhi\Bundles\Exchange\CSV\Services\CSVWriter;
 use PHPUnuhi\Bundles\Exchange\HTML\HTMLExchange;
-use PHPUnuhi\Bundles\Storage\INI\IniStorage;
-use PHPUnuhi\Bundles\Storage\JSON\JsonStorage;
-use PHPUnuhi\Bundles\Storage\PHP\PhpStorage;
-use PHPUnuhi\Bundles\Storage\PO\PoStorage;
-use PHPUnuhi\Bundles\Storage\Shopware6\Shopware6Storage;
-use PHPUnuhi\Bundles\Storage\StorageFactory;
-use PHPUnuhi\Bundles\Storage\StorageInterface;
-use PHPUnuhi\Bundles\Storage\YAML\YamlStorage;
 use PHPUnuhi\Exceptions\ConfigurationException;
 use PHPUnuhi\Models\Command\CommandOption;
 

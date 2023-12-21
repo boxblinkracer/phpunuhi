@@ -2,7 +2,6 @@
 
 namespace PHPUnuhi\Bundles\Exchange;
 
-use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Models\Command\CommandOption;
 use PHPUnuhi\Models\Translation\TranslationSet;
 

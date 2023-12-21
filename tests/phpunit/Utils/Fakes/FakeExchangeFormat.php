@@ -4,7 +4,6 @@ namespace phpunit\Utils\Fakes;
 
 use PHPUnuhi\Bundles\Exchange\ExchangeInterface;
 use PHPUnuhi\Bundles\Exchange\ImportResult;
-use PHPUnuhi\Models\Command\CommandOption;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
 class FakeExchangeFormat implements ExchangeInterface

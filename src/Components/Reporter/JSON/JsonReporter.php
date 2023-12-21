@@ -3,7 +3,6 @@
 namespace PHPUnuhi\Components\Reporter\JSON;
 
 use PHPUnuhi\Components\Reporter\Model\ReportResult;
-use PHPUnuhi\Components\Reporter\Model\SuiteResult;
 use PHPUnuhi\Components\Reporter\ReporterInterface;
 use PHPUnuhi\Services\Writers\Directory\DirectoryWriterInterface;
 use PHPUnuhi\Services\Writers\File\FileWriterInterface;

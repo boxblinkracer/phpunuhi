@@ -4,8 +4,6 @@ namespace phpunit\Components\Validator\CaseStyle\Style;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Components\Validator\CaseStyle\CaseStyleValidatorInterface;
-use PHPUnuhi\Components\Validator\CaseStyle\Style\CamelCaseValidator;
-use PHPUnuhi\Components\Validator\CaseStyle\Style\KebabCaseValidator;
 use PHPUnuhi\Components\Validator\CaseStyle\Style\SnakeCaseValidator;
 
 class SnakeCaseValidatorTest extends TestCase

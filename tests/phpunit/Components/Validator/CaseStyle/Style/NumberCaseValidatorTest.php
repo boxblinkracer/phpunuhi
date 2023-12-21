@@ -4,12 +4,7 @@ namespace phpunit\Components\Validator\CaseStyle\Style;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Components\Validator\CaseStyle\CaseStyleValidatorInterface;
-use PHPUnuhi\Components\Validator\CaseStyle\Style\CamelCaseValidator;
-use PHPUnuhi\Components\Validator\CaseStyle\Style\KebabCaseValidator;
 use PHPUnuhi\Components\Validator\CaseStyle\Style\NumberCaseValidator;
-use PHPUnuhi\Components\Validator\CaseStyle\Style\SnakeCaseValidator;
-use PHPUnuhi\Components\Validator\CaseStyle\Style\StartCaseValidator;
-use PHPUnuhi\Components\Validator\CaseStyle\Style\UpperCaseValidator;
 
 class NumberCaseValidatorTest extends TestCase
 {

@@ -6,7 +6,6 @@ use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Components\Validator\Model\ValidationError;
 use PHPUnuhi\Components\Validator\Model\ValidationResult;
 use PHPUnuhi\Components\Validator\Model\ValidationTest;
-use PHPUnuhi\Components\Validator\ValidatorInterface;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
 

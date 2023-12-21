@@ -15,7 +15,6 @@ use PHPUnuhi\Exceptions\ConfigurationException;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\Translation;
 use PHPUnuhi\Models\Translation\TranslationSet;
-use PHPUnuhi\Services\GroupName\GroupNameService;
 use PHPUnuhi\Traits\BinaryTrait;
 use PHPUnuhi\Traits\StringTrait;
 

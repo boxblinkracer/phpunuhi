@@ -4,7 +4,6 @@ namespace phpunit\Components\Validator\Model;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Components\Validator\Model\ValidationError;
-use PHPUnuhi\Models\Translation\Locale;
 
 class ValidationErrorTest extends TestCase
 {

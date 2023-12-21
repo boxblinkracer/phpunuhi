@@ -8,7 +8,6 @@ use Orhanerday\OpenAi\OpenAi;
 use PHPUnuhi\Bundles\Translator\TranslatorInterface;
 use PHPUnuhi\Models\Command\CommandOption;
 use PHPUnuhi\Services\Placeholder\Placeholder;
-use PHPUnuhi\Services\Placeholder\PlaceholderEncoder;
 
 class OpenAITranslator implements TranslatorInterface
 {

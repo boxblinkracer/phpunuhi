@@ -8,8 +8,6 @@ use PHPUnuhi\Bundles\Storage\JSON\JsonStorage;
 use PHPUnuhi\Components\Validator\Rules\NestingDepthRule;
 use PHPUnuhi\Models\Configuration\Filter;
 use PHPUnuhi\Models\Configuration\Protection;
-use PHPUnuhi\Models\Configuration\Rule;
-use PHPUnuhi\Models\Configuration\Rules;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
 

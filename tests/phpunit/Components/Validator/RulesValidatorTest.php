@@ -5,12 +5,10 @@ namespace phpunit\Components\Validator;
 use PHPUnit\Framework\TestCase;
 use phpunit\Utils\Traits\TranslationSetBuilderTrait;
 use PHPUnuhi\Bundles\Storage\JSON\JsonStorage;
-use PHPUnuhi\Components\Validator\Rules\NestingDepthRule;
 use PHPUnuhi\Components\Validator\RulesValidator;
 use PHPUnuhi\Models\Configuration\Rule;
 use PHPUnuhi\Models\Configuration\Rules;
 use PHPUnuhi\Models\Translation\Locale;
-use PHPUnuhi\Models\Translation\TranslationSet;
 
 class RulesValidatorTest extends TestCase
 {

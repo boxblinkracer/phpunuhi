@@ -7,7 +7,6 @@ use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Configuration\ConfigurationLoader;
 use PHPUnuhi\Exceptions\ConfigurationException;
 use PHPUnuhi\Models\Translation\Locale;
-use PHPUnuhi\Services\Path\FileExtensionConverter;
 use PHPUnuhi\Traits\CommandTrait;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

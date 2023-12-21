@@ -3,7 +3,6 @@
 namespace phpunit\Components\Repoter\Model;
 
 use PHPUnit\Framework\TestCase;
-use PHPUnit\TextUI\TestRunner;
 use PHPUnuhi\Components\Reporter\Model\SuiteResult;
 use PHPUnuhi\Components\Reporter\Model\TestResult;
 
