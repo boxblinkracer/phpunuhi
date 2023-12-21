@@ -2,10 +2,10 @@
 
 namespace phpunit\Bundles\Storage;
 
-use PHPUnuhi\Exceptions\ConfigurationException;
-use phpunit\Fakes\FakeStorage;
 use PHPUnit\Framework\TestCase;
+use phpunit\Utils\Fakes\FakeStorage;
 use PHPUnuhi\Bundles\Storage\StorageFactory;
+use PHPUnuhi\Exceptions\ConfigurationException;
 use PHPUnuhi\Models\Configuration\Filter;
 use PHPUnuhi\Models\Configuration\Protection;
 use PHPUnuhi\Models\Translation\TranslationSet;

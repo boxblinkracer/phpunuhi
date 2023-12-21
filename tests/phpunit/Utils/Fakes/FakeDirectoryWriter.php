@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Fakes;
+namespace phpunit\Utils\Fakes;
 
 use PHPUnuhi\Services\Writers\Directory\DirectoryWriterInterface;
 

@@ -2,8 +2,8 @@
 
 namespace phpunit\Bundles\Exchange\CSV;
 
-use phpunit\Fakes\FakeCSVWriter;
 use PHPUnit\Framework\TestCase;
+use phpunit\Utils\Fakes\FakeCSVWriter;
 use PHPUnuhi\Bundles\Exchange\CSV\CSVExchange;
 use PHPUnuhi\Models\Configuration\Filter;
 use PHPUnuhi\Models\Configuration\Protection;

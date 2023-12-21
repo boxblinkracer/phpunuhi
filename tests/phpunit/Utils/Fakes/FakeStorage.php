@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Fakes;
+namespace phpunit\Utils\Fakes;
 
 use PHPUnuhi\Bundles\Storage\StorageHierarchy;
 use PHPUnuhi\Bundles\Storage\StorageInterface;

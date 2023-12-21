@@ -2,16 +2,22 @@
 
 namespace phpunit\Components\Repoter\JUnit;
 
-use phpunit\Fakes\FakeDirectoryWriter;
-use phpunit\Fakes\FakeXmlWriter;
 use PHPUnit\Framework\TestCase;
+use phpunit\Utils\Fakes\FakeDirectoryWriter;
+use phpunit\Utils\Fakes\FakeXmlWriter;
+use phpunit\Utils\Traits\StringCleanerTrait;
+use phpunit\Utils\Traits\TestReportBuilderTrait;
 use PHPUnuhi\Components\Reporter\JUnit\JUnitReporter;
 use PHPUnuhi\Components\Reporter\Model\ReportResult;
-use PHPUnuhi\Services\Writers\Directory\DirectoryWriterInterface;
+use PHPUnuhi\Components\Reporter\Model\SuiteResult;
 
 
 class JUnitReporterTest extends TestCase
 {
+
+    use TestReportBuilderTrait;
+    use StringCleanerTrait;
+
 
     /**
      * @var JUnitReporter
@@ -82,6 +88,43 @@ class JUnitReporterTest extends TestCase
         $this->reporter->generate('./subfolder/subfolder2/my-file.xml', $result);
 
         $this->assertEquals('./subfolder/subfolder2', $this->fakeDirectoryWriter->getCreatedDirectory());
+    }
+
+    /**
+     * @return void
+     */
+    public function testReportGeneration(): void
+    {
+        $suite = new SuiteResult('Storefront');
+        $suite->addTestResult($this->buildTestResult(true));
+        $suite->addTestResult($this->buildTestResult(false));
+
+        $result = new ReportResult();
+        $result->addSuite($suite);
+
+
+        $this->reporter->generate('.my-file.xml', $result);
+
+
+        $expected = <<<XML
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="PHPUnuhi Translation-Sets" tests="2" failures="1">
+    <testsuite name="Storefront" tests="2" failures="1">
+        <testcase name="" classname="">
+        </testcase>
+        <testcase name="" classname="">
+            <failure type="" message=". Line 2"></failure>
+        </testcase>
+    </testsuite>
+</testsuites>
+XML;
+
+        $actual = $this->fakeXmlWriter->getProvidedXml();
+
+        $expected = $this->buildComparableString($expected);
+        $actual = $this->buildComparableString($actual);
+
+        $this->assertEquals($expected, $actual);
     }
 
 }
