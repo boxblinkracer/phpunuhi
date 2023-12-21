@@ -54,9 +54,10 @@ pr: ##2 Runs and prepares everything for a pull request
 	PHP_CS_FIXER_IGNORE_ENV=1 php ./vendor/bin/php-cs-fixer fix --config=./.php_cs.php
 	@make phpcheck -B
 	@make phpmin -B
-	@make phpunit -B
 	@make stan -B
 	@make phpmnd -B
+	@make phpunit -B
+	@make infection -B
 
 #------------------------------------------------------------------------------------------------
 
@@ -79,8 +80,12 @@ rector: ##3 Runs the Rector checks in dry run
 	php vendor/bin/rector process --dry-run
 
 phpunit: ##3 Runs all tests
-	XDEBUG_MODE=coverage php ./vendor/bin/phpunit --configuration=./.phpunit.xml -v --coverage-html ./.reports/phpunit/coverage --coverage-clover ./.reports/phpunit/clover/index.xml
+	XDEBUG_MODE=coverage php ./vendor/bin/phpunit -v --coverage-html ./.reports/phpunit/coverage --coverage-clover ./.reports/phpunit/clover/index.xml
 	php vendor/bin/coverage-check ./.reports/phpunit/clover/index.xml $(PHPUNIT_MIN_COVERAGE)
+
+infection: ##3 Starts all Infection/Mutation tests
+	rm -rf ./.reports/infection
+	@XDEBUG_MODE=coverage php vendor/bin/infection --configuration=./infection.json --log-verbosity=all --debug
 
 phpinsights: ##3 Starts PHPInsights
 	@php -d memory_limit=2000M vendor/bin/phpinsights --no-interaction

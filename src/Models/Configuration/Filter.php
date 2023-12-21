@@ -90,7 +90,8 @@ class Filter
             preg_quote($wildcard_pattern, '/')
         );
 
-        return (bool)preg_match('/^' . $regex . '$/is', $haystack);
+        $result = preg_match('/^' . $regex . '$/is', $haystack);
+        return $result === 1;
     }
 
 }

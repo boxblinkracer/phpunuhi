@@ -1,0 +1,19 @@
+{
+  "bootstrap": "./vendor/autoload.php",
+  "minMsi": 100,
+  "minCoveredMsi": 100,
+  "source": {
+    "directories": [
+      "src/Models/Command",
+      "src/Models/Configuration"
+    ]
+  },
+  "mutators": {
+    "@default": true
+  },
+  "logs": {
+    "text": ".reports/infection/infection.log",
+    "summary": ".reports/infection/summary.log"
+  },
+  "$schema": "vendor/infection/infection/resources/schema.json"
+}

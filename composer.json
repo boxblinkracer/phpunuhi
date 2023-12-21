@@ -20,11 +20,16 @@
         "bin/phpunuhi"
     ],
     "config": {
+        "platform": {
+            "php": "7.4"
+        },
         "optimize-autoloader": true,
         "sort-packages": true,
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true,
-            "php-http/discovery": true
+            "php-http/discovery": true,
+            "ocramius/package-versions": true,
+            "infection/extension-installer": true
         }
     },
     "require": {
@@ -40,10 +45,11 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.18",
+        "infection/infection": "^0.21.5",
         "nunomaduro/phpinsights": "^1.14",
         "phpcompatibility/php-compatibility": "^9.3",
         "phpstan/phpstan": "*",
-        "phpunit/phpunit": "^8.5",
+        "phpunit/phpunit": "^9.6",
         "povils/phpmnd": "^3.3",
         "rector/rector": "^0.18.12",
         "roave/security-advisories": "dev-latest",
