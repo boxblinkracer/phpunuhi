@@ -1,6 +1,7 @@
 parameters:
-    level: 8
+    level: 9
     paths:
         - ./src
     excludePaths:
         - ./src/vendor/*
+    checkExplicitMixed: false
