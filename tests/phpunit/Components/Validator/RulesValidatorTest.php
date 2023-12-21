@@ -55,7 +55,7 @@ class RulesValidatorTest extends TestCase
     /**
      * @return array[]
      */
-    public function ruleValidationDataProvider()
+    public function ruleValidationDataProvider(): array
     {
         return [
             [Rules::NESTING_DEPTH, 2],
