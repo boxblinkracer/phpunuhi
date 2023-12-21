@@ -57,5 +57,4 @@ class SnakeCaseValidatorTest extends TestCase
 
         $this->assertEquals($expectedValid, $isValid);
     }
-
 }

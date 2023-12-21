@@ -63,8 +63,8 @@ class DeeplTranslator implements TranslatorInterface
 
     /**
      * @param array<mixed> $options
-     * @return void
      * @throws Exception
+     * @return void
      */
     public function setOptionValues(array $options): void
     {
@@ -83,8 +83,8 @@ class DeeplTranslator implements TranslatorInterface
      * @param string $sourceLocale
      * @param string $targetLocale
      * @param Placeholder[] $foundPlaceholders
-     * @return string
      * @throws Exception
+     * @return string
      */
     public function translate(string $text, string $sourceLocale, string $targetLocale, array $foundPlaceholders): string
     {
@@ -130,5 +130,4 @@ class DeeplTranslator implements TranslatorInterface
 
         return $result;
     }
-
 }

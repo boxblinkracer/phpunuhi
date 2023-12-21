@@ -104,5 +104,4 @@ class CoverageSetTest extends TestCase
 
         $this->assertEquals(5, $value);
     }
-
 }

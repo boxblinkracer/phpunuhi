@@ -77,8 +77,8 @@ class JsonStorage implements StorageInterface
 
     /**
      * @param TranslationSet $set
-     * @return void
      * @throws Exception
+     * @return void
      */
     public function loadTranslationSet(TranslationSet $set): void
     {
@@ -122,5 +122,4 @@ class JsonStorage implements StorageInterface
 
         return new StorageSaveResult(1, $translationsCount);
     }
-
 }

@@ -13,7 +13,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ListTranslationsCommand extends Command
 {
-
     use CommandTrait;
 
     /**
@@ -32,8 +31,8 @@ class ListTranslationsCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return int
      * @throws ConfigurationException
+     * @return int
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -53,7 +52,6 @@ class ListTranslationsCommand extends Command
 
 
         foreach ($config->getTranslationSets() as $set) {
-
             $io->section('Translation Set: ' . $set->getName());
 
             foreach ($set->getAllTranslationIDs() as $id) {
@@ -63,5 +61,4 @@ class ListTranslationsCommand extends Command
 
         return 0;
     }
-
 }

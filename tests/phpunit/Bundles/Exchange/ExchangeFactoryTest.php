@@ -21,8 +21,8 @@ class ExchangeFactoryTest extends TestCase
 
 
     /**
-     * @return void
      * @throws ConfigurationException
+     * @return void
      */
     public function testGetCustomExchangeFormat(): void
     {
@@ -35,8 +35,8 @@ class ExchangeFactoryTest extends TestCase
     }
 
     /**
-     * @return void
      * @throws ConfigurationException
+     * @return void
      */
     public function testDoubleRegistrationThrowsException(): void
     {
@@ -49,8 +49,8 @@ class ExchangeFactoryTest extends TestCase
     }
 
     /**
-     * @return void
      * @throws ConfigurationException
+     * @return void
      */
     public function testUnknownFormatThrowsException(): void
     {
@@ -60,8 +60,8 @@ class ExchangeFactoryTest extends TestCase
     }
 
     /**
-     * @return void
      * @throws ConfigurationException
+     * @return void
      */
     public function testEmptyFormatThrowsException(): void
     {
@@ -69,5 +69,4 @@ class ExchangeFactoryTest extends TestCase
 
         ExchangeFactory::getInstance()->getExchange('', []);
     }
-
 }

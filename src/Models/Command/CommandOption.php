@@ -40,5 +40,4 @@ class CommandOption
     {
         return $this->hasValue;
     }
-
 }

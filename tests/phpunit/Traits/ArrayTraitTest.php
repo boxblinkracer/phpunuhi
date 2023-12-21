@@ -7,7 +7,6 @@ use PHPUnuhi\Traits\ArrayTrait;
 
 class ArrayTraitTest extends TestCase
 {
-
     use ArrayTrait;
 
     /**
@@ -195,5 +194,4 @@ class ArrayTraitTest extends TestCase
 
         $this->assertEquals($expected, $flat);
     }
-
 }

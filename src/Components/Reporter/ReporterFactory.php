@@ -61,18 +61,16 @@ class ReporterFactory
 
     /**
      * @param string $name
-     * @return ReporterInterface
      * @throws ConfigurationException
+     * @return ReporterInterface
      */
     public function getReporter(string $name): ReporterInterface
     {
         if ($name === '' || $name === '0') {
-
             throw new InvalidArgumentException('No name provided for the Reporter');
         }
 
         foreach ($this->reporters as $reporter) {
-
             if ($reporter->getName() === $name) {
                 return $reporter;
             }
@@ -80,5 +78,4 @@ class ReporterFactory
 
         throw new ConfigurationException('No reporter found for name: ' . $name);
     }
-
 }

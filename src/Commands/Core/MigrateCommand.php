@@ -16,7 +16,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class MigrateCommand extends Command
 {
-
     use CommandTrait;
 
     /**
@@ -36,8 +35,8 @@ class MigrateCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return int
      * @throws ConfigurationException
+     * @return int
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -57,7 +56,6 @@ class MigrateCommand extends Command
         $config = $configLoader->load($configFile);
 
         foreach ($config->getTranslationSets() as $set) {
-
             $io->section('Translation-Set: ' . $set->getName());
 
             $sourceStorage = StorageFactory::getInstance()->getStorage($set);
@@ -97,5 +95,4 @@ class MigrateCommand extends Command
 
         return $newFile . ('.' . $targetStorage->getFileExtension());
     }
-
 }

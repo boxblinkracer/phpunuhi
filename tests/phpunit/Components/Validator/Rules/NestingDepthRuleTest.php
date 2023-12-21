@@ -11,7 +11,6 @@ use PHPUnuhi\Models\Configuration\Protection;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
-
 class NestingDepthRuleTest extends TestCase
 {
 
@@ -27,8 +26,8 @@ class NestingDepthRuleTest extends TestCase
     }
 
     /**
-     * @return void
      * @throws Exception
+     * @return void
      */
     public function testAllValid(): void
     {
@@ -49,8 +48,8 @@ class NestingDepthRuleTest extends TestCase
     }
 
     /**
-     * @return void
      * @throws Exception
+     * @return void
      */
     public function testLengthZeroAlwaysValid(): void
     {
@@ -71,8 +70,8 @@ class NestingDepthRuleTest extends TestCase
     }
 
     /**
-     * @return void
      * @throws Exception
+     * @return void
      */
     public function testNestingDepthReached(): void
     {
@@ -111,5 +110,4 @@ class NestingDepthRuleTest extends TestCase
             []
         );
     }
-
 }

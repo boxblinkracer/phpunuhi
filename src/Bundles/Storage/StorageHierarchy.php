@@ -40,5 +40,4 @@ class StorageHierarchy
     {
         return $this->delimiter;
     }
-
 }

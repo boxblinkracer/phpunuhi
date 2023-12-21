@@ -51,7 +51,6 @@ class YamlSaver
         $saveValues = [];
 
         foreach ($locale->getTranslations() as $translation) {
-
             $saveValues[$translation->getID()] = $translation->getValue();
             $translationCount++;
         }

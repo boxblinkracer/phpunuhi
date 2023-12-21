@@ -29,5 +29,4 @@ class FakeDirectoryWriter implements DirectoryWriterInterface
     {
         $this->createdDirectory = $path;
     }
-
 }

@@ -7,7 +7,6 @@ use PHPUnuhi\Traits\StringTrait;
 
 class StringTraitTest extends TestCase
 {
-
     use StringTrait;
 
     /**
@@ -79,5 +78,4 @@ class StringTraitTest extends TestCase
 
         $this->assertEquals(true, $contains);
     }
-
 }

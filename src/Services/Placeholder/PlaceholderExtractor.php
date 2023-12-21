@@ -33,7 +33,6 @@ class PlaceholderExtractor
         $placeholders = [];
 
         foreach ($uniqueList as $foundValue) {
-
             $ph = new Placeholder($markerStart . $foundValue . $markerEnd);
 
             $placeholders[] = $ph;
@@ -41,6 +40,4 @@ class PlaceholderExtractor
 
         return $placeholders;
     }
-
-
 }

@@ -36,5 +36,4 @@ interface CSVWriterInterface
      * @return void
      */
     public function close($file): void;
-
 }

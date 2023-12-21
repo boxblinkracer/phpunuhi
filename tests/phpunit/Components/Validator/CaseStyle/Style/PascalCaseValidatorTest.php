@@ -58,5 +58,4 @@ class PascalCaseValidatorTest extends TestCase
 
         $this->assertEquals($expectedValid, $isValid);
     }
-
 }

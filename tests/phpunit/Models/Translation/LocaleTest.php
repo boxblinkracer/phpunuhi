@@ -172,8 +172,8 @@ class LocaleTest extends TestCase
      * This test verifies that we do not add translations twice,
      * but do correctly update them in this case.
      *
-     * @return void
      * @throws TranslationNotFoundException
+     * @return void
      */
     public function testAddTranslationAvoidDuplicates(): void
     {
@@ -190,5 +190,4 @@ class LocaleTest extends TestCase
         $this->assertCount(1, $localeEN->getTranslationIDs());
         $this->assertEquals('Abbrechen', $localeEN->findTranslation('btnCancel')->getValue());
     }
-
 }

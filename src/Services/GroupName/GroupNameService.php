@@ -6,7 +6,6 @@ use PHPUnuhi\Traits\StringTrait;
 
 class GroupNameService
 {
-
     use StringTrait;
 
 
@@ -42,5 +41,4 @@ class GroupNameService
 
         return str_replace('group--' . $group . '.', '', $translationId);
     }
-
 }

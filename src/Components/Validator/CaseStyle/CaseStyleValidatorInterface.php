@@ -15,5 +15,4 @@ interface CaseStyleValidatorInterface
      * @return bool
      */
     public function isValid(string $text): bool;
-
 }

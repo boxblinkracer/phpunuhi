@@ -19,19 +19,15 @@ class CoverageService
         $tmpListSets = [];
 
         foreach ($sets as $set) {
-
             $tmpLocales = [];
 
             foreach ($set->getLocales() as $locale) {
-
                 $tmpLocales[] = new CoverageLocale($locale);
             }
 
             $tmpListSets[] = new CoverageSet($set->getName(), $tmpLocales);
-
         }
 
         return new  CoverageTotal($tmpListSets);
     }
-
 }

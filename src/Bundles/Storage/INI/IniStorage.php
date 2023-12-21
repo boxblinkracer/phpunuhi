@@ -69,13 +69,12 @@ class IniStorage implements StorageInterface
 
     /**
      * @param TranslationSet $set
-     * @return void
      * @throws Exception
+     * @return void
      */
     public function loadTranslationSet(TranslationSet $set): void
     {
         foreach ($set->getLocales() as $locale) {
-
             $iniArray = parse_ini_file($locale->getFilename(), true, INI_SCANNER_RAW);
 
             if ($iniArray === false) {
@@ -83,7 +82,6 @@ class IniStorage implements StorageInterface
             }
 
             foreach ($iniArray as $key => $value) {
-
                 if (is_array($value)) {
                     # we have a section
                     if ($key === $locale->getIniSection()) {
@@ -91,7 +89,6 @@ class IniStorage implements StorageInterface
                             $locale->addTranslation($transKey, $transValue, '');
                         }
                     }
-
                 } else {
                     # we just have a plain value
                     $locale->addTranslation($key, $value, '');
@@ -189,5 +186,4 @@ class IniStorage implements StorageInterface
 
         return $translationCount;
     }
-
 }

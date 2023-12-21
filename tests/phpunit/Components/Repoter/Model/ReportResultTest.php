@@ -89,5 +89,4 @@ class ReportResultTest extends TestCase
     {
         $this->assertEquals(1, $this->result->getFailureCount());
     }
-
 }

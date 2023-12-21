@@ -127,5 +127,4 @@ class ValidationTest
     {
         return $this->success;
     }
-
 }

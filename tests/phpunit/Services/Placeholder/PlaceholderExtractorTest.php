@@ -80,5 +80,4 @@ class PlaceholderExtractorTest extends TestCase
 
         $this->assertEquals('{firstname lastname}', $placeholders[0]->getValue());
     }
-
 }

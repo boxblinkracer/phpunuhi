@@ -13,7 +13,6 @@ use PHPUnuhi\Traits\StringTrait;
 
 class PoStorage implements StorageInterface
 {
-
     use StringTrait;
 
 
@@ -69,18 +68,16 @@ class PoStorage implements StorageInterface
 
     /**
      * @param TranslationSet $set
-     * @return void
      * @throws Exception
+     * @return void
      */
     public function loadTranslationSet(TranslationSet $set): void
     {
         foreach ($set->getLocales() as $locale) {
-
             $lines = $this->getLines($locale->getFilename());
             $blocks = $this->getBlocks($lines);
 
             foreach ($blocks as $block) {
-
                 $id = $block->getId();
                 $value = $block->getMessage();
 
@@ -111,7 +108,6 @@ class PoStorage implements StorageInterface
         }
 
         return new StorageSaveResult($localeCount, $translationCount);
-
     }
 
     /**
@@ -145,7 +141,6 @@ class PoStorage implements StorageInterface
         $newLines = [];
 
         foreach ($blocks as $block) {
-
             $id = $block->getId();
 
             $existingKeys[] = $id;
@@ -168,7 +163,6 @@ class PoStorage implements StorageInterface
         $newLines[] = '';
 
         foreach ($locale->getTranslations() as $translation) {
-
             $found = false;
 
             foreach ($existingKeys as $existingKey) {
@@ -211,13 +205,11 @@ class PoStorage implements StorageInterface
         $newLines = [];
         $count = 0;
         foreach ($lines as $line) {
-
             if (empty($line)) {
                 if ($count <= 0) {
                     $newLines[] = $line;
                     $count += 1;
                 }
-
             } else {
                 $newLines[] = $line;
                 $count = 0;
@@ -241,7 +233,6 @@ class PoStorage implements StorageInterface
         }
 
         while (($line = fgets($handle)) !== false) {
-
             $line = trim($line);
             $lines[] = $line;
         }
@@ -263,7 +254,6 @@ class PoStorage implements StorageInterface
         $currentBlockLines = [];
 
         foreach ($lines as $line) {
-
             if (!empty($line) && !$inBlock) {
                 # start new block
                 $inBlock = true;
@@ -276,7 +266,6 @@ class PoStorage implements StorageInterface
                 }
                 $currentBlockLines = [];
             } else {
-
                 $currentBlockLines[] = $line;
             }
         }

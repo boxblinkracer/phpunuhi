@@ -18,7 +18,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class TranslateCommand extends Command
 {
-
     use CommandTrait;
 
 
@@ -58,8 +57,8 @@ class TranslateCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return int
      * @throws ConfigurationException
+     * @return int
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -96,7 +95,6 @@ class TranslateCommand extends Command
         $translateFailedCount = 0;
 
         foreach ($config->getTranslationSets() as $set) {
-
             $translatedInSet = 0;
 
             # if we have configured to only translate a specific set then skip others
@@ -111,7 +109,6 @@ class TranslateCommand extends Command
             # first iterate through ids
             # then we have all ids next to each other for better comparing on CLI
             foreach ($allIDs as $currentID) {
-
                 foreach ($set->getLocales() as $locale) {
 
                     # if we have configured to only translate a specific locale then skip other locales
@@ -129,7 +126,6 @@ class TranslateCommand extends Command
 
                     # translate if we either force it or only if our value is empty
                     if ($forceLocale || $currentTranslation->isEmpty()) {
-
                         try {
                             $existingData = $set->findAnyExistingTranslation($currentID, $sourceLocale);
                         } catch (TranslationNotFoundException $ex) {
@@ -211,6 +207,4 @@ class TranslateCommand extends Command
         $io->success($translatedCount . ' translation(s) are updated!');
         return 0;
     }
-
-
 }

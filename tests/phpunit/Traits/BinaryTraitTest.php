@@ -7,7 +7,6 @@ use PHPUnuhi\Traits\BinaryTrait;
 
 class BinaryTraitTest extends TestCase
 {
-
     use BinaryTrait;
 
     /**
@@ -64,5 +63,4 @@ class BinaryTraitTest extends TestCase
 
         $this->assertFalse($isBinary);
     }
-
 }

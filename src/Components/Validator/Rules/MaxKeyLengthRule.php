@@ -56,7 +56,6 @@ class MaxKeyLengthRule implements RuleValidatorInterface
 
         foreach ($set->getLocales() as $locale) {
             foreach ($locale->getTranslations() as $translation) {
-
                 if ($hierarchy->isMultiLevel()) {
                     $parts = explode($hierarchy->getDelimiter(), $translation->getKey());
                     if (!is_array($parts)) {
@@ -68,7 +67,6 @@ class MaxKeyLengthRule implements RuleValidatorInterface
 
                 $invalidKey = null;
                 foreach ($parts as $part) {
-
                     if (strlen($part) > $this->maxKeyLength) {
                         $invalidKey = $part;
                         break;
@@ -112,5 +110,4 @@ class MaxKeyLengthRule implements RuleValidatorInterface
 
         return new ValidationResult($tests, $errors);
     }
-
 }

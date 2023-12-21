@@ -9,7 +9,6 @@ use PHPUnuhi\Traits\StringTrait;
 
 class CSVImporter
 {
-
     use StringTrait;
 
 
@@ -30,8 +29,8 @@ class CSVImporter
 
     /**
      * @param string $filename
-     * @return ImportResult
      * @throws Exception
+     * @return ImportResult
      */
     public function import(string $filename): ImportResult
     {
@@ -45,12 +44,10 @@ class CSVImporter
         }
 
         while ($row = fgetcsv($csvFile, 0, $this->delimiter)) {
-
             if ($headerFiles === []) {
                 # header line
                 $headerFiles = $row;
             } else {
-
                 $startIndex = 1;
 
                 if (in_array('Group', $headerFiles)) {
@@ -63,13 +60,11 @@ class CSVImporter
                 }
 
                 for ($i = $startIndex; $i <= count($row) - 1; $i++) {
-
                     $value = $row[$i];
 
                     $localeExchangeID = (string)$headerFiles[$i];
 
                     if ($localeExchangeID !== '') {
-
                         $importData[] = new ImportEntry(
                             $localeExchangeID,
                             (string)$key,
@@ -85,5 +80,4 @@ class CSVImporter
 
         return new ImportResult($importData);
     }
-
 }

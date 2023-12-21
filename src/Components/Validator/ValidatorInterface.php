@@ -20,5 +20,4 @@ interface ValidatorInterface
      * @return ValidationResult
      */
     public function validate(TranslationSet $set, StorageInterface $storage): ValidationResult;
-
 }

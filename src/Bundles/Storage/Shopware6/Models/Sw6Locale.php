@@ -55,5 +55,4 @@ class Sw6Locale
     {
         return $this->localeName;
     }
-
 }

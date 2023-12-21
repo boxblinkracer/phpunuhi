@@ -7,7 +7,6 @@ use PHPUnuhi\Components\Reporter\ReporterInterface;
 use PHPUnuhi\Services\Writers\Directory\DirectoryWriterInterface;
 use PHPUnuhi\Services\Writers\Xml\XmlWriterInterface;
 
-
 class JUnitReporter implements ReporterInterface
 {
 
@@ -62,11 +61,9 @@ class JUnitReporter implements ReporterInterface
 
 
         foreach ($report->getSuites() as $suite) {
-
             $content .= '<testsuite name="' . $suite->getName() . '" tests="' . $suite->getTestCount() . '" failures="' . $suite->getFailureCount() . '">';
 
             foreach ($suite->getTests() as $test) {
-
                 $content .= '<testcase name="' . $test->getName() . '" classname="' . $test->getClassName() . '">';
 
                 if (!$test->isSuccess()) {
@@ -93,6 +90,4 @@ class JUnitReporter implements ReporterInterface
 
         $this->xmlWriter->saveXml($filename, $content);
     }
-
-
 }

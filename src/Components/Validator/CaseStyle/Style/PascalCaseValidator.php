@@ -2,7 +2,6 @@
 
 namespace PHPUnuhi\Components\Validator\CaseStyle\Style;
 
-
 use PHPUnuhi\Components\Validator\CaseStyle\CaseStyleValidatorInterface;
 
 class PascalCaseValidator implements CaseStyleValidatorInterface
@@ -28,5 +27,4 @@ class PascalCaseValidator implements CaseStyleValidatorInterface
 
         return ($count > 0);
     }
-
 }

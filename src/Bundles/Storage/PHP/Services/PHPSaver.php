@@ -7,7 +7,6 @@ use PHPUnuhi\Traits\ArrayTrait;
 
 class PHPSaver
 {
-
     use ArrayTrait;
 
     /**
@@ -80,7 +79,6 @@ class PHPSaver
 
 
         foreach ($root as $key => $value) {
-
             if (is_array($value)) {
                 $indent += 1;
 
@@ -94,5 +92,4 @@ class PHPSaver
 
         return $content;
     }
-
 }

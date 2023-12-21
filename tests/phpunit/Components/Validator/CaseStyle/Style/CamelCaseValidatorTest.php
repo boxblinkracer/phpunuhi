@@ -57,5 +57,4 @@ class CamelCaseValidatorTest extends TestCase
 
         $this->assertEquals($expectedValid, $isValid);
     }
-
 }

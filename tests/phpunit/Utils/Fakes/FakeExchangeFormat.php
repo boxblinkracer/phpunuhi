@@ -8,10 +8,9 @@ use PHPUnuhi\Models\Translation\TranslationSet;
 
 class FakeExchangeFormat implements ExchangeInterface
 {
-
     public function getName(): string
     {
-       return 'fake';
+        return 'fake';
     }
 
     public function getOptions(): array
@@ -33,6 +32,4 @@ class FakeExchangeFormat implements ExchangeInterface
     {
         // TODO: Implement import() method.
     }
-
-
 }

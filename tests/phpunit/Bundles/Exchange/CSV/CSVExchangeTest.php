@@ -128,5 +128,4 @@ class CSVExchangeTest extends TestCase
 
         $this->assertEquals($expected, $fakeWriter->getWrittenLines());
     }
-
 }

@@ -39,5 +39,4 @@ interface TranslatorInterface
      * @return string
      */
     public function translate(string $text, string $sourceLocale, string $targetLocale, array $foundPlaceholders): string;
-
 }

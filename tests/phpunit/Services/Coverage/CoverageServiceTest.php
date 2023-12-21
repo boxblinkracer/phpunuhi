@@ -67,5 +67,4 @@ class CoverageServiceTest extends TestCase
 
         $this->assertEquals(60, $coverage->getCoverage());
     }
-
 }

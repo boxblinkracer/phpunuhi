@@ -55,5 +55,4 @@ class SnippetSet
     {
         return $this->iso;
     }
-
 }

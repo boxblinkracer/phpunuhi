@@ -18,8 +18,8 @@ class AppManager
 
     /**
      * @param array<mixed> $arguments
-     * @return void
      * @throws Exception
+     * @return void
      */
     public static function run(array $arguments): void
     {
@@ -38,5 +38,4 @@ class AppManager
 
         $application->run();
     }
-
 }

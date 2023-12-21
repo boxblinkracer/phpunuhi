@@ -36,7 +36,6 @@ class Block
     public function getId(): string
     {
         foreach ($this->lines as $line) {
-
             $isId = $this->stringDoesStartsWith($line, 'msgid');
 
             if ($isId) {
@@ -53,7 +52,6 @@ class Block
     public function getMessage(): string
     {
         foreach ($this->lines as $line) {
-
             $isId = $this->stringDoesStartsWith($line, 'msgstr');
 
             if ($isId) {
@@ -71,7 +69,6 @@ class Block
     public function setMessage(string $msg): void
     {
         foreach ($this->lines as &$line) {
-
             $isId = $this->stringDoesStartsWith($line, 'msgstr');
 
             if ($isId) {
@@ -93,5 +90,4 @@ class Block
 
         return str_replace('"', '', $msg);
     }
-
 }

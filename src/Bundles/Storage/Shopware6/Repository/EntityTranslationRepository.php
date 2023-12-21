@@ -8,7 +8,6 @@ use PHPUnuhi\Traits\BinaryTrait;
 
 class EntityTranslationRepository
 {
-
     use BinaryTrait;
 
     /**
@@ -48,7 +47,7 @@ class EntityTranslationRepository
      * @param string $entity
      * @param string $entityId
      * @param string $languageId
-     * @return array<mixed>|null
+     * @return null|array<mixed>
      */
     public function getTranslationRow(string $entity, string $entityId, string $languageId): ?array
     {
@@ -93,7 +92,6 @@ class EntityTranslationRepository
         # unfortunately, we have to assign NULL for every empty JSON field-value.
         # otherwise we get a JSON empty-document error
         foreach ($fieldValues as $data) {
-
             $valueKey = 'value_' . $data->getField();
             $value = $data->getValue();
 
@@ -101,7 +99,7 @@ class EntityTranslationRepository
 
             # make sure empty JSON fields are NULL
             if ($value === '' && in_array($data->getField(), $jsonFields)) {
-                $value = NULL;
+                $value = null;
             }
 
             $sqlFieldParts[] = $data->getField() . '= :' . $valueKey;
@@ -140,5 +138,4 @@ class EntityTranslationRepository
 
         return $jsonFields;
     }
-
 }

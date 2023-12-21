@@ -122,5 +122,4 @@ class YamlStorage implements StorageInterface
 
         return new StorageSaveResult(1, $translationCount);
     }
-
 }

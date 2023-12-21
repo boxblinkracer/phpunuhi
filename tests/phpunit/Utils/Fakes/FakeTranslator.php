@@ -25,5 +25,4 @@ class FakeTranslator implements TranslatorInterface
     {
         // TODO: Implement translate() method.
     }
-
 }

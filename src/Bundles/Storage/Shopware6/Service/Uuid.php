@@ -3,13 +3,14 @@
 namespace PHPUnuhi\Bundles\Storage\Shopware6\Service;
 
 use Exception;
+
 class Uuid
 {
 
 
     /**
-     * @return string
      * @throws Exception
+     * @return string
      */
     public static function randomHex(): string
     {
@@ -59,5 +60,4 @@ class Uuid
 
         return $clockSeqHi | 0x80;
     }
-
 }

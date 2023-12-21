@@ -40,5 +40,4 @@ class Attribute
     {
         return $this->value;
     }
-
 }

@@ -5,10 +5,8 @@ namespace PHPUnuhi\Bundles\Storage\JSON\Services;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Traits\ArrayTrait;
 
-
 class JsonLoader
 {
-
     use ArrayTrait;
 
 
@@ -46,5 +44,4 @@ class JsonLoader
             $this->getLineNumbers($foundTranslations, $delimiter, '', 1, true)
         );
     }
-
 }

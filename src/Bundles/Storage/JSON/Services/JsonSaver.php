@@ -7,7 +7,6 @@ use PHPUnuhi\Traits\ArrayTrait;
 
 class JsonSaver
 {
-
     use ArrayTrait;
 
 
@@ -83,5 +82,4 @@ class JsonSaver
 
         return $translationCount;
     }
-
 }

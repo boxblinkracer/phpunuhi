@@ -13,5 +13,4 @@ class WordCounter
     {
         return str_word_count($text);
     }
-
 }

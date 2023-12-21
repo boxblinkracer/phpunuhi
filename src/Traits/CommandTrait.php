@@ -73,5 +73,4 @@ trait CommandTrait
 
         return $value;
     }
-
 }

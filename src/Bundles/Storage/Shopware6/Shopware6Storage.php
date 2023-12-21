@@ -82,8 +82,8 @@ class Shopware6Storage implements StorageInterface
 
     /**
      * @param TranslationSet $set
-     * @return void
      * @throws ConfigurationException
+     * @return void
      */
     public function loadTranslationSet(TranslationSet $set): void
     {
@@ -92,8 +92,8 @@ class Shopware6Storage implements StorageInterface
 
     /**
      * @param TranslationSet $set
-     * @return StorageSaveResult
      * @throws ConfigurationException
+     * @return StorageSaveResult
      */
     public function saveTranslationSet(TranslationSet $set): StorageSaveResult
     {
@@ -103,12 +103,11 @@ class Shopware6Storage implements StorageInterface
     /**
      * @param Locale $locale
      * @param string $filename
-     * @return StorageSaveResult
      * @throws Exception
+     * @return StorageSaveResult
      */
     public function saveTranslationLocale(Locale $locale, string $filename): StorageSaveResult
     {
         throw new Exception('Not supported at the moment');
     }
-
 }

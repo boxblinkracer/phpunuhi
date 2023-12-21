@@ -43,5 +43,4 @@ interface ExchangeInterface
      * @return ImportResult
      */
     public function import(string $filename): ImportResult;
-
 }

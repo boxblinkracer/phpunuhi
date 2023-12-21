@@ -23,5 +23,4 @@ class ConfigurationTest extends TestCase
 
         $this->assertCount(1, $config->getTranslationSets());
     }
-
 }

@@ -49,5 +49,4 @@ class FakeStorage implements StorageInterface
     {
         // TODO: Implement saveTranslationLocale() method.
     }
-
 }

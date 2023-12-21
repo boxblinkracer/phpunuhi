@@ -41,5 +41,4 @@ class StorageSaveResult
     {
         return $this->savedTranslations;
     }
-
 }

@@ -11,7 +11,6 @@ use PHPUnuhi\Models\Configuration\Protection;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
-
 class MixedStructureValidatorTest extends TestCase
 {
 
@@ -39,8 +38,8 @@ class MixedStructureValidatorTest extends TestCase
     }
 
     /**
-     * @return void
      * @throws Exception
+     * @return void
      */
     public function testAllValid(): void
     {
@@ -62,8 +61,8 @@ class MixedStructureValidatorTest extends TestCase
     }
 
     /**
-     * @return void
      * @throws Exception
+     * @return void
      */
     public function testMixedStructureFound(): void
     {
@@ -102,5 +101,4 @@ class MixedStructureValidatorTest extends TestCase
             []
         );
     }
-
 }

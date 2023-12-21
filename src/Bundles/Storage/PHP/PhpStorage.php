@@ -13,7 +13,6 @@ use PHPUnuhi\Traits\ArrayTrait;
 
 class PhpStorage implements StorageInterface
 {
-
     use ArrayTrait;
 
     /**
@@ -111,7 +110,6 @@ class PhpStorage implements StorageInterface
         $translationCount = 0;
 
         foreach ($set->getLocales() as $locale) {
-
             $filename = $locale->getFilename();
 
             $translationCount += $this->saver->saveLocale(
@@ -143,5 +141,4 @@ class PhpStorage implements StorageInterface
 
         return new StorageSaveResult(1, $translationCount);
     }
-
 }

@@ -53,5 +53,4 @@ class Protection
     {
         return $this->terms;
     }
-
 }

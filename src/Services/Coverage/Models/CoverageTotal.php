@@ -6,7 +6,6 @@ use PHPUnuhi\Services\Coverage\Traits\CoverageDataTrait;
 
 class CoverageTotal
 {
-
     use CoverageDataTrait;
 
     /**
@@ -43,12 +42,9 @@ class CoverageTotal
         $this->countWords = 0;
 
         foreach ($this->coverageSets as $coverage) {
-
             $this->countTranslated += $coverage->getCountTranslated();
             $this->countAll += $coverage->getCountAll();
             $this->countWords += $coverage->getWordCount();
         }
     }
-
 }
-

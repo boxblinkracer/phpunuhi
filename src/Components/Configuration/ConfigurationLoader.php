@@ -17,7 +17,6 @@ use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
 use SimpleXMLElement;
 
-
 class ConfigurationLoader
 {
 
@@ -38,9 +37,9 @@ class ConfigurationLoader
 
     /**
      * @param string $rootConfigFilename
-     * @return Configuration
      * @throws ConfigurationException
      * @throws Exception
+     * @return Configuration
      */
     public function load(string $rootConfigFilename): Configuration
     {
@@ -64,7 +63,6 @@ class ConfigurationLoader
         # now iterate through all our files and process
         # every file independently, because it might have some content in it
         foreach ($importFiles as $file) {
-
             $fullFilename = $rootConfigDir . $file;
 
             $fileXmlString = (string)file_get_contents($fullFilename);
@@ -145,8 +143,8 @@ class ConfigurationLoader
     /**
      * @param SimpleXMLElement $rootNode
      * @param string $configFilename
-     * @return TranslationSet[]
      * @throws Exception
+     * @return TranslationSet[]
      */
     private function loadTranslations(SimpleXMLElement $rootNode, string $configFilename): array
     {
@@ -160,7 +158,6 @@ class ConfigurationLoader
 
         /** @var SimpleXMLElement $xmlSet */
         foreach ($rootNode->translations->children() as $xmlSet) {
-
             $setName = trim((string)$xmlSet['name']);
             $nodeFormat = $xmlSet->format;
             $nodeProtection = $xmlSet->protect;
@@ -223,7 +220,6 @@ class ConfigurationLoader
             # this is because filters are also used in imports (at least affects imports)
             # which means that they would lead to removed keys on FILE-type storages.
             if (!$storage->supportsFilters() && $set->getFilter()->hasFilters()) {
-
                 throw new ConfigurationException('Filters are not allowed for storage format: ' . $setFormat);
             }
 
@@ -245,8 +241,8 @@ class ConfigurationLoader
 
     /**
      * @param SimpleXMLElement $rootFormat
-     * @return array<mixed>
      * @throws Exception
+     * @return array<mixed>
      */
     private function parseFormat(SimpleXMLElement $rootFormat): array
     {
@@ -260,7 +256,6 @@ class ConfigurationLoader
         $setAttributes = '';
 
         foreach ($children as $formatTag => $formatElement) {
-
             if ($formatTag === '@attributes') {
                 continue;
             }
@@ -349,7 +344,6 @@ class ConfigurationLoader
         }
 
         foreach ($stylesNode->style as $style) {
-
             $attributes = $style->attributes();
 
             $styleName = (string)$style;
@@ -407,8 +401,8 @@ class ConfigurationLoader
     /**
      * @param SimpleXMLElement $rootLocales
      * @param string $configFilename
-     * @return array<mixed>
      * @throws ConfigurationException
+     * @return array<mixed>
      */
     private function loadLocales(SimpleXMLElement $rootLocales, string $configFilename): array
     {
@@ -418,7 +412,6 @@ class ConfigurationLoader
         $basePath = $this->getAttribute('basePath', $rootLocales);
 
         foreach ($rootLocales->children() as $nodeLocale) {
-
             $nodeType = $nodeLocale->getName();
             $innerValue = trim((string)$nodeLocale[0]);
 
@@ -465,15 +458,14 @@ class ConfigurationLoader
 
     /**
      * @param Configuration $configuration
-     * @return void
      * @throws Exception
+     * @return void
      */
     private function validateConfig(Configuration $configuration): void
     {
         $foundSets = [];
 
         foreach ($configuration->getTranslationSets() as $set) {
-
             if ($set->getName() === '') {
                 throw new ConfigurationException('TranslationSet has no name. This is required!');
             }
@@ -492,7 +484,6 @@ class ConfigurationLoader
             $foundLocales = [];
 
             foreach ($set->getLocales() as $locale) {
-
                 if ($locale->getName() === '') {
                     throw new ConfigurationException('Locale has no name. This is required!');
                 }

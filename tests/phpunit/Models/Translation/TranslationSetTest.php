@@ -45,8 +45,8 @@ class TranslationSetTest extends TestCase
     }
 
     /**
-     * @return void
      * @throws Exception
+     * @return void
      */
     public function testProtection(): void
     {
@@ -63,8 +63,8 @@ class TranslationSetTest extends TestCase
     }
 
     /**
-     * @return void
      * @throws Exception
+     * @return void
      */
     public function testRules(): void
     {
@@ -153,8 +153,8 @@ class TranslationSetTest extends TestCase
     }
 
     /**
-     * @return void
      * @throws TranslationNotFoundException
+     * @return void
      */
     public function testFindAnyExistingTranslation(): void
     {
@@ -182,8 +182,8 @@ class TranslationSetTest extends TestCase
     }
 
     /**
-     * @return void
      * @throws TranslationNotFoundException
+     * @return void
      */
     public function testFindAnyExistingTranslationWithLocale(): void
     {
@@ -215,8 +215,8 @@ class TranslationSetTest extends TestCase
     }
 
     /**
-     * @return void
      * @throws Exception
+     * @return void
      */
     public function testFindAnyExistingTranslationNotFound(): void
     {
@@ -271,5 +271,4 @@ class TranslationSetTest extends TestCase
         $isTranslated = $set->isCompletelyTranslated('btnCancel');
         $this->assertTrue($isTranslated);
     }
-    
 }

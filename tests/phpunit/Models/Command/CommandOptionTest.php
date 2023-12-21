@@ -37,5 +37,4 @@ class CommandOptionTest extends TestCase
 
         $this->assertEquals(false, $option->hasValue());
     }
-
 }

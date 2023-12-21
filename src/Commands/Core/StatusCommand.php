@@ -15,7 +15,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class StatusCommand extends Command
 {
-
     use CommandTrait;
 
     /**
@@ -35,8 +34,8 @@ class StatusCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return int
      * @throws ConfigurationException
+     * @return int
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -60,7 +59,6 @@ class StatusCommand extends Command
         $coverageResult = $coverageService->getCoverage($config->getTranslationSets());
 
         foreach ($coverageResult->getCoverageSets() as $translationSet) {
-
             $io->section('Translation Set: ' . $translationSet->getName());
 
             $io->writeln("Coverage: " . $translationSet->getCoverage() . '% (' . $translationSet->getCountTranslated() . '/' . $translationSet->getCountAll() . ')');
@@ -84,5 +82,4 @@ class StatusCommand extends Command
 
         return 0;
     }
-
 }

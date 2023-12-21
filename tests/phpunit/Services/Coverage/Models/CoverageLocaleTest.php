@@ -87,5 +87,4 @@ class CoverageLocaleTest extends TestCase
 
         $this->assertEquals(3, $value);
     }
-
 }

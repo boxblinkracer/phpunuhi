@@ -23,5 +23,4 @@ interface ReporterInterface
      * @return void
      */
     public function generate(string $filename, ReportResult $report): void;
-
 }

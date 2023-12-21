@@ -29,5 +29,4 @@ class PercentageCalculator
 
         return round($percent, 2);
     }
-
 }

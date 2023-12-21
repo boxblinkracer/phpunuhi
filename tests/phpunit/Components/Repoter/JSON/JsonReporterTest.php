@@ -13,7 +13,6 @@ use PHPUnuhi\Components\Reporter\Model\SuiteResult;
 
 class JsonReporterTest extends TestCase
 {
-
     use TestReportBuilderTrait;
     use StringCleanerTrait;
 
@@ -138,5 +137,4 @@ JSON;
 
         $this->assertEquals($expected, $actual);
     }
-
 }

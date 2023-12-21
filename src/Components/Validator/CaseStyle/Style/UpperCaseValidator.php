@@ -2,7 +2,6 @@
 
 namespace PHPUnuhi\Components\Validator\CaseStyle\Style;
 
-
 use PHPUnuhi\Components\Validator\CaseStyle\CaseStyleValidatorInterface;
 
 class UpperCaseValidator implements CaseStyleValidatorInterface
@@ -28,5 +27,4 @@ class UpperCaseValidator implements CaseStyleValidatorInterface
 
         return ($count > 0);
     }
-
 }

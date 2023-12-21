@@ -108,5 +108,4 @@ trait ArrayTrait
 
         return $result;
     }
-
 }

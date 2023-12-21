@@ -13,5 +13,4 @@ class DirectoryWriter implements DirectoryWriterInterface
     {
         mkdir($path);
     }
-
 }

@@ -21,7 +21,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ImportCommand extends Command
 {
-
     use CommandTrait;
 
 
@@ -52,8 +51,8 @@ class ImportCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return int
      * @throws ConfigurationException
+     * @return int
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -90,7 +89,6 @@ class ImportCommand extends Command
         $filterHandler = new FilterHandler();
 
         foreach ($config->getTranslationSets() as $set) {
-
             if ($setName !== $set->getName()) {
                 continue;
             }
@@ -130,9 +128,7 @@ class ImportCommand extends Command
     private function updateTranslationSet(TranslationSet $set, ImportResult $importData): void
     {
         foreach ($importData->getEntries() as $entry) {
-
             foreach ($set->getLocales() as $locale) {
-
                 if ($entry->getLocaleExchangeID() !== $locale->getExchangeIdentifier()) {
                     continue;
                 }
@@ -149,5 +145,4 @@ class ImportCommand extends Command
             }
         }
     }
-
-} 
+}

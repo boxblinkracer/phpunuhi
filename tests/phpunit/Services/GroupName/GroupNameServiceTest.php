@@ -58,5 +58,4 @@ class GroupNameServiceTest extends TestCase
 
         $this->assertEquals('no-group--1', $propertyKey);
     }
-
 }

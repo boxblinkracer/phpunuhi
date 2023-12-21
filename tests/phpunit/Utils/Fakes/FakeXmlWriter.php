@@ -44,5 +44,4 @@ class FakeXmlWriter implements XmlWriterInterface
         $this->providedFilename = $filename;
         $this->providedXml = $content;
     }
-
 }

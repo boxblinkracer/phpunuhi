@@ -27,5 +27,4 @@ class DeepLTranslatorTest extends TestCase
 
         $this->assertEquals($expected, DeeplTranslator::ALLOWED_FORMALITY);
     }
-
 }

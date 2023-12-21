@@ -27,5 +27,4 @@ class PlaceholderTest extends TestCase
 
         $this->assertEquals('{firstname}', $ph->getValue());
     }
-
 }

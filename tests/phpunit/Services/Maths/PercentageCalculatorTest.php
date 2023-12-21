@@ -43,5 +43,4 @@ class PercentageCalculatorTest extends TestCase
 
         $this->assertEquals(100, $result);
     }
-
 }

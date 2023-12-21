@@ -72,5 +72,4 @@ interface StorageInterface
      * @return StorageSaveResult
      */
     public function saveTranslationLocale(Locale $locale, string $filename): StorageSaveResult;
-
 }

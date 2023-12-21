@@ -53,5 +53,4 @@ class ReportResult
 
         return $count;
     }
-
 }

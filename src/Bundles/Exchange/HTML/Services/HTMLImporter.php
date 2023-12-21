@@ -10,7 +10,6 @@ use SplFileObject;
 
 class HTMLImporter
 {
-
     use StringTrait;
 
     /**
@@ -24,7 +23,6 @@ class HTMLImporter
         $groupNameService = new GroupNameService();
 
         foreach (new SplFileObject($filename) as $line) {
-
             if ($line === false) {
                 $line = '';
             }
@@ -63,5 +61,4 @@ class HTMLImporter
 
         return new ImportResult($foundData);
     }
-
 }

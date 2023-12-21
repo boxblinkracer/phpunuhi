@@ -8,7 +8,6 @@ use PHPUnuhi\Services\WordCounter\WordCounter;
 
 class CoverageLocale
 {
-
     use CoverageDataTrait;
 
     /**
@@ -52,5 +51,4 @@ class CoverageLocale
             $this->countWords += $wordCounter->getWordCount($translation->getValue());
         }
     }
-
 }

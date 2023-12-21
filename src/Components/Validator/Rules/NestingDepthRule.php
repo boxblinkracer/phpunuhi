@@ -60,7 +60,6 @@ class NestingDepthRule implements RuleValidatorInterface
 
         foreach ($set->getLocales() as $locale) {
             foreach ($locale->getTranslations() as $translation) {
-
                 $parts = explode($hierarchy->getDelimiter(), $translation->getKey());
 
                 if (!is_array($parts)) {
@@ -128,5 +127,4 @@ class NestingDepthRule implements RuleValidatorInterface
             $locale->findLineNumber($identifier)
         );
     }
-
 }

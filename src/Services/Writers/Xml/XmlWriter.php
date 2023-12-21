@@ -23,5 +23,4 @@ class XmlWriter implements XmlWriterInterface
 
         file_put_contents($filename, $out);
     }
-
 }

@@ -40,11 +40,9 @@ class DuplicateContentRule implements RuleValidatorInterface
 
 
         foreach ($set->getLocales() as $locale) {
-
             $existingValues = [];
 
             foreach ($locale->getTranslations() as $translation) {
-
                 $testPassed = false;
 
                 if (!in_array($translation->getValue(), $existingValues, true)) {
@@ -111,5 +109,4 @@ class DuplicateContentRule implements RuleValidatorInterface
             $locale->findLineNumber($identifier)
         );
     }
-
 }

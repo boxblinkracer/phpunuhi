@@ -16,16 +16,13 @@ class FilterHandler
         $filter = $set->getFilter();
 
         foreach ($set->getLocales() as $locale) {
-
             $translations = $locale->getTranslations();
 
             foreach ($translations as $translation) {
-
                 if (!$filter->isKeyAllowed($translation->getKey())) {
                     $locale->removeTranslation($translation->getID());
                 }
             }
         }
     }
-
 }

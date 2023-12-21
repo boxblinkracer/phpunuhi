@@ -47,5 +47,4 @@ class ProtectionTest extends TestCase
 
         $this->assertCount(2, $protection->getTerms());
     }
-
 }

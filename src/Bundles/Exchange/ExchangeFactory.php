@@ -47,8 +47,8 @@ class ExchangeFactory
 
     /**
      * @param ExchangeInterface $exchangeFormat
-     * @return void
      * @throws ConfigurationException
+     * @return void
      */
     public function registerExchangeFormat(ExchangeInterface $exchangeFormat): void
     {
@@ -94,8 +94,8 @@ class ExchangeFactory
     /**
      * @param string $format
      * @param array<mixed> $options
-     * @return ExchangeInterface
      * @throws Exception
+     * @return ExchangeInterface
      */
     public function getExchange(string $format, array $options): ExchangeInterface
     {
@@ -104,7 +104,6 @@ class ExchangeFactory
         }
 
         foreach ($this->exchangeServices as $exchangeService) {
-
             if ($exchangeService->getName() === $format) {
                 $exchangeService->setOptionValues($options);
 
@@ -114,5 +113,4 @@ class ExchangeFactory
 
         throw new Exception('No Exchange service found for format: ' . $format);
     }
-
 }

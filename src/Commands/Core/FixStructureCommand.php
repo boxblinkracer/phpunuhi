@@ -2,7 +2,6 @@
 
 namespace PHPUnuhi\Commands\Core;
 
-
 use PHPUnuhi\Bundles\Storage\StorageFactory;
 use PHPUnuhi\Configuration\ConfigurationLoader;
 use PHPUnuhi\Exceptions\ConfigurationException;
@@ -17,7 +16,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class FixStructureCommand extends Command
 {
-
     use CommandTrait;
 
     /**
@@ -37,8 +35,8 @@ class FixStructureCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return int
      * @throws ConfigurationException
+     * @return int
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -63,7 +61,6 @@ class FixStructureCommand extends Command
         $groupNameService = new GroupNameService();
 
         foreach ($config->getTranslationSets() as $set) {
-
             if ($setName !== '' && $setName !== '0' && $setName !== $set->getName()) {
                 continue;
             }
@@ -71,12 +68,10 @@ class FixStructureCommand extends Command
             $io->section('Fixing Translation Set: ' . $set->getName());
 
             foreach ($set->getAllTranslationIDs() as $currentID) {
-
                 foreach ($set->getLocales() as $locale) {
                     try {
                         $locale->findTranslation($currentID);
                     } catch (TranslationNotFoundException $ex) {
-
                         $groupName = $groupNameService->getGroupID($currentID);
                         $propertyKey = $groupNameService->getPropertyName($currentID);
                         $io->writeln('   [+] create translation: [' . $locale->getName() . '] ' . $currentID);
@@ -106,5 +101,4 @@ class FixStructureCommand extends Command
         $io->success($countCreated . ' translations have been created!');
         return 0;
     }
-
 }

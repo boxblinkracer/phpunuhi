@@ -23,5 +23,4 @@ class NumberCaseValidator implements CaseStyleValidatorInterface
     {
         return is_numeric($text);
     }
-
 }

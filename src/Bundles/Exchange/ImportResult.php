@@ -26,5 +26,4 @@ class ImportResult
     {
         return $this->entries;
     }
-
 }

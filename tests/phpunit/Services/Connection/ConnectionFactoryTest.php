@@ -27,5 +27,4 @@ class ConnectionFactoryTest extends TestCase
 
         $this->assertInstanceOf(PDO::class, $conn);
     }
-
 }

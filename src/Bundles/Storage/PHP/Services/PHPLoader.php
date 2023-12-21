@@ -7,7 +7,6 @@ use PHPUnuhi\Traits\ArrayTrait;
 
 class PHPLoader
 {
-
     use ArrayTrait;
 
     /**
@@ -18,7 +17,6 @@ class PHPLoader
     public function loadTranslationSet(TranslationSet $set, string $delimiter): void
     {
         foreach ($set->getLocales() as $locale) {
-
             $arrayData = require($locale->getFilename());
 
             if (!is_array($arrayData)) {
@@ -37,5 +35,4 @@ class PHPLoader
             );
         }
     }
-
 }

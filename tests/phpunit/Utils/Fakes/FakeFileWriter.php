@@ -44,5 +44,4 @@ class FakeFileWriter implements FileWriterInterface
         $this->providedFilename = $filename;
         $this->providedContent = $content;
     }
-
 }

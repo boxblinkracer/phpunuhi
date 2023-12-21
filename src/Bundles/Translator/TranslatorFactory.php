@@ -48,8 +48,8 @@ class TranslatorFactory
 
     /**
      * @param TranslatorInterface $translator
-     * @return void
      * @throws ConfigurationException
+     * @return void
      */
     public function registerTranslator(TranslatorInterface $translator): void
     {
@@ -97,8 +97,8 @@ class TranslatorFactory
     /**
      * @param string $service
      * @param array<mixed> $options
-     * @return TranslatorInterface
      * @throws Exception
+     * @return TranslatorInterface
      */
     public function fromService(string $service, array $options): TranslatorInterface
     {
@@ -107,7 +107,6 @@ class TranslatorFactory
         }
 
         foreach ($this->translators as $translator) {
-
             if ($translator->getName() === $service) {
                 # configure our translator with the
                 # provided option values
@@ -119,5 +118,4 @@ class TranslatorFactory
 
         throw new Exception('No translator found with name: ' . $service);
     }
-
 }

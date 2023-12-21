@@ -175,13 +175,12 @@ class Locale
 
     /**
      * @param string $searchID
-     * @return Translation
      * @throws TranslationNotFoundException
+     * @return Translation
      */
     public function findTranslation(string $searchID): Translation
     {
         foreach ($this->getTranslations() as $translation) {
-
             if ($translation->getID() === $searchID) {
                 return $translation;
             }
@@ -215,7 +214,6 @@ class Locale
         $tmpList = [];
 
         foreach ($this->translations as $translation) {
-
             if ($translation->getID() !== $id) {
                 $tmpList[] = $translation;
             }
@@ -224,4 +222,3 @@ class Locale
         $this->translations = $tmpList;
     }
 }
-

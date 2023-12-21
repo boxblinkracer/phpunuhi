@@ -59,5 +59,4 @@ class StartCaseValidatorTest extends TestCase
 
         $this->assertEquals($expectedValid, $isValid);
     }
-
 }

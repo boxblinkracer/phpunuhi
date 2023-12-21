@@ -37,7 +37,6 @@ class RulesValidator implements ValidatorInterface
         $ruleValidators = [];
 
         foreach ($set->getRules() as $rule) {
-
             switch ($rule->getName()) {
                 case Rules::NESTING_DEPTH:
                     $maxNestingLevel = (int)$rule->getValue();
@@ -69,7 +68,6 @@ class RulesValidator implements ValidatorInterface
 
         /** @var RuleValidatorInterface $validator */
         foreach ($ruleValidators as $validator) {
-
             $result = $validator->validate($set, $storage);
 
             $allTests = array_merge($allTests, $result->getTests());
@@ -81,5 +79,4 @@ class RulesValidator implements ValidatorInterface
             $allErrors
         );
     }
-
 }

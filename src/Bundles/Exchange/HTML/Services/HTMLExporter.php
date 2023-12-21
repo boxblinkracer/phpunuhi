@@ -13,8 +13,8 @@ class HTMLExporter
      * @param TranslationSet $set
      * @param string $outputDir
      * @param bool $onlyEmpty
-     * @return void
      * @throws TranslationNotFoundException
+     * @return void
      */
     public function export(TranslationSet $set, string $outputDir, bool $onlyEmpty): void
     {
@@ -87,10 +87,7 @@ class HTMLExporter
         $previosuGroup = '';
 
         foreach ($set->getAllTranslationIDs() as $id) {
-
-
             if ($onlyEmpty) {
-
                 $isComplete = $set->isCompletelyTranslated($id);
 
                 # if it's already complete, do not export
@@ -103,7 +100,6 @@ class HTMLExporter
 
 
             foreach ($set->getLocales() as $locale) {
-
                 $translation = $locale->findTranslation($id);
 
                 if ($set->hasGroups()) {
@@ -122,8 +118,6 @@ class HTMLExporter
 
 
             foreach ($set->getLocales() as $locale) {
-
-
                 $value = $this->getTranslationValue($locale, $id);
 
                 $value = htmlentities($value);
@@ -168,7 +162,6 @@ class HTMLExporter
         file_put_contents($fullFile, $html);
 
         echo '   [+] generated file: ' . $fullFile . PHP_EOL . PHP_EOL;
-
     }
 
     /**
@@ -179,9 +172,7 @@ class HTMLExporter
     private function getTranslationValue(Locale $locale, string $key): string
     {
         foreach ($locale->getTranslations() as $translation) {
-
             if ($translation->getID() === $key) {
-
                 return $translation->getValue();
             }
         }

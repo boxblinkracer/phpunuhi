@@ -15,7 +15,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ExportCommand extends Command
 {
-
     use CommandTrait;
 
 
@@ -47,8 +46,8 @@ class ExportCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return int
      * @throws ConfigurationException
+     * @return int
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -93,5 +92,4 @@ class ExportCommand extends Command
         $io->success('All translations exported!');
         return 0;
     }
-
 }

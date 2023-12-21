@@ -27,5 +27,4 @@ class AttributeTest extends TestCase
 
         $this->assertEquals('ini', $attr->getValue());
     }
-
 }

@@ -31,7 +31,6 @@ class EmptyContentValidator implements ValidatorInterface
 
         foreach ($set->getLocales() as $locale) {
             foreach ($locale->getTranslations() as $translation) {
-
                 $testPassed = !$translation->isEmpty();
 
                 $tests[] = new ValidationTest(
@@ -68,5 +67,4 @@ class EmptyContentValidator implements ValidatorInterface
 
         return new ValidationResult($tests, $errors);
     }
-
 }

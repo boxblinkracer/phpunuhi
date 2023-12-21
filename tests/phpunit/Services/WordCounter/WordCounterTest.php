@@ -43,5 +43,4 @@ class WordCounterTest extends TestCase
 
         $this->assertEquals(0, $words);
     }
-
 }

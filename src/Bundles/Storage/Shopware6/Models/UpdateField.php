@@ -40,5 +40,4 @@ class UpdateField
     {
         return $this->value;
     }
-
 }

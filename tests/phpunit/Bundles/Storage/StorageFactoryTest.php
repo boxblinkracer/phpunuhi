@@ -42,8 +42,8 @@ class StorageFactoryTest extends TestCase
     /**
      * This test verifies that we can successfully register a new storage
      * and that it will be returned correctly when accessing it.
-     * @return void
      * @throws ConfigurationException
+     * @return void
      */
     public function testGetCustomStorage(): void
     {
@@ -58,8 +58,8 @@ class StorageFactoryTest extends TestCase
     /**
      * This test verifies that we can successfully register a new storage
      * and that it will be returned for the provided set correctly.
-     * @return void
      * @throws ConfigurationException
+     * @return void
      */
     public function testGetCustomStorageBySet(): void
     {
@@ -70,5 +70,4 @@ class StorageFactoryTest extends TestCase
 
         $this->assertSame($fakeStorage, $storage);
     }
-
 }

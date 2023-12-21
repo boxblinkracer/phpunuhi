@@ -14,7 +14,6 @@ use PHPUnuhi\Models\Configuration\Protection;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
-
 class CaseStyleValidatorTest extends TestCase
 {
 
@@ -42,8 +41,8 @@ class CaseStyleValidatorTest extends TestCase
     }
 
     /**
-     * @return void
      * @throws Exception
+     * @return void
      */
     public function testValidMixedCases(): void
     {
@@ -59,8 +58,8 @@ class CaseStyleValidatorTest extends TestCase
     }
 
     /**
-     * @return void
      * @throws Exception
+     * @return void
      */
     public function testInvalidCases(): void
     {
@@ -75,8 +74,8 @@ class CaseStyleValidatorTest extends TestCase
     }
 
     /**
-     * @return void
      * @throws Exception
+     * @return void
      */
     public function testMixedWithLevels(): void
     {
@@ -103,8 +102,8 @@ class CaseStyleValidatorTest extends TestCase
      * This means both our ends are only snake case, while the middle part is camel.
      * This is only valid because level 0 + 2 are snake-validated, and the rest is globally validated with camel.
      *
-     * @return void
      * @throws Exception
+     * @return void
      */
     public function testMixedWithMissingLevels(): void
     {
@@ -132,8 +131,8 @@ class CaseStyleValidatorTest extends TestCase
      * Our global style is snake which would be valid, but our first level is pinned to be
      * pascal, so it's still not valid.
      *
-     * @return void
      * @throws Exception
+     * @return void
      */
     public function testGlobalStylesNotValidatedForExistingLevels(): void
     {
@@ -154,8 +153,8 @@ class CaseStyleValidatorTest extends TestCase
      * This test verifies that all our levels are correctly checked.
      * Our 2nd level has an invalid style, so this should break.
      *
-     * @return void
      * @throws Exception
+     * @return void
      */
     public function testMixedWithInvalidLevels(): void
     {
@@ -177,8 +176,8 @@ class CaseStyleValidatorTest extends TestCase
     }
 
     /**
-     * @return void
      * @throws Exception
+     * @return void
      */
     public function testValidCasesWithoutSetStyles(): void
     {
@@ -193,8 +192,8 @@ class CaseStyleValidatorTest extends TestCase
     /**
      * @param string $translationKey
      * @param array $caseStyles
-     * @return ValidationResult
      * @throws CaseStyleNotFoundException
+     * @return ValidationResult
      */
     private function validateSet(string $translationKey, array $caseStyles): ValidationResult
     {
@@ -216,5 +215,4 @@ class CaseStyleValidatorTest extends TestCase
 
         return $this->validator->validate($set, $storage);
     }
-
 }

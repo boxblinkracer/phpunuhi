@@ -10,5 +10,4 @@ interface DirectoryWriterInterface
      * @return void
      */
     public function createDirectory(string $path): void;
-
 }

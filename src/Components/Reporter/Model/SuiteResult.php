@@ -70,5 +70,4 @@ class SuiteResult
 
         return $count;
     }
-
 }

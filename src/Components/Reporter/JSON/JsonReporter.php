@@ -60,7 +60,6 @@ class JsonReporter implements ReporterInterface
         ];
 
         foreach ($report->getSuites() as $suite) {
-
             $suiteJson = [
                 'name' => $suite->getName(),
                 'tests' => $suite->getTestCount(),
@@ -104,5 +103,4 @@ class JsonReporter implements ReporterInterface
 
         $this->fileWriter->writeFile($filename, (string)$json);
     }
-
 }

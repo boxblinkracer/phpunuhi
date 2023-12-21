@@ -11,7 +11,6 @@ use PHPUnuhi\Models\Configuration\Protection;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
-
 class DisallowedTextsRuleTest extends TestCase
 {
 
@@ -27,8 +26,8 @@ class DisallowedTextsRuleTest extends TestCase
     }
 
     /**
-     * @return void
      * @throws Exception
+     * @return void
      */
     public function testAllValid(): void
     {
@@ -51,8 +50,8 @@ class DisallowedTextsRuleTest extends TestCase
     }
 
     /**
-     * @return void
      * @throws Exception
+     * @return void
      */
     public function testDisallowedTextFound(): void
     {
@@ -97,5 +96,4 @@ class DisallowedTextsRuleTest extends TestCase
             []
         );
     }
-
 }

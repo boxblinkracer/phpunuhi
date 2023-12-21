@@ -24,5 +24,4 @@ interface Rules
      *
      */
     public const DUPLICATE_CONTENT = 'duplicateContent';
-
 }

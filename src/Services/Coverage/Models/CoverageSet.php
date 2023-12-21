@@ -6,7 +6,6 @@ use PHPUnuhi\Services\Coverage\Traits\CoverageDataTrait;
 
 class CoverageSet
 {
-
     use CoverageDataTrait;
 
     /**
@@ -60,7 +59,6 @@ class CoverageSet
         $this->countWords = 0;
 
         foreach ($this->localeCoverages as $coverage) {
-
             $this->countTranslated += $coverage->getCountTranslated();
             $this->countAll += $coverage->getCountAll();
             $this->countWords += $coverage->getWordCount();

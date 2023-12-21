@@ -56,5 +56,4 @@ trait CoverageDataTrait
     {
         return $this->countWords;
     }
-
 }

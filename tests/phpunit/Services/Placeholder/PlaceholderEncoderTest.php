@@ -8,7 +8,6 @@ use PHPUnuhi\Services\Placeholder\PlaceholderEncoder;
 
 class PlaceholderEncoderTest extends TestCase
 {
-
     private const MARKER = '//';
 
 
@@ -67,5 +66,4 @@ class PlaceholderEncoderTest extends TestCase
 
         $this->assertEquals('Hello, my name is {firstname} {lastname}! Thank you for your attention', $encodedString);
     }
-
 }

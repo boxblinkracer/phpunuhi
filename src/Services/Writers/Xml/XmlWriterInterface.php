@@ -11,5 +11,4 @@ interface XmlWriterInterface
      * @return void
      */
     public function saveXml(string $filename, string $content): void;
-
 }

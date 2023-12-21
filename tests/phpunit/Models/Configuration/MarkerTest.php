@@ -27,5 +27,4 @@ class MarkerTest extends TestCase
 
         $this->assertEquals('>', $marker->getEnd());
     }
-
 }

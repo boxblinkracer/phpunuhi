@@ -75,5 +75,4 @@ class ValidationErrorTest extends TestCase
     {
         $this->assertEquals('14', $this->error->getLineNumber());
     }
-
 }

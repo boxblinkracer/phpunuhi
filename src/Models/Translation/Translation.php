@@ -89,5 +89,4 @@ class Translation
     {
         return (trim($this->value) === '');
     }
-
 }

@@ -12,7 +12,6 @@ use PHPUnuhi\Bundles\Storage\YAML\YamlStorage;
 use PHPUnuhi\Exceptions\ConfigurationException;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
-
 class StorageFactory
 {
 
@@ -50,8 +49,8 @@ class StorageFactory
 
     /**
      * @param StorageInterface $storage
-     * @return void
      * @throws ConfigurationException
+     * @return void
      */
     public function registerStorage(StorageInterface $storage): void
     {
@@ -86,8 +85,8 @@ class StorageFactory
 
     /**
      * @param TranslationSet $set
-     * @return StorageInterface
      * @throws ConfigurationException
+     * @return StorageInterface
      */
     public function getStorage(TranslationSet $set): StorageInterface
     {
@@ -99,20 +98,18 @@ class StorageFactory
     /**
      * @param string $name
      * @param TranslationSet $set
-     * @return StorageInterface
      * @throws ConfigurationException
+     * @return StorageInterface
      */
     public function getStorageByFormat(string $name, TranslationSet $set): StorageInterface
     {
         if ($name === '' || $name === '0') {
-
-            throw new Exception('No name provided for the Storage' );
+            throw new Exception('No name provided for the Storage');
         }
 
         foreach ($this->storages as $storage) {
-
             if ($storage->getStorageName() === $name) {
-                $storage->configureStorage( $set);
+                $storage->configureStorage($set);
 
                 return $storage;
             }
@@ -120,5 +117,4 @@ class StorageFactory
 
         throw new ConfigurationException('No storage found for name: ' . $name);
     }
-
 }

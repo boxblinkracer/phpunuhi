@@ -7,7 +7,6 @@ use PHPUnuhi\Traits\BinaryTrait;
 
 class EntityRepository
 {
-
     use BinaryTrait;
 
     /**
@@ -40,5 +39,4 @@ class EntityRepository
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-
 }

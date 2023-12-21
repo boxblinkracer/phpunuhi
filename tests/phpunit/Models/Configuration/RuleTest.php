@@ -27,5 +27,4 @@ class RuleTest extends TestCase
 
         $this->assertEquals('black', $rule->getValue());
     }
-
 }

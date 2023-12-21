@@ -24,8 +24,8 @@ class CaseStyleValidator implements ValidatorInterface
     /**
      * @param TranslationSet $set
      * @param StorageInterface $storage
-     * @return ValidationResult
      * @throws CaseStyleNotFoundException
+     * @return ValidationResult
      */
     public function validate(TranslationSet $set, StorageInterface $storage): ValidationResult
     {
@@ -48,7 +48,6 @@ class CaseStyleValidator implements ValidatorInterface
 
         foreach ($set->getLocales() as $locale) {
             foreach ($locale->getTranslations() as $translation) {
-
                 $isKeyCaseValid = true;
                 $invalidKeyPart = '';
 
@@ -71,11 +70,9 @@ class CaseStyleValidator implements ValidatorInterface
                 $partLevel = 0;
 
                 foreach ($keyParts as $part) {
-
                     $invalidKeyPart = $part;
 
                     foreach ($caseStyles as $caseStyle) {
-
                         if ($caseStyle->hasLevel() && $caseStyle->getLevel() !== $partLevel) {
                             continue;
                         }
@@ -149,5 +146,4 @@ class CaseStyleValidator implements ValidatorInterface
 
         return new ValidationResult($tests, $errors);
     }
-
 }

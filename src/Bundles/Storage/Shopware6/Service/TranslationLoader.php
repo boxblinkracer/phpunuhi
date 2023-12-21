@@ -17,7 +17,6 @@ use PHPUnuhi\Traits\StringTrait;
 
 class TranslationLoader
 {
-
     use BinaryTrait;
     use StringTrait;
 
@@ -51,8 +50,8 @@ class TranslationLoader
 
     /**
      * @param TranslationSet $set
-     * @return void
      * @throws ConfigurationException
+     * @return void
      */
     public function loadTranslations(TranslationSet $set): void
     {
@@ -80,9 +79,7 @@ class TranslationLoader
         $allSnippetSets = $this->repoSnippets->getSnippetSets();
 
         foreach ($set->getLocales() as $locale) {
-
             foreach ($allSnippets as $snippet) {
-
                 $foundSet = null;
                 foreach ($allSnippetSets as $snippetSet) {
                     if ($snippetSet->getId() === $snippet->getSnippetSetId()) {
@@ -106,7 +103,6 @@ class TranslationLoader
                 );
             }
         }
-
     }
 
     /**
@@ -122,7 +118,6 @@ class TranslationLoader
         $allDbTranslations = $this->repoEntityTranslations->getTranslations($entity);
 
         foreach ($set->getLocales() as $locale) {
-
             $currentLanguageID = $this->getShopwareLanguageId($locale, $allDbLanguages);
 
             if ($currentLanguageID === '' || $currentLanguageID === '0') {
@@ -190,5 +185,4 @@ class TranslationLoader
 
         return '';
     }
-
 }

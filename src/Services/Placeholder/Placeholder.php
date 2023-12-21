@@ -40,5 +40,4 @@ class Placeholder
     {
         return $this->value;
     }
-
 }

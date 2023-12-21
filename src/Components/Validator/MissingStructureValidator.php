@@ -33,7 +33,6 @@ class MissingStructureValidator implements ValidatorInterface
         $errors = [];
 
         foreach ($set->getLocales() as $locale) {
-
             $localeKeys = $locale->getTranslationIDs();
 
             # verify if our current locale has the same structure
@@ -44,7 +43,6 @@ class MissingStructureValidator implements ValidatorInterface
             $same = $this->getSame($localeKeys, $allKeys);
 
             if (!$structureValid) {
-
                 $filtered = $this->getDiff($localeKeys, $allKeys);
 
                 foreach ($filtered as $key) {
@@ -128,5 +126,4 @@ class MissingStructureValidator implements ValidatorInterface
 
         return array_merge($diffA, $diffB);
     }
-
 }

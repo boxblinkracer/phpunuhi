@@ -34,8 +34,8 @@ class CSVExporter
      * @param TranslationSet $set
      * @param string $outputDir
      * @param bool $onlyEmpty
-     * @return void
      * @throws TranslationNotFoundException
+     * @return void
      */
     public function export(TranslationSet $set, string $outputDir, bool $onlyEmpty): void
     {
@@ -72,11 +72,9 @@ class CSVExporter
         # BUILD DATA LINES
 
         foreach ($set->getAllTranslationIDs() as $id) {
-
             $keyRow = [];
 
             if ($onlyEmpty) {
-
                 $isComplete = $set->isCompletelyTranslated($id);
 
                 # if it's already complete, do not export
@@ -101,7 +99,6 @@ class CSVExporter
 
             # use the same sorting as our header line
             foreach ($sortedLanguagesColumns as $colName) {
-
                 foreach ($set->getLocales() as $locale) {
 
                     # only use the one from our current column
@@ -116,7 +113,6 @@ class CSVExporter
                         $trans = $locale->findTranslation($id);
 
                         $keyRow[] = $trans->getValue();
-
                     } catch (TranslationNotFoundException $ex) {
                         # if we have no translation, add an empty value
                         $keyRow[] = '';
@@ -154,5 +150,4 @@ class CSVExporter
 
         echo '   [+] generated file: ' . $csvFilename . PHP_EOL . PHP_EOL;
     }
-
 }

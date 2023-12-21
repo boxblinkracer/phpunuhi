@@ -14,5 +14,4 @@ class FileWriter implements FileWriterInterface
     {
         file_put_contents($filename, $content);
     }
-
 }

@@ -27,5 +27,4 @@ trait TranslationSetBuilderTrait
             $rules
         );
     }
-
 }

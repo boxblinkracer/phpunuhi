@@ -2,7 +2,6 @@
 
 namespace PHPUnuhi\Models\Configuration;
 
-
 use PHPUnuhi\Models\Translation\TranslationSet;
 
 class Configuration
@@ -28,5 +27,4 @@ class Configuration
     {
         return $this->sets;
     }
-
 }

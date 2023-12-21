@@ -11,7 +11,6 @@ use PHPUnuhi\Models\Configuration\Protection;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
-
 class DuplicateContentRuleTest extends TestCase
 {
 
@@ -26,8 +25,8 @@ class DuplicateContentRuleTest extends TestCase
     }
 
     /**
-     * @return void
      * @throws Exception
+     * @return void
      */
     public function testAllValid(): void
     {
@@ -49,8 +48,8 @@ class DuplicateContentRuleTest extends TestCase
     }
 
     /**
-     * @return void
      * @throws Exception
+     * @return void
      */
     public function testDuplicateInDifferentLocalesIsValid(): void
     {
@@ -72,8 +71,8 @@ class DuplicateContentRuleTest extends TestCase
     }
 
     /**
-     * @return void
      * @throws Exception
+     * @return void
      */
     public function testKeyLengthExceeded(): void
     {
@@ -114,5 +113,4 @@ class DuplicateContentRuleTest extends TestCase
             []
         );
     }
-
 }

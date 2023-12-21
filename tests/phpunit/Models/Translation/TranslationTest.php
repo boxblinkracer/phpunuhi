@@ -59,5 +59,4 @@ class TranslationTest extends TestCase
 
         $this->assertEquals('product-123', $translation->getGroup());
     }
-
 }

@@ -20,7 +20,6 @@ use PHPUnuhi\Traits\StringTrait;
 
 class TranslationSaver
 {
-
     use BinaryTrait;
     use StringTrait;
 
@@ -52,8 +51,8 @@ class TranslationSaver
 
     /**
      * @param TranslationSet $set
-     * @return StorageSaveResult
      * @throws ConfigurationException
+     * @return StorageSaveResult
      */
     public function saveTranslations(TranslationSet $set): StorageSaveResult
     {
@@ -84,7 +83,6 @@ class TranslationSaver
         $allSnippetSets = $this->repoSnippets->getSnippetSets();
 
         foreach ($set->getLocales() as $locale) {
-
             $localeCount++;
 
             $foundSnippetSet = null;
@@ -101,9 +99,7 @@ class TranslationSaver
             }
 
             foreach ($locale->getTranslations() as $translation) {
-
                 try {
-
                     $existingSnippet = $this->repoSnippets->getSnippet($translation->getKey(), $foundSnippetSet->getId());
 
                     $this->repoSnippets->updateSnippet(
@@ -112,7 +108,6 @@ class TranslationSaver
                         $translation->getValue()
                     );
                 } catch (SnippetNotFoundException $ex) {
-
                     $existingSnippet = $this->repoSnippets->getSnippetByKey($translation->getKey());
 
                     $this->repoSnippets->insertSnippet(
@@ -148,7 +143,6 @@ class TranslationSaver
         $translationCount = 0;
 
         foreach ($set->getLocales() as $locale) {
-
             $currentLanguageID = $this->getShopwareLanguageId($locale, $allDbLanguages);
 
             if ($currentLanguageID === '' || $currentLanguageID === '0') {
@@ -168,7 +162,6 @@ class TranslationSaver
             # now that we have grouped them,
             # build a single SQL update statement for every entity (group)
             foreach ($entityUpdateData as $group => $translations) {
-
                 $fields = [];
                 $entityId = '';
 
@@ -220,5 +213,4 @@ class TranslationSaver
 
         return '';
     }
-
 }

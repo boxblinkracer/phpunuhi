@@ -123,5 +123,4 @@ class TestResult
     {
         return $this->success;
     }
-
 }

@@ -11,5 +11,4 @@ interface FileWriterInterface
      * @return void
      */
     public function writeFile(string $filename, string $content): void;
-
 }

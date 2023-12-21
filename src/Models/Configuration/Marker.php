@@ -42,5 +42,4 @@ class Marker
     {
         return $this->end;
     }
-
 }

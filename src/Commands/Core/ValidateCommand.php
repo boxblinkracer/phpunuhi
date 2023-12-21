@@ -2,7 +2,6 @@
 
 namespace PHPUnuhi\Commands\Core;
 
-
 use PHPUnuhi\Bundles\Storage\StorageFactory;
 use PHPUnuhi\Components\Reporter\Model\ReportResult;
 use PHPUnuhi\Components\Reporter\Model\SuiteResult;
@@ -25,7 +24,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ValidateCommand extends Command
 {
-
     use CommandTrait;
     use StringTrait;
 
@@ -48,9 +46,9 @@ class ValidateCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return int
      * @throws CaseStyleNotFoundException
      * @throws ConfigurationException
+     * @return int
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -85,7 +83,6 @@ class ValidateCommand extends Command
         $reportResult = new ReportResult();
 
         foreach ($config->getTranslationSets() as $set) {
-
             $io->section('Translation-Set: ' . $set->getName());
 
             $io->writeln('-------------------------------------------------------------');
@@ -111,7 +108,6 @@ class ValidateCommand extends Command
             $suiteResult = new SuiteResult($set->getName());
 
             foreach ($validators as $validator) {
-
                 $result = $validator->validate($set, $storage);
 
                 if (!$result->isValid()) {
@@ -153,7 +149,6 @@ class ValidateCommand extends Command
 
 
         if ($reportFormat !== '' && $reportFormat !== '0') {
-
             $reporter = ReporterFactory::getInstance()->getReporter($reportFormat);
 
             if ($reportFilename === '' || $reportFilename === '0') {
@@ -176,5 +171,4 @@ class ValidateCommand extends Command
         $io->error('Found ' . $errorCount . ' errors!');
         return 1;
     }
-
 }

@@ -191,8 +191,8 @@ class TranslationSet
     /**
      * @param string $searchID
      * @param string $searchLocale
-     * @return array<mixed>
      * @throws TranslationNotFoundException
+     * @return array<mixed>
      */
     public function findAnyExistingTranslation(string $searchID, string $searchLocale): array
     {
@@ -247,5 +247,4 @@ class TranslationSet
 
         return $complete;
     }
-
 }

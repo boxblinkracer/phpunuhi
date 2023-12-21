@@ -71,5 +71,4 @@ class ImportEntry
     {
         return $this->value;
     }
-
 }

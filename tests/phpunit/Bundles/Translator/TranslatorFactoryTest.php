@@ -20,8 +20,8 @@ class TranslatorFactoryTest extends TestCase
     }
 
     /**
-     * @return void
      * @throws ConfigurationException
+     * @return void
      */
     public function testGetCustomTranslator(): void
     {
@@ -34,8 +34,8 @@ class TranslatorFactoryTest extends TestCase
     }
 
     /**
-     * @return void
      * @throws ConfigurationException
+     * @return void
      */
     public function testUnknownServiceThrowsException(): void
     {
@@ -45,8 +45,8 @@ class TranslatorFactoryTest extends TestCase
     }
 
     /**
-     * @return void
      * @throws ConfigurationException
+     * @return void
      */
     public function testNoServiceNameLeadsToException(): void
     {
@@ -56,8 +56,8 @@ class TranslatorFactoryTest extends TestCase
     }
 
     /**
-     * @return void
      * @throws ConfigurationException
+     * @return void
      */
     public function testDoubleRegistrationThrowsException(): void
     {

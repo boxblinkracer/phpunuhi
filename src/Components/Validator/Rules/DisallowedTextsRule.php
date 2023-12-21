@@ -11,7 +11,6 @@ use PHPUnuhi\Traits\StringTrait;
 
 class DisallowedTextsRule implements RuleValidatorInterface
 {
-
     use StringTrait;
 
     /**
@@ -49,7 +48,6 @@ class DisallowedTextsRule implements RuleValidatorInterface
 
         foreach ($set->getLocales() as $locale) {
             foreach ($locale->getTranslations() as $translation) {
-
                 $foundWord = null;
                 foreach ($this->disallowedWords as $disallowedWord) {
                     if ($this->stringDoesContain($translation->getValue(), $disallowedWord)) {
@@ -94,5 +92,4 @@ class DisallowedTextsRule implements RuleValidatorInterface
 
         return new ValidationResult($tests, $errors);
     }
-
 }

@@ -54,5 +54,4 @@ class CSVWriter implements CSVWriterInterface
     {
         fclose($file);
     }
-
 }

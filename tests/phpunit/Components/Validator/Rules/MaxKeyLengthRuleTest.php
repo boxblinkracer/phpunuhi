@@ -11,7 +11,6 @@ use PHPUnuhi\Models\Configuration\Protection;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
-
 class MaxKeyLengthRuleTest extends TestCase
 {
 
@@ -27,8 +26,8 @@ class MaxKeyLengthRuleTest extends TestCase
     }
 
     /**
-     * @return void
      * @throws Exception
+     * @return void
      */
     public function testAllValid(): void
     {
@@ -52,8 +51,8 @@ class MaxKeyLengthRuleTest extends TestCase
     }
 
     /**
-     * @return void
      * @throws Exception
+     * @return void
      */
     public function testLengthZeroAlwaysValid(): void
     {
@@ -76,8 +75,8 @@ class MaxKeyLengthRuleTest extends TestCase
 
 
     /**
-     * @return void
      * @throws Exception
+     * @return void
      */
     public function testKeyLengthExceeded(): void
     {
@@ -120,5 +119,4 @@ class MaxKeyLengthRuleTest extends TestCase
             []
         );
     }
-
 }

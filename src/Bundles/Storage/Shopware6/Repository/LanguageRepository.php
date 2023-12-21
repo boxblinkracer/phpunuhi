@@ -8,7 +8,6 @@ use PHPUnuhi\Traits\BinaryTrait;
 
 class LanguageRepository
 {
-
     use BinaryTrait;
 
     /**
@@ -42,7 +41,6 @@ class LanguageRepository
         }
 
         foreach ($dbRows as $row) {
-
             $list[] = new Sw6Locale(
                 $this->binaryToString((string)$row['langId']),
                 (string)$row['langName'],
@@ -52,5 +50,4 @@ class LanguageRepository
 
         return $list;
     }
-
 }

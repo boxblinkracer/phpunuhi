@@ -93,5 +93,4 @@ class Filter
         $result = preg_match('/^' . $regex . '$/is', $haystack);
         return $result === 1;
     }
-
 }

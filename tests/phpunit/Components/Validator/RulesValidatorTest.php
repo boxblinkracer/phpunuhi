@@ -12,7 +12,6 @@ use PHPUnuhi\Models\Translation\Locale;
 
 class RulesValidatorTest extends TestCase
 {
-
     use TranslationSetBuilderTrait;
 
     /**

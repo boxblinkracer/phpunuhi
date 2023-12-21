@@ -76,5 +76,4 @@ class TestResultTest extends TestCase
     {
         $this->assertEquals('btnCancel', $this->resultFailed->getTranslationKey());
     }
-
 }

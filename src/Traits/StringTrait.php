@@ -41,5 +41,4 @@ trait StringTrait
         }
         return (substr($string, -$len) === $endString);
     }
-
 }

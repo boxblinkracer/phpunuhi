@@ -38,13 +38,12 @@ class CaseStyleValidatorFactory
 
     /**
      * @param string $identifier
-     * @return CaseStyleValidatorInterface
      * @throws CaseStyleNotFoundException
+     * @return CaseStyleValidatorInterface
      */
     public function fromIdentifier(string $identifier): CaseStyleValidatorInterface
     {
         foreach ($this->validators as $validator) {
-
             if ($validator->getIdentifier() === $identifier) {
                 return $validator;
             }
@@ -52,5 +51,4 @@ class CaseStyleValidatorFactory
 
         throw new CaseStyleNotFoundException('No CaseStyle validator found for identifier: ' . $identifier);
     }
-
 }

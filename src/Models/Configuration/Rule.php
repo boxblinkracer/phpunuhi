@@ -41,5 +41,4 @@ class Rule
     {
         return $this->value;
     }
-
 }

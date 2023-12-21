@@ -123,5 +123,4 @@ class FilterTest extends TestCase
 
         $this->assertEquals(false, $isAllowed);
     }
-
 }

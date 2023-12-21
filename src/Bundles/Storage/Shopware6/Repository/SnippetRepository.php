@@ -13,7 +13,6 @@ use PHPUnuhi\Traits\BinaryTrait;
 
 class SnippetRepository
 {
-
     use BinaryTrait;
 
     /**
@@ -32,8 +31,8 @@ class SnippetRepository
 
 
     /**
-     * @return SnippetSet[]
      * @throws Exception
+     * @return SnippetSet[]
      */
     public function getSnippetSets(): array
     {
@@ -50,7 +49,6 @@ class SnippetRepository
         $list = [];
 
         foreach ($dbRows as $row) {
-
             $list[] = new SnippetSet(
                 $this->binaryToString((string)$row['id']),
                 (string)$row['name'],
@@ -62,8 +60,8 @@ class SnippetRepository
     }
 
     /**
-     * @return Snippet[]
      * @throws Exception
+     * @return Snippet[]
      */
     public function getSnippets(): array
     {
@@ -89,8 +87,8 @@ class SnippetRepository
     /**
      * @param string $key
      * @param string $snippetSetId
-     * @return Snippet
      * @throws SnippetNotFoundException
+     * @return Snippet
      */
     public function getSnippet(string $key, string $snippetSetId): Snippet
     {
@@ -112,8 +110,8 @@ class SnippetRepository
 
     /**
      * @param string $key
-     * @return Snippet
      * @throws SnippetNotFoundException
+     * @return Snippet
      */
     public function getSnippetByKey(string $key): Snippet
     {
@@ -156,8 +154,8 @@ class SnippetRepository
      * @param string $value
      * @param string $author
      * @param string $customFields
-     * @return void
      * @throws Exception
+     * @return void
      */
     public function insertSnippet(string $key, string $snippetSetId, string $value, string $author, string $customFields): void
     {
@@ -199,8 +197,5 @@ class SnippetRepository
             (string)$row['author'],
             (string)$row['custom_fields']
         );
-
     }
-
-
 }

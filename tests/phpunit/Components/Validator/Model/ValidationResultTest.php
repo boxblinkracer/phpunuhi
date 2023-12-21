@@ -60,5 +60,4 @@ class ValidationResultTest extends TestCase
     {
         $this->assertCount(1, $this->result->getErrors());
     }
-
 }

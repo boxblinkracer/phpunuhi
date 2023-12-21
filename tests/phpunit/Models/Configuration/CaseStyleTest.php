@@ -49,5 +49,4 @@ class CaseStyleTest extends TestCase
 
         $this->assertEquals(true, $style->hasLevel());
     }
-
 }

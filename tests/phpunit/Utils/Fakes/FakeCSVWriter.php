@@ -66,5 +66,4 @@ class FakeCSVWriter implements CSVWriterInterface
     {
         // TODO: Implement close() method.
     }
-
 }

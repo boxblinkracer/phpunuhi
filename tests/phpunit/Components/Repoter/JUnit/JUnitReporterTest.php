@@ -11,10 +11,8 @@ use PHPUnuhi\Components\Reporter\JUnit\JUnitReporter;
 use PHPUnuhi\Components\Reporter\Model\ReportResult;
 use PHPUnuhi\Components\Reporter\Model\SuiteResult;
 
-
 class JUnitReporterTest extends TestCase
 {
-
     use TestReportBuilderTrait;
     use StringCleanerTrait;
 
@@ -126,5 +124,4 @@ XML;
 
         $this->assertEquals($expected, $actual);
     }
-
 }

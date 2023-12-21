@@ -43,8 +43,8 @@ class HTMLExchange implements ExchangeInterface
      * @param TranslationSet $set
      * @param string $outputDir
      * @param bool $onlyEmpty
-     * @return void
      * @throws TranslationNotFoundException
+     * @return void
      */
     public function export(TranslationSet $set, string $outputDir, bool $onlyEmpty): void
     {
@@ -54,13 +54,12 @@ class HTMLExchange implements ExchangeInterface
 
     /**
      * @param string $filename
-     * @return ImportResult
      * @throws Exception
+     * @return ImportResult
      */
     public function import(string $filename): ImportResult
     {
         $importer = new HTMLImporter();
         return $importer->import($filename);
     }
-
 }

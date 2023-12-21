@@ -12,8 +12,8 @@ class ReporterFactoryTest extends TestCase
 {
 
     /**
-     * @return void
      * @throws ConfigurationException
+     * @return void
      */
     public function testEmptyReportNameThrowsException(): void
     {
@@ -25,8 +25,8 @@ class ReporterFactoryTest extends TestCase
     }
 
     /**
-     * @return void
      * @throws ConfigurationException
+     * @return void
      */
     public function testUnknownReporterThrowsException(): void
     {
@@ -38,8 +38,8 @@ class ReporterFactoryTest extends TestCase
     }
 
     /**
-     * @return void
      * @throws ConfigurationException
+     * @return void
      */
     public function testJUnitReporterIsFound(): void
     {
@@ -49,5 +49,4 @@ class ReporterFactoryTest extends TestCase
 
         $this->assertInstanceOf(JUnitReporter::class, $reporter);
     }
-
 }

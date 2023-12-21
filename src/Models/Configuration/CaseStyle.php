@@ -4,7 +4,6 @@ namespace PHPUnuhi\Models\Configuration;
 
 class CaseStyle
 {
-
     private const MIN_LEVEL = 0;
 
     /**
@@ -56,5 +55,4 @@ class CaseStyle
     {
         $this->level = $level;
     }
-
 }

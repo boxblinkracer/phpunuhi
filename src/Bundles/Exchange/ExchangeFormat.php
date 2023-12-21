@@ -14,5 +14,4 @@ class ExchangeFormat
      *
      */
     public const HTML = 'html';
-
 }

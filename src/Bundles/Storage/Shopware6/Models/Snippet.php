@@ -101,5 +101,4 @@ class Snippet
     {
         return $this->customFields;
     }
-
 }

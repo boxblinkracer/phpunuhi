@@ -12,8 +12,8 @@ class CaseStyleValidatorFactoryTest extends TestCase
 
 
     /**
-     * @return void
      * @throws CaseStyleNotFoundException
+     * @return void
      */
     public function testUnknownIdentifierThrowsException(): void
     {
@@ -25,8 +25,8 @@ class CaseStyleValidatorFactoryTest extends TestCase
     }
 
     /**
-     * @return void
      * @throws CaseStyleNotFoundException
+     * @return void
      */
     public function testValidatorFound(): void
     {
