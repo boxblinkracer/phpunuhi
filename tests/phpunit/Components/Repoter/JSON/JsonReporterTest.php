@@ -5,7 +5,6 @@ namespace phpunit\Components\Repoter\JSON;
 use PHPUnit\Framework\TestCase;
 use phpunit\Utils\Fakes\FakeDirectoryWriter;
 use phpunit\Utils\Fakes\FakeFileWriter;
-use phpunit\Utils\Fakes\FakeXmlWriter;
 use phpunit\Utils\Traits\StringCleanerTrait;
 use phpunit\Utils\Traits\TestReportBuilderTrait;
 use PHPUnuhi\Components\Reporter\JSON\JsonReporter;

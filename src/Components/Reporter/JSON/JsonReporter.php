@@ -103,7 +103,7 @@ class JsonReporter implements ReporterInterface
 
         $json = json_encode($content, JSON_PRETTY_PRINT);
 
-        $this->fileWriter->writeFile($filename, $json);
+        $this->fileWriter->writeFile($filename, (string)$json);
     }
 
 }
