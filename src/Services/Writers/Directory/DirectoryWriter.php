@@ -11,6 +11,8 @@ class DirectoryWriter implements DirectoryWriterInterface
      */
     public function createDirectory(string $path): void
     {
-        mkdir($path);
+        if (!is_dir($path)) {
+            mkdir($path);
+        }
     }
 }
