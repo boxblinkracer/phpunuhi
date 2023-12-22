@@ -4,6 +4,7 @@ namespace phpunit\Components\Validator\Rules;
 
 use Exception;
 use PHPUnit\Framework\TestCase;
+use PHPUnuhi\Bundles\Storage\INI\IniStorage;
 use PHPUnuhi\Bundles\Storage\JSON\JsonStorage;
 use PHPUnuhi\Components\Validator\Rules\NestingDepthRule;
 use PHPUnuhi\Models\Configuration\Filter;
@@ -42,6 +43,28 @@ class NestingDepthRuleTest extends TestCase
         $storage = new JsonStorage(3, true);
 
         $validator = new NestingDepthRule(20);
+        $result = $validator->validate($set, $storage);
+
+        $this->assertEquals(true, $result->isValid());
+    }
+
+    /**
+     * @throws Exception
+     * @return void
+     */
+    public function testNestingDepthNotAppliedOnSingleHierarchy(): void
+    {
+        $localeDE = new Locale('de-DE', '', '');
+        $localeDE->addTranslation('lvl1.lvl2.level3.level4', 'Abbrechen', '');
+
+        $localeEN = new Locale('en-GB', '', '');
+        $localeEN->addTranslation('lvl1.lvl2.level3.level4', 'Cancel', '');
+
+        $set = $this->buildSet([$localeDE, $localeEN]);
+
+        $storage = new IniStorage();
+
+        $validator = new NestingDepthRule(1);
         $result = $validator->validate($set, $storage);
 
         $this->assertEquals(true, $result->isValid());

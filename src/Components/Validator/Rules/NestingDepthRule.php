@@ -49,6 +49,11 @@ class NestingDepthRule implements RuleValidatorInterface
             return new ValidationResult([], []);
         }
 
+        if ($hierarchy->getDelimiter() === '') {
+            return new ValidationResult([], []);
+        }
+
+
         # this is always valid
         if ($this->maxNestingLevel <= 0) {
             return new ValidationResult([], []);
@@ -61,10 +66,6 @@ class NestingDepthRule implements RuleValidatorInterface
         foreach ($set->getLocales() as $locale) {
             foreach ($locale->getTranslations() as $translation) {
                 $parts = explode($hierarchy->getDelimiter(), $translation->getKey());
-
-                if (!is_array($parts)) {
-                    $parts = [];
-                }
 
                 $currentLevels = count($parts);
 
