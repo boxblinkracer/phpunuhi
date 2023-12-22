@@ -10,6 +10,7 @@ use PHPUnuhi\Models\Configuration\Filter;
 use PHPUnuhi\Models\Configuration\Protection;
 use PHPUnuhi\Models\Configuration\Rule;
 use PHPUnuhi\Models\Translation\Locale;
+use PHPUnuhi\Models\Translation\Translation;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
 class TranslationSetTest extends TestCase
@@ -232,6 +233,26 @@ class TranslationSetTest extends TestCase
     }
 
     /**
+     * @throws Exception
+     * @return void
+     */
+    public function testFindAnyExistingTranslationThrowsErrorOnEmptyValues(): void
+    {
+        $this->expectException(TranslationNotFoundException::class);
+
+        $localeEN = new Locale('EN', '', '');
+        $localeEN->addTranslation('btnCancel', '', '');
+
+        $locales = [$localeEN];
+        $attributes = [];
+        $filter = new Filter();
+
+        $set = new TranslationSet('storefront', 'json', new Protection(), $locales, $filter, $attributes, [], []);
+
+        $set->findAnyExistingTranslation('btnCancel', '');
+    }
+
+    /**
      * This test verifies that the isCompletelyTranslated() works correctly.
      * We start with a EN translation, the DE one is missing, so it's not completely translated.
      * Then we add a translation that is invalid and last but not least we add a valid translation.
@@ -270,5 +291,34 @@ class TranslationSetTest extends TestCase
 
         $isTranslated = $set->isCompletelyTranslated('btnCancel');
         $this->assertTrue($isTranslated);
+    }
+
+    /**
+     * @throws TranslationNotFoundException
+     * @return void
+     */
+    public function testFindAnyExistingTranslationSkipsWrongIDs(): void
+    {
+        $attributes = [];
+        $filter = new Filter();
+
+        $localeEN = new Locale('EN', '', '');
+        $localeEN->addTranslation('1', 'Cancel', '');
+        $localeEN->addTranslation('2', 'Cancel', '');
+        $localeEN->addTranslation('3', 'Cancel', '');
+        $localeEN->addTranslation('btnCancel', 'Cancel', '');
+
+        $locales = [$localeEN];
+
+        $set = new TranslationSet('storefront', 'json', new Protection(), $locales, $filter, $attributes, [], []);
+
+        $existing = $set->findAnyExistingTranslation('btnCancel', 'EN');
+
+        $expected = [
+            'locale' => 'EN',
+            'translation' => new Translation('btnCancel', 'Cancel', '')
+        ];
+
+        $this->assertEquals($expected, $existing);
     }
 }
