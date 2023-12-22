@@ -29,11 +29,7 @@ class DuplicateContentRule implements RuleValidatorInterface
      */
     public function validate(TranslationSet $set, StorageInterface $storage): ValidationResult
     {
-        $hierarchy = $storage->getHierarchy();
-
-        if (!$hierarchy->isMultiLevel()) {
-            return new ValidationResult([], []);
-        }
+        $storage->getHierarchy();
 
         $tests = [];
         $errors = [];

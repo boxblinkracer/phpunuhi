@@ -9,6 +9,10 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 - Updated to OpenAI model **gpt-3.5-turbo-instruct** because the old model **gpt-3.5-turbo** will be shut down.
 
+### Fixed
+
+- Fixed bug where the **DuplicateContentRule** validation didn't work for single-hierarchy storages like INI, ...
+
 ### Removed
 
 - Removed **fake** translator service. This was accidentally existed inside the code and factory, but was only meant for
