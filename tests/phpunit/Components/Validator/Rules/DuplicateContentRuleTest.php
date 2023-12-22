@@ -4,6 +4,7 @@ namespace phpunit\Components\Validator\Rules;
 
 use Exception;
 use PHPUnit\Framework\TestCase;
+use PHPUnuhi\Bundles\Storage\INI\IniStorage;
 use PHPUnuhi\Bundles\Storage\JSON\JsonStorage;
 use PHPUnuhi\Components\Validator\Rules\DuplicateContentRule;
 use PHPUnuhi\Models\Configuration\Filter;
@@ -28,17 +29,39 @@ class DuplicateContentRuleTest extends TestCase
      * @throws Exception
      * @return void
      */
-    public function testAllValid(): void
+    public function testDuplicateContentNotAllowedInSingleHiearchyStorage(): void
     {
         $localeDE = new Locale('de-DE', '', '');
-        $localeDE->addTranslation('card.btnCancel', 'Abbrechen', 'group1');
+        $localeDE->addTranslation('btn-Cancel1', 'Abbrechen', 'group1');
+        $localeDE->addTranslation('btn-Cancel2', 'Abbrechen', 'group1');
+
+        $set = $this->buildSet([$localeDE]);
+
+        $storageSingleLevel = new IniStorage();
+
+        $validator = new DuplicateContentRule();
+        $result = $validator->validate($set, $storageSingleLevel);
+
+        $this->assertEquals(false, $result->isValid());
+    }
+
+    /**
+     * @throws Exception
+     * @return void
+     */
+    public function testNoDuplicatesMeansValid(): void
+    {
+        $localeDE = new Locale('de-DE', '', '');
+        $localeDE->addTranslation('card.btnCancel1', 'Abbrechen1', 'group1');
+        $localeDE->addTranslation('card.btnCancel2', 'Abbrechen2', 'group1');
 
         $localeEN = new Locale('en-GB', '', '');
-        $localeEN->addTranslation('card.btnCancel', 'Cancel', 'group1');
+        $localeEN->addTranslation('card.btnCancel1', 'Cancel1', 'group1');
+        $localeEN->addTranslation('card.btnCancel2', 'Cancel2', 'group1');
 
         $set = $this->buildSet([$localeDE, $localeEN]);
 
-        $storage = new JsonStorage(3, true);
+        $storage = new JsonStorage();
 
         $validator = new DuplicateContentRule();
 
@@ -61,38 +84,13 @@ class DuplicateContentRuleTest extends TestCase
 
         $set = $this->buildSet([$localeDE, $localeEN]);
 
-        $storage = new JsonStorage(3, true);
+        $storage = new JsonStorage();
 
         $validator = new DuplicateContentRule();
 
         $result = $validator->validate($set, $storage);
 
         $this->assertEquals(true, $result->isValid());
-    }
-
-    /**
-     * @throws Exception
-     * @return void
-     */
-    public function testKeyLengthExceeded(): void
-    {
-        $localeDE = new Locale('de-DE', '', '');
-        $localeDE->addTranslation('card.btnOK', 'OK', 'group1');
-        $localeDE->addTranslation('card.btnOK2', 'Okay', 'group1');
-
-        $localeEN = new Locale('en-GB', '', '');
-        $localeEN->addTranslation('card.btnOK', 'OK', 'group1');
-        $localeEN->addTranslation('card.btnOK2', 'OK', 'group1');
-
-        $set = $this->buildSet([$localeDE, $localeEN]);
-
-        $storage = new JsonStorage(3, true);
-
-        $validator = new DuplicateContentRule();
-
-        $result = $validator->validate($set, $storage);
-
-        $this->assertEquals(false, $result->isValid());
     }
 
 

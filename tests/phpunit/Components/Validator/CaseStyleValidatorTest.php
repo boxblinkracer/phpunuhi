@@ -4,10 +4,9 @@ namespace phpunit\Components\Validator;
 
 use Exception;
 use PHPUnit\Framework\TestCase;
+use PHPUnuhi\Bundles\Storage\INI\IniStorage;
 use PHPUnuhi\Bundles\Storage\JSON\JsonStorage;
-use PHPUnuhi\Components\Validator\CaseStyle\Exception\CaseStyleNotFoundException;
 use PHPUnuhi\Components\Validator\CaseStyleValidator;
-use PHPUnuhi\Components\Validator\Model\ValidationResult;
 use PHPUnuhi\Models\Configuration\CaseStyle;
 use PHPUnuhi\Models\Configuration\Filter;
 use PHPUnuhi\Models\Configuration\Protection;
@@ -21,6 +20,10 @@ class CaseStyleValidatorTest extends TestCase
      * @var CaseStyleValidator
      */
     private $validator;
+    /**
+     * @var JsonStorage
+     */
+    private $storageJson;
 
 
     /**
@@ -29,6 +32,8 @@ class CaseStyleValidatorTest extends TestCase
     protected function setUp(): void
     {
         $this->validator = new CaseStyleValidator();
+
+        $this->storageJson = new JsonStorage();
     }
 
 
@@ -49,10 +54,12 @@ class CaseStyleValidatorTest extends TestCase
         $case1 = new CaseStyle('snake');
         $case2 = new CaseStyle('camel');
 
-        $result = $this->validateSet(
-            'global.businessEvents.mollie_checkout_order_success',
-            [$case1, $case2]
-        );
+        $locale = new Locale('en-GB', '', '');
+        $locale->addTranslation('global.businessEvents.mollie_checkout_order_success', 'Cancel', 'group1');
+
+        $set = $this->buildSet($locale, [$case1, $case2]);
+
+        $result = $this->validator->validate($set, $this->storageJson);
 
         $this->assertEquals(true, $result->isValid());
     }
@@ -65,10 +72,12 @@ class CaseStyleValidatorTest extends TestCase
     {
         $case1 = new CaseStyle('snake');
 
-        $result = $this->validateSet(
-            'global.businessEvents.flowTitle',
-            [$case1]
-        );
+        $locale = new Locale('en-GB', '', '');
+        $locale->addTranslation('global.businessEvents.flowTitle', 'Cancel', 'group1');
+
+        $set = $this->buildSet($locale, [$case1]);
+
+        $result = $this->validator->validate($set, $this->storageJson);
 
         $this->assertEquals(false, $result->isValid());
     }
@@ -88,10 +97,12 @@ class CaseStyleValidatorTest extends TestCase
         $case3 = new CaseStyle('snake');
         $case3->setLevel(2);
 
-        $result = $this->validateSet(
-            'global.businessEvents.mollie_checkout_order_success',
-            [$case1, $case2, $case3]
-        );
+        $locale = new Locale('en-GB', '', '');
+        $locale->addTranslation('global.businessEvents.mollie_checkout_order_success', 'Cancel', 'group1');
+
+        $set = $this->buildSet($locale, [$case1, $case2, $case3]);
+
+        $result = $this->validator->validate($set, $this->storageJson);
 
         $this->assertEquals(true, $result->isValid());
     }
@@ -116,10 +127,12 @@ class CaseStyleValidatorTest extends TestCase
         # this would be globally checked
         $case3 = new CaseStyle('camel');
 
-        $result = $this->validateSet(
-            'global_snake.businessEvents.other_snake',
-            [$case1, $case2, $case3]
-        );
+        $locale = new Locale('en-GB', '', '');
+        $locale->addTranslation('global_snake.businessEvents.other_snake', 'Cancel', 'group1');
+
+        $set = $this->buildSet($locale, [$case1, $case2, $case3]);
+
+        $result = $this->validator->validate($set, $this->storageJson);
 
         $this->assertEquals(true, $result->isValid());
     }
@@ -141,10 +154,12 @@ class CaseStyleValidatorTest extends TestCase
 
         $case2 = new CaseStyle('snake');
 
-        $result = $this->validateSet(
-            'global_snake.business_event',
-            [$case1, $case2]
-        );
+        $locale = new Locale('en-GB', '', '');
+        $locale->addTranslation('global_snake.business_event', 'Cancel', 'group1');
+
+        $set = $this->buildSet($locale, [$case1, $case2]);
+
+        $result = $this->validator->validate($set, $this->storageJson);
 
         $this->assertEquals(false, $result->isValid());
     }
@@ -167,10 +182,12 @@ class CaseStyleValidatorTest extends TestCase
         $case3 = new CaseStyle('pascal');   # INVALID
         $case3->setLevel(2);
 
-        $result = $this->validateSet(
-            'global.businessEvents.mollie_checkout_order_success',
-            [$case1, $case2, $case3]
-        );
+        $locale = new Locale('en-GB', '', '');
+        $locale->addTranslation('global.businessEvents.mollie_checkout_order_success', 'Cancel', 'group1');
+
+        $set = $this->buildSet($locale, [$case1, $case2, $case3]);
+
+        $result = $this->validator->validate($set, $this->storageJson);
 
         $this->assertEquals(false, $result->isValid());
     }
@@ -181,28 +198,45 @@ class CaseStyleValidatorTest extends TestCase
      */
     public function testValidCasesWithoutSetStyles(): void
     {
-        $result = $this->validateSet(
-            'global.businessEvents.mollie_checkout_order_success',
-            []
-        );
+        $locale = new Locale('en-GB', '', '');
+        $locale->addTranslation('global.businessEvents.mollie_checkout_order_success', 'Cancel', 'group1');
+
+        $set = $this->buildSet($locale, []);
+
+        $result = $this->validator->validate($set, $this->storageJson);
 
         $this->assertEquals(true, $result->isValid());
     }
 
     /**
-     * @param string $translationKey
-     * @param array $caseStyles
-     * @throws CaseStyleNotFoundException
-     * @return ValidationResult
+     * @throws Exception
+     * @return void
      */
-    private function validateSet(string $translationKey, array $caseStyles): ValidationResult
+    public function testSingleHierarchyValidation(): void
     {
-        $storage = new JsonStorage(3, true);
+        $storageINI = new IniStorage();
 
         $locale = new Locale('en-GB', '', '');
-        $locale->addTranslation($translationKey, 'Cancel', 'group1');
+        $locale->addTranslation('btn-cancel', 'Cancel', '');
 
-        $set = new TranslationSet(
+        $case1 = new CaseStyle('snake');
+        $case1->setLevel(0);
+
+        $set = $this->buildSet($locale, [$case1]);
+
+        $result = $this->validator->validate($set, $storageINI);
+
+        $this->assertEquals(false, $result->isValid());
+    }
+
+    /**
+     * @param Locale $locale
+     * @param array $caseStyles
+     * @return TranslationSet
+     */
+    private function buildSet(Locale $locale, array $caseStyles): TranslationSet
+    {
+        return new TranslationSet(
             '',
             'json',
             new Protection(),
@@ -212,7 +246,5 @@ class CaseStyleValidatorTest extends TestCase
             $caseStyles,
             []
         );
-
-        return $this->validator->validate($set, $storage);
     }
 }
