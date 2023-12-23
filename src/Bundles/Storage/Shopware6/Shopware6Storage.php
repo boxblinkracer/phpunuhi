@@ -74,7 +74,17 @@ class Shopware6Storage implements StorageInterface
      */
     public function configureStorage(TranslationSet $set): void
     {
-        $pdo = (new ConnectionFactory())->pdoFromEnv();
+        $host = (string)getenv('DB_HOST');
+        $port = (string)getenv('DB_PORT');
+        $user = (string)getenv('DB_USER');
+        $pwd = (string)getenv('DB_PASSWD');
+        $dbName = (string)getenv('DB_DBNAME');
+
+        $factory = new ConnectionFactory();
+
+        $connStr = $factory->buildMySQLConnectionString($host, $port, $dbName);
+
+        $pdo = $factory->fromConnectionString($connStr, $user, $pwd);
 
         $this->loader = new TranslationLoader($pdo);
         $this->saver = new TranslationSaver($pdo);

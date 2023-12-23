@@ -12,18 +12,39 @@ class ConnectionFactoryTest extends TestCase
     /**
      * @return void
      */
-    public function testPdoObjectBuiltCorrectly(): void
+    public function testBuildMySQLConnectionString(): void
     {
-        putenv('DB_HOST=127.0.01');
-        putenv('DB_PORT=3306');
-        putenv('DB_USER=test');
-        putenv('DB_PASSWD=test');
-        putenv('DB_DBNAME=test');
+        $host = 'localhost';
+        $port = '3306';
+        $database = 'test_db';
 
+        $result = (new ConnectionFactory())->buildMySQLConnectionString($host, $port, $database);
+
+        $expected = 'mysql:host=localhost;port=3306;dbname=test_db;charset=utf8';
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testConnectionRefused(): void
+    {
         $this->expectExceptionMessage('SQLSTATE[HY000] [2002] Connection refused');
 
         $factory = new ConnectionFactory();
-        $conn = $factory->pdoFromEnv();
+        $connStr = $factory->buildMySQLConnectionString('127.0.01', '3306', 'test');
+
+        $factory->fromConnectionString($connStr, '', '');
+    }
+
+    /**
+     * @return void
+     */
+    public function testConnectionSuccessful(): void
+    {
+        $factory = new ConnectionFactory();
+        $conn = $factory->fromConnectionString('sqlite::memory:', '', '');
 
         $this->assertInstanceOf(PDO::class, $conn);
     }
