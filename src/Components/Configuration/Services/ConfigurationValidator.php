@@ -17,6 +17,10 @@ class ConfigurationValidator
     {
         $foundSets = [];
 
+        if (count($configuration->getTranslationSets()) === 0) {
+            throw new ConfigurationException('No TranslationSets found');
+        }
+
         foreach ($configuration->getTranslationSets() as $set) {
             if ($set->getName() === '') {
                 throw new ConfigurationException('TranslationSet has no name. This is required!');

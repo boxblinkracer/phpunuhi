@@ -8,6 +8,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 ### Changed
 
 - Updated to OpenAI model **gpt-3.5-turbo-instruct** because the old model **gpt-3.5-turbo** will be shut down.
+- The validation of a configuration does now throw an error if no Translation-Sets are defined.
 
 ### Fixed
 
