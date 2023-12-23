@@ -56,5 +56,4 @@ class CommandTraitTest extends TestCase
 
         $this->assertEquals($expected, $config);
     }
-
 }
