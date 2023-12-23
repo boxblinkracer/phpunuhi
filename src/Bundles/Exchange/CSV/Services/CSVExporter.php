@@ -141,7 +141,7 @@ class CSVExporter
 
         $f = $this->csvWriter->open($csvFilename);
 
-        if ($f !== false) {
+        if ($f !== null) {
             foreach ($csvExportLines as $row) {
                 $this->csvWriter->writeLine($f, $row, $this->delimiter);
             }

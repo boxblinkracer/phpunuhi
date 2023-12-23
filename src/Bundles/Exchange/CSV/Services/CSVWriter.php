@@ -31,14 +31,14 @@ class CSVWriter implements CSVWriterInterface
     /**
      * @param string $filename
      * @throws Exception
-     * @return mixed
+     * @return null|resource
      */
-    public function open(string $filename) : mixed
+    public function open(string $filename)
     {
         $resource = fopen($filename, 'ab');
 
         if (!$resource) {
-            throw new Exception('Could not open file: ' . $filename);
+            return null;
         }
 
         return $resource;

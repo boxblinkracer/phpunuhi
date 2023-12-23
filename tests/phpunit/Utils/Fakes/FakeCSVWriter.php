@@ -39,11 +39,17 @@ class FakeCSVWriter implements CSVWriterInterface
 
     /**
      * @param string $filename
-     * @return mixed
+     * @return null|resource
      */
-    public function open(string $filename): mixed
+    public function open(string $filename)
     {
-        return null;
+        $file = fopen('data://text/plain;base64,' . base64_encode('my-memory-text'), 'r');
+
+        if ($file === false) {
+            return null;
+        }
+
+        return $file;
     }
 
     /**
