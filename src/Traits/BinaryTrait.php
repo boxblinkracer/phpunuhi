@@ -22,7 +22,13 @@ trait BinaryTrait
      */
     protected function stringToBinary(string $text): string
     {
-        return (string)hex2bin($text);
+        $result = hex2bin($text);
+
+        if (!$result) {
+            return '';
+        }
+
+        return $result;
     }
 
     /**
