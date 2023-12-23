@@ -60,16 +60,22 @@ class DirectoryWriterTest extends TestCase
 
 
     /**
-     * @param $path
+     * @param string $path
      * @return void
      */
-    private function deleteDirectory($path): void
+    private function deleteDirectory(string $path): void
     {
         if (!is_dir($path)) {
             return;
         }
 
-        $files = array_diff(scandir($path), ['.', '..']);
+        $files = scandir($path);
+
+        if ($files === false) {
+            $files = [];
+        }
+
+        $files = array_diff($files, ['.', '..']);
 
         foreach ($files as $file) {
             is_dir("$path/$file") ? $this->deleteDirectory("$path/$file") : unlink("$path/$file");

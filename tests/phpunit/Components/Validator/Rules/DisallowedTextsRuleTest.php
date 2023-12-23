@@ -41,7 +41,7 @@ class DisallowedTextsRuleTest extends TestCase
 
         $set = $this->buildSet([$localeDE, $localeEN]);
 
-        $storage = new JsonStorage(3, true);
+        $storage = new JsonStorage();
 
         $validator = new DisallowedTextsRule([]);
         $result = $validator->validate($set, $storage);
@@ -65,7 +65,7 @@ class DisallowedTextsRuleTest extends TestCase
 
         $set = $this->buildSet([$localeDE, $localeEN]);
 
-        $storage = new JsonStorage(3, true);
+        $storage = new JsonStorage();
 
         $validator = new DisallowedTextsRule(
             [
@@ -80,7 +80,7 @@ class DisallowedTextsRuleTest extends TestCase
 
 
     /**
-     * @param array $locales
+     * @param Locale[] $locales
      * @return TranslationSet
      */
     private function buildSet(array $locales): TranslationSet

@@ -17,12 +17,12 @@ class FakeEmptyDelimiterStorage implements StorageInterface
 
     public function getFileExtension(): string
     {
-        // TODO: Implement getFileExtension() method.
+        return '.fake';
     }
 
     public function supportsFilters(): bool
     {
-        // TODO: Implement supportsFilters() method.
+        return false;
     }
 
     /**
@@ -38,21 +38,19 @@ class FakeEmptyDelimiterStorage implements StorageInterface
 
     public function configureStorage(TranslationSet $set): void
     {
-        // TODO: Implement configureStorage() method.
     }
 
     public function loadTranslationSet(TranslationSet $set): void
     {
-        // TODO: Implement loadTranslationSet() method.
     }
 
     public function saveTranslationSet(TranslationSet $set): StorageSaveResult
     {
-        // TODO: Implement saveTranslationSet() method.
+        return new StorageSaveResult(0, 0);
     }
 
     public function saveTranslationLocale(Locale $locale, string $filename): StorageSaveResult
     {
-        // TODO: Implement saveTranslationLocale() method.
+        return new StorageSaveResult(0, 0);
     }
 }

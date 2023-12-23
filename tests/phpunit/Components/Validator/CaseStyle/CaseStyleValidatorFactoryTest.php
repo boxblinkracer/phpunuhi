@@ -17,7 +17,7 @@ class CaseStyleValidatorFactoryTest extends TestCase
      */
     public function testUnknownIdentifierThrowsException(): void
     {
-        $factory = new CaseStyleValidatorFactory('', [], '');
+        $factory = new CaseStyleValidatorFactory();
 
         $this->expectException(CaseStyleNotFoundException::class);
 
@@ -30,7 +30,7 @@ class CaseStyleValidatorFactoryTest extends TestCase
      */
     public function testValidatorFound(): void
     {
-        $factory = new CaseStyleValidatorFactory('', [], '');
+        $factory = new CaseStyleValidatorFactory();
 
         $validator = $factory->fromIdentifier('camel');
 

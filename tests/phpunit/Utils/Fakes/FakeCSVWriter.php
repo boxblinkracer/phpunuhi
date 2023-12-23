@@ -22,7 +22,7 @@ class FakeCSVWriter implements CSVWriterInterface
     }
 
     /**
-     * @return array|string[]
+     * @return array<mixed>
      */
     public function getWrittenLines(): array
     {
@@ -35,21 +35,20 @@ class FakeCSVWriter implements CSVWriterInterface
      */
     public function deleteFile(string $filename): void
     {
-        // TODO: Implement deleteFile() method.
     }
 
     /**
      * @param string $filename
-     * @return resource|void
+     * @return mixed
      */
-    public function open(string $filename): void
+    public function open(string $filename): mixed
     {
-        // TODO: Implement open() method.
+        return null;
     }
 
     /**
-     * @param $file
-     * @param array $row
+     * @param resource $file
+     * @param array<mixed> $row
      * @param string $delimiter
      * @return void
      */
@@ -59,11 +58,10 @@ class FakeCSVWriter implements CSVWriterInterface
     }
 
     /**
-     * @param $file
+     * @param mixed $file
      * @return void
      */
     public function close($file): void
     {
-        // TODO: Implement close() method.
     }
 }

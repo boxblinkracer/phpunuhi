@@ -41,7 +41,7 @@ class NestingDepthRuleTest extends TestCase
 
         $set = $this->buildSet([$localeDE, $localeEN]);
 
-        $storage = new JsonStorage(3, true);
+        $storage = new JsonStorage();
 
         $validator = new NestingDepthRule(20);
         $result = $validator->validate($set, $storage);
@@ -85,7 +85,7 @@ class NestingDepthRuleTest extends TestCase
 
         $set = $this->buildSet([$localeDE, $localeEN]);
 
-        $storage = new JsonStorage(3, true);
+        $storage = new JsonStorage();
 
         $validator = new NestingDepthRule(0);
         $result = $validator->validate($set, $storage);
@@ -107,7 +107,7 @@ class NestingDepthRuleTest extends TestCase
 
         $set = $this->buildSet([$localeDE, $localeEN]);
 
-        $storage = new JsonStorage(3, true);
+        $storage = new JsonStorage();
 
         $validator = new NestingDepthRule(4);
         $result = $validator->validate($set, $storage);
@@ -136,8 +136,7 @@ class NestingDepthRuleTest extends TestCase
 
 
     /**
-     * @param array $locales
-     * @param int $maxDepth
+     * @param Locale[] $locales
      * @return TranslationSet
      */
     private function buildSet(array $locales): TranslationSet

@@ -33,7 +33,7 @@ class CamelCaseValidatorTest extends TestCase
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function getData(): array
     {
@@ -49,6 +49,9 @@ class CamelCaseValidatorTest extends TestCase
 
     /**
      * @dataProvider getData
+     *
+     * @param bool $expectedValid
+     * @param string $text
      * @return void
      */
     public function testIsValid(bool $expectedValid, string $text): void

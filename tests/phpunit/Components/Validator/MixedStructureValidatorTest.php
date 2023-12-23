@@ -53,7 +53,7 @@ class MixedStructureValidatorTest extends TestCase
 
         $set = $this->buildSet([$localeDE, $localeEN]);
 
-        $storage = new JsonStorage(3, true);
+        $storage = new JsonStorage();
 
         $result = $this->validator->validate($set, $storage);
 
@@ -75,7 +75,7 @@ class MixedStructureValidatorTest extends TestCase
 
         $set = $this->buildSet([$localeDE, $localeEN]);
 
-        $storage = new JsonStorage(3, true);
+        $storage = new JsonStorage();
 
 
         $result = $this->validator->validate($set, $storage);
@@ -85,7 +85,7 @@ class MixedStructureValidatorTest extends TestCase
 
 
     /**
-     * @param array $locales
+     * @param Locale[] $locales
      * @return TranslationSet
      */
     private function buildSet(array $locales): TranslationSet

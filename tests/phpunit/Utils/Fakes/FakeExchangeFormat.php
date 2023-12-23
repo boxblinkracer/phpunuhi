@@ -15,21 +15,19 @@ class FakeExchangeFormat implements ExchangeInterface
 
     public function getOptions(): array
     {
-        // TODO: Implement getOptions() method.
+        return [];
     }
 
     public function setOptionValues(array $options): void
     {
-        // TODO: Implement setOptionValues() method.
     }
 
     public function export(TranslationSet $set, string $outputDir, bool $onlyEmpty): void
     {
-        // TODO: Implement export() method.
     }
 
     public function import(string $filename): ImportResult
     {
-        // TODO: Implement import() method.
+        return new ImportResult([]);
     }
 }

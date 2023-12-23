@@ -42,7 +42,7 @@ class CommandTraitTest extends TestCase
      *            [ "" ]
      *            [ " " ]
      *
-     * @param $option
+     * @param mixed $option
      * @return void
      */
     public function testGetConfigFileWithoutValueGivesDefaultConfig($option): void
@@ -65,7 +65,7 @@ class CommandTraitTest extends TestCase
      *            [ "", 4.5 ]
      *
      * @param string $expected
-     * @param $option
+     * @param mixed $option
      * @return void
      */
     public function testGetConfigStringValue(string $expected, $option): void
@@ -90,7 +90,7 @@ class CommandTraitTest extends TestCase
      *            [ true, true ]
      *
      * @param bool $expected
-     * @param $option
+     * @param mixed $option
      * @return void
      */
     public function testGetConfigBoolValue(bool $expected, $option): void

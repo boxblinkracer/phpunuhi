@@ -21,7 +21,7 @@ interface CSVWriterInterface
      * @param string $filename
      * @return resource
      */
-    public function open(string $filename);
+    public function open(string $filename) : mixed;
 
     /**
      * @param resource $file

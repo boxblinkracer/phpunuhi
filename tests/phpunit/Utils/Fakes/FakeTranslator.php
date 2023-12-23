@@ -13,16 +13,15 @@ class FakeTranslator implements TranslatorInterface
 
     public function getOptions(): array
     {
-        // TODO: Implement getOptions() method.
+        return [];
     }
 
     public function setOptionValues(array $options): void
     {
-        // TODO: Implement setOptionValues() method.
     }
 
     public function translate(string $text, string $sourceLocale, string $targetLocale, array $foundPlaceholders): string
     {
-        // TODO: Implement translate() method.
+        return $text;
     }
 }

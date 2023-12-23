@@ -24,7 +24,7 @@ class ValidationErrorTest extends TestCase
             'en_US',
             'en.json',
             'ID-123',
-            '14'
+            14
         );
     }
 

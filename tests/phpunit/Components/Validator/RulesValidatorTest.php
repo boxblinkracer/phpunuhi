@@ -50,7 +50,7 @@ class RulesValidatorTest extends TestCase
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function ruleValidationDataProvider(): array
     {
@@ -66,7 +66,7 @@ class RulesValidatorTest extends TestCase
      * @dataProvider ruleValidationDataProvider
      *
      * @param string $ruleName
-     * @param $ruleValue
+     * @param mixed $ruleValue
      * @return void
      */
     public function testRulesCorrectlyValidate(string $ruleName, $ruleValue): void

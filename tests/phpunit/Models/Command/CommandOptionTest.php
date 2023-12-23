@@ -13,7 +13,7 @@ class CommandOptionTest extends TestCase
      */
     public function testName(): void
     {
-        $option = new CommandOption('delimiter', ',');
+        $option = new CommandOption('delimiter', true);
 
         $this->assertEquals('delimiter', $option->getName());
     }
@@ -23,7 +23,7 @@ class CommandOptionTest extends TestCase
      */
     public function testHasValue(): void
     {
-        $option = new CommandOption('delimiter', ',');
+        $option = new CommandOption('delimiter', true);
 
         $this->assertEquals(true, $option->hasValue());
     }
@@ -33,7 +33,7 @@ class CommandOptionTest extends TestCase
      */
     public function testHasNoValue(): void
     {
-        $option = new CommandOption('delimiter', '');
+        $option = new CommandOption('delimiter', false);
 
         $this->assertEquals(false, $option->hasValue());
     }

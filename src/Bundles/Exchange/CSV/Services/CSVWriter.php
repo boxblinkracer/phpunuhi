@@ -2,6 +2,8 @@
 
 namespace PHPUnuhi\Bundles\Exchange\CSV\Services;
 
+use Exception;
+
 class CSVWriter implements CSVWriterInterface
 {
 
@@ -28,11 +30,18 @@ class CSVWriter implements CSVWriterInterface
 
     /**
      * @param string $filename
-     * @return false|resource
+     * @throws Exception
+     * @return mixed
      */
-    public function open(string $filename)
+    public function open(string $filename) : mixed
     {
-        return fopen($filename, 'ab');
+        $resource = fopen($filename, 'ab');
+
+        if (!$resource) {
+            throw new Exception('Could not open file: ' . $filename);
+        }
+
+        return $resource;
     }
 
     /**

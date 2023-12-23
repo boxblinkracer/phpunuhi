@@ -33,7 +33,7 @@ class KebabCaseValidatorTest extends TestCase
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function getData(): array
     {

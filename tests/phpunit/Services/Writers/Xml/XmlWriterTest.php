@@ -46,7 +46,7 @@ class XmlWriterTest extends TestCase
 
         $xmlWriter->saveXml($this->testXmlFilePath, $xmlContent);
 
-        $actual = file_get_contents($this->testXmlFilePath);
+        $actual = (string)file_get_contents($this->testXmlFilePath);
 
         $expected = $this->buildComparableString($xmlContent);
         $actual = $this->buildComparableString($actual);

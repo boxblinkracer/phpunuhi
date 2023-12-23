@@ -5,6 +5,7 @@ namespace phpunit\Components\Configuration\Services;
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Configuration\Services\StyleLoader;
 use PHPUnuhi\Models\Configuration\CaseStyle;
+use SimpleXMLElement;
 
 class StyleLoaderTest extends TestCase
 {
@@ -22,8 +23,7 @@ class StyleLoaderTest extends TestCase
 </styles>
 XML;
 
-        $xml = simplexml_load_string($xmlString);
-
+        $xml = $this->loadXml($xmlString);
 
         $loader = new StyleLoader();
         $result = $loader->loadStyles($xml);
@@ -55,7 +55,7 @@ XML;
 </root>
 XML;
 
-        $xml = simplexml_load_string($xmlString);
+        $xml = $this->loadXml($xmlString);
 
         $loader = new StyleLoader();
         $result = $loader->loadStyles($xml);
@@ -75,11 +75,26 @@ XML;
 </styles>
 XML;
 
-        $xml = simplexml_load_string($xmlString);
+        $xml = $this->loadXml($xmlString);
 
         $loader = new StyleLoader();
         $result = $loader->loadStyles($xml);
 
         $this->assertCount(2, $result);
+    }
+
+    /**
+     * @param string $xml
+     * @return SimpleXMLElement
+     */
+    private function loadXml(string $xml): SimpleXMLElement
+    {
+        $element = simplexml_load_string($xml);
+
+        if ($element === false) {
+            return new SimpleXMLElement('');
+        }
+
+        return $element;
     }
 }

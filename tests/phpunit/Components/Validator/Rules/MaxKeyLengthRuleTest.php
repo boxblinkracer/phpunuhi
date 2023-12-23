@@ -42,7 +42,7 @@ class MaxKeyLengthRuleTest extends TestCase
 
         $set = $this->buildSet([$localeDE, $localeEN]);
 
-        $storage = new JsonStorage(3, true);
+        $storage = new JsonStorage();
 
         $validator = new MaxKeyLengthRule(20);
 
@@ -65,7 +65,7 @@ class MaxKeyLengthRuleTest extends TestCase
 
         $set = $this->buildSet([$localeDE, $localeEN]);
 
-        $storage = new JsonStorage(3, true);
+        $storage = new JsonStorage();
 
         $validator = new MaxKeyLengthRule(0);
 
@@ -93,7 +93,7 @@ class MaxKeyLengthRuleTest extends TestCase
 
         $set = $this->buildSet([$localeDE, $localeEN]);
 
-        $storage = new JsonStorage(3, true);
+        $storage = new JsonStorage();
 
         $validator = new MaxKeyLengthRule(6);  # "short" +1
 
@@ -118,7 +118,7 @@ class MaxKeyLengthRuleTest extends TestCase
         $storage = new FakeEmptyDelimiterStorage();
 
         # now create a rule for our $keyWithDelimiter but 1 size smaller
-        # so that its not valid anymore
+        # so that it's not valid anymore
         $validator = new MaxKeyLengthRule(strlen($keyWithDelimiter) - 1);
 
         $result = $validator->validate($set, $storage);
@@ -127,7 +127,7 @@ class MaxKeyLengthRuleTest extends TestCase
     }
 
     /**
-     * @param array $locales
+     * @param Locale[] $locales
      * @return TranslationSet
      */
     private function buildSet(array $locales): TranslationSet

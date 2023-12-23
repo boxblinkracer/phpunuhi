@@ -2,6 +2,7 @@ parameters:
     level: 9
     paths:
         - ./src
+        - ./tests/phpunit
     excludePaths:
         - ./src/vendor/*
     checkExplicitMixed: false

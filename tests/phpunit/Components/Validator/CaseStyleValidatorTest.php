@@ -231,7 +231,7 @@ class CaseStyleValidatorTest extends TestCase
 
     /**
      * @param Locale $locale
-     * @param array $caseStyles
+     * @param CaseStyle[] $caseStyles
      * @return TranslationSet
      */
     private function buildSet(Locale $locale, array $caseStyles): TranslationSet

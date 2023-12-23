@@ -13,8 +13,15 @@ class JsonStorageTest extends TestCase
      */
     private $locale;
 
+    /**
+     * @var array<string>
+     */
     private $files = [];
 
+
+    /**
+     * @return void
+     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -26,6 +33,9 @@ class JsonStorageTest extends TestCase
         $this->locale = $locale;
     }
 
+    /**
+     * @return void
+     */
     protected function tearDown(): void
     {
         parent::tearDown();
@@ -33,6 +43,9 @@ class JsonStorageTest extends TestCase
         \array_map('unlink', \array_filter($this->files, 'is_file'));
     }
 
+    /**
+     * @return void
+     */
     public function testIndentBy4WithNewLineAtTheEnd(): void
     {
         $testFile = $this->createRandomFile();
@@ -53,6 +66,9 @@ JSON;
         static::assertSame($expected, $json);
     }
 
+    /**
+     * @return void
+     */
     public function testIndentBy2WithoutNewLineAtTheEnd(): void
     {
         $testFile = $this->createRandomFile();
@@ -72,6 +88,10 @@ JSON;
         static::assertSame($expected, $json);
     }
 
+
+    /**
+     * @return void
+     */
     public function testIndentBy5AndSortedKeys(): void
     {
         $testFile = $this->createRandomFile();
@@ -91,9 +111,12 @@ JSON;
         static::assertSame($expected, $json);
     }
 
+    /**
+     * @return string
+     */
     private function createRandomFile(): string
     {
-        $result = \tempnam(\sys_get_temp_dir(), 'phpunuhiJsonStorageTest');
+        $result = (string)\tempnam(\sys_get_temp_dir(), 'phpunuhiJsonStorageTest');
 
         $this->files[] = $result;
 

@@ -95,7 +95,7 @@ class DuplicateContentRuleTest extends TestCase
 
 
     /**
-     * @param array $locales
+     * @param Locale[] $locales
      * @return TranslationSet
      */
     private function buildSet(array $locales): TranslationSet
