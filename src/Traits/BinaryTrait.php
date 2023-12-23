@@ -24,7 +24,7 @@ trait BinaryTrait
     {
         $result = hex2bin($text);
 
-        if (!$result) {
+        if ($result === '' || $result === '0' || $result === false) {
             return '';
         }
 
