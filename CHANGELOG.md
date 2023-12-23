@@ -12,6 +12,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 ### Fixed
 
 - Fixed bug where the **DuplicateContentRule** validation didn't work for single-hierarchy storages like INI, ...
+- If an empty config value was provided, it did not correctly use the default phpunuhi.xml file.
 
 ### Removed
 

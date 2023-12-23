@@ -32,6 +32,8 @@ trait CommandTrait
             $configFile = '';
         }
 
+        $configFile = trim($configFile);
+
         if ($configFile === '' || $configFile === '0') {
             $configFile = 'phpunuhi.xml';
         }
