@@ -3,12 +3,14 @@
 namespace phpunit\Components\Configuration\Services;
 
 use PHPUnit\Framework\TestCase;
+use phpunit\Utils\Traits\XmlLoaderTrait;
 use PHPUnuhi\Configuration\Services\StyleLoader;
 use PHPUnuhi\Models\Configuration\CaseStyle;
-use SimpleXMLElement;
 
 class StyleLoaderTest extends TestCase
 {
+    use XmlLoaderTrait;
+
 
     /**
      * @return void
@@ -81,20 +83,5 @@ XML;
         $result = $loader->loadStyles($xml);
 
         $this->assertCount(2, $result);
-    }
-
-    /**
-     * @param string $xml
-     * @return SimpleXMLElement
-     */
-    private function loadXml(string $xml): SimpleXMLElement
-    {
-        $element = simplexml_load_string($xml);
-
-        if ($element === false) {
-            return new SimpleXMLElement('');
-        }
-
-        return $element;
     }
 }

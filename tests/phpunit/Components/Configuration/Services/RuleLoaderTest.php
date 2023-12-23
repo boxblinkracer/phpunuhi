@@ -1,0 +1,48 @@
+<?php
+
+namespace phpunit\Components\Configuration\Services;
+
+use PHPUnit\Framework\TestCase;
+use phpunit\Utils\Traits\XmlLoaderTrait;
+use PHPUnuhi\Configuration\Services\RulesLoader;
+use PHPUnuhi\Models\Configuration\Rule;
+use PHPUnuhi\Models\Configuration\Rules;
+
+class RuleLoaderTest extends TestCase
+{
+    use XmlLoaderTrait;
+
+
+    /**
+     * @return void
+     */
+    public function testLoadRules(): void
+    {
+        $xml = '
+            <rulesNode>
+                <nestingDepth>5</nestingDepth>
+                <keyLength>10</keyLength>
+                <disallowedTexts>
+                    <text>badword1</text>
+                    <text>badword2</text>
+                </disallowedTexts>
+                <duplicateContent>false</duplicateContent>
+            </rulesNode>
+        ';
+
+        $xmlNode = $this->loadXml($xml);
+
+        $loader = new RulesLoader();
+        $actualRules = $loader->loadRules($xmlNode);
+
+
+        $expectedRules = [
+            new Rule(Rules::NESTING_DEPTH, '5'),
+            new Rule(Rules::KEY_LENGTH, '10'),
+            new Rule(Rules::DISALLOWED_TEXT, ['badword1', 'badword2']),
+            new Rule(Rules::DUPLICATE_CONTENT, false),
+        ];
+
+        $this->assertEquals($expectedRules, $actualRules);
+    }
+}
