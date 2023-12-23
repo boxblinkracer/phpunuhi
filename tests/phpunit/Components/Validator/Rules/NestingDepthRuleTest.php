@@ -4,6 +4,7 @@ namespace phpunit\Components\Validator\Rules;
 
 use Exception;
 use PHPUnit\Framework\TestCase;
+use phpunit\Utils\Fakes\FakeEmptyDelimiterStorage;
 use PHPUnuhi\Bundles\Storage\INI\IniStorage;
 use PHPUnuhi\Bundles\Storage\JSON\JsonStorage;
 use PHPUnuhi\Components\Validator\Rules\NestingDepthRule;
@@ -112,6 +113,25 @@ class NestingDepthRuleTest extends TestCase
         $result = $validator->validate($set, $storage);
 
         $this->assertEquals(false, $result->isValid());
+    }
+
+    /**
+     * @throws Exception
+     * @return void
+     */
+    public function testStorageWithEmptyDelimiterIsValid(): void
+    {
+        $localeDE = new Locale('de-DE', '', '');
+        $localeDE->addTranslation('lvl1.lvl2.level3.level4', 'Abbrechen', 'group1');
+
+        $set = $this->buildSet([$localeDE]);
+
+        $storage = new FakeEmptyDelimiterStorage();
+
+        $validator = new NestingDepthRule(2);
+        $result = $validator->validate($set, $storage);
+
+        $this->assertEquals(true, $result->isValid());
     }
 
 

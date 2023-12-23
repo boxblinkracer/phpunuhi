@@ -4,6 +4,7 @@ namespace phpunit\Components\Validator\Rules;
 
 use Exception;
 use PHPUnit\Framework\TestCase;
+use phpunit\Utils\Fakes\FakeEmptyDelimiterStorage;
 use PHPUnuhi\Bundles\Storage\JSON\JsonStorage;
 use PHPUnuhi\Components\Validator\Rules\MaxKeyLengthRule;
 use PHPUnuhi\Models\Configuration\Filter;
@@ -101,6 +102,29 @@ class MaxKeyLengthRuleTest extends TestCase
         $this->assertEquals(false, $result->isValid());
     }
 
+    /**
+     * @throws Exception
+     * @return void
+     */
+    public function testStorageWithEmptyDelimiterUsesNoNesting(): void
+    {
+        $keyWithDelimiter = 'card-long.longlonglong';
+
+        $localeDE = new Locale('de-DE', '', '');
+        $localeDE->addTranslation($keyWithDelimiter, '', 'group1');
+
+        $set = $this->buildSet([$localeDE]);
+
+        $storage = new FakeEmptyDelimiterStorage();
+
+        # now create a rule for our $keyWithDelimiter but 1 size smaller
+        # so that its not valid anymore
+        $validator = new MaxKeyLengthRule(strlen($keyWithDelimiter) - 1);
+
+        $result = $validator->validate($set, $storage);
+
+        $this->assertEquals(false, $result->isValid());
+    }
 
     /**
      * @param array $locales
