@@ -5,26 +5,59 @@ namespace PHPUnuhi\Configuration;
 use Exception;
 use PHPUnuhi\Bundles\Storage\StorageFactory;
 use PHPUnuhi\Components\Filter\FilterHandler;
+use PHPUnuhi\Configuration\Services\ConfigurationValidator;
+use PHPUnuhi\Configuration\Services\FilterLoader;
+use PHPUnuhi\Configuration\Services\LocalesLoader;
+use PHPUnuhi\Configuration\Services\ProtectionLoader;
+use PHPUnuhi\Configuration\Services\RulesLoader;
+use PHPUnuhi\Configuration\Services\StyleLoader;
 use PHPUnuhi\Exceptions\ConfigurationException;
-use PHPUnuhi\Models\Configuration\Attribute;
-use PHPUnuhi\Models\Configuration\CaseStyle;
 use PHPUnuhi\Models\Configuration\Configuration;
 use PHPUnuhi\Models\Configuration\Filter;
 use PHPUnuhi\Models\Configuration\Protection;
-use PHPUnuhi\Models\Configuration\Rule;
-use PHPUnuhi\Models\Configuration\Rules;
-use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
+use PHPUnuhi\Traits\XmlTrait;
 use SimpleXMLElement;
 
 class ConfigurationLoader
 {
+    use XmlTrait;
+
 
     /**
      * @var FilterHandler
      */
     private $filterHandler;
 
+    /**
+     * @var ConfigurationValidator
+     */
+    private $configValidator;
+
+    /**
+     * @var LocalesLoader
+     */
+    private $localesLoader;
+
+    /**
+     * @var RulesLoader
+     */
+    private $rulesLoader;
+
+    /**
+     * @var StyleLoader
+     */
+    private $styleLoader;
+
+    /**
+     * @var FilterLoader
+     */
+    private $filterLoader;
+
+    /**
+     * @var ProtectionLoader
+     */
+    private $protectionLoader;
 
     /**
      *
@@ -32,13 +65,19 @@ class ConfigurationLoader
     public function __construct()
     {
         $this->filterHandler = new FilterHandler();
+        $this->configValidator = new ConfigurationValidator();
+        $this->localesLoader = new LocalesLoader();
+        $this->rulesLoader = new RulesLoader();
+        $this->styleLoader = new StyleLoader();
+        $this->filterLoader = new FilterLoader();
+        $this->protectionLoader = new ProtectionLoader();
     }
 
 
     /**
      * @param string $rootConfigFilename
-     * @throws ConfigurationException
      * @throws Exception
+     * @throws ConfigurationException
      * @return Configuration
      */
     public function load(string $rootConfigFilename): Configuration
@@ -83,7 +122,7 @@ class ConfigurationLoader
 
         # create and validate the configuration object
         $config = new Configuration($allSuites);
-        $this->validateConfig($config);
+        $this->configValidator->validateConfig($config);
 
         return $config;
     }
@@ -182,23 +221,23 @@ class ConfigurationLoader
             }
 
             if ($nodeProtection !== null) {
-                $setProtection = $this->loadProtection($nodeProtection);
+                $setProtection = $this->protectionLoader->loadProtection($nodeProtection);
             }
 
             if ($nodeFilter !== null) {
-                $setFilter = $this->loadFilter($nodeFilter);
+                $setFilter = $this->filterLoader->loadFilter($nodeFilter);
             }
 
             if ($nodeLocales !== null) {
-                $setLocales = $this->loadLocales($nodeLocales, $configFilename);
+                $setLocales = $this->localesLoader->loadLocales($nodeLocales, $configFilename);
             }
 
             if ($nodeStyles !== null) {
-                $casingStyles = $this->loadStyles($nodeStyles);
+                $casingStyles = $this->styleLoader->loadStyles($nodeStyles);
             }
 
             if ($nodeRules !== null) {
-                $rules = $this->loadRules($nodeRules);
+                $rules = $this->rulesLoader->loadRules($nodeRules);
             }
 
             $set = new TranslationSet(
@@ -268,269 +307,5 @@ class ConfigurationLoader
             'format' => $format,
             'attributes' => $setAttributes,
         ];
-    }
-
-    /**
-     * @param SimpleXMLElement $filterNode
-     * @return Protection
-     */
-    private function loadProtection(SimpleXMLElement $filterNode): Protection
-    {
-        $protection = new Protection();
-
-        $nodeMarkers = $filterNode->marker;
-        $nodeTerms = $filterNode->term;
-
-        if ($nodeMarkers !== null) {
-            foreach ($nodeMarkers as $marker) {
-                $markerStart = $this->getAttribute('start', $marker);
-                $markerEnd = $this->getAttribute('end', $marker);
-
-                $protection->addMarker($markerStart->getValue(), $markerEnd->getValue());
-            }
-        }
-
-        if ($nodeTerms !== null) {
-            foreach ($nodeTerms as $term) {
-                $termValue = (string)$term;
-
-                $protection->addTerm($termValue);
-            }
-        }
-
-        return $protection;
-    }
-
-    /**
-     * @param SimpleXMLElement $filterNode
-     * @return Filter
-     */
-    private function loadFilter(SimpleXMLElement $filterNode): Filter
-    {
-        $filter = new Filter();
-
-        $nodeAllows = $filterNode->include;
-        $nodeExcludes = $filterNode->exclude;
-
-        $nodeAllowsKeys = ($nodeAllows !== null) ? $nodeAllows->key : null;
-        $nodeExcludeKeys = ($nodeExcludes !== null) ? $nodeExcludes->key : null;
-
-        if ($nodeAllowsKeys !== null) {
-            foreach ($nodeAllowsKeys as $key) {
-                $filter->addIncludeKey((string)$key);
-            }
-        }
-
-        if ($nodeExcludeKeys !== null) {
-            foreach ($nodeExcludeKeys as $key) {
-                $filter->addExcludeKey((string)$key);
-            }
-        }
-
-        return $filter;
-    }
-
-
-    /**
-     * @param SimpleXMLElement $stylesNode
-     * @return CaseStyle[]
-     */
-    private function loadStyles(SimpleXMLElement $stylesNode): array
-    {
-        $styles = [];
-
-        if ($stylesNode->style === null) {
-            return [];
-        }
-
-        foreach ($stylesNode->style as $style) {
-            $attributes = $style->attributes();
-
-            $styleName = (string)$style;
-            $styleLevel = ($attributes instanceof SimpleXMLElement) ? (string)$attributes->level : '';
-
-            $caseStyle = new CaseStyle($styleName);
-
-            if ($styleLevel !== '' && $styleLevel !== '0') {
-                $caseStyle->setLevel((int)$styleLevel);
-            }
-
-            $styles[] = $caseStyle;
-        }
-
-        return $styles;
-    }
-
-    /**
-     * @param SimpleXMLElement $rulesNode
-     * @return Rule[]
-     */
-    private function loadRules(SimpleXMLElement $rulesNode): array
-    {
-        $rules = [];
-
-        $nestingDepth = $rulesNode->nestingDepth;
-        $keyLength = $rulesNode->keyLength;
-        $disallowedTexts = $rulesNode->disallowedTexts;
-        $duplicateContent = $rulesNode->duplicateContent;
-
-        if ($nestingDepth !== null) {
-            $rules[] = new Rule(Rules::NESTING_DEPTH, (string)$nestingDepth);
-        }
-
-        if ($keyLength !== null) {
-            $rules[] = new Rule(Rules::KEY_LENGTH, (string)$keyLength);
-        }
-
-        if ($disallowedTexts !== null) {
-            $textsArray = $disallowedTexts->text;
-            $rules[] = new Rule(Rules::DISALLOWED_TEXT, (array)$textsArray);
-        }
-
-        if ($duplicateContent !== null) {
-            $value = (strtolower($duplicateContent));
-            if ($value !== '') {
-                $isAllowed = $value !== 'false';
-                $rules[] = new Rule(Rules::DUPLICATE_CONTENT, $isAllowed);
-            }
-        }
-
-        return $rules;
-    }
-
-    /**
-     * @param SimpleXMLElement $rootLocales
-     * @param string $configFilename
-     * @throws ConfigurationException
-     * @return array<mixed>
-     */
-    private function loadLocales(SimpleXMLElement $rootLocales, string $configFilename): array
-    {
-        $foundLocales = [];
-
-        # load optional <locale basePath=xy">
-        $basePath = $this->getAttribute('basePath', $rootLocales);
-
-        foreach ($rootLocales->children() as $nodeLocale) {
-            $nodeType = $nodeLocale->getName();
-            $innerValue = trim((string)$nodeLocale[0]);
-
-            if ($nodeType !== 'locale') {
-                throw new ConfigurationException('only <locale> elements are allowed in the locales node. found: ' . $nodeType);
-            }
-
-            $localeName = (string)$nodeLocale['name'];
-            $localeFile = '';
-            $iniSection = (string)$nodeLocale['iniSection'];
-
-
-            if (trim($localeName) === '') {
-                throw new ConfigurationException('empty locale attributes are not allowed in set: ' . $configFilename);
-            }
-
-            if ($innerValue !== '') {
-
-                # replace our locale-name placeholders
-                $innerValue = str_replace('%locale%', $localeName, $innerValue);
-                $innerValue = str_replace('%locale_uc%', strtoupper($localeName), $innerValue);
-                $innerValue = str_replace('%locale_lc%', strtolower($localeName), $innerValue);
-
-                # if we have a basePath, we also need to replace any values
-                if ($basePath->getValue() !== '' && $basePath->getValue() !== '0') {
-                    $innerValue = str_replace('%base_path%', $basePath->getValue(), $innerValue);
-                }
-
-                # for now treat inner value as file
-                $configuredFileName = dirname($configFilename) . '/' . $innerValue;
-
-                $localeFile = (string)realpath($configuredFileName);
-
-                if (!file_exists($localeFile)) {
-                    throw new ConfigurationException('Attention, translation file not found: ' . $configuredFileName);
-                }
-            }
-
-            $foundLocales[] = new Locale($localeName, $localeFile, $iniSection);
-        }
-
-        return $foundLocales;
-    }
-
-    /**
-     * @param Configuration $configuration
-     * @throws Exception
-     * @return void
-     */
-    private function validateConfig(Configuration $configuration): void
-    {
-        $foundSets = [];
-
-        foreach ($configuration->getTranslationSets() as $set) {
-            if ($set->getName() === '') {
-                throw new ConfigurationException('TranslationSet has no name. This is required!');
-            }
-
-            if ($set->getFormat() === '') {
-                throw new ConfigurationException('TranslationSet has no format. This is required!');
-            }
-
-            if (in_array($set->getName(), $foundSets)) {
-                throw new ConfigurationException('TranslationSet "' . $set->getName() . '" has already been found');
-            }
-
-            $foundSets[] = $set->getName();
-
-
-            $foundLocales = [];
-
-            foreach ($set->getLocales() as $locale) {
-                if ($locale->getName() === '') {
-                    throw new ConfigurationException('Locale has no name. This is required!');
-                }
-
-                if (in_array($locale->getName(), $foundLocales)) {
-                    throw new ConfigurationException('Locale "' . $locale->getName() . '" has already been found in Translation-Set: ' . $set->getName());
-                }
-
-                $foundLocales[] = $locale->getName();
-            }
-        }
-    }
-
-    /**
-     * @param SimpleXMLElement $node
-     * @return array<Attribute>
-     */
-    private function getAttributes(SimpleXMLElement $node): array
-    {
-        $setAttributes = [];
-        $nodeAttributes = $node->attributes();
-        if ($nodeAttributes !== null) {
-            foreach ($nodeAttributes as $attrName => $value) {
-                $setAttributes[] = new Attribute($attrName, $value);
-            }
-        }
-
-        return $setAttributes;
-    }
-
-    /**
-     * @param string $name
-     * @param SimpleXMLElement $node
-     * @return Attribute
-     */
-    private function getAttribute(string $name, SimpleXMLElement $node): Attribute
-    {
-        $nodeAttributes = $node->attributes();
-
-        if ($nodeAttributes !== null) {
-            foreach ($nodeAttributes as $attrName => $value) {
-                if ($attrName === $name) {
-                    return new Attribute($attrName, $value);
-                }
-            }
-        }
-
-        return new Attribute($name, '');
     }
 }
