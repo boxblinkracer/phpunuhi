@@ -15,7 +15,7 @@ return static function (RectorConfig $rectorConfig): void {
         __DIR__ . '/bin',
         __DIR__ . '/scripts',
         __DIR__ . '/src',
-        __DIR__ . '/tests',
+        __DIR__ . '/tests/phpunit',
     ]);
 
     $rectorConfig->phpVersion(PhpVersion::PHP_72);
