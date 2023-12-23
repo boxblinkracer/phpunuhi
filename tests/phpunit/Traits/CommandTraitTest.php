@@ -56,4 +56,50 @@ class CommandTraitTest extends TestCase
 
         $this->assertEquals($expected, $config);
     }
+
+    /**
+     * @testWith  [ "" , null ]
+     *            [ "", "" ]
+     *            [ " ", " " ]
+     *            [ "", 4 ]
+     *            [ "", 4.5 ]
+     *
+     * @param string $expected
+     * @param $option
+     * @return void
+     */
+    public function testGetConfigStringValue(string $expected, $option): void
+    {
+        $input = $this->createMock(InputInterface::class);
+        $input->method('getOption')->willReturn($option);
+
+        $value = $this->getConfigStringValue('myKey', $input);
+
+        $this->assertEquals($expected, $value);
+    }
+
+    /**
+     * @testWith  [ false , null ]
+     *            [ false, "" ]
+     *            [ false, " " ]
+     *            [ false, 4 ]
+     *            [ false, 4.5 ]
+     *            [ false, false ]
+     *            [ false, "false" ]
+     *            [ false, "true" ]
+     *            [ true, true ]
+     *
+     * @param bool $expected
+     * @param $option
+     * @return void
+     */
+    public function testGetConfigBoolValue(bool $expected, $option): void
+    {
+        $input = $this->createMock(InputInterface::class);
+        $input->method('getOption')->willReturn($option);
+
+        $value = $this->getConfigBoolValue('myKey', $input);
+
+        $this->assertEquals($expected, $value);
+    }
 }
