@@ -16,6 +16,7 @@ use PHPUnuhi\Models\Configuration\Configuration;
 use PHPUnuhi\Models\Configuration\Filter;
 use PHPUnuhi\Models\Configuration\Protection;
 use PHPUnuhi\Models\Translation\TranslationSet;
+use PHPUnuhi\Services\Loaders\Xml\XmlLoaderInterface;
 use PHPUnuhi\Traits\XmlTrait;
 use SimpleXMLElement;
 
@@ -23,6 +24,11 @@ class ConfigurationLoader
 {
     use XmlTrait;
 
+
+    /**
+     * @var XmlLoaderInterface
+     */
+    private $xmlLoader;
 
     /**
      * @var FilterHandler
@@ -59,11 +65,14 @@ class ConfigurationLoader
      */
     private $protectionLoader;
 
+
     /**
-     *
+     * @param XmlLoaderInterface $xmlLoader
      */
-    public function __construct()
+    public function __construct(XmlLoaderInterface $xmlLoader)
     {
+        $this->xmlLoader = $xmlLoader;
+
         $this->filterHandler = new FilterHandler();
         $this->configValidator = new ConfigurationValidator();
         $this->localesLoader = new LocalesLoader();
@@ -76,18 +85,13 @@ class ConfigurationLoader
 
     /**
      * @param string $rootConfigFilename
-     * @throws Exception
      * @throws ConfigurationException
+     * @throws Exception
      * @return Configuration
      */
     public function load(string $rootConfigFilename): Configuration
     {
-        $rootXmlString = (string)file_get_contents($rootConfigFilename);
-        $rootXmlSettings = simplexml_load_string($rootXmlString);
-
-        if (!$rootXmlSettings instanceof SimpleXMLElement) {
-            throw new ConfigurationException('Error when loading configuration. Invalid XML: ' . $rootConfigFilename);
-        }
+        $rootXmlSettings = $this->xmlLoader->loadXML($rootConfigFilename);
 
         $rootConfigDir = dirname($rootConfigFilename) . '/';
 
@@ -104,12 +108,7 @@ class ConfigurationLoader
         foreach ($importFiles as $file) {
             $fullFilename = $rootConfigDir . $file;
 
-            $fileXmlString = (string)file_get_contents($fullFilename);
-            $fileXmlNode = simplexml_load_string($fileXmlString);
-
-            if (!$fileXmlNode instanceof SimpleXMLElement) {
-                throw new ConfigurationException('Error when loading configuration. Invalid XML: ' . $fullFilename);
-            }
+            $fileXmlNode = $this->xmlLoader->loadXML($fullFilename);
 
             # load ENV variables
             $this->loadPHPEnvironment($fileXmlNode);

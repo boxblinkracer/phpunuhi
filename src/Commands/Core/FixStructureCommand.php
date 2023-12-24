@@ -7,6 +7,7 @@ use PHPUnuhi\Configuration\ConfigurationLoader;
 use PHPUnuhi\Exceptions\ConfigurationException;
 use PHPUnuhi\Exceptions\TranslationNotFoundException;
 use PHPUnuhi\Services\GroupName\GroupNameService;
+use PHPUnuhi\Services\Loaders\Xml\XmlLoader;
 use PHPUnuhi\Traits\CommandTrait;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -52,7 +53,7 @@ class FixStructureCommand extends Command
 
         # -----------------------------------------------------------------
 
-        $configLoader = new ConfigurationLoader();
+        $configLoader = new ConfigurationLoader(new XmlLoader());
         $config = $configLoader->load($configFile);
 
 

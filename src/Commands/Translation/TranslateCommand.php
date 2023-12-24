@@ -7,6 +7,7 @@ use PHPUnuhi\Bundles\Translator\TranslatorFactory;
 use PHPUnuhi\Configuration\ConfigurationLoader;
 use PHPUnuhi\Exceptions\ConfigurationException;
 use PHPUnuhi\Exceptions\TranslationNotFoundException;
+use PHPUnuhi\Services\Loaders\Xml\XmlLoader;
 use PHPUnuhi\Services\Placeholder\Placeholder;
 use PHPUnuhi\Services\Placeholder\PlaceholderExtractor;
 use PHPUnuhi\Traits\CommandTrait;
@@ -83,7 +84,7 @@ class TranslateCommand extends Command
 
         # -----------------------------------------------------------------
 
-        $configLoader = new ConfigurationLoader();
+        $configLoader = new ConfigurationLoader(new XmlLoader());
         $config = $configLoader->load($configFile);
 
 

@@ -14,6 +14,7 @@ use PHPUnuhi\Components\Validator\MissingStructureValidator;
 use PHPUnuhi\Components\Validator\RulesValidator;
 use PHPUnuhi\Configuration\ConfigurationLoader;
 use PHPUnuhi\Exceptions\ConfigurationException;
+use PHPUnuhi\Services\Loaders\Xml\XmlLoader;
 use PHPUnuhi\Traits\CommandTrait;
 use PHPUnuhi\Traits\StringTrait;
 use Symfony\Component\Console\Command\Command;
@@ -65,7 +66,7 @@ class ValidateCommand extends Command
 
         # -----------------------------------------------------------------
 
-        $configLoader = new ConfigurationLoader();
+        $configLoader = new ConfigurationLoader(new XmlLoader());
         $config = $configLoader->load($configFile);
 
 

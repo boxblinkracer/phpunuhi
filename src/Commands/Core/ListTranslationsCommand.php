@@ -4,6 +4,7 @@ namespace PHPUnuhi\Commands\Core;
 
 use PHPUnuhi\Configuration\ConfigurationLoader;
 use PHPUnuhi\Exceptions\ConfigurationException;
+use PHPUnuhi\Services\Loaders\Xml\XmlLoader;
 use PHPUnuhi\Traits\CommandTrait;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -47,7 +48,7 @@ class ListTranslationsCommand extends Command
 
         # -----------------------------------------------------------------
 
-        $configLoader = new ConfigurationLoader();
+        $configLoader = new ConfigurationLoader(new XmlLoader());
         $config = $configLoader->load($configFile);
 
 
