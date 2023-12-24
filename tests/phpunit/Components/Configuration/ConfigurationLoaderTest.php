@@ -26,7 +26,11 @@ class ConfigurationLoaderTest extends TestCase
         $loader->load('not-existing.xml');
     }
 
-    public function test(): void
+    /**
+     * @throws ConfigurationException
+     * @return void
+     */
+    public function testConfigurationLoaded(): void
     {
         StorageFactory::getInstance()->resetStorages();
         StorageFactory::getInstance()->registerStorage(new FakeStorage());
