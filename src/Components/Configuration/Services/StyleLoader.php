@@ -16,23 +16,21 @@ class StyleLoader
     {
         $styles = [];
 
-        if ($stylesNode->style === null) {
-            return [];
-        }
+        if ($stylesNode->style !== null) {
+            foreach ($stylesNode->style as $style) {
+                $attributes = $style->attributes();
 
-        foreach ($stylesNode->style as $style) {
-            $attributes = $style->attributes();
+                $styleName = (string)$style;
+                $styleLevel = ($attributes instanceof SimpleXMLElement) ? (string)$attributes->level : '';
 
-            $styleName = (string)$style;
-            $styleLevel = ($attributes instanceof SimpleXMLElement) ? (string)$attributes->level : '';
+                $caseStyle = new CaseStyle($styleName);
 
-            $caseStyle = new CaseStyle($styleName);
+                if ($styleLevel !== '' && $styleLevel !== '0') {
+                    $caseStyle->setLevel((int)$styleLevel);
+                }
 
-            if ($styleLevel !== '' && $styleLevel !== '0') {
-                $caseStyle->setLevel((int)$styleLevel);
+                $styles[] = $caseStyle;
             }
-
-            $styles[] = $caseStyle;
         }
 
         return $styles;

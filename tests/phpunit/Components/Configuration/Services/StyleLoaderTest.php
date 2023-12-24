@@ -13,23 +13,33 @@ class StyleLoaderTest extends TestCase
 
 
     /**
+     * @var StyleLoader
+     */
+    private $loader;
+
+
+    /**
+     * @return void
+     */
+    public function setUp(): void
+    {
+        $this->loader = new StyleLoader();
+    }
+
+    /**
      * @return void
      */
     public function testLoadStyles(): void
     {
-        $xmlString = <<<XML
-<styles>
-    <style level="1">camel</style>
-    <style>pascal</style>
-    <style level="2">kebab</style>
-</styles>
-XML;
+        $xml = $this->loadXml('
+            <styles>
+                <style level="1">camel</style>
+                <style>pascal</style>
+                <style level="2">kebab</style>
+            </styles>
+        ');
 
-        $xml = $this->loadXml($xmlString);
-
-        $loader = new StyleLoader();
-        $result = $loader->loadStyles($xml);
-
+        $result = $this->loader->loadStyles($xml);
 
         $this->assertCount(3, $result);
 
@@ -52,15 +62,9 @@ XML;
      */
     public function testLoadWithoutStylesNode(): void
     {
-        $xmlString = <<<XML
-<root>
-</root>
-XML;
+        $xml = $this->loadXml('<root></root>');
 
-        $xml = $this->loadXml($xmlString);
-
-        $loader = new StyleLoader();
-        $result = $loader->loadStyles($xml);
+        $result = $this->loader->loadStyles($xml);
 
         $this->assertCount(0, $result);
     }
@@ -70,18 +74,27 @@ XML;
      */
     public function testLoadWithInvalidStyle(): void
     {
-        $xmlString = <<<XML
-<styles>
-    <style>pascal</style>
-    <style>abc</style>
-</styles>
-XML;
+        $xml = $this->loadXml('
+            <styles>
+                <style>pascal</style>
+                <style>abc</style>
+            </styles>
+        ');
 
-        $xml = $this->loadXml($xmlString);
-
-        $loader = new StyleLoader();
-        $result = $loader->loadStyles($xml);
+        $result = $this->loader->loadStyles($xml);
 
         $this->assertCount(2, $result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testMissingStyleEntriesAreWorking(): void
+    {
+        $xml = $this->loadXml('<styles></styles>');
+
+        $result = $this->loader->loadStyles($xml);
+
+        $this->assertCount(0, $result);
     }
 }
