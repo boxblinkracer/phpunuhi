@@ -16,6 +16,11 @@ class LocalesLoaderTest extends TestCase
      */
     private $existingLocaleFile;
 
+    /**
+     * @var LocalesLoader
+     */
+    private $loader;
+
 
     /**
      * @return void
@@ -23,6 +28,8 @@ class LocalesLoaderTest extends TestCase
     protected function setUp(): void
     {
         $this->existingLocaleFile = __DIR__ . '/tmp_locale_file.json';
+
+        $this->loader = new LocalesLoader();
     }
 
     /**
@@ -41,17 +48,14 @@ class LocalesLoaderTest extends TestCase
      */
     public function testLocalesLoadedCorrectly(): void
     {
-        $xml = '
+        $xmlNode = $this->loadXml('
             <locales basePath="./snippets">
                 <locale name="en">' . $this->existingLocaleFile . '</locale>
                 <locale name="de">' . $this->existingLocaleFile . '</locale>
             </locales>
-        ';
+        ');
 
-        $xmlNode = $this->loadXml($xml);
-
-        $loader = new LocalesLoader();
-        $locales = $loader->loadLocales($xmlNode, 'test.xml');
+        $locales = $this->loader->loadLocales($xmlNode, 'test.xml');
 
         $this->assertCount(2, $locales);
         $this->assertEquals('en', $locales[0]->getName());
@@ -69,16 +73,13 @@ class LocalesLoaderTest extends TestCase
      */
     public function testLocaleWithoutExistingFileIsAlsoLoaded(): void
     {
-        $xml = '
+        $xmlNode = $this->loadXml('
             <locales>
                 <locale name="en">./not-existing.json</locale>
             </locales>
-        ';
+        ');
 
-        $xmlNode = $this->loadXml($xml);
-
-        $loader = new LocalesLoader();
-        $locales = $loader->loadLocales($xmlNode, 'test.xml');
+        $locales = $this->loader->loadLocales($xmlNode, 'test.xml');
 
         $this->assertCount(1, $locales);
         $this->assertEquals('./not-existing.json', $locales[0]->getFilename());
@@ -90,18 +91,36 @@ class LocalesLoaderTest extends TestCase
      */
     public function testBasePathPlaceholder(): void
     {
-        $xml = '
+        $xmlNode = $this->loadXml('
             <locales basePath="./snippets">
                 <locale name="en">%base_path%/translation.json</locale>
             </locales>
-        ';
+        ');
 
-        $xmlNode = $this->loadXml($xml);
-
-        $loader = new LocalesLoader();
-        $locales = $loader->loadLocales($xmlNode, 'test.xml');
+        $locales = $this->loader->loadLocales($xmlNode, 'test.xml');
 
         $this->assertEquals('./snippets/translation.json', $locales[0]->getFilename());
+    }
+
+    /**
+     * @testWith  [ "" ]
+     *            [ " " ]
+     *
+     * @param string $placeholder
+     * @throws ConfigurationException
+     * @return void
+     */
+    public function testInvalidBasePathPlaceholdersAreSkipped(string $placeholder): void
+    {
+        $xmlNode = $this->loadXml('
+            <locales basePath="' . $placeholder . '">
+                <locale name="en">%base_path%/translation.json</locale>
+            </locales>
+        ');
+
+        $locales = $this->loader->loadLocales($xmlNode, 'test.xml');
+
+        $this->assertEquals('./%base_path%/translation.json', $locales[0]->getFilename());
     }
 
     /**
@@ -117,16 +136,13 @@ class LocalesLoaderTest extends TestCase
      */
     public function testLocalePlaceholder(string $expectedLocalePart, string $placeholder, string $locale): void
     {
-        $xml = '
+        $xmlNode = $this->loadXml('
             <locales>
                 <locale name="' . $locale . '">' . $placeholder . '/translation.json</locale>
             </locales>
-        ';
+        ');
 
-        $xmlNode = $this->loadXml($xml);
-
-        $loader = new LocalesLoader();
-        $locales = $loader->loadLocales($xmlNode, 'test.xml');
+        $locales = $this->loader->loadLocales($xmlNode, 'test.xml');
 
         $this->assertEquals('./' . $expectedLocalePart . '/translation.json', $locales[0]->getFilename());
     }
@@ -137,17 +153,52 @@ class LocalesLoaderTest extends TestCase
      */
     public function testIniSectionLoaded(): void
     {
-        $xml = '
+        $xmlNode = $this->loadXml('
             <locales>
                 <locale name="en" iniSection="en-GB">%locale%/translation.ini</locale>
             </locales>
-        ';
+        ');
 
-        $xmlNode = $this->loadXml($xml);
-
-        $loader = new LocalesLoader();
-        $locales = $loader->loadLocales($xmlNode, 'test.xml');
+        $locales = $this->loader->loadLocales($xmlNode, 'test.xml');
 
         $this->assertEquals('en-GB', $locales[0]->getIniSection());
+    }
+
+    /**
+     * This test verifies that we also load locales where the file does not exist.
+     * The ConfigurationValidator does then need to throw an exception for this.
+     *
+     * @throws ConfigurationException
+     * @return void
+     */
+    public function testLocaleWithoutNameIsLoaded(): void
+    {
+        $xmlNode = $this->loadXml('
+            <locales>
+                <locale>translation.ini</locale>
+            </locales>
+        ');
+
+        $locales = $this->loader->loadLocales($xmlNode, 'test.xml');
+
+        $this->assertEquals('', $locales[0]->getName());
+    }
+
+    /**
+     * @throws ConfigurationException
+     * @return void
+     */
+    public function testOtherNodesAreSkipped(): void
+    {
+        $xmlNode = $this->loadXml('
+            <locales>
+                <other></other>
+                <locale>translation.ini</locale>
+            </locales>
+        ');
+
+        $locales = $this->loader->loadLocales($xmlNode, 'test.xml');
+
+        $this->assertCount(1, $locales);
     }
 }
