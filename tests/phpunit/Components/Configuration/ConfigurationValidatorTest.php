@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Components\Configuration\Services;
+namespace phpunit\Components\Configuration;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Configuration\Services\ConfigurationValidator;

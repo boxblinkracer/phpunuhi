@@ -42,25 +42,22 @@ class LocalesLoader
             }
 
             if ($innerValue !== '') {
-
                 # replace our locale-name placeholders
                 $innerValue = str_replace('%locale%', $localeName, $innerValue);
                 $innerValue = str_replace('%locale_uc%', strtoupper($localeName), $innerValue);
                 $innerValue = str_replace('%locale_lc%', strtolower($localeName), $innerValue);
-
                 # if we have a basePath, we also need to replace any values
                 if ($basePath->getValue() !== '' && $basePath->getValue() !== '0') {
                     $innerValue = str_replace('%base_path%', $basePath->getValue(), $innerValue);
                 }
-
                 # for now treat inner value as file
                 $configuredFileName = dirname($configFilename) . '/' . $innerValue;
+                $localeFile = file_exists($configuredFileName) ? (string)realpath($configuredFileName) : $configuredFileName;
 
-                $localeFile = (string)realpath($configuredFileName);
-
-                if (!file_exists($localeFile)) {
-                    throw new ConfigurationException('Attention, translation file not found: ' . $configuredFileName);
-                }
+                # clear duplicate slashes that exist somehow
+                $localeFile = str_replace('//', '/', $localeFile);
+                # replace duplicate occurrences of ./
+                $localeFile = str_replace('././', './', $localeFile);
             }
 
             $foundLocales[] = new Locale($localeName, $localeFile, $iniSection);

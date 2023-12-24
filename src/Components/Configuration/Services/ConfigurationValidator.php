@@ -48,6 +48,11 @@ class ConfigurationValidator
                     throw new ConfigurationException('Locale "' . $locale->getName() . '" has already been found in Translation-Set: ' . $set->getName());
                 }
 
+                $filename = $locale->getFilename();
+                if ($filename !== '' && !file_exists($filename)) {
+                    throw new ConfigurationException('Attention, translation file not found: ' . $filename);
+                }
+
                 $foundLocales[] = $locale->getName();
             }
         }
