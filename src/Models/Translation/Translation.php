@@ -2,8 +2,11 @@
 
 namespace PHPUnuhi\Models\Translation;
 
+use PHPUnuhi\Traits\StringTrait;
+
 class Translation
 {
+    use StringTrait;
 
     /**
      * @var string
@@ -88,5 +91,24 @@ class Translation
     public function isEmpty(): bool
     {
         return (trim($this->value) === '');
+    }
+
+    /**
+     * @param string $delimiter
+     * @return int
+     */
+    public function getLevel(string $delimiter): int
+    {
+        if (!$this->stringDoesContain($this->key, $delimiter)) {
+            return 0;
+        }
+
+        $parts = explode($delimiter, $this->key);
+
+        if (!is_array($parts)) {
+            return 0;
+        }
+
+        return count($parts) - 1;
     }
 }

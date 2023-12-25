@@ -2,8 +2,17 @@
 
 namespace PHPUnuhi\Services\CaseStyle;
 
-class UpperCaseConverter
+class UpperCaseConverter implements CaseStyleConverterInterface
 {
+
+    /**
+     * @return string
+     */
+    public function getIdentifier(): string
+    {
+        return 'upper';
+    }
+
 
     /**
      * @param string $text

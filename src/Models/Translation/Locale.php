@@ -2,6 +2,7 @@
 
 namespace PHPUnuhi\Models\Translation;
 
+use Exception;
 use PHPUnuhi\Exceptions\TranslationNotFoundException;
 
 class Locale
@@ -220,5 +221,32 @@ class Locale
         }
 
         $this->translations = $tmpList;
+    }
+
+    /**
+     * @param string $oldKey
+     * @param string $newKey
+     * @throws TranslationNotFoundException
+     * @return void
+     */
+    public function updateTranslationKey(string $oldKey, string $newKey): void
+    {
+        try {
+            # check if our new key already exists
+            $this->findTranslation($newKey);
+
+            throw new Exception('Cannot update translation key. The new key already exists: ' . $newKey);
+        } catch (TranslationNotFoundException $exception) {
+        }
+
+        $oldExisting = $this->findTranslation($oldKey);
+
+        $this->removeTranslation($oldKey);
+
+        $this->addTranslation(
+            $newKey,
+            $oldExisting->getValue(),
+            $oldExisting->getGroup()
+        );
     }
 }

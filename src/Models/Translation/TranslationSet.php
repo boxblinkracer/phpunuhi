@@ -247,4 +247,25 @@ class TranslationSet
 
         return $complete;
     }
+
+    /**
+     * @param int $getLevel
+     * @return string
+     */
+    public function getCasingStyle(int $getLevel): string
+    {
+        foreach ($this->casingStyles as $style) {
+            if ($style->getLevel() === $getLevel) {
+                return $style->getName();
+            }
+        }
+
+        foreach ($this->casingStyles as $style) {
+            if ($style->hasLevel() === false) {
+                return $style->getName();
+            }
+        }
+
+        return '';
+    }
 }

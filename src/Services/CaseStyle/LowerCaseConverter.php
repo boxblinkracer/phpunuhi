@@ -2,8 +2,16 @@
 
 namespace PHPUnuhi\Services\CaseStyle;
 
-class LowerCaseConverter
+class LowerCaseConverter implements CaseStyleConverterInterface
 {
+
+    /**
+     * @return string
+     */
+    public function getIdentifier(): string
+    {
+        return 'lower';
+    }
 
     /**
      * @param string $text

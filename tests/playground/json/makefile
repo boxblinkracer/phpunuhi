@@ -26,6 +26,9 @@ validate-json: ## Validate command with json report
 structure: ## Fix Structure
 	cd ../../.. && php bin/phpunuhi fix:structure --configuration=./tests/playground/json/phpunuhi.xml
 
+keys: ## Fix Keys
+	cd ../../.. && php bin/phpunuhi fix:keys --configuration=./tests/playground/json/phpunuhi.xml
+
 html: ## Exports a HTML
 	cd ../../.. && php bin/phpunuhi export --configuration=./tests/playground/json/phpunuhi.xml --format=html --empty --dir=./tests/playground/json/.exports
 
