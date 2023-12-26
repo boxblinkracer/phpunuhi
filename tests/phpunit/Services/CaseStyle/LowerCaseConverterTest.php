@@ -11,6 +11,16 @@ class LowerCaseConverterTest extends TestCase
 
 
     /**
+     * @return void
+     */
+    public function testIdentifier(): void
+    {
+        $converter = new LowerCaseConverter();
+
+        $this->assertEquals('lower', $converter->getIdentifier());
+    }
+
+    /**
      * @return array<mixed>>
      */
     public function getData(): array

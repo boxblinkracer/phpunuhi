@@ -8,6 +8,15 @@ use PHPUnuhi\Services\CaseStyle\CamelCaseConverter;
 class CamelCaseConverterTest extends TestCase
 {
 
+    /**
+     * @return void
+     */
+    public function testIdentifier(): void
+    {
+        $converter = new CamelCaseConverter();
+
+        $this->assertEquals('camel', $converter->getIdentifier());
+    }
 
     /**
      * @return array<mixed>

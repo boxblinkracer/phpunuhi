@@ -9,6 +9,17 @@ use PHPUnuhi\Services\CaseStyle\UpperCaseConverter;
 class UpperCaseConverterTest extends TestCase
 {
 
+
+    /**
+     * @return void
+     */
+    public function testIdentifier(): void
+    {
+        $converter = new UpperCaseConverter();
+
+        $this->assertEquals('upper', $converter->getIdentifier());
+    }
+
     /**
      * @return array<mixed>
      */
