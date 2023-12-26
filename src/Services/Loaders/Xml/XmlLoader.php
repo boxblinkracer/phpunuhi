@@ -21,7 +21,12 @@ class XmlLoader implements XmlLoaderInterface
 
         $rootXmlString = (string)file_get_contents($filename);
 
-        $xml = simplexml_load_string($rootXmlString);
+        $xml = null;
+
+        try {
+            $xml = simplexml_load_string($rootXmlString);
+        } catch (Exception $e) {
+        }
 
         if (!$xml instanceof SimpleXMLElement) {
             throw new Exception('Could not parse XML file: ' . $filename);
