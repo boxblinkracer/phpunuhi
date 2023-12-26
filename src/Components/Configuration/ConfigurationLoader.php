@@ -85,8 +85,8 @@ class ConfigurationLoader
 
     /**
      * @param string $rootConfigFilename
-     * @throws ConfigurationException
      * @throws Exception
+     * @throws ConfigurationException
      * @return Configuration
      */
     public function load(string $rootConfigFilename): Configuration
@@ -192,16 +192,16 @@ class ConfigurationLoader
             throw new ConfigurationException('Invalid configuration! No translation node has been found!');
         }
 
-        $nodeTranslations = $rootNode->translations->children();
+        $translationsCount = $rootNode->translations->children()->count();
 
-        if (count($nodeTranslations) <= 0) {
+        if ($translationsCount <= 0) {
             throw new ConfigurationException('Invalid configuration! No translation-sets have been found!');
         }
 
         $suites = [];
 
         /** @var SimpleXMLElement $xmlSet */
-        foreach ($nodeTranslations as $xmlSet) {
+        foreach ($rootNode->translations->children() as $xmlSet) {
             $setName = trim((string)$xmlSet['name']);
             $nodeFormat = $xmlSet->format;
             $nodeProtection = $xmlSet->protect;
