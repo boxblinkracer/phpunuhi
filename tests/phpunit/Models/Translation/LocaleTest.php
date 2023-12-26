@@ -2,6 +2,7 @@
 
 namespace phpunit\Models\Translation;
 
+use Exception;
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Exceptions\TranslationNotFoundException;
 use PHPUnuhi\Models\Translation\Locale;
@@ -189,5 +190,40 @@ class LocaleTest extends TestCase
 
         $this->assertCount(1, $localeEN->getTranslationIDs());
         $this->assertEquals('Abbrechen', $localeEN->findTranslation('btnCancel')->getValue());
+    }
+
+    /**
+     * @throws TranslationNotFoundException
+     * @return void
+     */
+    public function testUpdateTranslationKey(): void
+    {
+        $locale = new Locale('EN', '', '');
+        $locale->addTranslation('btnCancel', 'Cancel', '');
+
+        $locale->updateTranslationKey('btnCancel', 'btn-cancel');
+
+        $translation = $locale->findTranslation('btn-cancel');
+
+        $this->assertCount(1, $locale->getTranslationIDs());
+        $this->assertEquals('btn-cancel', $translation->getID());
+        $this->assertEquals('Cancel', $translation->getValue());
+    }
+
+    /**
+     * @throws TranslationNotFoundException
+     * @return void
+     */
+    public function testUpdateTranslationKeyIfNewKeyExists(): void
+    {
+        $this->expectException(Exception::class);
+
+        $locale = new Locale('EN', '', '');
+        $locale->addTranslation('btnCancel', 'Cancel', '');
+        $locale->addTranslation('btn-cancel', 'Abbrechen', '');
+
+        $locale->updateTranslationKey('btnCancel', 'btn-cancel');
+
+        $this->assertCount(1, $locale->getTranslationIDs());
     }
 }

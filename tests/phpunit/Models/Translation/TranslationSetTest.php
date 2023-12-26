@@ -6,6 +6,7 @@ use Exception;
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Exceptions\TranslationNotFoundException;
 use PHPUnuhi\Models\Configuration\Attribute;
+use PHPUnuhi\Models\Configuration\CaseStyle;
 use PHPUnuhi\Models\Configuration\Filter;
 use PHPUnuhi\Models\Configuration\Protection;
 use PHPUnuhi\Models\Configuration\Rule;
@@ -320,5 +321,54 @@ class TranslationSetTest extends TestCase
         ];
 
         $this->assertEquals($expected, $existing);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCasingStyle(): void
+    {
+        $pascalCase = new CaseStyle('pascal');
+
+        $camelCase = new CaseStyle('camel');
+        $camelCase->setLevel(2);
+
+        $set = new TranslationSet(
+            'storefront',
+            'json',
+            new Protection(),
+            [],
+            new Filter(),
+            [],
+            [
+                $camelCase,
+                $pascalCase,
+            ],
+            []
+        );
+
+        $this->assertEquals('pascal', $set->getCasingStyle(0));
+        $this->assertEquals('pascal', $set->getCasingStyle(1));
+        $this->assertEquals('camel', $set->getCasingStyle(2));
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCasingStyleReturnEmptyIfNotFound(): void
+    {
+        $set = new TranslationSet(
+            'storefront',
+            'json',
+            new Protection(),
+            [],
+            new Filter(),
+            [],
+            [],
+            []
+        );
+
+        $this->assertEquals('', $set->getCasingStyle(0));
+        $this->assertEquals('', $set->getCasingStyle(1));
     }
 }
