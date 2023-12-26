@@ -99,15 +99,15 @@ class Translation
      */
     public function getLevel(string $delimiter): int
     {
+        if ($delimiter === '') {
+            return 0;
+        }
+
         if (!$this->stringDoesContain($this->key, $delimiter)) {
             return 0;
         }
 
         $parts = explode($delimiter, $this->key);
-
-        if (!is_array($parts)) {
-            return 0;
-        }
 
         return count($parts) - 1;
     }

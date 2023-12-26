@@ -59,4 +59,35 @@ class TranslationTest extends TestCase
 
         $this->assertEquals('product-123', $translation->getGroup());
     }
+
+    /**
+     * @testWith  [ 0, "title" ]
+     *            [ 0, "title_title" ]
+     *            [ 1, "title.title" ]
+     *            [ 2, "title.title.title" ]
+     *
+     * @param int $expected
+     * @param string $key
+     * @return void
+     */
+    public function testGetLevel(int $expected, string $key): void
+    {
+        $translation = new Translation($key, '', '');
+
+        $level = $translation->getLevel('.');
+
+        $this->assertEquals($expected, $level);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetLevelWithEmptyDelimiter(): void
+    {
+        $translation = new Translation('title.title2', '', '');
+
+        $level = $translation->getLevel('');
+
+        $this->assertEquals(0, $level);
+    }
 }
