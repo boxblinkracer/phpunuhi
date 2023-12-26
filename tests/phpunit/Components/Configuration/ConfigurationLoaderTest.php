@@ -5,10 +5,13 @@ namespace phpunit\Components\Configuration;
 use Exception;
 use PHPUnit\Framework\TestCase;
 use phpunit\Utils\Fakes\FakeStorage;
+use phpunit\Utils\Fakes\FakeStorageNoFilter;
 use phpunit\Utils\Fakes\FakeXmlLoader;
 use PHPUnuhi\Bundles\Storage\StorageFactory;
+use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Configuration\ConfigurationLoader;
 use PHPUnuhi\Exceptions\ConfigurationException;
+use PHPUnuhi\Models\Configuration\Configuration;
 use PHPUnuhi\Services\Loaders\Xml\XmlLoader;
 
 class ConfigurationLoaderTest extends TestCase
@@ -30,11 +33,35 @@ class ConfigurationLoaderTest extends TestCase
      * @throws ConfigurationException
      * @return void
      */
+    public function testMissingTranslationNodeThrowsException(): void
+    {
+        $this->expectException(ConfigurationException::class);
+
+        $xml = '<phpunuhi>
+</phpunuhi>';
+
+        $this->loadXml($xml, new FakeStorage());
+    }
+
+    /**
+     * @throws ConfigurationException
+     * @return void
+     */
+    public function testEmptyTranslationSetsThrowsException(): void
+    {
+        $this->expectException(ConfigurationException::class);
+
+        $xml = '<phpunuhi><translations></translations></phpunuhi>';
+
+        $this->loadXml($xml, new FakeStorage());
+    }
+
+    /**
+     * @throws ConfigurationException
+     * @return void
+     */
     public function testConfigurationLoaded(): void
     {
-        StorageFactory::getInstance()->resetStorages();
-        StorageFactory::getInstance()->registerStorage(new FakeStorage());
-
         $xml = '
         <phpunuhi>
             <translations>
@@ -51,9 +78,7 @@ class ConfigurationLoaderTest extends TestCase
         </phpunuhi>
         ';
 
-        $loader = new ConfigurationLoader(new FakeXmlLoader($xml));
-
-        $configuration = $loader->load('not-existing.xml');
+        $configuration = $this->loadXml($xml, new FakeStorage());
 
         $set1 = $configuration->getTranslationSets()[0];
 
@@ -64,5 +89,75 @@ class ConfigurationLoaderTest extends TestCase
         $this->assertCount(2, $set1->getLocales());
         $this->assertEquals('en', $set1->getLocales()[0]->getName());
         $this->assertEquals('de', $set1->getLocales()[1]->getName());
+    }
+
+    /**
+     * @throws ConfigurationException
+     * @return void
+     */
+    public function testFiltersForNotSupportedStorageThrowsException(): void
+    {
+        $this->expectException(ConfigurationException::class);
+
+        $xml = '
+        <phpunuhi>
+            <translations>
+                <set name="Storefront">
+                    <format>
+                        <fake/>
+                    </format>
+                     <filter>
+                        <exclude>
+                            <key>abc</key>
+                        </exclude>
+                    </filter>
+                    <locales>
+                        <locale name="en"></locale>
+                    </locales>
+                </set>
+            </translations>
+        </phpunuhi>
+        ';
+
+        $this->loadXml($xml, new FakeStorageNoFilter());
+    }
+
+    /**
+     * @throws ConfigurationException
+     * @return void
+     */
+    public function testMissingStorageFormatThrowsException(): void
+    {
+        $this->expectException(ConfigurationException::class);
+
+        $xml = '
+        <phpunuhi>
+            <translations>
+                <set name="Storefront">
+                    <locales>
+                        <locale name="en"></locale>
+                    </locales>
+                </set>
+            </translations>
+        </phpunuhi>
+        ';
+
+        $this->loadXml($xml, new FakeStorageNoFilter());
+    }
+
+    /**
+     * @param string $xml
+     * @param StorageInterface $storage
+     * @throws ConfigurationException
+     * @return Configuration
+     */
+    private function loadXml(string $xml, StorageInterface $storage): Configuration
+    {
+        StorageFactory::getInstance()->resetStorages();
+        StorageFactory::getInstance()->registerStorage($storage);
+
+        $loader = new ConfigurationLoader(new FakeXmlLoader($xml));
+
+        return $loader->load('not-existing.xml');
     }
 }

@@ -189,13 +189,19 @@ class ConfigurationLoader
         $hasTranslationSets = ($rootNode->translations->children() !== null);
 
         if (!$hasTranslationSets) {
+            throw new ConfigurationException('Invalid configuration! No translation node has been found!');
+        }
+
+        $nodeTranslations = $rootNode->translations->children();
+
+        if (count($nodeTranslations) <= 0) {
             throw new ConfigurationException('Invalid configuration! No translation-sets have been found!');
         }
 
         $suites = [];
 
         /** @var SimpleXMLElement $xmlSet */
-        foreach ($rootNode->translations->children() as $xmlSet) {
+        foreach ($nodeTranslations as $xmlSet) {
             $setName = trim((string)$xmlSet['name']);
             $nodeFormat = $xmlSet->format;
             $nodeProtection = $xmlSet->protect;
@@ -279,7 +285,7 @@ class ConfigurationLoader
 
     /**
      * @param SimpleXMLElement $rootFormat
-     * @throws Exception
+     * @throws ConfigurationException
      * @return array<mixed>
      */
     private function parseFormat(SimpleXMLElement $rootFormat): array
@@ -287,7 +293,7 @@ class ConfigurationLoader
         $children = get_object_vars($rootFormat);
 
         if (count($children) <= 0) {
-            throw new Exception('No format provided');
+            throw new ConfigurationException('No format provided');
         }
 
         $format = '';
