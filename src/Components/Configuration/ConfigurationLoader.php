@@ -85,8 +85,8 @@ class ConfigurationLoader
 
     /**
      * @param string $rootConfigFilename
-     * @throws Exception
      * @throws ConfigurationException
+     * @throws Exception
      * @return Configuration
      */
     public function load(string $rootConfigFilename): Configuration
@@ -192,13 +192,7 @@ class ConfigurationLoader
             throw new ConfigurationException('Invalid configuration! No translation node has been found!');
         }
 
-        $translationsCount = $rootNode->translations->children()->count();
-
-        if ($translationsCount <= 0) {
-            throw new ConfigurationException('Invalid configuration! No translation-sets have been found!');
-        }
-
-        $suites = [];
+        $foundSets = [];
 
         /** @var SimpleXMLElement $xmlSet */
         foreach ($rootNode->translations->children() as $xmlSet) {
@@ -276,10 +270,14 @@ class ConfigurationLoader
             # because of our allow or exclude list
             $this->filterHandler->applyFilter($set);
 
-            $suites[] = $set;
+            $foundSets[] = $set;
         }
 
-        return $suites;
+        if (count($foundSets) <= 0) {
+            throw new ConfigurationException('Invalid configuration! No translation-sets have been found!');
+        }
+
+        return $foundSets;
     }
 
 
