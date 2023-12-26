@@ -37,8 +37,7 @@ class ConfigurationLoaderTest extends TestCase
     {
         $this->expectException(ConfigurationException::class);
 
-        $xml = '<phpunuhi>
-</phpunuhi>';
+        $xml = '<phpunuhi><unknown></unknown></phpunuhi>';
 
         $this->loadXml($xml, new FakeStorage());
     }
