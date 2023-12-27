@@ -2,6 +2,7 @@
 
 namespace phpunit\Bundles\Storage;
 
+use Exception;
 use PHPUnit\Framework\TestCase;
 use phpunit\Utils\Fakes\FakeStorage;
 use PHPUnuhi\Bundles\Storage\StorageFactory;
@@ -69,5 +70,31 @@ class StorageFactoryTest extends TestCase
         $storage = StorageFactory::getInstance()->getStorage($this->set);
 
         $this->assertSame($fakeStorage, $storage);
+    }
+
+    /**
+     * @testWith [""]
+     *           [" "]
+     *
+     * @param string $emptyFormat
+     * @throws ConfigurationException
+     * @return void
+     */
+    public function testEmptyStorageFormatThrowsException(string $emptyFormat): void
+    {
+        $this->expectException(Exception::class);
+
+        StorageFactory::getInstance()->getStorageByFormat($emptyFormat, $this->set);
+    }
+
+    /**
+     * @throws ConfigurationException
+     * @return void
+     */
+    public function testUnknownStorageFormatThrowsException(): void
+    {
+        $this->expectException(ConfigurationException::class);
+
+        StorageFactory::getInstance()->getStorageByFormat('unknown', $this->set);
     }
 }

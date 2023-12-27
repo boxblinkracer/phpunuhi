@@ -62,9 +62,8 @@ class StorageFactory
             }
         }
 
-        $this->storages[] =$storage;
+        $this->storages[] = $storage;
     }
-
 
 
     /**
@@ -103,7 +102,7 @@ class StorageFactory
      */
     public function getStorageByFormat(string $name, TranslationSet $set): StorageInterface
     {
-        if ($name === '' || $name === '0') {
+        if (trim($name) === '') {
             throw new Exception('No name provided for the Storage');
         }
 
