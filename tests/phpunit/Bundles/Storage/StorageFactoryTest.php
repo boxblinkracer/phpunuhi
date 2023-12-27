@@ -97,4 +97,16 @@ class StorageFactoryTest extends TestCase
 
         StorageFactory::getInstance()->getStorageByFormat('unknown', $this->set);
     }
+
+    /**
+     * @throws ConfigurationException
+     * @return void
+     */
+    public function testDuplicateRegistrationThrowsException(): void
+    {
+        $this->expectException(ConfigurationException::class);
+
+        StorageFactory::getInstance()->registerStorage(new FakeStorage());
+        StorageFactory::getInstance()->registerStorage(new FakeStorage());
+    }
 }
