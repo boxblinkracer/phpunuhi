@@ -7,6 +7,7 @@ use PHPUnit\Framework\TestCase;
 use phpunit\Utils\Fakes\FakeTranslator;
 use PHPUnuhi\Bundles\Translator\TranslatorFactory;
 use PHPUnuhi\Exceptions\ConfigurationException;
+use PHPUnuhi\Models\Command\CommandOption;
 
 class TranslatorFactoryTest extends TestCase
 {
@@ -67,5 +68,22 @@ class TranslatorFactoryTest extends TestCase
 
         TranslatorFactory::getInstance()->registerTranslator($custom);
         TranslatorFactory::getInstance()->registerTranslator($custom);
+    }
+
+    /**
+     * @return void
+     */
+    public function testAllOptions(): void
+    {
+        $options = TranslatorFactory::getInstance()->getAllOptions();
+
+        $expected = [
+            new CommandOption('google-key', true),
+            new CommandOption('openai-key', true),
+            new CommandOption('deepl-key', true),
+            new CommandOption('deepl-formal', false),
+        ];
+
+        $this->assertEquals($expected, $options);
     }
 }
