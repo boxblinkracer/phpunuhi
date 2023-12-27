@@ -12,16 +12,10 @@ class PHPUnuhi
     {
         $composerFile = __DIR__ . '/../composer.json';
 
-        if (file_exists($composerFile)) {
-            $composer = (string)file_get_contents($composerFile);
+        $composer = (string)file_get_contents($composerFile);
 
-            $json = json_decode($composer, true);
+        $json = json_decode($composer, true);
 
-            if (is_array($json)) {
-                return (string)$json['version'];
-            }
-        }
-
-        return 'unknown';
+        return (string)$json['version'];
     }
 }
