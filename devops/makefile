@@ -16,3 +16,4 @@ run: ## Starts Docker and installs all dependencies
 	docker exec -it phpunuhi bash -c 'cd /app/devops/scripts && sh install.sh'
 	docker exec -it phpunuhi bash -c 'cd /app && make dev'
 	docker exec -it phpunuhi bash -c 'cd /app && make help'
+	docker exec -it phpunuhi bash
