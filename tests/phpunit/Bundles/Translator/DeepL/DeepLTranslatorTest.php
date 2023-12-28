@@ -37,8 +37,8 @@ class DeepLTranslatorTest extends TestCase
     }
 
     /**
-     * @throws \Exception
      * @return void
+     * @throws \Exception
      */
     public function testSetOptionsWithMissingKeyThrowsException(): void
     {
@@ -51,6 +51,25 @@ class DeepLTranslatorTest extends TestCase
         $translator = new DeeplTranslator();
         $translator->setOptionValues($options);
     }
+
+    /**
+     * @return void
+     * @throws \Exception
+     */
+    public function testSetOptions(): void
+    {
+        $options = [
+            'deepl-key' => 'key-123',
+            'deepl-formal' => true,
+        ];
+
+        $translator = new DeeplTranslator();
+        $translator->setOptionValues($options);
+
+        $this->assertEquals('key-123', $translator->getApiKey());
+        $this->assertEquals(true, $translator->isFormality());
+    }
+
 
     /**
      * @return void

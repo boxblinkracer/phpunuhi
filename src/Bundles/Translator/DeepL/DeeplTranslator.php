@@ -13,16 +13,6 @@ class DeeplTranslator implements TranslatorInterface
 {
 
     /**
-     * @var string
-     */
-    private $apiKey;
-
-    /**
-     * @var bool
-     */
-    private $formality;
-
-    /**
      *
      */
     public const ALLOWED_FORMALITY = [
@@ -35,6 +25,17 @@ class DeeplTranslator implements TranslatorInterface
         'es',
         'pt'
     ];
+
+    /**
+     * @var string
+     */
+    private $apiKey;
+
+    /**
+     * @var bool
+     */
+    private $formality;
+
 
     /**
      * @var PlaceholderEncoder
@@ -51,6 +52,23 @@ class DeeplTranslator implements TranslatorInterface
     }
 
     /**
+     * @return string
+     */
+    public function getApiKey(): string
+    {
+        return $this->apiKey;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFormality(): bool
+    {
+        return $this->formality;
+    }
+
+
+    /**
      * @return CommandOption[]
      */
     public function getOptions(): array
@@ -63,8 +81,8 @@ class DeeplTranslator implements TranslatorInterface
 
     /**
      * @param array<mixed> $options
-     * @throws Exception
      * @return void
+     * @throws Exception
      */
     public function setOptionValues(array $options): void
     {
@@ -85,8 +103,8 @@ class DeeplTranslator implements TranslatorInterface
      * @param string $sourceLocale
      * @param string $targetLocale
      * @param Placeholder[] $foundPlaceholders
-     * @throws Exception
      * @return string
+     * @throws Exception
      */
     public function translate(string $text, string $sourceLocale, string $targetLocale, array $foundPlaceholders): string
     {
