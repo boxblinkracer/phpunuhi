@@ -68,10 +68,12 @@ class DeeplTranslator implements TranslatorInterface
      */
     public function setOptionValues(array $options): void
     {
-        $this->apiKey = (string)$options['deepl-key'];
-        $this->formality = (bool)$options['deepl-formal'];
+        $this->apiKey = isset($options['deepl-key']) ? (string)$options['deepl-key'] : '';
+        $this->formality = isset($options['deepl-formal']) && (bool)$options['deepl-formal'];
 
-        if ($this->apiKey === '' || $this->apiKey === '0') {
+        $this->apiKey = trim($this->apiKey);
+
+        if ($this->apiKey === '') {
             throw new Exception('Please provide your API key for DeepL');
         }
 

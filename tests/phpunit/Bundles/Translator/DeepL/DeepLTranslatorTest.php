@@ -2,12 +2,55 @@
 
 namespace phpunit\Bundles\Translator\DeepL;
 
+use Exception;
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Bundles\Translator\DeepL\DeeplTranslator;
 
 class DeepLTranslatorTest extends TestCase
 {
 
+
+    /**
+     * @return void
+     */
+    public function testGetName(): void
+    {
+        $translator = new DeeplTranslator();
+
+        $this->assertEquals('deepl', $translator->getName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetOptions(): void
+    {
+        $translator = new DeeplTranslator();
+
+        $foundOptions = $translator->getOptions();
+
+        $this->assertEquals('deepl-key', $foundOptions[0]->getName());
+        $this->assertEquals(true, $foundOptions[0]->hasValue());
+
+        $this->assertEquals('deepl-formal', $foundOptions[1]->getName());
+        $this->assertEquals(false, $foundOptions[1]->hasValue());
+    }
+
+    /**
+     * @throws \Exception
+     * @return void
+     */
+    public function testSetOptionsWithMissingKeyThrowsException(): void
+    {
+        $this->expectException(Exception::class);
+
+        $options = [
+            'deepl-key' => ' '
+        ];
+
+        $translator = new DeeplTranslator();
+        $translator->setOptionValues($options);
+    }
 
     /**
      * @return void
