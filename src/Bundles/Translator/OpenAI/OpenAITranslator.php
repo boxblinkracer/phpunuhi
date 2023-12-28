@@ -26,6 +26,13 @@ class OpenAITranslator implements TranslatorInterface
         return 'openai';
     }
 
+    /**
+     * @return string
+     */
+    public function getApiKey(): string
+    {
+        return $this->apiKey;
+    }
 
     /**
      * @return CommandOption[]
@@ -44,9 +51,11 @@ class OpenAITranslator implements TranslatorInterface
      */
     public function setOptionValues(array $options): void
     {
-        $this->apiKey = (string)$options['openai-key'];
+        $this->apiKey = isset($options['openai-key']) ? (string)$options['openai-key'] : '';
 
-        if ($this->apiKey === '' || $this->apiKey === '0') {
+        $this->apiKey = trim($this->apiKey);
+
+        if ($this->apiKey === '') {
             throw new Exception('OpenAI API Key must not be empty. Please provide a key');
         }
     }
