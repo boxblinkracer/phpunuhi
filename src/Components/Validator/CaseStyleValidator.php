@@ -51,7 +51,7 @@ class CaseStyleValidator implements ValidatorInterface
                 $isKeyCaseValid = true;
                 $invalidKeyPart = '';
 
-                if ($hierarchy->isMultiLevel() && $hierarchy->getDelimiter() !== '') {
+                if ($hierarchy->isNestedStorage() && $hierarchy->getDelimiter() !== '') {
                     $keyParts = explode($hierarchy->getDelimiter(), $translation->getKey());
                 } else {
                     $keyParts = [$translation->getKey()];

@@ -45,7 +45,7 @@ class NestingDepthRule implements RuleValidatorInterface
     {
         $hierarchy = $storage->getHierarchy();
 
-        if (!$hierarchy->isMultiLevel()) {
+        if (!$hierarchy->isNestedStorage()) {
             return new ValidationResult([], []);
         }
 

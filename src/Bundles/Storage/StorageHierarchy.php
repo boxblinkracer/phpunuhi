@@ -8,7 +8,7 @@ class StorageHierarchy
     /**
      * @var bool
      */
-    private $multiLevel;
+    private $nestedStorage;
 
     /**
      * @var string
@@ -16,21 +16,21 @@ class StorageHierarchy
     private $delimiter;
 
     /**
-     * @param bool $multiLevel
+     * @param bool $isNested
      * @param string $delimiter
      */
-    public function __construct(bool $multiLevel, string $delimiter)
+    public function __construct(bool $isNested, string $delimiter)
     {
-        $this->multiLevel = $multiLevel;
+        $this->nestedStorage = $isNested;
         $this->delimiter = $delimiter;
     }
 
     /**
      * @return bool
      */
-    public function isMultiLevel(): bool
+    public function isNestedStorage(): bool
     {
-        return $this->multiLevel;
+        return $this->nestedStorage;
     }
 
     /**
