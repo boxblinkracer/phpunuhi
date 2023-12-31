@@ -67,7 +67,7 @@ class DeepLTranslatorTest extends TestCase
         $translator->setOptionValues($options);
 
         $this->assertEquals('key-123', $translator->getApiKey());
-        $this->assertEquals(true, $translator->isFormality());
+        $this->assertTrue($translator->isFormality());
     }
 
 
