@@ -145,6 +145,66 @@ class ConfigurationLoaderTest extends TestCase
     }
 
     /**
+     * @throws ConfigurationException
+     * @return void
+     */
+    public function testLoadPHPEnvironment(): void
+    {
+        $xml = '
+        <phpunuhi>
+            <php>
+                <env name="DB_HOST" value="127.0.0.1"/>
+            </php>
+            <translations>
+                <set name="Storefront">
+                    <format>
+                        <fake/>
+                    </format>
+                    <locales>
+                        <locale name="en"></locale>
+                    </locales>
+                </set>
+            </translations>
+        </phpunuhi>
+        ';
+
+        $this->loadXml($xml, new FakeStorage());
+
+        $phpEnvDBHost = getenv('DB_HOST');
+
+        $this->assertEquals('127.0.0.1', $phpEnvDBHost);
+    }
+
+    /**
+     * @throws ConfigurationException
+     * @return void
+     */
+    public function testMissingPhpEnvNodeIsSkipped(): void
+    {
+        $xml = '
+        <phpunuhi>
+            <php>
+            </php>
+            <translations>
+                <set name="Storefront">
+                    <format>
+                        <fake/>
+                    </format>
+                    <locales>
+                        <locale name="en"></locale>
+                    </locales>
+                </set>
+            </translations>
+        </phpunuhi>
+        ';
+
+        $configuration = $this->loadXml($xml, new FakeStorage());
+
+        # just verify configs are loaded
+        $this->assertCount(1, $configuration->getTranslationSets());
+    }
+
+    /**
      * @param string $xml
      * @param StorageInterface $storage
      * @throws ConfigurationException
