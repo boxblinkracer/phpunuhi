@@ -7,6 +7,7 @@ use PHPUnit\Framework\TestCase;
 use phpunit\Utils\Fakes\FakeExchangeFormat;
 use PHPUnuhi\Bundles\Exchange\ExchangeFactory;
 use PHPUnuhi\Exceptions\ConfigurationException;
+use PHPUnuhi\Models\Command\CommandOption;
 
 class ExchangeFactoryTest extends TestCase
 {
@@ -68,5 +69,19 @@ class ExchangeFactoryTest extends TestCase
         $this->expectException(Exception::class);
 
         ExchangeFactory::getInstance()->getExchange('', []);
+    }
+
+    /**
+     *
+     */
+    public function testGetAllOptions(): void
+    {
+        $options = ExchangeFactory::getInstance()->getAllOptions();
+
+        $expected = [
+            new CommandOption('csv-delimiter', true),
+        ];
+
+        $this->assertEquals($expected, $options);
     }
 }
