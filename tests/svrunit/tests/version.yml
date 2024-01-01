@@ -1,7 +1,7 @@
 commands:
   - name: "Version is correct"
     command: "(($EXEC)) --version --configuration=./tests/svrunit/formats/json/phpunuhi.xml"
-    expected: "PHPUnuhi 1.14.0"
+    expected: "PHPUnuhi 1.15.0"
   - name: "Version is correct (command header)"
     command: "(($EXEC)) status --configuration=./tests/svrunit/formats/json/phpunuhi.xml"
-    expected: "PHPUnuhi Framework, v1.14.0"
+    expected: "PHPUnuhi Framework, v1.15.0"
