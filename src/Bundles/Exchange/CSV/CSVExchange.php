@@ -44,6 +44,15 @@ class CSVExchange implements ExchangeInterface
     }
 
     /**
+     * @return string
+     */
+    public function getCsvDelimiter(): string
+    {
+        return $this->csvDelimiter;
+    }
+
+
+    /**
      * @return CommandOption[]
      */
     public function getOptions(): array
@@ -59,9 +68,11 @@ class CSVExchange implements ExchangeInterface
      */
     public function setOptionValues(array $options): void
     {
-        $this->csvDelimiter = (string)$options['csv-delimiter'];
+        $this->csvDelimiter = isset($options['csv-delimiter']) ? (string)$options['csv-delimiter'] : '';
 
-        if ($this->csvDelimiter === '' || $this->csvDelimiter === '0') {
+        $this->csvDelimiter = trim($this->csvDelimiter);
+
+        if ($this->csvDelimiter === '') {
             $this->csvDelimiter = ',';
         }
     }
