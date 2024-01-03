@@ -88,9 +88,6 @@ infection: ##3 Starts all Infection/Mutation tests
 	rm -rf ./.reports/infection
 	@XDEBUG_MODE=coverage php vendor/bin/infection --configuration=./infection.json --log-verbosity=all --debug
 
-phpinsights: ##3 Starts PHPInsights
-	@php -d memory_limit=2000M vendor/bin/phpinsights --no-interaction
-
 svrunit: ##3 Runs all SVRUnit tests
 	php vendor/bin/svrunit test --configuration=./svrunit.xml --debug --report-junit --report-html
 

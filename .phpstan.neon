@@ -1,3 +1,6 @@
+includes:
+    - 'vendor/staabm/phpstan-todo-by/extension.neon'
+
 parameters:
     level: 9
     paths:
@@ -6,3 +9,6 @@ parameters:
     excludePaths:
         - ./src/vendor/*
     checkExplicitMixed: false
+    todo_by:
+        nonIgnorable: true
+        referenceTime: "now+7days"
