@@ -1,5 +1,6 @@
 includes:
-    - 'vendor/staabm/phpstan-todo-by/extension.neon'
+    - vendor/spaze/phpstan-disallowed-calls/extension.neon
+    - vendor/staabm/phpstan-todo-by/extension.neon
 
 parameters:
     level: 9
@@ -9,6 +10,15 @@ parameters:
     excludePaths:
         - ./src/vendor/*
     checkExplicitMixed: false
+    disallowedFunctionCalls:
+        - function: 'var_dump()'
+          message: 'use some logger instead'
+        - function: 'var_export()'
+          message: 'use some logger instead'
+        - function: 'dd()'
+          message: 'use some logger instead'
+        - function: 'print_r()'
+          message: 'use some logger instead'
     todo_by:
         nonIgnorable: true
         referenceTime: "now+7days"

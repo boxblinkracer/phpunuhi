@@ -53,6 +53,7 @@
         "rector/rector": "^0.18.12",
         "roave/security-advisories": "dev-latest",
         "rregeer/phpunit-coverage-check": "^0.3.1",
+        "spaze/phpstan-disallowed-calls": "^3.0",
         "squizlabs/php_codesniffer": "^3.7",
         "staabm/phpstan-todo-by": "^0.1.16",
         "svrunit/svrunit": "dev-main"
