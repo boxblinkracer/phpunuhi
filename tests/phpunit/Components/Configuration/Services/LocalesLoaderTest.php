@@ -58,8 +58,10 @@ class LocalesLoaderTest extends TestCase
         $locales = $this->loader->loadLocales($xmlNode, 'test.xml');
 
         $this->assertCount(2, $locales);
+
         $this->assertEquals('en', $locales[0]->getName());
-        $this->assertEquals('.' . $this->existingLocaleFile, $locales[0]->getFilename());
+        $this->assertEquals($this->existingLocaleFile, $locales[0]->getFilename());
+
         $this->assertEquals('de', $locales[1]->getName());
     }
 
@@ -82,7 +84,7 @@ class LocalesLoaderTest extends TestCase
         $locales = $this->loader->loadLocales($xmlNode, 'test.xml');
 
         $this->assertCount(1, $locales);
-        $this->assertEquals('./not-existing.json', $locales[0]->getFilename());
+        $this->assertEquals('not-existing.json', $locales[0]->getFilename());
     }
 
     /**
@@ -99,7 +101,7 @@ class LocalesLoaderTest extends TestCase
 
         $locales = $this->loader->loadLocales($xmlNode, 'test.xml');
 
-        $this->assertEquals('./snippets/translation.json', $locales[0]->getFilename());
+        $this->assertEquals('snippets/translation.json', $locales[0]->getFilename());
     }
 
     /**
@@ -120,7 +122,7 @@ class LocalesLoaderTest extends TestCase
 
         $locales = $this->loader->loadLocales($xmlNode, 'test.xml');
 
-        $this->assertEquals('./%base_path%/translation.json', $locales[0]->getFilename());
+        $this->assertEquals('%base_path%/translation.json', $locales[0]->getFilename());
     }
 
     /**
@@ -144,7 +146,7 @@ class LocalesLoaderTest extends TestCase
 
         $locales = $this->loader->loadLocales($xmlNode, 'test.xml');
 
-        $this->assertEquals('./' . $expectedLocalePart . '/translation.json', $locales[0]->getFilename());
+        $this->assertEquals($expectedLocalePart . '/translation.json', $locales[0]->getFilename());
     }
 
     /**

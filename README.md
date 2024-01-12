@@ -497,9 +497,9 @@ use this one also for the directories of your files.
 ```xml
 
 <set name="sample">
-    <locales basePath="./Bundles/MySuperBundle/Resources/snippets">
-        <locale name="de">%base_path%/de/snippets/de.json</locale>
-        <locale name="en">%base_path%/%locale%/snippets/%locale%.json</locale>
+    <locales basePath="./Bundles/MySuperBundle/Resources/snippets/%locale%">
+        <locale name="de">%base_path%/snippets/de.json</locale>
+        <locale name="en">%base_path%/snippets/%locale%.json</locale>
     </locales>
 </set>
 ```

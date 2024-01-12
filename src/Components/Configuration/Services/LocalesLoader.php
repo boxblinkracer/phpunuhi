@@ -11,6 +11,22 @@ class LocalesLoader
 {
     use XmlTrait;
 
+
+    /**
+     * @var LocalesPlaceholderProcessor
+     */
+    private $placholderProcessor;
+
+
+    /**
+     *
+     */
+    public function __construct()
+    {
+        $this->placholderProcessor = new LocalesPlaceholderProcessor();
+    }
+
+
     /**
      * @param SimpleXMLElement $rootLocales
      * @param string $configFilename
@@ -33,29 +49,14 @@ class LocalesLoader
             }
 
             $localeName = (string)$nodeLocale['name'];
-            $localeFile = '';
             $iniSection = (string)$nodeLocale['iniSection'];
 
-            if ($innerValue !== '') {
-                # replace our locale-name placeholders
-                $innerValue = str_replace('%locale%', $localeName, $innerValue);
-                $innerValue = str_replace('%locale_uc%', strtoupper($localeName), $innerValue);
-                $innerValue = str_replace('%locale_lc%', strtolower($localeName), $innerValue);
-
-                # if we have a basePath, we also need to replace any values
-                if (trim($basePath->getValue()) !== '') {
-                    $innerValue = str_replace('%base_path%', $basePath->getValue(), $innerValue);
-                }
-
-                # for now treat inner value as file
-                $configuredFileName = dirname($configFilename) . '/' . $innerValue;
-                $localeFile = file_exists($configuredFileName) ? (string)realpath($configuredFileName) : $configuredFileName;
-
-                # clear duplicate slashes that exist somehow
-                $localeFile = str_replace('//', '/', $localeFile);
-                # replace duplicate occurrences of ./
-                $localeFile = str_replace('././', './', $localeFile);
-            }
+            $localeFile = $this->placholderProcessor->buildRealFilename(
+                $localeName,
+                $innerValue,
+                $basePath->getValue(),
+                $configFilename
+            );
 
             $foundLocales[] = new Locale($localeName, $localeFile, $iniSection);
         }

@@ -3,6 +3,12 @@
 All notable changes of PHPUnuhi releases are documented in this file
 using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
+## [unreleased]
+
+### Added
+
+- It's now possible to use the **%locale%** placeholder also in the **basePath** attribute of the locales node in the XML configuration.
+
 ## [1.15.0]
 
 ### Changed
