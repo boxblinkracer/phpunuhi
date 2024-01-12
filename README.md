@@ -282,7 +282,7 @@ on storages that support nesting (JSON, PHP, ...)
 
 ### 4.2 Validate Mess Command
 
-What is a mess? This is simply defined by translations keys where there is no translation value at all.
+What is a mess? This is simply defined by translation keys that have no value in any of your locales.
 So these keys might not even be used in your software, which means they can probably be removed.
 
 To run the mess detection please run this command:
