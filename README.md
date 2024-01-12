@@ -251,6 +251,9 @@ php vendor/bin/phpunuhi validate:all  --configuration=./translations.xml
 
 # generate a junit report in a custom folder
 php vendor/bin/phpunuhi validate:all  --report-format=junit --report-output=.reports/junit.xml
+
+# validate with minimum total coverage
+php vendor/bin/phpunuhi validate:all --min-coverage=80
 ```
 
 **Invalid structure**

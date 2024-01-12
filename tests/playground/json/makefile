@@ -18,7 +18,7 @@ list: ## List Translate
 	cd ../../.. && php bin/phpunuhi list:translations --configuration=./tests/playground/json/phpunuhi.xml
 
 validate: ## Validate command
-	cd ../../.. && php bin/phpunuhi validate --configuration=./tests/playground/json/phpunuhi.xml --report-format=junit --report-output=./tests/playground/json/.exports/junit.xml
+	cd ../../.. && php bin/phpunuhi validate:all --configuration=./tests/playground/json/phpunuhi.xml --min-coverage=60 --report-format=junit --report-output=./tests/playground/json/.exports/junit.xml
 
 validate-mess: ## Validate mess command
 	cd ../../.. && php bin/phpunuhi validate:mess --configuration=./tests/playground/json/phpunuhi.xml --report-format=junit --report-output=./tests/playground/json/.exports/junit.xml

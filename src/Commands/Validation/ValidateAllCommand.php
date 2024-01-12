@@ -14,6 +14,7 @@ use PHPUnuhi\Components\Validator\MissingStructureValidator;
 use PHPUnuhi\Components\Validator\RulesValidator;
 use PHPUnuhi\Configuration\ConfigurationLoader;
 use PHPUnuhi\Exceptions\ConfigurationException;
+use PHPUnuhi\Services\Coverage\CoverageService;
 use PHPUnuhi\Services\Loaders\Xml\XmlLoader;
 use PHPUnuhi\Traits\CommandTrait;
 use PHPUnuhi\Traits\StringTrait;
@@ -28,6 +29,7 @@ class ValidateAllCommand extends Command
     use CommandTrait;
     use StringTrait;
 
+    private const COVERAGE_NOT_SET = 1;
 
     /**
      * @return void
@@ -39,7 +41,8 @@ class ValidateAllCommand extends Command
             ->setDescription('Validates everything')
             ->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('report-format', null, InputOption::VALUE_REQUIRED, 'The report format for a generated report', '')
-            ->addOption('report-output', null, InputOption::VALUE_REQUIRED, 'The report output filename for the generated report', '');
+            ->addOption('report-output', null, InputOption::VALUE_REQUIRED, 'The report output filename for the generated report', '')
+            ->addOption('min-coverage', null, InputOption::VALUE_REQUIRED, 'The minimum total translation coverage', '');
 
         parent::configure();
     }
@@ -48,8 +51,8 @@ class ValidateAllCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @throws CaseStyleNotFoundException
      * @throws ConfigurationException
+     * @throws CaseStyleNotFoundException
      * @return int
      */
     public function execute(InputInterface $input, OutputInterface $output): int
@@ -64,6 +67,7 @@ class ValidateAllCommand extends Command
         $configFile = $this->getConfigFile($input);
         $reportFormat = $this->getConfigStringValue('report-format', $input);
         $reportFilename = $this->getConfigStringValue('report-output', $input);
+        $minCoverage = $this->getConfigIntValue('min-coverage', $input, self::COVERAGE_NOT_SET);
 
         # -----------------------------------------------------------------
 
@@ -150,10 +154,31 @@ class ValidateAllCommand extends Command
         }
 
 
-        if ($reportFormat !== '' && $reportFormat !== '0') {
+        $coverageService = new CoverageService();
+
+        $coverageResult = $coverageService->getCoverage($config->getTranslationSets());
+
+
+        if ($minCoverage > self::COVERAGE_NOT_SET) {
+            $io->section('Checking minimum coverage: ' . $minCoverage . '%...');
+
+            $covResult = $coverageResult->getCoverage();
+
+            if ($covResult >= $minCoverage) {
+                $io->writeln('   [/] PASSED: Minimum coverage of ' . $minCoverage . '% is reached.');
+            } else {
+                $isAllValid = false;
+                $io->writeln('   [x] FAILED: Minimum coverage of ' . $minCoverage . '% is not reached.');
+            }
+
+            $io->writeln('   - ' . $covResult . '% of all translations are covered.');
+        }
+
+
+        if ($reportFormat !== '') {
             $reporter = ReporterFactory::getInstance()->getReporter($reportFormat);
 
-            if ($reportFilename === '' || $reportFilename === '0') {
+            if ($reportFilename === '') {
                 $reportFilename = $reporter->getDefaultFilename();
             }
 

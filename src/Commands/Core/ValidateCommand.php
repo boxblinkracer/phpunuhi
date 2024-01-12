@@ -23,7 +23,8 @@ class ValidateCommand extends Command
             ->setDescription('[DEPRECATED] Validates all your translations from your configuration. Please use validate:all instead.')
             ->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('report-format', null, InputOption::VALUE_REQUIRED, 'The report format for a generated report', '')
-            ->addOption('report-output', null, InputOption::VALUE_REQUIRED, 'The report output filename for the generated report', '');
+            ->addOption('report-output', null, InputOption::VALUE_REQUIRED, 'The report output filename for the generated report', '')
+            ->addOption('min-coverage', null, InputOption::VALUE_REQUIRED, 'The minimum total translation coverage', '');
 
         parent::configure();
     }
@@ -31,8 +32,8 @@ class ValidateCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @throws CaseStyleNotFoundException
      * @throws ConfigurationException
+     * @throws CaseStyleNotFoundException
      * @return int
      */
     public function execute(InputInterface $input, OutputInterface $output): int

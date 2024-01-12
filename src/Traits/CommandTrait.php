@@ -63,6 +63,27 @@ trait CommandTrait
     /**
      * @param string $name
      * @param InputInterface $input
+     * @param int $default
+     * @return int
+     */
+    protected function getConfigIntValue(string $name, InputInterface $input, int $default): int
+    {
+        if (!$input->hasOption($name)) {
+            return $default;
+        }
+
+        $value = $input->getOption($name);
+
+        if (!ctype_digit($value)) {
+            return $default;
+        }
+
+        return (int)$value;
+    }
+
+    /**
+     * @param string $name
+     * @param InputInterface $input
      * @return bool
      */
     protected function getConfigBoolValue(string $name, InputInterface $input): bool
