@@ -23,6 +23,9 @@ validate: ## Validate command
 validate-mess: ## Validate mess command
 	cd ../../.. && php bin/phpunuhi validate:mess --configuration=./tests/playground/json/phpunuhi.xml --report-format=junit --report-output=./tests/playground/json/.exports/junit.xml
 
+fix-mess: ## Fix mess command
+	cd ../../.. && php bin/phpunuhi fix:mess --configuration=./tests/playground/json/phpunuhi.xml
+
 validate-json: ## Validate command with json report
 	cd ../../.. && php bin/phpunuhi validate --configuration=./tests/playground/json/phpunuhi.xml --report-format=json --report-output=./tests/playground/json/.exports/report.json
 

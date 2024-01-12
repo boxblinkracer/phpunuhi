@@ -7,7 +7,8 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 ### Added
 
-- Add new **validate:mess** command to find keys without any translation. This means that these translations might not be used at all an can be removed.
+- Add new **validate:mess** command to find keys without any translation. This means that these translations might not be used at all and can be removed.
+- Add new **fix:mess** command to remove keys without any translation. This means that these translations might not be used at all and can be removed.
 - It's now possible to use the **%locale%** placeholder also in the **basePath** attribute of the locales node in the XML configuration.
 
 ### Changed

@@ -37,12 +37,13 @@ Now that you know this, let's get started!
     * [4.1 Validate All Command](#41-validate-all-command)
     * [4.2 Validate Mess Command](#42-validate-mess-command)
     * [4.3 Fix Structure Command](#43-fix-structure-command)
-    * [4.4 Export Command](#44-export-command)
-    * [4.5 Import Command](#45-import-command)
-    * [4.6 Status Command](#46-status-command)
-    * [4.7 Translate Command](#47-translate-command)
-    * [4.8 List Translations Command](#48-list-translations-command)
-    * [4.9 Migration Command](#49-migration-command)
+    * [4.4 Fix Mess Command](#44-fix-mess-command)
+    * [4.5 Export Command](#45-export-command)
+    * [4.6 Import Command](#46-import-command)
+    * [4.7 Status Command](#47-status-command)
+    * [4.8 Translate Command](#48-translate-command)
+    * [4.9 List Translations Command](#49-list-translations-command)
+    * [4.10 Migration Command](#410-migration-command)
 * [5. Use Cases](#5-use-cases)
     * [5.1 Validation in CI pipeline](#51-validation-in-ci-pipeline)
     * [5.2 Working with external translation agencies](#52-working-with-external-translation-agencies)
@@ -316,7 +317,21 @@ php vendor/bin/phpunuhi fix:structure --set="storefront"
    <img src="/.github/assets/fix.png">
 </p>
 
-### 4.4 Export Command
+### 4.4 Fix Mess Command
+
+This command will automatically remove all translation keys that have no value in any of your locales.
+Keys detected by the **validate:mess** command might not be used after all.
+So this command will remove them.
+
+```bash 
+# Fixes all sets of the configuration
+php vendor/bin/phpunuhi fix:mess
+
+# Fixes only a provided set of your configuration
+php vendor/bin/phpunuhi fix:mess --set="storefront"
+```
+
+### 4.5 Export Command
 
 You can export your translations **into a CSV file**, a HTML WebEdit spreadsheet, or other supported exchange formats.
 These files can then be passed on to an external translator or company.
@@ -347,7 +362,7 @@ php vendor/bin/phpunuhi export ... --empty
    <img src="/.github/assets/csv.png">
 </p>
 
-### 4.5 Import Command
+### 4.6 Import Command
 
 You can import your translations **from a CSV file** or other supported exchange formats.
 This will automatically update the storage (JSON, ...) that has been assigned to the imported translation set.
@@ -362,7 +377,7 @@ php vendor/bin/phpunuhi import --set=storefront --file=storefront.csv
 php vendor/bin/phpunuhi import ... --format=html
 ```
 
-### 4.6 Status Command
+### 4.7 Status Command
 
 Use this command to get statistics and reports of your translations.
 This includes the coverage and the number of found words.
@@ -375,7 +390,7 @@ php vendor/bin/phpunuhi status
    <img src="/.github/assets/status.png">
 </p>
 
-### 4.7 Translate Command
+### 4.8 Translate Command
 
 PHPUnuhi includes the option to use external services to automatically translate missing values for you.
 
@@ -412,7 +427,7 @@ php vendor/bin/phpunuhi translate ...  --source=en
    <img src="/.github/assets/translate.png">
 </p>
 
-### 4.8 List Translations Command
+### 4.9 List Translations Command
 
 This command allows you to output all available translation keys in your Translation-Sets.
 Use this to debug and analyse your translations.
@@ -421,7 +436,7 @@ Use this to debug and analyse your translations.
 php vendor/bin/phpunuhi list:translations 
 ```
 
-### 4.9 Migration Command
+### 4.10 Migration Command
 
 It's also possible to migrate your translations from one storage to another.
 Just use the migration command and provide the target storage as output format.

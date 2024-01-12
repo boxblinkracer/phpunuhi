@@ -3,6 +3,7 @@
 namespace PHPUnuhi;
 
 use Exception;
+use PHPUnuhi\Commands\Core\FixMessCommand;
 use PHPUnuhi\Commands\Core\FixStructureCommand;
 use PHPUnuhi\Commands\Core\ListTranslationsCommand;
 use PHPUnuhi\Commands\Core\MigrateCommand;
@@ -32,12 +33,15 @@ class AppManager
         $application->add(new ExportCommand());
         $application->add(new ImportCommand());
         $application->add(new TranslateCommand());
-        $application->add(new FixStructureCommand());
         $application->add(new ListTranslationsCommand());
         $application->add(new MigrateCommand());
 
         $application->add(new ValidateAllCommand());
         $application->add(new ValidateMessCommand());
+
+        $application->add(new FixStructureCommand());
+        $application->add(new FixMessCommand());
+
 
         $application->setDefaultCommand('list');
 
