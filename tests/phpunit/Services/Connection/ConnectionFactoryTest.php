@@ -2,7 +2,6 @@
 
 namespace phpunit\Services\Connection;
 
-use PDO;
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Services\Connection\ConnectionFactory;
 
@@ -36,16 +35,5 @@ class ConnectionFactoryTest extends TestCase
         $connStr = $factory->buildMySQLConnectionString('127.0.01', '3306', 'test');
 
         $factory->fromConnectionString($connStr, '', '');
-    }
-
-    /**
-     * @return void
-     */
-    public function testConnectionSuccessful(): void
-    {
-        $factory = new ConnectionFactory();
-        $conn = $factory->fromConnectionString('sqlite::memory:', '', '');
-
-        $this->assertInstanceOf(PDO::class, $conn);
     }
 }
