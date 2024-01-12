@@ -24,7 +24,7 @@ This is a dev-tool. It can be used to improve pipelines, workflows and QA proces
 It can also be used to get some quick start in adding languages or new sentences.
 But it is NO replacement for services or people that/who translate in a professional way with context and knowledge
 about the software.
-Please keep that in mind to avoid misinterpreting the goal of this framework.
+Please keep that in mind to avoids misinterpreting the goal of this framework.
 
 Now that you know this, let's get started!
 
@@ -34,14 +34,15 @@ Now that you know this, let's get started!
 * [2. Installation](#2-installation)
 * [3. Configuration](#3-configuration)
 * [4. Commands](#4-commands)
-    * [4.1 Validate Command](#41-validate-command)
-    * [4.2 Fix Structure Command](#42-fix-structure-command)
-    * [4.3 Export Command](#43-export-command)
-    * [4.4 Import Command](#44-import-command)
-    * [4.5 Status Command](#45-status-command)
-    * [4.6 Translate Command](#46-translate-command)
-    * [4.7 List Translations Command](#47-list-translations-command)
-    * [4.8 Migration Command](#48-migration-command)
+    * [4.1 Validate All Command](#41-validate-all-command)
+    * [4.2 Validate Mess Command](#42-validate-mess-command)
+    * [4.3 Fix Structure Command](#43-fix-structure-command)
+    * [4.4 Export Command](#44-export-command)
+    * [4.5 Import Command](#45-import-command)
+    * [4.6 Status Command](#46-status-command)
+    * [4.7 Translate Command](#47-translate-command)
+    * [4.8 List Translations Command](#48-list-translations-command)
+    * [4.9 Migration Command](#49-migration-command)
 * [5. Use Cases](#5-use-cases)
     * [5.1 Validation in CI pipeline](#51-validation-in-ci-pipeline)
     * [5.2 Working with external translation agencies](#52-working-with-external-translation-agencies)
@@ -235,19 +236,20 @@ Some storage formats, such as JSON, have individual attributes that can be defin
 
 ## 4. Commands
 
-### 4.1 Validate Command
+### 4.1 Validate All Command
 
-Start the validation of your translations by running this command:
+Start the full validation of your translations by running the following command.
+This validates everything - easy and simple.
 
 ```bash 
 # loads configuration phpunuhi.xml as default
-php vendor/bin/phpunuhi validate 
+php vendor/bin/phpunuhi validate:all 
 
 # provide custom configuration
-php vendor/bin/phpunuhi validate --configuration=./translations.xml
+php vendor/bin/phpunuhi validate:all  --configuration=./translations.xml
 
 # generate a junit report in a custom folder
-php vendor/bin/phpunuhi validate --report-format=junit --report-output=.reports/junit.xml
+php vendor/bin/phpunuhi validate:all  --report-format=junit --report-output=.reports/junit.xml
 ```
 
 **Invalid structure**
@@ -278,7 +280,24 @@ if all your translation keys, match your provided case styles.
 If you have provided a rule for nestingDepth, then the validator will also verify the nesting level
 on storages that support nesting (JSON, PHP, ...)
 
-### 4.2 Fix Structure Command
+### 4.2 Validate Mess Command
+
+What is a mess? This is simply defined by translations keys where there is no translation value at all.
+So these keys might not even be used in your software, which means they can probably be removed.
+
+To run the mess detection please run this command:
+
+```bash 
+php vendor/bin/phpunuhi validate:mess 
+
+# provide custom configuration
+php vendor/bin/phpunuhi validate:mess  --configuration=./translations.xml
+
+# generate a junit report in a custom folder
+php vendor/bin/phpunuhi validate:mess  --report-format=junit --report-output=.reports/junit.xml
+```
+
+### 4.3 Fix Structure Command
 
 If your storage is not matching, you can easily use the fixing command to make sure they are in sync.
 Please note, that this will only create empty translations so that the structure is the same.
@@ -297,7 +316,7 @@ php vendor/bin/phpunuhi fix:structure --set="storefront"
    <img src="/.github/assets/fix.png">
 </p>
 
-### 4.3 Export Command
+### 4.4 Export Command
 
 You can export your translations **into a CSV file**, a HTML WebEdit spreadsheet, or other supported exchange formats.
 These files can then be passed on to an external translator or company.
@@ -328,7 +347,7 @@ php vendor/bin/phpunuhi export ... --empty
    <img src="/.github/assets/csv.png">
 </p>
 
-### 4.4 Import Command
+### 4.5 Import Command
 
 You can import your translations **from a CSV file** or other supported exchange formats.
 This will automatically update the storage (JSON, ...) that has been assigned to the imported translation set.
@@ -343,7 +362,7 @@ php vendor/bin/phpunuhi import --set=storefront --file=storefront.csv
 php vendor/bin/phpunuhi import ... --format=html
 ```
 
-### 4.5 Status Command
+### 4.6 Status Command
 
 Use this command to get statistics and reports of your translations.
 This includes the coverage and the number of found words.
@@ -356,7 +375,7 @@ php vendor/bin/phpunuhi status
    <img src="/.github/assets/status.png">
 </p>
 
-### 4.6 Translate Command
+### 4.7 Translate Command
 
 PHPUnuhi includes the option to use external services to automatically translate missing values for you.
 
@@ -393,16 +412,16 @@ php vendor/bin/phpunuhi translate ...  --source=en
    <img src="/.github/assets/translate.png">
 </p>
 
-### 4.7 List Translations Command
+### 4.8 List Translations Command
 
 This command allows you to output all available translation keys in your Translation-Sets.
-Use this to debug and analyzse your translations.
+Use this to debug and analyse your translations.
 
 ```bash 
 php vendor/bin/phpunuhi list:translations 
 ```
 
-### 4.8 Migration Command
+### 4.9 Migration Command
 
 It's also possible to migrate your translations from one storage to another.
 Just use the migration command and provide the target storage as output format.

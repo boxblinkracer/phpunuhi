@@ -7,7 +7,12 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 ### Added
 
+- Add new **validate:mess** command to find keys without any translation. This means that these translations might not be used at all an can be removed.
 - It's now possible to use the **%locale%** placeholder also in the **basePath** attribute of the locales node in the XML configuration.
+
+### Changed
+
+- Due to the new mess command the old validate function is now deprecated and should be replaced with the new **validate:all** command.
 
 ## [1.15.0]
 

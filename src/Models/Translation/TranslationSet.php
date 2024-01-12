@@ -268,4 +268,35 @@ class TranslationSet
 
         return '';
     }
+
+    /**
+     * @return array<mixed>
+     */
+    public function getInvalidTranslationsIDs(): array
+    {
+        $invalidTranslations = [];
+
+        foreach ($this->getAllTranslationIDs() as $id) {
+            $hasValueInAnyLocale = false;
+
+            foreach ($this->locales as $locale) {
+                try {
+                    $translation = $locale->findTranslation($id);
+                } catch (TranslationNotFoundException $ex) {
+                    continue;
+                }
+
+                if (!$translation->isEmpty()) {
+                    $hasValueInAnyLocale = true;
+                    break;
+                }
+            }
+
+            if (!$hasValueInAnyLocale) {
+                $invalidTranslations[] = $id;
+            }
+        }
+
+        return $invalidTranslations;
+    }
 }

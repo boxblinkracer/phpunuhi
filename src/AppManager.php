@@ -11,6 +11,8 @@ use PHPUnuhi\Commands\Core\ValidateCommand;
 use PHPUnuhi\Commands\Exchange\ExportCommand;
 use PHPUnuhi\Commands\Exchange\ImportCommand;
 use PHPUnuhi\Commands\Translation\TranslateCommand;
+use PHPUnuhi\Commands\Validation\ValidateAllCommand;
+use PHPUnuhi\Commands\Validation\ValidateMessCommand;
 use Symfony\Component\Console\Application;
 
 class AppManager
@@ -33,6 +35,9 @@ class AppManager
         $application->add(new FixStructureCommand());
         $application->add(new ListTranslationsCommand());
         $application->add(new MigrateCommand());
+
+        $application->add(new ValidateAllCommand());
+        $application->add(new ValidateMessCommand());
 
         $application->setDefaultCommand('list');
 
