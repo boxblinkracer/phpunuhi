@@ -200,7 +200,7 @@ Look at this one:
 >
     <translations>
 
-        <set name="Storefront JSON">
+        <set name="Storefront JSON" minCoverage="80">
             <format>
                 <json indent="4" sort="true"/>
             </format>
@@ -210,7 +210,7 @@ Look at this one:
             </locales>
         </set>
 
-        <set name="Products">
+        <set name="Products" minCoverage="50">
             <format>
                 <shopware6 entity="product"/>
             </format>
@@ -283,6 +283,12 @@ if all your translation keys, match your provided case styles.
 
 If you have provided a rule for nestingDepth, then the validator will also verify the nesting level
 on storages that support nesting (JSON, PHP, ...)
+
+**Minimum Locale Coverage**
+
+If you provide either the CLI option "--min-coverage" or the attribute "minCoverage" in your configuration,
+then the validation will fail if the coverage is below the provided value.
+Please note that all provided coverage percentage values are tested against the coverage result of each translation set.
 
 ### 4.2 Validate Mess Command
 

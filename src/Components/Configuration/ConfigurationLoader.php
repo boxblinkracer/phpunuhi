@@ -85,8 +85,8 @@ class ConfigurationLoader
 
     /**
      * @param string $rootConfigFilename
-     * @throws ConfigurationException
      * @throws Exception
+     * @throws ConfigurationException
      * @return Configuration
      */
     public function load(string $rootConfigFilename): Configuration
@@ -197,6 +197,7 @@ class ConfigurationLoader
         /** @var SimpleXMLElement $xmlSet */
         foreach ($rootNode->translations->children() as $xmlSet) {
             $setName = trim((string)$xmlSet['name']);
+            $minCoverage = trim((string)$xmlSet['minCoverage']);
             $nodeFormat = $xmlSet->format;
             $nodeProtection = $xmlSet->protect;
             $nodeLocales = $xmlSet->locales;
@@ -249,6 +250,10 @@ class ConfigurationLoader
                 $casingStyles,
                 $rules
             );
+
+            if ($minCoverage !== '') {
+                $set->setMinCoverage((int)$minCoverage);
+            }
 
             $storage = StorageFactory::getInstance()->getStorage($set);
 

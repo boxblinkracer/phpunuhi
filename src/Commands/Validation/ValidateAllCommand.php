@@ -51,8 +51,8 @@ class ValidateAllCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @throws ConfigurationException
      * @throws CaseStyleNotFoundException
+     * @throws ConfigurationException
      * @return int
      */
     public function execute(InputInterface $input, OutputInterface $output): int
@@ -67,7 +67,7 @@ class ValidateAllCommand extends Command
         $configFile = $this->getConfigFile($input);
         $reportFormat = $this->getConfigStringValue('report-format', $input);
         $reportFilename = $this->getConfigStringValue('report-output', $input);
-        $minCoverage = $this->getConfigIntValue('min-coverage', $input, self::COVERAGE_NOT_SET);
+        $cliMinCoverage = $this->getConfigIntValue('min-coverage', $input, self::COVERAGE_NOT_SET);
 
         # -----------------------------------------------------------------
 
@@ -87,6 +87,9 @@ class ValidateAllCommand extends Command
         $errorCount = 0;
 
         $reportResult = new ReportResult();
+
+        $coverageService = new CoverageService();
+
 
         foreach ($config->getTranslationSets() as $set) {
             $io->section('Translation-Set: ' . $set->getName());
@@ -151,27 +154,32 @@ class ValidateAllCommand extends Command
             }
 
             $reportResult->addSuite($suiteResult);
-        }
 
 
-        $coverageService = new CoverageService();
+            # -----------------------------------------------------------------
+            $setCoverageResult = $coverageService->getCoverage([$set]);
 
-        $coverageResult = $coverageService->getCoverage($config->getTranslationSets());
+            $validateMinCoverageValue = null;
 
-
-        if ($minCoverage > self::COVERAGE_NOT_SET) {
-            $io->section('Checking minimum coverage: ' . $minCoverage . '%...');
-
-            $covResult = $coverageResult->getCoverage();
-
-            if ($covResult >= $minCoverage) {
-                $io->writeln('   [/] PASSED: Minimum coverage of ' . $minCoverage . '% is reached.');
-            } else {
-                $isAllValid = false;
-                $io->writeln('   [x] FAILED: Minimum coverage of ' . $minCoverage . '% is not reached.');
+            if ($cliMinCoverage > self::COVERAGE_NOT_SET) {
+                $validateMinCoverageValue = $cliMinCoverage;
+            } elseif ($set->hasMinCoverage()) {
+                $validateMinCoverageValue = $set->getMinCoverage();
             }
 
-            $io->writeln('   - ' . $covResult . '% of all translations are covered.');
+            if ($validateMinCoverageValue !== null) {
+                $covResult = $setCoverageResult->getCoverage();
+
+                $io->writeln('Checking minimum coverage: ' . $validateMinCoverageValue . '%...');
+                $io->writeln('   ...' . $covResult . '% of all translations in set "' . $set->getName() . '" are covered.');
+
+                if ($covResult >= $validateMinCoverageValue) {
+                    $io->writeln('   [/] PASSED: Minimum coverage of ' . $validateMinCoverageValue . '% in set "' . $set->getName() . '" is reached.');
+                } else {
+                    $isAllValid = false;
+                    $io->writeln('   [x] FAILED: Minimum coverage of ' . $validateMinCoverageValue . '% in set "' . $set->getName() . '" is not reached.');
+                }
+            }
         }
 
 

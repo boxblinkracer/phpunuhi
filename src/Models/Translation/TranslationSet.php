@@ -13,6 +13,12 @@ class TranslationSet
 {
 
     /**
+     *
+     */
+    private const NO_MIN_COVERAGE = -1;
+
+
+    /**
      * @var string
      */
     private $name;
@@ -52,6 +58,11 @@ class TranslationSet
      */
     private $rules;
 
+    /**
+     * @var int
+     */
+    private $minCoverage = self::NO_MIN_COVERAGE;
+
 
     /**
      * @param string $name
@@ -79,7 +90,7 @@ class TranslationSet
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -191,8 +202,8 @@ class TranslationSet
     /**
      * @param string $searchID
      * @param string $searchLocale
-     * @throws TranslationNotFoundException
      * @return array<mixed>
+     * @throws TranslationNotFoundException
      */
     public function findAnyExistingTranslation(string $searchID, string $searchLocale): array
     {
@@ -298,5 +309,30 @@ class TranslationSet
         }
 
         return $invalidTranslations;
+    }
+
+    /**
+     * @param int $minCoverage
+     * @return void
+     */
+    public function setMinCoverage(int $minCoverage): void
+    {
+        $this->minCoverage = $minCoverage;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasMinCoverage(): bool
+    {
+        return $this->minCoverage > self::NO_MIN_COVERAGE;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMinCoverage(): int
+    {
+        return $this->minCoverage;
     }
 }
