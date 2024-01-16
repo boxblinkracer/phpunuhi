@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPUnuhi\Commands\Exchange;
+namespace PHPUnuhi\Commands;
 
 use Exception;
 use PHPUnuhi\Bundles\Exchange\ExchangeFactory;

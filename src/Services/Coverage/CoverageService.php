@@ -4,8 +4,8 @@ namespace PHPUnuhi\Services\Coverage;
 
 use PHPUnuhi\Models\Translation\TranslationSet;
 use PHPUnuhi\Services\Coverage\Models\CoverageLocale;
-use PHPUnuhi\Services\Coverage\Models\CoverageSet;
 use PHPUnuhi\Services\Coverage\Models\CoverageTotal;
+use PHPUnuhi\Services\Coverage\Models\CoverageTranslationSet;
 
 class CoverageService
 {
@@ -25,7 +25,7 @@ class CoverageService
                 $tmpLocales[] = new CoverageLocale($locale);
             }
 
-            $tmpListSets[] = new CoverageSet($set->getName(), $tmpLocales);
+            $tmpListSets[] = new CoverageTranslationSet($set->getName(), $tmpLocales);
         }
 
         return new  CoverageTotal($tmpListSets);

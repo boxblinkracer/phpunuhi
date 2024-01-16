@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPUnuhi\Commands\Core;
+namespace PHPUnuhi\Commands;
 
 use PHPUnuhi\Bundles\Exchange\ExchangeFormat;
 use PHPUnuhi\Configuration\ConfigurationLoader;
@@ -24,7 +24,7 @@ class StatusCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('status')
+            ->setName(CommandNames::STATUS)
             ->setDescription('Show the status and statistics of your translations')
             ->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('format', null, InputOption::VALUE_REQUIRED, 'R', ExchangeFormat::CSV);
@@ -59,20 +59,20 @@ class StatusCommand extends Command
 
         $coverageResult = $coverageService->getCoverage($config->getTranslationSets());
 
-        foreach ($coverageResult->getCoverageSets() as $translationSet) {
+        foreach ($coverageResult->getTranslationSetCoverages() as $translationSet) {
             $io->section('Translation Set: ' . $translationSet->getName());
 
             $io->writeln("Coverage: " . $translationSet->getCoverage() . '% (' . $translationSet->getCountTranslated() . '/' . $translationSet->getCountAll() . ')');
 
             foreach ($translationSet->getLocaleCoverages() as $localeCoverage) {
-                $io->writeln("   [" . $localeCoverage->getName() . '] Coverage: ' . $localeCoverage->getCoverage() . '% (' . $localeCoverage->getCountTranslated() . '/' . $localeCoverage->getCountAll() . ')');
+                $io->writeln("   [" . $localeCoverage->getLocaleName() . '] Coverage: ' . $localeCoverage->getCoverage() . '% (' . $localeCoverage->getCountTranslated() . '/' . $localeCoverage->getCountAll() . ')');
             }
 
             $io->writeln('');
             $io->writeln("Words: " . $translationSet->getWordCount());
 
             foreach ($translationSet->getLocaleCoverages() as $localeCoverage) {
-                $io->writeln("   [" . $localeCoverage->getName() . '] Words: ' . $localeCoverage->getWordCount());
+                $io->writeln("   [" . $localeCoverage->getLocaleName() . '] Words: ' . $localeCoverage->getWordCount());
             }
         }
 

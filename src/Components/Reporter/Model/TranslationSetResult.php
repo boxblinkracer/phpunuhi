@@ -2,7 +2,7 @@
 
 namespace PHPUnuhi\Components\Reporter\Model;
 
-class SuiteResult
+class TranslationSetResult
 {
 
     /**

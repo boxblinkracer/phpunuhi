@@ -5,18 +5,13 @@ namespace PHPUnuhi\Models\Translation;
 use PHPUnuhi\Exceptions\TranslationNotFoundException;
 use PHPUnuhi\Models\Configuration\Attribute;
 use PHPUnuhi\Models\Configuration\CaseStyle;
+use PHPUnuhi\Models\Configuration\Coverage\Coverage;
 use PHPUnuhi\Models\Configuration\Filter;
 use PHPUnuhi\Models\Configuration\Protection;
 use PHPUnuhi\Models\Configuration\Rule;
 
 class TranslationSet
 {
-
-    /**
-     *
-     */
-    private const NO_MIN_COVERAGE = -1;
-
 
     /**
      * @var string
@@ -59,9 +54,9 @@ class TranslationSet
     private $rules;
 
     /**
-     * @var int
+     * @var Coverage
      */
-    private $minCoverage = self::NO_MIN_COVERAGE;
+    private $coverage;
 
 
     /**
@@ -311,28 +306,21 @@ class TranslationSet
         return $invalidTranslations;
     }
 
+
     /**
-     * @param int $minCoverage
+     * @return Coverage
+     */
+    public function getCoverage(): Coverage
+    {
+        return $this->coverage;
+    }
+
+    /**
+     * @param Coverage $coverage
      * @return void
      */
-    public function setMinCoverage(int $minCoverage): void
+    public function setCoverage(Coverage $coverage): void
     {
-        $this->minCoverage = $minCoverage;
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasMinCoverage(): bool
-    {
-        return $this->minCoverage > self::NO_MIN_COVERAGE;
-    }
-
-    /**
-     * @return int
-     */
-    public function getMinCoverage(): int
-    {
-        return $this->minCoverage;
+        $this->coverage = $coverage;
     }
 }

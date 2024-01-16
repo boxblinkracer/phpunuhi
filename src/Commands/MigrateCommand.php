@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPUnuhi\Commands\Core;
+namespace PHPUnuhi\Commands;
 
 use PHPUnuhi\Bundles\Storage\StorageFactory;
 use PHPUnuhi\Bundles\Storage\StorageInterface;

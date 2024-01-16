@@ -9,7 +9,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 - Add new **validate:mess** command to find keys without any translation. This means that these translations might not be used at all and can be removed.
 - Add new **fix:mess** command to remove keys without any translation. This means that these translations might not be used at all and can be removed.
-- Add new options to validate **minimum coverage percentage** for validate:all command. If provided the coverage needs to be at least the provided percentage to pass the validation (see README for more).
+- Add new configurations for a minimum coverage. These can be set for a TranslationSet, or all sets or across all locales. (see README for more).
 - It's now possible to use the **%locale%** placeholder also in the **basePath** attribute of the locales node in the XML configuration.
 
 ### Changed

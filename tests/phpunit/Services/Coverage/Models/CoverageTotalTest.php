@@ -5,14 +5,14 @@ namespace phpunit\Services\Coverage\Models;
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Services\Coverage\Models\CoverageLocale;
-use PHPUnuhi\Services\Coverage\Models\CoverageSet;
 use PHPUnuhi\Services\Coverage\Models\CoverageTotal;
+use PHPUnuhi\Services\Coverage\Models\CoverageTranslationSet;
 
 class CoverageTotalTest extends TestCase
 {
 
     /**
-     * @var CoverageSet[]
+     * @var CoverageTranslationSet[]
      */
     private $sets;
 
@@ -30,14 +30,14 @@ class CoverageTotalTest extends TestCase
         $locale2->addTranslation('title', 'Title Title Car', '');
         $locale2->addTranslation('text2', '', '');
 
-        $this->sets[] = new CoverageSet(
+        $this->sets[] = new CoverageTranslationSet(
             'Storefront',
             [
                 new CoverageLocale($locale1),
             ]
         );
 
-        $this->sets[] = new CoverageSet(
+        $this->sets[] = new CoverageTranslationSet(
             'Admin',
             [
                 new CoverageLocale($locale2)
@@ -52,7 +52,7 @@ class CoverageTotalTest extends TestCase
     {
         $coverage = new CoverageTotal($this->sets);
 
-        $value = $coverage->getCoverageSets();
+        $value = $coverage->getTranslationSetCoverages();
 
         $this->assertCount(2, $value);
     }

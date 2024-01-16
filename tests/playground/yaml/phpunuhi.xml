@@ -17,4 +17,9 @@
 
     </translations>
 
+
+    <coverage>
+        <locale name="de">20</locale>
+    </coverage>
+
 </phpunuhi>

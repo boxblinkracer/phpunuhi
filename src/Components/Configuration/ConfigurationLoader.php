@@ -6,6 +6,7 @@ use Exception;
 use PHPUnuhi\Bundles\Storage\StorageFactory;
 use PHPUnuhi\Components\Filter\FilterHandler;
 use PHPUnuhi\Configuration\Services\ConfigurationValidator;
+use PHPUnuhi\Configuration\Services\CoverageLoader;
 use PHPUnuhi\Configuration\Services\FilterLoader;
 use PHPUnuhi\Configuration\Services\LocalesLoader;
 use PHPUnuhi\Configuration\Services\ProtectionLoader;
@@ -13,6 +14,7 @@ use PHPUnuhi\Configuration\Services\RulesLoader;
 use PHPUnuhi\Configuration\Services\StyleLoader;
 use PHPUnuhi\Exceptions\ConfigurationException;
 use PHPUnuhi\Models\Configuration\Configuration;
+use PHPUnuhi\Models\Configuration\Coverage\Coverage;
 use PHPUnuhi\Models\Configuration\Filter;
 use PHPUnuhi\Models\Configuration\Protection;
 use PHPUnuhi\Models\Translation\TranslationSet;
@@ -65,6 +67,11 @@ class ConfigurationLoader
      */
     private $protectionLoader;
 
+    /**
+     * @var CoverageLoader
+     */
+    private $coverageLoader;
+
 
     /**
      * @param XmlLoaderInterface $xmlLoader
@@ -80,6 +87,7 @@ class ConfigurationLoader
         $this->styleLoader = new StyleLoader();
         $this->filterLoader = new FilterLoader();
         $this->protectionLoader = new ProtectionLoader();
+        $this->coverageLoader = new CoverageLoader();
     }
 
 
@@ -121,6 +129,11 @@ class ConfigurationLoader
 
         # create and validate the configuration object
         $config = new Configuration($allSuites);
+        $coverageNode = $rootXmlSettings->coverage;
+        $coverage = $this->coverageLoader->loadCoverage($coverageNode);
+        $config->setCoverage($coverage);
+
+
         $this->configValidator->validateConfig($config);
 
         return $config;
@@ -197,13 +210,13 @@ class ConfigurationLoader
         /** @var SimpleXMLElement $xmlSet */
         foreach ($rootNode->translations->children() as $xmlSet) {
             $setName = trim((string)$xmlSet['name']);
-            $minCoverage = trim((string)$xmlSet['minCoverage']);
             $nodeFormat = $xmlSet->format;
             $nodeProtection = $xmlSet->protect;
             $nodeLocales = $xmlSet->locales;
             $nodeFilter = $xmlSet->filter;
             $nodeStyles = $xmlSet->styles;
             $nodeRules = $xmlSet->rules;
+            $nodeCoverage = $xmlSet->coverage;
 
             # default values
             $setFormat = 'json';
@@ -213,6 +226,7 @@ class ConfigurationLoader
             $setFilter = new Filter();
             $casingStyles = [];
             $rules = [];
+            $coverage = new Coverage();
 
             if ($nodeFormat !== null) {
                 $formatData = $this->parseFormat($nodeFormat);
@@ -240,6 +254,10 @@ class ConfigurationLoader
                 $rules = $this->rulesLoader->loadRules($nodeRules);
             }
 
+            if ($nodeCoverage !== null) {
+                $coverage = $this->coverageLoader->loadCoverage($nodeCoverage);
+            }
+
             $set = new TranslationSet(
                 $setName,
                 $setFormat,
@@ -251,9 +269,7 @@ class ConfigurationLoader
                 $rules
             );
 
-            if ($minCoverage !== '') {
-                $set->setMinCoverage((int)$minCoverage);
-            }
+            $set->setCoverage($coverage);
 
             $storage = StorageFactory::getInstance()->getStorage($set);
 

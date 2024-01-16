@@ -1,20 +1,23 @@
 <?php
 
-namespace PHPUnuhi\Commands\Core;
+namespace PHPUnuhi\Commands;
 
 use PHPUnuhi\Configuration\ConfigurationLoader;
 use PHPUnuhi\Exceptions\ConfigurationException;
+use PHPUnuhi\Facades\CLI\CoverageCliFacade;
 use PHPUnuhi\Services\Loaders\Xml\XmlLoader;
 use PHPUnuhi\Traits\CommandTrait;
+use PHPUnuhi\Traits\StringTrait;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class ListTranslationsCommand extends Command
+class ValidateCoverageCommand extends Command
 {
     use CommandTrait;
+    use StringTrait;
 
     /**
      * @return void
@@ -22,10 +25,9 @@ class ListTranslationsCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('list:translations')
-            ->setDescription('')
+            ->setName(CommandNames::VALIDATE_COVERAGE)
+            ->setDescription('Validates the coverage of the translations')
             ->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', '');
-
         parent::configure();
     }
 
@@ -39,27 +41,30 @@ class ListTranslationsCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $io->title('PHPUnuhi List Translations');
+        $io->title('PHPUnuhi Validate Coverage');
         $this->showHeader();
+
+        $configFile = $this->getConfigFile($input);
 
         # -----------------------------------------------------------------
 
-        $configFile = $this->getConfigFile($input);
+        $coverageCLI = new CoverageCliFacade($io);
 
         # -----------------------------------------------------------------
 
         $configLoader = new ConfigurationLoader(new XmlLoader());
         $config = $configLoader->load($configFile);
 
+        $covSuccess = $coverageCLI->execute($config);
 
-        foreach ($config->getTranslationSets() as $set) {
-            $io->section('Translation Set: ' . $set->getName());
+        # -----------------------------------------------------------------
 
-            foreach ($set->getAllTranslationIDs() as $id) {
-                $io->writeln('   [~] ' . $id);
-            }
+        if ($covSuccess) {
+            $io->success('Coverage checks passed!');
+            return 0;
         }
 
-        return 0;
+        $io->error('Coverage checks failed');
+        return 1;
     }
 }

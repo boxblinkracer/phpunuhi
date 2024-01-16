@@ -5,7 +5,7 @@ namespace phpunit\Services\Coverage\Models;
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Services\Coverage\Models\CoverageLocale;
-use PHPUnuhi\Services\Coverage\Models\CoverageSet;
+use PHPUnuhi\Services\Coverage\Models\CoverageTranslationSet;
 
 class CoverageSetTest extends TestCase
 {
@@ -38,7 +38,7 @@ class CoverageSetTest extends TestCase
      */
     public function testName(): void
     {
-        $coverage = new CoverageSet('Storefront', $this->locales);
+        $coverage = new CoverageTranslationSet('Storefront', $this->locales);
 
         $value = $coverage->getName();
 
@@ -50,7 +50,7 @@ class CoverageSetTest extends TestCase
      */
     public function testLocaleCoverages(): void
     {
-        $coverage = new CoverageSet('Storefront', $this->locales);
+        $coverage = new CoverageTranslationSet('Storefront', $this->locales);
 
         $value = $coverage->getLocaleCoverages();
 
@@ -62,7 +62,7 @@ class CoverageSetTest extends TestCase
      */
     public function testCoverage(): void
     {
-        $coverage = new CoverageSet('Storefront', $this->locales);
+        $coverage = new CoverageTranslationSet('Storefront', $this->locales);
 
         $value = $coverage->getCoverage();
 
@@ -74,7 +74,7 @@ class CoverageSetTest extends TestCase
      */
     public function testCountAll(): void
     {
-        $coverage = new CoverageSet('Storefront', $this->locales);
+        $coverage = new CoverageTranslationSet('Storefront', $this->locales);
 
         $value = $coverage->getCountAll();
 
@@ -86,7 +86,7 @@ class CoverageSetTest extends TestCase
      */
     public function testCountTranslated(): void
     {
-        $coverage = new CoverageSet('Storefront', $this->locales);
+        $coverage = new CoverageTranslationSet('Storefront', $this->locales);
 
         $value = $coverage->getCountTranslated();
 
@@ -98,7 +98,7 @@ class CoverageSetTest extends TestCase
      */
     public function testWordCount(): void
     {
-        $coverage = new CoverageSet('Storefront', $this->locales);
+        $coverage = new CoverageTranslationSet('Storefront', $this->locales);
 
         $value = $coverage->getWordCount();
 

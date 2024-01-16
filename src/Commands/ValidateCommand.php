@@ -1,9 +1,7 @@
 <?php
 
-namespace PHPUnuhi\Commands\Core;
+namespace PHPUnuhi\Commands;
 
-use PHPUnuhi\Commands\Validation\ValidateAllCommand;
-use PHPUnuhi\Components\Validator\CaseStyle\Exception\CaseStyleNotFoundException;
 use PHPUnuhi\Exceptions\ConfigurationException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -19,12 +17,12 @@ class ValidateCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('validate')
+            ->setName(CommandNames::VALIDATE)
             ->setDescription('[DEPRECATED] Validates all your translations from your configuration. Please use validate:all instead.')
             ->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', '')
             ->addOption('report-format', null, InputOption::VALUE_REQUIRED, 'The report format for a generated report', '')
             ->addOption('report-output', null, InputOption::VALUE_REQUIRED, 'The report output filename for the generated report', '')
-            ->addOption('min-coverage', null, InputOption::VALUE_REQUIRED, 'The minimum total translation coverage', '');
+            ->addOption('ignore-coverage', null, InputOption::VALUE_NONE, 'Ignore a configured coverage setting and proceed with strict validation.');
 
         parent::configure();
     }
@@ -33,7 +31,6 @@ class ValidateCommand extends Command
      * @param InputInterface $input
      * @param OutputInterface $output
      * @throws ConfigurationException
-     * @throws CaseStyleNotFoundException
      * @return int
      */
     public function execute(InputInterface $input, OutputInterface $output): int

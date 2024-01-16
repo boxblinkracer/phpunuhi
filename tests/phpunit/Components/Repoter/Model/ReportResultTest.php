@@ -4,8 +4,8 @@ namespace phpunit\Components\Repoter\Model;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Components\Reporter\Model\ReportResult;
-use PHPUnuhi\Components\Reporter\Model\SuiteResult;
 use PHPUnuhi\Components\Reporter\Model\TestResult;
+use PHPUnuhi\Components\Reporter\Model\TranslationSetResult;
 
 class ReportResultTest extends TestCase
 {
@@ -22,7 +22,7 @@ class ReportResultTest extends TestCase
      */
     public function setUp(): void
     {
-        $suite1 = new SuiteResult('test');
+        $suite1 = new TranslationSetResult('test');
         $suite1->addTestResult(
             new TestResult(
                 '',
@@ -35,7 +35,7 @@ class ReportResultTest extends TestCase
             )
         );
 
-        $suite2 = new SuiteResult('test2');
+        $suite2 = new TranslationSetResult('test2');
 
         $suite2->addTestResult(
             new TestResult(
@@ -62,8 +62,8 @@ class ReportResultTest extends TestCase
         );
 
         $this->result = new ReportResult();
-        $this->result->addSuite($suite1);
-        $this->result->addSuite($suite2);
+        $this->result->addTranslationSet($suite1);
+        $this->result->addTranslationSet($suite2);
     }
 
     /**

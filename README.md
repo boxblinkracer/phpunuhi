@@ -36,14 +36,15 @@ Now that you know this, let's get started!
 * [4. Commands](#4-commands)
     * [4.1 Validate All Command](#41-validate-all-command)
     * [4.2 Validate Mess Command](#42-validate-mess-command)
-    * [4.3 Fix Structure Command](#43-fix-structure-command)
-    * [4.4 Fix Mess Command](#44-fix-mess-command)
-    * [4.5 Export Command](#45-export-command)
-    * [4.6 Import Command](#46-import-command)
-    * [4.7 Status Command](#47-status-command)
-    * [4.8 Translate Command](#48-translate-command)
-    * [4.9 List Translations Command](#49-list-translations-command)
-    * [4.10 Migration Command](#410-migration-command)
+    * [4.3 Validate Coverage](#43-validate-coverage)
+    * [4.4 Fix Structure Command](#44-fix-structure-command)
+    * [4.5 Fix Mess Command](#45-fix-mess-command)
+    * [4.6 Export Command](#46-export-command)
+    * [4.7 Import Command](#47-import-command)
+    * [4.8 Status Command](#48-status-command)
+    * [4.9 Translate Command](#49-translate-command)
+    * [4.10 List Translations Command](#410-list-translations-command)
+    * [4.11 Migration Command](#411-migration-command)
 * [5. Use Cases](#5-use-cases)
     * [5.1 Validation in CI pipeline](#51-validation-in-ci-pipeline)
     * [5.2 Working with external translation agencies](#52-working-with-external-translation-agencies)
@@ -200,7 +201,7 @@ Look at this one:
 >
     <translations>
 
-        <set name="Storefront JSON" minCoverage="80">
+        <set name="Storefront JSON">
             <format>
                 <json indent="4" sort="true"/>
             </format>
@@ -210,7 +211,7 @@ Look at this one:
             </locales>
         </set>
 
-        <set name="Products" minCoverage="50">
+        <set name="Products">
             <format>
                 <shopware6 entity="product"/>
             </format>
@@ -252,8 +253,8 @@ php vendor/bin/phpunuhi validate:all  --configuration=./translations.xml
 # generate a junit report in a custom folder
 php vendor/bin/phpunuhi validate:all  --report-format=junit --report-output=.reports/junit.xml
 
-# validate with minimum total coverage
-php vendor/bin/phpunuhi validate:all --min-coverage=80
+# ignore a configured coverage and use strict checks again
+php vendor/bin/phpunuhi validate:all --ignore-coverage
 ```
 
 **Invalid structure**
@@ -284,12 +285,6 @@ if all your translation keys, match your provided case styles.
 If you have provided a rule for nestingDepth, then the validator will also verify the nesting level
 on storages that support nesting (JSON, PHP, ...)
 
-**Minimum Locale Coverage**
-
-If you provide either the CLI option "--min-coverage" or the attribute "minCoverage" in your configuration,
-then the validation will fail if the coverage is below the provided value.
-Please note that all provided coverage percentage values are tested against the coverage result of each translation set.
-
 ### 4.2 Validate Mess Command
 
 What is a mess? This is simply defined by translation keys that have no value in any of your locales.
@@ -307,7 +302,44 @@ php vendor/bin/phpunuhi validate:mess  --configuration=./translations.xml
 php vendor/bin/phpunuhi validate:mess  --report-format=junit --report-output=.reports/junit.xml
 ```
 
-### 4.3 Fix Structure Command
+### 4.3 Validate Coverage
+
+You can also validate the coverage of your translations.
+This considers your configuration and only run the coverage tests.
+
+Start by configuring your coverage in your XML either for all translation sets
+or each translation set.
+
+```xml
+
+<coverage minCoverage="20">
+</coverage>
+```
+
+```xml
+
+<coverage>
+    <locale name="de">100</locale>
+    <locale name="en">80</locale>
+</coverage>
+```
+
+These **coverage nodes can either be used on root level inside `<phpunuhi>` or
+within each `<set>` node.
+
+```bash 
+php vendor/bin/phpunuhi validate:coverage 
+
+# provide custom configuration
+php vendor/bin/phpunuhi validate:coverage --configuration=./translations.xml
+```
+
+> Attention, once a coverage has been configured, the validation:all command will not
+> work as strict as before. Strict errors will only be warnings, and only the coverage
+> result is considered for the CLI exit code.
+> However, you can provide a separate option to force strict validation again.
+
+### 4.4 Fix Structure Command
 
 If your storage is not matching, you can easily use the fixing command to make sure they are in sync.
 Please note, that this will only create empty translations so that the structure is the same.
@@ -326,7 +358,7 @@ php vendor/bin/phpunuhi fix:structure --set="storefront"
    <img src="/.github/assets/fix.png">
 </p>
 
-### 4.4 Fix Mess Command
+### 4.5 Fix Mess Command
 
 This command will automatically remove all translation keys that have no value in any of your locales.
 Keys detected by the **validate:mess** command might not be used after all.
@@ -340,7 +372,7 @@ php vendor/bin/phpunuhi fix:mess
 php vendor/bin/phpunuhi fix:mess --set="storefront"
 ```
 
-### 4.5 Export Command
+### 4.6 Export Command
 
 You can export your translations **into a CSV file**, a HTML WebEdit spreadsheet, or other supported exchange formats.
 These files can then be passed on to an external translator or company.
@@ -371,7 +403,7 @@ php vendor/bin/phpunuhi export ... --empty
    <img src="/.github/assets/csv.png">
 </p>
 
-### 4.6 Import Command
+### 4.7 Import Command
 
 You can import your translations **from a CSV file** or other supported exchange formats.
 This will automatically update the storage (JSON, ...) that has been assigned to the imported translation set.
@@ -386,7 +418,7 @@ php vendor/bin/phpunuhi import --set=storefront --file=storefront.csv
 php vendor/bin/phpunuhi import ... --format=html
 ```
 
-### 4.7 Status Command
+### 4.8 Status Command
 
 Use this command to get statistics and reports of your translations.
 This includes the coverage and the number of found words.
@@ -399,7 +431,7 @@ php vendor/bin/phpunuhi status
    <img src="/.github/assets/status.png">
 </p>
 
-### 4.8 Translate Command
+### 4.9 Translate Command
 
 PHPUnuhi includes the option to use external services to automatically translate missing values for you.
 
@@ -436,7 +468,7 @@ php vendor/bin/phpunuhi translate ...  --source=en
    <img src="/.github/assets/translate.png">
 </p>
 
-### 4.9 List Translations Command
+### 4.10 List Translations Command
 
 This command allows you to output all available translation keys in your Translation-Sets.
 Use this to debug and analyse your translations.
@@ -445,7 +477,7 @@ Use this to debug and analyse your translations.
 php vendor/bin/phpunuhi list:translations 
 ```
 
-### 4.10 Migration Command
+### 4.11 Migration Command
 
 It's also possible to migrate your translations from one storage to another.
 Just use the migration command and provide the target storage as output format.
@@ -1120,3 +1152,36 @@ This is perfect if you have brand names or just any word that should not be acci
     </protect>
 </set>
 ```
+
+7.13 Coverage
+
+You can also configure the coverage of your translations.
+
+This means you can either define that all your locales in a single TranslationSet require a specific
+coverage separately or in total, or you can even define that all your
+locales across all translation sets require a specific coverage in a specific locale or in total.
+
+Start by configuring your coverage in your XML either for all translation sets
+or each translation set.
+
+```xml
+
+<coverage minCoverage="20">
+</coverage>
+```
+
+```xml
+
+<coverage>
+    <locale name="de">100</locale>
+    <locale name="en">80</locale>
+</coverage>
+```
+
+These **coverage nodes can either be used on root level inside `<phpunuhi>` or
+within each `<set>` node.
+
+> Attention, once a coverage has been configured, the validation:all command will not
+> work as strict as before. Strict errors will only be warnings, and only the coverage
+> result is considered for the CLI exit code.
+> However, you can provide a separate option to force strict validation again.

@@ -3,45 +3,47 @@
 namespace PHPUnuhi;
 
 use Exception;
-use PHPUnuhi\Commands\Core\FixMessCommand;
-use PHPUnuhi\Commands\Core\FixStructureCommand;
-use PHPUnuhi\Commands\Core\ListTranslationsCommand;
-use PHPUnuhi\Commands\Core\MigrateCommand;
-use PHPUnuhi\Commands\Core\StatusCommand;
-use PHPUnuhi\Commands\Core\ValidateCommand;
-use PHPUnuhi\Commands\Exchange\ExportCommand;
-use PHPUnuhi\Commands\Exchange\ImportCommand;
-use PHPUnuhi\Commands\Translation\TranslateCommand;
-use PHPUnuhi\Commands\Validation\ValidateAllCommand;
-use PHPUnuhi\Commands\Validation\ValidateMessCommand;
+use PHPUnuhi\Commands\ExportCommand;
+use PHPUnuhi\Commands\FixMessCommand;
+use PHPUnuhi\Commands\FixStructureCommand;
+use PHPUnuhi\Commands\ImportCommand;
+use PHPUnuhi\Commands\ListTranslationsCommand;
+use PHPUnuhi\Commands\MigrateCommand;
+use PHPUnuhi\Commands\StatusCommand;
+use PHPUnuhi\Commands\TranslateCommand;
+use PHPUnuhi\Commands\ValidateAllCommand;
+use PHPUnuhi\Commands\ValidateCommand;
+use PHPUnuhi\Commands\ValidateCoverageCommand;
+use PHPUnuhi\Commands\ValidateMessCommand;
 use Symfony\Component\Console\Application;
 
 class AppManager
 {
 
     /**
-     * @param array<mixed> $arguments
      * @throws Exception
      * @return void
      */
-    public static function run(array $arguments): void
+    public static function run(): void
     {
         $application = new Application('PHPUnuhi', PHPUnuhi::getVersion());
 
         $application->add(new StatusCommand());
-        $application->add(new ValidateCommand());
-        $application->add(new ExportCommand());
-        $application->add(new ImportCommand());
-        $application->add(new TranslateCommand());
         $application->add(new ListTranslationsCommand());
-        $application->add(new MigrateCommand());
 
+        $application->add(new ValidateCommand());
         $application->add(new ValidateAllCommand());
         $application->add(new ValidateMessCommand());
+        $application->add(new ValidateCoverageCommand());
 
+        $application->add(new ImportCommand());
+        $application->add(new ExportCommand());
+
+        $application->add(new TranslateCommand());
+
+        $application->add(new MigrateCommand());
         $application->add(new FixStructureCommand());
         $application->add(new FixMessCommand());
-
 
         $application->setDefaultCommand('list');
 

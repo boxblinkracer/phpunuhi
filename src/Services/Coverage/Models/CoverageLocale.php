@@ -30,10 +30,11 @@ class CoverageLocale
     /**
      * @return string
      */
-    public function getName(): string
+    public function getLocaleName(): string
     {
         return $this->locale->getName();
     }
+
 
 
     /**

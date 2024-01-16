@@ -3,33 +3,73 @@
 namespace PHPUnuhi\Services\Coverage\Models;
 
 use PHPUnuhi\Services\Coverage\Traits\CoverageDataTrait;
+use PHPUnuhi\Services\Maths\PercentageCalculator;
+use RuntimeException;
 
 class CoverageTotal
 {
     use CoverageDataTrait;
 
     /**
-     * @var CoverageSet[]
+     * @var CoverageTranslationSet[]
      */
-    private $coverageSets;
+    private $translationSets;
 
 
     /**
-     * @param CoverageSet[] $coverageSets
+     * @param CoverageTranslationSet[] $coverageSets
      */
     public function __construct(array $coverageSets)
     {
-        $this->coverageSets = $coverageSets;
+        $this->translationSets = $coverageSets;
 
         $this->calculate();
     }
 
     /**
-     * @return CoverageSet[]
+     * @return CoverageTranslationSet[]
      */
-    public function getCoverageSets(): array
+    public function getTranslationSetCoverages(): array
     {
-        return $this->coverageSets;
+        return $this->translationSets;
+    }
+
+    /**
+     * @param string $translationSetName
+     * @return CoverageTranslationSet
+     */
+    public function getTranslationSetCoverage(string $translationSetName): CoverageTranslationSet
+    {
+        foreach ($this->translationSets as $coverageSet) {
+            if ($coverageSet->getName() === $translationSetName) {
+                return $coverageSet;
+            }
+        }
+
+        throw new RuntimeException('CoverageSet not found');
+    }
+
+    /**
+     * @param string $locale
+     * @return float
+     */
+    public function getLocaleCoverage(string $locale): float
+    {
+        $fullWords = 0;
+        $fullTranslated = 0;
+
+        foreach ($this->translationSets as $tmpCoverage) {
+            foreach ($tmpCoverage->getLocaleCoverages() as $tmpLocale) {
+                if ($tmpLocale->getLocaleName() === $locale) {
+                    $fullWords += $tmpLocale->getWordCount();
+                    $fullTranslated += $tmpLocale->getCountTranslated();
+                }
+            }
+        }
+
+        $calculator = new PercentageCalculator();
+
+        return $calculator->getRoundedPercentage($fullTranslated, $fullWords);
     }
 
     /**
@@ -41,7 +81,7 @@ class CoverageTotal
         $this->countAll = 0;
         $this->countWords = 0;
 
-        foreach ($this->coverageSets as $coverage) {
+        foreach ($this->translationSets as $coverage) {
             $this->countTranslated += $coverage->getCountTranslated();
             $this->countAll += $coverage->getCountAll();
             $this->countWords += $coverage->getWordCount();

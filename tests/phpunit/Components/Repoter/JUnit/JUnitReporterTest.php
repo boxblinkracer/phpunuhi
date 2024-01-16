@@ -9,7 +9,7 @@ use phpunit\Utils\Traits\StringCleanerTrait;
 use phpunit\Utils\Traits\TestReportBuilderTrait;
 use PHPUnuhi\Components\Reporter\JUnit\JUnitReporter;
 use PHPUnuhi\Components\Reporter\Model\ReportResult;
-use PHPUnuhi\Components\Reporter\Model\SuiteResult;
+use PHPUnuhi\Components\Reporter\Model\TranslationSetResult;
 
 class JUnitReporterTest extends TestCase
 {
@@ -93,12 +93,12 @@ class JUnitReporterTest extends TestCase
      */
     public function testReportGeneration(): void
     {
-        $suite = new SuiteResult('Storefront');
+        $suite = new TranslationSetResult('Storefront');
         $suite->addTestResult($this->buildTestResult(true));
         $suite->addTestResult($this->buildTestResult(false));
 
         $result = new ReportResult();
-        $result->addSuite($suite);
+        $result->addTranslationSet($suite);
 
 
         $this->reporter->generate('.my-file.xml', $result);

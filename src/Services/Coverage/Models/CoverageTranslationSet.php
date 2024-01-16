@@ -3,8 +3,9 @@
 namespace PHPUnuhi\Services\Coverage\Models;
 
 use PHPUnuhi\Services\Coverage\Traits\CoverageDataTrait;
+use RuntimeException;
 
-class CoverageSet
+class CoverageTranslationSet
 {
     use CoverageDataTrait;
 
@@ -46,6 +47,17 @@ class CoverageSet
     public function getLocaleCoverages(): array
     {
         return $this->localeCoverages;
+    }
+
+    public function getLocaleCoverage(string $locale): CoverageLocale
+    {
+        foreach ($this->localeCoverages as $coverage) {
+            if ($coverage->getLocaleName() === $locale) {
+                return $coverage;
+            }
+        }
+
+        throw new RuntimeException('Locale not found');
     }
 
 

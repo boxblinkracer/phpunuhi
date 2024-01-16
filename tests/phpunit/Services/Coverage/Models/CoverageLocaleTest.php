@@ -35,7 +35,7 @@ class CoverageLocaleTest extends TestCase
     {
         $coverage = new CoverageLocale($this->locale);
 
-        $value = $coverage->getName();
+        $value = $coverage->getLocaleName();
 
         $this->assertEquals('en', $value);
     }
