@@ -36,7 +36,7 @@ Now that you know this, let's get started!
 * [4. Commands](#4-commands)
     * [4.1 Validate All Command](#41-validate-all-command)
     * [4.2 Validate Mess Command](#42-validate-mess-command)
-    * [4.3 Validate Coverage](#43-validate-coverage)
+    * [4.3 Validate Coverage Command](#43-validate-coverage-command)
     * [4.4 Fix Structure Command](#44-fix-structure-command)
     * [4.5 Fix Mess Command](#45-fix-mess-command)
     * [4.6 Export Command](#46-export-command)
@@ -302,7 +302,7 @@ php vendor/bin/phpunuhi validate:mess  --configuration=./translations.xml
 php vendor/bin/phpunuhi validate:mess  --report-format=junit --report-output=.reports/junit.xml
 ```
 
-### 4.3 Validate Coverage
+### 4.3 Validate Coverage Command
 
 You can also validate the coverage of your translations.
 This considers your configuration and only run the coverage tests.
