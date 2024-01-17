@@ -25,6 +25,8 @@ class Configuration
     public function __construct(array $sets)
     {
         $this->sets = $sets;
+
+        $this->coverage = new Coverage();
     }
 
     /**

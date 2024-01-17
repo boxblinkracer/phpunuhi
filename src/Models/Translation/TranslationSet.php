@@ -79,6 +79,8 @@ class TranslationSet
         $this->attributes = $attributes;
         $this->casingStyles = $styles;
         $this->rules = $rules;
+
+        $this->coverage = new Coverage();
     }
 
 
@@ -276,6 +278,7 @@ class TranslationSet
     }
 
     /**
+     * @throws TranslationNotFoundException
      * @return array<mixed>
      */
     public function getInvalidTranslationsIDs(): array
@@ -286,11 +289,7 @@ class TranslationSet
             $hasValueInAnyLocale = false;
 
             foreach ($this->locales as $locale) {
-                try {
-                    $translation = $locale->findTranslation($id);
-                } catch (TranslationNotFoundException $ex) {
-                    continue;
-                }
+                $translation = $locale->findTranslation($id);
 
                 if (!$translation->isEmpty()) {
                     $hasValueInAnyLocale = true;

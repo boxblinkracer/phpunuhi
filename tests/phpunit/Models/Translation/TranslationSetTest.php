@@ -7,6 +7,7 @@ use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Exceptions\TranslationNotFoundException;
 use PHPUnuhi\Models\Configuration\Attribute;
 use PHPUnuhi\Models\Configuration\CaseStyle;
+use PHPUnuhi\Models\Configuration\Coverage\Coverage;
 use PHPUnuhi\Models\Configuration\Filter;
 use PHPUnuhi\Models\Configuration\Protection;
 use PHPUnuhi\Models\Configuration\Rule;
@@ -370,5 +371,51 @@ class TranslationSetTest extends TestCase
 
         $this->assertEquals('', $set->getCasingStyle(0));
         $this->assertEquals('', $set->getCasingStyle(1));
+    }
+
+    /**
+     * @throws TranslationNotFoundException
+     * @return void
+     */
+    public function testGetInvalidTranslationIDs(): void
+    {
+        $attributes = [];
+        $filter = new Filter();
+
+        $localeEN = new Locale('EN', '', '');
+        $localeEN->addTranslation('lblSave', 'Cancel', '');
+        $localeEN->addTranslation('lblCancel', '', '');
+        $localeEN->addTranslation('lblTitle', '', '');
+
+        $localeDE = new Locale('DE', '', '');
+        $localeDE->addTranslation('lblSave', 'Abbrechen', '');
+        $localeDE->addTranslation('lblCancel', '', '');
+        $localeDE->addTranslation('lblTitle', 'Titel', '');
+
+        $locales = [$localeEN, $localeDE];
+
+        $set = new TranslationSet('storefront', 'json', new Protection(), $locales, $filter, $attributes, [], []);
+
+        $existing = $set->getInvalidTranslationsIDs();
+
+        $expected = [
+            'lblCancel',
+        ];
+
+        $this->assertEquals($expected, $existing);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCoverage(): void
+    {
+        $coverage = new Coverage();
+
+        $set = new TranslationSet('storefront', 'json', new Protection(), [], new Filter(), [], [], []);
+
+        $set->setCoverage($coverage);
+
+        $this->assertSame($coverage, $set->getCoverage());
     }
 }
