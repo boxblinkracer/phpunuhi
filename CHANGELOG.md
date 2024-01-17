@@ -10,6 +10,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 - Add new **validate:mess** command to find keys without any translation. This means that these translations might not be used at all and can be removed.
 - Add new **fix:mess** command to remove keys without any translation. This means that these translations might not be used at all and can be removed.
 - Add new configurations for a minimum coverage. These can be set for a TranslationSet, or all sets or across all locales. (see README for more).
+- Add new **none** CaseStyle validator. This helps to explicitly disable case style validation on a specific level while other levels are still validated against configured styles.
 - It's now possible to use the **%locale%** placeholder also in the **basePath** attribute of the locales node in the XML configuration.
 
 ### Changed
