@@ -86,6 +86,7 @@ Now that you know this, let's get started!
         * [7.11.1 JUnit Report](#7111-junit-report)
         * [7.11.2 JSON Report](#7112-json-report)
     * [7.12 Protection](#712-protection)
+    * [7.13 Coverage](#713-coverage)
 
 <!-- TOC -->
 
@@ -304,28 +305,12 @@ php vendor/bin/phpunuhi validate:mess  --report-format=junit --report-output=.re
 
 ### 4.3 Validate Coverage Command
 
-You can also validate the coverage of your translations.
-This considers your configuration and only run the coverage tests.
+You can also validate the coverage of your translations separately.
 
 Start by configuring your coverage in your XML either for all translation sets
 or each translation set.
 
-```xml
-
-<coverage minCoverage="20">
-</coverage>
-```
-
-```xml
-
-<coverage>
-    <locale name="de">100</locale>
-    <locale name="en">80</locale>
-</coverage>
-```
-
-These **coverage nodes can either be used on root level inside `<phpunuhi>` or
-within each `<set>` node.
+> Please see Appendix to configure coverage values!
 
 ```bash 
 php vendor/bin/phpunuhi validate:coverage 
@@ -333,11 +318,6 @@ php vendor/bin/phpunuhi validate:coverage
 # provide custom configuration
 php vendor/bin/phpunuhi validate:coverage --configuration=./translations.xml
 ```
-
-> Attention, once a coverage has been configured, the validation:all command will not
-> work as strict as before. Strict errors will only be warnings, and only the coverage
-> result is considered for the CLI exit code.
-> However, you can provide a separate option to force strict validation again.
 
 ### 4.4 Fix Structure Command
 
@@ -856,6 +836,10 @@ The following styles are possible:
 * snake
 * start
 * number
+* none
+
+Please note that **none** can be used to explicitly disable case-style checks for a specific level,
+while other levels might validate against configured styles. This is useful for legacy constructs with old keys.
 
 ```xml
 
@@ -1153,7 +1137,7 @@ This is perfect if you have brand names or just any word that should not be acci
 </set>
 ```
 
-7.13 Coverage
+### 7.13 Coverage
 
 You can also configure the coverage of your translations.
 
@@ -1178,8 +1162,41 @@ or each translation set.
 </coverage>
 ```
 
-These **coverage nodes can either be used on root level inside `<phpunuhi>` or
+These **coverage** nodes can either be used on root level inside `<phpunuhi>` or
 within each `<set>` node.
+
+Here is a sample that has all coverage options set.
+Please keep in mind, that this does not make sense and work of course.
+
+```xml 
+
+<phpunuhi>
+
+    <translations>
+
+        <set name="Administration">
+            <format>
+                <json indent="2" sort="true" eol-last="true"/>
+            </format>
+            <locales>
+                <locale name="en">en.json</locale>
+                <locale name="de">de.json</locale>
+            </locales>
+            <coverage minCoverage="80">
+                <locale name="de">80</locale>
+                <locale name="en">80</locale>
+            </coverage>
+        </set>
+
+    </translations>
+
+    <coverage minCoverage="80">
+        <locale name="de">80</locale>
+        <locale name="en">80</locale>
+    </coverage>
+
+</phpunuhi>
+```
 
 > Attention, once a coverage has been configured, the validation:all command will not
 > work as strict as before. Strict errors will only be warnings, and only the coverage

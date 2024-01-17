@@ -2,7 +2,6 @@
 
 namespace PHPUnuhi\Models\Configuration;
 
-use PHPUnuhi\Models\Configuration\Coverage\Coverage;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
 class Configuration
@@ -32,7 +31,7 @@ class Configuration
     /**
      * @return TranslationSet[]
      */
-    public function getTranslationSets()
+    public function getTranslationSets(): array
     {
         return $this->sets;
     }
@@ -59,7 +58,7 @@ class Configuration
      */
     public function hasCoverageSetting(): bool
     {
-        if ($this->coverage->hasTotalMinCoverage()) {
+        if ($this->coverage->hasMinCoverage()) {
             return true;
         }
 
@@ -68,11 +67,17 @@ class Configuration
         }
 
         foreach ($this->sets as $set) {
-            if ($set->getCoverage()->hasTotalMinCoverage()) {
+            if (!$this->coverage->hasTranslationSetCoverage($set->getName())) {
+                continue;
+            }
+
+            $setCoverage = $this->coverage->getTranslationSetCoverage($set->getName());
+
+            if ($setCoverage->hasMinCoverage()) {
                 return true;
             }
 
-            if (count($set->getCoverage()->getLocaleCoverages()) > 0) {
+            if ($setCoverage->hasLocaleCoverages()) {
                 return true;
             }
         }

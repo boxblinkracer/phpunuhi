@@ -2,6 +2,8 @@
 
 namespace PHPUnuhi\Models\Configuration\Coverage;
 
+use PHPUnuhi\Models\Percentage;
+
 class LocaleCoverage
 {
 
@@ -11,19 +13,23 @@ class LocaleCoverage
     private $locale;
 
     /**
-     * @var int
+     * @var float
      */
     private $minCoverage;
 
 
     /**
      * @param string $locale
-     * @param int $minCoverage
+     * @param float $minCoverage
      */
-    public function __construct(string $locale, int $minCoverage)
+    public function __construct(string $locale, float $minCoverage)
     {
         $this->locale = $locale;
         $this->minCoverage = $minCoverage;
+
+        if ($this->minCoverage >= Percentage::MAX_PERCENTAGE) {
+            $this->minCoverage = Percentage::MAX_PERCENTAGE;
+        }
     }
 
     /**
@@ -35,9 +41,9 @@ class LocaleCoverage
     }
 
     /**
-     * @return int
+     * @return float
      */
-    public function getMinCoverage(): int
+    public function getMinCoverage(): float
     {
         return $this->minCoverage;
     }

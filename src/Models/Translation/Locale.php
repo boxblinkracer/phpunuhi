@@ -93,7 +93,13 @@ class Locale
     {
         $counter = count($this->translations);
         for ($i = 0; $i < $counter; $i++) {
-            if ($this->translations[$i]->getID() === $key) {
+            if (!isset($this->translations[$i])) {
+                continue;
+            }
+
+            $existingTranslation = $this->translations[$i];
+
+            if ($existingTranslation instanceof Translation && $existingTranslation->getID() === $key) {
                 unset($this->translations[$i]);
                 break;
             }

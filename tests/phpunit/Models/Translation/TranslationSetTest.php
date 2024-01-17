@@ -7,7 +7,6 @@ use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Exceptions\TranslationNotFoundException;
 use PHPUnuhi\Models\Configuration\Attribute;
 use PHPUnuhi\Models\Configuration\CaseStyle;
-use PHPUnuhi\Models\Configuration\Coverage\Coverage;
 use PHPUnuhi\Models\Configuration\Filter;
 use PHPUnuhi\Models\Configuration\Protection;
 use PHPUnuhi\Models\Configuration\Rule;
@@ -403,19 +402,5 @@ class TranslationSetTest extends TestCase
         ];
 
         $this->assertEquals($expected, $existing);
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetCoverage(): void
-    {
-        $coverage = new Coverage();
-
-        $set = new TranslationSet('storefront', 'json', new Protection(), [], new Filter(), [], [], []);
-
-        $set->setCoverage($coverage);
-
-        $this->assertSame($coverage, $set->getCoverage());
     }
 }

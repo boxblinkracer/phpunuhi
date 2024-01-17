@@ -4,7 +4,8 @@ namespace phpunit\Models\Configuration;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Models\Configuration\Configuration;
-use PHPUnuhi\Models\Configuration\Coverage\Coverage;
+use PHPUnuhi\Models\Configuration\Coverage;
+use PHPUnuhi\Models\Configuration\Coverage\TranslationSetCoverage;
 use PHPUnuhi\Models\Configuration\Filter;
 use PHPUnuhi\Models\Configuration\Protection;
 use PHPUnuhi\Models\Translation\TranslationSet;
@@ -28,10 +29,10 @@ class ConfigurationTest extends TestCase
     /**
      * @return void
      */
-    public function testGetGlobalCoverage(): void
+    public function testCoverageCanBeConfigured(): void
     {
         $cov = new Coverage();
-        $cov->setTotalMinCoverage(36);
+        $cov->setMinCoverage(36);
 
         $config = new Configuration([]);
         $config->setCoverage($cov);
@@ -42,10 +43,10 @@ class ConfigurationTest extends TestCase
     /**
      * @return void
      */
-    public function testHasCoverageWithTotalCoverage(): void
+    public function testHasCoverageWithGlobalMinCoverage(): void
     {
         $cov = new Coverage();
-        $cov->setTotalMinCoverage(36);
+        $cov->setMinCoverage(36);
 
         $config = new Configuration([]);
 
@@ -59,7 +60,7 @@ class ConfigurationTest extends TestCase
     /**
      * @return void
      */
-    public function testHasCoverageWithTotalLocaleCoverage(): void
+    public function testHasCoverageWithGlobalLocaleCoverage(): void
     {
         $cov = new Coverage();
         $cov->addLocaleCoverage('DE', 37);
@@ -76,7 +77,7 @@ class ConfigurationTest extends TestCase
     /**
      * @return void
      */
-    public function testHasCoverageWithTotalSetCoverage(): void
+    public function testHasCoverageWithTranslationSetMinCoverage(): void
     {
         $set = new TranslationSet('products', 'ini', new Protection(), [], new Filter(), [], [], []);
 
@@ -84,10 +85,13 @@ class ConfigurationTest extends TestCase
 
         $this->assertFalse($config->hasCoverageSetting());
 
-        $cov = new Coverage();
-        $cov->setTotalMinCoverage(25);
+        $cov = new TranslationSetCoverage();
+        $cov->setMinCoverage(25);
 
-        $set->setCoverage($cov);
+        $coverage = new Coverage();
+        $coverage->addTranslationSetCoverage($set->getName(), $cov);
+
+        $config->setCoverage($coverage);
 
         $this->assertTrue($config->hasCoverageSetting());
     }
@@ -95,7 +99,7 @@ class ConfigurationTest extends TestCase
     /**
      * @return void
      */
-    public function testHasCoverageWithTotalSetLocaleCoverage(): void
+    public function testHasCoverageWithTranslationSetLocaleCoverage(): void
     {
         $set = new TranslationSet('products', 'ini', new Protection(), [], new Filter(), [], [], []);
 
@@ -103,10 +107,36 @@ class ConfigurationTest extends TestCase
 
         $this->assertFalse($config->hasCoverageSetting());
 
-        $cov = new Coverage();
+        $cov = new TranslationSetCoverage();
         $cov->addLocaleCoverage('DE', 37);
 
-        $set->setCoverage($cov);
+        $coverage = new Coverage();
+        $coverage->addTranslationSetCoverage($set->getName(), $cov);
+
+        $config->setCoverage($coverage);
+
+        $this->assertTrue($config->hasCoverageSetting());
+    }
+
+    /**
+     * @return void
+     */
+    public function testHasCoverageIfOnlyOneTranslationSetHasCoverage(): void
+    {
+        $set1 = new TranslationSet('admin', 'ini', new Protection(), [], new Filter(), [], [], []);
+        $set2 = new TranslationSet('storefront', 'ini', new Protection(), [], new Filter(), [], [], []);
+
+        $config = new Configuration([$set1, $set2]);
+
+        $this->assertFalse($config->hasCoverageSetting());
+
+        $cov = new TranslationSetCoverage();
+        $cov->setMinCoverage(25);
+
+        $coverage = new Coverage();
+        $coverage->addTranslationSetCoverage($set2->getName(), $cov);
+
+        $config->setCoverage($coverage);
 
         $this->assertTrue($config->hasCoverageSetting());
     }

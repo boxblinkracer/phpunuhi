@@ -5,7 +5,6 @@ namespace PHPUnuhi\Models\Translation;
 use PHPUnuhi\Exceptions\TranslationNotFoundException;
 use PHPUnuhi\Models\Configuration\Attribute;
 use PHPUnuhi\Models\Configuration\CaseStyle;
-use PHPUnuhi\Models\Configuration\Coverage\Coverage;
 use PHPUnuhi\Models\Configuration\Filter;
 use PHPUnuhi\Models\Configuration\Protection;
 use PHPUnuhi\Models\Configuration\Rule;
@@ -53,11 +52,6 @@ class TranslationSet
      */
     private $rules;
 
-    /**
-     * @var Coverage
-     */
-    private $coverage;
-
 
     /**
      * @param string $name
@@ -79,8 +73,6 @@ class TranslationSet
         $this->attributes = $attributes;
         $this->casingStyles = $styles;
         $this->rules = $rules;
-
-        $this->coverage = new Coverage();
     }
 
 
@@ -303,23 +295,5 @@ class TranslationSet
         }
 
         return $invalidTranslations;
-    }
-
-
-    /**
-     * @return Coverage
-     */
-    public function getCoverage(): Coverage
-    {
-        return $this->coverage;
-    }
-
-    /**
-     * @param Coverage $coverage
-     * @return void
-     */
-    public function setCoverage(Coverage $coverage): void
-    {
-        $this->coverage = $coverage;
     }
 }

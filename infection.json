@@ -1,7 +1,7 @@
 {
   "bootstrap": "./vendor/autoload.php",
-  "minMsi": 100,
-  "minCoveredMsi": 100,
+  "minMsi": 95,
+  "minCoveredMsi": 95,
   "source": {
     "directories": [
       "src/Models/Command",

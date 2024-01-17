@@ -3,35 +3,53 @@
 namespace phpunit\Models\Configuration\Coverage;
 
 use PHPUnit\Framework\TestCase;
-use PHPUnuhi\Models\Configuration\Coverage\Coverage;
+use PHPUnuhi\Models\Configuration\Coverage\TranslationSetCoverage;
 
-class CoverageTest extends TestCase
+class TranslationSetCoverageTest extends TestCase
 {
 
     /**
      * @return void
      */
-    public function testSetTotalMinCoverage(): void
+    public function testSetMinCoverage(): void
     {
-        $cov = new Coverage();
+        $cov = new TranslationSetCoverage();
 
-        $cov->setTotalMinCoverage(80);
+        $cov->setMinCoverage(80);
 
-        $this->assertEquals(80, $cov->getTotalMinCoverage());
+        $this->assertEquals(80, $cov->getMinCoverage());
+    }
+
+    /**
+     * @testWith    [ 99.9, 99.9 ]
+     *               [ 100.0, 100.0 ]
+     *               [ 100.0, 100.1 ]
+     *
+     * @param float $expected
+     * @param float $input
+     * @return void
+     */
+    public function testSetMinCoverageIsMaximum100(float $expected, float $input): void
+    {
+        $cov = new TranslationSetCoverage();
+
+        $cov->setMinCoverage($input);
+
+        $this->assertEquals($expected, $cov->getMinCoverage());
     }
 
     /**
      * @return void
      */
-    public function testHasTotalMinCoverage(): void
+    public function testHasMinCoverage(): void
     {
-        $cov = new Coverage();
+        $cov = new TranslationSetCoverage();
 
-        $this->assertFalse($cov->hasTotalMinCoverage());
+        $this->assertFalse($cov->hasMinCoverage());
 
-        $cov->setTotalMinCoverage(80);
+        $cov->setMinCoverage(80);
 
-        $this->assertTrue($cov->hasTotalMinCoverage());
+        $this->assertTrue($cov->hasMinCoverage());
     }
 
     /**
@@ -39,7 +57,7 @@ class CoverageTest extends TestCase
      */
     public function testGetLocaleCoverages(): void
     {
-        $cov = new Coverage();
+        $cov = new TranslationSetCoverage();
 
         $this->assertCount(0, $cov->getLocaleCoverages());
 
@@ -54,7 +72,7 @@ class CoverageTest extends TestCase
      */
     public function testGetLocaleCoverageByName(): void
     {
-        $cov = new Coverage();
+        $cov = new TranslationSetCoverage();
 
         $cov->addLocaleCoverage('DE', 35);
         $cov->addLocaleCoverage('EN', 80);
@@ -70,7 +88,7 @@ class CoverageTest extends TestCase
      */
     public function testHasLocaleCoverages(): void
     {
-        $cov = new Coverage();
+        $cov = new TranslationSetCoverage();
 
         $this->assertFalse($cov->hasLocaleCoverages());
 
@@ -84,7 +102,7 @@ class CoverageTest extends TestCase
      */
     public function testHasLocaleCoverage(): void
     {
-        $cov = new Coverage();
+        $cov = new TranslationSetCoverage();
 
         $this->assertFalse($cov->hasLocaleCoverage('DE'));
 

@@ -2,7 +2,7 @@
 
 namespace PHPUnuhi\Components\Validator\Coverage;
 
-use PHPUnuhi\Models\Configuration\Coverage\Coverage;
+use PHPUnuhi\Models\Configuration\Coverage;
 use PHPUnuhi\Models\Translation\TranslationSet;
 use PHPUnuhi\Services\Coverage\CoverageService;
 
@@ -25,11 +25,11 @@ class CoverageValidator
 
 
     /**
-     * @param Coverage $configGlobalCoverage
+     * @param Coverage $coverageSetting
      * @param TranslationSet[] $translationSets
      * @return CoverageValidatorResult
      */
-    public function validate(Coverage $configGlobalCoverage, array $translationSets): CoverageValidatorResult
+    public function validate(Coverage $coverageSetting, array $translationSets): CoverageValidatorResult
     {
         $result = $this->coverageService->getCoverage($translationSets);
 
@@ -37,8 +37,8 @@ class CoverageValidator
         # GLOBAL TOTAL COVERAGE
         # make sure to use the total coverage from all TranslationSets
         # and compare it against our input value
-        if ($configGlobalCoverage->hasTotalMinCoverage()) {
-            $expectedMinCoverage = $configGlobalCoverage->getTotalMinCoverage();
+        if ($coverageSetting->hasMinCoverage()) {
+            $expectedMinCoverage = $coverageSetting->getMinCoverage();
             $actualTotalCoverage = $result->getCoverage();
 
             if ($actualTotalCoverage < $expectedMinCoverage) {
@@ -50,7 +50,7 @@ class CoverageValidator
         # GLOBAL LOCALE COVERAGES
         # Sum up all words from all locales across TranslationSets
         # and compare it against our input value
-        foreach ($configGlobalCoverage->getLocaleCoverages() as $configLocaleCoverage) {
+        foreach ($coverageSetting->getLocaleCoverages() as $configLocaleCoverage) {
             $expectedCov = $configLocaleCoverage->getMinCoverage();
             $tmpValue = $result->getLocaleCoverage($configLocaleCoverage->getLocale());
 
@@ -68,10 +68,10 @@ class CoverageValidator
         # SET LOCALE TOTAL COVERAGE
         # we have a full coverage within a TranslationSet
         foreach ($translationSets as $translationSet) {
-            $configTranslationSet = $translationSet->getCoverage();
+            $configTranslationSet = $coverageSetting->getTranslationSetCoverage($translationSet->getName());
             $actualTranslationSetCoverage = $result->getTranslationSetCoverage($translationSet->getName());
 
-            $minCoverage = $configTranslationSet->getTotalMinCoverage();
+            $minCoverage = $configTranslationSet->getMinCoverage();
 
             if ($actualTranslationSetCoverage->getCoverage() < $minCoverage) {
                 return new CoverageValidatorResult(
@@ -87,7 +87,7 @@ class CoverageValidator
         # TRANSLATION SET LOCALE COVERAGES
         # Now a specific locale inside a TranslationSet needs a specific coverage value.
         foreach ($translationSets as $translationSet) {
-            $configTranslationSet = $translationSet->getCoverage();
+            $configTranslationSet = $coverageSetting->getTranslationSetCoverage($translationSet->getName());
             $actualTranslationSetCoverage = $result->getTranslationSetCoverage($translationSet->getName());
 
             foreach ($translationSet->getLocales() as $locale) {

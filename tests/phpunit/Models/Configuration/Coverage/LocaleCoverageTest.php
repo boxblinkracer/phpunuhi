@@ -27,4 +27,20 @@ class LocaleCoverageTest extends TestCase
 
         $this->assertEquals(35, $cov->getMinCoverage());
     }
+
+    /**
+     * @testWith    [ 99.9, 99.9 ]
+     *               [ 100.0, 100.0 ]
+     *               [ 100.0, 100.1 ]
+     *
+     * @param float $expected
+     * @param float $input
+     * @return void
+     */
+    public function testSetMinCoverageIsMaximum100(float $expected, float $input): void
+    {
+        $cov = new LocaleCoverage('DE', $input);
+
+        $this->assertEquals($expected, $cov->getMinCoverage());
+    }
 }

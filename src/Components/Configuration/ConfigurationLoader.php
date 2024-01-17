@@ -14,7 +14,7 @@ use PHPUnuhi\Configuration\Services\RulesLoader;
 use PHPUnuhi\Configuration\Services\StyleLoader;
 use PHPUnuhi\Exceptions\ConfigurationException;
 use PHPUnuhi\Models\Configuration\Configuration;
-use PHPUnuhi\Models\Configuration\Coverage\Coverage;
+use PHPUnuhi\Models\Configuration\Coverage\TranslationSetCoverage;
 use PHPUnuhi\Models\Configuration\Filter;
 use PHPUnuhi\Models\Configuration\Protection;
 use PHPUnuhi\Models\Translation\TranslationSet;
@@ -72,6 +72,11 @@ class ConfigurationLoader
      */
     private $coverageLoader;
 
+    /**
+     * @var TranslationSetCoverage[]
+     */
+    private $bufferTranslationSetCoverages;
+
 
     /**
      * @param XmlLoaderInterface $xmlLoader
@@ -93,8 +98,8 @@ class ConfigurationLoader
 
     /**
      * @param string $rootConfigFilename
-     * @throws Exception
      * @throws ConfigurationException
+     * @throws Exception
      * @return Configuration
      */
     public function load(string $rootConfigFilename): Configuration
@@ -129,10 +134,19 @@ class ConfigurationLoader
 
         # create and validate the configuration object
         $config = new Configuration($allSuites);
+
+        # ------------------------------------------------------------------------------------
+
         $coverageNode = $rootXmlSettings->coverage;
-        $coverage = $this->coverageLoader->loadCoverage($coverageNode);
+        $coverage = $this->coverageLoader->loadGlobalCoverage($coverageNode);
+
+        foreach ($this->bufferTranslationSetCoverages as $name => $setCoverage) {
+            $coverage->addTranslationSetCoverage($name, $setCoverage);
+        }
+
         $config->setCoverage($coverage);
 
+        # ------------------------------------------------------------------------------------
 
         $this->configValidator->validateConfig($config);
 
@@ -226,7 +240,7 @@ class ConfigurationLoader
             $setFilter = new Filter();
             $casingStyles = [];
             $rules = [];
-            $coverage = new Coverage();
+            $setCoverage = null;
 
             if ($nodeFormat !== null) {
                 $formatData = $this->parseFormat($nodeFormat);
@@ -255,7 +269,7 @@ class ConfigurationLoader
             }
 
             if ($nodeCoverage !== null) {
-                $coverage = $this->coverageLoader->loadCoverage($nodeCoverage);
+                $setCoverage = $this->coverageLoader->loadTranslationCoverage($nodeCoverage);
             }
 
             $set = new TranslationSet(
@@ -269,7 +283,10 @@ class ConfigurationLoader
                 $rules
             );
 
-            $set->setCoverage($coverage);
+            if ($setCoverage instanceof TranslationSetCoverage) {
+                $this->bufferTranslationSetCoverages[$set->getName()] = $setCoverage;
+            }
+
 
             $storage = StorageFactory::getInstance()->getStorage($set);
 

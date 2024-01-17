@@ -2,14 +2,16 @@
 
 namespace PHPUnuhi\Models\Configuration\Coverage;
 
-class Coverage
+use PHPUnuhi\Models\Percentage;
+
+class TranslationSetCoverage
 {
     private const COVERAGE_NOT_SET = -1;
 
     /**
-     * @var int
+     * @var float
      */
-    private $totalMinCoverage = self::COVERAGE_NOT_SET;
+    private $minCoverage = self::COVERAGE_NOT_SET;
 
     /**
      * @var array<LocaleCoverage>
@@ -18,28 +20,32 @@ class Coverage
 
 
     /**
-     * @param int $totalMinCoverage
+     * @param float $totalMinCoverage
      * @return void
      */
-    public function setTotalMinCoverage(int $totalMinCoverage): void
+    public function setMinCoverage(float $totalMinCoverage): void
     {
-        $this->totalMinCoverage = $totalMinCoverage;
+        $this->minCoverage = $totalMinCoverage;
+
+        if ($this->minCoverage >= Percentage::MAX_PERCENTAGE) {
+            $this->minCoverage = Percentage::MAX_PERCENTAGE;
+        }
     }
 
     /**
      * @return bool
      */
-    public function hasTotalMinCoverage(): bool
+    public function hasMinCoverage(): bool
     {
-        return $this->totalMinCoverage > self::COVERAGE_NOT_SET;
+        return $this->minCoverage > self::COVERAGE_NOT_SET;
     }
 
     /**
-     * @return int
+     * @return float
      */
-    public function getTotalMinCoverage(): int
+    public function getMinCoverage(): float
     {
-        return $this->totalMinCoverage;
+        return $this->minCoverage;
     }
 
     /**
@@ -51,6 +57,10 @@ class Coverage
         return isset($this->localeCoverages[$locale]);
     }
 
+    /**
+     * @param string $locale
+     * @return LocaleCoverage
+     */
     public function getLocaleCoverage(string $locale): LocaleCoverage
     {
         return $this->localeCoverages[$locale];
@@ -58,10 +68,10 @@ class Coverage
 
     /**
      * @param string $locale
-     * @param int $minCoverage
+     * @param float $minCoverage
      * @return void
      */
-    public function addLocaleCoverage(string $locale, int $minCoverage): void
+    public function addLocaleCoverage(string $locale, float $minCoverage): void
     {
         $this->localeCoverages[$locale] = new LocaleCoverage($locale, $minCoverage);
     }
