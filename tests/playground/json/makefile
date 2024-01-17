@@ -52,3 +52,6 @@ translate: ## Translate
 
 migrate: ## Migrate command
 	cd ../../.. && php bin/phpunuhi migrate --configuration=./tests/playground/json/phpunuhi.xml --output=ini
+
+scan: ## Scans all TWIG files
+	cd ../../.. && php bin/phpunuhi scan:usage --configuration=./tests/playground/json/phpunuhi.xml --dir=templates --scanner=twig

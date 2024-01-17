@@ -9,7 +9,7 @@
 
     <translations>
 
-        <set name="json with newline" minCoverage="20">
+        <set name="json with newline">
             <format>
                 <json indent="2" sort="true" eol-last="true"/>
             </format>

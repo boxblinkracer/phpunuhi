@@ -7,6 +7,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 ### Added
 
+- Add new **scanner** bundles that allow to scan files for occurrences of translations. With this you can figure out what translations are not used in your templates.
 - Add new **validate:mess** command to find keys without any translation. This means that these translations might not be used at all and can be removed.
 - Add new **fix:mess** command to remove keys without any translation. This means that these translations might not be used at all and can be removed.
 - Add new configurations for a minimum coverage. These can be set for a TranslationSet, or all sets or across all locales. (see README for more).

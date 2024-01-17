@@ -9,6 +9,7 @@ use PHPUnuhi\Commands\FixStructureCommand;
 use PHPUnuhi\Commands\ImportCommand;
 use PHPUnuhi\Commands\ListTranslationsCommand;
 use PHPUnuhi\Commands\MigrateCommand;
+use PHPUnuhi\Commands\ScanUsageCommand;
 use PHPUnuhi\Commands\StatusCommand;
 use PHPUnuhi\Commands\TranslateCommand;
 use PHPUnuhi\Commands\ValidateAllCommand;
@@ -44,6 +45,8 @@ class AppManager
         $application->add(new MigrateCommand());
         $application->add(new FixStructureCommand());
         $application->add(new FixMessCommand());
+
+        $application->add(new ScanUsageCommand());
 
         $application->setDefaultCommand('list');
 

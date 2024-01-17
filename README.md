@@ -45,6 +45,7 @@ Now that you know this, let's get started!
     * [4.9 Translate Command](#49-translate-command)
     * [4.10 List Translations Command](#410-list-translations-command)
     * [4.11 Migration Command](#411-migration-command)
+    * [4.12 Scan Usage Command](#412-scan-usage-command)
 * [5. Use Cases](#5-use-cases)
     * [5.1 Validation in CI pipeline](#51-validation-in-ci-pipeline)
     * [5.2 Working with external translation agencies](#52-working-with-external-translation-agencies)
@@ -87,6 +88,7 @@ Now that you know this, let's get started!
         * [7.11.2 JSON Report](#7112-json-report)
     * [7.12 Protection](#712-protection)
     * [7.13 Coverage](#713-coverage)
+    * [7.14 Scanners](#714-scanners)
 
 <!-- TOC -->
 
@@ -464,6 +466,21 @@ Just use the migration command and provide the target storage as output format.
 
 ```bash 
 php vendor/bin/phpunuhi migrate --output=json
+```
+
+### 4.12 Scan Usage Command
+
+Usually you have template files that use your translation keys.
+The scanner command helps to scan all these files and see if all your translation keys are actually used in there.
+
+```bash 
+php vendor/bin/phpunuhi scan:usage --dir=./src --scanner=twig
+
+# provide custom configuration
+php vendor/bin/phpunuhi scan:usage --dir=./src --scanner=twig --configuration=./translations.xml
+
+# custom set
+php vendor/bin/phpunuhi scan:usage --dir=./src --scanner=twig --set=storefront
 ```
 
 ## 5. Use Cases
@@ -1202,3 +1219,21 @@ Please keep in mind, that this does not make sense and work of course.
 > work as strict as before. Strict errors will only be warnings, and only the coverage
 > result is considered for the CLI exit code.
 > However, you can provide a separate option to force strict validation again.
+
+### 7.14 Scanners
+
+Scanners allow you to scan your files for occurrences of translations keys.
+This allows you to e.g. scan your TWIG files and see if all your keys are actually used somewhere.
+
+The following list of scanners are currently supported:
+
+* twig
+
+It's also possible to register your custom scanner.
+Create a class and implement the **ScannerInterface** according to your needs.
+
+Then simply register your translator using this function:
+
+```php
+ScannerFactory::getInstance()->registerScanner($myScanner);
+```
