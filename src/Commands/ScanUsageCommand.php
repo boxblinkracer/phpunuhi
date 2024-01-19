@@ -40,8 +40,8 @@ class ScanUsageCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return int
      * @throws ConfigurationException
+     * @return int
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
