@@ -483,6 +483,10 @@ php vendor/bin/phpunuhi scan:usage --dir=./src --scanner=twig --configuration=./
 php vendor/bin/phpunuhi scan:usage --dir=./src --scanner=twig --set=storefront
 ```
 
+> Please note, this is only a helper command to find unused translations in template files.
+> Keys that are found here, could still be used in other places, such as JS files, PHP files and more!
+> Do not immediately remove them without thinking about it.
+
 ## 5. Use Cases
 
 Here are a few use cases and ideas to get you started.

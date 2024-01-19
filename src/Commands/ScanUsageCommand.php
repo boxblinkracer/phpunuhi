@@ -40,8 +40,8 @@ class ScanUsageCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @throws ConfigurationException
      * @return int
+     * @throws ConfigurationException
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -126,6 +126,7 @@ class ScanUsageCommand extends Command
 
         if ($errorCount > 0) {
             $io->error('Found ' . $errorCount . ' translation keys that do not seem to be used in any of the scanned files');
+            $io->note('Please keep in mind, the keys have not been found in your scanned files, but might be used somewhere else, like in JS or PHP files. Do not delete them without further investigation!');
             return 1;
         }
 
