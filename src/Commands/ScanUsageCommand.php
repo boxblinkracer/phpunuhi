@@ -67,7 +67,7 @@ class ScanUsageCommand extends Command
             throw new Exception('No directory provided');
         }
 
-        $directory = dirname($configFile) . '/' . $directory;
+        $directory = $this->getFromRelativePath($directory);
 
         $directoryLoader = new DirectoryLoader();
         $fileReader = new FileLoader();
@@ -81,6 +81,7 @@ class ScanUsageCommand extends Command
         $io->writeln('Using scanner: ' . $scanner->getStorageName());
 
 
+
         $scannedFiles = $directoryLoader->getFiles($directory, 'twig');
 
         $fileContents = [];
@@ -90,7 +91,8 @@ class ScanUsageCommand extends Command
 
 
         if ($fileContents === []) {
-            throw new Exception('No files found in directory: ' . $directory);
+            $io->warning('No files found in directory: ' . $directory);
+            return Command::SUCCESS;
         }
 
         $errorCount = 0;

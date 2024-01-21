@@ -45,6 +45,20 @@ trait CommandTrait
     }
 
     /**
+     * @param string $path
+     * @return string
+     */
+    protected function getFromRelativePath(string $path): string
+    {
+        $cur_dir = explode('\\', (string)getcwd());
+        $workingDir = $cur_dir[count($cur_dir) - 1];
+
+        $dir = $workingDir . '/' . $path;
+
+        return (string)realpath($dir);
+    }
+
+    /**
      * @param string $name
      * @param InputInterface $input
      * @return string
