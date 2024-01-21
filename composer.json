@@ -50,7 +50,7 @@
         "phpstan/phpstan": "*",
         "phpunit/phpunit": "^9.6",
         "povils/phpmnd": "^3.3",
-        "rector/rector": "^0.18.12",
+        "rector/rector": "0.19.1",
         "roave/security-advisories": "dev-latest",
         "rregeer/phpunit-coverage-check": "^0.3.1",
         "spaze/phpstan-disallowed-calls": "^3.0",
