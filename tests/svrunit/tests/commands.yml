@@ -1,0 +1,32 @@
+commands:
+  - name: "Status"
+    command: "(($EXEC)) status --configuration=./tests/svrunit/formats/json/phpunuhi.xml"
+    expected: "Coverage: 100%"
+
+  - name: "List Translations"
+    command: "(($EXEC)) list:translations --configuration=./tests/svrunit/formats/json/phpunuhi.xml"
+    expected: "[~] card.description"
+
+  - name: "Validate (deprecated))"
+    command: "(($EXEC)) validate --configuration=./tests/svrunit/formats/json/phpunuhi.xml"
+    expected: "All translations are valid"
+
+  - name: "Validate All"
+    command: "(($EXEC)) validate:all --configuration=./tests/svrunit/formats/json/phpunuhi.xml"
+    expected: "All translations are valid"
+
+  - name: "Validate Coverage"
+    command: "(($EXEC)) validate:coverage --configuration=./tests/svrunit/formats/json/phpunuhi.xml"
+    expected: "Checking minimum coverage..."
+
+  - name: "Validate Mess"
+    command: "(($EXEC)) validate:mess --configuration=./tests/svrunit/formats/json/phpunuhi.xml"
+    expected: "All translations are valid"
+
+  - name: "Export"
+    command: "(($EXEC)) export --configuration=./tests/svrunit/formats/json/phpunuhi.xml --dir=.svrunit"
+    expected: "All translations exported"
+
+  - name: "Scan Usage"
+    command: "(($EXEC)) scan:usage --configuration=./tests/svrunit/formats/json/phpunuhi.xml --dir=./tests/svrunit/formats/json/templates --scanner=twig"
+    expected: "Key not found in any file"
