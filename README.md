@@ -36,15 +36,16 @@ Now that you know this, let's get started!
     * [4.1 Validate All Command](#41-validate-all-command)
     * [4.2 Validate Mess Command](#42-validate-mess-command)
     * [4.3 Validate Coverage Command](#43-validate-coverage-command)
-    * [4.4 Fix Structure Command](#44-fix-structure-command)
-    * [4.5 Fix Mess Command](#45-fix-mess-command)
-    * [4.6 Export Command](#46-export-command)
-    * [4.7 Import Command](#47-import-command)
-    * [4.8 Status Command](#48-status-command)
-    * [4.9 Translate Command](#49-translate-command)
-    * [4.10 List Translations Command](#410-list-translations-command)
-    * [4.11 Migration Command](#411-migration-command)
-    * [4.12 Scan Usage Command](#412-scan-usage-command)
+    * [4.4 Validate Structure Command](#44-validate-structure-command)
+    * [4.5 Fix Structure Command](#45-fix-structure-command)
+    * [4.6 Fix Mess Command](#46-fix-mess-command)
+    * [4.7 Export Command](#47-export-command)
+    * [4.8 Import Command](#48-import-command)
+    * [4.9 Status Command](#49-status-command)
+    * [4.10 Translate Command](#410-translate-command)
+    * [4.11 List Translations Command](#411-list-translations-command)
+    * [4.12 Migration Command](#412-migration-command)
+    * [4.13 Scan Usage Command](#413-scan-usage-command)
   * [5. Validation Processes](#5-validation-processes)
     * [5.1 Structure Validation](#51-structure-validation)
     * [5.2 Empty content Validation](#52-empty-content-validation)
@@ -296,7 +297,18 @@ php vendor/bin/phpunuhi validate:coverage
 php vendor/bin/phpunuhi validate:coverage --configuration=./translations.xml
 ```
 
-### 4.4 Fix Structure Command
+### 4.4 Validate Structure Command
+
+This validates only the structure of your translations and no content or any rules.
+
+```bash 
+php vendor/bin/phpunuhi validate:structure 
+
+# provide custom configuration
+php vendor/bin/phpunuhi validate:structure --configuration=./translations.xml
+```
+
+### 4.5 Fix Structure Command
 
 If your storage is not matching, you can easily use the fixing command to make sure they are in sync.
 Please note, that this will only create empty translations so that the structure is the same.
@@ -315,7 +327,7 @@ php vendor/bin/phpunuhi fix:structure --set="storefront"
    <img src="/.github/assets/fix.png">
 </p>
 
-### 4.5 Fix Mess Command
+### 4.6 Fix Mess Command
 
 This command will automatically remove all translation keys that have no value in any of your locales.
 Keys detected by the **validate:mess** command might not be used after all.
@@ -329,7 +341,7 @@ php vendor/bin/phpunuhi fix:mess
 php vendor/bin/phpunuhi fix:mess --set="storefront"
 ```
 
-### 4.6 Export Command
+### 4.7 Export Command
 
 You can export your translations **into a CSV file**, a HTML WebEdit spreadsheet, or other supported exchange formats.
 These files can then be passed on to an external translator or company.
@@ -360,7 +372,7 @@ php vendor/bin/phpunuhi export ... --empty
    <img src="/.github/assets/csv.png">
 </p>
 
-### 4.7 Import Command
+### 4.8 Import Command
 
 You can import your translations **from a CSV file** or other supported exchange formats.
 This will automatically update the storage (JSON, ...) that has been assigned to the imported translation set.
@@ -375,7 +387,7 @@ php vendor/bin/phpunuhi import --set=storefront --file=storefront.csv
 php vendor/bin/phpunuhi import ... --format=html
 ```
 
-### 4.8 Status Command
+### 4.9 Status Command
 
 Use this command to get statistics and reports of your translations.
 This includes the coverage and the number of found words.
@@ -388,7 +400,7 @@ php vendor/bin/phpunuhi status
    <img src="/.github/assets/status.png">
 </p>
 
-### 4.9 Translate Command
+### 4.10 Translate Command
 
 PHPUnuhi includes the option to use external services to automatically translate missing values for you.
 
@@ -425,7 +437,7 @@ php vendor/bin/phpunuhi translate ...  --source=en
    <img src="/.github/assets/translate.png">
 </p>
 
-### 4.10 List Translations Command
+### 4.11 List Translations Command
 
 This command allows you to output all available translation keys in your Translation-Sets.
 Use this to debug and analyse your translations.
@@ -434,7 +446,7 @@ Use this to debug and analyse your translations.
 php vendor/bin/phpunuhi list:translations 
 ```
 
-### 4.11 Migration Command
+### 4.12 Migration Command
 
 It's also possible to migrate your translations from one storage to another.
 Just use the migration command and provide the target storage as output format.
@@ -443,7 +455,7 @@ Just use the migration command and provide the target storage as output format.
 php vendor/bin/phpunuhi migrate --output=json
 ```
 
-### 4.12 Scan Usage Command
+### 4.13 Scan Usage Command
 
 Usually you have template files that use your translation keys.
 The scanner command helps to scan all these files and see if all your translation keys are actually used in there.

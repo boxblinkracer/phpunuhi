@@ -8,6 +8,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 ### Added
 
 - Add new **MJML** scanner that allows to scan MJML files for translations. (idea by @wannevancamp)
+- Add new **validate:structure** command to only validate against the structure.
 
 ### Fixed
 

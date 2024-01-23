@@ -29,8 +29,12 @@ fix-mess: ## Fix mess command
 validate-json: ## Validate command with json report
 	cd ../../.. && php bin/phpunuhi validate --configuration=./tests/playground/json/phpunuhi.xml --report-format=json --report-output=./tests/playground/json/.exports/report.json
 
-structure: ## Fix Structure
+validate-structure: ## Fix Structure
+	cd ../../.. && php bin/phpunuhi validate:structure --configuration=./tests/playground/json/phpunuhi.xml
+
+fix-structure: ## Fix Structure
 	cd ../../.. && php bin/phpunuhi fix:structure --configuration=./tests/playground/json/phpunuhi.xml
+
 
 keys: ## Fix Keys
 	cd ../../.. && php bin/phpunuhi fix:structure --configuration=./tests/playground/json/phpunuhi.xml

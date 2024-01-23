@@ -16,6 +16,7 @@ use PHPUnuhi\Commands\ValidateAllCommand;
 use PHPUnuhi\Commands\ValidateCommand;
 use PHPUnuhi\Commands\ValidateCoverageCommand;
 use PHPUnuhi\Commands\ValidateMessCommand;
+use PHPUnuhi\Commands\ValidateStructureCommand;
 use Symfony\Component\Console\Application;
 
 class AppManager
@@ -36,6 +37,7 @@ class AppManager
         $application->add(new ValidateAllCommand());
         $application->add(new ValidateMessCommand());
         $application->add(new ValidateCoverageCommand());
+        $application->add(new ValidateStructureCommand());
 
         $application->add(new ImportCommand());
         $application->add(new ExportCommand());
