@@ -5,6 +5,7 @@ namespace phpunit\Components\Validator;
 use Exception;
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Bundles\Storage\JSON\JsonStorage;
+use PHPUnuhi\Components\Validator\EmptyContent\AllowEmptyContent;
 use PHPUnuhi\Components\Validator\EmptyContentValidator;
 use PHPUnuhi\Models\Configuration\Filter;
 use PHPUnuhi\Models\Configuration\Protection;
@@ -25,7 +26,7 @@ class EmptyContentValidatorTest extends TestCase
      */
     protected function setUp(): void
     {
-        $this->validator = new EmptyContentValidator();
+        $this->validator = new EmptyContentValidator([]);
     }
 
 
@@ -81,6 +82,44 @@ class EmptyContentValidatorTest extends TestCase
         $result = $this->validator->validate($set, $storage);
 
         $this->assertEquals(false, $result->isValid());
+    }
+
+
+    /**
+     * @throws Exception
+     * @return void
+     */
+    public function testEmptyContentWithAllowList(): void
+    {
+        $localeDE = new Locale('de-DE', '', '');
+        $localeEN = new Locale('en-GB', '', '');
+
+        # allow empty in DE -> should be OK
+        $localeDE->addTranslation('card.btnCancel', '', 'group1');
+        $localeEN->addTranslation('card.btnCancel', 'Cancel', 'group1');
+
+        # do not allow anything -> 1 error
+        $localeDE->addTranslation('card.btnTitle', 'Title', 'group1');
+        $localeEN->addTranslation('card.btnTitle', '', '');
+
+        # allow empty in EN -> should be OK
+        $localeDE->addTranslation('card.btnOK', 'OK', '');
+        $localeEN->addTranslation('card.btnOK', '', 'group1');
+
+
+        $set = $this->buildSet([$localeDE, $localeEN]);
+
+        $storage = new JsonStorage();
+
+        $allowList = [];
+        $allowList[] = new AllowEmptyContent('card.btnCancel', ['de-DE']);
+        $allowList[] = new AllowEmptyContent('card.btnOK', ['en-GB']);
+
+        $validator = new EmptyContentValidator($allowList);
+
+        $result = $validator->validate($set, $storage);
+
+        $this->assertCount(1, $result->getErrors());
     }
 
 

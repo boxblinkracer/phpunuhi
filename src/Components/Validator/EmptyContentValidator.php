@@ -3,6 +3,7 @@
 namespace PHPUnuhi\Components\Validator;
 
 use PHPUnuhi\Bundles\Storage\StorageInterface;
+use PHPUnuhi\Components\Validator\EmptyContent\AllowEmptyContent;
 use PHPUnuhi\Components\Validator\Model\ValidationError;
 use PHPUnuhi\Components\Validator\Model\ValidationResult;
 use PHPUnuhi\Components\Validator\Model\ValidationTest;
@@ -10,6 +11,22 @@ use PHPUnuhi\Models\Translation\TranslationSet;
 
 class EmptyContentValidator implements ValidatorInterface
 {
+
+
+    /**
+     * @var AllowEmptyContent[]
+     */
+    private $allowList;
+
+
+    /**
+     * @param AllowEmptyContent[] $allowList
+     */
+    public function __construct(array $allowList)
+    {
+        $this->allowList = $allowList;
+    }
+
 
     /**
      * @return string
@@ -43,6 +60,16 @@ class EmptyContentValidator implements ValidatorInterface
                     'Translation for key ' . $translation->getKey() . ' does not have a value',
                     $testPassed
                 );
+
+                if (!$testPassed) {
+                    # check if we have an allow list entry
+                    foreach ($this->allowList as $allowEntry) {
+                        if ($allowEntry->getKey() === $translation->getKey() && $allowEntry->isLocaleAllowed($locale->getName())) {
+                            $testPassed = true;
+                            break;
+                        }
+                    }
+                }
 
                 if ($testPassed) {
                     continue;

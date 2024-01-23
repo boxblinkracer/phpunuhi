@@ -66,7 +66,7 @@ class ValidateAllCommand extends Command
         $validators = [];
         $validators[] = new MissingStructureValidator();
         $validators[] = new CaseStyleValidator();
-        $validators[] = new EmptyContentValidator();
+        $validators[] = new EmptyContentValidator([]);
         $validators[] = new RulesValidator();
 
         $translationSetCLI = new TranslationSetCliFacade($io);
