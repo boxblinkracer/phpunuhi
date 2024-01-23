@@ -3,6 +3,12 @@
 All notable changes of releases are documented in this file
 using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
+## [unreleased]
+
+### Fixed
+
+- Fixed problem with relative locale filenames in combination with the **basePath** attribute in the `<locales>` node. This led to wrong absolute filenames and therefore invalid filenames when loading.
+
 ## [1.16.0]
 
 ### Added

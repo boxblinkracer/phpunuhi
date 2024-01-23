@@ -171,11 +171,41 @@ class LocalesPlaceholderProcessorTest extends TestCase
         $filename = $this->processor->buildRealFilename(
             'en',
             '%base_path%/data.xml',
-            './translations/administration',
+            '/translations/administration',
             ''
         );
 
-        $this->assertEquals('translations/administration/data.xml', $filename);
+        $this->assertEquals('/translations/administration/data.xml', $filename);
+    }
+
+    /**
+     * @return void
+     */
+    public function testBasePathWithUpperDirectory(): void
+    {
+        $filename = $this->processor->buildRealFilename(
+            'en',
+            '%base_path%/data.json',
+            '../../translations/administration',
+            '/var/www/html/devops'
+        );
+
+        $this->assertEquals('/var/www/html/../../translations/administration/data.json', $filename);
+    }
+
+    /**
+     * @return void
+     */
+    public function testBasePathWithUpperDirectoryWithoutConfigFile(): void
+    {
+        $filename = $this->processor->buildRealFilename(
+            'en',
+            '%base_path%/data.json',
+            '../../translations/administration',
+            ''
+        );
+
+        $this->assertEquals('../../translations/administration/data.json', $filename);
     }
 
     /**
