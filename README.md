@@ -29,11 +29,10 @@ Please keep that in mind to avoids misinterpreting the goal of this framework.
 Now that you know this, let's get started!
 
 <!-- TOC -->
-
-* [1. Basic Concept](#1-basic-concept)
-* [2. Installation](#2-installation)
-* [3. Configuration](#3-configuration)
-* [4. Commands](#4-commands)
+  * [1. Basic Concept](#1-basic-concept)
+  * [2. Installation](#2-installation)
+  * [3. Configuration](#3-configuration)
+  * [4. Commands](#4-commands)
     * [4.1 Validate All Command](#41-validate-all-command)
     * [4.2 Validate Mess Command](#42-validate-mess-command)
     * [4.3 Validate Coverage Command](#43-validate-coverage-command)
@@ -46,50 +45,54 @@ Now that you know this, let's get started!
     * [4.10 List Translations Command](#410-list-translations-command)
     * [4.11 Migration Command](#411-migration-command)
     * [4.12 Scan Usage Command](#412-scan-usage-command)
-* [5. Use Cases](#5-use-cases)
-    * [5.1 Validation in CI pipeline](#51-validation-in-ci-pipeline)
-    * [5.2 Working with external translation agencies](#52-working-with-external-translation-agencies)
-    * [5.3 Live WebEdit with HTML](#53-live-webedit-with-html)
-    * [5.4 Automatic Translation with Google, DeepL, ...](#54-automatic-translation-with-google-deepl-)
-* [6. Warning](#6-warning)
-* [7. Appendix](#7-appendix)
-    * [7.1 Imports](#71-imports)
-    * [7.2 Locales](#72-locales)
-    * [7.3 Storage Formats](#73-storage-formats)
-        * [7.3.1 Formats](#731-formats)
-            * [7.3.1.1 JSON](#7311-json)
-            * [7.3.1.2 INI](#7312-ini)
-            * [7.3.1.3 PO](#7313-po)
-            * [7.3.1.4 PHP](#7314-php)
-            * [7.3.1.5 Shopware 6](#7315-shopware-6)
-            * [7.3.1.6 YAML](#7316-yaml)
-        * [7.3.2 Custom Formats](#732-custom-formats)
-    * [7.4 Filters](#74-filters)
-    * [7.5 Groups](#75-groups)
-    * [7.6 Case Styles](#76-case-styles)
-    * [7.7 Rules](#77-rules)
-        * [7.7.1 Nesting Depth](#771-nesting-depth)
-        * [7.7.2 Key Length](#772-key-length)
-        * [7.7.3 Disallowed Texts](#773-disallowed-texts)
-        * [7.7.4 Duplicate Content](#774-duplicate-content)
-    * [7.8 PHP ENV Variables](#78-php-env-variables)
-    * [7.9 Exchange Formats](#79-exchange-formats)
-        * [7.9.1 CSV](#791-csv)
-        * [7.9.2 HTML / WebEdit](#792-html--webedit)
-        * [7.9.3 Custom Exchange Formats](#793-custom-exchange-formats)
-    * [7.10 Translator Services](#710-translator-services)
-        * [7.10.1 DeepL](#7101-deepl)
-        * [7.10.2 Google Cloud Translate](#7102-google-cloud-translate)
-        * [7.10.3 Google Web Translate](#7103-google-web-translate)
-        * [7.10.4 OpenAI GPT Translate](#7104-openai-gpt-translate)
-        * [7.10.5 Custom Translators](#7105-custom-translators)
-    * [7.11 Validation Reports](#711-validation-reports)
-        * [7.11.1 JUnit Report](#7111-junit-report)
-        * [7.11.2 JSON Report](#7112-json-report)
-    * [7.12 Protection](#712-protection)
-    * [7.13 Coverage](#713-coverage)
-    * [7.14 Scanners](#714-scanners)
-
+  * [5. Validation Processes](#5-validation-processes)
+    * [5.1 Structure Validation](#51-structure-validation)
+    * [5.2 Empty content Validation](#52-empty-content-validation)
+    * [5.3 Case-Style Validation](#53-case-style-validation)
+    * [5.4 Rules Validation](#54-rules-validation)
+  * [6. Use Cases](#6-use-cases)
+    * [6.1 Validation in CI pipeline](#61-validation-in-ci-pipeline)
+    * [6.2 Working with external translation agencies](#62-working-with-external-translation-agencies)
+    * [6.3 Live WebEdit with HTML](#63-live-webedit-with-html)
+    * [6.4 Automatic Translation with Google, DeepL, ...](#64-automatic-translation-with-google-deepl-)
+  * [7. Warning](#7-warning)
+  * [8. Appendix](#8-appendix)
+      * [8.1 Imports](#81-imports)
+      * [8.2 Locales](#82-locales)
+    * [8.3 Storage Formats](#83-storage-formats)
+      * [8.3.1 Formats](#831-formats)
+        * [8.3.1.1 JSON](#8311-json)
+        * [8.3.1.2 INI](#8312-ini)
+        * [8.3.1.3 PO](#8313-po)
+        * [8.3.1.4 PHP](#8314-php)
+        * [8.3.1.5 Shopware 6](#8315-shopware-6)
+        * [8.3.1.6 YAML](#8316-yaml)
+      * [8.3.2 Custom Formats](#832-custom-formats)
+    * [8.4 Filters](#84-filters)
+    * [8.5 Groups](#85-groups)
+    * [8.6 Case Styles](#86-case-styles)
+    * [8.7 Rules](#87-rules)
+      * [8.8.1 Nesting Depth](#881-nesting-depth)
+      * [8.8.2 Key Length](#882-key-length)
+      * [8.8.3 Disallowed Texts](#883-disallowed-texts)
+      * [8.8.4 Duplicate Content](#884-duplicate-content)
+    * [8.8 PHP ENV Variables](#88-php-env-variables)
+    * [8.9 Exchange Formats](#89-exchange-formats)
+      * [8.9.1 CSV](#891-csv)
+      * [8.9.2 HTML / WebEdit](#892-html--webedit)
+      * [8.9.3 Custom Exchange Formats](#893-custom-exchange-formats)
+    * [8.10 Translator Services](#810-translator-services)
+      * [8.10.1 DeepL](#8101-deepl)
+      * [8.10.2 Google Cloud Translate](#8102-google-cloud-translate)
+      * [8.10.3 Google Web Translate](#8103-google-web-translate)
+      * [8.10.4 OpenAI GPT Translate](#8104-openai-gpt-translate)
+      * [8.10.5 Custom Translators](#8105-custom-translators)
+    * [8.11 Validation Reports](#811-validation-reports)
+      * [8.11.1 JUnit Report](#8111-junit-report)
+      * [8.11.2 JSON Report](#8112-json-report)
+    * [8.12 Protection](#812-protection)
+    * [8.13 Coverage](#813-coverage)
+    * [8.14 Scanners](#814-scanners)
 <!-- TOC -->
 
 
@@ -259,34 +262,6 @@ php vendor/bin/phpunuhi validate:all  --report-format=junit --report-output=.rep
 # ignore a configured coverage and use strict checks again
 php vendor/bin/phpunuhi validate:all --ignore-coverage
 ```
-
-**Invalid structure**
-
-The command will check if all locales of a Translation-Set have the **same structure**.
-If not, you might have forgotten something ;)
-
-<p align="center">
-   <img src="/.github/assets/validation-structure.png">
-</p>
-
-**Missing translations**
-
-If missing translations (**empty values**) are found, the validation process will fail.
-This helps against forgetting certain translations in any of your locales.
-
-<p align="center">
-   <img src="/.github/assets/validation-empty.png">
-</p>
-
-**Invalid Case-Styles**
-
-If you have provided a list of allowed case-styles, the validation command will automatically test
-if all your translation keys, match your provided case styles.
-
-**Maximum nesting levels**
-
-If you have provided a rule for nestingDepth, then the validator will also verify the nesting level
-on storages that support nesting (JSON, PHP, ...)
 
 ### 4.2 Validate Mess Command
 
@@ -487,11 +462,54 @@ php vendor/bin/phpunuhi scan:usage --dir=./src --scanner=twig --set=storefront
 > Keys that are found here, could still be used in other places, such as JS files, PHP files and more!
 > Do not immediately remove them without thinking about it.
 
-## 5. Use Cases
+## 5. Validation Processes
+
+PHPUnuhi has different validators integrated.
+These are executed depending on your configuration and what command you are using.
+
+While the command **validate:all** runs all validators, others might only use a specific validation process.
+
+In a nutshell, this is a list of things that PHPUnuhi can test for you.
+
+### 5.1 Structure Validation
+
+The command will check if all locales of a Translation-Set have the **same structure**.
+If not, you might have forgotten something ;)
+
+<p align="center">
+   <img src="/.github/assets/validation-structure.png">
+</p>
+
+### 5.2 Empty content Validation
+
+If missing translations (**empty values**) are found, the validation process will fail.
+This helps against forgetting certain translations in any of your locales.
+
+<p align="center">
+   <img src="/.github/assets/validation-empty.png">
+</p>
+
+### 5.3 Case-Style Validation
+
+If you have provided a list of allowed case-styles, the validation command will automatically test
+if all your translation keys, match your provided case styles.
+
+### 5.4 Rules Validation
+
+If you have provided specific rules such as max-nesting-depth or more,
+these will be tested as well.
+
+You can find possible rules in the appendix.
+
+> Why not everything as rule? Because things where growing after time, and yes, it could all be a rule
+> but still, the basic idea about rules is that they are really individual and configurable
+> while the other validators are more meant as "core" and standard validation steps.
+
+## 6. Use Cases
 
 Here are a few use cases and ideas to get you started.
 
-### 5.1 Validation in CI pipeline
+### 6.1 Validation in CI pipeline
 
 One of the typical things you want to make sure is, that your plugin/software doesn't miss any
 required translations.
@@ -499,7 +517,7 @@ required translations.
 This can be done directly within your CI pipeline. Just install your dependencies and run the validation command.
 The exit value of this command will automatically stop your pipeline if an error is detected.
 
-### 5.2 Working with external translation agencies
+### 6.2 Working with external translation agencies
 
 External translation agencies often require CSV exports.
 You can easily generate and export a CSV file for your partner agencies.
@@ -507,7 +525,7 @@ You can easily generate and export a CSV file for your partner agencies.
 Once they have adjusted their translation, they can send you the file back and you simply
 import it again with the import command.
 
-### 5.3 Live WebEdit with HTML
+### 6.3 Live WebEdit with HTML
 
 If you have a test or staging system, you can even go one step further.
 Just imagine setting up a cronjob that runs after a deployment, or as scheduled job.
@@ -518,7 +536,7 @@ That HTML file might then be exposed with something like this **https://stage.my
 Everyone who wants to either see all translations, or even modify them, can easily do this in their browser.
 And because you use a cronjob to generate the HTML, it's always automatically updated.
 
-### 5.4 Automatic Translation with Google, DeepL, ...
+### 6.4 Automatic Translation with Google, DeepL, ...
 
 You can automatically translate your missing (or all) translations by using an external service.
 This can be GoogleWeb, GoogleCloud or even DeepL.
@@ -526,7 +544,7 @@ Provide your API key (if required for service) and see the magic happening.
 
 > A double check and approval in your version control would still be a good thing.
 
-## 6. Warning
+## 7. Warning
 
 Please keep these things in mind:
 
@@ -534,9 +552,9 @@ Please keep these things in mind:
 * If you are using a storage format that is directly connected to a database, make sure to create a backup before
   importing translations!
 
-## 7. Appendix
+## 8. Appendix
 
-#### 7.1 Imports
+#### 8.1 Imports
 
 You can import other configuration files into your main configuration.
 This is useful if you want to split your configuration into multiple files and bundles.
@@ -554,7 +572,7 @@ This is useful if you want to split your configuration into multiple files and b
 </phpunuhi>
 ```
 
-#### 7.2 Locales
+#### 8.2 Locales
 
 Every translation set consists of multiple **locales**.
 Every locale is defined through a name and either a filename, or database-table (depending on format type).
@@ -580,16 +598,16 @@ use this one also for the directories of your files.
 </set>
 ```
 
-### 7.3 Storage Formats
+### 8.3 Storage Formats
 
 Storage formats define how your translations are stored.
 Every format has its own loading and saving implementation.
 
-#### 7.3.1 Formats
+#### 8.3.1 Formats
 
 The following formats are currently supported.
 
-##### 7.3.1.1 JSON
+##### 8.3.1.1 JSON
 
 | Format Attributes | Default | Description                             | 
 |-------------------|---------|-----------------------------------------|
@@ -614,7 +632,7 @@ The JSON structure across all files of a set should match.
 </set>
 ```
 
-##### 7.3.1.2 INI
+##### 8.3.1.2 INI
 
 | Format Attributes | Default | Description                             | 
 |-------------------|---------|-----------------------------------------|
@@ -656,7 +674,7 @@ different sections.
 </set>
 ```
 
-##### 7.3.1.3 PO
+##### 8.3.1.3 PO
 
 Some platforms have translations based on PO files.
 
@@ -676,7 +694,7 @@ At the moment it only covers the **msgid** and **msgstr** fields.
 </set>
 ```
 
-##### 7.3.1.4 PHP
+##### 8.3.1.4 PHP
 
 | Format Attributes | Default | Description                             | 
 |-------------------|---------|-----------------------------------------|
@@ -703,7 +721,7 @@ This storage type makes sure to read and also write PHP files that return a sing
 </set>
 ```
 
-##### 7.3.1.5 Shopware 6
+##### 8.3.1.5 Shopware 6
 
 | Format Attributes | Default | Description                            | 
 |-------------------|---------|----------------------------------------|
@@ -729,7 +747,7 @@ instead of an entity translation table.
 
 <phpunuhi>
     <php>
-        <env name="DB_HOST" value="127.0.0.1"/>
+        <env name="DB_HOST" value="128.0.0.1"/>
         <env name="DB_PORT" value="3306"/>
         <env name="DB_USER" value=""/>
         <env name="DB_PASSWD" value=""/>
@@ -762,7 +780,7 @@ instead of an entity translation table.
 </phpunuhi>
 ```
 
-##### 7.3.1.6 YAML
+##### 8.3.1.6 YAML
 
 | Format Attributes | Default | Description                             | 
 |-------------------|---------|-----------------------------------------|
@@ -787,7 +805,7 @@ The YAML structure across all files of a set should match.
 </set>
 ```
 
-#### 7.3.2 Custom Formats
+#### 8.3.2 Custom Formats
 
 It's also possible to register your custom storages.
 Create a class and implement the **StorageInterface** according to your needs.
@@ -798,7 +816,7 @@ Then simply register your storage using this function:
 StorageFactory::getInstance()->registerStorage($myStorage);
 ```
 
-### 7.4 Filters
+### 8.4 Filters
 
 It's possible to use filters to modify the list of covered translation keys.
 
@@ -823,7 +841,7 @@ You can also use **placeholders** using the * character.
 </set>
 ```
 
-### 7.5 Groups
+### 8.5 Groups
 
 Some storage formats automatically bundle translations into groups.
 This means, that more translations belong to one "thing".
@@ -839,7 +857,7 @@ A CSV format, has a separate column for groups, and the import should also work 
 The HTML format on the other hand, shows a matching style in the table, so you know that the
 translations all belong to this group.
 
-### 7.6 Case Styles
+### 8.6 Case Styles
 
 To keep consistency across all your translation keys, it's possible to set a list of allowed case styles.
 The **validate** command, will automatically test, if all your translation keys match at least one of the provided
@@ -893,7 +911,7 @@ Pascal case is only checked on level 1, and not on 0 and 2.
 </set>
 ```
 
-### 7.7 Rules
+### 8.7 Rules
 
 You can add additional rules to extend the validation of your Translation-Sets.
 Please see the list below for all supported rules.
@@ -909,7 +927,7 @@ Please see the list below for all supported rules.
 </set>
 ```
 
-#### 7.7.1 Nesting Depth
+#### 8.8.1 Nesting Depth
 
 The nesting-depth rule allows you to throw an error once the maximum depth is reached within a nested storage type.
 This helps you to keep your depth in control.
@@ -919,7 +937,7 @@ This helps you to keep your depth in control.
 <nestingDepth>3</nestingDepth>
 ```
 
-#### 7.7.2 Key Length
+#### 8.8.2 Key Length
 
 The key-length rule allows you to throw an error once the maximum length of a key is reached
 
@@ -928,7 +946,7 @@ The key-length rule allows you to throw an error once the maximum length of a ke
 <keyLength>20</keyLength>
 ```
 
-#### 7.7.3 Disallowed Texts
+#### 8.8.3 Disallowed Texts
 
 Provide a list of texts that must not occur in any of your translations.
 You can use this for anything you want, like swearing words, political incorrect phrases and more.
@@ -941,7 +959,7 @@ You can use this for anything you want, like swearing words, political incorrect
 </disallowedTexts>
 ```
 
-#### 7.7.4 Duplicate Content
+#### 8.8.4 Duplicate Content
 
 Sometimes you want to keep translations clean and reduced by avoiding duplicate values within a locale.
 Just imagine the simple translation value "Save" occurring multiple times in a single locale?
@@ -956,7 +974,7 @@ times within a single locale.
 <duplicateContent>false</duplicateContent>
 ```
 
-### 7.8 PHP ENV Variables
+### 8.8 PHP ENV Variables
 
 The XML configuration allows you to create custom ENV variables.
 Depending on the components you use in PHPUnuhi, some require specific ENV variables, such as the Shopware 6 database
@@ -968,7 +986,7 @@ configuration.
 
 <phpunuhi>
     <php>
-        <env name="DB_HOST" value="127.0.0.1"/>
+        <env name="DB_HOST" value="128.0.0.1"/>
         <env name="DB_PORT" value="3306"/>
         <env name="DB_USER" value=""/>
         <env name="DB_PASSWD" value=""/>
@@ -977,7 +995,7 @@ configuration.
 </phpunuhi>
 ```
 
-### 7.9 Exchange Formats
+### 8.9 Exchange Formats
 
 Exchange formats define how you export and import translation data.
 The main purpose is to send it out to a translation company or just someone else,
@@ -985,7 +1003,7 @@ and be able to import it back into your system again.
 
 The following formats are currently supported.
 
-#### 7.9.1 CSV
+#### 8.9.1 CSV
 
 * Format: "csv"
 
@@ -1006,7 +1024,7 @@ Every translation key has its own row, and all locale-values have their own colu
    <img src="/.github/assets/csv.png">
 </p>
 
-#### 7.9.2 HTML / WebEdit
+#### 8.9.2 HTML / WebEdit
 
 * Format: "html"
 
@@ -1020,7 +1038,7 @@ you can import again into your system with the format **html** in PHPUnuhi.
    <img src="/.github/assets/html.png">
 </p>
 
-#### 7.9.3 Custom Exchange Formats
+#### 8.9.3 Custom Exchange Formats
 
 It's also possible to register your custom exchange formats.
 Create a class and implement the **ExchangeInterface** according to your needs.
@@ -1031,12 +1049,12 @@ Then simply register your exchange format using this function:
 ExchangeFactory::getInstance()->registerExchangeFormat($myFormat);
 ```
 
-### 7.10 Translator Services
+### 8.10 Translator Services
 
 Translators are supported (external) services that automatically translate empty values for you.
 These services usually require an API key that needs to be provided for PHPUnuhi.
 
-#### 7.10.1 DeepL
+#### 8.10.1 DeepL
 
 * Service: "deepl"
 
@@ -1052,7 +1070,7 @@ DeepL allows you to either translate to a formal or informal language.
 This option is only available for some target languages, just like "German" ("du" vs. "Sie").
 You can request a formal language by simply applying the argument "--deepl-formal" to the translate command.
 
-#### 7.10.2 Google Cloud Translate
+#### 8.10.2 Google Cloud Translate
 
 * Service: "googlecloud"
 
@@ -1063,7 +1081,7 @@ You can request a formal language by simply applying the argument "--deepl-forma
 Google Cloud Translation allows you to use the AI services of Google.
 If you have an API Key, you can easily provide it with the corresponding argument when running the translation command.
 
-#### 7.10.3 Google Web Translate
+#### 8.10.3 Google Web Translate
 
 * Service: "googleweb"
 
@@ -1074,7 +1092,7 @@ Because of this, it can happen, that a massive number of requests might lead to 
 This is more meant for educational purposes.
 Although it works, you should consider getting a real Google API key for commercial and serious usage of their services.
 
-#### 7.10.4 OpenAI GPT Translate
+#### 8.10.4 OpenAI GPT Translate
 
 * Service: "openai"
 
@@ -1091,7 +1109,7 @@ That's it!
 This was indeed a last minute addon, but it works quite good.
 If you have any tweaks, feel free to contribute :)
 
-#### 7.10.5 Custom Translators
+#### 8.10.5 Custom Translators
 
 It's also possible to register your custom translators.
 Create a class and implement the **TranslatorInterface** according to your needs.
@@ -1102,7 +1120,7 @@ Then simply register your translator using this function:
 TranslatorFactory::getInstance()->registerTranslator($myTranslator);
 ```
 
-### 7.11 Validation Reports
+### 8.11 Validation Reports
 
 It's possible to generate reports after running a **validation** command. This helps you to use
 the results in different systems and platforms.
@@ -1110,19 +1128,19 @@ the results in different systems and platforms.
 The validation command has 2 arguments **--report-format=xyz** and **--report-output=abc** to provide
 a certain format and a custom output filename. Use this to generate reports based on validation results.
 
-#### 7.11.1 JUnit Report
+#### 8.11.1 JUnit Report
 
 You can generate a JUnit XML report by providing the following arguments when starting the validation.
 
 * Report Format: "junit"
 
-#### 7.11.2 JSON Report
+#### 8.11.2 JSON Report
 
 You can generate a JSON report by providing the following arguments when starting the validation.
 
 * Report Format: "json"
 
-### 7.12 Protection
+### 8.12 Protection
 
 PHPUnuhi allows you to configure markers or even full terms and protect them from being translated.
 Why would you need this?!
@@ -1158,7 +1176,7 @@ This is perfect if you have brand names or just any word that should not be acci
 </set>
 ```
 
-### 7.13 Coverage
+### 8.13 Coverage
 
 You can also configure the coverage of your translations.
 
@@ -1224,7 +1242,7 @@ Please keep in mind, that this does not make sense and work of course.
 > result is considered for the CLI exit code.
 > However, you can provide a separate option to force strict validation again.
 
-### 7.14 Scanners
+### 8.14 Scanners
 
 Scanners allow you to scan your files for occurrences of translations keys.
 This allows you to e.g. scan your TWIG files and see if all your keys are actually used somewhere.
