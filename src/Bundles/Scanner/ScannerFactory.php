@@ -3,6 +3,7 @@
 namespace PHPUnuhi\Bundles\Twig;
 
 use Exception;
+use PHPUnuhi\Bundles\MJML\MjmlScanner;
 use PHPUnuhi\Exceptions\ConfigurationException;
 
 class ScannerFactory
@@ -47,10 +48,10 @@ class ScannerFactory
      */
     public function registerScanner(ScannerInterface $scanner): void
     {
-        $newName = $scanner->getStorageName();
+        $newName = $scanner->getScannerName();
 
         foreach ($this->scanners as $existingStorage) {
-            if ($existingStorage->getStorageName() === $newName) {
+            if ($existingStorage->getScannerName() === $newName) {
                 throw new ConfigurationException('Scanner with name already registered: ' . $newName);
             }
         }
@@ -68,6 +69,7 @@ class ScannerFactory
         $this->scanners = [];
 
         $this->scanners[] = new TwigScanner();
+        $this->scanners[] = new MjmlScanner();
     }
 
     /**
@@ -82,7 +84,7 @@ class ScannerFactory
         }
 
         foreach ($this->scanners as $scanner) {
-            if ($scanner->getStorageName() === $name) {
+            if ($scanner->getScannerName() === $name) {
                 return $scanner;
             }
         }

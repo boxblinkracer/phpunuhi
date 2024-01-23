@@ -78,7 +78,7 @@ class ScanUsageCommand extends Command
         $config = $configLoader->load($configFile);
 
         $scanner = ScannerFactory::getInstance()->getScanner($scannerName);
-        $io->writeln('Using scanner: ' . $scanner->getStorageName());
+        $io->writeln('Using scanner: ' . $scanner->getScannerName());
 
 
 

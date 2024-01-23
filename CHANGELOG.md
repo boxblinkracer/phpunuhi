@@ -5,6 +5,10 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 ## [unreleased]
 
+### Added
+
+- Add new **MJML** scanner that allows to scan MJML files for translations. (idea by @wannevancamp)
+
 ### Fixed
 
 - Fixed problem with relative locale filenames in combination with the **basePath** attribute in the `<locales>` node. This led to wrong absolute filenames and therefore invalid filenames when loading.

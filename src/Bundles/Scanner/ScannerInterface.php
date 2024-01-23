@@ -6,10 +6,10 @@ interface ScannerInterface
 {
 
     /**
-     * Returns a unique name for the storage.
+     * Returns a unique name for the scanner.
      * @return string
      */
-    public function getStorageName(): string;
+    public function getScannerName(): string;
 
     /**
      * @param string $key

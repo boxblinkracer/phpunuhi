@@ -1,8 +1,10 @@
 <?php
 
-namespace PHPUnuhi\Bundles\Twig;
+namespace PHPUnuhi\Bundles\MJML;
 
-class TwigScanner implements ScannerInterface
+use PHPUnuhi\Bundles\Twig\ScannerInterface;
+
+class MjmlScanner implements ScannerInterface
 {
 
     /**
@@ -10,11 +12,11 @@ class TwigScanner implements ScannerInterface
      */
     public function getScannerName(): string
     {
-        return 'twig';
+        return 'mjml';
     }
 
     /**
-     * {{ 'header.example' | trans }}
+     * {{ 'email.contact.subject' | trans | sw_sanitize }}
      *
      * @param string $key
      * @param string $content

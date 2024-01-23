@@ -1232,6 +1232,7 @@ This allows you to e.g. scan your TWIG files and see if all your keys are actual
 The following list of scanners are currently supported:
 
 * twig
+* mjml
 
 It's also possible to register your custom scanner.
 Create a class and implement the **ScannerInterface** according to your needs.
