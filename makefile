@@ -60,6 +60,9 @@ pr: ##2 Runs and prepares everything for a pull request
 	@make phpunit -B
 	@make infection -B
 
+phpunit-debug: ##2 Debug the unit test with group "debug"
+	XDEBUG_MODE=coverage php ./vendor/bin/phpunit -v --group debug
+
 #------------------------------------------------------------------------------------------------
 
 phpcheck: ##3 Starts the PHP syntax checks
