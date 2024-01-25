@@ -161,6 +161,7 @@
 
     <xs:simpleType name="styleOptionValueType">
         <xs:restriction base="xs:token">
+            <xs:enumeration value="none"/>
             <xs:enumeration value="camel"/>
             <xs:enumeration value="snake"/>
             <xs:enumeration value="kebab"/>

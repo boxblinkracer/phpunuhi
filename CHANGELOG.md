@@ -13,6 +13,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 ### Fixed
 
 - Fixed problem with relative locale filenames in combination with the **basePath** attribute in the `<locales>` node. This led to wrong absolute filenames and therefore invalid filenames when loading.
+- Add missing **none** case style to XSD file.
 
 ## [1.16.0]
 
