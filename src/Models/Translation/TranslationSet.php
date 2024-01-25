@@ -313,15 +313,11 @@ class TranslationSet
             $hasValueInAnyLocale = false;
 
             foreach ($this->locales as $locale) {
-                try {
-                    $translation = $locale->findTranslation($id);
+                $translation = $locale->findTranslation($id);
 
-                    if (!$translation->isEmpty()) {
-                        $hasValueInAnyLocale = true;
-                        break;
-                    }
-                } catch (TranslationNotFoundException $ex) {
-                    continue;
+                if (!$translation->isEmpty()) {
+                    $hasValueInAnyLocale = true;
+                    break;
                 }
             }
 

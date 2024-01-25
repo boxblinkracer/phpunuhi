@@ -32,8 +32,6 @@ class EmptyContentRule implements RuleValidatorInterface
 
         foreach ($set->getLocales() as $locale) {
             foreach ($locale->getTranslations() as $translation) {
-                $testPassed = true;
-
                 $tests[] = $this->buildTestEntry(
                     $locale,
                     $translation->getKey(),

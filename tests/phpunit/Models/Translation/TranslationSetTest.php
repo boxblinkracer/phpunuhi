@@ -84,6 +84,86 @@ class TranslationSetTest extends TestCase
     }
 
     /**
+     * @throws Exception
+     * @return void
+     */
+    public function testHasRuleTrue(): void
+    {
+        $attributes = [];
+        $filter = new Filter();
+        $locales = [];
+        $protection = new Protection();
+        $rules = [
+            new Rule('test-rule', true),
+        ];
+
+        $set = new TranslationSet('storefront', 'json', $protection, $locales, $filter, $attributes, [], $rules);
+
+        $this->assertTrue($set->hasRule('test-rule'));
+    }
+
+    /**
+     * @throws Exception
+     * @return void
+     */
+    public function testHasRuleFalse(): void
+    {
+        $attributes = [];
+        $filter = new Filter();
+        $locales = [];
+        $protection = new Protection();
+        $rules = [
+            new Rule('test-rule', true),
+        ];
+
+        $set = new TranslationSet('storefront', 'json', $protection, $locales, $filter, $attributes, [], $rules);
+
+        $this->assertFalse($set->hasRule('abc'));
+    }
+
+    /**
+     * @throws Exception
+     * @return void
+     */
+    public function testGetRule(): void
+    {
+        $attributes = [];
+        $filter = new Filter();
+        $locales = [];
+        $protection = new Protection();
+        $rules = [
+            new Rule('test-rule', true),
+        ];
+
+        $set = new TranslationSet('storefront', 'json', $protection, $locales, $filter, $attributes, [], $rules);
+
+        $foundRule = $set->getRule('test-rule');
+
+        $this->assertEquals('test-rule', $foundRule->getName());
+    }
+
+    /**
+     * @throws Exception
+     * @return void
+     */
+    public function testGetRuleNotFoundThrowsException(): void
+    {
+        $this->expectException(Exception::class);
+
+        $attributes = [];
+        $filter = new Filter();
+        $locales = [];
+        $protection = new Protection();
+        $rules = [
+            new Rule('test-rule', true),
+        ];
+
+        $set = new TranslationSet('storefront', 'json', $protection, $locales, $filter, $attributes, [], $rules);
+
+        $set->getRule('abc');
+    }
+
+    /**
      * @return void
      */
     public function testAttributes(): void

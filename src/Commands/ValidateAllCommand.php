@@ -7,7 +7,6 @@ use PHPUnuhi\Components\Reporter\Model\ReportResult;
 use PHPUnuhi\Components\Validator\CaseStyleValidator;
 use PHPUnuhi\Components\Validator\EmptyContentValidator;
 use PHPUnuhi\Components\Validator\MissingStructureValidator;
-use PHPUnuhi\Components\Validator\Rules\EmptyContentRule;
 use PHPUnuhi\Components\Validator\RulesValidator;
 use PHPUnuhi\Configuration\ConfigurationLoader;
 use PHPUnuhi\Exceptions\ConfigurationException;
@@ -50,9 +49,9 @@ class ValidateAllCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return int
      * @throws Exception
      * @throws ConfigurationException
+     * @return int
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {

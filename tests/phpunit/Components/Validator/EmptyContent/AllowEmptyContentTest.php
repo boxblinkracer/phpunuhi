@@ -37,4 +37,24 @@ class AllowEmptyContentTest extends TestCase
 
         $this->assertFalse($data->isLocaleAllowed('fr-FR'));
     }
+
+    /**
+     * @return void
+     */
+    public function testLocaleWithWildcardIsAlwaysTrue(): void
+    {
+        $data = new AllowEmptyContent('lblTitle', ['*']);
+
+        $this->assertTrue($data->isLocaleAllowed('fr-FR'));
+    }
+
+    /**
+     * @return void
+     */
+    public function testEmptyLocalesIsAlwaysTrue(): void
+    {
+        $data = new AllowEmptyContent('lblTitle', []);
+
+        $this->assertTrue($data->isLocaleAllowed('fr-FR'));
+    }
 }

@@ -41,7 +41,7 @@ class AllowEmptyContent
     public function isLocaleAllowed(string $locale): bool
     {
         # if we have an entry without locales, we allow all locales to be empty
-        if (empty($this->locales)) {
+        if ($this->locales === []) {
             return true;
         }
 
