@@ -11,6 +11,11 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 - Add new **validate:structure** command to only validate against the structure.
 - Add new rule **emptyContent** that allows you to provide a list of keys that can stay empty, either in all or specific languages.
 
+### Changed
+
+- Add **breaking changes** for **duplicateContent** rule. This rule must now be configured per locale. Please see README for more.
+- The **duplicateContent** rule does now ignore empty values. Empty values are not considered anymore.
+
 ### Fixed
 
 - Fixed problem with relative locale filenames in combination with the **basePath** attribute in the `<locales>` node. This led to wrong absolute filenames and therefore invalid filenames when loading.

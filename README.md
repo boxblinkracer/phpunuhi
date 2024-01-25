@@ -984,9 +984,15 @@ In this case you can use this rule.
 Once set to **false**, the validator will automatically warn you, if you have a translation value configured multiple
 times within a single locale.
 
+You need to configure this rule per locale.
+If you want to configure all locales (or all that are not explicitely configured), you can use the wildcard for the rest.
+
 ```xml
 
-<duplicateContent>false</duplicateContent>
+<duplicateContent>
+    <locale name="de">false</locale>
+    <locale name="*">true</locale>
+</duplicateContent>
 ```
 
 #### 8.8.5 Empty Content

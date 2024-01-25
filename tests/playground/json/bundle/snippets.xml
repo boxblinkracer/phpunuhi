@@ -14,7 +14,9 @@
             </protect>
             <rules>
                 <nestingDepth>3</nestingDepth>
-                <duplicateContent>false</duplicateContent>
+                <duplicateContent>
+                    <locale name="*">false</locale>
+                </duplicateContent>
                 <emptyContent>
                     <key name="lblCaption"></key>
                     <key name="lblTitle">

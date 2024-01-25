@@ -1,9 +1,10 @@
 {
-    "card-section": {
-        "greeting": "Hallo %firstname%. Schön dich zu sehen!",
-        "titleTest": "Allgemein"
-    },
-    "kebab-title": "Allgemein",
-    "test234": "das Mädchen",
-    "lblCaption": ""
+  "card-section": {
+    "greeting": "Hallo %firstname%. Schön dich zu sehen!",
+    "titleTest": "Allgemein"
+  },
+  "kebab-title": "Allgemein",
+  "lblCaption": "Caption",
+  "lblCaption2": "Caption",
+  "test234": "das Mädchen"
 }

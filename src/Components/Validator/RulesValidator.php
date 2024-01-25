@@ -3,6 +3,7 @@
 namespace PHPUnuhi\Components\Validator;
 
 use PHPUnuhi\Bundles\Storage\StorageInterface;
+use PHPUnuhi\Components\Validator\DuplicateContent\DuplicateContent;
 use PHPUnuhi\Components\Validator\Model\ValidationResult;
 use PHPUnuhi\Components\Validator\Rules\DisallowedTextsRule;
 use PHPUnuhi\Components\Validator\Rules\DuplicateContentRule;
@@ -54,9 +55,10 @@ class RulesValidator implements ValidatorInterface
                     break;
 
                 case Rules::DUPLICATE_CONTENT:
-                    $isDuplicateAllowed = (bool)$rule->getValue();
-                    if (!$isDuplicateAllowed) {
-                        $ruleValidators[] = new DuplicateContentRule();
+                    /** @var DuplicateContent[] $localeSettings */
+                    $localeSettings = $rule->getValue();
+                    if (count($localeSettings) > 0) {
+                        $ruleValidators[] = new DuplicateContentRule($localeSettings);
                     }
                     break;
             }

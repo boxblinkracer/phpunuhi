@@ -3,6 +3,7 @@
 namespace PHPUnuhi\Components\Validator\Rules;
 
 use PHPUnuhi\Bundles\Storage\StorageInterface;
+use PHPUnuhi\Components\Validator\DuplicateContent\DuplicateContent;
 use PHPUnuhi\Components\Validator\Model\ValidationError;
 use PHPUnuhi\Components\Validator\Model\ValidationResult;
 use PHPUnuhi\Components\Validator\Model\ValidationTest;
@@ -11,6 +12,20 @@ use PHPUnuhi\Models\Translation\TranslationSet;
 
 class DuplicateContentRule implements RuleValidatorInterface
 {
+
+    /**
+     * @var DuplicateContent[]
+     */
+    private $localeSettings;
+
+
+    /**
+     * @param DuplicateContent[] $localeSettings
+     */
+    public function __construct(array $localeSettings)
+    {
+        $this->localeSettings = $localeSettings;
+    }
 
 
     /**
@@ -29,6 +44,10 @@ class DuplicateContentRule implements RuleValidatorInterface
      */
     public function validate(TranslationSet $set, StorageInterface $storage): ValidationResult
     {
+        if (count($this->localeSettings) === 0) {
+            return new ValidationResult([], []);
+        }
+
         $storage->getHierarchy();
 
         $tests = [];
@@ -36,6 +55,10 @@ class DuplicateContentRule implements RuleValidatorInterface
 
 
         foreach ($set->getLocales() as $locale) {
+            if (!$this->requiresDuplicateContent($locale->getName())) {
+                continue;
+            }
+
             $existingValues = [];
 
             foreach ($locale->getTranslations() as $translation) {
@@ -43,6 +66,11 @@ class DuplicateContentRule implements RuleValidatorInterface
 
                 if (!in_array($translation->getValue(), $existingValues, true)) {
                     $existingValues[] = $translation->getValue();
+                    $testPassed = true;
+                }
+
+                # if its empty we dont count it
+                if ($translation->getValue() === '') {
                     $testPassed = true;
                 }
 
@@ -68,6 +96,30 @@ class DuplicateContentRule implements RuleValidatorInterface
 
         return new ValidationResult($tests, $errors);
     }
+
+    /**
+     * @param string $locale
+     * @return bool
+     */
+    private function requiresDuplicateContent(string $locale): bool
+    {
+        foreach ($this->localeSettings as $localeSetting) {
+            if ($localeSetting->getLocale() === $locale) {
+                return !$localeSetting->isDuplicateAllowed();
+            }
+        }
+
+
+        # thats the default
+        foreach ($this->localeSettings as $localeSetting) {
+            if ($localeSetting->getLocale() === '*') {
+                return !$localeSetting->isDuplicateAllowed();
+            }
+        }
+
+        return false;
+    }
+
 
     /**
      * @param Locale $locale

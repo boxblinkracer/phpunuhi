@@ -133,7 +133,7 @@
             <xs:element name="nestingDepth" type="xs:int" minOccurs="0" maxOccurs="1"/>
             <xs:element name="keyLength" type="xs:int" minOccurs="0" maxOccurs="1"/>
             <xs:element name="disallowedTexts" type="typeDisallowedText" minOccurs="0" maxOccurs="1"/>
-            <xs:element name="duplicateContent" type="xs:boolean" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="duplicateContent" type="typeDuplicateContent" minOccurs="0" maxOccurs="1"/>
             <xs:element name="emptyContent" type="typeEmptyContent" minOccurs="0" maxOccurs="1"/>
         </xs:choice>
     </xs:complexType>
@@ -142,6 +142,20 @@
         <xs:choice minOccurs="0" maxOccurs="1">
             <xs:element name="text" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
         </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="typeDuplicateContent">
+        <xs:sequence>
+            <xs:element name="locale" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:boolean">
+                            <xs:attribute name="name" type="xs:string" use="required"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="typeEmptyContent">

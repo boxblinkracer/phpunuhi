@@ -2,6 +2,7 @@
 
 namespace PHPUnuhi\Configuration\Services;
 
+use PHPUnuhi\Components\Validator\DuplicateContent\DuplicateContent;
 use PHPUnuhi\Components\Validator\EmptyContent\AllowEmptyContent;
 use PHPUnuhi\Models\Configuration\Rule;
 use PHPUnuhi\Models\Configuration\Rules;
@@ -27,24 +28,36 @@ class RulesLoader
         $emptyContent = $rulesNode->emptyContent;
 
         if ($nestingDepth !== null) {
-            $rules[] = new Rule(Rules::NESTING_DEPTH, (string)$nestingDepth);
+            $value = (string)$nestingDepth;
+            if ($value !== '') {
+                $rules[] = new Rule(Rules::NESTING_DEPTH, $value);
+            }
         }
 
         if ($keyLength !== null) {
-            $rules[] = new Rule(Rules::KEY_LENGTH, (string)$keyLength);
+            $value = (string)$keyLength;
+            if ($value !== '') {
+                $rules[] = new Rule(Rules::KEY_LENGTH, $value);
+            }
         }
 
         if ($disallowedTexts !== null) {
+            /** @var null|array<mixed> $textsArray */
             $textsArray = $disallowedTexts->text;
-            $rules[] = new Rule(Rules::DISALLOWED_TEXT, (array)$textsArray);
+            if ($textsArray !== null && count($textsArray) > 0) {
+                $rules[] = new Rule(Rules::DISALLOWED_TEXT, (array)$textsArray);
+            }
         }
 
-        if ($duplicateContent !== null) {
-            $value = (strtolower($duplicateContent));
-            if ($value !== '') {
-                $isAllowed = $value !== 'false';
-                $rules[] = new Rule(Rules::DUPLICATE_CONTENT, $isAllowed);
+        if ($duplicateContent !== null && $duplicateContent->children() !== null) {
+            $foundLocales = [];
+            /** @var SimpleXMLElement $localeNode */
+            foreach ($duplicateContent->children() as $localeNode) {
+                $localeName = $this->getAttribute('name', $localeNode)->getValue();
+                $localeValue = (strtolower((string)$localeNode[0]) === 'true');
+                $foundLocales[] = new DuplicateContent($localeName, $localeValue);
             }
+            $rules[] = new Rule(Rules::DUPLICATE_CONTENT, $foundLocales);
         }
 
         if ($emptyContent !== null && $emptyContent->children() !== null) {
