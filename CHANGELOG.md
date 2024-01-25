@@ -9,6 +9,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 - Add new **MJML** scanner that allows to scan MJML files for translations. (idea by @wannevancamp)
 - Add new **validate:structure** command to only validate against the structure.
+- Add new rule **emptyContent** that allows you to provide a list of keys that can stay empty, either in all or specific languages.
 
 ### Fixed
 

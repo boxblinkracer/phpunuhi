@@ -2,9 +2,12 @@
 
 namespace PHPUnuhi\Commands;
 
+use Exception;
+use PHPUnuhi\Components\Reporter\Model\ReportResult;
 use PHPUnuhi\Components\Validator\CaseStyleValidator;
 use PHPUnuhi\Components\Validator\EmptyContentValidator;
 use PHPUnuhi\Components\Validator\MissingStructureValidator;
+use PHPUnuhi\Components\Validator\Rules\EmptyContentRule;
 use PHPUnuhi\Components\Validator\RulesValidator;
 use PHPUnuhi\Configuration\ConfigurationLoader;
 use PHPUnuhi\Exceptions\ConfigurationException;
@@ -12,6 +15,7 @@ use PHPUnuhi\Facades\CLI\CoverageCliFacade;
 use PHPUnuhi\Facades\CLI\ReporterCliFacade;
 use PHPUnuhi\Facades\CLI\TranslationSetCliFacade;
 use PHPUnuhi\Facades\CLI\ValidatorCliFacade;
+use PHPUnuhi\Models\Configuration\Rules;
 use PHPUnuhi\Services\Loaders\Xml\XmlLoader;
 use PHPUnuhi\Traits\CommandTrait;
 use PHPUnuhi\Traits\StringTrait;
@@ -46,8 +50,9 @@ class ValidateAllCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @throws ConfigurationException
      * @return int
+     * @throws Exception
+     * @throws ConfigurationException
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -63,15 +68,9 @@ class ValidateAllCommand extends Command
 
         # -----------------------------------------------------------------
 
-        $validators = [];
-        $validators[] = new MissingStructureValidator();
-        $validators[] = new CaseStyleValidator();
-        $validators[] = new EmptyContentValidator([]);
-        $validators[] = new RulesValidator();
-
         $translationSetCLI = new TranslationSetCliFacade($io);
         $coverageCLI = new CoverageCliFacade($io);
-        $validatorsCLI = new ValidatorCliFacade($io, $validators);
+        $validatorsCLI = new ValidatorCliFacade($io);
         $reporterCLI = new ReporterCliFacade($io);
 
         # -----------------------------------------------------------------
@@ -79,6 +78,7 @@ class ValidateAllCommand extends Command
 
         $configLoader = new ConfigurationLoader(new XmlLoader());
         $config = $configLoader->load($configFile);
+
 
         $useCoverageOnly = $config->hasCoverageSetting();
 
@@ -89,15 +89,34 @@ class ValidateAllCommand extends Command
 
         $translationSetCLI->showConfig($config->getTranslationSets());
 
-        $validatorsResult = $validatorsCLI->execute($config);
+        $validationResult = new ReportResult();
+
+        foreach ($config->getTranslationSets() as $set) {
+            $hasAllowEmptyList = [];
+
+            if ($set->hasRule(Rules::EMPTY_CONTENT)) {
+                $rule = $set->getRule(Rules::EMPTY_CONTENT);
+                $hasAllowEmptyList = $rule->getValue();
+            }
+
+            $validators = [];
+            $validators[] = new MissingStructureValidator();
+            $validators[] = new CaseStyleValidator();
+            $validators[] = new EmptyContentValidator($hasAllowEmptyList);
+            $validators[] = new RulesValidator();
+
+            $setResult = $validatorsCLI->execute($set, $validators);
+
+            $validationResult->addTranslationSet($setResult);
+        }
 
         $coverageResult = $useCoverageOnly ? $coverageCLI->execute($config) : true;
 
-        $reporterCLI->execute($reportFormat, $reportFilename, $validatorsResult);
+        $reporterCLI->execute($reportFormat, $reportFilename, $validationResult);
 
         # -----------------------------------------------------------------
 
-        $isAllValid = ($validatorsResult->getFailureCount() === 0);
+        $isAllValid = ($validationResult->getFailureCount() === 0);
 
         # if we have a coverage setting
         # then ignore all our results -> in this case these are only warnings
@@ -115,8 +134,8 @@ class ValidateAllCommand extends Command
         }
 
         if ($isAllValid) {
-            if ($validatorsResult->getFailureCount() > 0) {
-                $io->warning('Validation successful, but found ' . $validatorsResult->getFailureCount() . ' warnings!');
+            if ($validationResult->getFailureCount() > 0) {
+                $io->warning('Validation successful, but found ' . $validationResult->getFailureCount() . ' warnings!');
             } else {
                 $io->success('All translations are valid!');
             }
@@ -124,7 +143,7 @@ class ValidateAllCommand extends Command
             return 0;
         }
 
-        $io->error('Found ' . $validatorsResult->getFailureCount() . ' errors!');
+        $io->error('Found ' . $validationResult->getFailureCount() . ' errors!');
         return 1;
     }
 }

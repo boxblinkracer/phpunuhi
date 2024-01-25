@@ -15,6 +15,12 @@
             <rules>
                 <nestingDepth>3</nestingDepth>
                 <duplicateContent>false</duplicateContent>
+                <emptyContent>
+                    <key name="lblCaption"></key>
+                    <key name="lblTitle">
+                        <locale>*</locale>
+                    </key>
+                </emptyContent>
             </rules>
             <styles>
                 <style level="0">kebab</style>

@@ -38,8 +38,18 @@ class AllowEmptyContent
      * @param string $locale
      * @return bool
      */
-    public function isLocaleAllowed(string $locale) : bool
+    public function isLocaleAllowed(string $locale): bool
     {
+        # if we have an entry without locales, we allow all locales to be empty
+        if (empty($this->locales)) {
+            return true;
+        }
+
+        # if we have a locale with * wildcard, we also allow all locales to be empty
+        if (in_array('*', $this->locales)) {
+            return true;
+        }
+
         return in_array($locale, $this->locales);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace PHPUnuhi\Models\Translation;
 
+use Exception;
 use PHPUnuhi\Exceptions\TranslationNotFoundException;
 use PHPUnuhi\Models\Configuration\Attribute;
 use PHPUnuhi\Models\Configuration\CaseStyle;
@@ -132,11 +133,42 @@ class TranslationSet
     }
 
     /**
+     * @param string $name
+     * @return bool
+     */
+    public function hasRule(string $name): bool
+    {
+        foreach ($this->rules as $rule) {
+            if ($rule->getName() === $name) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * @return Rule[]
      */
     public function getRules(): array
     {
         return $this->rules;
+    }
+
+    /**
+     * @param string $name
+     * @throws Exception
+     * @return Rule
+     */
+    public function getRule(string $name): Rule
+    {
+        foreach ($this->rules as $rule) {
+            if ($rule->getName() === $name) {
+                return $rule;
+            }
+        }
+
+        throw new Exception('Rule not found: ' . $name);
     }
 
     /**

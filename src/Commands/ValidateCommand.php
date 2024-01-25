@@ -35,8 +35,6 @@ class ValidateCommand extends Command
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $originalCmd = new ValidateAllCommand();
-
-        return $originalCmd->execute($input, $output);
+        return (new ValidateAllCommand())->execute($input, $output);
     }
 }

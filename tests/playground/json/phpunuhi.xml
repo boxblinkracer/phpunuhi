@@ -16,16 +16,6 @@
             <locales basePath="./snippets">
                 <locale name="en">%base_path%/%locale%_newline.json</locale>
             </locales>
-            <rules>
-                <emptyContent>
-                    <key name="social.facebook.link"/>
-                    <key name="social.youtube.link">
-                        <locale>EN</locale>
-                        <locale>IT</locale>
-                    </key>
-                </emptyContent>
-                ...
-            </rules>
         </set>
 
     </translations>

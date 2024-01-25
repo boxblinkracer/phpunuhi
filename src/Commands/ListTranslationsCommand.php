@@ -22,7 +22,7 @@ class ListTranslationsCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('list:translations')
+            ->setName(CommandNames::LIST_TRANSLATIONS)
             ->setDescription('')
             ->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', '');
 

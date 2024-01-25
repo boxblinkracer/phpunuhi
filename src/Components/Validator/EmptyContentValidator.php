@@ -50,6 +50,17 @@ class EmptyContentValidator implements ValidatorInterface
             foreach ($locale->getTranslations() as $translation) {
                 $testPassed = !$translation->isEmpty();
 
+                if (!$testPassed) {
+
+                    # check if we have an allow list entry
+                    foreach ($this->allowList as $allowEntry) {
+                        if ($allowEntry->getKey() === $translation->getKey() && $allowEntry->isLocaleAllowed($locale->getName())) {
+                            $testPassed = true;
+                            break;
+                        }
+                    }
+                }
+
                 $tests[] = new ValidationTest(
                     $translation->getKey(),
                     $locale->getName(),
@@ -61,15 +72,6 @@ class EmptyContentValidator implements ValidatorInterface
                     $testPassed
                 );
 
-                if (!$testPassed) {
-                    # check if we have an allow list entry
-                    foreach ($this->allowList as $allowEntry) {
-                        if ($allowEntry->getKey() === $translation->getKey() && $allowEntry->isLocaleAllowed($locale->getName())) {
-                            $testPassed = true;
-                            break;
-                        }
-                    }
-                }
 
                 if ($testPassed) {
                     continue;

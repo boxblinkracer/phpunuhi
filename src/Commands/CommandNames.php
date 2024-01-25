@@ -11,4 +11,7 @@ interface CommandNames
     public const VALIDATE_COVERAGE = 'validate:coverage';
     public const VALIDATE_MESSAGES = 'validate:mess';
     public const VALIDATE_STRUCTURE = 'validate:structure';
+
+    public const LIST_TRANSLATIONS = 'list:translations';
+
 }

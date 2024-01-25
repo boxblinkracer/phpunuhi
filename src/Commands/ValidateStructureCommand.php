@@ -2,6 +2,7 @@
 
 namespace PHPUnuhi\Commands;
 
+use PHPUnuhi\Components\Reporter\Model\ReportResult;
 use PHPUnuhi\Components\Validator\MissingStructureValidator;
 use PHPUnuhi\Configuration\ConfigurationLoader;
 use PHPUnuhi\Exceptions\ConfigurationException;
@@ -61,7 +62,7 @@ class ValidateStructureCommand extends Command
         $validators[] = new MissingStructureValidator();
 
         $translationSetCLI = new TranslationSetCliFacade($io);
-        $validatorsCLI = new ValidatorCliFacade($io, $validators);
+        $validatorsCLI = new ValidatorCliFacade($io);
         $reporterCLI = new ReporterCliFacade($io);
 
         # -----------------------------------------------------------------
@@ -72,7 +73,13 @@ class ValidateStructureCommand extends Command
 
         $translationSetCLI->showConfig($config->getTranslationSets());
 
-        $validatorsResult = $validatorsCLI->execute($config);
+        $validatorsResult = new ReportResult();
+
+        foreach ($config->getTranslationSets() as $set) {
+            $result = $validatorsCLI->execute($set, $validators);
+
+            $validatorsResult->addTranslationSet($result);
+        }
 
         $reporterCLI->execute($reportFormat, $reportFilename, $validatorsResult);
 

@@ -10,13 +10,14 @@ use PHPUnuhi\Models\Translation\TranslationSet;
 
 class EmptyContentRule implements RuleValidatorInterface
 {
+    public const IDENTIFIER = 'EMPTY_CONTENT';
 
     /**
      * @return string
      */
     public function getRuleIdentifier(): string
     {
-        return 'EMPTY_CONTENT';
+        return self::IDENTIFIER;
     }
 
     /**
