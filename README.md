@@ -1021,7 +1021,7 @@ Besides that, you can specify the locales that are allowed to be empty.
 </emptyContent>
 ```
 
-Your validations will not always pass, if the conditions for empty translations based on this rule are met.
+Your validations will now always pass, if the conditions for empty translations based on this rule are met.
 
 ### 8.8 PHP ENV Variables
 
