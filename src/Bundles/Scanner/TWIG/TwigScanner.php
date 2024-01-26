@@ -14,6 +14,14 @@ class TwigScanner implements ScannerInterface
     }
 
     /**
+     * @return string
+     */
+    public function getExtension(): string
+    {
+        return 'twig';
+    }
+
+    /**
      * {{ 'header.example' | trans }}
      *
      * @param string $key

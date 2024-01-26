@@ -25,15 +25,14 @@ class ScanUsageCommand extends Command
     /**
      * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
-        $this
-            ->setName('scan:usage')
-            ->setDescription('Scans the usage of translations in the provided files')
-            ->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', '')
-            ->addOption('set', null, InputOption::VALUE_REQUIRED, '', '')
-            ->addOption('dir', null, InputOption::VALUE_REQUIRED, '', '')
-            ->addOption('scanner', null, InputOption::VALUE_REQUIRED, '', '');
+        $this->setName('scan:usage');
+        $this->setDescription('Scans the usage of translations in the provided files');
+        $this->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', '');
+        $this->addOption('set', null, InputOption::VALUE_REQUIRED, '', '');
+        $this->addOption('dir', null, InputOption::VALUE_REQUIRED, '', '');
+        $this->addOption('scanner', null, InputOption::VALUE_REQUIRED, '', '');
 
         parent::configure();
     }
@@ -57,7 +56,7 @@ class ScanUsageCommand extends Command
         $scannerName = $this->getConfigStringValue('scanner', $input);
         $directory = $this->getConfigStringValue('dir', $input);
         $setName = $this->getConfigStringValue('set', $input);
-
+        $isVerboseMode = (bool)$input->getOption('verbose');
 
         if ($scannerName === '' || $scannerName === '0') {
             throw new Exception('No scanner provided');
@@ -79,15 +78,25 @@ class ScanUsageCommand extends Command
 
         $scanner = ScannerFactory::getInstance()->getScanner($scannerName);
         $io->writeln('Using scanner: ' . $scanner->getScannerName());
+        $io->writeln('');
 
-
-
-        $scannedFiles = $directoryLoader->getFiles($directory, 'twig');
+        $scannedFiles = $directoryLoader->getFiles($directory, $scanner->getExtension());
 
         $fileContents = [];
+
+        if ($isVerboseMode) {
+            $io->writeln('Found files:');
+        }
+
         foreach ($scannedFiles as $file) {
             $fileContents[$file] = $fileReader->load($file);
+
+            if ($isVerboseMode) {
+                $io->writeln('    * ' . $file);
+            }
         }
+
+        $io->writeln('');
 
 
         if ($fileContents === []) {
@@ -155,7 +164,7 @@ class ScanUsageCommand extends Command
 
         if ($errorCount > 0) {
             $io->error('Found ' . $errorCount . ' translation keys that do not seem to be used in any of the scanned files');
-            $io->note('Please keep in mind, the keys have not been found in your scanned files, but might be used somewhere else, like in JS or PHP files. Do not delete them without further investigation!');
+            $io->note('Please keep in mind, the keys have not been found in your scanned files, but might be used somewhere else, like in JS, PHP, C# or other files. Do not delete them without further investigation!');
             return Command::FAILURE;
         }
 

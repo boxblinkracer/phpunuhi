@@ -16,6 +16,14 @@ class MjmlScanner implements ScannerInterface
     }
 
     /**
+     * @return string
+     */
+    public function getExtension(): string
+    {
+        return 'mjml';
+    }
+
+    /**
      * {{ 'email.contact.subject' | trans | sw_sanitize }}
      *
      * @param string $key

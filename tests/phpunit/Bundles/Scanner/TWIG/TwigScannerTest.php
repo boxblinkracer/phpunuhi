@@ -17,6 +17,14 @@ class TwigScannerTest extends TestCase
     }
 
     /**
+     * @return void
+     */
+    public function testGetExtension(): void
+    {
+        $this->assertEquals('twig', (new TwigScanner())->getExtension());
+    }
+
+    /**
      * @return array<mixed>
      */
     public function getFoundData(): array

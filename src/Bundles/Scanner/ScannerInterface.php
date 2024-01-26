@@ -12,6 +12,11 @@ interface ScannerInterface
     public function getScannerName(): string;
 
     /**
+     * @return string
+     */
+    public function getExtension(): string;
+
+    /**
      * @param string $key
      * @param string $content
      * @return bool

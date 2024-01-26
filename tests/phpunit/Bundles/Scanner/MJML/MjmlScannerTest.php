@@ -17,6 +17,14 @@ class MjmlScannerTest extends TestCase
     }
 
     /**
+     * @return void
+     */
+    public function testGetExtension(): void
+    {
+        $this->assertEquals('mjml', (new MjmlScanner())->getExtension());
+    }
+
+    /**
      * @return array<mixed>
      */
     public function getFoundData(): array

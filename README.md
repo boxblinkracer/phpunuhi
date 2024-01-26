@@ -471,6 +471,9 @@ php vendor/bin/phpunuhi scan:usage --dir=./src --scanner=twig --configuration=./
 
 # custom set
 php vendor/bin/phpunuhi scan:usage --dir=./src --scanner=twig --set=storefront
+
+# verbose mode to show more output, like scanned files and so on
+php vendor/bin/phpunuhi scan:usage --dir=./src --scanner=twig --verbose
 ```
 
 > Please note, this is only a helper command to find unused translations in template files.
@@ -985,7 +988,7 @@ Once set to **false**, the validator will automatically warn you, if you have a 
 times within a single locale.
 
 You need to configure this rule per locale.
-If you want to configure all locales (or all that are not explicitely configured), you can use the wildcard for the rest.
+If you want to configure all locales (or all that are not explicitly configured), you can use the wildcard for the rest.
 
 ```xml
 
