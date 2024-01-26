@@ -24,6 +24,7 @@ class MjmlScannerTest extends TestCase
         return [
             ["<h1>{{'email.contact.subject'|trans|sw_sanitize}}</h1>"],
             ["<h1>{{ 'email.contact.subject' | trans | sw_sanitize }}</h1>"],
+            ["<h1>{{ 'email.contact.subject'|trans|sw_sanitize }}</h1>"],
 
             ["<h1>{{ 'email.contact.subject ' | trans }}</h1>"],
             ["<h1>{{ ' email.contact.subject' | trans }}</h1>"],
