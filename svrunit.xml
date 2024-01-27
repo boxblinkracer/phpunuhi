@@ -3,10 +3,12 @@
 
         <testsuite name="bin" executable="php bin/phpunuhi">
             <directory>tests/svrunit/tests</directory>
+            <directory>tests/svrunit/tests/commands</directory>
         </testsuite>
 
         <testsuite name="phar" executable="php ./build/phpunuhi.phar">
             <directory>tests/svrunit/tests</directory>
+            <directory>tests/svrunit/tests/commands</directory>
         </testsuite>
 
     </testsuites>

@@ -1,0 +1,5 @@
+commands:
+
+  - name: "Validate Structure"
+    command: "(($EXEC)) validate:structure --configuration=./tests/svrunit/fixtures/json/phpunuhi.xml"
+    expected: "All translations are valid"

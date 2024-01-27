@@ -1,10 +1,10 @@
 commands:
   - name: "Status"
-    command: "(($EXEC)) status --configuration=./tests/svrunit/formats/php/phpunuhi.xml"
+    command: "(($EXEC)) status --configuration=./tests/svrunit/fixtures/php/phpunuhi.xml"
     expected: "Coverage: 100%"
   - name: "Validate"
-    command: "(($EXEC)) validate --configuration=./tests/svrunit/formats/php/phpunuhi.xml"
+    command: "(($EXEC)) validate --configuration=./tests/svrunit/fixtures/php/phpunuhi.xml"
     expected: "All translations are valid"
   - name: "Export"
-    command: "(($EXEC)) export --configuration=./tests/svrunit/formats/php/phpunuhi.xml --dir=.svrunit"
+    command: "(($EXEC)) export --configuration=./tests/svrunit/fixtures/php/phpunuhi.xml --dir=.svrunit"
     expected: "All translations exported"

@@ -1,0 +1,5 @@
+commands:
+
+  - name: "Export"
+    command: "(($EXEC)) export --configuration=./tests/svrunit/fixtures/json/phpunuhi.xml --dir=.svrunit"
+    expected: "All translations exported"

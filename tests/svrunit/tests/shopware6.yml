@@ -1,4 +1,4 @@
 commands:
   - name: "Format requires database"
-    command: "(($EXEC)) status --configuration=./tests/svrunit/formats/shopware6/phpunuhi.xml"
+    command: "(($EXEC)) status --configuration=./tests/svrunit/fixtures/shopware6/phpunuhi.xml"
     expected: "Connection refused"

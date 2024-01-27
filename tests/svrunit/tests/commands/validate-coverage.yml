@@ -1,0 +1,5 @@
+commands:
+
+  - name: "Validate Coverage"
+    command: "(($EXEC)) validate:coverage --configuration=./tests/svrunit/fixtures/json/phpunuhi.xml"
+    expected: "Checking minimum coverage..."

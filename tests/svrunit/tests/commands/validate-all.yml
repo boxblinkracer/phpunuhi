@@ -1,0 +1,9 @@
+commands:
+
+  - name: "Validate (deprecated))"
+    command: "(($EXEC)) validate --configuration=./tests/svrunit/fixtures/json/phpunuhi.xml"
+    expected: "All translations are valid"
+
+  - name: "Validate All"
+    command: "(($EXEC)) validate:all --configuration=./tests/svrunit/fixtures/json/phpunuhi.xml"
+    expected: "All translations are valid"

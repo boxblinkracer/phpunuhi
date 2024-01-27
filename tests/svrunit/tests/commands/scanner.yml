@@ -1,0 +1,13 @@
+commands:
+
+  - name: "Scan Usage TWIG"
+    command: "(($EXEC)) scan:usage --scanner=twig --dir=./tests/svrunit/fixtures/json/templates --configuration=./tests/svrunit/fixtures/json/phpunuhi.xml "
+    expected: "Key not found in any file"
+
+  - name: "Scan Usage MJML"
+    command: "(($EXEC)) scan:usage --scanner=mjml --dir=./tests/svrunit/fixtures/json/templates --configuration=./tests/svrunit/fixtures/json/phpunuhi.xml"
+    expected: "Key not found in any file"
+
+  - name: "Scan Usage with verbose mode shows scanned files"
+    command: "(($EXEC)) scan:usage --scanner=mjml --dir=./tests/svrunit/fixtures/json/templates --verbose --configuration=./tests/svrunit/fixtures/json/phpunuhi.xml"
+    expected: "/app/tests/svrunit/fixtures/json/templates/subfolder/index.mjml"
