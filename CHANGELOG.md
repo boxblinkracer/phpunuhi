@@ -3,17 +3,20 @@
 All notable changes of releases are documented in this file
 using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
-## [unreleased]
+## [1.17.0]
+
+### Breaking Changes
+
+- Add **breaking changes** for **duplicateContent** rule. This rule must now be configured per locale. Please see README for more. (idea by @matthiashamacher)
 
 ### Added
 
 - Add new **MJML** scanner that allows to scan MJML files for translations. (idea by @wannevancamp)
 - Add new **validate:structure** command to only validate against the structure.
-- Add new rule **emptyContent** that allows you to provide a list of keys that can stay empty, either in all or specific languages.
+- Add new rule **emptyContent** that allows you to provide a list of keys that can stay empty, either in all or specific languages. (idea by @wannevancamp)
 
 ### Changed
 
-- Add **breaking changes** for **duplicateContent** rule. This rule must now be configured per locale. Please see README for more.
 - The **duplicateContent** rule does now ignore empty values. Empty values are not considered anymore.
 
 ### Fixed
