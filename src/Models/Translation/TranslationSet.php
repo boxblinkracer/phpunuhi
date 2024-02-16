@@ -5,7 +5,7 @@ namespace PHPUnuhi\Models\Translation;
 use Exception;
 use PHPUnuhi\Exceptions\TranslationNotFoundException;
 use PHPUnuhi\Models\Configuration\Attribute;
-use PHPUnuhi\Models\Configuration\CaseStyle;
+use PHPUnuhi\Models\Configuration\CaseStyleSetting;
 use PHPUnuhi\Models\Configuration\Filter;
 use PHPUnuhi\Models\Configuration\Protection;
 use PHPUnuhi\Models\Configuration\Rule;
@@ -44,9 +44,9 @@ class TranslationSet
     private $filter;
 
     /**
-     * @var CaseStyle[]
+     * @var CaseStyleSetting
      */
-    private $casingStyles;
+    private $casingStyleSettings;
 
     /**
      * @var Rule[]
@@ -61,10 +61,10 @@ class TranslationSet
      * @param Locale[] $locales
      * @param Filter $filter
      * @param Attribute[] $attributes
-     * @param CaseStyle[] $styles
+     * @param CaseStyleSetting $styles
      * @param Rule[] $rules
      */
-    public function __construct(string $name, string $format, Protection $protection, array $locales, Filter $filter, array $attributes, array $styles, array $rules)
+    public function __construct(string $name, string $format, Protection $protection, array $locales, Filter $filter, array $attributes, CaseStyleSetting $styles, array $rules)
     {
         $this->name = $name;
         $this->format = $format;
@@ -72,7 +72,7 @@ class TranslationSet
         $this->locales = $locales;
         $this->filter = $filter;
         $this->attributes = $attributes;
-        $this->casingStyles = $styles;
+        $this->casingStyleSettings = $styles;
         $this->rules = $rules;
     }
 
@@ -180,11 +180,11 @@ class TranslationSet
     }
 
     /**
-     * @return CaseStyle[]
+     * @return CaseStyleSetting
      */
-    public function getCasingStyles(): array
+    public function getCasingStyleSettings(): CaseStyleSetting
     {
-        return $this->casingStyles;
+        return $this->casingStyleSettings;
     }
 
     /**
@@ -286,13 +286,15 @@ class TranslationSet
      */
     public function getCasingStyle(int $getLevel): string
     {
-        foreach ($this->casingStyles as $style) {
+        $caseStyles = $this->casingStyleSettings->getCaseStyles();
+
+        foreach ($caseStyles as $style) {
             if ($style->getLevel() === $getLevel) {
                 return $style->getName();
             }
         }
 
-        foreach ($this->casingStyles as $style) {
+        foreach ($caseStyles as $style) {
             if ($style->hasLevel() === false) {
                 return $style->getName();
             }

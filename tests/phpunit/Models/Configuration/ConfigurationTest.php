@@ -3,6 +3,7 @@
 namespace phpunit\Models\Configuration;
 
 use PHPUnit\Framework\TestCase;
+use PHPUnuhi\Models\Configuration\CaseStyleSetting;
 use PHPUnuhi\Models\Configuration\Configuration;
 use PHPUnuhi\Models\Configuration\Coverage;
 use PHPUnuhi\Models\Configuration\Coverage\TranslationSetCoverage;
@@ -19,7 +20,7 @@ class ConfigurationTest extends TestCase
     public function testTranslationSets(): void
     {
         $sets = [];
-        $sets[] = new TranslationSet('products', 'ini', new Protection(), [], new Filter(), [], [], []);
+        $sets[] = new TranslationSet('products', 'ini', new Protection(), [], new Filter(), [], new CaseStyleSetting([], []), []);
 
         $config = new Configuration($sets);
 
@@ -79,7 +80,7 @@ class ConfigurationTest extends TestCase
      */
     public function testHasCoverageWithTranslationSetMinCoverage(): void
     {
-        $set = new TranslationSet('products', 'ini', new Protection(), [], new Filter(), [], [], []);
+        $set = new TranslationSet('products', 'ini', new Protection(), [], new Filter(), [], new CaseStyleSetting([], []), []);
 
         $config = new Configuration([$set]);
 
@@ -101,7 +102,7 @@ class ConfigurationTest extends TestCase
      */
     public function testHasCoverageWithTranslationSetLocaleCoverage(): void
     {
-        $set = new TranslationSet('products', 'ini', new Protection(), [], new Filter(), [], [], []);
+        $set = new TranslationSet('products', 'ini', new Protection(), [], new Filter(), [], new CaseStyleSetting([], []), []);
 
         $config = new Configuration([$set]);
 
@@ -123,8 +124,8 @@ class ConfigurationTest extends TestCase
      */
     public function testHasCoverageIfOnlyOneTranslationSetHasCoverage(): void
     {
-        $set1 = new TranslationSet('admin', 'ini', new Protection(), [], new Filter(), [], [], []);
-        $set2 = new TranslationSet('storefront', 'ini', new Protection(), [], new Filter(), [], [], []);
+        $set1 = new TranslationSet('admin', 'ini', new Protection(), [], new Filter(), [], new CaseStyleSetting([], []), []);
+        $set2 = new TranslationSet('storefront', 'ini', new Protection(), [], new Filter(), [], new CaseStyleSetting([], []), []);
 
         $config = new Configuration([$set1, $set2]);
 

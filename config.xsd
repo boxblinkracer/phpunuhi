@@ -175,9 +175,10 @@
     <!-- STYLE -->
 
     <xs:complexType name="typeStyle">
-        <xs:choice minOccurs="0" maxOccurs="1">
+        <xs:sequence>
             <xs:element name="style" type="styleOptions" minOccurs="1" maxOccurs="unbounded"/>
-        </xs:choice>
+            <xs:element name="ignore" type="styleIgnore" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="styleOptions">
@@ -201,6 +202,20 @@
             <xs:enumeration value="number"/>
         </xs:restriction>
     </xs:simpleType>
+
+    <xs:complexType name="styleIgnore">
+        <xs:sequence>
+            <xs:element name="key" type="styleIgnoreKey" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="styleIgnoreKey">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="fqp" type="xs:boolean" use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
 
     <!-- ================================================================================================================================ -->
     <!-- LOCALES -->

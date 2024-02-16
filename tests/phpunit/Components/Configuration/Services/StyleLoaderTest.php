@@ -5,7 +5,8 @@ namespace phpunit\Components\Configuration\Services;
 use PHPUnit\Framework\TestCase;
 use phpunit\Utils\Traits\XmlLoaderTrait;
 use PHPUnuhi\Configuration\Services\StyleLoader;
-use PHPUnuhi\Models\Configuration\CaseStyle;
+use PHPUnuhi\Models\Configuration\CaseStyle\CaseStyle;
+use PHPUnuhi\Models\Configuration\CaseStyle\CaseStyleIgnoreKey;
 
 class StyleLoaderTest extends TestCase
 {
@@ -94,6 +95,65 @@ class StyleLoaderTest extends TestCase
         $xml = $this->loadXml('<styles></styles>');
 
         $result = $this->loader->loadStyles($xml);
+
+        $this->assertCount(0, $result);
+    }
+
+
+    /**
+     * @return void
+     */
+    public function testLoadIgnores(): void
+    {
+        $xml = $this->loadXml('
+            <styles>
+                <ignore>
+                    <key>lblTitle</key>
+                    <key fqp="false">lblGlobal</key>
+                    <key fqp="true">lblFixed</key>
+                </ignore>
+            </styles>
+        ');
+
+        $result = $this->loader->loadIgnoredKeys($xml);
+
+        $this->assertCount(3, $result);
+
+        $this->assertInstanceOf(CaseStyleIgnoreKey::class, $result[0]);
+        $this->assertInstanceOf(CaseStyleIgnoreKey::class, $result[1]);
+        $this->assertInstanceOf(CaseStyleIgnoreKey::class, $result[2]);
+
+        # default should be FQP TRUE
+        $this->assertEquals('lblTitle', $result[0]->getKey());
+        $this->assertEquals(true, $result[0]->isFullyQualifiedPath(), 'FQP should be true if not provided');
+
+        $this->assertEquals('lblGlobal', $result[1]->getKey());
+        $this->assertEquals(false, $result[1]->isFullyQualifiedPath(), 'FQP should be false');
+
+        $this->assertEquals('lblFixed', $result[2]->getKey());
+        $this->assertEquals(true, $result[2]->isFullyQualifiedPath(), 'FQP should be true');
+    }
+
+    /**
+     * @return void
+     */
+    public function testLoadIgnoresWithoutStylesNode(): void
+    {
+        $xml = $this->loadXml('<root></root>');
+
+        $result = $this->loader->loadIgnoredKeys($xml);
+
+        $this->assertCount(0, $result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testLoadIgnoresWithMissingNode(): void
+    {
+        $xml = $this->loadXml('<styles></styles>');
+
+        $result = $this->loader->loadIgnoredKeys($xml);
 
         $this->assertCount(0, $result);
     }

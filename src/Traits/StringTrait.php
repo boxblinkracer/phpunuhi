@@ -41,4 +41,19 @@ trait StringTrait
         }
         return (substr($string, -$len) === $endString);
     }
+
+    /**
+     * @param string $string
+     * @param string[] $search
+     * @return bool
+     */
+    protected function stringDoesContainInArray(string $string, array $search): bool
+    {
+        foreach ($search as $item) {
+            if ($this->stringDoesContain($string, $item)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

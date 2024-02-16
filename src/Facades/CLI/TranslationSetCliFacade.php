@@ -33,9 +33,11 @@ class TranslationSetCliFacade
             $this->io->writeln('-------------------------------------------------------------');
             $this->io->writeln(' Configuration for Translation-Set:');
 
-            if (count($set->getCasingStyles()) > 0) {
+            $caseStyles = $set->getCasingStyleSettings()->getCaseStyles();
+
+            if (count($caseStyles) > 0) {
                 $caseNames = [];
-                foreach ($set->getCasingStyles() as $caseStyle) {
+                foreach ($caseStyles as $caseStyle) {
                     $caseNames[] = $caseStyle->getName();
                 }
                 $styles = implode(', ', $caseNames);

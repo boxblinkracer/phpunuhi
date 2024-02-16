@@ -8,6 +8,8 @@ class TranslationSetCoverage
 {
     private const COVERAGE_NOT_SET = -1;
 
+    private const OFFSET = 0.1;
+
     /**
      * @var float
      */
@@ -27,7 +29,9 @@ class TranslationSetCoverage
     {
         $this->minCoverage = $totalMinCoverage;
 
-        if ($this->minCoverage >= Percentage::MAX_PERCENTAGE) {
+        $max = (Percentage::MAX_PERCENTAGE + self::OFFSET);
+
+        if ($this->minCoverage >= $max) {
             $this->minCoverage = Percentage::MAX_PERCENTAGE;
         }
     }

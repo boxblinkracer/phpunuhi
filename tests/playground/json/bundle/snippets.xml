@@ -1,6 +1,6 @@
 <phpunuhi
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../xsd/phpunuhi.xsd"
+        xsi:noNamespaceSchemaLocation="../../../../config.xsd"
 >
 
     <translations>
@@ -25,7 +25,6 @@
                 </emptyContent>
             </rules>
             <styles>
-                <style level="0">kebab</style>
                 <style level="1">camel</style>
             </styles>
             <locales basePath="./snippets">

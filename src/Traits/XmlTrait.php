@@ -11,6 +11,28 @@ trait XmlTrait
     /**
      * @param string $name
      * @param SimpleXMLElement $node
+     * @return bool
+     */
+    protected function hasAttribute(string $name, SimpleXMLElement $node): bool
+    {
+        $nodeAttributes = $node->attributes();
+
+        if ($nodeAttributes === null) {
+            return false;
+        }
+
+        foreach ($nodeAttributes as $attrName => $value) {
+            if ($attrName === $name) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param string $name
+     * @param SimpleXMLElement $node
      * @return Attribute
      */
     protected function getAttribute(string $name, SimpleXMLElement $node): Attribute

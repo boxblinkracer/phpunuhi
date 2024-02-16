@@ -1,9 +1,9 @@
 <?php
 
-namespace phpunit\Models\Configuration;
+namespace phpunit\Models\Configuration\CaseStyle;
 
 use PHPUnit\Framework\TestCase;
-use PHPUnuhi\Models\Configuration\CaseStyle;
+use PHPUnuhi\Models\Configuration\CaseStyle\CaseStyle;
 
 class CaseStyleTest extends TestCase
 {

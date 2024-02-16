@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPUnuhi\Models\Configuration;
+namespace PHPUnuhi\Models\Configuration\CaseStyle;
 
 class CaseStyle
 {

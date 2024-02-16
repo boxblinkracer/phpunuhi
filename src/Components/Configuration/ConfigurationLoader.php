@@ -13,6 +13,7 @@ use PHPUnuhi\Configuration\Services\ProtectionLoader;
 use PHPUnuhi\Configuration\Services\RulesLoader;
 use PHPUnuhi\Configuration\Services\StyleLoader;
 use PHPUnuhi\Exceptions\ConfigurationException;
+use PHPUnuhi\Models\Configuration\CaseStyleSetting;
 use PHPUnuhi\Models\Configuration\Configuration;
 use PHPUnuhi\Models\Configuration\Coverage\TranslationSetCoverage;
 use PHPUnuhi\Models\Configuration\Filter;
@@ -98,8 +99,8 @@ class ConfigurationLoader
 
     /**
      * @param string $rootConfigFilename
-     * @throws ConfigurationException
      * @throws Exception
+     * @throws ConfigurationException
      * @return Configuration
      */
     public function load(string $rootConfigFilename): Configuration
@@ -239,6 +240,7 @@ class ConfigurationLoader
             $setLocales = [];
             $setFilter = new Filter();
             $casingStyles = [];
+            $ignoredKeys = [];
             $rules = [];
             $setCoverage = null;
 
@@ -262,6 +264,7 @@ class ConfigurationLoader
 
             if ($nodeStyles !== null) {
                 $casingStyles = $this->styleLoader->loadStyles($nodeStyles);
+                $ignoredKeys = $this->styleLoader->loadIgnoredKeys($nodeStyles);
             }
 
             if ($nodeRules !== null) {
@@ -279,7 +282,7 @@ class ConfigurationLoader
                 $setLocales,
                 $setFilter,
                 $setAttributes,
-                $casingStyles,
+                new CaseStyleSetting($casingStyles, $ignoredKeys),
                 $rules
             );
 

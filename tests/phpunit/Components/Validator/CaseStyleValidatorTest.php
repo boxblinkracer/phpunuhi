@@ -6,8 +6,11 @@ use Exception;
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Bundles\Storage\INI\IniStorage;
 use PHPUnuhi\Bundles\Storage\JSON\JsonStorage;
+use PHPUnuhi\Components\Validator\CaseStyle\Exception\CaseStyleNotFoundException;
 use PHPUnuhi\Components\Validator\CaseStyleValidator;
-use PHPUnuhi\Models\Configuration\CaseStyle;
+use PHPUnuhi\Models\Configuration\CaseStyle\CaseStyle;
+use PHPUnuhi\Models\Configuration\CaseStyle\CaseStyleIgnoreKey;
+use PHPUnuhi\Models\Configuration\CaseStyleSetting;
 use PHPUnuhi\Models\Configuration\Filter;
 use PHPUnuhi\Models\Configuration\Protection;
 use PHPUnuhi\Models\Translation\Locale;
@@ -57,7 +60,7 @@ class CaseStyleValidatorTest extends TestCase
         $locale = new Locale('en-GB', '', '');
         $locale->addTranslation('global.businessEvents.mollie_checkout_order_success', 'Cancel', 'group1');
 
-        $set = $this->buildSet($locale, [$case1, $case2]);
+        $set = $this->buildSet($locale, [$case1, $case2], []);
 
         $result = $this->validator->validate($set, $this->storageJson);
 
@@ -75,7 +78,7 @@ class CaseStyleValidatorTest extends TestCase
         $locale = new Locale('en-GB', '', '');
         $locale->addTranslation('global.businessEvents.flowTitle', 'Cancel', 'group1');
 
-        $set = $this->buildSet($locale, [$case1]);
+        $set = $this->buildSet($locale, [$case1], []);
 
         $result = $this->validator->validate($set, $this->storageJson);
 
@@ -100,7 +103,7 @@ class CaseStyleValidatorTest extends TestCase
         $locale = new Locale('en-GB', '', '');
         $locale->addTranslation('global.businessEvents.mollie_checkout_order_success', 'Cancel', 'group1');
 
-        $set = $this->buildSet($locale, [$case1, $case2, $case3]);
+        $set = $this->buildSet($locale, [$case1, $case2, $case3], []);
 
         $result = $this->validator->validate($set, $this->storageJson);
 
@@ -130,7 +133,7 @@ class CaseStyleValidatorTest extends TestCase
         $locale = new Locale('en-GB', '', '');
         $locale->addTranslation('global_snake.businessEvents.other_snake', 'Cancel', 'group1');
 
-        $set = $this->buildSet($locale, [$case1, $case2, $case3]);
+        $set = $this->buildSet($locale, [$case1, $case2, $case3], []);
 
         $result = $this->validator->validate($set, $this->storageJson);
 
@@ -157,7 +160,7 @@ class CaseStyleValidatorTest extends TestCase
         $locale = new Locale('en-GB', '', '');
         $locale->addTranslation('global_snake.business_event', 'Cancel', 'group1');
 
-        $set = $this->buildSet($locale, [$case1, $case2]);
+        $set = $this->buildSet($locale, [$case1, $case2], []);
 
         $result = $this->validator->validate($set, $this->storageJson);
 
@@ -185,11 +188,39 @@ class CaseStyleValidatorTest extends TestCase
         $locale = new Locale('en-GB', '', '');
         $locale->addTranslation('global.businessEvents.mollie_checkout_order_success', 'Cancel', 'group1');
 
-        $set = $this->buildSet($locale, [$case1, $case2, $case3]);
+        $set = $this->buildSet($locale, [$case1, $case2, $case3], []);
 
         $result = $this->validator->validate($set, $this->storageJson);
 
         $this->assertEquals(false, $result->isValid());
+    }
+
+    /**
+     * This test verifies if we only have 1 case style on level 1,
+     * and we have invalid key, that is fails correctly.
+     *
+     * @throws CaseStyleNotFoundException
+     * @return void
+     */
+    public function testOnlyLevel1IsSetAndFails(): void
+    {
+        $case1 = new CaseStyle('kebab');
+        $case1->setLevel(1);
+
+        $locale = new Locale('en-GB', '', '');
+        $locale->addTranslation('card-section.lblTitle', 'Cancel', 'group1');
+
+        $set = $this->buildSet($locale, [$case1], []);
+
+        $result = $this->validator->validate($set, $this->storageJson);
+
+        $firstError = $result->getErrors()[0];
+
+        $this->assertEquals(false, $result->isValid());
+
+        # make sure the correct error is found
+        # we only have an error at level 1, not at 0
+        $this->assertEquals('Invalid case-style for key: lblTitle at level: 1', $firstError->getMessage());
     }
 
     /**
@@ -201,7 +232,7 @@ class CaseStyleValidatorTest extends TestCase
         $locale = new Locale('en-GB', '', '');
         $locale->addTranslation('global.businessEvents.mollie_checkout_order_success', 'Cancel', 'group1');
 
-        $set = $this->buildSet($locale, []);
+        $set = $this->buildSet($locale, [], []);
 
         $result = $this->validator->validate($set, $this->storageJson);
 
@@ -222,7 +253,7 @@ class CaseStyleValidatorTest extends TestCase
         $case1 = new CaseStyle('snake');
         $case1->setLevel(0);
 
-        $set = $this->buildSet($locale, [$case1]);
+        $set = $this->buildSet($locale, [$case1], []);
 
         $result = $this->validator->validate($set, $storageINI);
 
@@ -230,11 +261,84 @@ class CaseStyleValidatorTest extends TestCase
     }
 
     /**
+     * This test verifies that a No-FQP (FULLY QUALIFIED PATH) scope allows us to only provide a part of the key.
+     * This means if we have nested structures, we can only provide e.g. the last part of the structure -
+     * so the plain key name.
+     * If we provide only the name of the key, the validation is OK, because we successfully
+     * recognize and ignore the key in its found structure.
+     * Also, if we provide the full key, it will be ignored and therefore the validation is also OK.
+     *
+     * @testWith   [ true, "root.sub.IGNORE_THIS" ]
+     *             [ true, "IGNORE_THIS" ]
+     *             [ false, "DIFFERENT_KEY" ]
+     *
+     * @param bool $isValid
+     * @param string $ignoreKey
+     * @throws CaseStyleNotFoundException
+     * @return void
+     */
+    public function testIgnoreWrongKeyNoFQP(bool $isValid, string $ignoreKey): void
+    {
+        $ignoreKey = new CaseStyleIgnoreKey($ignoreKey, false);
+
+        $notCamelCaseKey = 'root.sub.IGNORE_THIS';
+
+        $storageINI = new IniStorage();
+        $locale = new Locale('en-GB', '', '');
+        $locale->addTranslation('thisIsCamel', 'Cancel', '');
+        $locale->addTranslation($notCamelCaseKey, 'Cancel', '');
+        $case1 = new CaseStyle('camel');
+
+        $set = $this->buildSet($locale, [$case1], [$ignoreKey]);
+
+        $validator = new CaseStyleValidator();
+        $result = $validator->validate($set, $storageINI);
+
+        $this->assertEquals($isValid, $result->isValid());
+    }
+
+    /**
+     * This test verifies that a FQP (FULLY QUALIFIED PATH) scope considers the full provided key.
+     * If we have nested structures, we need to provide the full nested key.
+     * If only a part of the key is provided, it will NOT be ignored and therefore fail,
+     * because we do not use camel-case for this key.
+     *
+     * @testWith   [ true, "root.sub.IGNORE_THIS" ]
+     *             [ false, "IGNORE_THIS" ]
+     *             [ false, "DIFFERENT_KEY" ]
+     *
+     * @param bool $isValid
+     * @param string $ignoreKey
+     * @throws CaseStyleNotFoundException
+     * @return void
+     */
+    public function testIgnoreWrongKeyScopeFQP(bool $isValid, string $ignoreKey): void
+    {
+        $ignoreKey = new CaseStyleIgnoreKey($ignoreKey, true);
+
+        $notCamelCaseKey = 'root.sub.IGNORE_THIS';
+
+        $storageINI = new IniStorage();
+        $locale = new Locale('en-GB', '', '');
+        $locale->addTranslation('thisIsCamel', 'Cancel', '');
+        $locale->addTranslation($notCamelCaseKey, 'Cancel', '');
+        $case1 = new CaseStyle('camel');
+
+        $set = $this->buildSet($locale, [$case1], [$ignoreKey]);
+
+        $validator = new CaseStyleValidator();
+        $result = $validator->validate($set, $storageINI);
+
+        $this->assertEquals($isValid, $result->isValid());
+    }
+
+    /**
      * @param Locale $locale
      * @param CaseStyle[] $caseStyles
+     * @param CaseStyleIgnoreKey[] $ignoreCaseKeys
      * @return TranslationSet
      */
-    private function buildSet(Locale $locale, array $caseStyles): TranslationSet
+    private function buildSet(Locale $locale, array $caseStyles, array $ignoreCaseKeys): TranslationSet
     {
         return new TranslationSet(
             '',
@@ -243,7 +347,7 @@ class CaseStyleValidatorTest extends TestCase
             [$locale],
             new Filter(),
             [],
-            $caseStyles,
+            new CaseStyleSetting($caseStyles, $ignoreCaseKeys),
             []
         );
     }

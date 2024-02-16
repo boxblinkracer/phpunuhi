@@ -8,6 +8,7 @@ use phpunit\Utils\Fakes\FakeCSVWriter;
 use PHPUnuhi\Bundles\Exchange\CSV\CSVExchange;
 use PHPUnuhi\Exceptions\TranslationNotFoundException;
 use PHPUnuhi\Models\Command\CommandOption;
+use PHPUnuhi\Models\Configuration\CaseStyleSetting;
 use PHPUnuhi\Models\Configuration\Filter;
 use PHPUnuhi\Models\Configuration\Protection;
 use PHPUnuhi\Models\Translation\Locale;
@@ -113,7 +114,7 @@ class CSVExchangeTest extends TestCase
             [$localesDE, $localesEN],
             new Filter(),
             [],
-            [],
+            new CaseStyleSetting([], []),
             []
         );
 
@@ -165,7 +166,7 @@ class CSVExchangeTest extends TestCase
             [$localesDE, $localesEN],
             new Filter(),
             [],
-            [],
+            new CaseStyleSetting([], []),
             []
         );
 
@@ -234,7 +235,7 @@ class CSVExchangeTest extends TestCase
             [$de, $en],
             new Filter(),
             [],
-            [],
+            new CaseStyleSetting([], []),
             []
         );
 

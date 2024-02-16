@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use phpunit\Utils\Traits\TranslationSetBuilderTrait;
 use PHPUnuhi\Configuration\Services\ConfigurationValidator;
 use PHPUnuhi\Exceptions\ConfigurationException;
+use PHPUnuhi\Models\Configuration\CaseStyleSetting;
 use PHPUnuhi\Models\Configuration\Configuration;
 use PHPUnuhi\Models\Configuration\Filter;
 use PHPUnuhi\Models\Configuration\Protection;
@@ -58,7 +59,7 @@ class ConfigurationValidatorTest extends TestCase
             [],
             new Filter(),
             [],
-            [],
+            new CaseStyleSetting([], []),
             []
         );
 
@@ -82,7 +83,7 @@ class ConfigurationValidatorTest extends TestCase
             [],
             new Filter(),
             [],
-            [],
+            new CaseStyleSetting([], []),
             []
         );
 
@@ -106,7 +107,7 @@ class ConfigurationValidatorTest extends TestCase
             [],
             new Filter(),
             [],
-            [],
+            new CaseStyleSetting([], []),
             []
         );
 

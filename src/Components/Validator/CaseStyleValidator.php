@@ -9,9 +9,12 @@ use PHPUnuhi\Components\Validator\Model\ValidationError;
 use PHPUnuhi\Components\Validator\Model\ValidationResult;
 use PHPUnuhi\Components\Validator\Model\ValidationTest;
 use PHPUnuhi\Models\Translation\TranslationSet;
+use PHPUnuhi\Traits\StringTrait;
 
 class CaseStyleValidator implements ValidatorInterface
 {
+    use StringTrait;
+
 
     /**
      * @return string
@@ -36,7 +39,8 @@ class CaseStyleValidator implements ValidatorInterface
         $tests = [];
         $errors = [];
 
-        $caseStyles = $set->getCasingStyles();
+        $caseStyles = $set->getCasingStyleSettings()->getCaseStyles();
+        $ignoreKeys = $set->getCasingStyleSettings()->getIgnoreKeys();
 
         $stylesHaveLevel = false;
         foreach ($caseStyles as $style) {
@@ -110,8 +114,25 @@ class CaseStyleValidator implements ValidatorInterface
                 }
 
                 if (!$pathValid) {
+                    # sample: $part => root.sub.IGNORE_THIS (fully qualified)
+                    # also check ignore list
+                    foreach ($ignoreKeys as $ignoreKey) {
+                        if ($ignoreKey->isFullyQualifiedPath()) {
+                            if ($translation->getKey() === $ignoreKey->getKey()) {
+                                $pathValid = true;
+                                break;
+                            }
+                        } elseif ($this->stringDoesContain($translation->getKey(), $ignoreKey->getKey())) {
+                            $pathValid = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (!$pathValid) {
                     $isKeyCaseValid = false;
                 }
+
 
                 $testPassed = $isKeyCaseValid;
 
@@ -135,7 +156,6 @@ class CaseStyleValidator implements ValidatorInterface
                         $translation->getKey(),
                         $locale->findLineNumber($translation->getKey())
                     );
-                    break;
                 }
             }
         }

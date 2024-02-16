@@ -6,6 +6,7 @@ use PHPUnuhi\Models\Percentage;
 
 class LocaleCoverage
 {
+    private const OFFSET = 0.1;
 
     /**
      * @var string
@@ -27,7 +28,9 @@ class LocaleCoverage
         $this->locale = $locale;
         $this->minCoverage = $minCoverage;
 
-        if ($this->minCoverage >= Percentage::MAX_PERCENTAGE) {
+        $max = (Percentage::MAX_PERCENTAGE + self::OFFSET);
+
+        if ($this->minCoverage >= $max) {
             $this->minCoverage = Percentage::MAX_PERCENTAGE;
         }
     }

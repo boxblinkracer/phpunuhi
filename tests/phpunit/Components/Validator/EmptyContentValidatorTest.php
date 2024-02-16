@@ -7,6 +7,7 @@ use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Bundles\Storage\JSON\JsonStorage;
 use PHPUnuhi\Components\Validator\EmptyContent\AllowEmptyContent;
 use PHPUnuhi\Components\Validator\EmptyContentValidator;
+use PHPUnuhi\Models\Configuration\CaseStyleSetting;
 use PHPUnuhi\Models\Configuration\Filter;
 use PHPUnuhi\Models\Configuration\Protection;
 use PHPUnuhi\Models\Translation\Locale;
@@ -136,7 +137,7 @@ class EmptyContentValidatorTest extends TestCase
             $locales,
             new Filter(),
             [],
-            [],
+            new CaseStyleSetting([], []),
             []
         );
     }
