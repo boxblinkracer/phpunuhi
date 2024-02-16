@@ -929,10 +929,11 @@ Pascal case is only checked on level 1, and not on 0 and 2.
 </set>
 ```
 
-Sometimes you are working in a platform where keys exist that just need to be like this, even though
-your guidelines would be someone else. In this case you can add those keys to an **ignore list**.
+Sometimes you are working in a platform where key names exist that just need to be like this, even though
+your guidelines would be something else. In this case you can add those keys to an **ignore list**.
 Keys that are ignored, will not be considered for case style validation.
-You can set the attribute FQP (Fully Qualified Path). If set to TRUE, then the whole nesting
+
+You can set the attribute **fqp** (Fully Qualified Path). If set to TRUE, then the whole nesting
 structure needs to be provided, which means only this key is ignored (root.sub.MY_WEIRD_KEY).
 If set to FALSE, then the key is searched and ignored in all nesting levels, if found.
 The FQP default is set to TRUE if not provided.
