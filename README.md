@@ -935,7 +935,7 @@ Keys that are ignored, will not be considered for case style validation.
 
 You can tell the validator if you are providing the key with its full nesting-level by using the attribute **fqp** (Fully Qualified Path).
 If set to TRUE, the validation process will use an exact match that includes the full nesting-level of the key (root.sub.MY_WEIRD_KEY).
-If set to FALSE, then the key name is searched everywhere no matter in what hierarchy level it's found.
+If set to FALSE, then the key name is searched everywhere, regardless of its nesting-level.
 The default value for the fqp attribute is TRUE.
 
 ```xml
