@@ -933,10 +933,10 @@ Sometimes you are working in a platform where key names exist that just need to 
 your guidelines would be something else. In this case you can add those keys to an **ignore list**.
 Keys that are ignored, will not be considered for case style validation.
 
-You can set the attribute **fqp** (Fully Qualified Path). If set to TRUE, then the whole nesting
-structure needs to be provided, which means only this key is ignored (root.sub.MY_WEIRD_KEY).
-If set to FALSE, then the key is searched and ignored in all nesting levels, if found.
-The FQP default is set to TRUE if not provided.
+You can tell the validator if you are providing the key with its full nesting-level by using the attribute **fqp** (Fully Qualified Path).
+If set to TRUE, the validation process will use an exact match that includes the full nesting-level of the key (root.sub.MY_WEIRD_KEY).
+If set to FALSE, then the key name is searched everywhere no matter in what hierarchy level it's found.
+The default value for the fqp attribute is TRUE.
 
 ```xml
 
