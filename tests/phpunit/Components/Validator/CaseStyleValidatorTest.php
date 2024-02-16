@@ -141,7 +141,7 @@ class CaseStyleValidatorTest extends TestCase
     }
 
     /**
-     * This test verifies that if we have an existing level set
+     * This test verifies that if we have an existing level set,
      * then a global style is not used to be verified.
      * Our first level is only pascal, but the content is snake.
      * Our global style is snake which would be valid, but our first level is pinned to be
@@ -197,7 +197,7 @@ class CaseStyleValidatorTest extends TestCase
 
     /**
      * This test verifies if we only have 1 case style on level 1,
-     * and we have invalid key, that is fails correctly.
+     * and we have invalid key, that it fails correctly.
      *
      * @throws CaseStyleNotFoundException
      * @return void
