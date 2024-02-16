@@ -14,6 +14,42 @@ class XmlTraitTest extends TestCase
     /**
      * @return void
      */
+    public function testHasAttributeFalse(): void
+    {
+        $xmlNode = new SimpleXMLElement('<root attr1="value1" attr2="value2"/>');
+
+        $hasAttribute = $this->hasAttribute('fqp', $xmlNode);
+
+        $this->assertEquals(false, $hasAttribute);
+    }
+
+    /**
+     * @return void
+     */
+    public function testHasAttributeFalseNoAttributes(): void
+    {
+        $xmlNode = new SimpleXMLElement('<root/>');
+
+        $hasAttribute = $this->hasAttribute('fqp', $xmlNode);
+
+        $this->assertEquals(false, $hasAttribute);
+    }
+
+    /**
+     * @return void
+     */
+    public function testHasAttributeTrue(): void
+    {
+        $xmlNode = new SimpleXMLElement('<root attr1="value1" attr2="value2"/>');
+
+        $hasAttribute = $this->hasAttribute('attr2', $xmlNode);
+
+        $this->assertEquals(true, $hasAttribute);
+    }
+
+    /**
+     * @return void
+     */
     public function testGetAttribute(): void
     {
         $xmlNode = new SimpleXMLElement('<root attr1="value1" attr2="value2"/>');

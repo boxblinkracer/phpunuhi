@@ -17,13 +17,11 @@ trait XmlTrait
     {
         $nodeAttributes = $node->attributes();
 
-        if ($nodeAttributes === null) {
-            return false;
-        }
-
-        foreach ($nodeAttributes as $attrName => $value) {
-            if ($attrName === $name) {
-                return true;
+        if ($nodeAttributes !== null) {
+            foreach ($nodeAttributes as $attrName => $value) {
+                if ($attrName === $name) {
+                    return true;
+                }
             }
         }
 

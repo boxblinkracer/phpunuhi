@@ -78,4 +78,24 @@ class StringTraitTest extends TestCase
 
         $this->assertEquals(true, $contains);
     }
+
+    /**
+     * @return void
+     */
+    public function testStringDoesContainInArray(): void
+    {
+        $contains = $this->stringDoesContainInArray('car', ['tshirt', 'car', 'jeans']);
+
+        $this->assertEquals(true, $contains);
+    }
+
+    /**
+     * @return void
+     */
+    public function testStringDoesNotContainInEmptyArray(): void
+    {
+        $contains = $this->stringDoesContainInArray('this is a text', []);
+
+        $this->assertEquals(false, $contains);
+    }
 }
