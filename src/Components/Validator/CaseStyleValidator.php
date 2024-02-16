@@ -29,8 +29,8 @@ class CaseStyleValidator implements ValidatorInterface
     /**
      * @param TranslationSet $set
      * @param StorageInterface $storage
-     * @return ValidationResult
      * @throws CaseStyleNotFoundException
+     * @return ValidationResult
      */
     public function validate(TranslationSet $set, StorageInterface $storage): ValidationResult
     {
@@ -140,8 +140,8 @@ class CaseStyleValidator implements ValidatorInterface
      * @param string $part
      * @param int $level
      * @param CaseStyle[] $caseStyles
-     * @return bool
      * @throws CaseStyleNotFoundException
+     * @return bool
      */
     private function verifyLevel(string $part, int $level, array $caseStyles): bool
     {
