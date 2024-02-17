@@ -916,7 +916,7 @@ In that case, styles without levels, are globally checked for every level that d
 for its level.
 
 Here is an example that would be "valid" for this key: **global.businessEvents.mollie_checkout_order_success**.
-Pascal case is only checked on level 1, and not on 0 and 2.
+Camel case would be only checked on level 1, and not on level 0 and 2.
 
 ```xml
 
