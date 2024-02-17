@@ -109,8 +109,7 @@ class DuplicateContentRule implements RuleValidatorInterface
             }
         }
 
-
-        # thats the default
+        # that's the default
         foreach ($this->localeSettings as $localeSetting) {
             if ($localeSetting->getLocale() === '*') {
                 return !$localeSetting->isDuplicateAllowed();

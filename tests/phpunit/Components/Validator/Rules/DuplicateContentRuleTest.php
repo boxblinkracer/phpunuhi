@@ -139,6 +139,35 @@ class DuplicateContentRuleTest extends TestCase
         $this->assertEquals(false, $result->isValid());
     }
 
+    /**
+     * @throws Exception
+     * @return void
+     */
+    public function testNoDuplicateContentRequiredForLocale(): void
+    {
+        $localeDE = new Locale('de-DE', '', '');
+        $localeDE->addTranslation('card.btnOK', 'OK', 'group1');
+        $localeDE->addTranslation('card.btnCancel', 'OK', 'group1');
+
+        $localeEN = new Locale('en-GB', '', '');
+        $localeEN->addTranslation('card.btnOK', 'OK', 'group1');
+        $localeEN->addTranslation('card.btnCancel', 'OK', 'group1');
+
+        $set = $this->buildSet([$localeDE, $localeEN]);
+
+        $storage = new JsonStorage();
+
+        $validator = new DuplicateContentRule(
+            [
+                new DuplicateContent('es', true),
+            ]
+        );
+
+        $result = $validator->validate($set, $storage);
+
+        $this->assertEquals(true, $result->isValid());
+    }
+
 
     /**
      * @param Locale[] $locales

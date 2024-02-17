@@ -92,6 +92,7 @@ class Locale
     public function addTranslation(string $key, string $value, string $group): Translation
     {
         $counter = count($this->translations);
+
         for ($i = 0; $i < $counter; $i++) {
             if (!isset($this->translations[$i])) {
                 continue;
