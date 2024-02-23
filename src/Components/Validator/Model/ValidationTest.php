@@ -51,20 +51,13 @@ class ValidationTest
      * @param string $locale
      * @param string $title
      * @param string $filename
+     * @param int $lineNumber
      * @param string $classification
      * @param string $failureMessage
      * @param bool $success
      */
-    public function __construct(
-        string $translationKey,
-        string $locale,
-        string $title,
-        string $filename,
-        int $lineNumber,
-        string $classification,
-        string $failureMessage,
-        bool $success
-    ) {
+    public function __construct(string $translationKey, string $locale, string $title, string $filename, int $lineNumber, string $classification, string $failureMessage, bool $success)
+    {
         $this->translationKey = $translationKey;
         $this->locale = $locale;
         $this->title = $title;
@@ -126,5 +119,13 @@ class ValidationTest
     public function isSuccess(): bool
     {
         return $this->success;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLocale(): string
+    {
+        return $this->locale;
     }
 }

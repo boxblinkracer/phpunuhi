@@ -220,7 +220,7 @@ class CaseStyleValidatorTest extends TestCase
 
         # make sure the correct error is found
         # we only have an error at level 1, not at 0
-        $this->assertEquals('Invalid case-style for key: lblTitle at level: 1', $firstError->getMessage());
+        $this->assertEquals("Invalid case-style for part 'lblTitle' in key 'card-section.lblTitle' at level: 1", $firstError->getFailureMessage());
     }
 
     /**

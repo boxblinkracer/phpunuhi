@@ -3,7 +3,6 @@
 namespace PHPUnuhi\Components\Validator\Rules;
 
 use PHPUnuhi\Bundles\Storage\StorageInterface;
-use PHPUnuhi\Components\Validator\Model\ValidationError;
 use PHPUnuhi\Components\Validator\Model\ValidationResult;
 use PHPUnuhi\Components\Validator\Model\ValidationTest;
 use PHPUnuhi\Models\Translation\TranslationSet;
@@ -47,12 +46,10 @@ class MaxKeyLengthRule implements RuleValidatorInterface
 
         # this is always valid
         if ($this->maxKeyLength <= 0) {
-            return new ValidationResult([], []);
+            return new ValidationResult([]);
         }
 
         $tests = [];
-        $errors = [];
-
 
         foreach ($set->getLocales() as $locale) {
             foreach ($locale->getTranslations() as $translation) {
@@ -73,38 +70,25 @@ class MaxKeyLengthRule implements RuleValidatorInterface
                 $testPassed = ($invalidKey === null);
                 $invalidKey = (string)$invalidKey; # for output below
 
-                $tests[] = new ValidationTest(
-                    $translation->getKey(),
-                    $locale->getName(),
-                    'Test length of key: ' . $translation->getKey(),
-                    $locale->getFilename(),
-                    $locale->findLineNumber($translation->getKey()),
-                    $this->getRuleIdentifier(),
-                    'Maximum length of key ' . $invalidKey . ' has been reached. Length is ' . strlen($invalidKey) . ' of max allowed ' . $this->maxKeyLength . '.',
-                    $testPassed
-                );
-
-                if ($testPassed) {
-                    continue;
-                }
-
                 if ($translation->getGroup() !== '') {
                     $identifier = $translation->getGroup() . ' (group) => ' . $translation->getKey();
                 } else {
                     $identifier = $translation->getID();
                 }
 
-                $errors[] = new ValidationError(
-                    $this->getRuleIdentifier(),
-                    'Maximum length of key ' . $invalidKey . ' has been reached. Length is ' . strlen($invalidKey) . ' of max allowed ' . $this->maxKeyLength . '.',
-                    $locale->getName(),
-                    $locale->getFilename(),
+                $tests[] = new ValidationTest(
                     $identifier,
-                    $locale->findLineNumber($identifier)
+                    $locale->getName(),
+                    "Test length of key '" . $translation->getKey(),
+                    $locale->getFilename(),
+                    $locale->findLineNumber($translation->getKey()),
+                    $this->getRuleIdentifier(),
+                    "Maximum length of " . $this->maxKeyLength . " for key '" . $invalidKey . "' has been reached. Length is " . strlen($invalidKey),
+                    $testPassed
                 );
             }
         }
 
-        return new ValidationResult($tests, $errors);
+        return new ValidationResult($tests);
     }
 }

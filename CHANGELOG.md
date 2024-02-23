@@ -5,8 +5,21 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 ## [Unreleased]
 
+### Added
+
 - Add new option to **ignore** some keys from case style validation. Sometimes you are bound to the platform you are
   using for some keys.
+- Add new **table layout** for all errors on CLI. This makes it easier to read and understand the errors.
+
+### Changed
+
+- Validators will now show a new **table layout** for all errors. This makes it easier to read and understand the
+  errors.
+
+### Fixed
+
+- Positive test results from mess validations where missing in reports.
+- Case Style validation always showed up in reports even though not configured.
 
 ## [1.17.0]
 

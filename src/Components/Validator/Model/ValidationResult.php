@@ -12,19 +12,11 @@ class ValidationResult
 
 
     /**
-     * @var ValidationError[]
-     */
-    private $errors;
-
-    
-    /**
      * @param ValidationTest[] $tests
-     * @param ValidationError[] $errors
      */
-    public function __construct(array $tests, array $errors)
+    public function __construct(array $tests)
     {
         $this->tests = $tests;
-        $this->errors = $errors;
     }
 
     /**
@@ -32,7 +24,7 @@ class ValidationResult
      */
     public function isValid(): bool
     {
-        return count($this->errors) === 0;
+        return $this->getErrors() === [];
     }
 
     /**
@@ -44,10 +36,18 @@ class ValidationResult
     }
 
     /**
-     * @return ValidationError[]
+     * @return ValidationTest[]
      */
     public function getErrors(): array
     {
-        return $this->errors;
+        $errors = [];
+
+        foreach ($this->tests as $test) {
+            if (!$test->isSuccess()) {
+                $errors[] = $test;
+            }
+        }
+
+        return $errors;
     }
 }

@@ -32,7 +32,7 @@ class RulesValidator implements ValidatorInterface
     public function validate(TranslationSet $set, StorageInterface $storage): ValidationResult
     {
         if ($set->getAllTranslationIDs() === []) {
-            return new ValidationResult([], []);
+            return new ValidationResult([]);
         }
 
         $ruleValidators = [];
@@ -64,21 +64,15 @@ class RulesValidator implements ValidatorInterface
             }
         }
 
-
         $allTests = [];
-        $allErrors = [];
 
         /** @var RuleValidatorInterface $validator */
         foreach ($ruleValidators as $validator) {
             $result = $validator->validate($set, $storage);
 
             $allTests = array_merge($allTests, $result->getTests());
-            $allErrors = array_merge($allErrors, $result->getErrors());
         }
 
-        return new ValidationResult(
-            $allTests,
-            $allErrors
-        );
+        return new ValidationResult($allTests);
     }
 }

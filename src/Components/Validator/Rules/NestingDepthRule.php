@@ -3,7 +3,6 @@
 namespace PHPUnuhi\Components\Validator\Rules;
 
 use PHPUnuhi\Bundles\Storage\StorageInterface;
-use PHPUnuhi\Components\Validator\Model\ValidationError;
 use PHPUnuhi\Components\Validator\Model\ValidationResult;
 use PHPUnuhi\Components\Validator\Model\ValidationTest;
 use PHPUnuhi\Models\Translation\Locale;
@@ -46,22 +45,20 @@ class NestingDepthRule implements RuleValidatorInterface
         $hierarchy = $storage->getHierarchy();
 
         if (!$hierarchy->isNestedStorage()) {
-            return new ValidationResult([], []);
+            return new ValidationResult([]);
         }
 
         if ($hierarchy->getDelimiter() === '') {
-            return new ValidationResult([], []);
+            return new ValidationResult([]);
         }
 
 
         # this is always valid
         if ($this->maxNestingLevel <= 0) {
-            return new ValidationResult([], []);
+            return new ValidationResult([]);
         }
 
         $tests = [];
-        $errors = [];
-
 
         foreach ($set->getLocales() as $locale) {
             foreach ($locale->getTranslations() as $translation) {
@@ -71,23 +68,17 @@ class NestingDepthRule implements RuleValidatorInterface
 
                 $testPassed = $currentLevels <= $this->maxNestingLevel;
 
-                $tests[] = $this->buildTestEntry($locale, $translation->getKey(), $currentLevels, $testPassed);
-
-                if ($testPassed) {
-                    continue;
-                }
-
                 if ($translation->getGroup() !== '') {
                     $identifier = $translation->getGroup() . ' (group) => ' . $translation->getKey();
                 } else {
                     $identifier = $translation->getID();
                 }
 
-                $errors[] = $this->buildError($locale, $identifier, $currentLevels);
+                $tests[] = $this->buildTestEntry($locale, $identifier, $currentLevels, $testPassed);
             }
         }
 
-        return new ValidationResult($tests, $errors);
+        return new ValidationResult($tests);
     }
 
     /**
@@ -102,30 +93,12 @@ class NestingDepthRule implements RuleValidatorInterface
         return new ValidationTest(
             $translationKey,
             $locale->getName(),
-            'Test nesting level of key: ' . $translationKey,
+            "Test nesting-depth of key '" . $translationKey,
             $locale->getFilename(),
             $locale->findLineNumber($translationKey),
             $this->getRuleIdentifier(),
-            'Translation for key ' . $translationKey . ' has ' . $depthOfKey . ' levels. Maximum nesting level is: ' . $this->maxNestingLevel,
+            'Maximum nesting depth of ' . $this->maxNestingLevel . ' has been reached. Key has ' . $depthOfKey . ' levels',
             $passed
-        );
-    }
-
-    /**
-     * @param Locale $locale
-     * @param string $identifier
-     * @param int $depthOfKey
-     * @return ValidationError
-     */
-    private function buildError(Locale $locale, string $identifier, int $depthOfKey): ValidationError
-    {
-        return new ValidationError(
-            $this->getRuleIdentifier(),
-            'Maximum nesting level of ' . $this->maxNestingLevel . ' has been reached. Translation has ' . $depthOfKey . ' levels.',
-            $locale->getName(),
-            $locale->getFilename(),
-            $identifier,
-            $locale->findLineNumber($identifier)
         );
     }
 }

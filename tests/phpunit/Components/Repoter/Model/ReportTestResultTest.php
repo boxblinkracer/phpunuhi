@@ -3,13 +3,13 @@
 namespace phpunit\Components\Repoter\Model;
 
 use PHPUnit\Framework\TestCase;
-use PHPUnuhi\Components\Reporter\Model\TestResult;
+use PHPUnuhi\Components\Reporter\Model\ReportTestResult;
 
-class TestResultTest extends TestCase
+class ReportTestResultTest extends TestCase
 {
 
     /**
-     * @var TestResult
+     * @var ReportTestResult
      */
     private $resultFailed;
 
@@ -18,7 +18,7 @@ class TestResultTest extends TestCase
      */
     public function setUp(): void
     {
-        $this->resultFailed = new TestResult(
+        $this->resultFailed = new ReportTestResult(
             'storefront 1',
             'btnCancel',
             'ErrorClass',

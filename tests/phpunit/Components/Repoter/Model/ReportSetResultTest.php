@@ -3,15 +3,15 @@
 namespace phpunit\Components\Repoter\Model;
 
 use PHPUnit\Framework\TestCase;
-use PHPUnuhi\Components\Reporter\Model\TestResult;
-use PHPUnuhi\Components\Reporter\Model\TranslationSetResult;
+use PHPUnuhi\Components\Reporter\Model\ReportSetResult;
+use PHPUnuhi\Components\Reporter\Model\ReportTestResult;
 
-class SuiteResultTest extends TestCase
+class ReportSetResultTest extends TestCase
 {
 
 
     /**
-     * @var TranslationSetResult
+     * @var ReportSetResult
      */
     private $result;
 
@@ -21,10 +21,10 @@ class SuiteResultTest extends TestCase
      */
     public function setUp(): void
     {
-        $this->result = new TranslationSetResult('storefront');
+        $this->result = new ReportSetResult('storefront');
 
         $this->result->addTestResult(
-            new TestResult(
+            new ReportTestResult(
                 'storefront',
                 'btnCancel',
                 'ErrorClass',
@@ -36,7 +36,7 @@ class SuiteResultTest extends TestCase
         );
 
         $this->result->addTestResult(
-            new TestResult(
+            new ReportTestResult(
                 'storefront',
                 'btnOk',
                 'ErrorClass',

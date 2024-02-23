@@ -6,7 +6,6 @@ use PHPUnuhi\Bundles\Storage\StorageHierarchy;
 use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Components\Validator\CaseStyle\CaseStyleValidatorFactory;
 use PHPUnuhi\Components\Validator\CaseStyle\Exception\CaseStyleNotFoundException;
-use PHPUnuhi\Components\Validator\Model\ValidationError;
 use PHPUnuhi\Components\Validator\Model\ValidationResult;
 use PHPUnuhi\Components\Validator\Model\ValidationTest;
 use PHPUnuhi\Models\Configuration\CaseStyle\CaseStyle;
@@ -37,88 +36,81 @@ class CaseStyleValidator implements ValidatorInterface
         $hierarchy = $storage->getHierarchy();
 
         $tests = [];
-        $errors = [];
 
         $caseStyles = $set->getCasingStyleSettings()->getCaseStyles();
         $ignoreKeys = $set->getCasingStyleSettings()->getIgnoreKeys();
 
-        foreach ($set->getLocales() as $locale) {
-            foreach ($locale->getTranslations() as $translation) {
-                $isKeyCaseValid = true;
-                $invalidKeyPart = '';
-                $isCurrentKeyValid = true;
+        $allowedCaseStylesText = implode(', ', array_map(function (CaseStyle $caseStyle): string {
+            return $caseStyle->getName();
+        }, $caseStyles));
 
-                # we have a full key like root.sub.lblTitle
-                # and we want to split it into parts and separately check the cases of the hierarchy levels
-                # sample: root.sub.lblTitle => [root, sub, lblTitle]
-                $keyParts = $this->getKeyParts($translation->getKey(), $hierarchy);
+        if ($caseStyles !== []) {
+            foreach ($set->getLocales() as $locale) {
+                foreach ($locale->getTranslations() as $translation) {
+                    $isKeyCaseValid = true;
+                    $invalidKeyPart = '';
+                    $isCurrentKeyValid = true;
 
-                $partLevel = 0;
+                    # we have a full key like root.sub.lblTitle
+                    # and we want to split it into parts and separately check the cases of the hierarchy levels
+                    # sample: root.sub.lblTitle => [root, sub, lblTitle]
+                    $keyParts = $this->getKeyParts($translation->getKey(), $hierarchy);
 
-                foreach ($keyParts as $part) {
-                    $isPartValid = $this->verifyLevel($part, $partLevel, $caseStyles);
+                    $partLevel = 0;
 
-                    if (!$isPartValid) {
-                        $invalidKeyPart = $part;
-                        $isCurrentKeyValid = false;
-                        break;
+                    foreach ($keyParts as $part) {
+                        $isPartValid = $this->verifyLevel($part, $partLevel, $caseStyles);
+
+                        if (!$isPartValid) {
+                            $invalidKeyPart = $part;
+                            $isCurrentKeyValid = false;
+                            break;
+                        }
+
+                        $partLevel++;
                     }
 
-                    $partLevel++;
-                }
 
-
-                # if it's somehow not valid
-                # then make sure to also check ouf ignore list
-                # then it might be valid :)
-                if (!$isCurrentKeyValid) {
-                    # sample: $part => root.sub.IGNORE_THIS (fully qualified)
-                    # also check ignore list
-                    foreach ($ignoreKeys as $ignoreKey) {
-                        if ($ignoreKey->isFullyQualifiedPath()) {
-                            if ($translation->getKey() === $ignoreKey->getKey()) {
+                    # if it's somehow not valid
+                    # then make sure to also check ouf ignore list
+                    # then it might be valid :)
+                    if (!$isCurrentKeyValid) {
+                        # sample: $part => root.sub.IGNORE_THIS (fully qualified)
+                        # also check ignore list
+                        foreach ($ignoreKeys as $ignoreKey) {
+                            if ($ignoreKey->isFullyQualifiedPath()) {
+                                if ($translation->getKey() === $ignoreKey->getKey()) {
+                                    $isCurrentKeyValid = true;
+                                    break;
+                                }
+                            } elseif ($this->stringDoesContain($translation->getKey(), $ignoreKey->getKey())) {
                                 $isCurrentKeyValid = true;
                                 break;
                             }
-                        } elseif ($this->stringDoesContain($translation->getKey(), $ignoreKey->getKey())) {
-                            $isCurrentKeyValid = true;
-                            break;
                         }
                     }
-                }
 
-                if (!$isCurrentKeyValid) {
-                    $isKeyCaseValid = false;
-                }
+                    if (!$isCurrentKeyValid) {
+                        $isKeyCaseValid = false;
+                    }
 
+                    $testPassed = $isKeyCaseValid;
 
-                $testPassed = $isKeyCaseValid;
-
-                $tests[] = new ValidationTest(
-                    $translation->getKey(),
-                    $locale->getName(),
-                    'Test case-style of key: ' . $translation->getKey(),
-                    $locale->getFilename(),
-                    $locale->findLineNumber($translation->getKey()),
-                    $this->getTypeIdentifier(),
-                    'Translation key ' . $translation->getKey() . ' has part with invalid case-style: ' . $invalidKeyPart . ' at level: ' . $partLevel,
-                    $testPassed
-                );
-
-                if (!$testPassed) {
-                    $errors[] = new ValidationError(
-                        $this->getTypeIdentifier(),
-                        'Invalid case-style for key: ' . $invalidKeyPart . ' at level: ' . $partLevel,
-                        $locale->getName(),
-                        $locale->getFilename(),
+                    $tests[] = new ValidationTest(
                         $translation->getKey(),
-                        $locale->findLineNumber($translation->getKey())
+                        $locale->getName(),
+                        "Test case-style of key '" . $translation->getKey() . "' to be one of: " . $allowedCaseStylesText,
+                        $locale->getFilename(),
+                        $locale->findLineNumber($translation->getKey()),
+                        $this->getTypeIdentifier(),
+                        "Invalid case-style for part '" . $invalidKeyPart . "' in key '" . $translation->getKey() . "' at level: " . $partLevel,
+                        $testPassed
                     );
                 }
             }
         }
 
-        return new ValidationResult($tests, $errors);
+        return new ValidationResult($tests);
     }
 
     /**

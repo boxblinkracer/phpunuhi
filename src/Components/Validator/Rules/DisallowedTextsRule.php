@@ -3,7 +3,6 @@
 namespace PHPUnuhi\Components\Validator\Rules;
 
 use PHPUnuhi\Bundles\Storage\StorageInterface;
-use PHPUnuhi\Components\Validator\Model\ValidationError;
 use PHPUnuhi\Components\Validator\Model\ValidationResult;
 use PHPUnuhi\Components\Validator\Model\ValidationTest;
 use PHPUnuhi\Models\Translation\TranslationSet;
@@ -44,7 +43,6 @@ class DisallowedTextsRule implements RuleValidatorInterface
     public function validate(TranslationSet $set, StorageInterface $storage): ValidationResult
     {
         $tests = [];
-        $errors = [];
 
         foreach ($set->getLocales() as $locale) {
             foreach ($locale->getTranslations() as $translation) {
@@ -58,38 +56,25 @@ class DisallowedTextsRule implements RuleValidatorInterface
 
                 $testPassed = ($foundWord === null);
 
-                $tests[] = new ValidationTest(
-                    $translation->getKey(),
-                    $locale->getName(),
-                    'Test against disallowed text for key: ' . $translation->getKey(),
-                    $locale->getFilename(),
-                    $locale->findLineNumber($translation->getKey()),
-                    $this->getRuleIdentifier(),
-                    'Translation for key ' . $translation->getKey() . ' has disallowed text: ' . $foundWord,
-                    $testPassed
-                );
-
-                if ($testPassed) {
-                    continue;
-                }
-
                 if ($translation->getGroup() !== '') {
                     $identifier = $translation->getGroup() . ' (group) => ' . $translation->getKey();
                 } else {
                     $identifier = $translation->getID();
                 }
 
-                $errors[] = new ValidationError(
-                    $this->getRuleIdentifier(),
-                    'Found disallowed text in key ' . $translation->getKey() . '. Value must not contain: ' . $foundWord,
-                    $locale->getName(),
-                    $locale->getFilename(),
+                $tests[] = new ValidationTest(
                     $identifier,
-                    $locale->findLineNumber($identifier)
+                    $locale->getName(),
+                    "Test against disallowed texts for key: '" . $translation->getKey(),
+                    $locale->getFilename(),
+                    $locale->findLineNumber($translation->getKey()),
+                    $this->getRuleIdentifier(),
+                    "Found disallowed text in key '" . $translation->getKey() . "'. Value must not contain: '" . $foundWord . "'",
+                    $testPassed
                 );
             }
         }
 
-        return new ValidationResult($tests, $errors);
+        return new ValidationResult($tests);
     }
 }

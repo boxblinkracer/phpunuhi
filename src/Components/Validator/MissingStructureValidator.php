@@ -3,9 +3,9 @@
 namespace PHPUnuhi\Components\Validator;
 
 use PHPUnuhi\Bundles\Storage\StorageInterface;
-use PHPUnuhi\Components\Validator\Model\ValidationError;
 use PHPUnuhi\Components\Validator\Model\ValidationResult;
 use PHPUnuhi\Components\Validator\Model\ValidationTest;
+use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
 class MissingStructureValidator implements ValidatorInterface
@@ -30,7 +30,6 @@ class MissingStructureValidator implements ValidatorInterface
         $allKeys = $set->getAllTranslationIDs();
 
         $tests = [];
-        $errors = [];
 
         foreach ($set->getLocales() as $locale) {
             $localeKeys = $locale->getTranslationIDs();
@@ -46,43 +45,16 @@ class MissingStructureValidator implements ValidatorInterface
                 $filtered = $this->getDiff($localeKeys, $allKeys);
 
                 foreach ($filtered as $key) {
-                    $errors[] = new ValidationError(
-                        $this->getTypeIdentifier(),
-                        'Found missing structure in locale',
-                        $locale->getName(),
-                        $locale->getFilename(),
-                        $key,
-                        $locale->findLineNumber($key)
-                    );
-
-                    $tests[] = new ValidationTest(
-                        $key,
-                        $locale->getName(),
-                        'Text structure of key: ' . $key,
-                        $locale->getFilename(),
-                        $locale->findLineNumber($key),
-                        $this->getTypeIdentifier(),
-                        'Translation key ' . $key . ' is not found in locale ' . $locale->getName(),
-                        false
-                    );
+                    $tests[] = $this->buildValidationTest($key, $locale, false);
                 }
             }
 
             foreach ($same as $key) {
-                $tests[] = new ValidationTest(
-                    $key,
-                    $locale->getName(),
-                    'Text structure of key: ' . $key,
-                    $locale->getFilename(),
-                    $locale->findLineNumber($key),
-                    $this->getTypeIdentifier(),
-                    '',
-                    true
-                );
+                $tests[] = $this->buildValidationTest($key, $locale, true);
             }
         }
 
-        return new ValidationResult($tests, $errors);
+        return new ValidationResult($tests);
     }
 
 
@@ -125,5 +97,25 @@ class MissingStructureValidator implements ValidatorInterface
         $diffB = array_intersect($b, $a);
 
         return array_merge($diffA, $diffB);
+    }
+
+    /**
+     * @param string $key
+     * @param Locale $locale
+     * @param bool $success
+     * @return ValidationTest
+     */
+    private function buildValidationTest(string $key, Locale $locale, bool $success): ValidationTest
+    {
+        return new ValidationTest(
+            $key,
+            $locale->getName(),
+            'Test structure of key: ' . $key,
+            $locale->getFilename(),
+            $locale->findLineNumber($key),
+            $this->getTypeIdentifier(),
+            'Found missing structure in locale. Key is missing: ' . $key,
+            $success
+        );
     }
 }

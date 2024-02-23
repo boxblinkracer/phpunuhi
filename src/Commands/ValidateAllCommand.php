@@ -69,7 +69,7 @@ class ValidateAllCommand extends Command
 
         $translationSetCLI = new TranslationSetCliFacade($io);
         $coverageCLI = new CoverageCliFacade($io);
-        $validatorsCLI = new ValidatorCliFacade($io);
+        $validatorsCLI = new ValidatorCliFacade($io, $output);
         $reporterCLI = new ReporterCliFacade($io);
 
         # -----------------------------------------------------------------

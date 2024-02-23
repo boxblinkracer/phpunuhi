@@ -6,22 +6,22 @@ class ReportResult
 {
 
     /**
-     * @var TranslationSetResult[]
+     * @var ReportSetResult[]
      */
     private $suites = [];
 
 
     /**
-     * @param TranslationSetResult $result
+     * @param ReportSetResult $result
      * @return void
      */
-    public function addTranslationSet(TranslationSetResult $result): void
+    public function addTranslationSet(ReportSetResult $result): void
     {
         $this->suites[] = $result;
     }
 
     /**
-     * @return TranslationSetResult[]
+     * @return ReportSetResult[]
      */
     public function getSuites(): array
     {

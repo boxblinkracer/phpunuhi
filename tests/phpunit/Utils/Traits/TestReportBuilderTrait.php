@@ -2,18 +2,18 @@
 
 namespace phpunit\Utils\Traits;
 
-use PHPUnuhi\Components\Reporter\Model\TestResult;
+use PHPUnuhi\Components\Reporter\Model\ReportTestResult;
 
 trait TestReportBuilderTrait
 {
 
     /**
      * @param bool $success
-     * @return TestResult
+     * @return ReportTestResult
      */
-    protected function buildTestResult(bool $success): TestResult
+    protected function buildTestResult(bool $success): ReportTestResult
     {
-        return new TestResult(
+        return new ReportTestResult(
             'Fake Test',
             'btnTitle',
             'CONTENT_VALIDATOR',

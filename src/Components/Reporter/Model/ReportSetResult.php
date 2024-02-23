@@ -2,7 +2,7 @@
 
 namespace PHPUnuhi\Components\Reporter\Model;
 
-class TranslationSetResult
+class ReportSetResult
 {
 
     /**
@@ -11,7 +11,7 @@ class TranslationSetResult
     private $name;
 
     /**
-     * @var TestResult[]
+     * @var ReportTestResult[]
      */
     private $tests = [];
 
@@ -32,16 +32,16 @@ class TranslationSetResult
     }
 
     /**
-     * @param TestResult $result
+     * @param ReportTestResult $result
      * @return void
      */
-    public function addTestResult(TestResult $result): void
+    public function addTestResult(ReportTestResult $result): void
     {
         $this->tests[] = $result;
     }
 
     /**
-     * @return TestResult[]
+     * @return ReportTestResult[]
      */
     public function getTests(): array
     {

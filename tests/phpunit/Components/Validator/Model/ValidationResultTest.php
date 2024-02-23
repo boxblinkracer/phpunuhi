@@ -3,7 +3,6 @@
 namespace phpunit\Components\Validator\Model;
 
 use PHPUnit\Framework\TestCase;
-use PHPUnuhi\Components\Validator\Model\ValidationError;
 use PHPUnuhi\Components\Validator\Model\ValidationResult;
 use PHPUnuhi\Components\Validator\Model\ValidationTest;
 
@@ -30,19 +29,10 @@ class ValidationResultTest extends TestCase
             5,
             '',
             '',
-            true
+            false
         );
 
-        $error = new ValidationError(
-            '',
-            '',
-            '',
-            '',
-            '',
-            4
-        );
-
-        $this->result = new ValidationResult([$test], [$error]);
+        $this->result = new ValidationResult([$test]);
     }
 
     /**

@@ -4,9 +4,10 @@ namespace PHPUnuhi\Components\Validator;
 
 use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Components\Validator\EmptyContent\AllowEmptyContent;
-use PHPUnuhi\Components\Validator\Model\ValidationError;
 use PHPUnuhi\Components\Validator\Model\ValidationResult;
 use PHPUnuhi\Components\Validator\Model\ValidationTest;
+use PHPUnuhi\Models\Translation\Locale;
+use PHPUnuhi\Models\Translation\Translation;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
 class EmptyContentValidator implements ValidatorInterface
@@ -44,7 +45,6 @@ class EmptyContentValidator implements ValidatorInterface
     public function validate(TranslationSet $set, StorageInterface $storage): ValidationResult
     {
         $tests = [];
-        $errors = [];
 
         foreach ($set->getLocales() as $locale) {
             foreach ($locale->getTranslations() as $translation) {
@@ -61,39 +61,37 @@ class EmptyContentValidator implements ValidatorInterface
                     }
                 }
 
-                $tests[] = new ValidationTest(
-                    $translation->getKey(),
-                    $locale->getName(),
-                    'Test existing translation of key: ' . $translation->getKey(),
-                    $locale->getFilename(),
-                    $locale->findLineNumber($translation->getKey()),
-                    $this->getTypeIdentifier(),
-                    'Translation for key ' . $translation->getKey() . ' does not have a value',
-                    $testPassed
-                );
-
-
-                if ($testPassed) {
-                    continue;
-                }
-
                 if ($translation->getGroup() !== '') {
                     $identifier = $translation->getGroup() . ' (group) => ' . $translation->getKey();
                 } else {
                     $identifier = $translation->getID();
                 }
 
-                $errors[] = new ValidationError(
-                    $this->getTypeIdentifier(),
-                    'Found empty translation',
-                    $locale->getName(),
-                    $locale->getFilename(),
-                    $identifier,
-                    $locale->findLineNumber($identifier)
-                );
+                $tests[] = $this->buildValidationTest($identifier, $locale, $translation, $testPassed);
             }
         }
 
-        return new ValidationResult($tests, $errors);
+        return new ValidationResult($tests);
+    }
+
+    /**
+     * @param string $identifier
+     * @param Locale $locale
+     * @param Translation $translation
+     * @param bool $testPassed
+     * @return ValidationTest
+     */
+    private function buildValidationTest(string $identifier, Locale $locale, Translation $translation, bool $testPassed): ValidationTest
+    {
+        return new ValidationTest(
+            $identifier,
+            $locale->getName(),
+            'Test existing translation for key: ' . $translation->getKey(),
+            $locale->getFilename(),
+            $locale->findLineNumber($translation->getKey()),
+            $this->getTypeIdentifier(),
+            'Translation for key ' . $translation->getKey() . ' does not have a value',
+            $testPassed
+        );
     }
 }

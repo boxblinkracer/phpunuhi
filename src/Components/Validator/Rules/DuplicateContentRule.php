@@ -4,7 +4,6 @@ namespace PHPUnuhi\Components\Validator\Rules;
 
 use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Components\Validator\DuplicateContent\DuplicateContent;
-use PHPUnuhi\Components\Validator\Model\ValidationError;
 use PHPUnuhi\Components\Validator\Model\ValidationResult;
 use PHPUnuhi\Components\Validator\Model\ValidationTest;
 use PHPUnuhi\Models\Translation\Locale;
@@ -45,14 +44,12 @@ class DuplicateContentRule implements RuleValidatorInterface
     public function validate(TranslationSet $set, StorageInterface $storage): ValidationResult
     {
         if (count($this->localeSettings) === 0) {
-            return new ValidationResult([], []);
+            return new ValidationResult([]);
         }
 
         $storage->getHierarchy();
 
         $tests = [];
-        $errors = [];
-
 
         foreach ($set->getLocales() as $locale) {
             if (!$this->requiresDuplicateContent($locale->getName())) {
@@ -74,27 +71,21 @@ class DuplicateContentRule implements RuleValidatorInterface
                     $testPassed = true;
                 }
 
-                $tests[] = $this->buildTestEntry(
-                    $locale,
-                    $translation->getKey(),
-                    $testPassed
-                );
-
-                if ($testPassed) {
-                    continue;
-                }
-
                 if ($translation->getGroup() !== '') {
                     $identifier = $translation->getGroup() . ' (group) => ' . $translation->getKey();
                 } else {
                     $identifier = $translation->getID();
                 }
 
-                $errors[] = $this->buildError($locale, $identifier);
+                $tests[] = $this->buildTestEntry(
+                    $locale,
+                    $identifier,
+                    $testPassed
+                );
             }
         }
 
-        return new ValidationResult($tests, $errors);
+        return new ValidationResult($tests);
     }
 
     /**
@@ -131,29 +122,12 @@ class DuplicateContentRule implements RuleValidatorInterface
         return new ValidationTest(
             $translationKey,
             $locale->getName(),
-            'Testing for duplicate content of key: ' . $translationKey,
+            "Testing for duplicate content in key: '" . $translationKey . "'",
             $locale->getFilename(),
             $locale->findLineNumber($translationKey),
             $this->getRuleIdentifier(),
-            'Content of key ' . $translationKey . ' has been found multiple times within locale: ' . $locale->getName(),
+            "Content of key '" . $translationKey . "' has been found multiple times within locale '" . $locale->getName() . "'",
             $passed
-        );
-    }
-
-    /**
-     * @param Locale $locale
-     * @param string $identifier
-     * @return ValidationError
-     */
-    private function buildError(Locale $locale, string $identifier): ValidationError
-    {
-        return new ValidationError(
-            $this->getRuleIdentifier(),
-            'Content of key ' . $identifier . ' has been found multiple times within locale: ' . $locale->getName(),
-            $locale->getName(),
-            $locale->getFilename(),
-            $identifier,
-            $locale->findLineNumber($identifier)
         );
     }
 }

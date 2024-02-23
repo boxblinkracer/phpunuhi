@@ -9,7 +9,7 @@ use phpunit\Utils\Traits\StringCleanerTrait;
 use phpunit\Utils\Traits\TestReportBuilderTrait;
 use PHPUnuhi\Components\Reporter\JSON\JsonReporter;
 use PHPUnuhi\Components\Reporter\Model\ReportResult;
-use PHPUnuhi\Components\Reporter\Model\TranslationSetResult;
+use PHPUnuhi\Components\Reporter\Model\ReportSetResult;
 
 class JsonReporterTest extends TestCase
 {
@@ -88,7 +88,7 @@ class JsonReporterTest extends TestCase
      */
     public function testReportGeneration(): void
     {
-        $suite = new TranslationSetResult('Storefront');
+        $suite = new ReportSetResult('Storefront');
         $suite->addTestResult($this->buildTestResult(true));
         $suite->addTestResult($this->buildTestResult(false));
 

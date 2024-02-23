@@ -28,7 +28,6 @@ class EmptyContentRule implements RuleValidatorInterface
     public function validate(TranslationSet $set, StorageInterface $storage): ValidationResult
     {
         $tests = [];
-        $errors = [];
 
         foreach ($set->getLocales() as $locale) {
             foreach ($locale->getTranslations() as $translation) {
@@ -40,7 +39,7 @@ class EmptyContentRule implements RuleValidatorInterface
             }
         }
 
-        return new ValidationResult($tests, $errors);
+        return new ValidationResult($tests);
     }
 
     /**

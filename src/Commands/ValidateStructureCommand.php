@@ -62,7 +62,7 @@ class ValidateStructureCommand extends Command
         $validators[] = new MissingStructureValidator();
 
         $translationSetCLI = new TranslationSetCliFacade($io);
-        $validatorsCLI = new ValidatorCliFacade($io);
+        $validatorsCLI = new ValidatorCliFacade($io, $output);
         $reporterCLI = new ReporterCliFacade($io);
 
         # -----------------------------------------------------------------
