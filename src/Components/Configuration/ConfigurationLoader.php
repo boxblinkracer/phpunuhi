@@ -99,8 +99,8 @@ class ConfigurationLoader
 
     /**
      * @param string $rootConfigFilename
-     * @throws Exception
      * @throws ConfigurationException
+     * @throws Exception
      * @return Configuration
      */
     public function load(string $rootConfigFilename): Configuration
@@ -108,6 +108,21 @@ class ConfigurationLoader
         $rootXmlSettings = $this->xmlLoader->loadXML($rootConfigFilename);
 
         $rootConfigDir = dirname($rootConfigFilename) . '/';
+
+        # load our bootstrap file
+        # if provided
+        $bootstrap = $this->getAttribute('bootstrap', $rootXmlSettings)->getValue();
+
+        if ($bootstrap !== '' && $bootstrap !== '0') {
+            $bootstrapOriginal = $bootstrap;
+            $bootstrap = (string)realpath($rootConfigDir . '/' . $bootstrap);
+
+            if (!file_exists($bootstrap)) {
+                throw new ConfigurationException('Bootstrap file not found: ' . $bootstrapOriginal);
+            }
+
+            require_once $bootstrap;
+        }
 
         # we might have sub imports in files with <imports>
         # so we load the list of files to import

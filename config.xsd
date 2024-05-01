@@ -12,6 +12,7 @@
                 <xs:element name="translations" type="typeTranslations" minOccurs="1" maxOccurs="unbounded"/>
                 <xs:element name="coverage" type="typeCoverage" minOccurs="0" maxOccurs="1"/>
             </xs:sequence>
+            <xs:attribute name="bootstrap" type="xs:string" use="optional"/>
         </xs:complexType>
 
         <!-- names of Translation-Sets must be unique -->

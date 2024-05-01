@@ -3,6 +3,12 @@
 All notable changes of releases are documented in this file
 using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
+## [unreleased]
+
+### Added
+
+- Add new **bootstrap** loading option to make it easier to load register custom storages and more. Load all your vendors, and register whatever you need in that file.
+
 ## [1.18.0]
 
 ### Added

@@ -834,6 +834,16 @@ Then simply register your storage using this function:
 StorageFactory::getInstance()->registerStorage($myStorage);
 ```
 
+The easiest approach is to use a **bootstrap** file and assign it in your XML configuration
+to load your custom storage.
+
+```xml
+
+<phpunuhi
+        bootstrap="./autoload.php">
+</phpunuhi>
+```
+
 ### 8.4 Filters
 
 It's possible to use filters to modify the list of covered translation keys.
@@ -1130,6 +1140,16 @@ Then simply register your exchange format using this function:
 ExchangeFactory::getInstance()->registerExchangeFormat($myFormat);
 ```
 
+The easiest approach is to use a **bootstrap** file and assign it in your XML configuration
+to load your custom storage.
+
+```xml
+
+<phpunuhi
+        bootstrap="./autoload.php">
+</phpunuhi>
+```
+
 ### 8.10 Translator Services
 
 Translators are supported (external) services that automatically translate empty values for you.
@@ -1199,6 +1219,16 @@ Then simply register your translator using this function:
 
 ```php
 TranslatorFactory::getInstance()->registerTranslator($myTranslator);
+```
+
+The easiest approach is to use a **bootstrap** file and assign it in your XML configuration
+to load your custom storage.
+
+```xml
+
+<phpunuhi
+        bootstrap="./autoload.php">
+</phpunuhi>
 ```
 
 ### 8.11 Validation Reports

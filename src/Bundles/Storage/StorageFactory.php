@@ -47,6 +47,7 @@ class StorageFactory
         $this->resetStorages();
     }
 
+
     /**
      * @param StorageInterface $storage
      * @throws ConfigurationException
@@ -107,7 +108,7 @@ class StorageFactory
         }
 
         foreach ($this->storages as $storage) {
-            if ($storage->getStorageName() === $name) {
+            if (strtolower($storage->getStorageName()) === strtolower($name)) {
                 $storage->configureStorage($set);
 
                 return $storage;

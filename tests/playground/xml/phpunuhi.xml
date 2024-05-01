@@ -1,0 +1,21 @@
+<phpunuhi
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../xsd/phpunuhi.xsd"
+        bootstrap="autoload.php"
+>
+
+    <translations>
+
+        <set name="xml">
+            <format>
+                <xml sort="true"/>
+            </format>
+            <locales>
+                <locale name="de">./snippets/de.xml</locale>
+                <locale name="en">.//snippets/en.xml</locale>
+            </locales>
+        </set>
+
+    </translations>
+
+</phpunuhi>
