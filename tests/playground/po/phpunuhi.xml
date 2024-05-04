@@ -12,6 +12,7 @@
             <locales>
                 <locale name="de">./%locale%.po</locale>
                 <locale name="en">./%locale%.po</locale>
+                <locale name="fr">./%locale%.po</locale>
             </locales>
         </set>
 

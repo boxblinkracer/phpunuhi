@@ -21,3 +21,8 @@
 /tests/playground/yaml/.exports
 /tests/playground/po/.exports
 /tests/playground/php/.exports
+/tests/playground/json/bundle/snippets/fr.json
+/tests/playground/ini/fr.ini
+/tests/playground/php/fr.php
+/tests/playground/po/fr.po
+/tests/playground/yaml/fr.yaml

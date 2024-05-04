@@ -12,6 +12,7 @@
             <locales>
                 <locale name="de">./de.yaml</locale>
                 <locale name="en">./en.yaml</locale>
+                <locale name="fr">./fr.yaml</locale>
             </locales>
         </set>
 

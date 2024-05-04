@@ -15,6 +15,7 @@
             <locales>
                 <locale name="de">./de.ini</locale>
                 <locale name="en">./en.ini</locale>
+                <locale name="fr">./fr.ini</locale>
             </locales>
         </set>
 
