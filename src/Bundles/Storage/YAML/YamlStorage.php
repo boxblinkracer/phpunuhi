@@ -10,10 +10,12 @@ use PHPUnuhi\Bundles\Storage\YAML\Services\YamlSaver;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
 use PHPUnuhi\Traits\ArrayTrait;
+use PHPUnuhi\Traits\AutoCreateTranslationFileTrait;
 
 class YamlStorage implements StorageInterface
 {
     use ArrayTrait;
+    use AutoCreateTranslationFileTrait;
 
     /**
      * @var YamlLoader
@@ -74,6 +76,8 @@ class YamlStorage implements StorageInterface
 
         $this->loader = new YamlLoader();
         $this->saver = new YamlSaver((int)$indent, $sort, $eolLast);
+        $this->commandPrompt = $set->getCommandPrompt();
+        $this->setStorageFileTemplate((string) file_get_contents(__DIR__ . '/Template/StorageFileTemplate.yaml'));
     }
 
     /**
@@ -85,7 +89,9 @@ class YamlStorage implements StorageInterface
         $delimiter = $this->getHierarchy()->getDelimiter();
 
         foreach ($set->getLocales() as $locale) {
-            $this->loader->loadLocale($locale, $delimiter);
+            if ($this->ensureTranslationFileExists($locale)) {
+                $this->loader->loadLocale($locale, $delimiter);
+            }
         }
     }
 

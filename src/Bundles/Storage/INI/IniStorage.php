@@ -8,9 +8,11 @@ use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Bundles\Storage\StorageSaveResult;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
+use PHPUnuhi\Traits\AutoCreateTranslationFileTrait;
 
 class IniStorage implements StorageInterface
 {
+    use AutoCreateTranslationFileTrait;
 
     /**
      * @var bool
@@ -65,6 +67,9 @@ class IniStorage implements StorageInterface
     {
         $this->sortIni = filter_var($set->getAttributeValue('sort'), FILTER_VALIDATE_BOOLEAN);
         $this->eolLast = filter_var($set->getAttributeValue('eol-last'), FILTER_VALIDATE_BOOLEAN);
+
+        $this->commandPrompt = $set->getCommandPrompt();
+        $this->setStorageFileTemplate((string) file_get_contents(__DIR__ . '/Template/StorageFileTemplate.ini'));
     }
 
     /**
@@ -75,6 +80,10 @@ class IniStorage implements StorageInterface
     public function loadTranslationSet(TranslationSet $set): void
     {
         foreach ($set->getLocales() as $locale) {
+            if (false === $this->ensureTranslationFileExists($locale)) {
+                continue;
+            }
+
             $iniArray = parse_ini_file($locale->getFilename(), true, INI_SCANNER_RAW);
 
             if ($iniArray === false) {
