@@ -34,8 +34,9 @@ class SupportedLanguages
     /**
      * @param string $locale
      * @return string
+     * @throws DeepLException
      */
-    public function getAvailableLocale($locale): string
+    public function getAvailableLocale(string $locale): string
     {
         $locale = strtolower($locale);
 
@@ -60,7 +61,7 @@ class SupportedLanguages
 
         throw new DeepLException(
             'Supported languages are: ' . implode(', ', $supportedLocales) .
-            ' Not `'. $locale .'`'
+            ' Not `' . $locale . '`'
         );
     }
 
