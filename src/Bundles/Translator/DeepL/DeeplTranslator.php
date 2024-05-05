@@ -4,6 +4,7 @@ namespace PHPUnuhi\Bundles\Translator\DeepL;
 
 use DeepL\Translator;
 use Exception;
+use PHPUnuhi\Bundles\Translator\DeepL\Services\SupportedLanguages;
 use PHPUnuhi\Bundles\Translator\TranslatorInterface;
 use PHPUnuhi\Models\Command\CommandOption;
 use PHPUnuhi\Services\Placeholder\Placeholder;
@@ -114,13 +115,9 @@ class DeeplTranslator implements TranslatorInterface
 
         $translator = new Translator($this->apiKey);
 
-        if ($targetLocale === 'en') {
-            $targetLocale = 'en-GB';
-        }
-        if ($targetLocale === 'de-DE') {
-            $targetLocale = 'de';
-        }
+        $supportedLanguages = new SupportedLanguages($translator);
 
+        $targetLocale = $supportedLanguages->getAvailableLocale($targetLocale);
 
         $options = [
 
