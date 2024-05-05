@@ -598,10 +598,11 @@ The purpose is, that every locale in a translation-set should match across those
 same structure for example).
 
 This is how you can define locales (with files in this sample).
-You can also use a placeholder **%locale%**, **%locale_lc%** and **%locale_uc%** in the value to make things easier for
+You can also use a placeholder **%locale%**, **%locale_lc%**, **%locale_uc%** and **%locale_un%** in the value to make things easier for
 you.
 This will reuse the locale name in the filename.
 **locale_lc** is lower case and **locale_uc** is upper case.
+**%locale_un%** change `-` to `_` underscore. (fr-CH to fr_CH)
 
 If you have all files in the same base directory, you can also provide a placeholder for the **basePath** and
 use this one also for the directories of your files.
@@ -609,9 +610,15 @@ use this one also for the directories of your files.
 ```xml
 
 <set name="sample">
-    <locales basePath="./Bundles/MySuperBundle/Resources/snippets/%locale%">
-        <locale name="de">%base_path%/snippets/de.json</locale>
-        <locale name="en">%base_path%/snippets/%locale%.json</locale>
+    <locales basePath="./Bundles/MySuperBundle/Resources/snippets/%locale_un%">
+        <!-- Bundles/MySuperBundle/Resources/snippets/DE/storefront-de.json -->
+        <locale name="DE">%base_path%/storefront-%locale_lc%.json</locale>
+      
+        <!-- Bundles/MySuperBundle/Resources/snippets/en/storefront-EN.json -->
+        <locale name="en">%base_path%/storefront-%locale_uc%.json</locale>
+
+        <!-- Bundles/MySuperBundle/Resources/snippets/fr_CH/storefront-fr-CH.json -->
+        <locale name="fr-CH">%base_path%/storefront-%locale%.json</locale>
     </locales>
 </set>
 ```

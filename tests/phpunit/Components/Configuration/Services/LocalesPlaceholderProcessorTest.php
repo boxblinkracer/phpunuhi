@@ -237,4 +237,23 @@ class LocalesPlaceholderProcessorTest extends TestCase
 
         $this->assertEquals('translations/en-US/administration/data-en-US.xml', $filename);
     }
+
+    /**
+     * @testWith [ "fr_FR", "fr-FR" ]
+     *           [ "fr_be", "fr-be" ]
+     *           [ "fr_cH", "fr-cH" ]
+     *           [ "fr", "fr" ]
+     * @return void
+     */
+    public function testPlaceholderLocaleUNInFilename(string $expect, string $locale): void
+    {
+        $filename = $this->processor->buildRealFilename(
+            $locale,
+            '%base_path%/storefront-%locale%.xml',
+            './snippets/%locale_un%/',
+            ''
+        );
+
+        $this->assertEquals("snippets/{$expect}/storefront-{$locale}.xml", $filename);
+    }
 }
