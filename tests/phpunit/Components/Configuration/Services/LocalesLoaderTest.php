@@ -129,6 +129,7 @@ class LocalesLoaderTest extends TestCase
      * @testWith     [ "en-US", "%locale%", "en-US" ]
      *               [ "EN", "%locale_uc%", "en" ]
      *               [ "en", "%locale_lc%", "EN" ]
+     *               [ "fr_Fr", "%locale_un%", "fr-Fr" ]
      *
      * @param string $expectedLocalePart
      * @param string $placeholder
