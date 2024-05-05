@@ -33,8 +33,8 @@ class SupportedLanguages
 
     /**
      * @param string $locale
-     * @return string
      * @throws DeepLException
+     * @return string
      */
     public function getAvailableLocale(string $locale): string
     {
