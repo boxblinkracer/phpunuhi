@@ -8,11 +8,11 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 ### Added
 
 - Add new **bootstrap** loading option to make it easier to load register custom storages and more. Load all your vendors, and register whatever you need in that file.
+- Add new placeholder **%locale_un%** for XML configuration to change `-` to `_` underscore. (fr-CH to fr_CH) (thx @TumTum)
 
 ### Fixed
 
 - Fixed **target locale** feature of the DeepL integration. DeepL actually only needs the first part of a given locale. (thx @TumTum)
-
 
 ## [1.18.0]
 
