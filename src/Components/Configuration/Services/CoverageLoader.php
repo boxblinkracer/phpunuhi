@@ -21,7 +21,7 @@ class CoverageLoader
 
         $totalCoverage = $this->getAttribute('minCoverage', $coverageNode);
 
-        if ($totalCoverage->getValue() != '') {
+        if ($totalCoverage->getValue() !== '') {
             $coverage->setMinCoverage((int)$totalCoverage->getValue());
         }
 
@@ -53,7 +53,7 @@ class CoverageLoader
 
         $totalCoverage = $this->getAttribute('minCoverage', $coverageNode);
 
-        if ($totalCoverage->getValue() != '') {
+        if ($totalCoverage->getValue() !== '') {
             $coverage->setMinCoverage((int)$totalCoverage->getValue());
         }
 

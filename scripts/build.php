@@ -40,10 +40,10 @@ function deleteDirectory(string $dir): bool
     }
 
     foreach (scandir($dir) as $item) {
-        if ($item == '.') {
+        if ($item === '.') {
             continue;
         }
-        if ($item == '..') {
+        if ($item === '..') {
             continue;
         }
         if (!deleteDirectory($dir . DIRECTORY_SEPARATOR . $item)) {

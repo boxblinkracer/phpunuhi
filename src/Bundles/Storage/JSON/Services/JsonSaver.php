@@ -63,7 +63,7 @@ class JsonSaver
         $tmpArray = $this->getMultiDimensionalArray($saveValues, $delimiter);
 
         $jsonString = (string)json_encode($tmpArray, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-        $indentStr = (string)str_repeat(' ', $indent);
+        $indentStr = str_repeat(' ', $indent);
 
         $json = preg_replace_callback(
             '/^ +/m',

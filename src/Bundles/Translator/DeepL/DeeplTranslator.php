@@ -2,6 +2,7 @@
 
 namespace PHPUnuhi\Bundles\Translator\DeepL;
 
+use DeepL\TextResult;
 use DeepL\Translator;
 use Exception;
 use PHPUnuhi\Bundles\Translator\DeepL\Services\SupportedLanguages;
@@ -127,6 +128,7 @@ class DeeplTranslator implements TranslatorInterface
             $options['formality'] = $formalValue;
         }
 
+        /** @var TextResult|TextResult[] $result */
         $result = $translator->translateText(
             $text,
             null,
@@ -134,11 +136,7 @@ class DeeplTranslator implements TranslatorInterface
             $options
         );
 
-        if (is_array($result)) {
-            return $result[0]->text;
-        }
-
-        $result = $result->text;
+        $result = $result instanceof TextResult ? $result->text : $result[0]->text;
 
         if ($foundPlaceholders !== []) {
             # decode our string so that we have the original placeholder values again (%productName%)
