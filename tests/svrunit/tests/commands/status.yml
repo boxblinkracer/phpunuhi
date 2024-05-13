@@ -2,4 +2,4 @@ commands:
 
   - name: "Version is correct (command header)"
     command: "(($EXEC)) status --configuration=./tests/svrunit/fixtures/json/phpunuhi.xml"
-    expected: "PHPUnuhi Framework, v1.18.0"
+    expected: "PHPUnuhi Framework, v1.19.0"
