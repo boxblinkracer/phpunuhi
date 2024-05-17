@@ -791,6 +791,21 @@ instead of an entity translation table.
             </locales>
         </set>
 
+        <set name="categories">
+            <format>
+                <shopware6 entity="category"/>
+            </format>
+            <locales>
+                <locale name="en-GB"/>
+                <locale name="de-DE"/>
+            </locales>
+            <filter>
+                <include>
+                    <key>name</key>
+                </include>
+            </filter>
+        </set>
+        
         <set name="Snippets">
             <format>
                 <shopware6 entity="snippet"/>

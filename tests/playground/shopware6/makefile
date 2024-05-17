@@ -33,6 +33,7 @@ translate: ## Translate
 	cd ../../.. && php bin/phpunuhi translate --configuration=./tests/playground/shopware6/phpunuhi.xml --service=googleweb
 
 import: ## Import
+	cd ../../.. && php bin/phpunuhi import --configuration=./tests/playground/shopware6/phpunuhi.xml --set=categories --format=csv --file=./tests/playground/shopware6/.exports/categories.csv
 	cd ../../.. && php bin/phpunuhi import --configuration=./tests/playground/shopware6/phpunuhi.xml --set=products --format=csv --file=./tests/playground/shopware6/.exports/products.csv
 	cd ../../.. && php bin/phpunuhi import --configuration=./tests/playground/shopware6/phpunuhi.xml --set=snippets --format=csv --file=./tests/playground/shopware6/.exports/snippets.csv
 	cd ../../.. && php bin/phpunuhi import --configuration=./tests/playground/shopware6/phpunuhi.xml --set=state-machine-states --format=csv --file=./tests/playground/shopware6/.exports/state-machine-states.csv
