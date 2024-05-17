@@ -16,7 +16,7 @@ trait CommandTrait
     protected function showHeader()
     {
         echo "PHPUnuhi Framework, v" . PHPUnuhi::getVersion() . PHP_EOL;
-        echo "Copyright (c) 2023 Christian Dangl" . PHP_EOL;
+        echo "Copyright (c) 2023 - " . date('Y') . ", Christian Dangl and contributors" . PHP_EOL;
         echo PHP_EOL;
     }
 

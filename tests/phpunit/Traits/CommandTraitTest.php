@@ -17,7 +17,7 @@ class CommandTraitTest extends TestCase
      */
     public function testShowHeader(): void
     {
-        $this->expectOutputString("PHPUnuhi Framework, v" . PHPUnuhi::getVersion() . "\nCopyright (c) 2023 Christian Dangl\n\n");
+        $this->expectOutputString("PHPUnuhi Framework, v" . PHPUnuhi::getVersion() . "\nCopyright (c) 2023 - " . date('Y') . ", Christian Dangl and contributors\n\n");
 
         $this->showHeader();
     }
