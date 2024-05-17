@@ -34,4 +34,6 @@ translate: ## Translate
 
 import: ## Import
 	cd ../../.. && php bin/phpunuhi import --configuration=./tests/playground/shopware6/phpunuhi.xml --set=products --format=csv --file=./tests/playground/shopware6/.exports/products.csv
-	cd ../../.. && php bin/phpunuhi import --configuration=./tests/playground/shopware6/phpunuhi.xml --set=shipping --format=html --file=./tests/playground/shopware6/.exports/import.html.txt
+	cd ../../.. && php bin/phpunuhi import --configuration=./tests/playground/shopware6/phpunuhi.xml --set=snippets --format=csv --file=./tests/playground/shopware6/.exports/snippets.csv
+	cd ../../.. && php bin/phpunuhi import --configuration=./tests/playground/shopware6/phpunuhi.xml --set=state-machine-states --format=csv --file=./tests/playground/shopware6/.exports/state-machine-states.csv
+	cd ../../.. && php bin/phpunuhi import --configuration=./tests/playground/shopware6/phpunuhi.xml --set=state-machines --format=csv --file=./tests/playground/shopware6/.exports/state-machines.csv
