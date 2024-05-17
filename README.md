@@ -801,6 +801,16 @@ instead of an entity translation table.
             </locales>
         </set>
 
+        <set name="State Machine States">
+            <format>
+                <shopware6 entity="state_machine_state"/>
+            </format>
+            <locales>
+                <locale name="de-DE"/>
+                <locale name="en-GB"/>
+            </locales>
+        </set>
+
     </translations>
 </phpunuhi>
 ```

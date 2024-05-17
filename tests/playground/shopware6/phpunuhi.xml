@@ -40,6 +40,26 @@
             </locales>
         </set>
 
+        <set name="state-machines">
+            <format>
+                <shopware6 entity="state_machine"/>
+            </format>
+            <locales>
+                <locale name="en-GB"/>
+                <locale name="de-DE"/>
+            </locales>
+        </set>
+
+        <set name="state-machine-states">
+            <format>
+                <shopware6 entity="state_machine_state"/>
+            </format>
+            <locales>
+                <locale name="en-GB"/>
+                <locale name="de-DE"/>
+            </locales>
+        </set>
+
     </translations>
 
 </phpunuhi>
