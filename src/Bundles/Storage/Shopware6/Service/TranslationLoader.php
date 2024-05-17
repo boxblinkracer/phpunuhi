@@ -161,7 +161,7 @@ class TranslationLoader
 
                     # the value might either be a string or binary
                     # make sure to always use raw string
-                    $translationValue = ($this->isBinary($value)) ? $this->binaryToString($value) : (string)$value;
+                    $translationValue = ($this->isBinary((string)$value)) ? $this->binaryToString($value) : (string)$value;
 
                     $locale->addTranslation($translationKey, $translationValue, $groupName);
                 }

@@ -3,6 +3,12 @@
 All notable changes of releases are documented in this file
 using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
+## [unreleased]
+
+### Fixed
+
+- Fixed exception with **isBinary** method in Shopware 6 storage format when NULL was being passed on from the database entry.
+
 ## [1.19.0]
 
 ### Added
