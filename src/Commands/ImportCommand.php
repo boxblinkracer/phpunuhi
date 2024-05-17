@@ -138,9 +138,11 @@ class ImportCommand extends Command
                     if ($translation->getKey() !== $entry->getKey()) {
                         continue;
                     }
+
                     if ($translation->getGroup() !== $entry->getGroup()) {
                         continue;
                     }
+
                     $translation->setValue($entry->getValue());
                 }
             }

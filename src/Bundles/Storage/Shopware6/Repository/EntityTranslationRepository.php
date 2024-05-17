@@ -80,7 +80,6 @@ class EntityTranslationRepository
 
         $jsonFields = $this->getJsonFields($tableName);
 
-
         $params = [
             ':id' => $this->stringToBinary($entityId),
             ':langId' => $this->stringToBinary($languageId),

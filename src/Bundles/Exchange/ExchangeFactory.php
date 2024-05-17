@@ -6,6 +6,7 @@ use Exception;
 use PHPUnuhi\Bundles\Exchange\CSV\CSVExchange;
 use PHPUnuhi\Bundles\Exchange\CSV\Services\CSVWriter;
 use PHPUnuhi\Bundles\Exchange\HTML\HTMLExchange;
+use PHPUnuhi\Bundles\Exchange\JSON\JsonExchange;
 use PHPUnuhi\Exceptions\ConfigurationException;
 use PHPUnuhi\Models\Command\CommandOption;
 
@@ -74,6 +75,7 @@ class ExchangeFactory
 
         $this->exchangeServices[] = new CSVExchange(new CSVWriter());
         $this->exchangeServices[] = new HTMLExchange();
+        $this->exchangeServices[] = new JsonExchange();
     }
 
 

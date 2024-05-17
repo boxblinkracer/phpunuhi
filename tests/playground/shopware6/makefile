@@ -29,12 +29,15 @@ csv: ## Exports a CSV
 html: ## Exports a HTML
 	cd ../../.. && php bin/phpunuhi export --configuration=./tests/playground/shopware6/phpunuhi.xml --format=html --dir=./tests/playground/shopware6/.exports
 
+json: ## Exports a JSON
+	cd ../../.. && php bin/phpunuhi export --configuration=./tests/playground/shopware6/phpunuhi.xml --format=json --dir=./tests/playground/shopware6/.exports
+
 translate: ## Translate
 	cd ../../.. && php bin/phpunuhi translate --configuration=./tests/playground/shopware6/phpunuhi.xml --service=googleweb
 
-import: ## Import
-	cd ../../.. && php bin/phpunuhi import --configuration=./tests/playground/shopware6/phpunuhi.xml --set=categories --format=csv --file=./tests/playground/shopware6/.exports/categories.csv
-	cd ../../.. && php bin/phpunuhi import --configuration=./tests/playground/shopware6/phpunuhi.xml --set=products --format=csv --file=./tests/playground/shopware6/.exports/products.csv
-	cd ../../.. && php bin/phpunuhi import --configuration=./tests/playground/shopware6/phpunuhi.xml --set=snippets --format=csv --file=./tests/playground/shopware6/.exports/snippets.csv
-	cd ../../.. && php bin/phpunuhi import --configuration=./tests/playground/shopware6/phpunuhi.xml --set=state-machine-states --format=csv --file=./tests/playground/shopware6/.exports/state-machine-states.csv
-	cd ../../.. && php bin/phpunuhi import --configuration=./tests/playground/shopware6/phpunuhi.xml --set=state-machines --format=csv --file=./tests/playground/shopware6/.exports/state-machines.csv
+import: ## Import, provide format format=json
+	cd ../../.. && php bin/phpunuhi import --configuration=./tests/playground/shopware6/phpunuhi.xml --set=categories --format=$(format) --file=./tests/playground/shopware6/.exports/categories.$(format)
+	cd ../../.. && php bin/phpunuhi import --configuration=./tests/playground/shopware6/phpunuhi.xml --set=products --format=$(format) --file=./tests/playground/shopware6/.exports/products.$(format)
+	cd ../../.. && php bin/phpunuhi import --configuration=./tests/playground/shopware6/phpunuhi.xml --set=snippets --format=$(format) --file=./tests/playground/shopware6/.exports/snippets.$(format)
+	cd ../../.. && php bin/phpunuhi import --configuration=./tests/playground/shopware6/phpunuhi.xml --set=state-machine-states --format=$(format) --file=./tests/playground/shopware6/.exports/state-machine-states.$(format)
+	cd ../../.. && php bin/phpunuhi import --configuration=./tests/playground/shopware6/phpunuhi.xml --set=state-machines --format=$(format) --file=./tests/playground/shopware6/.exports/state-machines.$(format)

@@ -5,6 +5,10 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 ## [unreleased]
 
+### Added
+
+- Add new **json** exchange format. This allows to import and export translations in JSON format.
+
 ### Changed
 
 - removed deprecated **utf8_decode** function. mb_convert_encoding is now being used.
