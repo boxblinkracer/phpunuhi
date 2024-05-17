@@ -95,7 +95,7 @@ class EntityTranslationRepository
             $valueKey = 'value_' . $data->getField();
             $value = $data->getValue();
 
-            $value = utf8_decode($value);
+            $value =  mb_convert_encoding($value, "ISO-8859-1", "UTF-8");
 
             # make sure empty JSON fields are NULL
             if ($value === '' && in_array($data->getField(), $jsonFields)) {

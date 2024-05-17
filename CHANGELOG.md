@@ -5,6 +5,10 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 ## [unreleased]
 
+### Changed
+
+- removed deprecated **utf8_decode** function. mb_convert_encoding is now being used.
+
 ### Fixed
 
 - Fixed exception with **isBinary** method in Shopware 6 storage format when NULL was being passed on from the database entry.
