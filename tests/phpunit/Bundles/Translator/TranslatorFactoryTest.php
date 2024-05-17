@@ -80,6 +80,7 @@ class TranslatorFactoryTest extends TestCase
         $expected = [
             new CommandOption('google-key', true),
             new CommandOption('openai-key', true),
+            new CommandOption('openai-model', true),
             new CommandOption('deepl-key', true),
             new CommandOption('deepl-formal', false),
         ];

@@ -29,10 +29,11 @@ Please keep that in mind to avoids misinterpreting the goal of this framework.
 Now that you know this, let's get started!
 
 <!-- TOC -->
-  * [1. Basic Concept](#1-basic-concept)
-  * [2. Installation](#2-installation)
-  * [3. Configuration](#3-configuration)
-  * [4. Commands](#4-commands)
+
+* [1. Basic Concept](#1-basic-concept)
+* [2. Installation](#2-installation)
+* [3. Configuration](#3-configuration)
+* [4. Commands](#4-commands)
     * [4.1 Validate All Command](#41-validate-all-command)
     * [4.2 Validate Mess Command](#42-validate-mess-command)
     * [4.3 Validate Coverage Command](#43-validate-coverage-command)
@@ -46,56 +47,57 @@ Now that you know this, let's get started!
     * [4.11 List Translations Command](#411-list-translations-command)
     * [4.12 Migration Command](#412-migration-command)
     * [4.13 Scan Usage Command](#413-scan-usage-command)
-  * [5. Validation Processes](#5-validation-processes)
+* [5. Validation Processes](#5-validation-processes)
     * [5.1 Structure Validation](#51-structure-validation)
     * [5.2 Empty content Validation](#52-empty-content-validation)
     * [5.3 Case-Style Validation](#53-case-style-validation)
     * [5.4 Rules Validation](#54-rules-validation)
-  * [6. Use Cases](#6-use-cases)
+* [6. Use Cases](#6-use-cases)
     * [6.1 Validation in CI pipeline](#61-validation-in-ci-pipeline)
     * [6.2 Working with external translation agencies](#62-working-with-external-translation-agencies)
     * [6.3 Live WebEdit with HTML](#63-live-webedit-with-html)
     * [6.4 Automatic Translation with Google, DeepL, ...](#64-automatic-translation-with-google-deepl-)
-  * [7. Warning](#7-warning)
-  * [8. Appendix](#8-appendix)
-      * [8.1 Imports](#81-imports)
-      * [8.2 Locales](#82-locales)
+* [7. Warning](#7-warning)
+* [8. Appendix](#8-appendix)
+    * [8.1 Imports](#81-imports)
+    * [8.2 Locales](#82-locales)
     * [8.3 Storage Formats](#83-storage-formats)
-      * [8.3.1 Formats](#831-formats)
-        * [8.3.1.1 JSON](#8311-json)
-        * [8.3.1.2 INI](#8312-ini)
-        * [8.3.1.3 PO](#8313-po)
-        * [8.3.1.4 PHP](#8314-php)
-        * [8.3.1.5 Shopware 6](#8315-shopware-6)
-        * [8.3.1.6 YAML](#8316-yaml)
-      * [8.3.2 Custom Formats](#832-custom-formats)
+        * [8.3.1 Formats](#831-formats)
+            * [8.3.1.1 JSON](#8311-json)
+            * [8.3.1.2 INI](#8312-ini)
+            * [8.3.1.3 PO](#8313-po)
+            * [8.3.1.4 PHP](#8314-php)
+            * [8.3.1.5 Shopware 6](#8315-shopware-6)
+            * [8.3.1.6 YAML](#8316-yaml)
+        * [8.3.2 Custom Formats](#832-custom-formats)
     * [8.4 Filters](#84-filters)
     * [8.5 Groups](#85-groups)
     * [8.6 Case Styles](#86-case-styles)
     * [8.7 Rules](#87-rules)
-      * [8.8.1 Nesting Depth](#881-nesting-depth)
-      * [8.8.2 Key Length](#882-key-length)
-      * [8.8.3 Disallowed Texts](#883-disallowed-texts)
-      * [8.8.4 Duplicate Content](#884-duplicate-content)
-      * [8.8.5 Empty Content](#885-empty-content)
+        * [8.8.1 Nesting Depth](#881-nesting-depth)
+        * [8.8.2 Key Length](#882-key-length)
+        * [8.8.3 Disallowed Texts](#883-disallowed-texts)
+        * [8.8.4 Duplicate Content](#884-duplicate-content)
+        * [8.8.5 Empty Content](#885-empty-content)
     * [8.8 PHP ENV Variables](#88-php-env-variables)
     * [8.9 Exchange Formats](#89-exchange-formats)
-      * [8.9.1 CSV](#891-csv)
-      * [8.9.2 HTML / WebEdit](#892-html--webedit)
-      * [8.9.3 JSON](#893-json)
-      * [8.9.4 Custom Exchange Formats](#894-custom-exchange-formats)
+        * [8.9.1 CSV](#891-csv)
+        * [8.9.2 HTML / WebEdit](#892-html--webedit)
+        * [8.9.3 JSON](#893-json)
+        * [8.9.4 Custom Exchange Formats](#894-custom-exchange-formats)
     * [8.10 Translator Services](#810-translator-services)
-      * [8.10.1 DeepL](#8101-deepl)
-      * [8.10.2 Google Cloud Translate](#8102-google-cloud-translate)
-      * [8.10.3 Google Web Translate](#8103-google-web-translate)
-      * [8.10.4 OpenAI GPT Translate](#8104-openai-gpt-translate)
-      * [8.10.5 Custom Translators](#8105-custom-translators)
+        * [8.10.1 DeepL](#8101-deepl)
+        * [8.10.2 Google Cloud Translate](#8102-google-cloud-translate)
+        * [8.10.3 Google Web Translate](#8103-google-web-translate)
+        * [8.10.4 OpenAI GPT Translate](#8104-openai-gpt-translate)
+        * [8.10.5 Custom Translators](#8105-custom-translators)
     * [8.11 Validation Reports](#811-validation-reports)
-      * [8.11.1 JUnit Report](#8111-junit-report)
-      * [8.11.2 JSON Report](#8112-json-report)
+        * [8.11.1 JUnit Report](#8111-junit-report)
+        * [8.11.2 JSON Report](#8112-json-report)
     * [8.12 Protection](#812-protection)
     * [8.13 Coverage](#813-coverage)
     * [8.14 Scanners](#814-scanners)
+
 <!-- TOC -->
 
 
@@ -612,7 +614,7 @@ use this one also for the directories of your files.
     <locales basePath="./Bundles/MySuperBundle/Resources/snippets/%locale_un%">
         <!-- Bundles/MySuperBundle/Resources/snippets/DE/storefront-de.json -->
         <locale name="DE">%base_path%/storefront-%locale_lc%.json</locale>
-      
+
         <!-- Bundles/MySuperBundle/Resources/snippets/en/storefront-EN.json -->
         <locale name="en">%base_path%/storefront-%locale_uc%.json</locale>
 
@@ -804,7 +806,7 @@ instead of an entity translation table.
                 </include>
             </filter>
         </set>
-        
+
         <set name="Snippets">
             <format>
                 <shopware6 entity="snippet"/>
@@ -1245,9 +1247,10 @@ Although it works, you should consider getting a real Google API key for commerc
 
 * Service: "openai"
 
-| Command   | Argument     | Description     |
-|-----------|--------------|-----------------|
-| translate | --openai-key | Your OpenAI Key |
+| Command   | Argument       | Description                                     |
+|-----------|----------------|-------------------------------------------------|
+| translate | --openai-key   | Your OpenAI Key                                 |
+| translate | --openai-model | The OpenAI model you want to use such as gpt-4o |
 
 This type of translator uses the latest OpenAI technology to translate your texts.
 Let AI help you to translate your texts.

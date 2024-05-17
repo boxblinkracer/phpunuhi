@@ -8,6 +8,8 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 ### Added
 
 - Add new **json** exchange format. This allows to import and export translations in JSON format.
+- Upgrade OpenAI integration to allow the use of the latest **gpt-4.0** models.
+- Add new option to provide a custom **model** for OpenAI translations that you want to use.
 
 ### Changed
 

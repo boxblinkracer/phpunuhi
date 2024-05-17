@@ -38,7 +38,7 @@
         "ext-simplexml": "*",
         "deeplcom/deepl-php": "^1.2",
         "google/cloud-translate": "^1.12",
-        "orhanerday/open-ai": "^3.4",
+        "orhanerday/open-ai": "^5.1",
         "symfony/console": "*",
         "symfony/yaml": "*",
         "ext-json": "*"
