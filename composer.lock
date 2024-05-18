@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cc2f9224fee1b08db0e388a4ab0bef27",
+    "content-hash": "61c8712b6195040953e27703243e0abc",
     "packages": [
         {
             "name": "deeplcom/deepl-php",
@@ -4767,12 +4767,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "c8cc0081bff33f9080302f312e3479c13d1f592d"
+                "reference": "4a1ce99ead02e286f024fc7d032c7233ac01091b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/c8cc0081bff33f9080302f312e3479c13d1f592d",
-                "reference": "c8cc0081bff33f9080302f312e3479c13d1f592d",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/4a1ce99ead02e286f024fc7d032c7233ac01091b",
+                "reference": "4a1ce99ead02e286f024fc7d032c7233ac01091b",
                 "shasum": ""
             },
             "conflict": {
@@ -5139,8 +5139,8 @@
                 "neos/flow": ">=1,<1.0.4|>=1.1,<1.1.1|>=2,<2.0.1|>=2.3,<2.3.16|>=3,<3.0.12|>=3.1,<3.1.10|>=3.2,<3.2.13|>=3.3,<3.3.13|>=4,<4.0.6",
                 "neos/form": ">=1.2,<4.3.3|>=5,<5.0.9|>=5.1,<5.1.3",
                 "neos/media-browser": "<7.3.19|>=8,<8.0.16|>=8.1,<8.1.11|>=8.2,<8.2.11|>=8.3,<8.3.9",
-                "neos/neos": ">=1.1,<1.1.3|>=1.2,<1.2.13|>=2,<2.0.4|>=2.3,<2.9.99|>=3,<3.0.20|>=3.1,<3.1.18|>=3.2,<3.2.14|>=3.3,<5.3.10|>=7,<7.0.9|>=7.1,<7.1.7|>=7.2,<7.2.6|>=7.3,<7.3.4|>=8,<8.0.2",
-                "neos/swiftmailer": ">=4.1,<4.1.99|>=5.4,<5.4.5",
+                "neos/neos": ">=1.1,<1.1.3|>=1.2,<1.2.13|>=2,<2.0.4|>=2.3,<3.0.20|>=3.1,<3.1.18|>=3.2,<3.2.14|>=3.3,<5.3.10|>=7,<7.0.9|>=7.1,<7.1.7|>=7.2,<7.2.6|>=7.3,<7.3.4|>=8,<8.0.2",
+                "neos/swiftmailer": "<5.4.5",
                 "netgen/tagsbundle": ">=3.4,<3.4.11|>=4,<4.0.15",
                 "nette/application": ">=2,<2.0.19|>=2.1,<2.1.13|>=2.2,<2.2.10|>=2.3,<2.3.14|>=2.4,<2.4.16|>=3,<3.0.6",
                 "nette/nette": ">=2,<2.0.19|>=2.1,<2.1.13",
@@ -5555,7 +5555,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-05-15T23:04:18+00:00"
+            "time": "2024-05-18T00:15:00+00:00"
         },
         {
             "name": "rregeer/phpunit-coverage-check",
