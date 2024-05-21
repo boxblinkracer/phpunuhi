@@ -37,6 +37,6 @@ trait BinaryTrait
      */
     protected function isBinary(string $str): bool
     {
-        return preg_match('~[^\x20-\x7E\t\r\n]~', $str) > 0;
+        return ! mb_check_encoding($str, 'UTF-8');
     }
 }
