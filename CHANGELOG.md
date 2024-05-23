@@ -7,8 +7,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 ### Fixed
 
-- Fixed binary detection to also support umlauts
-
+- Fixed binary detection to also support "Umlaute". These were accidentally detected as binary strings, but they are not.
 
 ## [1.20.0]
 
