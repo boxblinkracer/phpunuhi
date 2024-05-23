@@ -55,11 +55,27 @@ class BinaryTraitTest extends TestCase
     }
 
     /**
+     * @return array<int, array<int, string>>
+     */
+    public function nonBinaryStrings(): array
+    {
+        return [
+            [''],
+            ['Some Content'],
+            ['Content with umlauts: äöüß'],
+            ['Sóme Cotént'],
+            ['这是一些内容']
+        ];
+    }
+
+    /**
+     * @dataProvider nonBinaryStrings
+     *
      * @return void
      */
-    public function testIsBinaryFalse(): void
+    public function testIsBinaryFalse(string $string): void
     {
-        $isBinary = $this->isBinary('');
+        $isBinary = $this->isBinary($string);
 
         $this->assertFalse($isBinary);
     }
