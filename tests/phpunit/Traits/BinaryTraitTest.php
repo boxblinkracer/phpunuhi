@@ -54,6 +54,9 @@ class BinaryTraitTest extends TestCase
         $this->assertTrue($isBinary);
     }
 
+    /**
+     * @return array<int, array<int, string>>
+     */
     public function nonBinaryStrings(): array
     {
         return [
@@ -70,11 +73,10 @@ class BinaryTraitTest extends TestCase
      *
      * @return void
      */
-    public function testIsBinaryFalse($string): void
+    public function testIsBinaryFalse(string $string): void
     {
         $isBinary = $this->isBinary($string);
 
         $this->assertFalse($isBinary);
     }
 }
-
