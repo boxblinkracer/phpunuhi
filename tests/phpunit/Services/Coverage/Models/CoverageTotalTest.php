@@ -30,6 +30,8 @@ class CoverageTotalTest extends TestCase
         $locale2->addTranslation('title', 'Title Title Car', '');
         $locale2->addTranslation('text2', '', '');
 
+        $locale3 = new Locale('it', 'Italian', '');
+
         $this->sets[] = new CoverageTranslationSet(
             'Storefront',
             [
@@ -43,6 +45,13 @@ class CoverageTotalTest extends TestCase
                 new CoverageLocale($locale2)
             ]
         );
+
+        $this->sets[] = new CoverageTranslationSet(
+            'Service',
+            [
+                new CoverageLocale($locale3)
+            ]
+        );
     }
 
     /**
@@ -54,7 +63,7 @@ class CoverageTotalTest extends TestCase
 
         $value = $coverage->getTranslationSetCoverages();
 
-        $this->assertCount(2, $value);
+        $this->assertCount(3, $value);
     }
 
     /**
@@ -134,6 +143,21 @@ class CoverageTotalTest extends TestCase
     }
 
     /**
+     * If we have a locale with no words, the coverage should be 100%.
+     * Then this is fine.
+     * @return void
+     */
+    public function testCoverageWithNoWordsIs100(): void
+    {
+        $coverage = new CoverageTotal($this->sets);
+
+        $value = $coverage->getLocaleCoverage('it');
+
+        $this->assertEquals(100, $value);
+    }
+
+    /**
+     * If we have a locale that is not in the sets, the coverage should be 0%.
      * @return void
      */
     public function testCoverageOfMissingLocaleIsZero(): void

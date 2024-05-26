@@ -58,16 +58,19 @@ class CoverageTotal
         $fullWords = 0;
         $fullTranslated = 0;
 
+        $localeFound = false;
+
         foreach ($this->translationSets as $tmpCoverage) {
             foreach ($tmpCoverage->getLocaleCoverages() as $tmpLocale) {
                 if ($tmpLocale->getLocaleName() === $locale) {
+                    $localeFound = true;
                     $fullWords += $tmpLocale->getWordCount();
                     $fullTranslated += $tmpLocale->getCountTranslated();
                 }
             }
         }
 
-        if ($fullWords === 0) {
+        if (!$localeFound && $fullWords === 0) {
             return 0;
         }
 
