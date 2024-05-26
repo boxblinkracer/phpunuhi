@@ -104,4 +104,44 @@ class CoverageTotalTest extends TestCase
 
         $this->assertEquals(50, $value);
     }
+
+
+    /**
+     * @return array<mixed>
+     */
+    public function getLocaleCoverageData(): array
+    {
+        return [
+            [33.33, 'de'],
+            [50, 'en'],
+        ];
+    }
+
+    /**
+     * @dataProvider getLocaleCoverageData
+     *
+     * @param float $expected
+     * @param string $locale
+     * @return void
+     */
+    public function testLocaleCoverage(float $expected, string $locale): void
+    {
+        $coverage = new CoverageTotal($this->sets);
+
+        $value = $coverage->getLocaleCoverage($locale);
+
+        $this->assertEquals($expected, $value);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCoverageOfMissingLocaleIsZero(): void
+    {
+        $coverage = new CoverageTotal($this->sets);
+
+        $value = $coverage->getLocaleCoverage('missing');
+
+        $this->assertEquals(0, $value);
+    }
 }

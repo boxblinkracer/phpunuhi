@@ -67,6 +67,10 @@ class CoverageTotal
             }
         }
 
+        if ($fullWords === 0) {
+            return 0;
+        }
+
         $calculator = new PercentageCalculator();
 
         return $calculator->getRoundedPercentage($fullTranslated, $fullWords);

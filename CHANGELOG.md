@@ -8,6 +8,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 ### Fixed
 
 - Fixed binary detection to also support "Umlaute". These were accidentally detected as binary strings, but they are not.
+- Fix bug where the coverage of a missing locale was accidentally 100%
 
 ## [1.20.0]
 
