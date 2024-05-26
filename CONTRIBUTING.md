@@ -3,13 +3,15 @@
 *Pull requests, bug reports, and all other forms of contribution are welcomed and highly encouraged!* :octocat:
 
 <!-- TOC -->
+
 * [Contributing Guidelines](#contributing-guidelines)
-  * [1. Starting Dev Environment](#1-starting-dev-environment)
-  * [2. Make Commands](#2-make-commands)
-  * [3. Code Complexity](#3-code-complexity)
-  * [4. Creating Pull Requests](#4-creating-pull-requests)
-    * [4.1 Running Tests (locally)](#41-running-tests-locally)
-    * [4.2 Changelog](#42-changelog)
+    * [1. Starting Dev Environment](#1-starting-dev-environment)
+    * [2. Make Commands](#2-make-commands)
+    * [3. Code Complexity](#3-code-complexity)
+    * [4. Creating Pull Requests](#4-creating-pull-requests)
+        * [4.1 Running Tests (locally)](#41-running-tests-locally)
+        * [4.2 Changelog](#42-changelog)
+
 <!-- TOC -->
 
 ## 1. Starting Dev Environment
@@ -65,6 +67,10 @@ This will run the **fixers** and all **tests** from the pipeline.
 So it can be that your GIT tool shows changes afterwards from the fixers, just commit these to your branch.
 
 If this command runs completely through, the pipeline on Github will also pass.
+
+If you want to increase the **coverage of unit tests** you can open the generated **HTML report** inside the
+folder **.reports/phpunit/coverage** and check what could be improved.
+Besides this report, there are many more that you can use.
 
 ### 4.2 Changelog
 
