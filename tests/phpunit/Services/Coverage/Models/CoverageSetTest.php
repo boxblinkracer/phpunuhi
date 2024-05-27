@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Services\Coverage\Models\CoverageLocale;
 use PHPUnuhi\Services\Coverage\Models\CoverageTranslationSet;
+use RuntimeException;
 
 class CoverageSetTest extends TestCase
 {
@@ -55,6 +56,30 @@ class CoverageSetTest extends TestCase
         $value = $coverage->getLocaleCoverages();
 
         $this->assertCount(2, $value);
+    }
+
+    /**
+     * @return void
+     */
+    public function testLocaleCoverage(): void
+    {
+        $coverage = new CoverageTranslationSet('Storefront', $this->locales);
+
+        $result = $coverage->getLocaleCoverage('de');
+
+        $this->assertEquals(50, $result->getCoverage());
+    }
+
+    /**
+     * @return void
+     */
+    public function testLocaleCoverageNotFound(): void
+    {
+        $this->expectException(RuntimeException::class);
+
+        $coverage = new CoverageTranslationSet('Storefront', $this->locales);
+
+        $coverage->getLocaleCoverage('missing');
     }
 
     /**
