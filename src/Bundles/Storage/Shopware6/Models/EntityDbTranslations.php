@@ -37,6 +37,6 @@ class EntityDbTranslations
             }, $this->dbTranslations[$languageId]);
         }
 
-        return $this->dbTranslations;
+        return $this->dbTranslations[$languageId];
     }
 }
