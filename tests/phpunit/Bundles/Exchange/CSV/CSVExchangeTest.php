@@ -99,11 +99,11 @@ class CSVExchangeTest extends TestCase
      */
     public function testExportWithoutGroups(): void
     {
-        $localesDE = new Locale('de-DE', '', '');
+        $localesDE = new Locale('de-DE', false, '', '');
         $localesDE->addTranslation('btnCancel', 'Abbrechen', '');
         $localesDE->addTranslation('btnOK', 'OK', '');
 
-        $localesEN = new Locale('en-GB', '', '');
+        $localesEN = new Locale('en-GB', false, '', '');
         $localesEN->addTranslation('btnCancel', 'Cancel', '');
 
 
@@ -150,12 +150,12 @@ class CSVExchangeTest extends TestCase
      */
     public function testExportWithGroups(): void
     {
-        $localesDE = new Locale('de-DE', '', '');
+        $localesDE = new Locale('de-DE', false, '', '');
         $localesDE->addTranslation('title', 'T-Shirt', 'ProductA');
         $localesDE->addTranslation('size', 'Mittel', 'ProductA');
         $localesDE->addTranslation('title', 'Hose', 'ProductB');
 
-        $localesEN = new Locale('en-GB', '', '');
+        $localesEN = new Locale('en-GB', false, '', '');
         $localesEN->addTranslation('size', 'Medium', 'ProductA');
 
 
@@ -212,8 +212,8 @@ class CSVExchangeTest extends TestCase
      */
     public function testExportOnlyEmpty(): void
     {
-        $de = new Locale('de-DE', '', '');
-        $en = new Locale('en-GB', '', '');
+        $de = new Locale('de-DE', false, '', '');
+        $en = new Locale('en-GB', false, '', '');
 
         # must not be exported
         $de->addTranslation('title', 'Titel', '');

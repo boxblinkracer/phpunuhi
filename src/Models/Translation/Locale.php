@@ -14,6 +14,11 @@ class Locale
     private $name;
 
     /**
+     * @var bool
+     */
+    private $isBase;
+
+    /**
      * @var string
      */
     private $filename;
@@ -36,12 +41,14 @@ class Locale
 
     /**
      * @param string $name
+     * @param bool $isMain
      * @param string $filename
      * @param string $iniSection
      */
-    public function __construct(string $name, string $filename, string $iniSection)
+    public function __construct(string $name, bool $isMain, string $filename, string $iniSection)
     {
         $this->name = $name;
+        $this->isBase = $isMain;
         $this->filename = $filename;
         $this->iniSection = $iniSection;
     }
@@ -52,6 +59,14 @@ class Locale
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isBase(): bool
+    {
+        return $this->isBase;
     }
 
     /**

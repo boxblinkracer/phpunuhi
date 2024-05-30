@@ -24,11 +24,11 @@ class CoverageServiceTest extends TestCase
      */
     public function setUp(): void
     {
-        $locale1 = new Locale('en', 'English', '');
+        $locale1 = new Locale('en', false, 'English', '');
         $locale1->addTranslation('btnSave', 'Save', '');
         $locale1->addTranslation('btnCancel', '', '');
 
-        $locale2 = new Locale('en', 'English', '');
+        $locale2 = new Locale('en', false, 'English', '');
         $locale2->addTranslation('btnSave', 'Save', '');
         $locale2->addTranslation('btnCancel', 'Cancel', '');
         $locale2->addTranslation('btnSubmit', '', '');

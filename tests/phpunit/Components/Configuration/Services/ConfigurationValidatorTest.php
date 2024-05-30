@@ -124,7 +124,7 @@ class ConfigurationValidatorTest extends TestCase
     {
         $this->expectException(ConfigurationException::class);
 
-        $locale = new Locale('', '', '');
+        $locale = new Locale('', false, '', '');
 
         $set = $this->buildTranslationSet([$locale], []);
 
@@ -141,7 +141,7 @@ class ConfigurationValidatorTest extends TestCase
     {
         $this->expectException(ConfigurationException::class);
 
-        $locale = new Locale('DE', '', '');
+        $locale = new Locale('DE', false, '', '');
 
         $set = $this->buildTranslationSet([$locale, $locale], []);
 
@@ -158,7 +158,7 @@ class ConfigurationValidatorTest extends TestCase
     {
         $this->expectException(ConfigurationException::class);
 
-        $locale = new Locale('DE', 'not-existing.json', '');
+        $locale = new Locale('DE', false, 'not-existing.json', '');
 
         $set = $this->buildTranslationSet([$locale], []);
 

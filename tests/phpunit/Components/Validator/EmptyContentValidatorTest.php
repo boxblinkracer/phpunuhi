@@ -45,11 +45,11 @@ class EmptyContentValidatorTest extends TestCase
      */
     public function testAllValid(): void
     {
-        $localeDE = new Locale('de-DE', '', '');
+        $localeDE = new Locale('de-DE', false, '', '');
         $localeDE->addTranslation('card.btnCancel', 'Abbrechen', 'group1');
         $localeDE->addTranslation('card.btnOK', 'OK', 'group1');
 
-        $localeEN = new Locale('en-GB', '', '');
+        $localeEN = new Locale('en-GB', false, '', '');
         $localeEN->addTranslation('card.btnCancel', 'Cancel', 'group1');
         $localeEN->addTranslation('card.btnOK', 'OK', 'group1');
 
@@ -68,11 +68,11 @@ class EmptyContentValidatorTest extends TestCase
      */
     public function testEmptyContentFound(): void
     {
-        $localeDE = new Locale('de-DE', '', '');
+        $localeDE = new Locale('de-DE', false, '', '');
         $localeDE->addTranslation('card.btnCancel', '', 'group1');
         $localeDE->addTranslation('card.btnOK', 'OK', 'group1');
 
-        $localeEN = new Locale('en-GB', '', '');
+        $localeEN = new Locale('en-GB', false, '', '');
         $localeEN->addTranslation('card.btnCancel', 'Cancel', 'group1');
         $localeEN->addTranslation('card.btnOK', '', ''); # also use without group
 
@@ -92,8 +92,8 @@ class EmptyContentValidatorTest extends TestCase
      */
     public function testEmptyContentWithAllowList(): void
     {
-        $localeDE = new Locale('de-DE', '', '');
-        $localeEN = new Locale('en-GB', '', '');
+        $localeDE = new Locale('de-DE', false, '', '');
+        $localeEN = new Locale('en-GB', false, '', '');
 
         # allow empty in DE -> should be OK
         $localeDE->addTranslation('card.btnCancel', '', 'group1');

@@ -227,8 +227,8 @@ class TranslationSetTest extends TestCase
         $filter = new Filter();
 
         $locales = [];
-        $locales[] = new Locale('', '', '');
-        $locales[] = new Locale('', '', '');
+        $locales[] = new Locale('', false, '', '');
+        $locales[] = new Locale('', false, '', '');
 
         $set = new TranslationSet('storefront', 'json', new Protection(), $locales, $filter, $attributes, new CaseStyleSetting([], []), []);
 
@@ -245,9 +245,9 @@ class TranslationSetTest extends TestCase
         $filter = new Filter();
 
 
-        $localeEN = new Locale('EN', '', '');
+        $localeEN = new Locale('EN', false, '', '');
 
-        $localeDE = new Locale('DE', '', '');
+        $localeDE = new Locale('DE', false, '', '');
         $localeDE->addTranslation('btnCancel', 'Abbrechen', '');
 
         $locales = [$localeEN, $localeDE];
@@ -274,13 +274,13 @@ class TranslationSetTest extends TestCase
         $filter = new Filter();
 
 
-        $localeEN = new Locale('EN', '', '');
+        $localeEN = new Locale('EN', false, '', '');
         $localeEN->addTranslation('btnCancel', 'Cancel', '');
 
-        $localeDE = new Locale('DE', '', '');
+        $localeDE = new Locale('DE', false, '', '');
         $localeDE->addTranslation('btnCancel', 'Abbrechen', '');
 
-        $localeNL = new Locale('NL', '', '');
+        $localeNL = new Locale('NL', false, '', '');
         $localeNL->addTranslation('btnCancel', 'Annuleren', '');
 
         $locales = [$localeEN, $localeDE, $localeNL];
@@ -322,7 +322,7 @@ class TranslationSetTest extends TestCase
     {
         $this->expectException(TranslationNotFoundException::class);
 
-        $localeEN = new Locale('EN', '', '');
+        $localeEN = new Locale('EN', false, '', '');
         $localeEN->addTranslation('btnCancel', '', '');
 
         $locales = [$localeEN];
@@ -343,10 +343,10 @@ class TranslationSetTest extends TestCase
      */
     public function testIsCompletelyTranslated(): void
     {
-        $localeEN = new Locale('EN', '', '');
+        $localeEN = new Locale('EN', false, '', '');
         $localeEN->addTranslation('btnCancel', 'Cancel', '');
 
-        $localeDE = new Locale('DE', '', '');
+        $localeDE = new Locale('DE', false, '', '');
 
         $locales = [$localeEN, $localeDE];
 
@@ -384,7 +384,7 @@ class TranslationSetTest extends TestCase
         $attributes = [];
         $filter = new Filter();
 
-        $localeEN = new Locale('EN', '', '');
+        $localeEN = new Locale('EN', false, '', '');
         $localeEN->addTranslation('1', 'Cancel', '');
         $localeEN->addTranslation('2', 'Cancel', '');
         $localeEN->addTranslation('3', 'Cancel', '');
@@ -459,12 +459,12 @@ class TranslationSetTest extends TestCase
         $attributes = [];
         $filter = new Filter();
 
-        $localeEN = new Locale('EN', '', '');
+        $localeEN = new Locale('EN', false, '', '');
         $localeEN->addTranslation('lblSave', 'Cancel', '');
         $localeEN->addTranslation('lblCancel', '', '');
         $localeEN->addTranslation('lblTitle', '', '');
 
-        $localeDE = new Locale('DE', '', '');
+        $localeDE = new Locale('DE', false, '', '');
         $localeDE->addTranslation('lblSave', 'Abbrechen', '');
         $localeDE->addTranslation('lblCancel', '', '');
         $localeDE->addTranslation('lblTitle', 'Titel', '');

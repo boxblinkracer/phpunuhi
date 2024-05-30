@@ -17,7 +17,7 @@ class LocaleTest extends TestCase
      */
     public function testName(): void
     {
-        $locale = new Locale('en GB', 'de.json', 'de-section');
+        $locale = new Locale('en GB', false, 'de.json', 'de-section');
 
         $this->assertEquals('en GB', $locale->getName());
     }
@@ -25,9 +25,19 @@ class LocaleTest extends TestCase
     /**
      * @return void
      */
+    public function testIsBase(): void
+    {
+        $locale = new Locale('en GB', true, 'de.json', 'de-section');
+
+        $this->assertEquals(true, $locale->isBase());
+    }
+
+    /**
+     * @return void
+     */
     public function testFilename(): void
     {
-        $locale = new Locale('en GB', './de.json', 'de-section');
+        $locale = new Locale('en GB', false, './de.json', 'de-section');
 
         $this->assertEquals('./de.json', $locale->getFilename());
     }
@@ -37,7 +47,7 @@ class LocaleTest extends TestCase
      */
     public function testIniSection(): void
     {
-        $locale = new Locale('en GB', 'de.json', 'de-section');
+        $locale = new Locale('en GB', false, 'de.json', 'de-section');
 
         $this->assertEquals('de-section', $locale->getIniSection());
     }
@@ -47,7 +57,7 @@ class LocaleTest extends TestCase
      */
     public function testExchangeIdentifierFilename(): void
     {
-        $locale = new Locale('', 'de.json', '');
+        $locale = new Locale('', false, 'de.json', '');
 
         $this->assertEquals('de.json', $locale->getExchangeIdentifier());
     }
@@ -57,7 +67,7 @@ class LocaleTest extends TestCase
      */
     public function testExchangeIdentifierName(): void
     {
-        $locale = new Locale('DE', 'de.json', '');
+        $locale = new Locale('DE', false, 'de.json', '');
 
         $this->assertEquals('DE', $locale->getExchangeIdentifier());
     }
@@ -67,7 +77,7 @@ class LocaleTest extends TestCase
      */
     public function testExchangeIdentifierHasNoSpaces(): void
     {
-        $locale = new Locale('en GB', 'de.json', '');
+        $locale = new Locale('en GB', false, 'de.json', '');
 
         $this->assertEquals('en-GB', $locale->getExchangeIdentifier());
     }
@@ -77,7 +87,7 @@ class LocaleTest extends TestCase
      */
     public function testGetTranslationKeys(): void
     {
-        $locale = new Locale('', '', '');
+        $locale = new Locale('', false, '', '');
         $locale->addTranslation('title', 'Titel', '');
         # add description twice
         $locale->addTranslation('description', '', '');
@@ -91,7 +101,7 @@ class LocaleTest extends TestCase
      */
     public function testGetValidTranslations(): void
     {
-        $locale = new Locale('', '', '');
+        $locale = new Locale('', false, '', '');
         # valid
         $locale->addTranslation('title', 'Titel', '');
         # invalid
@@ -105,7 +115,7 @@ class LocaleTest extends TestCase
      */
     public function testGetTranslations(): void
     {
-        $locale = new Locale('', '', '');
+        $locale = new Locale('', false, '', '');
         $locale->addTranslation('title', 'Titel', '');
         $locale->addTranslation('description', '', '');
 
@@ -117,7 +127,7 @@ class LocaleTest extends TestCase
      */
     public function testSetTranslations(): void
     {
-        $locale = new Locale('', '', '');
+        $locale = new Locale('', false, '', '');
 
         $this->assertCount(0, $locale->getTranslations());
 
@@ -131,7 +141,7 @@ class LocaleTest extends TestCase
 
     public function testSetLineNumbers(): void
     {
-        $locale = new Locale('', '', '');
+        $locale = new Locale('', false, '', '');
 
         $this->assertCount(0, $locale->getLineNumbers());
 
@@ -145,7 +155,7 @@ class LocaleTest extends TestCase
 
     public function testGetLineNumbers(): void
     {
-        $locale = new Locale('', '', '');
+        $locale = new Locale('', false, '', '');
 
         $lineNumbers = [
             'title' => 1,
@@ -158,7 +168,7 @@ class LocaleTest extends TestCase
 
     public function testFindLineNumber(): void
     {
-        $locale = new Locale('', '', '');
+        $locale = new Locale('', false, '', '');
 
         $lineNumbers = [
             'title' => 1,
@@ -178,7 +188,7 @@ class LocaleTest extends TestCase
      */
     public function testAddTranslationAvoidDuplicates(): void
     {
-        $localeEN = new Locale('EN', '', '');
+        $localeEN = new Locale('EN', false, '', '');
 
         $this->assertCount(0, $localeEN->getTranslationIDs());
 
@@ -198,7 +208,7 @@ class LocaleTest extends TestCase
      */
     public function testUpdateTranslationKey(): void
     {
-        $locale = new Locale('EN', '', '');
+        $locale = new Locale('EN', false, '', '');
         $locale->addTranslation('btnCancel', 'Cancel', '');
 
         $locale->updateTranslationKey('btnCancel', 'btn-cancel');
@@ -218,7 +228,7 @@ class LocaleTest extends TestCase
     {
         $this->expectException(Exception::class);
 
-        $locale = new Locale('EN', '', '');
+        $locale = new Locale('EN', false, '', '');
         $locale->addTranslation('btnCancel', 'Cancel', '');
         $locale->addTranslation('btn-cancel', 'Abbrechen', '');
 

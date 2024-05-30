@@ -57,7 +57,7 @@ class CaseStyleValidatorTest extends TestCase
         $case1 = new CaseStyle('snake');
         $case2 = new CaseStyle('camel');
 
-        $locale = new Locale('en-GB', '', '');
+        $locale = new Locale('en-GB', false, '', '');
         $locale->addTranslation('global.businessEvents.mollie_checkout_order_success', 'Cancel', 'group1');
 
         $set = $this->buildSet($locale, [$case1, $case2], []);
@@ -75,7 +75,7 @@ class CaseStyleValidatorTest extends TestCase
     {
         $case1 = new CaseStyle('snake');
 
-        $locale = new Locale('en-GB', '', '');
+        $locale = new Locale('en-GB', false, '', '');
         $locale->addTranslation('global.businessEvents.flowTitle', 'Cancel', 'group1');
 
         $set = $this->buildSet($locale, [$case1], []);
@@ -100,7 +100,7 @@ class CaseStyleValidatorTest extends TestCase
         $case3 = new CaseStyle('snake');
         $case3->setLevel(2);
 
-        $locale = new Locale('en-GB', '', '');
+        $locale = new Locale('en-GB', false, '', '');
         $locale->addTranslation('global.businessEvents.mollie_checkout_order_success', 'Cancel', 'group1');
 
         $set = $this->buildSet($locale, [$case1, $case2, $case3], []);
@@ -130,7 +130,7 @@ class CaseStyleValidatorTest extends TestCase
         # this would be globally checked
         $case3 = new CaseStyle('camel');
 
-        $locale = new Locale('en-GB', '', '');
+        $locale = new Locale('en-GB', false, '', '');
         $locale->addTranslation('global_snake.businessEvents.other_snake', 'Cancel', 'group1');
 
         $set = $this->buildSet($locale, [$case1, $case2, $case3], []);
@@ -157,7 +157,7 @@ class CaseStyleValidatorTest extends TestCase
 
         $case2 = new CaseStyle('snake');
 
-        $locale = new Locale('en-GB', '', '');
+        $locale = new Locale('en-GB', false, '', '');
         $locale->addTranslation('global_snake.business_event', 'Cancel', 'group1');
 
         $set = $this->buildSet($locale, [$case1, $case2], []);
@@ -185,7 +185,7 @@ class CaseStyleValidatorTest extends TestCase
         $case3 = new CaseStyle('pascal');   # INVALID
         $case3->setLevel(2);
 
-        $locale = new Locale('en-GB', '', '');
+        $locale = new Locale('en-GB', false, '', '');
         $locale->addTranslation('global.businessEvents.mollie_checkout_order_success', 'Cancel', 'group1');
 
         $set = $this->buildSet($locale, [$case1, $case2, $case3], []);
@@ -207,7 +207,7 @@ class CaseStyleValidatorTest extends TestCase
         $case1 = new CaseStyle('kebab');
         $case1->setLevel(1);
 
-        $locale = new Locale('en-GB', '', '');
+        $locale = new Locale('en-GB', false, '', '');
         $locale->addTranslation('card-section.lblTitle', 'Cancel', 'group1');
 
         $set = $this->buildSet($locale, [$case1], []);
@@ -229,7 +229,7 @@ class CaseStyleValidatorTest extends TestCase
      */
     public function testValidCasesWithoutSetStyles(): void
     {
-        $locale = new Locale('en-GB', '', '');
+        $locale = new Locale('en-GB', false, '', '');
         $locale->addTranslation('global.businessEvents.mollie_checkout_order_success', 'Cancel', 'group1');
 
         $set = $this->buildSet($locale, [], []);
@@ -247,7 +247,7 @@ class CaseStyleValidatorTest extends TestCase
     {
         $storageINI = new IniStorage();
 
-        $locale = new Locale('en-GB', '', '');
+        $locale = new Locale('en-GB', false, '', '');
         $locale->addTranslation('btn-cancel', 'Cancel', '');
 
         $case1 = new CaseStyle('snake');
@@ -284,7 +284,7 @@ class CaseStyleValidatorTest extends TestCase
         $notCamelCaseKey = 'root.sub.IGNORE_THIS';
 
         $storageINI = new IniStorage();
-        $locale = new Locale('en-GB', '', '');
+        $locale = new Locale('en-GB', false, '', '');
         $locale->addTranslation('thisIsCamel', 'Cancel', '');
         $locale->addTranslation($notCamelCaseKey, 'Cancel', '');
         $case1 = new CaseStyle('camel');
@@ -319,7 +319,7 @@ class CaseStyleValidatorTest extends TestCase
         $notCamelCaseKey = 'root.sub.IGNORE_THIS';
 
         $storageINI = new IniStorage();
-        $locale = new Locale('en-GB', '', '');
+        $locale = new Locale('en-GB', false, '', '');
         $locale->addTranslation('thisIsCamel', 'Cancel', '');
         $locale->addTranslation($notCamelCaseKey, 'Cancel', '');
         $case1 = new CaseStyle('camel');

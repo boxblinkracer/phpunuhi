@@ -26,7 +26,7 @@ class JsonStorageTest extends TestCase
     {
         parent::setUp();
 
-        $locale = new Locale('nl-NL', 'nl-NL.json', '');
+        $locale = new Locale('nl-NL', false, 'nl-NL.json', '');
         $locale->addTranslation('nes.ted', 'value', '');
         $locale->addTranslation('foo', 'bar', '');
 

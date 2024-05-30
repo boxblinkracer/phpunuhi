@@ -33,11 +33,11 @@ class MaxKeyLengthRuleTest extends TestCase
      */
     public function testAllValid(): void
     {
-        $localeDE = new Locale('de-DE', '', '');
+        $localeDE = new Locale('de-DE', false, '', '');
         $localeDE->addTranslation('card.btnCancel', 'Abbrechen', 'group1');
         $localeDE->addTranslation('card.btnOK', 'OK', 'group1');
 
-        $localeEN = new Locale('en-GB', '', '');
+        $localeEN = new Locale('en-GB', false, '', '');
         $localeEN->addTranslation('card.btnCancel', 'Cancel', 'group1');
         $localeEN->addTranslation('card.btnOK', 'OK', 'group1');
 
@@ -58,10 +58,10 @@ class MaxKeyLengthRuleTest extends TestCase
      */
     public function testLengthZeroAlwaysValid(): void
     {
-        $localeDE = new Locale('de-DE', '', '');
+        $localeDE = new Locale('de-DE', false, '', '');
         $localeDE->addTranslation('card.btnCancel', 'Abbrechen', 'group1');
 
-        $localeEN = new Locale('en-GB', '', '');
+        $localeEN = new Locale('en-GB', false, '', '');
         $localeEN->addTranslation('card.btnCancel', 'Cancel', 'group1');
 
         $set = $this->buildSet([$localeDE, $localeEN]);
@@ -82,11 +82,11 @@ class MaxKeyLengthRuleTest extends TestCase
      */
     public function testKeyLengthExceeded(): void
     {
-        $localeDE = new Locale('de-DE', '', '');
+        $localeDE = new Locale('de-DE', false, '', '');
         $localeDE->addTranslation('card-long.longlonglong', '', 'group1');
         $localeDE->addTranslation('card-long.longlonglong2', 'OK', 'group1');
 
-        $localeEN = new Locale('en-GB', '', '');
+        $localeEN = new Locale('en-GB', false, '', '');
         $localeEN->addTranslation('card-long.longlonglong', 'Cancel', 'group1');
 
         # this is the one we are looking to fail
@@ -111,7 +111,7 @@ class MaxKeyLengthRuleTest extends TestCase
     {
         $keyWithDelimiter = 'card-long.longlonglong';
 
-        $localeDE = new Locale('de-DE', '', '');
+        $localeDE = new Locale('de-DE', false, '', '');
         $localeDE->addTranslation($keyWithDelimiter, '', 'group1');
 
         $set = $this->buildSet([$localeDE]);

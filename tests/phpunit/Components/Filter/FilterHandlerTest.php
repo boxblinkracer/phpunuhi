@@ -26,11 +26,11 @@ class FilterHandlerTest extends TestCase
     {
         $handler = new FilterHandler();
 
-        $localesDE = new Locale('de-DE', '', '');
+        $localesDE = new Locale('de-DE', false, '', '');
         $localesDE->addTranslation('btnCancel', 'Abbrechen', 'group1');
         $localesDE->addTranslation('btnOK', 'OK', 'group1');
 
-        $localesEN = new Locale('en-GB', '', '');
+        $localesEN = new Locale('en-GB', false, '', '');
         $localesEN->addTranslation('btnCancel', 'Cancel', 'group1');
         $localesEN->addTranslation('btnOK', 'OK', 'group1');
         $localesEN->addTranslation('title', 'title', 'group1');

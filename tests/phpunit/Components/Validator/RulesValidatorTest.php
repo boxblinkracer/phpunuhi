@@ -33,7 +33,7 @@ class RulesValidatorTest extends TestCase
     {
         $storage = new JsonStorage();
 
-        $locale = new Locale('de', '', '');
+        $locale = new Locale('de', false, '', '');
 
         $set = $this->buildTranslationSet(
             [
@@ -74,7 +74,7 @@ class RulesValidatorTest extends TestCase
     {
         $storage = new JsonStorage();
 
-        $locale = new Locale('de', '', '');
+        $locale = new Locale('de', false, '', '');
         $locale->addTranslation('card.overview.btnCancel', 'Cancel', '');
         $locale->addTranslation('btnCancel', 'Cancel', '');
         $locale->addTranslation('btnCancelEmpty', '', '');

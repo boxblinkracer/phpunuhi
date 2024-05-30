@@ -34,10 +34,10 @@ class NestingDepthRuleTest extends TestCase
      */
     public function testAllValid(): void
     {
-        $localeDE = new Locale('de-DE', '', '');
+        $localeDE = new Locale('de-DE', false, '', '');
         $localeDE->addTranslation('lvl1.lvl2.level3.level4', 'Abbrechen', 'group1');
 
-        $localeEN = new Locale('en-GB', '', '');
+        $localeEN = new Locale('en-GB', false, '', '');
         $localeEN->addTranslation('lvl1.lvl2.level3.level4', 'Cancel', 'group1');
 
         $set = $this->buildSet([$localeDE, $localeEN]);
@@ -56,10 +56,10 @@ class NestingDepthRuleTest extends TestCase
      */
     public function testNestingDepthNotAppliedOnSingleHierarchy(): void
     {
-        $localeDE = new Locale('de-DE', '', '');
+        $localeDE = new Locale('de-DE', false, '', '');
         $localeDE->addTranslation('lvl1.lvl2.level3.level4', 'Abbrechen', '');
 
-        $localeEN = new Locale('en-GB', '', '');
+        $localeEN = new Locale('en-GB', false, '', '');
         $localeEN->addTranslation('lvl1.lvl2.level3.level4', 'Cancel', '');
 
         $set = $this->buildSet([$localeDE, $localeEN]);
@@ -78,10 +78,10 @@ class NestingDepthRuleTest extends TestCase
      */
     public function testLengthZeroAlwaysValid(): void
     {
-        $localeDE = new Locale('de-DE', '', '');
+        $localeDE = new Locale('de-DE', false, '', '');
         $localeDE->addTranslation('lvl1.lvl2.level3.level4', 'Abbrechen', 'group1');
 
-        $localeEN = new Locale('en-GB', '', '');
+        $localeEN = new Locale('en-GB', false, '', '');
         $localeEN->addTranslation('lvl1.lvl2.level3.level4', 'Cancel', 'group1');
 
         $set = $this->buildSet([$localeDE, $localeEN]);
@@ -100,10 +100,10 @@ class NestingDepthRuleTest extends TestCase
      */
     public function testNestingDepthReached(): void
     {
-        $localeDE = new Locale('de-DE', '', '');
+        $localeDE = new Locale('de-DE', false, '', '');
         $localeDE->addTranslation('lvl1.lvl2.level3.level4', 'Abbrechen', 'group1');
 
-        $localeEN = new Locale('en-GB', '', '');
+        $localeEN = new Locale('en-GB', false, '', '');
         $localeEN->addTranslation('lvl1.lvl2.level3.level4.level5', 'Cancel', 'group1');
 
         $set = $this->buildSet([$localeDE, $localeEN]);
@@ -122,7 +122,7 @@ class NestingDepthRuleTest extends TestCase
      */
     public function testStorageWithEmptyDelimiterIsValid(): void
     {
-        $localeDE = new Locale('de-DE', '', '');
+        $localeDE = new Locale('de-DE', false, '', '');
         $localeDE->addTranslation('lvl1.lvl2.level3.level4', 'Abbrechen', 'group1');
 
         $set = $this->buildSet([$localeDE]);

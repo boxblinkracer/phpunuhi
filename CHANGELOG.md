@@ -5,6 +5,10 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 ## [Unreleased]
 
+### Added
+
+- Added new option to specify the **base locale** within a Translation-Set. This will be used for different features where it's necessary to know the base language.
+
 ### Fixed
 
 - Fixed binary detection to also support "Umlaute". These were accidentally detected as binary strings, but they are not.

@@ -598,6 +598,9 @@ Every locale is defined through a name and either a filename, or database-table 
 The purpose is, that every locale in a translation-set should match across those languages (all files should have the
 same structure for example).
 
+You can also specify what locale is the base locale using the attribute **base="true"**.
+This will be used for certain features where it's necessary to know the base locale that should contain all values.
+
 This is how you can define locales (with files in this sample).
 You can also use a placeholder **%locale%**, **%locale_lc%**, **%locale_uc%** and **%locale_un%** in the value to make things easier for
 you.
@@ -613,7 +616,7 @@ use this one also for the directories of your files.
 <set name="sample">
     <locales basePath="./Bundles/MySuperBundle/Resources/snippets/%locale_un%">
         <!-- Bundles/MySuperBundle/Resources/snippets/DE/storefront-de.json -->
-        <locale name="DE">%base_path%/storefront-%locale_lc%.json</locale>
+        <locale name="DE" base="true">%base_path%/storefront-%locale_lc%.json</locale>
 
         <!-- Bundles/MySuperBundle/Resources/snippets/en/storefront-EN.json -->
         <locale name="en">%base_path%/storefront-%locale_uc%.json</locale>

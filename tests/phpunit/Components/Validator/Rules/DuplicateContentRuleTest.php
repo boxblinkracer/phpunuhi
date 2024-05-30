@@ -33,7 +33,7 @@ class DuplicateContentRuleTest extends TestCase
      */
     public function testDuplicateContentNotAllowedInSingleHiearchyStorage(): void
     {
-        $localeDE = new Locale('de-DE', '', '');
+        $localeDE = new Locale('de-DE', false, '', '');
         $localeDE->addTranslation('btn-Cancel1', 'Abbrechen', 'group1');
         $localeDE->addTranslation('btn-Cancel2', 'Abbrechen', 'group1');
 
@@ -58,11 +58,11 @@ class DuplicateContentRuleTest extends TestCase
      */
     public function testNoDuplicatesMeansValid(): void
     {
-        $localeDE = new Locale('de-DE', '', '');
+        $localeDE = new Locale('de-DE', false, '', '');
         $localeDE->addTranslation('card.btnCancel1', 'Abbrechen1', 'group1');
         $localeDE->addTranslation('card.btnCancel2', 'Abbrechen2', 'group1');
 
-        $localeEN = new Locale('en-GB', '', '');
+        $localeEN = new Locale('en-GB', false, '', '');
         $localeEN->addTranslation('card.btnCancel1', 'Cancel1', 'group1');
         $localeEN->addTranslation('card.btnCancel2', 'Cancel2', 'group1');
 
@@ -87,10 +87,10 @@ class DuplicateContentRuleTest extends TestCase
      */
     public function testDuplicateInDifferentLocalesIsValid(): void
     {
-        $localeDE = new Locale('de-DE', '', '');
+        $localeDE = new Locale('de-DE', false, '', '');
         $localeDE->addTranslation('card.btnOK', 'OK', 'group1');
 
-        $localeEN = new Locale('en-GB', '', '');
+        $localeEN = new Locale('en-GB', false, '', '');
         $localeEN->addTranslation('card.btnOK', 'OK', 'group1');
 
         $set = $this->buildSet([$localeDE, $localeEN]);
@@ -115,11 +115,11 @@ class DuplicateContentRuleTest extends TestCase
      */
     public function testWithLocaleAndFallbackWildcard(): void
     {
-        $localeDE = new Locale('de-DE', '', '');
+        $localeDE = new Locale('de-DE', false, '', '');
         $localeDE->addTranslation('card.btnOK', 'OK', 'group1');
         $localeDE->addTranslation('card.btnCancel', 'OK', 'group1');
 
-        $localeEN = new Locale('en-GB', '', '');
+        $localeEN = new Locale('en-GB', false, '', '');
         $localeEN->addTranslation('card.btnOK', 'OK', 'group1');
         $localeEN->addTranslation('card.btnCancel', 'OK', 'group1');
 
@@ -145,11 +145,11 @@ class DuplicateContentRuleTest extends TestCase
      */
     public function testNoDuplicateContentRequiredForLocale(): void
     {
-        $localeDE = new Locale('de-DE', '', '');
+        $localeDE = new Locale('de-DE', false, '', '');
         $localeDE->addTranslation('card.btnOK', 'OK', 'group1');
         $localeDE->addTranslation('card.btnCancel', 'OK', 'group1');
 
-        $localeEN = new Locale('en-GB', '', '');
+        $localeEN = new Locale('en-GB', false, '', '');
         $localeEN->addTranslation('card.btnOK', 'OK', 'group1');
         $localeEN->addTranslation('card.btnCancel', 'OK', 'group1');
 

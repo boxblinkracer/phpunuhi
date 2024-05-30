@@ -20,7 +20,7 @@ class CoverageLocaleTest extends TestCase
      */
     public function setUp(): void
     {
-        $this->locale = new Locale('en', 'English', '');
+        $this->locale = new Locale('en', false, 'English', '');
 
         $this->locale->addTranslation('title', 'Title Title', '');
         $this->locale->addTranslation('subtitle', 'Subtitle', '');

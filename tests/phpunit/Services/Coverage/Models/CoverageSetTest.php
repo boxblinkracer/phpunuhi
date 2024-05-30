@@ -22,11 +22,11 @@ class CoverageSetTest extends TestCase
      */
     public function setUp(): void
     {
-        $locale1 = new Locale('en', 'English', '');
+        $locale1 = new Locale('en', false, 'English', '');
         $locale1->addTranslation('title', 'Title Title', '');
         $locale1->addTranslation('text2', '', '');
 
-        $locale2 = new Locale('de', 'German', '');
+        $locale2 = new Locale('de', false, 'German', '');
         $locale2->addTranslation('title', 'Title Title Car', '');
         $locale2->addTranslation('text2', '', '');
 

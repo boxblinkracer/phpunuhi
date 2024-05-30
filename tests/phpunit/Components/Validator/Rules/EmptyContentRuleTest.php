@@ -31,7 +31,7 @@ class EmptyContentRuleTest extends TestCase
      */
     public function testEmptyContentIsAlwaysTrue(): void
     {
-        $localeDE = new Locale('de-DE', '', '');
+        $localeDE = new Locale('de-DE', false, '', '');
         $localeDE->addTranslation('btn-Cancel1', 'Abbrechen', 'group1');
         $localeDE->addTranslation('btn-Cancel2', '', 'group1');
 

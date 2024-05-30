@@ -4,13 +4,14 @@ namespace PHPUnuhi\Configuration\Services;
 
 use PHPUnuhi\Exceptions\ConfigurationException;
 use PHPUnuhi\Models\Translation\Locale;
+use PHPUnuhi\Traits\BoolTrait;
 use PHPUnuhi\Traits\XmlTrait;
 use SimpleXMLElement;
 
 class LocalesLoader
 {
     use XmlTrait;
-
+    use BoolTrait;
 
     /**
      * @var LocalesPlaceholderProcessor
@@ -50,6 +51,7 @@ class LocalesLoader
 
             $localeName = (string)$nodeLocale['name'];
             $iniSection = (string)$nodeLocale['iniSection'];
+            $isMain = isset($nodeLocale['base']) && $this->getBool((string)$nodeLocale['base']);
 
             $localeFile = $this->placholderProcessor->buildRealFilename(
                 $localeName,
@@ -58,7 +60,7 @@ class LocalesLoader
                 $configFilename
             );
 
-            $foundLocales[] = new Locale($localeName, $localeFile, $iniSection);
+            $foundLocales[] = new Locale($localeName, $isMain, $localeFile, $iniSection);
         }
 
         return $foundLocales;

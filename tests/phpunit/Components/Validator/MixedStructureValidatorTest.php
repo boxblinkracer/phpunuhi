@@ -44,11 +44,11 @@ class MixedStructureValidatorTest extends TestCase
      */
     public function testAllValid(): void
     {
-        $localeDE = new Locale('de-DE', '', '');
+        $localeDE = new Locale('de-DE', false, '', '');
         $localeDE->addTranslation('card.btnCancel', 'Abbrechen', 'group1');
         $localeDE->addTranslation('card.btnOK', 'OK', 'group1');
 
-        $localeEN = new Locale('en-GB', '', '');
+        $localeEN = new Locale('en-GB', false, '', '');
         $localeEN->addTranslation('card.btnCancel', 'Cancel', 'group1');
         $localeEN->addTranslation('card.btnOK', 'OK', 'group1');
 
@@ -67,10 +67,10 @@ class MixedStructureValidatorTest extends TestCase
      */
     public function testMixedStructureFound(): void
     {
-        $localeDE = new Locale('de-DE', '', '');
+        $localeDE = new Locale('de-DE', false, '', '');
         $localeDE->addTranslation('card.btnCancel', '', 'group1');
 
-        $localeEN = new Locale('en-GB', '', '');
+        $localeEN = new Locale('en-GB', false, '', '');
         $localeEN->addTranslation('card.btnCancel2', 'Cancel', 'group1');
         $localeEN->addTranslation('card.btnOK', '', 'group1');
 
