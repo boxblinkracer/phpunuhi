@@ -9,7 +9,7 @@
             <xs:sequence>
                 <xs:element name="imports" type="typeImports" minOccurs="0" maxOccurs="unbounded"/>
                 <xs:element name="php" type="typePHP" minOccurs="0" maxOccurs="unbounded"/>
-                <xs:element name="translations" type="typeTranslations" minOccurs="1" maxOccurs="unbounded"/>
+                <xs:element name="translations" type="typeTranslations" minOccurs="0" maxOccurs="unbounded"/>
                 <xs:element name="coverage" type="typeCoverage" minOccurs="0" maxOccurs="1"/>
             </xs:sequence>
             <xs:attribute name="bootstrap" type="xs:string" use="optional"/>

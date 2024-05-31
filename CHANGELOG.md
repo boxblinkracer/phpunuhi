@@ -13,6 +13,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 - Fixed binary detection to also support "Umlaute". These were accidentally detected as binary strings, but they are not.
 - Fix bug where the coverage of a missing locale was accidentally 100%
+- Fix bug where it was not possible to only use import-config files without a Translation-Set inside the main configuration file. This is now possible.
 
 ## [1.20.0]
 

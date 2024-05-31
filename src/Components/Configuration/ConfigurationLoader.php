@@ -105,12 +105,13 @@ class ConfigurationLoader
      */
     public function load(string $rootConfigFilename): Configuration
     {
+        $this->bufferTranslationSetCoverages = [];
+
         $rootXmlSettings = $this->xmlLoader->loadXML($rootConfigFilename);
 
         $rootConfigDir = dirname($rootConfigFilename) . '/';
 
-        # load our bootstrap file
-        # if provided
+        # load our bootstrap file if provided
         $bootstrap = $this->getAttribute('bootstrap', $rootXmlSettings)->getValue();
 
         if ($bootstrap !== '' && $bootstrap !== '0') {
@@ -163,6 +164,10 @@ class ConfigurationLoader
         $config->setCoverage($coverage);
 
         # ------------------------------------------------------------------------------------
+
+        if (count($config->getTranslationSets()) <= 0) {
+            throw new ConfigurationException('Invalid configuration! No translation-sets have been found!');
+        }
 
         $this->configValidator->validateConfig($config);
 
@@ -231,14 +236,15 @@ class ConfigurationLoader
     {
         $hasTranslationSets = ($rootNode->translations->children() !== null);
 
-        if (!$hasTranslationSets) {
-            throw new ConfigurationException('Invalid configuration! No translation node has been found!');
-        }
+        # we might have different import-based configuration files
+        # and it can be that the root file might not have a translation
+        # so we just use an empty array in that case
+        /** @var SimpleXMLElement[] $xmlTranslationSets */
+        $xmlTranslationSets = $hasTranslationSets ? $rootNode->translations->children() : [];
 
         $foundSets = [];
 
-        /** @var SimpleXMLElement $xmlSet */
-        foreach ($rootNode->translations->children() as $xmlSet) {
+        foreach ($xmlTranslationSets as $xmlSet) {
             $setName = trim((string)$xmlSet['name']);
             $nodeFormat = $xmlSet->format;
             $nodeProtection = $xmlSet->protect;
@@ -327,10 +333,6 @@ class ConfigurationLoader
             $this->filterHandler->applyFilter($set);
 
             $foundSets[] = $set;
-        }
-
-        if (count($foundSets) <= 0) {
-            throw new ConfigurationException('Invalid configuration! No translation-sets have been found!');
         }
 
         return $foundSets;

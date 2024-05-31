@@ -9,7 +9,7 @@
             <xs:sequence>
                 <xs:element name="imports" type="typeImports" minOccurs="0" maxOccurs="unbounded"/>
                 <xs:element name="php" type="typePHP" minOccurs="0" maxOccurs="unbounded"/>
-                <xs:element name="translations" type="typeTranslations" minOccurs="1" maxOccurs="unbounded"/>
+                <xs:element name="translations" type="typeTranslations" minOccurs="0" maxOccurs="unbounded"/>
                 <xs:element name="coverage" type="typeCoverage" minOccurs="0" maxOccurs="1"/>
             </xs:sequence>
             <xs:attribute name="bootstrap" type="xs:string" use="optional"/>
@@ -213,17 +213,10 @@
     <xs:complexType name="styleIgnoreKey">
         <xs:simpleContent>
             <xs:extension base="xs:string">
-                <xs:attribute name="scope" type="styleIgnoreKeyOptions" use="optional"/>
+                <xs:attribute name="fqp" type="xs:boolean" use="optional"/>
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>
-
-    <xs:simpleType name="styleIgnoreKeyOptions">
-        <xs:restriction base="xs:string">
-            <xs:enumeration value="global"/>
-            <xs:enumeration value="fixed"/>
-        </xs:restriction>
-    </xs:simpleType>
 
     <!-- ================================================================================================================================ -->
     <!-- LOCALES -->
