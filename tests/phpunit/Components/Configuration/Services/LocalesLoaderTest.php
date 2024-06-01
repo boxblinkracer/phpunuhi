@@ -97,18 +97,41 @@ class LocalesLoaderTest extends TestCase
             <locales basePath="./snippets">
                 <locale name="en">' . $this->existingLocaleFile . '</locale>
                 <locale name="de" base="true">' . $this->existingLocaleFile . '</locale>
+                <locale name="fr" base="false">' . $this->existingLocaleFile . '</locale>
             </locales>
         ');
 
         $locales = $this->loader->loadLocales($xmlNode, 'test.xml');
 
-        $this->assertCount(2, $locales);
+        $this->assertCount(3, $locales);
 
         $this->assertEquals('en', $locales[0]->getName());
         $this->assertEquals(false, $locales[0]->isBase());
 
         $this->assertEquals('de', $locales[1]->getName());
         $this->assertEquals(true, $locales[1]->isBase());
+
+        $this->assertEquals('fr', $locales[2]->getName());
+        $this->assertEquals(false, $locales[2]->isBase());
+    }
+
+    /**
+     * @throws ConfigurationException
+     * @return void
+     */
+    public function testBaseLocaleAttributeCannotBeDefinedTwice(): void
+    {
+        $this->expectException(ConfigurationException::class);
+        $this->expectExceptionMessage('Only 1 locale can be defined as the base locale within a translation-set');
+
+        $xmlNode = $this->loadXml('
+            <locales basePath="./snippets">
+                <locale name="en" base="true">' . $this->existingLocaleFile . '</locale>
+                <locale name="de" base="true">' . $this->existingLocaleFile . '</locale>
+            </locales>
+        ');
+
+        $this->loader->loadLocales($xmlNode, 'test.xml');
     }
 
     /**

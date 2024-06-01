@@ -51,7 +51,7 @@ class LocalesLoader
 
             $localeName = (string)$nodeLocale['name'];
             $iniSection = (string)$nodeLocale['iniSection'];
-            $isMain = isset($nodeLocale['base']) && $this->getBool((string)$nodeLocale['base']);
+            $isBase = isset($nodeLocale['base']) && $this->getBool((string)$nodeLocale['base']);
 
             $localeFile = $this->placholderProcessor->buildRealFilename(
                 $localeName,
@@ -60,7 +60,16 @@ class LocalesLoader
                 $configFilename
             );
 
-            $foundLocales[] = new Locale($localeName, $isMain, $localeFile, $iniSection);
+            $foundLocales[] = new Locale($localeName, $isBase, $localeFile, $iniSection);
+        }
+
+        # check if we have 2 base locales, and throw an exception if so
+        $baseLocales = array_filter($foundLocales, function (Locale $locale): bool {
+            return $locale->isBase();
+        });
+
+        if (count($baseLocales) > 1) {
+            throw new ConfigurationException('Only 1 locale can be defined as the base locale within a translation-set');
         }
 
         return $foundLocales;
