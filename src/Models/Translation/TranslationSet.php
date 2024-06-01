@@ -222,18 +222,24 @@ class TranslationSet
 
     /**
      * @param string $searchID
-     * @param string $searchLocale
+     * @param string $sourceLocaleName
      * @throws TranslationNotFoundException
      * @return array<mixed>
      */
-    public function findAnyExistingTranslation(string $searchID, string $searchLocale): array
+    public function findAnyExistingTranslation(string $searchID, string $sourceLocaleName): array
     {
         foreach ($this->locales as $currentLocale) {
+            if ($currentLocale->isBase()) {
+                $sourceLocaleName = $currentLocale->getName();
+                break;
+            }
+        }
 
-            # if we have a search locale set,
-            # then only search for translations of this locale.
-            # if it does not match, continue
-            if ($searchLocale !== '' && $searchLocale !== '0' && $currentLocale->getName() !== $searchLocale) {
+        foreach ($this->locales as $currentLocale) {
+
+            # if we have a source locale try to figure out if we are in this one
+            # if not, then just continue with the next one
+            if ($sourceLocaleName !== '' && $currentLocale->getName() !== $sourceLocaleName) {
                 continue;
             }
 

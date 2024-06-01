@@ -600,6 +600,7 @@ same structure for example).
 
 You can also specify what locale is the base locale using the attribute **base="true"**.
 This will be used for certain features where it's necessary to know the base locale that should contain all values.
+Translations services e.g. will prefer the base locale as the source for translations, if defined and no other source is specified in the command.
 
 This is how you can define locales (with files in this sample).
 You can also use a placeholder **%locale%**, **%locale_lc%**, **%locale_uc%** and **%locale_un%** in the value to make things easier for

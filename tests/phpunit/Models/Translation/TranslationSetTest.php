@@ -405,6 +405,40 @@ class TranslationSetTest extends TestCase
     }
 
     /**
+     * @throws TranslationNotFoundException
+     * @return void
+     */
+    public function testFindAnyExistingTranslationPrioritizesBaseLocale(): void
+    {
+        $attributes = [];
+        $filter = new Filter();
+
+        $locale1 = new Locale('EN', false, '', '');
+        $locale1->addTranslation('btnCancel', 'Cancel', '');
+
+        # the second locale is our base locale
+        $locale2 = new Locale('DE', true, '', '');
+        $locale2->addTranslation('btnCancel', 'Abbrechen', '');
+
+        # this locale only has empty translation
+        $locale3 = new Locale('ES', false, '', '');
+        $locale3->addTranslation('btnCancel', '', '');
+
+        $locales = [$locale1, $locale2, $locale3];
+
+        $set = new TranslationSet('storefront', 'json', new Protection(), $locales, $filter, $attributes, new CaseStyleSetting([], []), []);
+
+        $existing = $set->findAnyExistingTranslation('btnCancel', 'EN');
+
+        $expected = [
+            'locale' => 'DE',
+            'translation' => new Translation('btnCancel', 'Abbrechen', '')
+        ];
+
+        $this->assertEquals($expected, $existing);
+    }
+
+    /**
      * @return void
      */
     public function testGetCasingStyle(): void

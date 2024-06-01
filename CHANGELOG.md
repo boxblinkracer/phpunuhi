@@ -8,6 +8,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 ### Added
 
 - Added new option to specify the **base locale** within a Translation-Set. This will be used for different features where it's necessary to know the base language.
+- Translation services will now use the new base locale as preferred source language for translations, if defined.
 
 ### Fixed
 
