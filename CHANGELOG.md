@@ -3,7 +3,7 @@
 All notable changes of releases are documented in this file
 using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
-## [Unreleased]
+## [1.21.0]
 
 ### Added
 
@@ -12,7 +12,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 ### Fixed
 
-- Fixed binary detection to also support "Umlaute". These were accidentally detected as binary strings, but they are not.
+- Fixed binary detection to also support "Umlaute". These were accidentally detected as binary strings, but they are not (thx @mjosef89).
 - Fix bug where the coverage of a missing locale was accidentally 100%
 - Fix bug where it was not possible to only use import-config files without a Translation-Set inside the main configuration file. This is now possible.
 
