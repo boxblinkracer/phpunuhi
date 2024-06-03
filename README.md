@@ -101,6 +101,8 @@ Now that you know this, let's get started!
 <!-- TOC -->
 
 
+[![English Shopware Community Day 2024](https://img.youtube.com/vi/phaO7-1n3O0/0.jpg)](https://www.youtube.com/watch?v=phaO7-1n3O0)
+
 [![German Webinar Video](https://img.youtube.com/vi/yeWyG5R0VZs/0.jpg)](https://www.youtube.com/watch?v=yeWyG5R0VZs)
 
 > Watch the latest (German) webinar about PHPUnuhi.
