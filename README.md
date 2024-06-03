@@ -101,11 +101,23 @@ Now that you know this, let's get started!
 <!-- TOC -->
 
 
-[![English Shopware Community Day 2024](https://img.youtube.com/vi/phaO7-1n3O0/0.jpg)](https://www.youtube.com/watch?v=phaO7-1n3O0)
+<table>
+  <tr>
+    <td>
+      <a href="https://www.youtube.com/watch?v=phaO7-1n3O0">
+        <img src="https://img.youtube.com/vi/phaO7-1n3O0/0.jpg" alt="English Shopware Community Day 2024">
+      </a>
+      <p>Watch the latest (English) talk about PHPUnuhi.</p>
+    </td>
+    <td>
+      <a href="https://www.youtube.com/watch?v=yeWyG5R0VZs">
+        <img src="https://img.youtube.com/vi/yeWyG5R0VZs/0.jpg" alt="German Webinar Video">
+      </a>
+      <p>Watch the latest (German) webinar about PHPUnuhi.</p>
+    </td>
+  </tr>
+</table>
 
-[![German Webinar Video](https://img.youtube.com/vi/yeWyG5R0VZs/0.jpg)](https://www.youtube.com/watch?v=yeWyG5R0VZs)
-
-> Watch the latest (German) webinar about PHPUnuhi.
 
 ## 1. Basic Concept
 
