@@ -103,7 +103,7 @@ trait ArrayTrait
             }
 
             // merge result
-            $result = array_merge_recursive($result, $lastVal);
+            $result = array_replace_recursive($result, $lastVal);
         }
 
         return $result;
