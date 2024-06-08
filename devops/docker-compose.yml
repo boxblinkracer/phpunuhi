@@ -7,6 +7,8 @@ services:
     image: dockware/flex:latest
     volumes:
       - "../:/app"
+    ports:
+      - "22:22"
     working_dir: /app
     environment:
       - PHP_VERSION=8.2
