@@ -194,4 +194,26 @@ class ArrayTraitTest extends TestCase
 
         $this->assertEquals($expected, $flat);
     }
+
+    public function testNestedArrayWithListOfArray(): void
+    {
+        $array = [
+            'blocks.0.title' => 'I am a title',
+            'blocks.0.content' => 'I am some content',
+        ];
+
+        $expected = [
+            'blocks' => [
+                [
+                    'title' => 'I am a title',
+                    'content' => 'I am some content',
+                ]
+            ],
+        ];
+
+        $actual = $this->getMultiDimensionalArray($array, '.');
+
+        $this->assertEquals($expected, $actual);
+        ;
+    }
 }
