@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Components\Repoter;
+namespace PHPUnuhi\Tests\Components\Repoter;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;

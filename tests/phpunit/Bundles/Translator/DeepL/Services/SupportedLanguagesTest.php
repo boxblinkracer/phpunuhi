@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Bundles\Translator\DeepL\Services;
+namespace PHPUnuhi\Tests\Bundles\Translator\DeepL\Services;
 
 use DeepL\DeepLException;
 use DeepL\Language;

@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Components\Validator\Rules;
+namespace PHPUnuhi\Tests\Components\Validator\Rules;
 
 use Exception;
 use PHPUnit\Framework\TestCase;

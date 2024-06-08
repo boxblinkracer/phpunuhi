@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Services\Coverage;
+namespace PHPUnuhi\Tests\Services\Coverage;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Models\Configuration\CaseStyleSetting;

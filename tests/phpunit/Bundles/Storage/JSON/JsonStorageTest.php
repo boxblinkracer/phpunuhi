@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Bundles\Storage\JSON;
+namespace PHPUnuhi\Tests\Bundles\Storage\JSON;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Bundles\Storage\JSON\JsonStorage;

@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Bundles\Translator\GoogleWeb;
+namespace PHPUnuhi\Tests\Bundles\Translator\GoogleWeb;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Bundles\Translator\GoogleWeb\GoogleWebTranslator;

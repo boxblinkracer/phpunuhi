@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Utils\Traits;
+namespace PHPUnuhi\Tests\Utils\Traits;
 
 trait StringCleanerTrait
 {

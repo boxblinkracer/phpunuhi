@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Components\Configuration\Services;
+namespace PHPUnuhi\Tests\Components\Configuration\Services;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Configuration\Services\LocalesPlaceholderProcessor;

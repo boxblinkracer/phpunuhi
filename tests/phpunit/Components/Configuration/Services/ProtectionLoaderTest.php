@@ -1,11 +1,11 @@
 <?php
 
-namespace phpunit\Components\Configuration\Services;
+namespace PHPUnuhi\Tests\Components\Configuration\Services;
 
 use PHPUnit\Framework\TestCase;
-use phpunit\Utils\Traits\XmlLoaderTrait;
 use PHPUnuhi\Configuration\Services\ProtectionLoader;
 use PHPUnuhi\Models\Configuration\Protection;
+use PHPUnuhi\Tests\Utils\Traits\XmlLoaderTrait;
 
 class ProtectionLoaderTest extends TestCase
 {

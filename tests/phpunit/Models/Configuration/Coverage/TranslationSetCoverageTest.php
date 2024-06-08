@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Models\Configuration\Coverage;
+namespace PHPUnuhi\Tests\Models\Configuration\Coverage;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Models\Configuration\Coverage\TranslationSetCoverage;

@@ -1,15 +1,15 @@
 <?php
 
-namespace phpunit\Components\Repoter\JSON;
+namespace PHPUnuhi\Tests\Components\Repoter\JSON;
 
 use PHPUnit\Framework\TestCase;
-use phpunit\Utils\Fakes\FakeDirectoryWriter;
-use phpunit\Utils\Fakes\FakeFileWriter;
-use phpunit\Utils\Traits\StringCleanerTrait;
-use phpunit\Utils\Traits\TestReportBuilderTrait;
 use PHPUnuhi\Components\Reporter\JSON\JsonReporter;
 use PHPUnuhi\Components\Reporter\Model\ReportResult;
 use PHPUnuhi\Components\Reporter\Model\ReportSetResult;
+use PHPUnuhi\Tests\Utils\Fakes\FakeDirectoryWriter;
+use PHPUnuhi\Tests\Utils\Fakes\FakeFileWriter;
+use PHPUnuhi\Tests\Utils\Traits\StringCleanerTrait;
+use PHPUnuhi\Tests\Utils\Traits\TestReportBuilderTrait;
 
 class JsonReporterTest extends TestCase
 {

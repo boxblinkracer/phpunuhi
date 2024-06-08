@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Services\Connection;
+namespace PHPUnuhi\Tests\Services\Connection;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Services\Connection\ConnectionFactory;

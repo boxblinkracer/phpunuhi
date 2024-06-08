@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Components\Validator\Model;
+namespace PHPUnuhi\Tests\Components\Validator\Model;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Components\Validator\Model\ValidationTest;

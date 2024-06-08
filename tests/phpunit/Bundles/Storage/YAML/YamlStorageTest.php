@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Bundles\Storage\YAML;
+namespace PHPUnuhi\Tests\Bundles\Storage\YAML;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Bundles\Storage\YAML\YamlStorage;

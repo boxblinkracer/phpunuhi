@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Models\Configuration\CaseStyle;
+namespace PHPUnuhi\Tests\Models\Configuration\CaseStyle;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Models\Configuration\CaseStyle\CaseStyleIgnoreKey;

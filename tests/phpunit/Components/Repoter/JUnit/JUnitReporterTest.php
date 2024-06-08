@@ -1,15 +1,15 @@
 <?php
 
-namespace phpunit\Components\Repoter\JUnit;
+namespace PHPUnuhi\Tests\Components\Repoter\JUnit;
 
 use PHPUnit\Framework\TestCase;
-use phpunit\Utils\Fakes\FakeDirectoryWriter;
-use phpunit\Utils\Fakes\FakeXmlWriter;
-use phpunit\Utils\Traits\StringCleanerTrait;
-use phpunit\Utils\Traits\TestReportBuilderTrait;
 use PHPUnuhi\Components\Reporter\JUnit\JUnitReporter;
 use PHPUnuhi\Components\Reporter\Model\ReportResult;
 use PHPUnuhi\Components\Reporter\Model\ReportSetResult;
+use PHPUnuhi\Tests\Utils\Fakes\FakeDirectoryWriter;
+use PHPUnuhi\Tests\Utils\Fakes\FakeXmlWriter;
+use PHPUnuhi\Tests\Utils\Traits\StringCleanerTrait;
+use PHPUnuhi\Tests\Utils\Traits\TestReportBuilderTrait;
 
 class JUnitReporterTest extends TestCase
 {

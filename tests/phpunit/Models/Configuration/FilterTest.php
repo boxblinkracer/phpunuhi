@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Models\Configuration;
+namespace PHPUnuhi\Tests\Models\Configuration;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Models\Configuration\Filter;

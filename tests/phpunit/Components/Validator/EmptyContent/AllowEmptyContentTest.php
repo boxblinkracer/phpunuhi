@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Components\Validator\EmptyContent;
+namespace PHPUnuhi\Tests\Components\Validator\EmptyContent;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Components\Validator\EmptyContent\AllowEmptyContent;

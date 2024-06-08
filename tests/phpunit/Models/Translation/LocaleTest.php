@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Models\Translation;
+namespace PHPUnuhi\Tests\Models\Translation;
 
 use Exception;
 use PHPUnit\Framework\TestCase;

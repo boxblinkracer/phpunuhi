@@ -1,18 +1,18 @@
 <?php
 
-namespace phpunit\Components\Configuration;
+namespace PHPUnuhi\Tests\Components\Configuration;
 
 use Exception;
 use PHPUnit\Framework\TestCase;
-use phpunit\Utils\Fakes\FakeStorage;
-use phpunit\Utils\Fakes\FakeStorageNoFilter;
-use phpunit\Utils\Fakes\FakeXmlLoader;
 use PHPUnuhi\Bundles\Storage\StorageFactory;
 use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Configuration\ConfigurationLoader;
 use PHPUnuhi\Exceptions\ConfigurationException;
 use PHPUnuhi\Models\Configuration\Configuration;
 use PHPUnuhi\Services\Loaders\Xml\XmlLoader;
+use PHPUnuhi\Tests\Utils\Fakes\FakeStorage;
+use PHPUnuhi\Tests\Utils\Fakes\FakeStorageNoFilter;
+use PHPUnuhi\Tests\Utils\Fakes\FakeXmlLoader;
 
 class ConfigurationLoaderTest extends TestCase
 {

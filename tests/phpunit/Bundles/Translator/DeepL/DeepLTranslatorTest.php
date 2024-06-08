@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Bundles\Translator\DeepL;
+namespace PHPUnuhi\Tests\Bundles\Translator\DeepL;
 
 use Exception;
 use PHPUnit\Framework\TestCase;

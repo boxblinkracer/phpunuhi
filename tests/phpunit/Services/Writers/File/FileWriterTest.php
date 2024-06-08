@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Services\Writers\File;
+namespace PHPUnuhi\Tests\Services\Writers\File;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Services\Writers\File\FileWriter;

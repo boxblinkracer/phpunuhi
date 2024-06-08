@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Bundles\Exchange;
+namespace PHPUnuhi\Tests\Bundles\Exchange;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Bundles\Exchange\ExchangeFormat;

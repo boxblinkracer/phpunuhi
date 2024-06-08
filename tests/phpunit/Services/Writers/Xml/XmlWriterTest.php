@@ -1,10 +1,10 @@
 <?php
 
-namespace phpunit\Services\Writers\Xml;
+namespace PHPUnuhi\Tests\Services\Writers\Xml;
 
 use PHPUnit\Framework\TestCase;
-use phpunit\Utils\Traits\StringCleanerTrait;
 use PHPUnuhi\Services\Writers\Xml\XmlWriter;
+use PHPUnuhi\Tests\Utils\Traits\StringCleanerTrait;
 
 class XmlWriterTest extends TestCase
 {

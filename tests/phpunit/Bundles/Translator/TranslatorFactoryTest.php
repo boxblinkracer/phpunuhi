@@ -1,13 +1,13 @@
 <?php
 
-namespace phpunit\Bundles\Translator;
+namespace PHPUnuhi\Tests\Bundles\Translator;
 
 use Exception;
 use PHPUnit\Framework\TestCase;
-use phpunit\Utils\Fakes\FakeTranslator;
 use PHPUnuhi\Bundles\Translator\TranslatorFactory;
 use PHPUnuhi\Exceptions\ConfigurationException;
 use PHPUnuhi\Models\Command\CommandOption;
+use PHPUnuhi\Tests\Utils\Fakes\FakeTranslator;
 
 class TranslatorFactoryTest extends TestCase
 {

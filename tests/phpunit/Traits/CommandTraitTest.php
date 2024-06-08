@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Traits;
+namespace PHPUnuhi\Tests\Traits;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\PHPUnuhi;

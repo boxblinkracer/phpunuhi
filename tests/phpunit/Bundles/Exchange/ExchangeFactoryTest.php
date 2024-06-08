@@ -1,13 +1,13 @@
 <?php
 
-namespace phpunit\Bundles\Exchange;
+namespace PHPUnuhi\Tests\Bundles\Exchange;
 
 use Exception;
 use PHPUnit\Framework\TestCase;
-use phpunit\Utils\Fakes\FakeExchangeFormat;
 use PHPUnuhi\Bundles\Exchange\ExchangeFactory;
 use PHPUnuhi\Exceptions\ConfigurationException;
 use PHPUnuhi\Models\Command\CommandOption;
+use PHPUnuhi\Tests\Utils\Fakes\FakeExchangeFormat;
 
 class ExchangeFactoryTest extends TestCase
 {

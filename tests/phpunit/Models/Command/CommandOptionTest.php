@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Models\Command;
+namespace PHPUnuhi\Tests\Models\Command;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Models\Command\CommandOption;

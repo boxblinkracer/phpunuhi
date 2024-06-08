@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Services\CaseStyle;
+namespace PHPUnuhi\Tests\Services\CaseStyle;
 
 use Exception;
 use PHPUnit\Framework\TestCase;

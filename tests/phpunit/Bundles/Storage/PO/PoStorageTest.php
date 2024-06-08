@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Bundles\Storage\PO;
+namespace PHPUnuhi\Tests\Bundles\Storage\PO;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Bundles\Storage\PO\PoStorage;

@@ -1,9 +1,8 @@
 <?php
 
-namespace phpunit\Components\Configuration\Services;
+namespace PHPUnuhi\Tests\Components\Configuration\Services;
 
 use PHPUnit\Framework\TestCase;
-use phpunit\Utils\Traits\TranslationSetBuilderTrait;
 use PHPUnuhi\Configuration\Services\ConfigurationValidator;
 use PHPUnuhi\Exceptions\ConfigurationException;
 use PHPUnuhi\Models\Configuration\CaseStyleSetting;
@@ -12,6 +11,7 @@ use PHPUnuhi\Models\Configuration\Filter;
 use PHPUnuhi\Models\Configuration\Protection;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
+use PHPUnuhi\Tests\Utils\Traits\TranslationSetBuilderTrait;
 
 class ConfigurationValidatorTest extends TestCase
 {

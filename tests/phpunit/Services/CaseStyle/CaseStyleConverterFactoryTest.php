@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Services\CaseStyle;
+namespace PHPUnuhi\Tests\Services\CaseStyle;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Components\Validator\CaseStyle\Exception\CaseStyleNotFoundException;

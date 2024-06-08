@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Bundles\Translator\GoogleCloud;
+namespace PHPUnuhi\Tests\Bundles\Translator\GoogleCloud;
 
 use Exception;
 use PHPUnit\Framework\TestCase;

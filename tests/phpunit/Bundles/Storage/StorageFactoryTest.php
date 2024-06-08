@@ -1,16 +1,16 @@
 <?php
 
-namespace phpunit\Bundles\Storage;
+namespace PHPUnuhi\Tests\Bundles\Storage;
 
 use Exception;
 use PHPUnit\Framework\TestCase;
-use phpunit\Utils\Fakes\FakeStorage;
 use PHPUnuhi\Bundles\Storage\StorageFactory;
 use PHPUnuhi\Exceptions\ConfigurationException;
 use PHPUnuhi\Models\Configuration\CaseStyleSetting;
 use PHPUnuhi\Models\Configuration\Filter;
 use PHPUnuhi\Models\Configuration\Protection;
 use PHPUnuhi\Models\Translation\TranslationSet;
+use PHPUnuhi\Tests\Utils\Fakes\FakeStorage;
 
 class StorageFactoryTest extends TestCase
 {

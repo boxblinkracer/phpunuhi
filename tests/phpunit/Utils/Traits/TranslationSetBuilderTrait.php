@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Utils\Traits;
+namespace PHPUnuhi\Tests\Utils\Traits;
 
 use PHPUnuhi\Models\Configuration\CaseStyleSetting;
 use PHPUnuhi\Models\Configuration\Filter;

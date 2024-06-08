@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Components\Filter;
+namespace PHPUnuhi\Tests\Components\Filter;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Components\Filter\FilterHandler;

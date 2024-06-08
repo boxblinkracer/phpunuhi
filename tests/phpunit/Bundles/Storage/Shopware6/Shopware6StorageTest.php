@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Bundles\Storage\Shopware6;
+namespace PHPUnuhi\Tests\Bundles\Storage\Shopware6;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Bundles\Storage\Shopware6\Shopware6Storage;

@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Utils\Fakes;
+namespace PHPUnuhi\Tests\Utils\Fakes;
 
 use Exception;
 use PHPUnuhi\Services\Loaders\Xml\XmlLoaderInterface;

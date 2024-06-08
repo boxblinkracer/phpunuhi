@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Services\Writers\Directory;
+namespace PHPUnuhi\Tests\Services\Writers\Directory;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Services\Writers\Directory\DirectoryWriter;

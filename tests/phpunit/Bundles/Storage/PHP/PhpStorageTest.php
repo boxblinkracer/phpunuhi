@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Bundles\Storage\PHP;
+namespace PHPUnuhi\Tests\Bundles\Storage\PHP;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Bundles\Storage\PHP\PhpStorage;

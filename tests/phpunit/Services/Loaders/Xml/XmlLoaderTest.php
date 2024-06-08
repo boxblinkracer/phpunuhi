@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Services\Loaders\Xml;
+namespace PHPUnuhi\Tests\Services\Loaders\Xml;
 
 use Exception;
 use PHPUnit\Framework\TestCase;

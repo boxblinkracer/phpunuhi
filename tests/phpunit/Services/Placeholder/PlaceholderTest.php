@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Services\Placeholder;
+namespace PHPUnuhi\Tests\Services\Placeholder;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Services\Placeholder\Placeholder;

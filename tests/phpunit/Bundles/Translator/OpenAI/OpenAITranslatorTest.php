@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Bundles\Translator\OpenAI;
+namespace PHPUnuhi\Tests\Bundles\Translator\OpenAI;
 
 use Exception;
 use PHPUnit\Framework\TestCase;

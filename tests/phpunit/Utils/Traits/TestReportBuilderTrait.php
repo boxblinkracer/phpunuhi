@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Utils\Traits;
+namespace PHPUnuhi\Tests\Utils\Traits;
 
 use PHPUnuhi\Components\Reporter\Model\ReportTestResult;
 

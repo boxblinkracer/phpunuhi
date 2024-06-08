@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Services\Maths;
+namespace PHPUnuhi\Tests\Services\Maths;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Services\Maths\PercentageCalculator;

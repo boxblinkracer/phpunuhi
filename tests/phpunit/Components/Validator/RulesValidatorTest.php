@@ -1,15 +1,15 @@
 <?php
 
-namespace phpunit\Components\Validator;
+namespace PHPUnuhi\Tests\Components\Validator;
 
 use PHPUnit\Framework\TestCase;
-use phpunit\Utils\Traits\TranslationSetBuilderTrait;
 use PHPUnuhi\Bundles\Storage\JSON\JsonStorage;
 use PHPUnuhi\Components\Validator\DuplicateContent\DuplicateContent;
 use PHPUnuhi\Components\Validator\RulesValidator;
 use PHPUnuhi\Models\Configuration\Rule;
 use PHPUnuhi\Models\Configuration\Rules;
 use PHPUnuhi\Models\Translation\Locale;
+use PHPUnuhi\Tests\Utils\Traits\TranslationSetBuilderTrait;
 
 class RulesValidatorTest extends TestCase
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Services\GroupName;
+namespace PHPUnuhi\Tests\Services\GroupName;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Services\GroupName\GroupNameService;

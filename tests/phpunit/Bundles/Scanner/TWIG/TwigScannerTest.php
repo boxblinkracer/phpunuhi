@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Bundles\Scanner\TWIG;
+namespace PHPUnuhi\Tests\Bundles\Scanner\TWIG;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Bundles\Twig\TwigScanner;

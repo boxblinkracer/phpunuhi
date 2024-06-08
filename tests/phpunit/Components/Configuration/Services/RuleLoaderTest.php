@@ -1,14 +1,14 @@
 <?php
 
-namespace phpunit\Components\Configuration\Services;
+namespace PHPUnuhi\Tests\Components\Configuration\Services;
 
 use PHPUnit\Framework\TestCase;
-use phpunit\Utils\Traits\XmlLoaderTrait;
 use PHPUnuhi\Components\Validator\DuplicateContent\DuplicateContent;
 use PHPUnuhi\Components\Validator\EmptyContent\AllowEmptyContent;
 use PHPUnuhi\Configuration\Services\RulesLoader;
 use PHPUnuhi\Models\Configuration\Rule;
 use PHPUnuhi\Models\Configuration\Rules;
+use PHPUnuhi\Tests\Utils\Traits\XmlLoaderTrait;
 
 class RuleLoaderTest extends TestCase
 {

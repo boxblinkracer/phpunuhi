@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Bundles\Scanner\MJML;
+namespace PHPUnuhi\Tests\Bundles\Scanner\MJML;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Bundles\MJML\MjmlScanner;

@@ -1,10 +1,9 @@
 <?php
 
-namespace phpunit\Bundles\Exchange\CSV;
+namespace PHPUnuhi\Tests\Bundles\Exchange\CSV;
 
 use Exception;
 use PHPUnit\Framework\TestCase;
-use phpunit\Utils\Fakes\FakeCSVWriter;
 use PHPUnuhi\Bundles\Exchange\CSV\CSVExchange;
 use PHPUnuhi\Exceptions\TranslationNotFoundException;
 use PHPUnuhi\Models\Command\CommandOption;
@@ -13,6 +12,7 @@ use PHPUnuhi\Models\Configuration\Filter;
 use PHPUnuhi\Models\Configuration\Protection;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
+use PHPUnuhi\Tests\Utils\Fakes\FakeCSVWriter;
 
 class CSVExchangeTest extends TestCase
 {

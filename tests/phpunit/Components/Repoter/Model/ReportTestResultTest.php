@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Components\Repoter\Model;
+namespace PHPUnuhi\Tests\Components\Repoter\Model;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Components\Reporter\Model\ReportTestResult;

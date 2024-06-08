@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Components\Validator\CaseStyle\Style;
+namespace PHPUnuhi\Tests\Components\Validator\CaseStyle\Style;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Components\Validator\CaseStyle\CaseStyleValidatorInterface;

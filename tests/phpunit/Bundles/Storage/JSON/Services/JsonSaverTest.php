@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Bundles\Storage\JSON\Services;
+namespace PHPUnuhi\Tests\Bundles\Storage\JSON\Services;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Bundles\Storage\JSON\Services\JsonSaver;

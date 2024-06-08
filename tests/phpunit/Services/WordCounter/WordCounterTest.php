@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Services\WordCounter;
+namespace PHPUnuhi\Tests\Services\WordCounter;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Services\WordCounter\WordCounter;

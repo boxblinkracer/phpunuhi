@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\Services\Coverage\Models;
+namespace PHPUnuhi\Tests\Services\Coverage\Models;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Models\Translation\Locale;
