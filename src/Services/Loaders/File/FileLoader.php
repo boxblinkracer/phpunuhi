@@ -2,21 +2,22 @@
 
 namespace PHPUnuhi\Services\Loaders\File;
 
+use Exception;
+
 class FileLoader
 {
 
     /**
      * @param string $filename
+     * @throws Exception
      * @return string
      */
     public function load(string $filename): string
     {
-        $content = file_get_contents($filename);
-
-        if ($content === false) {
-            return '';
+        if (!file_exists($filename)) {
+            throw new Exception('Configuration file not found: ' . $filename);
         }
 
-        return $content;
+        return (string)file_get_contents($filename);
     }
 }
