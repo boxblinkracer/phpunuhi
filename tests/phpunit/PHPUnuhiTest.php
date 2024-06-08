@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit;
+namespace PHPUnuhi\Tests;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\PHPUnuhi;
