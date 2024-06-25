@@ -10,10 +10,12 @@ use PHPUnuhi\Bundles\Storage\StorageSaveResult;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
 use PHPUnuhi\Traits\ArrayTrait;
+use PHPUnuhi\Traits\AutoCreateTranslationFileTrait;
 
 class PhpStorage implements StorageInterface
 {
     use ArrayTrait;
+    use AutoCreateTranslationFileTrait;
 
     /**
      * @var PHPSaver
@@ -89,6 +91,9 @@ class PhpStorage implements StorageInterface
         $this->eolLast = filter_var($set->getAttributeValue('eol-last'), FILTER_VALIDATE_BOOLEAN);
 
         $this->saver = new PHPSaver($this->eolLast);
+
+        $this->commandPrompt = $set->getCommandPrompt();
+        $this->setStorageFileTemplate((string) file_get_contents(__DIR__.'/Template/StorageFileTemplate.php'));
     }
 
     /**
@@ -97,7 +102,11 @@ class PhpStorage implements StorageInterface
      */
     public function loadTranslationSet(TranslationSet $set): void
     {
-        $this->loader->loadTranslationSet($set, $this->getHierarchy()->getDelimiter());
+        foreach ($set->getLocales() as $locale) {
+            if ($this->ensureTranslationFileExists($locale)) {
+                $this->loader->loadTranslation($locale, $this->getHierarchy()->getDelimiter());
+            }
+        }
     }
 
     /**

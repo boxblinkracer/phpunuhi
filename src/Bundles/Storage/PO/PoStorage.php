@@ -9,11 +9,13 @@ use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Bundles\Storage\StorageSaveResult;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
+use PHPUnuhi\Traits\AutoCreateTranslationFileTrait;
 use PHPUnuhi\Traits\StringTrait;
 
 class PoStorage implements StorageInterface
 {
     use StringTrait;
+    use AutoCreateTranslationFileTrait;
 
 
     /**
@@ -64,6 +66,9 @@ class PoStorage implements StorageInterface
     public function configureStorage(TranslationSet $set): void
     {
         $this->eolLast = filter_var($set->getAttributeValue('eol-last'), FILTER_VALIDATE_BOOLEAN);
+
+        $this->commandPrompt = $set->getCommandPrompt();
+        $this->setStorageFileTemplate((string) file_get_contents(__DIR__ . '/Template/StorageFileTemplate.po'));
     }
 
     /**
@@ -74,6 +79,10 @@ class PoStorage implements StorageInterface
     public function loadTranslationSet(TranslationSet $set): void
     {
         foreach ($set->getLocales() as $locale) {
+            if (false === $this->ensureTranslationFileExists($locale)) {
+                continue;
+            }
+
             $lines = $this->getLines($locale->getFilename());
             $blocks = $this->getBlocks($lines);
 

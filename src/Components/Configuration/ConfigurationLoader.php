@@ -5,6 +5,7 @@ namespace PHPUnuhi\Configuration;
 use Exception;
 use PHPUnuhi\Bundles\Storage\StorageFactory;
 use PHPUnuhi\Components\Filter\FilterHandler;
+use PHPUnuhi\Configuration\Services\CommandPrompt;
 use PHPUnuhi\Configuration\Services\ConfigurationValidator;
 use PHPUnuhi\Configuration\Services\CoverageLoader;
 use PHPUnuhi\Configuration\Services\FilterLoader;
@@ -22,6 +23,7 @@ use PHPUnuhi\Models\Translation\TranslationSet;
 use PHPUnuhi\Services\Loaders\Xml\XmlLoaderInterface;
 use PHPUnuhi\Traits\XmlTrait;
 use SimpleXMLElement;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ConfigurationLoader
 {
@@ -74,6 +76,11 @@ class ConfigurationLoader
     private $coverageLoader;
 
     /**
+     * @var CommandPrompt
+     */
+    private $commandPrompt;
+
+    /**
      * @var TranslationSetCoverage[]
      */
     private $bufferTranslationSetCoverages;
@@ -82,7 +89,7 @@ class ConfigurationLoader
     /**
      * @param XmlLoaderInterface $xmlLoader
      */
-    public function __construct(XmlLoaderInterface $xmlLoader)
+    public function __construct(XmlLoaderInterface $xmlLoader, SymfonyStyle $style)
     {
         $this->xmlLoader = $xmlLoader;
 
@@ -94,6 +101,7 @@ class ConfigurationLoader
         $this->filterLoader = new FilterLoader();
         $this->protectionLoader = new ProtectionLoader();
         $this->coverageLoader = new CoverageLoader();
+        $this->commandPrompt = new CommandPrompt($style);
     }
 
 
@@ -304,7 +312,8 @@ class ConfigurationLoader
                 $setFilter,
                 $setAttributes,
                 new CaseStyleSetting($casingStyles, $ignoredKeys),
-                $rules
+                $rules,
+                $this->commandPrompt
             );
 
             if ($setCoverage instanceof TranslationSetCoverage) {

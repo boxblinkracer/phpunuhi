@@ -12,6 +12,7 @@
             <locales>
                 <locale name="de">./de.php</locale>
                 <locale name="en">./en.php</locale>
+                <locale name="fr">./fr.php</locale>
             </locales>
         </set>
 

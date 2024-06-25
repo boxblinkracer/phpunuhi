@@ -10,9 +10,11 @@ use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Bundles\Storage\StorageSaveResult;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
+use PHPUnuhi\Traits\AutoCreateTranslationFileTrait;
 
 class JsonStorage implements StorageInterface
 {
+    use AutoCreateTranslationFileTrait;
 
     /**
      * @var JsonLoader
@@ -23,7 +25,6 @@ class JsonStorage implements StorageInterface
      * @var JsonSaver
      */
     private $saver;
-
 
     /**
      * @return string
@@ -71,6 +72,9 @@ class JsonStorage implements StorageInterface
         $sort = filter_var($set->getAttributeValue('sort'), FILTER_VALIDATE_BOOLEAN);
         $eolLast = filter_var($set->getAttributeValue('eol-last'), FILTER_VALIDATE_BOOLEAN);
 
+        $this->commandPrompt = $set->getCommandPrompt();
+        $this->setStorageFileTemplate((string) file_get_contents(__DIR__ . '/Template/StorageFileTemplate.json'));
+
         $this->loader = new JsonLoader();
         $this->saver = new JsonSaver((int)$indent, $sort, $eolLast);
     }
@@ -85,7 +89,9 @@ class JsonStorage implements StorageInterface
         $delimiter = $this->getHierarchy()->getDelimiter();
 
         foreach ($set->getLocales() as $locale) {
-            $this->loader->loadTranslations($locale, $delimiter);
+            if ($this->ensureTranslationFileExists($locale)) {
+                $this->loader->loadTranslations($locale, $delimiter);
+            }
         }
     }
 

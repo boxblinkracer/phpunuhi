@@ -3,6 +3,7 @@
 namespace PHPUnuhi\Models\Translation;
 
 use Exception;
+use PHPUnuhi\Configuration\Services\CommandPrompt;
 use PHPUnuhi\Exceptions\TranslationNotFoundException;
 use PHPUnuhi\Models\Configuration\Attribute;
 use PHPUnuhi\Models\Configuration\CaseStyleSetting;
@@ -53,6 +54,11 @@ class TranslationSet
      */
     private $rules;
 
+    /**
+     * @var CommandPrompt
+     */
+    private $commandPrompt;
+
 
     /**
      * @param string $name
@@ -64,7 +70,7 @@ class TranslationSet
      * @param CaseStyleSetting $styles
      * @param Rule[] $rules
      */
-    public function __construct(string $name, string $format, Protection $protection, array $locales, Filter $filter, array $attributes, CaseStyleSetting $styles, array $rules)
+    public function __construct(string $name, string $format, Protection $protection, array $locales, Filter $filter, array $attributes, CaseStyleSetting $styles, array $rules, CommandPrompt $prompt)
     {
         $this->name = $name;
         $this->format = $format;
@@ -74,6 +80,7 @@ class TranslationSet
         $this->attributes = $attributes;
         $this->casingStyleSettings = $styles;
         $this->rules = $rules;
+        $this->commandPrompt = $prompt;
     }
 
 
@@ -335,5 +342,10 @@ class TranslationSet
         }
 
         return $invalidTranslations;
+    }
+
+    public function getCommandPrompt(): CommandPrompt
+    {
+        return $this->commandPrompt;
     }
 }

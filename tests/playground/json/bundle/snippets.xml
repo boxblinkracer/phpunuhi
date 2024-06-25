@@ -30,6 +30,7 @@
             <locales basePath="./snippets">
                 <locale name="de">%base_path%/%locale%.json</locale>
                 <locale name="nl">%base_path%/%locale%.json</locale>
+                <locale name="fr">%base_path%/%locale%.json</locale>
             </locales>
         </set>
 
