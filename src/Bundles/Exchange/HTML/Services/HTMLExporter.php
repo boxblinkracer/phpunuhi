@@ -158,7 +158,7 @@ class HTMLExporter
             mkdir($outputDir);
         }
 
-        $fullFile = $outputDir . '/index.html';
+        $fullFile = sprintf('%s/%s.html', $outputDir, $set->getName());
         file_put_contents($fullFile, $html);
 
         echo '   [+] generated file: ' . $fullFile . PHP_EOL . PHP_EOL;
