@@ -162,8 +162,8 @@ class IniStorage implements StorageInterface
 
         $preparedTranslations = [];
 
-        foreach ($locale->getTranslations() as $translation) {
-            $preparedTranslations[$translation->getID()] = $translation->getValue();
+        foreach ($locale->getTranslations() as $id => $translation) {
+            $preparedTranslations[$id] = $translation->getValue();
         }
 
         if ($this->sortIni) {

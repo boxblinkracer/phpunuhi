@@ -224,7 +224,7 @@ class TranslationSet
      * @param string $searchID
      * @param string $sourceLocaleName
      * @throws TranslationNotFoundException
-     * @return array<mixed>
+     * @return array{locale: string, translation: Translation}
      */
     public function findAnyExistingTranslation(string $searchID, string $sourceLocaleName): array
     {
@@ -243,19 +243,20 @@ class TranslationSet
                 continue;
             }
 
-            foreach ($currentLocale->getTranslations() as $translation) {
-                if ($translation->getID() !== $searchID) {
-                    continue;
-                }
-                if ($translation->isEmpty()) {
-                    continue;
-                }
-                # should be an object, just too lazy atm
-                return [
-                    'locale' => $currentLocale->getName(),
-                    'translation' => $translation,
-                ];
+            $translation = $currentLocale->findTranslationOrNull($searchID);
+            if (!$translation) {
+                continue;
             }
+
+            if ($translation->isEmpty()) {
+                continue;
+            }
+
+            # should be an object, just too lazy atm
+            return [
+                'locale' => $currentLocale->getName(),
+                'translation' => $translation,
+            ];
         }
 
         throw new TranslationNotFoundException('No valid translation found for ID: ' . $searchID);

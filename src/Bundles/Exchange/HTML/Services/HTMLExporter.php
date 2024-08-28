@@ -4,6 +4,7 @@ namespace PHPUnuhi\Bundles\Exchange\HTML\Services;
 
 use PHPUnuhi\Exceptions\TranslationNotFoundException;
 use PHPUnuhi\Models\Translation\Locale;
+use PHPUnuhi\Models\Translation\Translation;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
 class HTMLExporter
@@ -171,13 +172,8 @@ class HTMLExporter
      */
     private function getTranslationValue(Locale $locale, string $key): string
     {
-        foreach ($locale->getTranslations() as $translation) {
-            if ($translation->getID() === $key) {
-                return $translation->getValue();
-            }
-        }
-
-        return "";
+        $translation = $locale->findTranslationOrNull($key);
+        return $translation instanceof Translation ? $translation->getValue() : '';
     }
 
     private function getCSS(): string

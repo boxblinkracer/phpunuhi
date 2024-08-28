@@ -8,6 +8,7 @@ use PHPUnuhi\Bundles\Storage\StorageHierarchy;
 use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Bundles\Storage\StorageSaveResult;
 use PHPUnuhi\Models\Translation\Locale;
+use PHPUnuhi\Models\Translation\Translation;
 use PHPUnuhi\Models\Translation\TranslationSet;
 use PHPUnuhi\Traits\StringTrait;
 
@@ -145,18 +146,18 @@ class PoStorage implements StorageInterface
 
             $existingKeys[] = $id;
 
-            foreach ($locale->getTranslations() as $translation) {
-                if ($translation->getID() === $id) {
-                    $block->setMessage($translation->getValue());
-
-                    foreach ($block->getLines() as $line) {
-                        $newLines[] = $line;
-                    }
-                    $newLines[] = '';
-                    break;
-                }
+            $translation = $locale->findTranslationOrNull($id);
+            if (!$translation instanceof Translation) {
+                $newLines[] = '';
+                continue;
             }
 
+            $block->setMessage($translation->getValue());
+
+            foreach ($block->getLines() as $line) {
+                $newLines[] = $line;
+            }
+            $newLines[] = '';
             $newLines[] = '';
         }
 

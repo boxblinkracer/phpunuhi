@@ -99,6 +99,11 @@ class LazyLocale extends Locale
         return $this->locale->findTranslation($searchID);
     }
 
+    public function findTranslationOrNull(string $searchID): ?Translation
+    {
+        return $this->locale->findTranslationOrNull($searchID);
+    }
+
     public function removeTranslation(string $id): void
     {
         $this->locale->removeTranslation($id);

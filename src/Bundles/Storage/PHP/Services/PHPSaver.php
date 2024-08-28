@@ -42,8 +42,8 @@ class PHPSaver
 
         $content .= 'return [' . PHP_EOL;
 
-        foreach ($locale->getTranslations() as $translation) {
-            $saveValues[$translation->getID()] = $translation->getValue();
+        foreach ($locale->getTranslations() as $id => $translation) {
+            $saveValues[$id] = $translation->getValue();
             $translationCount++;
         }
 
