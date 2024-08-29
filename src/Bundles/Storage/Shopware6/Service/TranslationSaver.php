@@ -22,6 +22,7 @@ class TranslationSaver
 {
     use BinaryTrait;
     use StringTrait;
+    use SnippetSetFinderTrait;
 
     /**
      * @var LanguageRepository
@@ -85,19 +86,7 @@ class TranslationSaver
         foreach ($set->getLocales() as $locale) {
             $localeCount++;
 
-            $foundSnippetSet = null;
-            foreach ($allSnippetSets as $snippetSet) {
-                # search for ID
-                if ($snippetSet->getIso() === $locale->getName()) {
-                    $foundSnippetSet = $snippetSet;
-                    break;
-                }
-            }
-
-            if ($foundSnippetSet === null) {
-                throw new Exception('No Snippet Set found in Shopware for locale: ' . $locale->getName());
-            }
-
+            $foundSnippetSet = $this->findSnippetSet($allSnippetSets, $locale->getName());
             foreach ($locale->getTranslations() as $translation) {
                 try {
                     $existingSnippet = $this->repoSnippets->getSnippet($translation->getKey(), $foundSnippetSet->getId());
