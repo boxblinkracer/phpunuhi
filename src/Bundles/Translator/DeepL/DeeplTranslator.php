@@ -13,6 +13,9 @@ use PHPUnuhi\Services\Placeholder\PlaceholderEncoder;
 
 class DeeplTranslator implements TranslatorInterface
 {
+    public const ENV_DEEPL_KEY = 'DEEPL_KEY';
+
+    public const ENV_DEEPL_FORMAL = 'DEEPL_FORMAL';
 
     /**
      *
@@ -88,8 +91,12 @@ class DeeplTranslator implements TranslatorInterface
      */
     public function setOptionValues(array $options): void
     {
-        $this->apiKey = isset($options['deepl-key']) ? (string)$options['deepl-key'] : '';
-        $this->formality = isset($options['deepl-formal']) && (bool)$options['deepl-formal'];
+        $this->apiKey = isset($options['deepl-key'])
+            ? (string) $options['deepl-key']
+            : (string) getenv(self::ENV_DEEPL_KEY);
+        $this->formality = isset($options['deepl-formal'])
+            ? (bool) $options['deepl-formal']
+            : (bool) getenv(self::ENV_DEEPL_FORMAL);
 
         $this->apiKey = trim($this->apiKey);
 
