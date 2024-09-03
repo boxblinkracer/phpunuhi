@@ -150,7 +150,7 @@ class TranslationSaver
 
             # now that we have grouped them,
             # build a single SQL update statement for every entity (group)
-            foreach ($entityUpdateData as $group => $translations) {
+            foreach ($entityUpdateData as $translations) {
                 $fields = [];
                 $entityId = '';
 
@@ -160,20 +160,7 @@ class TranslationSaver
                     $entityId = str_replace($entity . '_', '', $translation->getGroup());
                 }
 
-                # check if even existing
-                $existingRow = $this->repoTranslations->getTranslationRow($entity, $entityId, $currentLanguageID);
-
-                if ($existingRow === null) {
-                    echo "   [!] Translation not existing (Group: " . $group . "). PHPUnuhi cannot create new entries at the moment: " . $entity . '_' . $entityId . PHP_EOL;
-                    continue;
-                }
-
-                $this->repoTranslations->updateTranslationRow(
-                    $entity,
-                    $entityId,
-                    $currentLanguageID,
-                    $fields
-                );
+                $this->repoTranslations->writeTranslation($entity, $entityId, $currentLanguageID, $fields);
 
                 $translationCount++;
             }
