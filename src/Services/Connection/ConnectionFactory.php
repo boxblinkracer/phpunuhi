@@ -15,7 +15,7 @@ class ConnectionFactory
      */
     public function buildMySQLConnectionString(string $host, string $port, string $database): string
     {
-        return 'mysql:host=' . $host . ';port=' . $port . ';dbname=' . $database . ';charset=utf8';
+        return 'mysql:host=' . $host . ';port=' . $port . ';dbname=' . $database . ';collation=utf8mb4_unicode_ci';
     }
 
     /**
