@@ -86,16 +86,23 @@ class CSVExporter
             # build our key entry with just the name
             # so based on our unique key, weg fetch any translation
             # and add the readable name
+            $trans = null;
             foreach ($set->getLocales() as $locale) {
-                $trans = $locale->findTranslation($id);
-
-                if (!empty($trans->getGroup())) {
-                    $keyRow[] = $trans->getGroup();
+                $trans = $locale->findTranslationOrNull($id);
+                if ($trans) {
+                    break;
                 }
-
-                $keyRow[] = $trans->getKey();
-                break;
             }
+
+            if (!$trans) {
+                continue;
+            }
+
+            if (!empty($trans->getGroup())) {
+                $keyRow[] = $trans->getGroup();
+            }
+
+            $keyRow[] = $trans->getKey();
 
             # use the same sorting as our header line
             foreach ($sortedLanguagesColumns as $colName) {

@@ -85,7 +85,7 @@ class HTMLExporter
 
         $html .= "<tbody>";
 
-        $previosuGroup = '';
+        $previousGroup = '';
 
         foreach ($set->getAllTranslationIDs() as $id) {
             if ($onlyEmpty) {
@@ -99,24 +99,28 @@ class HTMLExporter
 
             $html .= "<tr>";
 
-
+            $translation = null;
             foreach ($set->getLocales() as $locale) {
-                $translation = $locale->findTranslation($id);
-
-                if ($set->hasGroups()) {
-                    if ($translation->getGroup() !== $previosuGroup) {
-                        $html .= "<td>" . $translation->getGroup() . "</td>";
-                        $previosuGroup = $translation->getGroup();
-                    } else {
-                        $html .= "<td></td>";
-                    }
+                $translation = $locale->findTranslationOrNull($id);
+                if ($translation) {
+                    break;
                 }
-
-                $html .= "<td>" . $translation->getKey() . "</td>";
-
-                break;
             }
 
+            if (!$translation) {
+                continue;
+            }
+
+            if ($set->hasGroups()) {
+                if ($translation->getGroup() !== $previousGroup) {
+                    $html .= "<td>" . $translation->getGroup() . "</td>";
+                    $previousGroup = $translation->getGroup();
+                } else {
+                    $html .= "<td></td>";
+                }
+            }
+
+            $html .= "<td>" . $translation->getKey() . "</td>";
 
             foreach ($set->getLocales() as $locale) {
                 $value = $this->getTranslationValue($locale, $id);
