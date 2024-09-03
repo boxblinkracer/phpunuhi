@@ -3,6 +3,7 @@
 
 
 use PHPUnuhi\AppManager;
+use Symfony\Component\Dotenv\Dotenv;
 
 if (php_sapi_name() !== 'cli') {
     exit;
@@ -38,5 +39,9 @@ if (!defined('PHPUNIT_COMPOSER_INSTALL')) {
 
 require PHPUNIT_COMPOSER_INSTALL;
 
+$envFile = getcwd() . '/.env';
+if (file_exists($envFile)) {
+    (new Dotenv())->usePutenv()->loadEnv($envFile);
+}
 
 AppManager::run($argv);
