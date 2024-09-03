@@ -3,6 +3,7 @@
 namespace PHPUnuhi\Bundles\Translator\DeepL;
 
 use DeepL\TextResult;
+use DeepL\TranslateTextOptions as DeeplOptions;
 use DeepL\Translator;
 use Exception;
 use PHPUnuhi\Bundles\Translator\DeepL\Services\SupportedLanguages;
@@ -127,12 +128,14 @@ class DeeplTranslator implements TranslatorInterface
 
         $targetLocale = $supportedLanguages->getAvailableLocale($targetLocale);
 
-        $options = [
-
-        ];
+        $options = [];
 
         if (in_array($targetLocale, self::ALLOWED_FORMALITY)) {
-            $options['formality'] = $formalValue;
+            $options[DeeplOptions::FORMALITY] = $formalValue;
+        }
+
+        if ($text !== strip_tags($text)) {
+            $options[DeeplOptions::TAG_HANDLING] = 'html';
         }
 
         /** @var TextResult|TextResult[] $result */
