@@ -34,14 +34,15 @@
     },
     "require": {
         "php": ">=7.2",
+        "ext-json": "*",
         "ext-pdo": "*",
         "ext-simplexml": "*",
         "deeplcom/deepl-php": "^1.2",
         "google/cloud-translate": "^1.12",
         "orhanerday/open-ai": "^5.1",
         "symfony/console": "*",
-        "symfony/yaml": "*",
-        "ext-json": "*"
+        "symfony/dotenv": "*",
+        "symfony/yaml": "*"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.18",

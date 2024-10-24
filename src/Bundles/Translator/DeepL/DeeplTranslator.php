@@ -3,6 +3,7 @@
 namespace PHPUnuhi\Bundles\Translator\DeepL;
 
 use DeepL\TextResult;
+use DeepL\TranslateTextOptions as DeeplOptions;
 use DeepL\Translator;
 use Exception;
 use PHPUnuhi\Bundles\Translator\DeepL\Services\SupportedLanguages;
@@ -13,6 +14,9 @@ use PHPUnuhi\Services\Placeholder\PlaceholderEncoder;
 
 class DeeplTranslator implements TranslatorInterface
 {
+    public const ENV_DEEPL_KEY = 'DEEPL_KEY';
+
+    public const ENV_DEEPL_FORMAL = 'DEEPL_FORMAL';
 
     /**
      *
@@ -88,8 +92,12 @@ class DeeplTranslator implements TranslatorInterface
      */
     public function setOptionValues(array $options): void
     {
-        $this->apiKey = isset($options['deepl-key']) ? (string)$options['deepl-key'] : '';
-        $this->formality = isset($options['deepl-formal']) && (bool)$options['deepl-formal'];
+        $this->apiKey = isset($options['deepl-key'])
+            ? (string) $options['deepl-key']
+            : (string) getenv(self::ENV_DEEPL_KEY);
+        $this->formality = isset($options['deepl-formal'])
+            ? (bool) $options['deepl-formal']
+            : (bool) getenv(self::ENV_DEEPL_FORMAL);
 
         $this->apiKey = trim($this->apiKey);
 
@@ -120,12 +128,14 @@ class DeeplTranslator implements TranslatorInterface
 
         $targetLocale = $supportedLanguages->getAvailableLocale($targetLocale);
 
-        $options = [
-
-        ];
+        $options = [];
 
         if (in_array($targetLocale, self::ALLOWED_FORMALITY)) {
-            $options['formality'] = $formalValue;
+            $options[DeeplOptions::FORMALITY] = $formalValue;
+        }
+
+        if ($text !== strip_tags($text)) {
+            $options[DeeplOptions::TAG_HANDLING] = 'html';
         }
 
         /** @var TextResult|TextResult[] $result */

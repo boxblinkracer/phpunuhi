@@ -22,6 +22,7 @@ class TranslationSaver
 {
     use BinaryTrait;
     use StringTrait;
+    use SnippetSetFinderTrait;
 
     /**
      * @var LanguageRepository
@@ -85,19 +86,7 @@ class TranslationSaver
         foreach ($set->getLocales() as $locale) {
             $localeCount++;
 
-            $foundSnippetSet = null;
-            foreach ($allSnippetSets as $snippetSet) {
-                # search for ID
-                if ($snippetSet->getIso() === $locale->getName()) {
-                    $foundSnippetSet = $snippetSet;
-                    break;
-                }
-            }
-
-            if ($foundSnippetSet === null) {
-                throw new Exception('No Snippet Set found in Shopware for locale: ' . $locale->getName());
-            }
-
+            $foundSnippetSet = $this->findSnippetSet($allSnippetSets, $locale->getName());
             foreach ($locale->getTranslations() as $translation) {
                 try {
                     $existingSnippet = $this->repoSnippets->getSnippet($translation->getKey(), $foundSnippetSet->getId());
@@ -161,7 +150,7 @@ class TranslationSaver
 
             # now that we have grouped them,
             # build a single SQL update statement for every entity (group)
-            foreach ($entityUpdateData as $group => $translations) {
+            foreach ($entityUpdateData as $translations) {
                 $fields = [];
                 $entityId = '';
 
@@ -171,20 +160,7 @@ class TranslationSaver
                     $entityId = str_replace($entity . '_', '', $translation->getGroup());
                 }
 
-                # check if even existing
-                $existingRow = $this->repoTranslations->getTranslationRow($entity, $entityId, $currentLanguageID);
-
-                if ($existingRow === null) {
-                    echo "   [!] Translation not existing (Group: " . $group . "). PHPUnuhi cannot create new entries at the moment: " . $entity . '_' . $entityId . PHP_EOL;
-                    continue;
-                }
-
-                $this->repoTranslations->updateTranslationRow(
-                    $entity,
-                    $entityId,
-                    $currentLanguageID,
-                    $fields
-                );
+                $this->repoTranslations->writeTranslation($entity, $entityId, $currentLanguageID, $fields);
 
                 $translationCount++;
             }

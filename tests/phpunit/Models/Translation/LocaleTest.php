@@ -132,7 +132,7 @@ class LocaleTest extends TestCase
         $this->assertCount(0, $locale->getTranslations());
 
         $translations = [];
-        $translations[] = new Translation('', '', '');
+        $translations[''] = new Translation('', '', '');
 
         $locale->setTranslations($translations);
 

@@ -4,6 +4,7 @@ namespace PHPUnuhi\Bundles\Exchange\HTML\Services;
 
 use PHPUnuhi\Exceptions\TranslationNotFoundException;
 use PHPUnuhi\Models\Translation\Locale;
+use PHPUnuhi\Models\Translation\Translation;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
 class HTMLExporter
@@ -84,7 +85,7 @@ class HTMLExporter
 
         $html .= "<tbody>";
 
-        $previosuGroup = '';
+        $previousGroup = '';
 
         foreach ($set->getAllTranslationIDs() as $id) {
             if ($onlyEmpty) {
@@ -98,24 +99,28 @@ class HTMLExporter
 
             $html .= "<tr>";
 
-
+            $translation = null;
             foreach ($set->getLocales() as $locale) {
-                $translation = $locale->findTranslation($id);
-
-                if ($set->hasGroups()) {
-                    if ($translation->getGroup() !== $previosuGroup) {
-                        $html .= "<td>" . $translation->getGroup() . "</td>";
-                        $previosuGroup = $translation->getGroup();
-                    } else {
-                        $html .= "<td></td>";
-                    }
+                $translation = $locale->findTranslationOrNull($id);
+                if ($translation) {
+                    break;
                 }
-
-                $html .= "<td>" . $translation->getKey() . "</td>";
-
-                break;
             }
 
+            if (!$translation) {
+                continue;
+            }
+
+            if ($set->hasGroups()) {
+                if ($translation->getGroup() !== $previousGroup) {
+                    $html .= "<td>" . $translation->getGroup() . "</td>";
+                    $previousGroup = $translation->getGroup();
+                } else {
+                    $html .= "<td></td>";
+                }
+            }
+
+            $html .= "<td>" . $translation->getKey() . "</td>";
 
             foreach ($set->getLocales() as $locale) {
                 $value = $this->getTranslationValue($locale, $id);
@@ -158,7 +163,7 @@ class HTMLExporter
             mkdir($outputDir);
         }
 
-        $fullFile = $outputDir . '/index.html';
+        $fullFile = sprintf('%s/%s.html', $outputDir, $set->getName());
         file_put_contents($fullFile, $html);
 
         echo '   [+] generated file: ' . $fullFile . PHP_EOL . PHP_EOL;
@@ -171,13 +176,8 @@ class HTMLExporter
      */
     private function getTranslationValue(Locale $locale, string $key): string
     {
-        foreach ($locale->getTranslations() as $translation) {
-            if ($translation->getID() === $key) {
-                return $translation->getValue();
-            }
-        }
-
-        return "";
+        $translation = $locale->findTranslationOrNull($key);
+        return $translation instanceof Translation ? $translation->getValue() : '';
     }
 
     private function getCSS(): string

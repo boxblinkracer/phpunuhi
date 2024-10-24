@@ -19,7 +19,7 @@ class ConnectionFactoryTest extends TestCase
 
         $result = (new ConnectionFactory())->buildMySQLConnectionString($host, $port, $database);
 
-        $expected = 'mysql:host=localhost;port=3306;dbname=test_db;charset=utf8';
+        $expected = 'mysql:host=localhost;port=3306;dbname=test_db;collation=utf8mb4_unicode_ci';
 
         $this->assertEquals($expected, $result);
     }

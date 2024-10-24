@@ -21,6 +21,7 @@ class TranslateCommand extends Command
 {
     use CommandTrait;
 
+    public const ENV_TRANSLATION_SERVICE = 'TRANSLATION_SERVICE';
 
     /**
      * @var PlaceholderExtractor
@@ -73,6 +74,10 @@ class TranslateCommand extends Command
         $configFile = $this->getConfigFile($input);
 
         $service = $this->getConfigStringValue('service', $input);
+        if ($service === '' || $service === '0') {
+            $service = (string) getenv(self::ENV_TRANSLATION_SERVICE);
+        }
+
         $setName = $this->getConfigStringValue('set', $input);
         $forceLocale = $this->getConfigStringValue('force', $input);
         $sourceLocale = $this->getConfigStringValue('source', $input);
@@ -117,32 +122,35 @@ class TranslateCommand extends Command
                         continue;
                     }
 
-                    try {
-                        $currentTranslation = $locale->findTranslation($currentID);
-                    } catch (TranslationNotFoundException $ex) {
-                        # if no translation exits
-                        # then skip this one
-                        continue;
-                    }
+                    $currentTranslation = $locale->findTranslationOrNull($currentID);
 
-                    # translate if we either force it or only if our value is empty
-                    if ($forceLocale || $currentTranslation->isEmpty()) {
-                        try {
-                            $existingData = $set->findAnyExistingTranslation($currentID, $sourceLocale);
-                        } catch (TranslationNotFoundException $ex) {
-                            # if no translation exits then skip this one
-                            if ($sourceLocale !== '' && $sourceLocale !== '0') {
-                                $io->writeln('   [?] no existing translation found in locale ' . $sourceLocale . ' for key: ' . $currentTranslation->getID());
-                            } else {
-                                $io->writeln('   [?] no existing translation found in any of the locales for key: ' . $currentTranslation->getID());
-                            }
-                            continue;
-                        }
+                    try {
+                        $existingData = $set->findAnyExistingTranslation($currentID, $sourceLocale);
 
                         $existingLocale = $existingData['locale'];
                         $existingTranslation = $existingData['translation'];
                         $existingValue = $existingTranslation->getValue();
+                    } catch (TranslationNotFoundException $ex) {
+                        # if no translation exits then skip this one
+                        if ($sourceLocale !== '' && $sourceLocale !== '0') {
+                            $io->writeln('   [?] no existing translation found in locale ' . $sourceLocale . ' for key: ' . $currentID);
+                        } else {
+                            $io->writeln('   [?] no existing translation found in any of the locales for key: ' . $currentID);
+                        }
+                        continue;
+                    }
 
+                    if (!$currentTranslation) {
+                        // If no translation exists, add an empty translation object to the locale
+                        $currentTranslation = $locale->addTranslation(
+                            $existingTranslation->getKey(),
+                            '',
+                            $existingTranslation->getGroup()
+                        );
+                    }
+
+                    # translate if we either force it or only if our value is empty
+                    if ($forceLocale || $currentTranslation->isEmpty()) {
                         $foundPlaceholders = [];
 
                         # -----------------------------------------------------------------------------------------------------------------------------------
@@ -174,7 +182,7 @@ class TranslateCommand extends Command
 
                         # -----------------------------------------------------------------------------------------------------------------------------------
 
-                        $io->writeln('   [~] translating "' . $currentTranslation->getID() . '" (' . $locale->getName() . ') => ' . $newTranslation);
+                        $io->writeln('   [~] Translated "' . $currentTranslation->getID() . '" (' . $locale->getName() . ') => ' . $newTranslation);
 
                         if ($newTranslation !== '' && $newTranslation !== '0') {
                             $translatedCount++;

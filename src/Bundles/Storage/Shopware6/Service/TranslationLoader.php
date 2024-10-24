@@ -19,6 +19,7 @@ class TranslationLoader
 {
     use BinaryTrait;
     use StringTrait;
+    use SnippetSetFinderTrait;
 
 
     /**
@@ -79,20 +80,14 @@ class TranslationLoader
         $allSnippetSets = $this->repoSnippets->getSnippetSets();
 
         foreach ($set->getLocales() as $locale) {
+            try {
+                $snippetSet = $this->findSnippetSet($allSnippetSets, $locale->getName());
+            } catch (Exception $e) {
+                continue;
+            }
+
             foreach ($allSnippets as $snippet) {
-                $foundSet = null;
-                foreach ($allSnippetSets as $snippetSet) {
-                    if ($snippetSet->getId() === $snippet->getSnippetSetId()) {
-                        $foundSet = $snippetSet;
-                        break;
-                    }
-                }
-
-                if ($foundSet === null) {
-                    continue;
-                }
-
-                if ($foundSet->getIso() !== $locale->getName()) {
+                if ($snippetSet->getId() !== $snippet->getSnippetSetId()) {
                     continue;
                 }
 

@@ -47,6 +47,24 @@ class EntityTranslationRepository
      * @param string $entity
      * @param string $entityId
      * @param string $languageId
+     * @param UpdateField[] $fieldValues
+     * @return void
+     */
+    public function writeTranslation(string $entity, string $entityId, string $languageId, array $fieldValues): void
+    {
+        $existingRow = $this->getTranslationRow($entity, $entityId, $languageId);
+        if ($existingRow === null || $existingRow === []) {
+            $this->insertTranslationRow($entity, $entityId, $languageId, $fieldValues);
+            return;
+        }
+
+        $this->updateTranslationRow($entity, $entityId, $languageId, $fieldValues);
+    }
+
+    /**
+     * @param string $entity
+     * @param string $entityId
+     * @param string $languageId
      * @return null|array<mixed>
      */
     public function getTranslationRow(string $entity, string $entityId, string $languageId): ?array
@@ -78,7 +96,7 @@ class EntityTranslationRepository
     {
         $tableName = $entity . '_translation';
 
-        $jsonFields = $this->getJsonFields($tableName);
+        $columnValueMap = $this->prepareDatabaseDataValues($tableName, $fieldValues);
 
         $params = [
             ':id' => $this->stringToBinary($entityId),
@@ -87,29 +105,73 @@ class EntityTranslationRepository
 
         $sqlFieldParts = [];
 
-        # now iterate through our parameter fields
-        # unfortunately, we have to assign NULL for every empty JSON field-value.
-        # otherwise we get a JSON empty-document error
-        foreach ($fieldValues as $data) {
-            $valueKey = 'value_' . $data->getField();
-            $value = $data->getValue();
+        foreach ($columnValueMap as $column => $value) {
+            $valueKey = ':value_' . $column;
+            $sqlFieldParts[] = sprintf('%s = %s', $column, $valueKey);
+            $params[$valueKey] = $value;
+        }
 
-            $value =  mb_convert_encoding($value, "ISO-8859-1", "UTF-8");
+        $sqlFieldParts[] = 'updated_at = now()';
+
+        $setSql = implode(', ', $sqlFieldParts);
+        $stmt = $this->pdo->prepare(sprintf('UPDATE %s SET %s WHERE %s_id = :id AND language_id = :langId', $tableName, $setSql, $entity));
+
+        $stmt->execute($params);
+    }
+
+    /**
+     * @param UpdateField[] $fieldValues
+     */
+    public function insertTranslationRow(string $entity, string $entityId, string $languageId, array $fieldValues): void
+    {
+        $tableName = $entity . '_translation';
+
+        $columnValueMap = $this->prepareDatabaseDataValues($tableName, $fieldValues);
+        $columnValueMap['language_id'] = $this->stringToBinary($languageId);
+        $columnValueMap[$entity . '_id'] = $this->stringToBinary($entityId);
+
+        $paramColValueMap = [];
+        foreach ($columnValueMap as $column => $value) {
+            $valueKey = ':value_' . $column;
+
+            $params[$valueKey] = $value;
+            $paramColValueMap[$column] = $valueKey;
+        }
+
+        $paramColValueMap['created_at'] = 'now()';
+
+        $stmt = $this->pdo->prepare(sprintf(
+            'INSERT INTO %s (%s) VALUES (%s)',
+            $tableName,
+            implode(', ', array_keys($paramColValueMap)),
+            implode(', ', array_values($paramColValueMap))
+        ));
+
+        $stmt->execute($params);
+    }
+
+    /**
+     * @param string $tableName
+     * @param UpdateField[] $fieldValues
+     * @return array<string, null|string>
+     */
+    private function prepareDatabaseDataValues(string $tableName, array $fieldValues): array
+    {
+        $jsonFields = $this->getJsonFields($tableName);
+
+        $columnValueMap = [];
+        foreach ($fieldValues as $fieldValue) {
+            $value = $fieldValue->getValue();
 
             # make sure empty JSON fields are NULL
-            if ($value === '' && in_array($data->getField(), $jsonFields)) {
+            if ($value === '' && in_array($fieldValue->getField(), $jsonFields)) {
                 $value = null;
             }
 
-            $sqlFieldParts[] = $data->getField() . '= :' . $valueKey;
-            $params[':' . $valueKey] = $value;
+            $columnValueMap[$fieldValue->getField()] = $value;
         }
 
-        $setSql = implode(', ', $sqlFieldParts);
-
-        $stmt = $this->pdo->prepare('UPDATE ' . $entity . '_translation SET ' . $setSql . ' WHERE ' . $entity . '_id = :id AND language_id = :langId');
-
-        $stmt->execute($params);
+        return $columnValueMap;
     }
 
     /**

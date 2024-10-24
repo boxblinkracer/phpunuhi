@@ -29,7 +29,7 @@ class Locale
     private $iniSection;
 
     /**
-     * @var Translation[]
+     * @var array<string, Translation>
      */
     private $translations = [];
 
@@ -106,34 +106,19 @@ class Locale
      */
     public function addTranslation(string $key, string $value, string $group): Translation
     {
-        $counter = count($this->translations);
-
-        for ($i = 0; $i < $counter; $i++) {
-            if (!isset($this->translations[$i])) {
-                continue;
-            }
-
-            $existingTranslation = $this->translations[$i];
-
-            if ($existingTranslation instanceof Translation && $existingTranslation->getID() === $key) {
-                unset($this->translations[$i]);
-                break;
-            }
-        }
-
         $translation = new Translation(
             $key,
             $value,
             $group
         );
 
-        $this->translations[] = $translation;
+        $this->translations[$translation->getID()] = $translation;
 
         return $translation;
     }
 
     /**
-     * @param array|Translation[] $translations
+     * @param array<string, Translation> $translations
      */
     public function setTranslations(array $translations): void
     {
@@ -141,7 +126,7 @@ class Locale
     }
 
     /**
-     * @return Translation[]
+     * @return array<string, Translation>
      */
     public function getTranslations(): array
     {
@@ -185,15 +170,7 @@ class Locale
      */
     public function getTranslationIDs(): array
     {
-        $ids = [];
-
-        foreach ($this->getTranslations() as $translation) {
-            if (!in_array($translation->getID(), $ids)) {
-                $ids[] = $translation->getID();
-            }
-        }
-
-        return $ids;
+        return array_keys($this->translations);
     }
 
     /**
@@ -203,13 +180,24 @@ class Locale
      */
     public function findTranslation(string $searchID): Translation
     {
-        foreach ($this->getTranslations() as $translation) {
-            if ($translation->getID() === $searchID) {
-                return $translation;
-            }
+        if (!isset($this->translations[$searchID])) {
+            throw new TranslationNotFoundException('No existing translation found for ID: ' . $searchID);
         }
 
-        throw new TranslationNotFoundException('No existing translation found for ID: ' . $searchID);
+        return $this->translations[$searchID];
+    }
+
+    /**
+     * @param string $searchID
+     * @return null|Translation
+     */
+    public function findTranslationOrNull(string $searchID): ?Translation
+    {
+        if (!isset($this->translations[$searchID])) {
+            return null;
+        }
+
+        return $this->translations[$searchID];
     }
 
     /**
@@ -217,15 +205,12 @@ class Locale
      */
     public function getValidTranslations(): array
     {
-        $list = [];
-
-        foreach ($this->getTranslations() as $translation) {
-            if (!$translation->isEmpty()) {
-                $list[] = $translation;
+        return array_filter(
+            $this->translations,
+            function ($translation): bool {
+                return !$translation->isEmpty();
             }
-        }
-
-        return $list;
+        );
     }
 
     /**
@@ -234,15 +219,7 @@ class Locale
      */
     public function removeTranslation(string $id): void
     {
-        $tmpList = [];
-
-        foreach ($this->translations as $translation) {
-            if ($translation->getID() !== $id) {
-                $tmpList[] = $translation;
-            }
-        }
-
-        $this->translations = $tmpList;
+        unset($this->translations[$id]);
     }
 
     /**

@@ -18,6 +18,7 @@ use PHPUnuhi\Models\Configuration\Configuration;
 use PHPUnuhi\Models\Configuration\Coverage\TranslationSetCoverage;
 use PHPUnuhi\Models\Configuration\Filter;
 use PHPUnuhi\Models\Configuration\Protection;
+use PHPUnuhi\Models\Translation\LazyTranslationSet;
 use PHPUnuhi\Models\Translation\TranslationSet;
 use PHPUnuhi\Services\Loaders\Xml\XmlLoaderInterface;
 use PHPUnuhi\Traits\XmlTrait;
@@ -296,7 +297,7 @@ class ConfigurationLoader
                 $setCoverage = $this->coverageLoader->loadTranslationCoverage($nodeCoverage);
             }
 
-            $set = new TranslationSet(
+            $set = new LazyTranslationSet(
                 $setName,
                 $setFormat,
                 $setProtection,
@@ -323,14 +324,8 @@ class ConfigurationLoader
                 throw new ConfigurationException('Filters are not allowed for storage format: ' . $setFormat);
             }
 
-
-            # now iterate through our locales
-            # and load the translation files for it
-            $storage->loadTranslationSet($set);
-
-            # remove fields that must not be existing
-            # because of our allow or exclude list
-            $this->filterHandler->applyFilter($set);
+            # We have to clone the storage as the object get reconfigured for every translation set
+            $set->setStorage(clone $storage, $this->filterHandler);
 
             $foundSets[] = $set;
         }
