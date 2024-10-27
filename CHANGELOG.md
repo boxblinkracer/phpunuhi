@@ -3,6 +3,28 @@
 All notable changes of releases are documented in this file
 using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
+## [unreleased]
+
+### Added
+
+- Allow DeepL / translator configuration with env variables (thx @Ocarthon)
+- Enable DeepL tag splitting on HTML input to also translate HTML fragments (thx @Ocarthon)
+- Support referencing Shopware snippets by their snippet set name (thx @Ocarthon)
+
+### Changed
+
+- Improve performance with lots of snippets and sets by adding lazy loading of snippets (thx @Ocarthon)
+- Massive performance improvement by using indexed array for translations and reduce amount of loops (thx @Ocarthon)
+- HTML Exports are now saved into separate files for each translation-set (thx @Ocarthon)
+- Load dotenv files from current working directory (thx @Ocarthon)
+- Use mb collation for database collection (MySQL utf8 is not actually utf8) (thx @Ocarthon)
+- Insert shopware translation, if no corresponding row exists (thx @Ocarthon)
+
+### Fixed
+
+- Check all locales to determine the translation keys. Sometimes this did not happen and therefore not all keys have been detected (thx @Ocarthon)
+- Fix problem with translate command and force flag (thx @Ocarthon)
+
 ## [1.21.0]
 
 ### Added
