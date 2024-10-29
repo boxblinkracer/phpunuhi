@@ -9,6 +9,9 @@ use PHPUnuhi\Models\Configuration\CaseStyleSetting;
 use PHPUnuhi\Models\Configuration\Filter;
 use PHPUnuhi\Models\Configuration\Protection;
 use PHPUnuhi\Models\Configuration\Rule;
+use PHPUnuhi\Services\Placeholder\Placeholder;
+use PHPUnuhi\Services\Placeholder\PlaceholderEncoder;
+use PHPUnuhi\Services\Placeholder\PlaceholderExtractor;
 
 class TranslationSet
 {
@@ -53,6 +56,16 @@ class TranslationSet
      */
     private $rules;
 
+    /**
+     * @var PlaceholderEncoder
+     */
+    private $placeHolderEncoder;
+
+    /**
+     * @var PlaceholderExtractor
+     */
+    private $placeholderExtractor;
+
 
     /**
      * @param string $name
@@ -74,6 +87,9 @@ class TranslationSet
         $this->attributes = $attributes;
         $this->casingStyleSettings = $styles;
         $this->rules = $rules;
+
+        $this->placeHolderEncoder = new PlaceholderEncoder();
+        $this->placeholderExtractor = new PlaceholderExtractor();
     }
 
 
@@ -336,5 +352,52 @@ class TranslationSet
         }
 
         return $invalidTranslations;
+    }
+
+
+    public function getEncodedValue(string $text): string
+    {
+        $foundPlaceholders = $this->findPlaceholders($text);
+
+        if ($foundPlaceholders === []) {
+            return $text;
+        }
+
+        return $this->placeHolderEncoder->encode($text, $foundPlaceholders);
+    }
+
+    public function getDecodedText(string $originalText, string $encodedText): string
+    {
+        $foundPlaceholders = $this->findPlaceholders($originalText);
+
+        if ($foundPlaceholders === []) {
+            return $encodedText;
+        }
+
+        return $this->placeHolderEncoder->decode($encodedText, $foundPlaceholders);
+    }
+
+    /**
+     * @param string $text
+     * @return Placeholder[]
+     */
+    public function findPlaceholders(string $text): array
+    {
+        $foundPlaceholders = [];
+
+        foreach ($this->getProtection()->getMarkers() as $marker) {
+            # search for all possible placeholders that exist, like %productName%
+            # we must not translate them (happens with DeepL, ...)
+            $markerPlaceholders = $this->placeholderExtractor->extract($text, $marker->getStart(), $marker->getEnd());
+
+            $foundPlaceholders = array_merge($foundPlaceholders, $markerPlaceholders);
+        }
+
+        foreach ($this->getProtection()->getTerms() as $term) {
+            # just add these as placeholders
+            $foundPlaceholders[] = new Placeholder($term);
+        }
+
+        return $foundPlaceholders;
     }
 }

@@ -5,6 +5,7 @@ namespace PHPUnuhi;
 use Exception;
 use PHPUnuhi\Commands\ExportCommand;
 use PHPUnuhi\Commands\FixMessCommand;
+use PHPUnuhi\Commands\FixSpellingCommand;
 use PHPUnuhi\Commands\FixStructureCommand;
 use PHPUnuhi\Commands\ImportCommand;
 use PHPUnuhi\Commands\ListTranslationsCommand;
@@ -16,6 +17,7 @@ use PHPUnuhi\Commands\ValidateAllCommand;
 use PHPUnuhi\Commands\ValidateCommand;
 use PHPUnuhi\Commands\ValidateCoverageCommand;
 use PHPUnuhi\Commands\ValidateMessCommand;
+use PHPUnuhi\Commands\ValidateSpellingCommand;
 use PHPUnuhi\Commands\ValidateStructureCommand;
 use Symfony\Component\Console\Application;
 
@@ -38,6 +40,7 @@ class AppManager
         $application->add(new ValidateMessCommand());
         $application->add(new ValidateCoverageCommand());
         $application->add(new ValidateStructureCommand());
+        $application->add(new ValidateSpellingCommand());
 
         $application->add(new ImportCommand());
         $application->add(new ExportCommand());
@@ -49,6 +52,8 @@ class AppManager
         $application->add(new FixMessCommand());
 
         $application->add(new ScanUsageCommand());
+
+        $application->add(new FixSpellingCommand());
 
         $application->setDefaultCommand('list');
 

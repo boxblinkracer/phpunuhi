@@ -22,6 +22,19 @@ trait CommandOutputTrait
             return;
         }
 
+        # return if we have no success false entries
+        $foundError = false;
+        foreach ($rows as $row) {
+            if (!$row->isSuccess()) {
+                $foundError = true;
+                break;
+            }
+        }
+
+        if (!$foundError) {
+            return;
+        }
+
         $table = new Table($output);
         $table->setStyle('default');
 
@@ -39,6 +52,10 @@ trait CommandOutputTrait
         $intRowIndex = 1;
 
         foreach ($rows as $row) {
+            if ($row->isSuccess()) {
+                continue;
+            }
+
             $rowData[] = [
                 $intRowIndex,
                 ' ' . $row->getClassification() . ' ',

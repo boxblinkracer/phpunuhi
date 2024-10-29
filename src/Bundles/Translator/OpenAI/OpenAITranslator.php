@@ -4,9 +4,9 @@ namespace PHPUnuhi\Bundles\Translator\OpenAI;
 
 use Exception;
 use Locale;
-use Orhanerday\OpenAi\OpenAi;
 use PHPUnuhi\Bundles\Translator\TranslatorInterface;
 use PHPUnuhi\Models\Command\CommandOption;
+use PHPUnuhi\Services\OpenAI\OpenAIClient;
 use PHPUnuhi\Services\Placeholder\Placeholder;
 
 class OpenAITranslator implements TranslatorInterface
@@ -103,39 +103,10 @@ class OpenAITranslator implements TranslatorInterface
             ]
         ];
 
-        $openAI = new OpenAi($this->apiKey);
+        $client = new OpenAIClient($this->apiKey);
 
-        $complete = (string)$openAI->chat($params);
+        $result = $client->chat($params);
 
-        $json = json_decode($complete, true);
-
-        if (!is_array($json)) {
-            return '';
-        }
-
-        if (isset($json['error'])) {
-            $msg = 'OpenAI Error: ' . $json['error']['message'];
-            throw new Exception($msg);
-        }
-
-        if (!isset($json['choices'])) {
-            return '';
-        }
-
-        $choices = $json['choices'];
-
-        if (!is_array($choices) || count($choices) <= 0) {
-            return '';
-        }
-
-        if (!isset($choices[0]['message'])) {
-            return '';
-        }
-
-        if (!isset($choices[0]['message']['content'])) {
-            return '';
-        }
-
-        return trim((string)$choices[0]['message']['content']);
+        return $result->getResponse();
     }
 }

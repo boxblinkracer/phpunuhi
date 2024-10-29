@@ -29,75 +29,78 @@ Please keep that in mind to avoids misinterpreting the goal of this framework.
 Now that you know this, let's get started!
 
 <!-- TOC -->
-
-* [1. Basic Concept](#1-basic-concept)
-* [2. Installation](#2-installation)
-* [3. Configuration](#3-configuration)
-* [4. Commands](#4-commands)
+  * [1. Basic Concept](#1-basic-concept)
+  * [2. Installation](#2-installation)
+  * [3. Configuration](#3-configuration)
+  * [4. Commands](#4-commands)
     * [4.1 Validate All Command](#41-validate-all-command)
     * [4.2 Validate Mess Command](#42-validate-mess-command)
     * [4.3 Validate Coverage Command](#43-validate-coverage-command)
     * [4.4 Validate Structure Command](#44-validate-structure-command)
-    * [4.5 Fix Structure Command](#45-fix-structure-command)
-    * [4.6 Fix Mess Command](#46-fix-mess-command)
-    * [4.7 Export Command](#47-export-command)
-    * [4.8 Import Command](#48-import-command)
-    * [4.9 Status Command](#49-status-command)
-    * [4.10 Translate Command](#410-translate-command)
-    * [4.11 List Translations Command](#411-list-translations-command)
-    * [4.12 Migration Command](#412-migration-command)
-    * [4.13 Scan Usage Command](#413-scan-usage-command)
-* [5. Validation Processes](#5-validation-processes)
+    * [4.5 Validate Spelling Command](#45-validate-spelling-command)
+    * [4.6 Fix Structure Command](#46-fix-structure-command)
+    * [4.7 Fix Mess Command](#47-fix-mess-command)
+    * [4.8 Export Command](#48-export-command)
+    * [4.9 Import Command](#49-import-command)
+    * [4.10 Status Command](#410-status-command)
+    * [4.11 Fix Spelling Command](#411-fix-spelling-command)
+    * [4.12 Translate Command](#412-translate-command)
+    * [4.13 List Translations Command](#413-list-translations-command)
+    * [4.14 Migration Command](#414-migration-command)
+    * [4.15 Scan Usage Command](#415-scan-usage-command)
+  * [5. Validation Processes](#5-validation-processes)
     * [5.1 Structure Validation](#51-structure-validation)
     * [5.2 Empty content Validation](#52-empty-content-validation)
     * [5.3 Case-Style Validation](#53-case-style-validation)
     * [5.4 Rules Validation](#54-rules-validation)
-* [6. Use Cases](#6-use-cases)
+  * [6. Use Cases](#6-use-cases)
     * [6.1 Validation in CI pipeline](#61-validation-in-ci-pipeline)
     * [6.2 Working with external translation agencies](#62-working-with-external-translation-agencies)
     * [6.3 Live WebEdit with HTML](#63-live-webedit-with-html)
     * [6.4 Automatic Translation with Google, DeepL, ...](#64-automatic-translation-with-google-deepl-)
-* [7. Warning](#7-warning)
-* [8. Appendix](#8-appendix)
-    * [8.1 Imports](#81-imports)
-    * [8.2 Locales](#82-locales)
+  * [7. Warning](#7-warning)
+  * [8. Appendix](#8-appendix)
+      * [8.1 Imports](#81-imports)
+      * [8.2 Locales](#82-locales)
     * [8.3 Storage Formats](#83-storage-formats)
-        * [8.3.1 Formats](#831-formats)
-            * [8.3.1.1 JSON](#8311-json)
-            * [8.3.1.2 INI](#8312-ini)
-            * [8.3.1.3 PO](#8313-po)
-            * [8.3.1.4 PHP](#8314-php)
-            * [8.3.1.5 Shopware 6](#8315-shopware-6)
-            * [8.3.1.6 YAML](#8316-yaml)
-        * [8.3.2 Custom Formats](#832-custom-formats)
+      * [8.3.1 Formats](#831-formats)
+        * [8.3.1.1 JSON](#8311-json)
+        * [8.3.1.2 INI](#8312-ini)
+        * [8.3.1.3 PO](#8313-po)
+        * [8.3.1.4 PHP](#8314-php)
+        * [8.3.1.5 Shopware 6](#8315-shopware-6)
+        * [8.3.1.6 YAML](#8316-yaml)
+      * [8.3.2 Custom Formats](#832-custom-formats)
     * [8.4 Filters](#84-filters)
     * [8.5 Groups](#85-groups)
     * [8.6 Case Styles](#86-case-styles)
     * [8.7 Rules](#87-rules)
-        * [8.8.1 Nesting Depth](#881-nesting-depth)
-        * [8.8.2 Key Length](#882-key-length)
-        * [8.8.3 Disallowed Texts](#883-disallowed-texts)
-        * [8.8.4 Duplicate Content](#884-duplicate-content)
-        * [8.8.5 Empty Content](#885-empty-content)
+      * [8.8.1 Nesting Depth](#881-nesting-depth)
+      * [8.8.2 Key Length](#882-key-length)
+      * [8.8.3 Disallowed Texts](#883-disallowed-texts)
+      * [8.8.4 Duplicate Content](#884-duplicate-content)
+      * [8.8.5 Empty Content](#885-empty-content)
     * [8.8 PHP ENV Variables](#88-php-env-variables)
     * [8.9 Exchange Formats](#89-exchange-formats)
-        * [8.9.1 CSV](#891-csv)
-        * [8.9.2 HTML / WebEdit](#892-html--webedit)
-        * [8.9.3 JSON](#893-json)
-        * [8.9.4 Custom Exchange Formats](#894-custom-exchange-formats)
+      * [8.9.1 CSV](#891-csv)
+      * [8.9.2 HTML / WebEdit](#892-html--webedit)
+      * [8.9.3 JSON](#893-json)
+      * [8.9.4 Custom Exchange Formats](#894-custom-exchange-formats)
     * [8.10 Translator Services](#810-translator-services)
-        * [8.10.1 DeepL](#8101-deepl)
-        * [8.10.2 Google Cloud Translate](#8102-google-cloud-translate)
-        * [8.10.3 Google Web Translate](#8103-google-web-translate)
-        * [8.10.4 OpenAI GPT Translate](#8104-openai-gpt-translate)
-        * [8.10.5 Custom Translators](#8105-custom-translators)
+      * [8.10.1 DeepL](#8101-deepl)
+      * [8.10.2 Google Cloud Translate](#8102-google-cloud-translate)
+      * [8.10.3 Google Web Translate](#8103-google-web-translate)
+      * [8.10.4 OpenAI GPT Translate](#8104-openai-gpt-translate)
+      * [8.10.5 Custom Translators](#8105-custom-translators)
     * [8.11 Validation Reports](#811-validation-reports)
-        * [8.11.1 JUnit Report](#8111-junit-report)
-        * [8.11.2 JSON Report](#8112-json-report)
+      * [8.11.1 JUnit Report](#8111-junit-report)
+      * [8.11.2 JSON Report](#8112-json-report)
     * [8.12 Protection](#812-protection)
     * [8.13 Coverage](#813-coverage)
     * [8.14 Scanners](#814-scanners)
-
+    * [8.15 Spell Checkers](#815-spell-checkers)
+      * [8.15.1 Aspell](#8151-aspell)
+      * [8.15.2 OpenAI](#8152-openai)
 <!-- TOC -->
 
 
@@ -117,7 +120,6 @@ Now that you know this, let's get started!
     </td>
   </tr>
 </table>
-
 
 ## 1. Basic Concept
 
@@ -139,11 +141,14 @@ or use any of the provided
 translation services (Google, DeepL, OpenAI). This makes PHPUnuhi a great **composable framework for translations**.
 
 ```mermaid
+```mermaid
   graph TD;
       Storage-Format --> Exchange-Format;
       Storage-Format --> Translation-Service;
       Exchange-Format --> Storage-Format;
       Translation-Service --> Storage-Format;
+      Storage-Format --> Spell-Checkers;
+      Spell-Checkers --> Storage-Format;
 ```
 
 **Key Benefits**
@@ -153,6 +158,7 @@ translation services (Google, DeepL, OpenAI). This makes PHPUnuhi a great **comp
 * Exchange formats such as CSV and HTML
 * Live WebEdit with HTML exchange format
 * Automatic translation using OpenAI (experimental), DeepL, Google and more
+* Automatic validation and fixing of misspelled translations with Spell Checkers
 
 <p align="center">
    <img src="/.github/assets/supported-systems.jpg">
@@ -326,7 +332,17 @@ php vendor/bin/phpunuhi validate:structure
 php vendor/bin/phpunuhi validate:structure --configuration=./translations.xml
 ```
 
-### 4.5 Fix Structure Command
+### 4.5 Validate Spelling Command
+
+The new concept of spell checkers allows you to also validate misspelled words.
+
+If a misspelled word is found, the validation will fail.
+
+```
+php vendor/bin/phpunuhi validate:spelling --service=aspell --configuration=./translations.xml
+```
+
+### 4.6 Fix Structure Command
 
 If your storage is not matching, you can easily use the fixing command to make sure they are in sync.
 Please note, that this will only create empty translations so that the structure is the same.
@@ -345,7 +361,7 @@ php vendor/bin/phpunuhi fix:structure --set="storefront"
    <img src="/.github/assets/fix.png">
 </p>
 
-### 4.6 Fix Mess Command
+### 4.7 Fix Mess Command
 
 This command will automatically remove all translation keys that have no value in any of your locales.
 Keys detected by the **validate:mess** command might not be used after all.
@@ -359,7 +375,7 @@ php vendor/bin/phpunuhi fix:mess
 php vendor/bin/phpunuhi fix:mess --set="storefront"
 ```
 
-### 4.7 Export Command
+### 4.8 Export Command
 
 You can export your translations **into a CSV file**, a HTML WebEdit spreadsheet, or other supported exchange formats.
 These files can then be passed on to an external translator or company.
@@ -390,7 +406,7 @@ php vendor/bin/phpunuhi export ... --empty
    <img src="/.github/assets/csv.png">
 </p>
 
-### 4.8 Import Command
+### 4.9 Import Command
 
 You can import your translations **from a CSV file** or other supported exchange formats.
 This will automatically update the storage (JSON, ...) that has been assigned to the imported translation set.
@@ -405,7 +421,7 @@ php vendor/bin/phpunuhi import --set=storefront --file=storefront.csv
 php vendor/bin/phpunuhi import ... --format=html
 ```
 
-### 4.9 Status Command
+### 4.10 Status Command
 
 Use this command to get statistics and reports of your translations.
 This includes the coverage and the number of found words.
@@ -418,7 +434,23 @@ php vendor/bin/phpunuhi status
    <img src="/.github/assets/status.png">
 </p>
 
-### 4.10 Translate Command
+### 4.11 Fix Spelling Command
+
+If you use a capable translator service that is able to fix a spelling for you, then you can use this
+command to scan all your translations for misspelled texts.
+New versions will be automatically stored in your storage.
+
+> Like so many AI approaches, there is no 100% guarantee, so please use the Git diff to verify your changes.
+
+```bash 
+# Fixes all sets of the configuration
+php vendor/bin/phpunuhi fix:spelling --service=openai ...
+
+# Fixes only a provided set of your configuration
+php vendor/bin/phpunuhi fix:spelling --set="storefront"
+```
+
+### 4.12 Translate Command
 
 PHPUnuhi includes the option to use external services to automatically translate missing values for you.
 
@@ -455,7 +487,7 @@ php vendor/bin/phpunuhi translate ...  --source=en
    <img src="/.github/assets/translate.png">
 </p>
 
-### 4.11 List Translations Command
+### 4.13 List Translations Command
 
 This command allows you to output all available translation keys in your Translation-Sets.
 Use this to debug and analyse your translations.
@@ -464,7 +496,7 @@ Use this to debug and analyse your translations.
 php vendor/bin/phpunuhi list:translations 
 ```
 
-### 4.12 Migration Command
+### 4.14 Migration Command
 
 It's also possible to migrate your translations from one storage to another.
 Just use the migration command and provide the target storage as output format.
@@ -473,7 +505,7 @@ Just use the migration command and provide the target storage as output format.
 php vendor/bin/phpunuhi migrate --output=json
 ```
 
-### 4.13 Scan Usage Command
+### 4.15 Scan Usage Command
 
 Usually you have template files that use your translation keys.
 The scanner command helps to scan all these files and see if all your translation keys are actually used in there.
@@ -1440,3 +1472,39 @@ Then simply register your translator using this function:
 ```php
 ScannerFactory::getInstance()->registerScanner($myScanner);
 ```
+
+### 8.15 Spell Checkers
+
+Spell Checkers allow you to check your translations for misspelled words.
+These can be used for validation processes but also for fixing your translations by automatically correcting misspelled.
+
+You can use one of the built-in services such as Aspell or Open AI.
+Every service comes with different benefits and drawbacks.
+
+```php
+SpellCheckerFactory::getInstance()->registerSpellChecker($mySpellChecker);
+```
+
+#### 8.15.1 Aspell
+
+* Service: "aspell"
+
+| Command                         | Argument | Description                             |
+|---------------------------------|----------|-----------------------------------------|
+| fix:spelling, validate:spelling | --binary | Individual path to binary, if not found |
+
+Aspell is a well known spell checker that can be used to check your translations for misspelled words.
+It's a command line tool that is available on most systems.
+
+Please make sure to install it properly on your system before using it.
+
+#### 8.15.2 OpenAI
+
+* Service: "openai"
+
+| Command                         | Argument       | Description                                     |
+|---------------------------------|----------------|-------------------------------------------------|
+| fix:spelling, validate:spelling | --openai-key   | Your OpenAI Key                                 |
+| fix:spelling, validate:spelling | --openai-model | The OpenAI model you want to use such as gpt-4o |
+
+With the OpenAI service you do even get improvements for gramma and not just spelling.
