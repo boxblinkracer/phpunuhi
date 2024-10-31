@@ -8,7 +8,6 @@ use PHPUnuhi\Configuration\ConfigurationLoader;
 use PHPUnuhi\Exceptions\ConfigurationException;
 use PHPUnuhi\Exceptions\TranslationNotFoundException;
 use PHPUnuhi\Services\Loaders\Xml\XmlLoader;
-use PHPUnuhi\Services\Placeholder\Placeholder;
 use PHPUnuhi\Services\Placeholder\PlaceholderExtractor;
 use PHPUnuhi\Traits\CommandTrait;
 use Symfony\Component\Console\Command\Command;
@@ -19,14 +18,13 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class TranslateCommand extends Command
 {
-    use CommandTrait;
-
-    public const ENV_TRANSLATION_SERVICE = 'TRANSLATION_SERVICE';
-
     /**
      * @var PlaceholderExtractor
      */
-    private $placeholderExtractor;
+    public $placeholderExtractor;
+    use CommandTrait;
+
+    public const ENV_TRANSLATION_SERVICE = 'TRANSLATION_SERVICE';
 
 
     /**
@@ -75,7 +73,7 @@ class TranslateCommand extends Command
 
         $service = $this->getConfigStringValue('service', $input);
         if ($service === '' || $service === '0') {
-            $service = (string) getenv(self::ENV_TRANSLATION_SERVICE);
+            $service = (string)getenv(self::ENV_TRANSLATION_SERVICE);
         }
 
         $setName = $this->getConfigStringValue('set', $input);
@@ -151,26 +149,7 @@ class TranslateCommand extends Command
 
                     # translate if we either force it or only if our value is empty
                     if ($forceLocale || $currentTranslation->isEmpty()) {
-                        $foundPlaceholders = [];
-
-                        # -----------------------------------------------------------------------------------------------------------------------------------
-
-                        foreach ($set->getProtection()->getMarkers() as $marker) {
-                            # search for all possible placeholders that exist, like %productName%
-                            # we must not translate them (happens with DeepL, ...)
-                            $markerPlaceholders = $this->placeholderExtractor->extract(
-                                $existingValue,
-                                $marker->getStart(),
-                                $marker->getEnd()
-                            );
-
-                            $foundPlaceholders = array_merge($foundPlaceholders, $markerPlaceholders);
-                        }
-
-                        foreach ($set->getProtection()->getTerms() as $term) {
-                            # just add these as placeholders
-                            $foundPlaceholders[] = new Placeholder($term);
-                        }
+                        $foundPlaceholders = $set->findPlaceholders($existingValue);
 
                         # start our third party translation service
                         $newTranslation = $translator->translate(

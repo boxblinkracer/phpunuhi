@@ -2,10 +2,11 @@
 
 namespace PHPUnuhi\Commands;
 
+use PHPUnuhi\Bundles\Spelling\SpellCheckerFactory;
 use PHPUnuhi\Configuration\ConfigurationLoader;
 use PHPUnuhi\Exceptions\ConfigurationException;
-use PHPUnuhi\Facades\CLI\MessValidatorCliFacade;
 use PHPUnuhi\Facades\CLI\ReporterCliFacade;
+use PHPUnuhi\Facades\CLI\SpellingValidatorCliFacade;
 use PHPUnuhi\Services\Loaders\Xml\XmlLoader;
 use PHPUnuhi\Traits\CommandTrait;
 use PHPUnuhi\Traits\StringTrait;
@@ -15,10 +16,13 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class ValidateMessCommand extends Command
+class ValidateSpellingCommand extends Command
 {
     use CommandTrait;
     use StringTrait;
+
+    public const ENV_SPELLCHECKER_SERVICE = 'SPELLCHECKER_SERVICE';
+
 
     /**
      * @return void
@@ -26,11 +30,20 @@ class ValidateMessCommand extends Command
     protected function configure()
     {
         $this
-            ->setName(CommandNames::VALIDATE_MESS)
-            ->setDescription('Find messy translations that do not have a single value and might not be required anymore')
+            ->setName(CommandNames::VALIDATE_SPELLING)
+            ->setDescription('Find misspelled translations.')
             ->addOption('configuration', null, InputOption::VALUE_REQUIRED, '', '')
+            ->addOption('service', null, InputOption::VALUE_REQUIRED, 'The spelling service you want to use', '')
             ->addOption('report-format', null, InputOption::VALUE_REQUIRED, 'The report format for a generated report', '')
             ->addOption('report-output', null, InputOption::VALUE_REQUIRED, 'The report output filename for the generated report', '');
+
+        foreach (SpellCheckerFactory::getInstance()->getAllOptions() as $option) {
+            if ($option->hasValue()) {
+                $this->addOption($option->getName(), null, InputOption::VALUE_REQUIRED, '');
+            } else {
+                $this->addOption($option->getName(), null, InputOption::VALUE_NONE, '');
+            }
+        }
 
         parent::configure();
     }
@@ -45,7 +58,7 @@ class ValidateMessCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $io->title('PHPUnuhi Validate Mess');
+        $io->title('PHPUnuhi Validate Spelling');
         $this->showHeader();
 
         $configFile = $this->getConfigFile($input);
@@ -54,7 +67,15 @@ class ValidateMessCommand extends Command
 
         # -----------------------------------------------------------------
 
-        $validatorCLI = new MessValidatorCliFacade($io);
+        $service = $this->getConfigStringValue('service', $input);
+
+        if ($service === '') {
+            $service = (string)getenv(self::ENV_SPELLCHECKER_SERVICE);
+        }
+
+        $spellchecker = SpellCheckerFactory::getInstance()->fromService($service, $input->getOptions());
+
+        $validatorCLI = new SpellingValidatorCliFacade($io, $spellchecker);
         $reporterCLI = new ReporterCliFacade($io);
 
         # -----------------------------------------------------------------

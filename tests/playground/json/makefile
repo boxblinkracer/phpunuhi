@@ -35,6 +35,11 @@ validate-structure: ## Fix Structure
 fix-structure: ## Fix Structure
 	cd ../../.. && php bin/phpunuhi fix:structure --configuration=./tests/playground/json/phpunuhi.xml
 
+fix-spelling: ## Fix Spelling
+	cd ../../.. && php bin/phpunuhi fix:spelling --service=aspell --configuration=./tests/playground/json/phpunuhi.xml
+
+validate-spelling: ## Validate Spelling
+	cd ../../.. && php bin/phpunuhi validate:spelling --service=aspell --configuration=./tests/playground/json/phpunuhi.xml
 
 keys: ## Fix Keys
 	cd ../../.. && php bin/phpunuhi fix:structure --configuration=./tests/playground/json/phpunuhi.xml

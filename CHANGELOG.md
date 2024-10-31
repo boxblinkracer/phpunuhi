@@ -7,9 +7,11 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 ### Added
 
+- Add new **SpellCheckers** with support for Aspell and OpenAI. This allows to check misspelled words and automatically fix them.
 - Allow DeepL / translator configuration with env variables (thx @Ocarthon)
 - Enable DeepL tag splitting on HTML input to also translate HTML fragments (thx @Ocarthon)
 - Support referencing Shopware snippets by their snippet set name (thx @Ocarthon)
+- TranslatorInterfaces do now have a fixSpelling option. A new command "fix:spelling" has been introduced to let services fix misspelled translations.
 
 ### Changed
 
@@ -24,6 +26,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 - Check all locales to determine the translation keys. Sometimes this did not happen and therefore not all keys have been detected (thx @Ocarthon)
 - Fix problem with translate command and force flag (thx @Ocarthon)
+- Fix problem where the error CLI output also showed successful test results and not just errors.
 
 ## [1.21.0]
 
