@@ -21,8 +21,6 @@ class ValidateSpellingCommand extends Command
     use CommandTrait;
     use StringTrait;
 
-    public const ENV_SPELLCHECKER_SERVICE = 'SPELLCHECKER_SERVICE';
-
 
     /**
      * @return void
@@ -70,7 +68,7 @@ class ValidateSpellingCommand extends Command
         $service = $this->getConfigStringValue('service', $input);
 
         if ($service === '') {
-            $service = (string)getenv(self::ENV_SPELLCHECKER_SERVICE);
+            $service = (string)getenv(CommandEnvVariables::SPELLCHECKER_SERVICE);
         }
 
         $spellchecker = SpellCheckerFactory::getInstance()->fromService($service, $input->getOptions());

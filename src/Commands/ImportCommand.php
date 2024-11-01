@@ -24,7 +24,6 @@ class ImportCommand extends Command
 {
     use CommandTrait;
 
-
     /**
      * @return void
      */

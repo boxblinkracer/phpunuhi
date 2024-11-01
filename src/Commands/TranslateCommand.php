@@ -23,8 +23,6 @@ class TranslateCommand extends Command
     use CommandTrait;
     use CommandOutputTrait;
 
-    public const ENV_TRANSLATION_SERVICE = 'TRANSLATION_SERVICE';
-
     /**
      * @var PlaceholderExtractor
      */
@@ -77,7 +75,7 @@ class TranslateCommand extends Command
 
         $service = $this->getConfigStringValue('service', $input);
         if ($service === '' || $service === '0') {
-            $service = (string)getenv(self::ENV_TRANSLATION_SERVICE);
+            $service = (string)getenv(CommandEnvVariables::TRANSLATION_SERVICE);
         }
 
         $setName = $this->getConfigStringValue('set', $input);

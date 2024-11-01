@@ -22,7 +22,6 @@ class FixSpellingCommand extends Command
     use CommandTrait;
     use CommandOutputTrait;
 
-    public const ENV_SPELLCHECKER_SERVICE = 'SPELLCHECKER_SERVICE';
 
     /**
      * @return void
@@ -65,7 +64,7 @@ class FixSpellingCommand extends Command
         $service = $this->getConfigStringValue('service', $input);
 
         if ($service === '') {
-            $service = (string)getenv(self::ENV_SPELLCHECKER_SERVICE);
+            $service = (string)getenv(CommandEnvVariables::SPELLCHECKER_SERVICE);
         }
 
         $io->writeln("service: " . $service);
