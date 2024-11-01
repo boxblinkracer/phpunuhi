@@ -32,14 +32,17 @@ validate-json: ## Validate command with json report
 validate-structure: ## Fix Structure
 	cd ../../.. && php bin/phpunuhi validate:structure --configuration=./tests/playground/json/phpunuhi.xml
 
+validate-spelling: ## Validate Spelling
+	cd ../../.. && php bin/phpunuhi validate:spelling --service=aspell --configuration=./tests/playground/json/phpunuhi.xml
+
+validate-similarity: ## Validate Similarity
+	cd ../../.. && php bin/phpunuhi validate:similarity --configuration=./tests/playground/json/phpunuhi.xml
+
 fix-structure: ## Fix Structure
 	cd ../../.. && php bin/phpunuhi fix:structure --configuration=./tests/playground/json/phpunuhi.xml
 
 fix-spelling: ## Fix Spelling
 	cd ../../.. && php bin/phpunuhi fix:spelling --service=aspell --configuration=./tests/playground/json/phpunuhi.xml
-
-validate-spelling: ## Validate Spelling
-	cd ../../.. && php bin/phpunuhi validate:spelling --service=aspell --configuration=./tests/playground/json/phpunuhi.xml
 
 keys: ## Fix Keys
 	cd ../../.. && php bin/phpunuhi fix:structure --configuration=./tests/playground/json/phpunuhi.xml

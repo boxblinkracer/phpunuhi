@@ -38,16 +38,17 @@ Now that you know this, let's get started!
     * [4.3 Validate Coverage Command](#43-validate-coverage-command)
     * [4.4 Validate Structure Command](#44-validate-structure-command)
     * [4.5 Validate Spelling Command](#45-validate-spelling-command)
-    * [4.6 Fix Structure Command](#46-fix-structure-command)
-    * [4.7 Fix Mess Command](#47-fix-mess-command)
-    * [4.8 Export Command](#48-export-command)
-    * [4.9 Import Command](#49-import-command)
-    * [4.10 Status Command](#410-status-command)
-    * [4.11 Fix Spelling Command](#411-fix-spelling-command)
-    * [4.12 Translate Command](#412-translate-command)
-    * [4.13 List Translations Command](#413-list-translations-command)
-    * [4.14 Migration Command](#414-migration-command)
-    * [4.15 Scan Usage Command](#415-scan-usage-command)
+    * [4.6 Validate Similarity Command](#46-validate-similarity-command)
+    * [4.7 Fix Structure Command](#47-fix-structure-command)
+    * [4.8 Fix Mess Command](#48-fix-mess-command)
+    * [4.9 Export Command](#49-export-command)
+    * [4.10 Import Command](#410-import-command)
+    * [4.11 Status Command](#411-status-command)
+    * [4.12 Fix Spelling Command](#412-fix-spelling-command)
+    * [4.13 Translate Command](#413-translate-command)
+    * [4.14 List Translations Command](#414-list-translations-command)
+    * [4.15 Migration Command](#415-migration-command)
+    * [4.16 Scan Usage Command](#416-scan-usage-command)
   * [5. Validation Processes](#5-validation-processes)
     * [5.1 Structure Validation](#51-structure-validation)
     * [5.2 Empty content Validation](#52-empty-content-validation)
@@ -342,7 +343,20 @@ If a misspelled word is found, the validation will fail.
 php vendor/bin/phpunuhi validate:spelling --service=aspell --configuration=./translations.xml
 ```
 
-### 4.6 Fix Structure Command
+### 4.6 Validate Similarity Command
+
+This command will check if your translation keys are too similar to each other.
+This can be useful to avoid confusion and mistakes.
+
+The default similarity threshold is 90% but can be adjusted by using the **threshold** option.
+
+```
+php vendor/bin/phpunuhi validate:similarity --configuration=./translations.xml
+
+php vendor/bin/phpunuhi validate:similarity --threshold=80 --configuration=./translations.xml
+```
+
+### 4.7 Fix Structure Command
 
 If your storage is not matching, you can easily use the fixing command to make sure they are in sync.
 Please note, that this will only create empty translations so that the structure is the same.
@@ -361,7 +375,7 @@ php vendor/bin/phpunuhi fix:structure --set="storefront"
    <img src="/.github/assets/fix.png">
 </p>
 
-### 4.7 Fix Mess Command
+### 4.8 Fix Mess Command
 
 This command will automatically remove all translation keys that have no value in any of your locales.
 Keys detected by the **validate:mess** command might not be used after all.
@@ -375,7 +389,7 @@ php vendor/bin/phpunuhi fix:mess
 php vendor/bin/phpunuhi fix:mess --set="storefront"
 ```
 
-### 4.8 Export Command
+### 4.9 Export Command
 
 You can export your translations **into a CSV file**, a HTML WebEdit spreadsheet, or other supported exchange formats.
 These files can then be passed on to an external translator or company.
@@ -406,7 +420,7 @@ php vendor/bin/phpunuhi export ... --empty
    <img src="/.github/assets/csv.png">
 </p>
 
-### 4.9 Import Command
+### 4.10 Import Command
 
 You can import your translations **from a CSV file** or other supported exchange formats.
 This will automatically update the storage (JSON, ...) that has been assigned to the imported translation set.
@@ -421,7 +435,7 @@ php vendor/bin/phpunuhi import --set=storefront --file=storefront.csv
 php vendor/bin/phpunuhi import ... --format=html
 ```
 
-### 4.10 Status Command
+### 4.11 Status Command
 
 Use this command to get statistics and reports of your translations.
 This includes the coverage and the number of found words.
@@ -434,7 +448,7 @@ php vendor/bin/phpunuhi status
    <img src="/.github/assets/status.png">
 </p>
 
-### 4.11 Fix Spelling Command
+### 4.12 Fix Spelling Command
 
 If you use a capable translator service that is able to fix a spelling for you, then you can use this
 command to scan all your translations for misspelled texts.
@@ -450,7 +464,7 @@ php vendor/bin/phpunuhi fix:spelling --service=openai ...
 php vendor/bin/phpunuhi fix:spelling --set="storefront"
 ```
 
-### 4.12 Translate Command
+### 4.13 Translate Command
 
 PHPUnuhi includes the option to use external services to automatically translate missing values for you.
 
@@ -487,7 +501,7 @@ php vendor/bin/phpunuhi translate ...  --source=en
    <img src="/.github/assets/translate.png">
 </p>
 
-### 4.13 List Translations Command
+### 4.14 List Translations Command
 
 This command allows you to output all available translation keys in your Translation-Sets.
 Use this to debug and analyse your translations.
@@ -496,7 +510,7 @@ Use this to debug and analyse your translations.
 php vendor/bin/phpunuhi list:translations 
 ```
 
-### 4.14 Migration Command
+### 4.15 Migration Command
 
 It's also possible to migrate your translations from one storage to another.
 Just use the migration command and provide the target storage as output format.
@@ -505,7 +519,7 @@ Just use the migration command and provide the target storage as output format.
 php vendor/bin/phpunuhi migrate --output=json
 ```
 
-### 4.15 Scan Usage Command
+### 4.16 Scan Usage Command
 
 Usually you have template files that use your translation keys.
 The scanner command helps to scan all these files and see if all your translation keys are actually used in there.

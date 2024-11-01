@@ -17,6 +17,7 @@ use PHPUnuhi\Commands\ValidateAllCommand;
 use PHPUnuhi\Commands\ValidateCommand;
 use PHPUnuhi\Commands\ValidateCoverageCommand;
 use PHPUnuhi\Commands\ValidateMessCommand;
+use PHPUnuhi\Commands\ValidateSimilarityCommand;
 use PHPUnuhi\Commands\ValidateSpellingCommand;
 use PHPUnuhi\Commands\ValidateStructureCommand;
 use Symfony\Component\Console\Application;
@@ -41,6 +42,7 @@ class AppManager
         $application->add(new ValidateCoverageCommand());
         $application->add(new ValidateStructureCommand());
         $application->add(new ValidateSpellingCommand());
+        $application->add(new ValidateSimilarityCommand());
 
         $application->add(new ImportCommand());
         $application->add(new ExportCommand());

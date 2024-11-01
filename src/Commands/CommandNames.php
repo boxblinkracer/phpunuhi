@@ -12,6 +12,7 @@ interface CommandNames
     public const VALIDATE_MESS = 'validate:mess';
     public const VALIDATE_SPELLING = 'validate:spelling';
     public const VALIDATE_STRUCTURE = 'validate:structure';
+    public const VALIDATE_SIMILARITY = 'validate:similarity';
 
     public const LIST_TRANSLATIONS = 'list:translations';
 }

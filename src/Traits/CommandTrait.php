@@ -110,4 +110,25 @@ trait CommandTrait
 
         return $value;
     }
+
+    /**
+     * @param string $name
+     * @param InputInterface $input
+     * @param float $default
+     * @return float
+     */
+    protected function getConfigFloatValue(string $name, InputInterface $input, float $default): float
+    {
+        if (!$input->hasOption($name)) {
+            return $default;
+        }
+
+        $value = $input->getOption($name);
+
+        if (!ctype_digit($value)) {
+            return $default;
+        }
+
+        return (float)$value;
+    }
 }
