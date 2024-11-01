@@ -3,12 +3,14 @@
 namespace PHPUnuhi\Commands;
 
 use PHPUnuhi\Bundles\Storage\StorageFactory;
+use PHPUnuhi\Bundles\Translator\OpenAI\OpenAITranslator;
 use PHPUnuhi\Bundles\Translator\TranslatorFactory;
 use PHPUnuhi\Configuration\ConfigurationLoader;
 use PHPUnuhi\Exceptions\ConfigurationException;
 use PHPUnuhi\Exceptions\TranslationNotFoundException;
 use PHPUnuhi\Services\Loaders\Xml\XmlLoader;
 use PHPUnuhi\Services\Placeholder\PlaceholderExtractor;
+use PHPUnuhi\Traits\CommandOutputTrait;
 use PHPUnuhi\Traits\CommandTrait;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -18,13 +20,15 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class TranslateCommand extends Command
 {
+    use CommandTrait;
+    use CommandOutputTrait;
+
+    public const ENV_TRANSLATION_SERVICE = 'TRANSLATION_SERVICE';
+
     /**
      * @var PlaceholderExtractor
      */
     public $placeholderExtractor;
-    use CommandTrait;
-
-    public const ENV_TRANSLATION_SERVICE = 'TRANSLATION_SERVICE';
 
 
     /**
@@ -185,6 +189,10 @@ class TranslateCommand extends Command
             $storageSaver = StorageFactory::getInstance()->getStorage($set);
 
             $storageSaver->saveTranslationSet($set);
+        }
+
+        if ($translator instanceof OpenAITranslator) {
+            $this->showOpenAIUsageData($io);
         }
 
         if ($translateFailedCount > 0) {

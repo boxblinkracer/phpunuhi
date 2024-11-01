@@ -2,6 +2,7 @@
 
 namespace PHPUnuhi\Facades\CLI;
 
+use PHPUnuhi\Bundles\Spelling\OpenAI\OpenAISpellChecker;
 use PHPUnuhi\Bundles\Spelling\Result\SpellingValidationResult;
 use PHPUnuhi\Bundles\Spelling\SpellCheckerInterface;
 use PHPUnuhi\Components\Reporter\Model\ReportResult;
@@ -92,6 +93,10 @@ class SpellingValidatorCliFacade
         }
 
         $this->showErrorTable($allTests, $this->io);
+
+        if ($this->spellChecker instanceof OpenAISpellChecker) {
+            $this->showOpenAIUsageData($this->io);
+        }
 
         return $reportResult;
     }

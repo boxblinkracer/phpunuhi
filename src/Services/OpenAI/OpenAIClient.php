@@ -12,8 +12,6 @@ class OpenAIClient
      */
     private $apiKey;
 
-    private const DEFAULT_TOKEN_PRICE = 0.00002;
-
 
     /**
      * @param string $apiKey
@@ -25,12 +23,28 @@ class OpenAIClient
 
 
     /**
-     * @param array<mixed> $params
+     * @param string $prompt
+     * @param string $model
      * @throws Exception
      * @return OpenAIResponse
      */
-    public function chat(array $params): OpenAIResponse
+    public function chat(string $prompt, string $model): OpenAIResponse
     {
+        $params = [
+            'model' => $model,
+            'temperature' => 0.3,
+            'max_tokens' => 100,
+            'top_p' => 1.0,
+            'frequency_penalty' => 0.0,
+            'presence_penalty' => 0.0,
+            'messages' => [
+                [
+                    "role" => "user",
+                    "content" => $prompt
+                ],
+            ]
+        ];
+
         $openAI = new OpenAi($this->apiKey);
 
         $complete = (string)$openAI->chat($params);
@@ -44,19 +58,27 @@ class OpenAIClient
 
         $costUSD = 0;
         if (isset($json['usage'])) {
-            $totalTokens = $json['usage']['total_tokens'];
-
             $pricingData = json_decode((string)file_get_contents(__DIR__ . '/pricing.json'), true);
-            $model = $params['model'] ?? 'gpt-3.5-turbo';
-            $costPerTokenUSD = $pricingData[$model] ?? self::DEFAULT_TOKEN_PRICE;
 
-            $costUSD = $totalTokens * $costPerTokenUSD;
+            if (isset($pricingData[$model])) {
+                $costsInputToken = $pricingData[$model]['input'] ?? 0;
+                $costsOutputToken = $pricingData[$model]['output'] ?? 0;
+
+                $totalInputTokens = $json['usage']['prompt_tokens'];
+                $totalOutputTokens = $json['usage']['completion_tokens'];
+
+                $costUSD = ($totalInputTokens * $costsInputToken) + ($totalOutputTokens * $costsOutputToken);
+            }
         }
 
         if (isset($json['error'])) {
             $msg = 'OpenAI Error: ' . $json['error']['message'];
             throw new Exception($msg);
         }
+
+        # always use our singleton usage tracker
+        OpenAIUsageTracker::getInstance()->addRequest($prompt, $costUSD);
+
 
         if (!isset($json['choices'])) {
             return new OpenAIResponse('', $costUSD);

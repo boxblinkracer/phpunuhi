@@ -3,11 +3,13 @@
 namespace PHPUnuhi\Commands;
 
 use Exception;
+use PHPUnuhi\Bundles\Spelling\OpenAI\OpenAISpellChecker;
 use PHPUnuhi\Bundles\Spelling\SpellCheckerFactory;
 use PHPUnuhi\Bundles\Storage\StorageFactory;
 use PHPUnuhi\Configuration\ConfigurationLoader;
 use PHPUnuhi\Models\Text\Text;
 use PHPUnuhi\Services\Loaders\Xml\XmlLoader;
+use PHPUnuhi\Traits\CommandOutputTrait;
 use PHPUnuhi\Traits\CommandTrait;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -18,6 +20,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class FixSpellingCommand extends Command
 {
     use CommandTrait;
+    use CommandOutputTrait;
 
     public const ENV_SPELLCHECKER_SERVICE = 'SPELLCHECKER_SERVICE';
 
@@ -109,6 +112,10 @@ class FixSpellingCommand extends Command
             $storageSaver = StorageFactory::getInstance()->getStorage($set);
 
             $storageSaver->saveTranslationSet($set);
+        }
+
+        if ($spellChecker instanceof OpenAISpellChecker) {
+            $this->showOpenAIUsageData($io);
         }
 
         $io->success($countFixed . ' spellings have been fixed!');

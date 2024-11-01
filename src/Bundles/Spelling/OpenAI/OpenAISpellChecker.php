@@ -100,22 +100,7 @@ class OpenAISpellChecker implements SpellCheckerInterface
 
         $prompt = 'Check spelling of this ' . $language . ' text using Hunspell. Do only return your recommended text, nothing more. ' . self::SPELLING_RULES . ': ' . $text->getEncodedText();
 
-        $params = [
-            'model' => $this->model,
-            'temperature' => 0.3,
-            'max_tokens' => 100,
-            'top_p' => 1.0,
-            'frequency_penalty' => 0.0,
-            'presence_penalty' => 0.0,
-            'messages' => [
-                [
-                    "role" => "user",
-                    "content" => $prompt
-                ],
-            ]
-        ];
-
-        $recommendedTextResult = (new OpenAIClient($this->apiKey))->chat($params);
+        $recommendedTextResult = (new OpenAIClient($this->apiKey))->chat($prompt, $this->model);
 
         $isSpellingValid = $recommendedTextResult->getResponse() === $text->getEncodedText();
 
@@ -134,22 +119,7 @@ class OpenAISpellChecker implements SpellCheckerInterface
 
         $prompt = 'Check spelling of this ' . $language . ' text using Hunspell. Do only return your fixed text, nothing more. ' . self::SPELLING_RULES . ': ' . $text->getEncodedText();
 
-        $params = [
-            'model' => $this->model,
-            'temperature' => 0.3,
-            'max_tokens' => 100,
-            'top_p' => 1.0,
-            'frequency_penalty' => 0.0,
-            'presence_penalty' => 0.0,
-            'messages' => [
-                [
-                    "role" => "user",
-                    "content" => $prompt
-                ],
-            ]
-        ];
-
-        $result = (new OpenAIClient($this->apiKey))->chat($params);
+        $result = (new OpenAIClient($this->apiKey))->chat($prompt, $this->model);
 
         return $result->getResponse();
     }

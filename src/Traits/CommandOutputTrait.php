@@ -3,6 +3,7 @@
 namespace PHPUnuhi\Traits;
 
 use PHPUnuhi\Components\Validator\Model\ValidationTest;
+use PHPUnuhi\Services\OpenAI\OpenAIUsageTracker;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Helper\TableCell;
 use Symfony\Component\Console\Helper\TableSeparator;
@@ -93,5 +94,15 @@ trait CommandOutputTrait
         $table->render();
 
         $output->writeln('');
+    }
+
+    protected function showOpenAIUsageData(OutputInterface $output): void
+    {
+        $tracker = OpenAIUsageTracker::getInstance();
+
+        $output->writeln("\n=== OpenAI Usage Summary =====================");
+        $output->writeln("Total Requests:    " . $tracker->getRequestCount());
+        $output->writeln("Estimated Costs:   " . $tracker->getTotalCostsUSD() . " USD (approx.)");
+        $output->writeln("==============================================\n");
     }
 }

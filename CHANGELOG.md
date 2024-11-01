@@ -8,6 +8,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 ### Added
 
 - Add new **SpellCheckers** with support for Aspell and OpenAI. This allows to check misspelled words and automatically fix them.
+- Add new **usage summary** when using Open AI. It shows the number of requests as well as the estimated costs. (approximate values, not guaranteed).
 - Allow DeepL / translator configuration with env variables (thx @Ocarthon)
 - Enable DeepL tag splitting on HTML input to also translate HTML fragments (thx @Ocarthon)
 - Support referencing Shopware snippets by their snippet set name (thx @Ocarthon)

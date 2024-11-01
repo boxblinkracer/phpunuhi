@@ -88,24 +88,9 @@ class OpenAITranslator implements TranslatorInterface
 
         $prompt = "Translate this into " . $languageName . " and do ONLY return the translation: " . $text;
 
-        $params = [
-            'model' => $this->model,
-            'temperature' => 0.3,
-            'max_tokens' => 100,
-            'top_p' => 1.0,
-            'frequency_penalty' => 0.0,
-            'presence_penalty' => 0.0,
-            'messages' => [
-                [
-                    "role" => "user",
-                    "content" => $prompt
-                ],
-            ]
-        ];
-
         $client = new OpenAIClient($this->apiKey);
 
-        $result = $client->chat($params);
+        $result = $client->chat($prompt, $this->model);
 
         return $result->getResponse();
     }
