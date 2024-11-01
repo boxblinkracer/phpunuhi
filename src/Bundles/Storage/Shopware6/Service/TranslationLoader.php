@@ -4,6 +4,7 @@ namespace PHPUnuhi\Bundles\Storage\Shopware6\Service;
 
 use Exception;
 use PDO;
+use PHPUnuhi\Bundles\Storage\Shopware6\Models\EntityDbTranslations;
 use PHPUnuhi\Bundles\Storage\Shopware6\Models\Sw6Locale;
 use PHPUnuhi\Bundles\Storage\Shopware6\Repository\EntityTranslationRepository;
 use PHPUnuhi\Bundles\Storage\Shopware6\Repository\LanguageRepository;
@@ -110,26 +111,29 @@ class TranslationLoader
         $entityIdKey = $entity . '_id';
 
         $allDbLanguages = $this->repoLanguages->getLanguages();
-        $allDbTranslations = $this->repoEntityTranslations->getTranslations($entity);
+
+        $mainLocale = $set->getAttributeValue('mainLocale');
+        if ($mainLocale !== '') {
+            $defaultLanguageID = $this->getShopwareLanguageId($mainLocale, $allDbLanguages);
+        }
+
+        $entityDbTranslations = new EntityDbTranslations(
+            $entity,
+            $this->repoEntityTranslations->getTranslations($entity),
+            $defaultLanguageID ?? null
+        );
 
         foreach ($set->getLocales() as $locale) {
-            $currentLanguageID = $this->getShopwareLanguageId($locale, $allDbLanguages);
+            $currentLanguageID = $this->getShopwareLanguageId($locale->getName(), $allDbLanguages);
 
             if ($currentLanguageID === '' || $currentLanguageID === '0') {
                 throw new Exception('no language found for locale: ' . $locale->getName());
             }
 
-            foreach ($allDbTranslations as $dbRow) {
+            foreach ($entityDbTranslations->getLanguageTranslations($currentLanguageID) as $dbRow) {
 
-                # read our primary entity id and the
-                # language id of the current translation row
-                $entityId = $this->binaryToString((string)$dbRow[$entityIdKey]);
-                $languageId = $this->binaryToString((string)$dbRow['language_id']);
-
-                # if it's not the language we are looking for, just skip
-                if ($languageId !== $currentLanguageID) {
-                    continue;
-                }
+                # read our primary entity id of the current translation row
+                $entityId = $dbRow[$entityIdKey];
 
                 # we need to create a group-identifier for our row. this is the current entity object
                 # for the product entity, a group will be a single product (T-Shirt A)
@@ -170,10 +174,10 @@ class TranslationLoader
      * @param Sw6Locale[] $allLanguages
      * @return string
      */
-    private function getShopwareLanguageId(Locale $locale, array $allLanguages): string
+    private function getShopwareLanguageId(string $locale, array $allLanguages): string
     {
         foreach ($allLanguages as $langEntity) {
-            if ($langEntity->getLocaleName() === $locale->getName()) {
+            if ($langEntity->getLocaleName() === $locale) {
                 return $langEntity->getLanguageId();
             }
         }
@@ -181,3 +185,4 @@ class TranslationLoader
         return '';
     }
 }
+
