@@ -113,12 +113,19 @@ class SpellingValidatorCliFacade
 
         if ($spellingResult->getMisspelledWords() !== []) {
             $failureMessage .= ' - Misspelled words: ';
+
             foreach ($spellingResult->getMisspelledWords() as $misspelledWord) {
-                $failureMessage .= $misspelledWord->getWord() . ' (Suggestions: ' . implode(', ', $misspelledWord->getSuggestions()) . ')';
+                $failureMessage .= $misspelledWord->getWord();
+
+                if ($misspelledWord->getSuggestions() !== []) {
+                    $failureMessage .= ' (Suggestions: ' . implode(', ', $misspelledWord->getSuggestions()) . '), ';
+                } else {
+                    $failureMessage .= ', ';
+                }
             }
         }
 
-        if ($spellingResult->getSuggestedText() !== '' && $spellingResult->getSuggestedText() !== '0') {
+        if ($spellingResult->getSuggestedText() !== '') {
 
             # we probably used the encoded text with placeholders
             # for a better experience, try to decode it

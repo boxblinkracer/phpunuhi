@@ -9,13 +9,16 @@ use PHPUnuhi\Bundles\Spelling\SpellCheckerInterface;
 use PHPUnuhi\Models\Command\CommandOption;
 use PHPUnuhi\Models\Text\Text;
 use PHPUnuhi\Services\OpenAI\OpenAIClient;
+use PHPUnuhi\Traits\StringTrait;
 use RuntimeException;
 
 class OpenAISpellChecker implements SpellCheckerInterface
 {
     private const DEFAULT_MODEL = 'gpt-4-turbo';
 
-    private const SPELLING_RULES = 'Only correct spelling errors, grammar, leave placeholders or wildcards intact, and ignore words in other languages. Do not translate or suggest translations.';
+    private const SPELLING_RULES = 'Only correct spelling errors, grammar. Keep placeholders and wildcards. Ignore words in other languages - just return the input text in that case. Do not translate or suggest translations.';
+
+    use StringTrait;
 
     /**
      * @var string
@@ -102,9 +105,13 @@ class OpenAISpellChecker implements SpellCheckerInterface
 
         $recommendedTextResult = (new OpenAIClient($this->apiKey))->chat($prompt, $this->model);
 
-        $isSpellingValid = $recommendedTextResult->getResponse() === $text->getEncodedText();
+        $recommendedText = $recommendedTextResult->getResponse();
 
-        return new SpellingValidationResult($isSpellingValid, $locale, $recommendedTextResult->getResponse(), []);
+        $recommendedText = $this->cleanResult($text->getEncodedText(), $recommendedText);
+
+        $isSpellingValid = $recommendedText === $text->getEncodedText();
+
+        return new SpellingValidationResult($isSpellingValid, $locale, $recommendedText, []);
     }
 
     /**
@@ -121,6 +128,24 @@ class OpenAISpellChecker implements SpellCheckerInterface
 
         $result = (new OpenAIClient($this->apiKey))->chat($prompt, $this->model);
 
-        return $result->getResponse();
+        $recommendedText = $result->getResponse();
+
+        return $this->cleanResult($text->getEncodedText(), $recommendedText);
+    }
+
+    private function cleanResult(string $originalText, string $suggestedText): string
+    {
+        if (!$this->stringDoesEndsWith($originalText, '.') && $this->stringDoesEndsWith($suggestedText, '.')) {
+            $suggestedText = rtrim($suggestedText, '.');
+        }
+
+        # we do not consider empty spaces (for now)
+        # so lets just ignore this
+        # TODO....maybe all these things could be done in some kind of global post-processor spell checker?!
+        if (trim($originalText) === trim($suggestedText)) {
+            return $originalText;
+        }
+
+        return $suggestedText;
     }
 }
