@@ -2,6 +2,7 @@
 
 namespace PHPUnuhi\Bundles\Storage\JSON\Services;
 
+use PHPUnuhi\Bundles\Storage\StorageHierarchy;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Traits\ArrayTrait;
 
@@ -12,10 +13,10 @@ class JsonLoader
 
     /**
      * @param Locale $locale
-     * @param string $delimiter
+     * @param StorageHierarchy $hierarchy
      * @return void
      */
-    public function loadTranslations(Locale $locale, string $delimiter): void
+    public function loadTranslations(Locale $locale, StorageHierarchy $hierarchy): void
     {
         $snippetJson = (string)file_get_contents($locale->getFilename());
 
@@ -33,7 +34,11 @@ class JsonLoader
             $foundTranslations = [];
         }
 
-        $foundTranslationsFlat = $this->getFlatArray($foundTranslations, $delimiter);
+        if ($hierarchy->isNestedStorage()) {
+            $foundTranslationsFlat = $this->getFlatArray($foundTranslations, $hierarchy->getDelimiter());
+        } else {
+            $foundTranslationsFlat = $foundTranslations;
+        }
 
         foreach ($foundTranslationsFlat as $key => $value) {
             $locale->addTranslation($key, $value, '');
@@ -41,7 +46,7 @@ class JsonLoader
 
         // We start with one as a properly formatted JSON file will always have the first line as the opening bracket
         $locale->setLineNumbers(
-            $this->getLineNumbers($foundTranslations, $delimiter, '', 1, true)
+            $this->getLineNumbers($foundTranslations, $hierarchy->getDelimiter(), '', 1, true)
         );
     }
 }

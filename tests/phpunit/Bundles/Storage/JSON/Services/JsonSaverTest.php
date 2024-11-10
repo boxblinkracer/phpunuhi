@@ -4,6 +4,7 @@ namespace PHPUnuhi\Tests\Bundles\Storage\JSON\Services;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Bundles\Storage\JSON\Services\JsonSaver;
+use PHPUnuhi\Bundles\Storage\StorageHierarchy;
 use PHPUnuhi\Models\Translation\Locale;
 
 class JsonStorageTest extends TestCase
@@ -51,7 +52,9 @@ class JsonStorageTest extends TestCase
         $testFile = $this->createRandomFile();
         $storage = new JsonSaver(4, false, true);
 
-        static::assertSame(2, $storage->saveLocale($this->locale, '.', $testFile));
+        $hierarchy = new StorageHierarchy(true, '.');
+
+        static::assertSame(2, $storage->saveLocale($this->locale, $hierarchy, $testFile));
         $json = \file_get_contents($testFile);
         $expected = <<<'JSON'
 {
@@ -74,7 +77,9 @@ JSON;
         $testFile = $this->createRandomFile();
         $storage = new JsonSaver(2, false, false);
 
-        static::assertSame(2, $storage->saveLocale($this->locale, '.', $testFile));
+        $hierarchy = new StorageHierarchy(true, '.');
+
+        static::assertSame(2, $storage->saveLocale($this->locale, $hierarchy, $testFile));
         $json = \file_get_contents($testFile);
         $expected = <<<'JSON'
 {
@@ -97,7 +102,9 @@ JSON;
         $testFile = $this->createRandomFile();
         $storage = new JsonSaver(5, true, false);
 
-        static::assertSame(2, $storage->saveLocale($this->locale, '.', $testFile));
+        $hierarchy = new StorageHierarchy(true, '.');
+
+        static::assertSame(2, $storage->saveLocale($this->locale, $hierarchy, $testFile));
         $json = \file_get_contents($testFile);
         $expected = <<<'JSON'
 {

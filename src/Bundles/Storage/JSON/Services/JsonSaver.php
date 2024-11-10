@@ -2,6 +2,7 @@
 
 namespace PHPUnuhi\Bundles\Storage\JSON\Services;
 
+use PHPUnuhi\Bundles\Storage\StorageHierarchy;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Traits\ArrayTrait;
 
@@ -39,11 +40,11 @@ class JsonSaver
 
     /**
      * @param Locale $locale
-     * @param string $delimiter
+     * @param StorageHierarchy $hierarchy
      * @param string $filename
      * @return int
      */
-    public function saveLocale(Locale $locale, string $delimiter, string $filename): int
+    public function saveLocale(Locale $locale, StorageHierarchy  $hierarchy, string $filename): int
     {
         $indent = $this->jsonIndent;
 
@@ -60,7 +61,11 @@ class JsonSaver
             ksort($saveValues);
         }
 
-        $tmpArray = $this->getMultiDimensionalArray($saveValues, $delimiter);
+        if ($hierarchy->isNestedStorage()) {
+            $tmpArray = $this->getMultiDimensionalArray($saveValues, $hierarchy->getDelimiter());
+        } else {
+            $tmpArray = $saveValues;
+        }
 
         $jsonString = (string)json_encode($tmpArray, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         $indentStr = str_repeat(' ', $indent);

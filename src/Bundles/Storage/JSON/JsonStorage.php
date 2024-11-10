@@ -24,6 +24,11 @@ class JsonStorage implements StorageInterface
      */
     private $saver;
 
+    /**
+     * @var bool
+     */
+    private $isNested = true;
+
 
     /**
      * @return string
@@ -55,7 +60,7 @@ class JsonStorage implements StorageInterface
     public function getHierarchy(): StorageHierarchy
     {
         return new StorageHierarchy(
-            true,
+            $this->isNested,
             '.'
         );
     }
@@ -71,6 +76,10 @@ class JsonStorage implements StorageInterface
         $sort = filter_var($set->getAttributeValue('sort'), FILTER_VALIDATE_BOOLEAN);
         $eolLast = filter_var($set->getAttributeValue('eol-last'), FILTER_VALIDATE_BOOLEAN);
 
+        # its always nested, except if we explicitly set it to false
+        $nested = $set->getAttributeValue('nested');
+        $this->isNested = strtolower($nested) !== 'false';
+
         $this->loader = new JsonLoader();
         $this->saver = new JsonSaver((int)$indent, $sort, $eolLast);
     }
@@ -82,10 +91,8 @@ class JsonStorage implements StorageInterface
      */
     public function loadTranslationSet(TranslationSet $set): void
     {
-        $delimiter = $this->getHierarchy()->getDelimiter();
-
         foreach ($set->getLocales() as $locale) {
-            $this->loader->loadTranslations($locale, $delimiter);
+            $this->loader->loadTranslations($locale, $this->getHierarchy());
         }
     }
 
@@ -95,14 +102,12 @@ class JsonStorage implements StorageInterface
      */
     public function saveTranslationSet(TranslationSet $set): StorageSaveResult
     {
-        $delimiter = $this->getHierarchy()->getDelimiter();
-
         $localeCount = 0;
         $translationCount = 0;
 
         foreach ($set->getLocales() as $locale) {
             $filename = $locale->getFilename();
-            $translationCount += $this->saver->saveLocale($locale, $delimiter, $filename);
+            $translationCount += $this->saver->saveLocale($locale, $this->getHierarchy(), $filename);
             $localeCount++;
         }
 
@@ -116,9 +121,7 @@ class JsonStorage implements StorageInterface
      */
     public function saveTranslationLocale(Locale $locale, string $filename): StorageSaveResult
     {
-        $delimiter = $this->getHierarchy()->getDelimiter();
-
-        $translationsCount = $this->saver->saveLocale($locale, $delimiter, $filename);
+        $translationsCount = $this->saver->saveLocale($locale, $this->getHierarchy(), $filename);
 
         return new StorageSaveResult(1, $translationsCount);
     }
