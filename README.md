@@ -142,7 +142,6 @@ or use any of the provided
 translation services (Google, DeepL, OpenAI). This makes PHPUnuhi a great **composable framework for translations**.
 
 ```mermaid
-```mermaid
   graph TD;
       Storage-Format --> Exchange-Format;
       Storage-Format --> Translation-Service;
