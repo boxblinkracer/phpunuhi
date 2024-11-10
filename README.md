@@ -135,8 +135,7 @@ PHPUnuhi helps you to make sure you didn't forget any translations, screwed up s
 even
 helps you to export and import or translate your entries.
 
-One of the benefits of this framework is the approach of decoupled **Storage formats**, **Exchange formats** and *
-*Translation services**.
+One of the benefits of this framework is the approach of decoupled **Storage formats**, **Exchange formats**, **Spell Checkers** and **Translation services**.
 You can combine any storage format (JSON, INI, DB, ...) with any exchange format for import + exports (CSV, HTML, ...)
 or use any of the provided
 translation services (Google, DeepL, OpenAI). This makes PHPUnuhi a great **composable framework for translations**.
