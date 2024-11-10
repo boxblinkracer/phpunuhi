@@ -1,0 +1,5 @@
+commands:
+
+  - name: "List Translation Keys"
+    command: "(($EXEC)) list:translation-keys --configuration=./tests/svrunit/fixtures/json/phpunuhi.xml"
+    expected: "[~] card.description"

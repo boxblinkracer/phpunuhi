@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/platform/trunk/src/Core/Framework/App/Manifest/Schema/manifest-2.0.xsd">
+
+    <meta>
+        <name>MyApp</name>
+        <label lang="nl-NL">Mijn app</label>
+        <label lang="de-DE">Meine App</label>
+        <label>My App</label>
+        <description lang="nl-NL">Mijn voorbeeld-app</description>
+        <description lang="de-DE">Meine Beispiel-App</description>
+        <description>My Sample App</description>
+        <privacyPolicyExtensions lang="nl-NL">abc</privacyPolicyExtensions>
+        <privacyPolicyExtensions lang="de-DE">ABC</privacyPolicyExtensions>
+        <privacyPolicyExtensions>abc</privacyPolicyExtensions>
+    </meta>
+
+    <admin>
+
+        <action-button action="shipOrder">
+            <label lang="nl-NL">Verzendopdracht</label>
+            <label lang="de-DE">Versandauftrag</label>
+            <label>Ship Order</label>
+        </action-button>
+
+    </admin>
+
+    <payments>
+
+        <payment-method>
+            <identifier>my_payment</identifier>
+            <name lang="nl-NL">MIJN Betaling</name>
+            <name lang="de-DE">MEINE Zahlung</name>
+            <name>MY Payment</name>
+            <description lang="nl-NL">MIJN Betaling</description>
+            <description lang="de-DE">MEINE Zahlung</description>
+            <description>MY Payment</description>
+        </payment-method>
+
+    </payments>
+
+    <rule-conditions>
+        <rule-condition>
+            <identifier>my_custom_condition</identifier>
+            <name lang="nl-NL">Is niet gelijk aan</name>
+            <name>Is not equal to</name>
+            <name lang="de-DE">Ist nicht gleich</name>
+            <constraints>
+                <single-select name="operator">
+                    <placeholder lang="nl-NL">Kies een operator...</placeholder>
+                    <placeholder>Choose an operator...</placeholder>
+                    <placeholder lang="de-DE">Bitte Operatoren wählen</placeholder>
+                    <options>
+                        <option value="=">
+                            <name lang="nl-NL">Is gelijk aan</name>
+                            <name>Is equal to</name>
+                            <name lang="de-DE">Ist gleich</name>
+                        </option>
+                        <option value="!=">
+                            <name lang="nl-NL">Is niet gelijk aan</name>
+                            <name>Is not equal to</name>
+                            <name lang="de-DE">Ist nicht gleich</name>
+                        </option>
+                    </options>
+                </single-select>
+                <text name="firstName">
+                    <placeholder lang="nl-NL">Voer de voornaam in</placeholder>
+                    <placeholder>Enter first name</placeholder>
+                    <placeholder lang="de-DE">Bitte Vornamen eingeben</placeholder>
+                </text>
+            </constraints>
+        </rule-condition>
+    </rule-conditions>
+
+    <custom-fields>
+        <custom-field-set>
+            <name>swag_example_set</name>
+            <label lang="nl-NL">Voorbeeldset</label>
+            <label>Example Set</label>
+            <label lang="de-DE">Beispiel-Set</label>
+            <fields>
+                <text name="swag_code">
+                    <label lang="nl-NL">Voorbeeldveld</label>
+                    <label lang="de-DE">Beispielfeld</label>
+                    <label>Example field</label>
+                    <help-text lang="nl-NL">Voorbeeldveld</help-text>
+                    <help-text lang="de-DE">Beispielfeld</help-text>
+                    <help-text>Example field</help-text>
+                </text>
+                <float name="swag_test_float_field">
+                    <label lang="nl-NL">Test vlotterveld</label>
+                    <label lang="de-DE">Float-Feld testen</label>
+                    <label>Test float field</label>
+                    <help-text lang="nl-NL">Dit is een zwevend veld.</help-text>
+                    <help-text lang="de-DE">Dies ist ein Float-Feld.</help-text>
+                    <help-text>This is an float field.</help-text>
+                </float>
+            </fields>
+        </custom-field-set>
+    </custom-fields>
+
+</manifest>

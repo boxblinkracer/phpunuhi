@@ -8,6 +8,7 @@ use PHPUnuhi\Commands\FixMessCommand;
 use PHPUnuhi\Commands\FixSpellingCommand;
 use PHPUnuhi\Commands\FixStructureCommand;
 use PHPUnuhi\Commands\ImportCommand;
+use PHPUnuhi\Commands\ListTranslationKeysCommand;
 use PHPUnuhi\Commands\ListTranslationsCommand;
 use PHPUnuhi\Commands\MigrateCommand;
 use PHPUnuhi\Commands\ScanUsageCommand;
@@ -34,6 +35,7 @@ class AppManager
         $application = new Application('PHPUnuhi', PHPUnuhi::getVersion());
 
         $application->add(new StatusCommand());
+        $application->add(new ListTranslationKeysCommand());
         $application->add(new ListTranslationsCommand());
 
         $application->add(new ValidateCommand());

@@ -8,8 +8,10 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 ### Added
 
 - Add new **SpellCheckers** with support for Aspell and OpenAI. This allows to check misspelled words and automatically fix them.
+- Add new **Shopware 6** Storage option to support **config XML** files of Shopware plugins and apps. You can now validate config.xml, manifest.xml and more.
 - Add new **usage summary** when using Open AI. It shows the number of requests as well as the estimated costs. (approximate values, not guaranteed).
 - Add new **similarity validation** for translations. This allows to validate if translation keys are similar to each other.
+- Add new command **list:translation-keys**. The old list:translations command will now show all translations and the new one will show the keys only.
 - Allow DeepL / translator configuration with env variables (thx @Ocarthon)
 - Enable DeepL tag splitting on HTML input to also translate HTML fragments (thx @Ocarthon)
 - Support referencing Shopware snippets by their snippet set name (thx @Ocarthon)
@@ -29,6 +31,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 - Check all locales to determine the translation keys. Sometimes this did not happen and therefore not all keys have been detected (thx @Ocarthon)
 - Fix problem with translate command and force flag (thx @Ocarthon)
 - Fix problem where the error CLI output also showed successful test results and not just errors.
+- Fix problem with googleweb translator where a "." was not correctly kept after translation into a German word.
 
 ## [1.21.0]
 

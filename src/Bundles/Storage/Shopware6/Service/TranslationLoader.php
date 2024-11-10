@@ -8,7 +8,6 @@ use PHPUnuhi\Bundles\Storage\Shopware6\Models\Sw6Locale;
 use PHPUnuhi\Bundles\Storage\Shopware6\Repository\EntityTranslationRepository;
 use PHPUnuhi\Bundles\Storage\Shopware6\Repository\LanguageRepository;
 use PHPUnuhi\Bundles\Storage\Shopware6\Repository\SnippetRepository;
-use PHPUnuhi\Bundles\Storage\Shopware6\Shopware6Storage;
 use PHPUnuhi\Exceptions\ConfigurationException;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Models\Translation\TranslationSet;
@@ -20,6 +19,11 @@ class TranslationLoader
     use BinaryTrait;
     use StringTrait;
     use SnippetSetFinderTrait;
+
+    public const FIELD_BLACKLIST = [
+        'created_at',
+        'updated_at',
+    ];
 
 
     /**
@@ -142,7 +146,7 @@ class TranslationLoader
                 foreach ($dbRow as $property => $value) {
 
                     # also exclude a few things hardcoded because they just make no sense
-                    if (in_array($property, Shopware6Storage::FIELD_BLACKLIST)) {
+                    if (in_array($property, self::FIELD_BLACKLIST)) {
                         continue;
                     }
 
