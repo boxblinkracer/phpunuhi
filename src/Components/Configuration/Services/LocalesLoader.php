@@ -53,7 +53,7 @@ class LocalesLoader
             $iniSection = (string)$nodeLocale['iniSection'];
             $isBase = isset($nodeLocale['base']) && $this->getBool((string)$nodeLocale['base']);
 
-            $localeFile = $this->placholderProcessor->buildRealFilename(
+            $localeFile = $this->placholderProcessor->buildRealLocaleFilename(
                 $localeName,
                 $innerValue,
                 $basePath->getValue(),

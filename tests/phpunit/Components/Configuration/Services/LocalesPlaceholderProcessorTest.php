@@ -28,7 +28,7 @@ class LocalesPlaceholderProcessorTest extends TestCase
      */
     public function testEmptyFileNameReturnsEmptyString(): void
     {
-        $filename = $this->processor->buildRealFilename(
+        $filename = $this->processor->buildRealLocaleFilename(
             'en',
             '',
             'not-empty',
@@ -43,7 +43,7 @@ class LocalesPlaceholderProcessorTest extends TestCase
      */
     public function testPlainFile(): void
     {
-        $filename = $this->processor->buildRealFilename(
+        $filename = $this->processor->buildRealLocaleFilename(
             'en',
             './en/data.xml',
             '',
@@ -59,7 +59,7 @@ class LocalesPlaceholderProcessorTest extends TestCase
      */
     public function testPlainFileWithAbsolutePath(): void
     {
-        $filename = $this->processor->buildRealFilename(
+        $filename = $this->processor->buildRealLocaleFilename(
             'en',
             '/var/www/translations/en.json',
             '',
@@ -74,7 +74,7 @@ class LocalesPlaceholderProcessorTest extends TestCase
      */
     public function testPlainFileWithAbsolutePathAndConfigWorkdir(): void
     {
-        $filename = $this->processor->buildRealFilename(
+        $filename = $this->processor->buildRealLocaleFilename(
             'en',
             '/var/www/translations/en.json',
             '',
@@ -93,7 +93,7 @@ class LocalesPlaceholderProcessorTest extends TestCase
      */
     public function testConfigDirectoryWorkDirBeforePlainFile(): void
     {
-        $filename = $this->processor->buildRealFilename(
+        $filename = $this->processor->buildRealLocaleFilename(
             'en',
             './en/data.xml',
             '',
@@ -108,7 +108,7 @@ class LocalesPlaceholderProcessorTest extends TestCase
      */
     public function testPlaceholderLocaleInFilename(): void
     {
-        $filename = $this->processor->buildRealFilename(
+        $filename = $this->processor->buildRealLocaleFilename(
             'en',
             './snippets/data-%locale%.xml',
             '',
@@ -123,7 +123,7 @@ class LocalesPlaceholderProcessorTest extends TestCase
      */
     public function testPlaceholderLocaleUCInFilename(): void
     {
-        $filename = $this->processor->buildRealFilename(
+        $filename = $this->processor->buildRealLocaleFilename(
             'en',
             './snippets/data-%locale_uc%.xml',
             '',
@@ -138,7 +138,7 @@ class LocalesPlaceholderProcessorTest extends TestCase
      */
     public function testPlaceholderLocaleLCInFilename(): void
     {
-        $filename = $this->processor->buildRealFilename(
+        $filename = $this->processor->buildRealLocaleFilename(
             'EN',
             './snippets/data-%locale_lc%.xml',
             '',
@@ -153,7 +153,7 @@ class LocalesPlaceholderProcessorTest extends TestCase
      */
     public function testBasePathIsUsed(): void
     {
-        $filename = $this->processor->buildRealFilename(
+        $filename = $this->processor->buildRealLocaleFilename(
             'en',
             '%base_path%/data.xml',
             './translations/administration',
@@ -168,7 +168,7 @@ class LocalesPlaceholderProcessorTest extends TestCase
      */
     public function testAbsoluteBasePathIsUsed(): void
     {
-        $filename = $this->processor->buildRealFilename(
+        $filename = $this->processor->buildRealLocaleFilename(
             'en',
             '%base_path%/data.xml',
             '/translations/administration',
@@ -183,7 +183,7 @@ class LocalesPlaceholderProcessorTest extends TestCase
      */
     public function testBasePathWithUpperDirectory(): void
     {
-        $filename = $this->processor->buildRealFilename(
+        $filename = $this->processor->buildRealLocaleFilename(
             'en',
             '%base_path%/data.json',
             '../../translations/administration',
@@ -198,7 +198,7 @@ class LocalesPlaceholderProcessorTest extends TestCase
      */
     public function testBasePathWithUpperDirectoryWithoutConfigFile(): void
     {
-        $filename = $this->processor->buildRealFilename(
+        $filename = $this->processor->buildRealLocaleFilename(
             'en',
             '%base_path%/data.json',
             '../../translations/administration',
@@ -213,7 +213,7 @@ class LocalesPlaceholderProcessorTest extends TestCase
      */
     public function testBasePathIsSkippedIfNotUsed(): void
     {
-        $filename = $this->processor->buildRealFilename(
+        $filename = $this->processor->buildRealLocaleFilename(
             'en',
             'data.xml',
             './translations/administration',
@@ -228,7 +228,7 @@ class LocalesPlaceholderProcessorTest extends TestCase
      */
     public function testBasePathUsesLocalesPlaceholder(): void
     {
-        $filename = $this->processor->buildRealFilename(
+        $filename = $this->processor->buildRealLocaleFilename(
             'en-US',
             '%base_path%/data-%locale%.xml',
             './translations/%locale%/administration',
@@ -247,7 +247,7 @@ class LocalesPlaceholderProcessorTest extends TestCase
      */
     public function testPlaceholderLocaleUNInFilename(string $expect, string $locale): void
     {
-        $filename = $this->processor->buildRealFilename(
+        $filename = $this->processor->buildRealLocaleFilename(
             $locale,
             '%base_path%/storefront-%locale%.xml',
             './snippets/%locale_un%/',

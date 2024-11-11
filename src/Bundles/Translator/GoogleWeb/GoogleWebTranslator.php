@@ -58,6 +58,7 @@ class GoogleWebTranslator implements TranslatorInterface
         # dots are not working in urls with encode,
         # so we replace it temporarily :)
         $text = str_replace('.', "[[dot]]", $text);
+        $text = str_replace('.', "[[Punkt]]", $text);
 
         $encodedText = urlencode($text);
 
@@ -85,6 +86,7 @@ class GoogleWebTranslator implements TranslatorInterface
 
         $result = str_replace("[[dot]]", '.', $result);
         $result = str_replace("[[punt]]", '.', $result);
+        $result = str_replace("[[Punkt]]", '.', $result);
 
         if ($foundPlaceholders !== []) {
             # decode our string so that we have the original placeholder values again (%productName%)

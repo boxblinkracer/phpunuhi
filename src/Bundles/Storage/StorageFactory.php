@@ -75,12 +75,12 @@ class StorageFactory
     {
         $this->storages = [];
 
-        $this->storages[] = new  JsonStorage();
-        $this->storages[] = new  IniStorage();
-        $this->storages[] = new  PhpStorage();
-        $this->storages[] = new  PoStorage();
-        $this->storages[] = new  YamlStorage();
-        $this->storages[] = new  Shopware6Storage();
+        $this->storages[] = new JsonStorage();
+        $this->storages[] = new IniStorage();
+        $this->storages[] = new PhpStorage();
+        $this->storages[] = new PoStorage();
+        $this->storages[] = new YamlStorage();
+        $this->storages[] = new Shopware6Storage();
     }
 
     /**

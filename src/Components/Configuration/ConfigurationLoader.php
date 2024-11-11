@@ -9,10 +9,12 @@ use PHPUnuhi\Configuration\Services\ConfigurationValidator;
 use PHPUnuhi\Configuration\Services\CoverageLoader;
 use PHPUnuhi\Configuration\Services\FilterLoader;
 use PHPUnuhi\Configuration\Services\LocalesLoader;
+use PHPUnuhi\Configuration\Services\LocalesPlaceholderProcessor;
 use PHPUnuhi\Configuration\Services\ProtectionLoader;
 use PHPUnuhi\Configuration\Services\RulesLoader;
 use PHPUnuhi\Configuration\Services\StyleLoader;
 use PHPUnuhi\Exceptions\ConfigurationException;
+use PHPUnuhi\Models\Configuration\Attribute;
 use PHPUnuhi\Models\Configuration\CaseStyleSetting;
 use PHPUnuhi\Models\Configuration\Configuration;
 use PHPUnuhi\Models\Configuration\Coverage\TranslationSetCoverage;
@@ -79,6 +81,11 @@ class ConfigurationLoader
      */
     private $bufferTranslationSetCoverages;
 
+    /**
+     * @var LocalesPlaceholderProcessor
+     */
+    private $localesPlaceholderProcessor;
+
 
     /**
      * @param XmlLoaderInterface $xmlLoader
@@ -95,13 +102,14 @@ class ConfigurationLoader
         $this->filterLoader = new FilterLoader();
         $this->protectionLoader = new ProtectionLoader();
         $this->coverageLoader = new CoverageLoader();
+        $this->localesPlaceholderProcessor = new LocalesPlaceholderProcessor();
     }
 
 
     /**
      * @param string $rootConfigFilename
-     * @throws ConfigurationException
      * @throws Exception
+     * @throws ConfigurationException
      * @return Configuration
      */
     public function load(string $rootConfigFilename): Configuration
@@ -145,7 +153,7 @@ class ConfigurationLoader
             $this->loadPHPEnvironment($fileXmlNode);
 
             # load translation-sets
-            $suites = $this->loadTranslations($fileXmlNode, $fullFilename);
+            $suites = $this->loadTranslationSets($fileXmlNode, $fullFilename);
 
             $allSuites = array_merge($allSuites, $suites);
         }
@@ -233,7 +241,7 @@ class ConfigurationLoader
      * @throws Exception
      * @return TranslationSet[]
      */
-    private function loadTranslations(SimpleXMLElement $rootNode, string $configFilename): array
+    private function loadTranslationSets(SimpleXMLElement $rootNode, string $configFilename): array
     {
         $hasTranslationSets = ($rootNode->translations->children() !== null);
 
@@ -270,6 +278,14 @@ class ConfigurationLoader
                 $formatData = $this->parseFormat($nodeFormat);
                 $setFormat = $formatData['format'];
                 $setAttributes = $formatData['attributes'];
+
+                /** @var Attribute $attribute */
+                foreach ($setAttributes as $attribute) {
+                    if ($attribute->getName() === 'file') {
+                        $fixedPath = $this->localesPlaceholderProcessor->buildFullPath($attribute->getValue(), $configFilename);
+                        $attribute->setValue($fixedPath);
+                    }
+                }
             }
 
             if ($nodeProtection !== null) {

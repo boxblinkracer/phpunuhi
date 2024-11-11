@@ -13,6 +13,55 @@ trait CommandOutputTrait
 {
 
     /**
+     * @param array<mixed> $rows
+     * @param OutputInterface $output
+     * @return void
+     */
+    public function showTranslationTable(array $rows, OutputInterface $output): void
+    {
+        if ($rows === []) {
+            return;
+        }
+
+        $table = new Table($output);
+        $table->setStyle('default');
+
+        $headers = [
+            '#',
+            'Locale',
+            'Key',
+            'Value',
+        ];
+        $table->setHeaders($headers);
+
+        $rowData = [];
+
+        $intRowIndex = 1;
+
+        foreach ($rows as $row) {
+            $rowData[] = [
+                $intRowIndex,
+                ' ' . $row[0] . ' ',
+                ' ' . $row[1] . ' ',
+                ' ' . $row[2] . ' ',
+            ];
+
+            # don't add as last line
+            if ($row !== end($rows)) {
+                $rowData[] = new TableSeparator();
+            }
+
+            $intRowIndex++;
+        }
+        $table->setRows($rowData);
+
+        $table->render();
+
+        $output->writeln('');
+    }
+
+
+    /**
      * @param ValidationTest[] $rows
      * @param OutputInterface $output
      * @return void

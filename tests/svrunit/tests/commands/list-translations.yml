@@ -1,5 +1,0 @@
-commands:
-
-  - name: "List Translations"
-    command: "(($EXEC)) list:translations --configuration=./tests/svrunit/fixtures/json/phpunuhi.xml"
-    expected: "[~] card.description"

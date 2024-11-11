@@ -290,14 +290,6 @@
         </xs:simpleContent>
     </xs:complexType>
 
-    <xs:complexType name="typeFormatShopware6">
-        <xs:simpleContent>
-            <xs:extension base="xs:string">
-                <xs:attribute name="entity" type="xs:string" use="required"/>
-            </xs:extension>
-        </xs:simpleContent>
-    </xs:complexType>
-
     <xs:complexType name="typeFormatYAML">
         <xs:simpleContent>
             <xs:extension base="xs:string">
@@ -307,6 +299,23 @@
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>
+
+    <xs:complexType name="typeFormatShopware6">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="type" type="typeShopware6" use="required"/>
+                <xs:attribute name="file" type="xs:string" use="optional"/>
+                <xs:attribute name="entity" type="xs:string" use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="typeShopware6">
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="config"/>
+            <xs:enumeration value="entity"/>
+        </xs:restriction>
+    </xs:simpleType>
 
     <!-- ================================================================================================================================ -->
 
