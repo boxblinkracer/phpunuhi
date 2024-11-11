@@ -947,7 +947,7 @@ instead of an entity translation table.
 Shopware Plugins and Apps can also have configuration files based on XML.
 These files contain translations for the plugin itself, flow actions and way more.
 
-You can now also use PHPUnuhi to validate and maintain these translations too.
+You can now also use PHPUnuhi to validate and maintain these translations.
 
 Please provide the path to the configuration file in the **file** attribute and also make sure to set a **base** locale.
 PHPUnuhi will then automatically detect if it is a config.xml, a manifest.xml or a different configuration type of Shopware.
@@ -963,11 +963,11 @@ The following configuration types are currently supported:
 <phpunuhi>
     <translations>
 
-        <set name="config">
+        <set name="plugin-settings">
             <format>
                 <shopware6 type="config" file="./Resources/config.xml"/>
             </format>
-            <locales base="true">
+            <locales>
                 <locale name="en-GB" base="true"></locale>
                 <locale name="nl-NL"></locale>
             </locales>
