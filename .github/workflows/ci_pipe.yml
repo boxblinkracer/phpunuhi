@@ -12,7 +12,7 @@ on:
 
 
 env:
-  PHP_VERSION: 8.3
+  PHP_VERSION: 8.2
 
 jobs:
 
