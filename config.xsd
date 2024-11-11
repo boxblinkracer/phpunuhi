@@ -294,6 +294,7 @@
         <xs:simpleContent>
             <xs:extension base="xs:string">
                 <xs:attribute name="entity" type="xs:string" use="required"/>
+                <xs:attribute name="mainLocale" type="xs:string" use="optional"/>
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>
