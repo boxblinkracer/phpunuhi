@@ -40,4 +40,13 @@ class Attribute
     {
         return $this->value;
     }
+
+    /**
+     * @param string $fixedPath
+     * @return void
+     */
+    public function setValue(string $fixedPath): void
+    {
+        $this->value = $fixedPath;
+    }
 }

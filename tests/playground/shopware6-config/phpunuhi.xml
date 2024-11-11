@@ -1,0 +1,41 @@
+<phpunuhi
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../config.xsd"
+>
+    <translations>
+
+        <set name="config">
+            <format>
+                <shopware6 type="config" file="./configs/config.xml"/>
+            </format>
+            <locales>
+                <locale name="de-DE"></locale>
+                <locale name="en-GB" base="true"></locale>
+                <locale name="nl-NL"></locale>
+            </locales>
+        </set>
+
+        <set name="manifest">
+            <format>
+                <shopware6 type="config" file="./configs/manifest.xml"/>
+            </format>
+            <locales>
+                <locale name="de-DE"></locale>
+                <locale name="en-GB" base="true"></locale>
+                <locale name="nl-NL"></locale>
+            </locales>
+        </set>
+
+        <set name="flow-action">
+            <format>
+                <shopware6 type="config" file="./configs/flow.xml"/>
+            </format>
+            <locales>
+                <locale name="de-DE"></locale>
+                <locale name="en-GB" base="true"></locale>
+                <locale name="nl-NL"></locale>
+            </locales>
+        </set>
+
+    </translations>
+</phpunuhi>

@@ -10,13 +10,37 @@ class LocalesPlaceholderProcessor
 
 
     /**
+     * Builds a full path that can be used to read the file.
+     * Some files are relative in the configuration file and therefore their full path
+     * would be the configuration file's directory + the relative path.
+     * TODO this is just placed in here for now to avoid duplicate code, although it has nothing to do with locales
+     * @param string $filename
+     * @param string $configFilename
+     * @return string
+     */
+    public function buildFullPath(string $filename, string $configFilename): string
+    {
+        $isAlreadyAbsoluteLocaleFile = $this->stringDoesStartsWith($filename, '/');
+
+        if ($isAlreadyAbsoluteLocaleFile) {
+            $configuredFileName = $filename;
+        } elseif ($configFilename !== '') {
+            $configuredFileName = dirname($configFilename) . '/' . $filename;
+        } else {
+            $configuredFileName = $filename;
+        }
+
+        return $configuredFileName;
+    }
+
+    /**
      * @param string $localeName
      * @param string $localeFile
      * @param string $basePath
      * @param string $configFilename
      * @return string
      */
-    public function buildRealFilename(string $localeName, string $localeFile, string $basePath, string $configFilename): string
+    public function buildRealLocaleFilename(string $localeName, string $localeFile, string $basePath, string $configFilename): string
     {
         if ($localeFile === '') {
             return '';
@@ -27,15 +51,7 @@ class LocalesPlaceholderProcessor
             $localeFile = str_replace('%base_path%', $basePath, $localeFile);
         }
 
-        $isAlreadyAbsoluteLocaleFile = $this->stringDoesStartsWith($localeFile, '/');
-
-        if ($isAlreadyAbsoluteLocaleFile) {
-            $configuredFileName = $localeFile;
-        } elseif ($configFilename !== '') {
-            $configuredFileName = dirname($configFilename) . '/' . $localeFile;
-        } else {
-            $configuredFileName = $localeFile;
-        }
+        $configuredFileName = $this->buildFullPath($localeFile, $configFilename);
 
 
         $filename = file_exists($configuredFileName) ? (string)realpath($configuredFileName) : $configuredFileName;

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow-extensions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/shopware/trunk/src/Core/Framework/App/Flow/Schema/flow-1.0.xsd">
+    <flow-actions>
+        <flow-action>
+            <meta>
+                <name>slackmessage</name>
+                <label lang="nl-NL">Nee</label>
+                <label>No</label>
+                <label lang="de-DE">Nein</label>
+                <badge>Slack</badge>
+                <description lang="nl-NL">Slack berichtbeschrijving verzenden</description>
+                <description>Slack send message description</description>
+                <description lang="de-DE">Dies ist die Beispielbeschreibung für app</description>
+                <url>https://hooks.slack.com/services/{id}</url>
+                <sw-icon>default-communication-speech-bubbles</sw-icon>
+                <icon>slack.png</icon>
+                <requirements>orderAware</requirements>
+                <requirements>customerAware</requirements>
+            </meta>
+            <config>
+                <input-field type="text">
+                    <name>message</name>
+                    <label lang="nl-NL">Bericht</label>
+                    <label>Message</label>
+                    <label lang="de-DE">Gegenstand</label>
+                    <place-holder lang="nl-NL">Tijdelijke aanduiding</place-holder>
+                    <place-holder>Placeholder</place-holder>
+                    <place-holder lang="de-DE">Platzhalter</place-holder>
+                    <required>true</required>
+                    <helpText lang="nl-NL">Help-tekst</helpText>
+                    <helpText>Help Text</helpText>
+                    <helpText lang="de-DE">Hilfstext</helpText>
+                </input-field>
+                <input-field type="single-select">
+                    <name>changeShopwareOrderStatus</name>
+                    <label lang="nl-NL">Wijzigt de bestelstatus naar verzonden</label>
+                    <label lang="de-DE">Ändert den Bestellstatus in „Versendet“.</label>
+                    <label>Changes the order status to shipped</label>
+                    <defaultValue>no</defaultValue>
+                    <options>
+                        <option value="yes">
+                            <label lang="nl-NL">Ja</label>
+                            <label>Yes</label>
+                            <label lang="de-DE">Ja</label>
+                        </option>
+                        <option value="no">
+                            <label lang="nl-NL">Nee</label>
+                            <label>No</label>
+                            <label lang="de-DE">Nein</label>
+                        </option>
+                    </options>
+                </input-field>
+            </config>
+        </flow-action>
+    </flow-actions>
+</flow-extensions>

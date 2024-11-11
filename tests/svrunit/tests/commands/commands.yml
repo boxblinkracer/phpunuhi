@@ -3,8 +3,8 @@ commands:
     command: "(($EXEC)) status --configuration=./tests/svrunit/fixtures/json/phpunuhi.xml"
     expected: "Coverage: 100%"
 
-  - name: "List Translations"
-    command: "(($EXEC)) list:translations --configuration=./tests/svrunit/fixtures/json/phpunuhi.xml"
+  - name: "List Translation Keys"
+    command: "(($EXEC)) list:translation-keys --configuration=./tests/svrunit/fixtures/json/phpunuhi.xml"
     expected: "[~] card.description"
 
   - name: "Validate (deprecated))"

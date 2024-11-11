@@ -29,11 +29,10 @@ Please keep that in mind to avoids misinterpreting the goal of this framework.
 Now that you know this, let's get started!
 
 <!-- TOC -->
-
-* [1. Basic Concept](#1-basic-concept)
-* [2. Installation](#2-installation)
-* [3. Configuration](#3-configuration)
-* [4. Commands](#4-commands)
+  * [1. Basic Concept](#1-basic-concept)
+  * [2. Installation](#2-installation)
+  * [3. Configuration](#3-configuration)
+  * [4. Commands](#4-commands)
     * [4.1 Validate All Command](#41-validate-all-command)
     * [4.2 Validate Mess Command](#42-validate-mess-command)
     * [4.3 Validate Coverage Command](#43-validate-coverage-command)
@@ -47,63 +46,65 @@ Now that you know this, let's get started!
     * [4.11 Status Command](#411-status-command)
     * [4.12 Fix Spelling Command](#412-fix-spelling-command)
     * [4.13 Translate Command](#413-translate-command)
-    * [4.14 List Translations Command](#414-list-translations-command)
-    * [4.15 Migration Command](#415-migration-command)
-    * [4.16 Scan Usage Command](#416-scan-usage-command)
-* [5. Validation Processes](#5-validation-processes)
+    * [4.14 List Translation Keys Command](#414-list-translation-keys-command)
+    * [4.15 List Translations Command](#415-list-translations-command)
+    * [4.16 Migration Command](#416-migration-command)
+    * [4.17 Scan Usage Command](#417-scan-usage-command)
+  * [5. Validation Processes](#5-validation-processes)
     * [5.1 Structure Validation](#51-structure-validation)
     * [5.2 Empty content Validation](#52-empty-content-validation)
     * [5.3 Case-Style Validation](#53-case-style-validation)
     * [5.4 Rules Validation](#54-rules-validation)
-* [6. Use Cases](#6-use-cases)
+  * [6. Use Cases](#6-use-cases)
     * [6.1 Validation in CI pipeline](#61-validation-in-ci-pipeline)
     * [6.2 Working with external translation agencies](#62-working-with-external-translation-agencies)
     * [6.3 Live WebEdit with HTML](#63-live-webedit-with-html)
     * [6.4 Automatic Translation with Google, DeepL, ...](#64-automatic-translation-with-google-deepl-)
-* [7. Warning](#7-warning)
-* [8. Appendix](#8-appendix)
-    * [8.1 Imports](#81-imports)
-    * [8.2 Locales](#82-locales)
+  * [7. Warning](#7-warning)
+  * [8. Appendix](#8-appendix)
+      * [8.1 Imports](#81-imports)
+      * [8.2 Locales](#82-locales)
     * [8.3 Storage Formats](#83-storage-formats)
-        * [8.3.1 Formats](#831-formats)
-            * [8.3.1.1 JSON](#8311-json)
-            * [8.3.1.2 INI](#8312-ini)
-            * [8.3.1.3 PO](#8313-po)
-            * [8.3.1.4 PHP](#8314-php)
-            * [8.3.1.5 Shopware 6](#8315-shopware-6)
-            * [8.3.1.6 YAML](#8316-yaml)
-        * [8.3.2 Custom Formats](#832-custom-formats)
+      * [8.3.1 Formats](#831-formats)
+        * [8.3.1.1 JSON](#8311-json)
+        * [8.3.1.2 INI](#8312-ini)
+        * [8.3.1.3 PO](#8313-po)
+        * [8.3.1.4 PHP](#8314-php)
+        * [8.3.1.5 YAML](#8315-yaml)
+        * [8.3.1.6 Shopware 6](#8316-shopware-6)
+          * [Entities](#entities)
+          * [Configs](#configs)
+      * [8.3.2 Custom Formats](#832-custom-formats)
     * [8.4 Filters](#84-filters)
     * [8.5 Groups](#85-groups)
     * [8.6 Case Styles](#86-case-styles)
     * [8.7 Rules](#87-rules)
-        * [8.8.1 Nesting Depth](#881-nesting-depth)
-        * [8.8.2 Key Length](#882-key-length)
-        * [8.8.3 Disallowed Texts](#883-disallowed-texts)
-        * [8.8.4 Duplicate Content](#884-duplicate-content)
-        * [8.8.5 Empty Content](#885-empty-content)
+      * [8.8.1 Nesting Depth](#881-nesting-depth)
+      * [8.8.2 Key Length](#882-key-length)
+      * [8.8.3 Disallowed Texts](#883-disallowed-texts)
+      * [8.8.4 Duplicate Content](#884-duplicate-content)
+      * [8.8.5 Empty Content](#885-empty-content)
     * [8.8 PHP ENV Variables](#88-php-env-variables)
     * [8.9 Exchange Formats](#89-exchange-formats)
-        * [8.9.1 CSV](#891-csv)
-        * [8.9.2 HTML / WebEdit](#892-html--webedit)
-        * [8.9.3 JSON](#893-json)
-        * [8.9.4 Custom Exchange Formats](#894-custom-exchange-formats)
+      * [8.9.1 CSV](#891-csv)
+      * [8.9.2 HTML / WebEdit](#892-html--webedit)
+      * [8.9.3 JSON](#893-json)
+      * [8.9.4 Custom Exchange Formats](#894-custom-exchange-formats)
     * [8.10 Translator Services](#810-translator-services)
-        * [8.10.1 DeepL](#8101-deepl)
-        * [8.10.2 Google Cloud Translate](#8102-google-cloud-translate)
-        * [8.10.3 Google Web Translate](#8103-google-web-translate)
-        * [8.10.4 OpenAI GPT Translate](#8104-openai-gpt-translate)
-        * [8.10.5 Custom Translators](#8105-custom-translators)
+      * [8.10.1 DeepL](#8101-deepl)
+      * [8.10.2 Google Cloud Translate](#8102-google-cloud-translate)
+      * [8.10.3 Google Web Translate](#8103-google-web-translate)
+      * [8.10.4 OpenAI GPT Translate](#8104-openai-gpt-translate)
+      * [8.10.5 Custom Translators](#8105-custom-translators)
     * [8.11 Validation Reports](#811-validation-reports)
-        * [8.11.1 JUnit Report](#8111-junit-report)
-        * [8.11.2 JSON Report](#8112-json-report)
+      * [8.11.1 JUnit Report](#8111-junit-report)
+      * [8.11.2 JSON Report](#8112-json-report)
     * [8.12 Protection](#812-protection)
     * [8.13 Coverage](#813-coverage)
     * [8.14 Scanners](#814-scanners)
     * [8.15 Spell Checkers](#815-spell-checkers)
-        * [8.15.1 Aspell](#8151-aspell)
-        * [8.15.2 OpenAI](#8152-openai)
-
+      * [8.15.1 Aspell](#8151-aspell)
+      * [8.15.2 OpenAI](#8152-openai)
 <!-- TOC -->
 
 
@@ -501,16 +502,24 @@ php vendor/bin/phpunuhi translate ...  --source=en
    <img src="/.github/assets/translate.png">
 </p>
 
-### 4.14 List Translations Command
+### 4.14 List Translation Keys Command
 
 This command allows you to output all available translation keys in your Translation-Sets.
 Use this to debug and analyse your translations.
 
 ```bash 
+php vendor/bin/phpunuhi list:translation-keys 
+```
+
+### 4.15 List Translations Command
+
+This command shows all found translations and their values in a small and compact format.
+
+```bash 
 php vendor/bin/phpunuhi list:translations 
 ```
 
-### 4.15 Migration Command
+### 4.16 Migration Command
 
 It's also possible to migrate your translations from one storage to another.
 Just use the migration command and provide the target storage as output format.
@@ -519,7 +528,7 @@ Just use the migration command and provide the target storage as output format.
 php vendor/bin/phpunuhi migrate --output=json
 ```
 
-### 4.16 Scan Usage Command
+### 4.17 Scan Usage Command
 
 Usually you have template files that use your translation keys.
 The scanner command helps to scan all these files and see if all your translation keys are actually used in there.
@@ -812,15 +821,52 @@ This storage type makes sure to read and also write PHP files that return a sing
 </set>
 ```
 
-##### 8.3.1.5 Shopware 6
+##### 8.3.1.5 YAML
 
-| Format Attributes | Default | Description                            | 
-|-------------------|---------|----------------------------------------|
-| entity            |         | The entity your Translation-Set covers |
+| Format Attributes | Default | Description                             | 
+|-------------------|---------|-----------------------------------------|
+| indent            | 2       | Set a custom YAML indent for the spaces |
+| sort              | false   | Turn on or off the alphabetical sorting |
+| eol-last          | false   | Adds a new line at the end of the file  |
+
+The YAML format means that your files are stored in separate YAML files.
+Every locale has its own YAML file.
+The YAML structure across all files of a set should match.
+
+```xml
+
+<set name="sample">
+    <format>
+        <yaml indent="4" sort="true"/>
+    </format>
+    <locales>
+        <locale name="de">./snippets/de.yaml</locale>
+        <locale name="en">./snippets/en.yaml</locale>
+    </locales>
+</set>
+```
+
+##### 8.3.1.6 Shopware 6
+
+| Format Attributes | Default | Description                                                                                                                  | 
+|-------------------|---------|------------------------------------------------------------------------------------------------------------------------------|
+| type              | entity  | Whether you want to check for entities against the database or configuration files such as config.xml, manifest.xml and more |
+| entity            |         | The entity your Translation-Set covers                                                                                       |
+| file              |         | In case of type "config", you have to define a filename like ./Resources/config.xml                                          |
 
 The Shopware 6 format allows you to use PHPUnuhi directly on the database and the Shopware entities.
+But also validation on configuration files for Plugins and Apps like config.xml and manifest.xml are possible.
 
-What do we mean with entities? These are real objects of the platform, stored within the database.
+You can switch modes by using the **type** attribute.
+
+The following types are possible:
+
+* entity
+* config
+
+###### Entities
+
+Entities are real objects of the platform, stored within the database.
 This means **snippets**, **products**, **salutations**, **shipping methods** and more. Basically, everything that has a
 **_translation** table in the database.
 
@@ -896,29 +942,39 @@ instead of an entity translation table.
 </phpunuhi>
 ```
 
-##### 8.3.1.6 YAML
+###### Configs
 
-| Format Attributes | Default | Description                             | 
-|-------------------|---------|-----------------------------------------|
-| indent            | 2       | Set a custom YAML indent for the spaces |
-| sort              | false   | Turn on or off the alphabetical sorting |
-| eol-last          | false   | Adds a new line at the end of the file  |
+Shopware Plugins and Apps can also have configuration files based on XML.
+These files contain translations for the plugin itself, flow actions and way more.
 
-The YAML format means that your files are stored in separate YAML files.
-Every locale has its own YAML file.
-The YAML structure across all files of a set should match.
+You can now also use PHPUnuhi to validate and maintain these translations too.
+
+Please provide the path to the configuration file in the **file** attribute and also make sure to set a **base** locale.
+PHPUnuhi will then automatically detect if it is a config.xml, a manifest.xml or a different configuration type of Shopware.
+
+The following configuration types are currently supported:
+
+* config.xml
+* manifest.xml
+* flow-actions.xml and flow.xml
 
 ```xml
 
-<set name="sample">
-    <format>
-        <yaml indent="4" sort="true"/>
-    </format>
-    <locales>
-        <locale name="de">./snippets/de.yaml</locale>
-        <locale name="en">./snippets/en.yaml</locale>
-    </locales>
-</set>
+<phpunuhi>
+    <translations>
+
+        <set name="config">
+            <format>
+                <shopware6 type="config" file="./Resources/config.xml"/>
+            </format>
+            <locales base="true">
+                <locale name="en-GB" base="true"></locale>
+                <locale name="nl-NL"></locale>
+            </locales>
+        </set>
+
+    </translations>
+</phpunuhi>
 ```
 
 #### 8.3.2 Custom Formats

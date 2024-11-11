@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/platform/master/src/Core/System/SystemConfig/Schema/config.xsd">
+
+    <card>
+        <title lang="nl-NL">API</title>
+        <title>API</title>
+        <title lang="de-DE">API</title>
+
+        <input-field type="password">
+            <name>liveKey</name>
+            <copyable>true</copyable>
+            <label>Live Key</label>
+            <label lang="de-DE">Live Key</label>
+            <label lang="nl-NL">Live-sleutel</label>
+        </input-field>
+        <input-field type="password">
+            <name>testKey</name>
+            <copyable>true</copyable>
+            <label lang="de-DE">Testschlüssel</label>
+            <label>Test Key</label>
+            <label lang="nl-NL">Test-sleutel</label>
+        </input-field>
+    </card>
+
+    <card>
+        <title>Subscriptions</title>
+        <title lang="de-DE">Abonnements</title>
+        <title lang="nl-NL">Abonnementen</title>
+        <input-field type="bool">
+            <name>subscriptionsEnabled</name>
+            <defaultValue>true</defaultValue>
+            <label>Enable subscriptions</label>
+            <label lang="de-DE">Abonnements aktivieren</label>
+            <label lang="nl-NL">Activeer abonnementen</label>
+            <helpText lang="nl-NL">Schakelt de volledige abonnementsfunctionaliteit in of uit. Laad de administratie opnieuw nadat u deze instelling heeft gewijzigd.</helpText>
+            <helpText lang="de-DE">Aktiviert oder deaktiviert die vollständige Abonnementfunktionalität. Bitte laden Sie die Administration neu, nachdem Sie diese Einstellung geändert haben.</helpText>
+            <helpText>Enables or disables the full subscription functionality. Please reload the administration after changing this setting.</helpText>
+        </input-field>
+    </card>
+
+</config>
