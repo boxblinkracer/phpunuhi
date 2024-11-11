@@ -3,6 +3,10 @@ name: PR Pipeline
 on: [ pull_request, workflow_dispatch ]
 
 
+env:
+  PHP_VERSION: 8.3
+
+
 jobs:
 
   install_dev:
@@ -14,7 +18,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 7.4
+          php-version: ${{ env.PHP_VERSION }}
         # -----------------------------------
       - name: Mount Cache
         uses: actions/cache@v3
@@ -38,7 +42,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 7.4
+          php-version: ${{ env.PHP_VERSION }}
         # -----------------------------------
       - name: PHP Syntax Checks
         run: make phpcheck -B
@@ -53,7 +57,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 7.4
+          php-version: ${{ env.PHP_VERSION }}
         # -----------------------------------
       - name: Mount Cache
         uses: actions/cache@v3
@@ -75,7 +79,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.2
+          php-version: ${{ env.PHP_VERSION }}
         # -----------------------------------
       - name: Mount Cache
         uses: actions/cache@v3
@@ -97,7 +101,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.2
+          php-version: ${{ env.PHP_VERSION }}
         # -----------------------------------
       - name: Mount Cache
         uses: actions/cache@v3
@@ -119,7 +123,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 7.4
+          php-version: ${{ env.PHP_VERSION }}
         # -----------------------------------
       - name: Mount Cache
         uses: actions/cache@v3
@@ -141,7 +145,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 7.4
+          php-version: ${{ env.PHP_VERSION }}
         # -----------------------------------
       - name: Mount Cache
         uses: actions/cache@v3
@@ -163,7 +167,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 7.4
+          php-version: ${{ env.PHP_VERSION }}
         # -----------------------------------
       - name: Mount Cache
         uses: actions/cache@v3
@@ -185,7 +189,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 7.4
+          php-version: ${{ env.PHP_VERSION }}
         # -----------------------------------
       - name: Mount Cache
         uses: actions/cache@v3
@@ -209,7 +213,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 7.4
+          php-version: ${{ env.PHP_VERSION }}
           ini-values: phar.readonly=OFF
         # -----------------------------------
       - name: Build PHAR
