@@ -2,6 +2,7 @@
 
 namespace PHPUnuhi\Bundles\Storage\JSON\Services;
 
+use Exception;
 use PHPUnuhi\Bundles\Storage\StorageHierarchy;
 use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Traits\ArrayTrait;
@@ -26,7 +27,7 @@ class JsonLoader
             $foundTranslations = json_decode($snippetJson, true);
 
             if (json_last_error() !== JSON_ERROR_NONE) {
-                throw new \Exception('Error decoding JSON file: ' . json_last_error_msg());
+                throw new Exception('Error decoding JSON file: ' . json_last_error_msg());
             }
 
             if ($foundTranslations === false) {
