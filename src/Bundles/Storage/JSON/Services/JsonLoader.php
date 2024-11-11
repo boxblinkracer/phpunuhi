@@ -25,6 +25,10 @@ class JsonLoader
         if ($snippetJson !== '' && $snippetJson !== '0') {
             $foundTranslations = json_decode($snippetJson, true);
 
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                throw new \Exception('Error decoding JSON file: ' . json_last_error_msg());
+            }
+
             if ($foundTranslations === false) {
                 $foundTranslations = [];
             }

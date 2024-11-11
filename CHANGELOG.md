@@ -32,6 +32,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 - Fix problem with translate command and force flag (thx @Ocarthon)
 - Fix problem where the error CLI output also showed successful test results and not just errors.
 - Fix problem with googleweb translator where a "." was not correctly kept after translation into a German word.
+- Fix problem where the JSON storage format cleared all translations when a JSON was not valid and any kind of write-command was used like fix-structure.
 
 ## [1.21.0]
 
