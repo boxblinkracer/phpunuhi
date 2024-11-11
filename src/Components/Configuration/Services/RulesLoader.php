@@ -49,7 +49,7 @@ class RulesLoader
             }
         }
 
-        if ($duplicateContent !== null && $duplicateContent->children() !== null) {
+        if ($duplicateContent !== null && $duplicateContent->children() instanceof SimpleXMLElement) {
             $foundLocales = [];
             /** @var SimpleXMLElement $localeNode */
             foreach ($duplicateContent->children() as $localeNode) {
@@ -60,7 +60,7 @@ class RulesLoader
             $rules[] = new Rule(Rules::DUPLICATE_CONTENT, $foundLocales);
         }
 
-        if ($emptyContent !== null && $emptyContent->children() !== null) {
+        if ($emptyContent !== null && $emptyContent->children() instanceof SimpleXMLElement) {
             $foundKeys = [];
             foreach ($rulesNode->emptyContent->children() as $keyNode) {
                 $keyName = $this->getAttribute('name', $keyNode)->getValue();

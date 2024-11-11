@@ -37,7 +37,7 @@ class DeepLTranslatorTest extends TestCase
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      * @return void
      */
     public function testSetOptionsWithMissingKeyThrowsException(): void
@@ -53,7 +53,7 @@ class DeepLTranslatorTest extends TestCase
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      * @return void
      */
     public function testSetOptions(): void

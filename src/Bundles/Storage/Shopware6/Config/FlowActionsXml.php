@@ -279,7 +279,7 @@ class FlowActionsXml implements ShopwareXmlInterface
     {
         $config = $this->getFlowActionConfig($configName, $actionName, $xpath);
 
-        /** @var \DOMElement[] $nodes */
+        /** @var DOMElement[] $nodes */
         $nodes = $xpath->query('//options/*', $config);
 
         return $nodes;

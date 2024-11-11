@@ -33,7 +33,7 @@ class OpenAITranslatorTest extends TestCase
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      * @return void
      */
     public function testSetOptionsWithMissingKeyThrowsException(): void
@@ -49,7 +49,7 @@ class OpenAITranslatorTest extends TestCase
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      * @return void
      */
     public function testSetOptions(): void

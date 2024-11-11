@@ -117,7 +117,7 @@ class OpenAISpellChecker implements SpellCheckerInterface
     /**
      * @param Text $text
      * @param string $locale
-     * @throws \Exception
+     * @throws Exception
      * @return string
      */
     public function fixSpelling(Text $text, string $locale): string

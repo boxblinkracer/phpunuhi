@@ -41,6 +41,6 @@ class MjmlScanner implements ScannerInterface
 
         preg_match($pattern, $content, $matches);
 
-        return (!empty($matches));
+        return ($matches !== []);
     }
 }

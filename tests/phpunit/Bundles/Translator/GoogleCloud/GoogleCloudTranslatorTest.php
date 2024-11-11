@@ -34,7 +34,7 @@ class GoogleCloudTranslatorTest extends TestCase
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      * @return void
      */
     public function testSetOptions(): void
@@ -50,7 +50,7 @@ class GoogleCloudTranslatorTest extends TestCase
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      * @return void
      */
     public function testSetOptionsWithMissingKeyThrowsException(): void
