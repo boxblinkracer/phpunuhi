@@ -105,7 +105,7 @@ ifndef version
 	$(error version is not set)
 endif
 	rm -f ./devops/docker_release/phpunuhi.phar || true
-	docker rmi -f $(shell docker images boxblinkracer/phpunuhi -q)
+	docker rmi -f $(shell docker images boxblinkracer/phpunuhi -q) || true
 	cp ./build/phpunuhi.phar ./devops/docker_release/phpunuhi.phar
 	cd ./devops/docker_release && DOCKER_BUILDKIT=1 docker build --no-cache -t boxblinkracer/phpunuhi:$(version) .
 
