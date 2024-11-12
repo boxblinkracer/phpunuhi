@@ -15,7 +15,6 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 - Allow DeepL / translator configuration with env variables (thx @Ocarthon)
 - Enable DeepL tag splitting on HTML input to also translate HTML fragments (thx @Ocarthon)
 - Support referencing Shopware snippets by their snippet set name (thx @Ocarthon)
-- TranslatorInterfaces do now have a fixSpelling option. A new command "fix:spelling" has been introduced to let services fix misspelled translations.
 
 ### Changed
 
