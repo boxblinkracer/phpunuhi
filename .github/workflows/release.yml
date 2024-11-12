@@ -1,0 +1,35 @@
+name: Release Version
+run-name: Release ${{ github.event.inputs.version }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version'
+        required: true
+      setLatest:
+
+jobs:
+
+  # ------------------------------------------------------------------------------------------------------------------------
+
+  review:
+    name: Review Pipeline
+    uses: ./.github/workflows/step_review.yml
+    with:
+      PHP_VERSION: 8.2
+
+  # ------------------------------------------------------------------------------------------------------------------------
+
+  release:
+    name: Release Pipeline
+    uses: ./.github/workflows/step_release.yml
+    needs: [ review ]
+    secrets:
+      DOCKER_USERNAME: "${{ secrets.DOCKER_USERNAME }}"
+      DOCKER_PASSWORD: "${{ secrets.DOCKER_PASSWORD }}"
+      PACKAGIST_USER: "${{ secrets.PACKAGIST_USER }}"
+      PACKAGIST_TOKEN: "${{ secrets.PACKAGIST_TOKEN }}"
+    with:
+      VERSION: ${{ github.event.inputs.version }}
+      PHP_VERSION: 8.2
