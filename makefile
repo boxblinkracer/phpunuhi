@@ -98,7 +98,6 @@ svrunit: ##3 Runs all SVRUnit tests
 
 artifact: ##4 Create a ZIP file in the build folder
 	cd build && zip phpunuhi.zip phpunuhi.phar
-	cd build && rm -rf phpunuhi.phar
 
 pack: ##4 Builds the Docker image
 ifndef version
