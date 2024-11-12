@@ -72,7 +72,7 @@ Now that you know this, let's get started!
             * [8.3.1.3 PO](#8313-po)
             * [8.3.1.4 PHP](#8314-php)
             * [8.3.1.5 YAML](#8315-yaml)
-            * [8.3.1.6 RESX0](#8316-resx0)
+            * [8.3.1.6 RESX](#8316-resx)
             * [8.3.1.7 Shopware 6](#8317-shopware-6)
                 * [Entities](#entities)
                 * [Configs](#configs)
@@ -859,7 +859,7 @@ The YAML structure across all files of a set should match.
 </set>
 ```
 
-##### 8.3.1.6 RESX0
+##### 8.3.1.6 RESX
 
 The RESX format is used in .NET applications.
 It's a simple XML format that contains key-value pairs.
