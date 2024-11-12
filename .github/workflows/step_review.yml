@@ -25,7 +25,7 @@ jobs:
           php-version: ${{ inputs.PHP_VERSION }}
         # -----------------------------------
       - name: Mount Cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           key: cache-dev-${{ github.run_id }}
           path: |
@@ -64,7 +64,7 @@ jobs:
           php-version: ${{ inputs.PHP_VERSION }}
         # -----------------------------------
       - name: Mount Cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           key: cache-dev-${{ github.run_id }}
           path: |
@@ -86,7 +86,7 @@ jobs:
           php-version: ${{ inputs.PHP_VERSION }}
         # -----------------------------------
       - name: Mount Cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           key: cache-dev-${{ github.run_id }}
           path: |
@@ -108,7 +108,7 @@ jobs:
           php-version: ${{ inputs.PHP_VERSION }}
         # -----------------------------------
       - name: Mount Cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           key: cache-dev-${{ github.run_id }}
           path: |
@@ -130,7 +130,7 @@ jobs:
           php-version: ${{ inputs.PHP_VERSION }}
         # -----------------------------------
       - name: Mount Cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           key: cache-dev-${{ github.run_id }}
           path: |
@@ -152,7 +152,7 @@ jobs:
           php-version: ${{ inputs.PHP_VERSION }}
         # -----------------------------------
       - name: Mount Cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           key: cache-dev-${{ github.run_id }}
           path: |
