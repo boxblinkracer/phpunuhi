@@ -22,52 +22,18 @@ jobs:
     name: Review Pipeline
     uses: ./.github/workflows/step_review.yml
     with:
-      PHP_VERSION: 8.2
+      PHP_VERSION: ${{ env.PHP_VERSION }}
 
   # ------------------------------------------------------------------------------------------------------------------------
 
-  build:
-    name: Build Binaries
-    needs: [ review ]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        # -----------------------------------
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ env.PHP_VERSION }}
-          ini-values: phar.readonly=OFF
-        # -----------------------------------
-      - name: Mount Cache
-        uses: actions/cache@v3
-        with:
-          key: cache-build-${{ github.run_id }}
-          path: |
-            build
-            vendor
-        # -----------------------------------
-      - name: Build Binaries
-        run: |
-          make prod
-          make build -B
-
-      - name: Build Artifacts
-        run: make artifact
-
-      - name: Build Docker Image
-        run: make pack version=dev-master
-
-  # ------------------------------------------------------------------------------------------------------------------------
-
-  packagist:
-    name: Update Packagist
-    runs-on: ubuntu-latest
-    needs: [ build ]
-    steps:
-      # -----------------------------------
-      - uses: actions/checkout@v4
-        # -----------------------------------
-      - name: Invoke Packagist Webhook
-        run: |
-          curl -XPOST -H'content-type:application/json' 'https://packagist.org/api/update-package?username=${{ secrets.PACKAGIST_USER }}&apiToken=${{ secrets.PACKAGIST_TOKEN }}' -d'{"repository":{"url":"https://packagist.org/packages/boxblinkracer/phpunuhi"}}'
+  release:
+    name: Release Pipeline
+    uses: ./.github/workflows/step_release.yml
+    secrets:
+      DOCKER_USERNAME: "${{ secrets.DOCKER_USERNAME }}"
+      DOCKER_PASSWORD: "${{ secrets.DOCKER_PASSWORD }}"
+      PACKAGIST_USER: "${{ secrets.PACKAGIST_USER }}"
+      PACKAGIST_TOKEN: "${{ secrets.PACKAGIST_TOKEN }}"
+    with:
+      VERSION: "dev-master"
+      PHP_VERSION: ${{ env.PHP_VERSION }}
