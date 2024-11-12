@@ -8,6 +8,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 ### Added
 
 - Add new **resx** storage format to support Windows applications.
+- Add new **Docker Image** for PHPUnuhi to run it in a container without installing in your project
 
 ## [1.22.0]
 

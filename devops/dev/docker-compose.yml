@@ -1,12 +1,10 @@
-version: "3.0"
-
 services:
 
   phpunuhi:
     container_name: phpunuhi
     image: dockware/flex:latest
     volumes:
-      - "../:/app"
+      - "../../:/app"
     ports:
       - "22:22"
     working_dir: /app

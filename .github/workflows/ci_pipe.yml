@@ -48,7 +48,15 @@ jobs:
             vendor
         # -----------------------------------
       - name: Build Binaries
-        run: make build -B
+        run: |
+          make prod
+          make build -B
+
+      - name: Build Artifacts
+        run: make artifact
+
+      - name: Build Docker Image
+        run: make pack version=dev-master
 
   # ------------------------------------------------------------------------------------------------------------------------
 

@@ -30,7 +30,7 @@ help:
 
 #------------------------------------------------------------------------------------------------
 
-install: ##1 Installs all prod dependencies
+prod: ##1 Installs all prod dependencies
 	composer install --no-dev
 
 dev: ##1 Installs all dev dependencies
@@ -41,7 +41,6 @@ clean: ##1 Clears all dependencies
 	rm -rf .reports
 
 build: ##1 Builds PHPUnuhi and creates phpunuhi.phar
-	@make install -B
 	@echo "===================================================================="
 	@echo "verifying if phar files can be created....phar.readonly has to be OFF"
 	@php -i | grep phar.readonly
@@ -97,6 +96,16 @@ svrunit: ##3 Runs all SVRUnit tests
 
 #------------------------------------------------------------------------------------------------
 
-release: ##4 Create a ZIP file in the build folder
+artifact: ##4 Create a ZIP file in the build folder
 	cd build && zip phpunuhi.zip phpunuhi.phar
 	cd build && rm -rf phpunuhi.phar
+
+pack: ##4 Builds the Docker image
+ifndef version
+	$(error version is not set)
+endif
+	rm -f ./devops/docker_release/phpunuhi.phar || true
+	docker rmi -f $(shell docker images boxblinkracer/phpunuhi -q)
+	cp ./build/phpunuhi.phar ./devops/docker_release/phpunuhi.phar
+	cd ./devops/docker_release && DOCKER_BUILDKIT=1 docker build --no-cache -t boxblinkracer/phpunuhi:$(version) .
+

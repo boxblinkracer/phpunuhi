@@ -23,3 +23,4 @@
 /tests/playground/php/.exports
 /tests/playground/shopware6-config/.exports
 /tests/playground/resx/.exports
+/devops/docker_release/phpunuhi.phar
