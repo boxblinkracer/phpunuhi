@@ -3,15 +3,11 @@ name: PR Pipeline
 on: [ pull_request, workflow_dispatch ]
 
 
-env:
-  PHP_VERSION: 8.2
-
-
 jobs:
 
   review:
     name: Review Pipeline
     uses: ./.github/workflows/step_review.yml
     with:
-      PHP_VERSION: ${{ env.PHP_VERSION }}
+      PHP_VERSION: 8.2
 
