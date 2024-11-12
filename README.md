@@ -190,11 +190,14 @@ You can also use the available Docker image:
 
 ```ruby 
 # just start it from the directory of your project
-docker run --rm -v $(pwd):/app boxblinkracer/phpunuhi:latest validate:all
+docker run --rm -v $(pwd):/app boxblinkracer/phpunuhi:dev-master validate:all
 
 # you can provide all arguments, just like with the composer version
-docker run --rm -v $(pwd):/app boxblinkracer/phpunuhi:latest validate:all --configuration=./phpunuhi.xml
+docker run --rm -v $(pwd):/app boxblinkracer/phpunuhi:dev-master validate:all --configuration=./phpunuhi.xml
 ```
+
+> Here is a list of all available Docker versions: https://registry.hub.docker.com/r/boxblinkracer/phpunuhi/tags
+> The latest dev-master can be used using the tag **dev-master** and is automatically updated on every PR merge.
 
 ## 3. Configuration
 
