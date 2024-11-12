@@ -25,6 +25,7 @@ jobs:
   release:
     name: Release Pipeline
     uses: ./.github/workflows/step_release.yml
+    needs: [ review ]
     secrets:
       DOCKER_USERNAME: "${{ secrets.DOCKER_USERNAME }}"
       DOCKER_PASSWORD: "${{ secrets.DOCKER_PASSWORD }}"
