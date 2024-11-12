@@ -16,248 +16,22 @@ env:
 
 jobs:
 
-
-  install_dev:
-    name: Install Dev Dependencies
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        # -----------------------------------
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ env.PHP_VERSION }}
-        # -----------------------------------
-      - name: Mount Cache
-        uses: actions/cache@v3
-        with:
-          key: cache-dev-${{ github.run_id }}
-          path: |
-            vendor
-        # -----------------------------------
-      - name: Install Dependencies
-        run: make dev -B
-
   # ------------------------------------------------------------------------------------------------------------------------
 
-  syntax_checks:
-    name: Syntax Checks
-    needs: install_dev
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        # -----------------------------------
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ env.PHP_VERSION }}
-        # -----------------------------------
-      - name: PHP Syntax Checks
-        run: make phpcheck -B
-
-  php_min:
-    name: PHP Minimum Compatibility
-    needs: install_dev
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        # -----------------------------------
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ env.PHP_VERSION }}
-        # -----------------------------------
-      - name: Mount Cache
-        uses: actions/cache@v3
-        with:
-          key: cache-dev-${{ github.run_id }}
-          path: |
-            vendor
-        # -----------------------------------
-      - name: PHP Minimum Checks
-        run: make phpmin -B
-
-  unit_tests:
-    name: Unit Tests
-    needs: install_dev
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        # -----------------------------------
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ env.PHP_VERSION }}
-        # -----------------------------------
-      - name: Mount Cache
-        uses: actions/cache@v3
-        with:
-          key: cache-dev-${{ github.run_id }}
-          path: |
-            vendor
-        # -----------------------------------
-      - name: Run PHPUnit
-        run: make phpunit -B
-
-  infection:
-    name: Mutation Tests
-    needs: unit_tests
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        # -----------------------------------
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ env.PHP_VERSION }}
-        # -----------------------------------
-      - name: Mount Cache
-        uses: actions/cache@v3
-        with:
-          key: cache-dev-${{ github.run_id }}
-          path: |
-            vendor
-        # -----------------------------------
-      - name: Run Tests
-        run: make infection -B
-
-  phpstan:
-    name: PHPStan Analyzer
-    needs: install_dev
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        # -----------------------------------
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ env.PHP_VERSION }}
-        # -----------------------------------
-      - name: Mount Cache
-        uses: actions/cache@v3
-        with:
-          key: cache-dev-${{ github.run_id }}
-          path: |
-            vendor
-        # -----------------------------------
-      - name: Run PHPStan
-        run: make stan -B
-
-  phpcsfixer:
-    name: PHP CS Fixer
-    needs: install_dev
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        # -----------------------------------
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ env.PHP_VERSION }}
-        # -----------------------------------
-      - name: Mount Cache
-        uses: actions/cache@v3
-        with:
-          key: cache-dev-${{ github.run_id }}
-          path: |
-            vendor
-        # -----------------------------------
-      - name: Run PHP CS Fixer
-        run: make csfix -B
-
-  phpmnd:
-    name: PHP Magic Numbers Analyzer
-    needs: install_dev
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        # -----------------------------------
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ env.PHP_VERSION }}
-        # -----------------------------------
-      - name: Mount Cache
-        uses: actions/cache@v3
-        with:
-          key: cache-dev-${{ github.run_id }}
-          path: |
-            vendor
-        # -----------------------------------
-      - name: Run Test
-        run: make phpmnd -B
-
-  rector:
-    name: Rector Analyzer
-    needs: install_dev
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        # -----------------------------------
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ env.PHP_VERSION }}
-        # -----------------------------------
-      - name: Mount Cache
-        uses: actions/cache@v3
-        with:
-          key: cache-dev-${{ github.run_id }}
-          path: |
-            vendor
-        # -----------------------------------
-      - name: Run Rector
-        run: make rector -B
-
-  # ------------------------------------------------------------------------------------------------------------------------
-
-  svrunit:
-    name: SVRUnit Tests
-    needs: [ syntax_checks, php_min, unit_tests, phpstan, phpcsfixer ]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        # -----------------------------------
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ env.PHP_VERSION }}
-          ini-values: phar.readonly=OFF
-        # -----------------------------------
-      - name: Build PHAR
-        run: make build -B
-        # -----------------------------------
-      - name: Install SVRUnit
-        run: make dev -B
-        # -----------------------------------
-      - name: Start SVRUnit
-        run: make svrunit -B
-        # -----------------------------------
-      - name: Store SVRUnit Report
-        uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: svrunit_report
-          retention-days: 3
-          path: |
-            .reports
-        # -----------------------------------
-      - name: Build JUnit Report
-        uses: dorny/test-reporter@v1
-        if: always()
-        with:
-          name: SVRUnit Report
-          path: .reports/report.xml
-          reporter: jest-junit
+  review:
+    name: Review Pipeline
+    uses: ./.github/workflows/step_review.yml
+    with:
+      PHP_VERSION: ${{ env.PHP_VERSION }}
 
   # ------------------------------------------------------------------------------------------------------------------------
 
   build:
     name: Build Binaries
-    needs: [ svrunit ]
+    needs: [ review ]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         # -----------------------------------
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -284,7 +58,7 @@ jobs:
     needs: [ build ]
     steps:
       # -----------------------------------
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         # -----------------------------------
       - name: Invoke Packagist Webhook
         run: |
