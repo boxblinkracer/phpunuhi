@@ -190,10 +190,10 @@ You can also use the available Docker image:
 
 ```ruby 
 # just start it from the directory of your project
-docker run --rm -v $(pwd):/app boxblinkracer/phpunuhi:dev-master validate:all
+docker run -it --rm -v $(pwd):/app boxblinkracer/phpunuhi:dev-master validate:all
 
 # you can provide all arguments, just like with the composer version
-docker run --rm -v $(pwd):/app boxblinkracer/phpunuhi:dev-master validate:all --configuration=./phpunuhi.xml
+docker run -it --rm -v $(pwd):/app boxblinkracer/phpunuhi:dev-master validate:all --configuration=./phpunuhi.xml
 ```
 
 > Here is a list of all available Docker versions: https://registry.hub.docker.com/r/boxblinkracer/phpunuhi/tags

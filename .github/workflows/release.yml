@@ -6,7 +6,7 @@ on:
     inputs:
       version:
         description: 'Version'
-        required: true 
+        required: true
 
 jobs:
 
