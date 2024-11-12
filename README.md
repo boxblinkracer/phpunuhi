@@ -71,7 +71,8 @@ Now that you know this, let's get started!
         * [8.3.1.3 PO](#8313-po)
         * [8.3.1.4 PHP](#8314-php)
         * [8.3.1.5 YAML](#8315-yaml)
-        * [8.3.1.6 Shopware 6](#8316-shopware-6)
+        * [8.3.1.6 YAML](#8316-yaml)
+        * [8.3.1.7 Shopware 6](#8317-shopware-6)
           * [Entities](#entities)
           * [Configs](#configs)
       * [8.3.2 Custom Formats](#832-custom-formats)
@@ -846,7 +847,29 @@ The YAML structure across all files of a set should match.
 </set>
 ```
 
-##### 8.3.1.6 Shopware 6
+##### 8.3.1.6 YAML
+
+The RESX format is used in .NET applications.
+It's a simple XML format that contains key-value pairs.
+
+This storage type makes sure to read and also write RESX files.
+
+It will automatically only touch text types and not binary data, such as images.
+
+```xml
+
+<set name="sample">
+    <format>
+        <resx/>
+    </format>
+    <locales>
+        <locale name="de">./Resources.de.resx</locale>
+        <locale name="en">./Resources.en.resx</locale>
+    </locales>
+</set>
+```
+
+##### 8.3.1.7 Shopware 6
 
 | Format Attributes | Default | Description                                                                                                                  | 
 |-------------------|---------|------------------------------------------------------------------------------------------------------------------------------|

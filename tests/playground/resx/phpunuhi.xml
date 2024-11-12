@@ -1,0 +1,18 @@
+<phpunuhi
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../config.xsd"
+>
+    <translations>
+
+        <set name="application">
+            <format>
+                <resx/>
+            </format>
+            <locales>
+                <locale name="de-DE">./files/Resources.de.resx</locale>
+                <locale name="en-GB">./files/Resources.en.resx</locale>
+            </locales>
+        </set>
+
+    </translations>
+</phpunuhi>

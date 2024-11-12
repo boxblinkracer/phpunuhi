@@ -7,6 +7,7 @@ use PHPUnuhi\Bundles\Storage\INI\IniStorage;
 use PHPUnuhi\Bundles\Storage\JSON\JsonStorage;
 use PHPUnuhi\Bundles\Storage\PHP\PhpStorage;
 use PHPUnuhi\Bundles\Storage\PO\PoStorage;
+use PHPUnuhi\Bundles\Storage\RESX\ResxStorage;
 use PHPUnuhi\Bundles\Storage\Shopware6\Shopware6Storage;
 use PHPUnuhi\Bundles\Storage\YAML\YamlStorage;
 use PHPUnuhi\Exceptions\ConfigurationException;
@@ -80,6 +81,7 @@ class StorageFactory
         $this->storages[] = new PhpStorage();
         $this->storages[] = new PoStorage();
         $this->storages[] = new YamlStorage();
+        $this->storages[] = new ResxStorage();
         $this->storages[] = new Shopware6Storage();
     }
 

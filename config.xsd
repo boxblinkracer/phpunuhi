@@ -249,6 +249,7 @@
             <xs:element name="php" type="typeFormatPHP" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="shopware6" type="typeFormatShopware6" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="yaml" type="typeFormatYAML" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="resx" type="typeFormatRESX" minOccurs="0" maxOccurs="unbounded"/>
         </xs:choice>
     </xs:complexType>
 
@@ -296,6 +297,13 @@
                 <xs:attribute name="indent" type="xs:string" use="optional"/>
                 <xs:attribute name="sort" type="xs:boolean" use="optional"/>
                 <xs:attribute name="eol-last" type="xs:boolean" use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="typeFormatRESX">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>

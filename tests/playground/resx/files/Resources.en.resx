@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root xmlns="http://schemas.microsoft.com/winfx/2006/xaml">
+
+
+    <data name="Goodbye">
+        <value>Goodbye</value>
+    </data>
+    <data name="Hello">
+        <value>Hello</value>
+    </data>
+</root>
