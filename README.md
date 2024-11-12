@@ -197,7 +197,7 @@ docker run --rm -v $(pwd):/app boxblinkracer/phpunuhi:dev-master validate:all --
 ```
 
 > Here is a list of all available Docker versions: https://registry.hub.docker.com/r/boxblinkracer/phpunuhi/tags
-> The latest dev-master can be used using the tag **dev-master** and is automatically updated on every PR merge.
+> The latest dev-master can be used using the tag **dev-master** and is automatically updated on every PR merge. Don't forget to pull the latest version before using it ;)
 
 ## 3. Configuration
 
