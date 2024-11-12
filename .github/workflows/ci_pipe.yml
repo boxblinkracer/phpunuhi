@@ -10,10 +10,6 @@ on:
       - '**.md'
       - 'makefile'
 
-
-env:
-  PHP_VERSION: 8.2
-
 jobs:
 
   # ------------------------------------------------------------------------------------------------------------------------
@@ -22,7 +18,7 @@ jobs:
     name: Review Pipeline
     uses: ./.github/workflows/step_review.yml
     with:
-      PHP_VERSION: ${{ env.PHP_VERSION }}
+      PHP_VERSION: 8.2
 
   # ------------------------------------------------------------------------------------------------------------------------
 
@@ -36,4 +32,4 @@ jobs:
       PACKAGIST_TOKEN: "${{ secrets.PACKAGIST_TOKEN }}"
     with:
       VERSION: "dev-master"
-      PHP_VERSION: ${{ env.PHP_VERSION }}
+      PHP_VERSION: 8.2
