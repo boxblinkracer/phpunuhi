@@ -1,24 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Services\OpenAI;
 
 class OpenAIResponse
 {
+    private string $response;
 
-    /**
-     * @var string
-     */
-    private $response;
+    private float $costsUSD;
 
-    /**
-     * @var float
-     */
-    private $costsUSD;
 
-    /**
-     * @param string $response
-     * @param float $costsUSD
-     */
     public function __construct(string $response, float $costsUSD)
     {
         $this->response = $response;

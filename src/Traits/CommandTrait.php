@@ -9,7 +9,6 @@ use Symfony\Component\Console\Input\InputInterface;
 
 trait CommandTrait
 {
-
     /**
      * @return void
      */
@@ -20,10 +19,7 @@ trait CommandTrait
         echo PHP_EOL;
     }
 
-    /**
-     * @param InputInterface $input
-     * @return string
-     */
+
     protected function getConfigFile(InputInterface $input): string
     {
         $configFile = $input->getOption('configuration');
@@ -44,10 +40,7 @@ trait CommandTrait
         return $workingDir . '/' . $configFile;
     }
 
-    /**
-     * @param string $path
-     * @return string
-     */
+
     protected function getFromRelativePath(string $path): string
     {
         $cur_dir = explode('\\', (string)getcwd());
@@ -58,11 +51,7 @@ trait CommandTrait
         return (string)realpath($dir);
     }
 
-    /**
-     * @param string $name
-     * @param InputInterface $input
-     * @return string
-     */
+
     protected function getConfigStringValue(string $name, InputInterface $input): string
     {
         $value = $input->getOption($name);
@@ -74,12 +63,7 @@ trait CommandTrait
         return $value;
     }
 
-    /**
-     * @param string $name
-     * @param InputInterface $input
-     * @param int $default
-     * @return int
-     */
+
     protected function getConfigIntValue(string $name, InputInterface $input, int $default): int
     {
         if (!$input->hasOption($name)) {
@@ -95,11 +79,7 @@ trait CommandTrait
         return (int)$value;
     }
 
-    /**
-     * @param string $name
-     * @param InputInterface $input
-     * @return bool
-     */
+
     protected function getConfigBoolValue(string $name, InputInterface $input): bool
     {
         $value = $input->getOption($name);
@@ -111,12 +91,7 @@ trait CommandTrait
         return $value;
     }
 
-    /**
-     * @param string $name
-     * @param InputInterface $input
-     * @param float $default
-     * @return float
-     */
+
     protected function getConfigFloatValue(string $name, InputInterface $input, float $default): float
     {
         if (!$input->hasOption($name)) {

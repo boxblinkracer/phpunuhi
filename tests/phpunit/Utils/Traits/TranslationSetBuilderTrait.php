@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Utils\Traits;
 
 use PHPUnuhi\Models\Configuration\CaseStyleSetting;
@@ -11,11 +13,9 @@ use PHPUnuhi\Models\Translation\TranslationSet;
 
 trait TranslationSetBuilderTrait
 {
-
     /**
      * @param Locale[] $locales
      * @param Rule[] $rules
-     * @return TranslationSet
      */
     protected function buildTranslationSet(array $locales, array $rules): TranslationSet
     {

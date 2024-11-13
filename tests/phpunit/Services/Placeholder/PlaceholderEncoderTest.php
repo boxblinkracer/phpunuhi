@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Services\Placeholder;
 
 use PHPUnit\Framework\TestCase;
@@ -16,17 +18,13 @@ class PlaceholderEncoderTest extends TestCase
      * Some translators accidentally start conversion, but the current one
      * works really good and nothing is touched.
      *
-     * @return void
      */
     public function testEncodingMarker(): void
     {
         $this->assertEquals('//', PlaceholderEncoder::ENCODING_MARKER);
     }
 
-    /**
-     *
-     * @return void
-     */
+
     public function testEncode(): void
     {
         $text = 'Hello, my name is {firstname} {lastname}! Thank you for your attention';
@@ -45,10 +43,7 @@ class PlaceholderEncoderTest extends TestCase
         $this->assertEquals('Hello, my name is ' . self::MARKER . $p1->getId() . self::MARKER . ' ' . self::MARKER . $p2->getId() . self::MARKER . '! Thank you for your ' . self::MARKER . $p3->getId() . self::MARKER, $encodedString);
     }
 
-    /**
-     *
-     * @return void
-     */
+
     public function testDecode(): void
     {
         # marker placeholderø

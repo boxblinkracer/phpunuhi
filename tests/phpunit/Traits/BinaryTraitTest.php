@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Traits;
 
 use PHPUnit\Framework\TestCase;
@@ -9,9 +11,7 @@ class BinaryTraitTest extends TestCase
 {
     use BinaryTrait;
 
-    /**
-     * @return void
-     */
+
     public function testBinaryToString(): void
     {
         $hex = $this->stringToBinary('0d1eeedd6d22436385580e2ff42431b9');
@@ -20,9 +20,7 @@ class BinaryTraitTest extends TestCase
         $this->assertEquals('0d1eeedd6d22436385580e2ff42431b9', $string);
     }
 
-    /**
-     * @return void
-     */
+
     public function testStringToBinary(): void
     {
         $binary = $this->stringToBinary('0d1eeedd6d22436385580e2ff42431b9');
@@ -32,9 +30,7 @@ class BinaryTraitTest extends TestCase
         $this->assertEquals('0d1eeedd6d22436385580e2ff42431b9', $hex);
     }
 
-    /**
-     * @return void
-     */
+
     public function testStringToBinaryWithEmpty(): void
     {
         $hex = $this->stringToBinary('');
@@ -42,9 +38,7 @@ class BinaryTraitTest extends TestCase
         $this->assertEquals('', $hex);
     }
 
-    /**
-     * @return void
-     */
+
     public function testIsBinaryTrue(): void
     {
         $binary = $this->stringToBinary('0d1eeedd6d22436385580e2ff42431b9');
@@ -71,7 +65,6 @@ class BinaryTraitTest extends TestCase
     /**
      * @dataProvider nonBinaryStrings
      *
-     * @return void
      */
     public function testIsBinaryFalse(string $string): void
     {

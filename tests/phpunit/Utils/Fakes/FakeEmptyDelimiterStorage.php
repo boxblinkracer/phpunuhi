@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Utils\Fakes;
 
 use PHPUnuhi\Bundles\Storage\StorageHierarchy;
@@ -25,9 +27,7 @@ class FakeEmptyDelimiterStorage implements StorageInterface
         return false;
     }
 
-    /**
-     * @return StorageHierarchy
-     */
+
     public function getHierarchy(): StorageHierarchy
     {
         return new StorageHierarchy(

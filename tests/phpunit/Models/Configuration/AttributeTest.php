@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Models\Configuration;
 
 use PHPUnit\Framework\TestCase;
@@ -7,10 +9,6 @@ use PHPUnuhi\Models\Configuration\Attribute;
 
 class AttributeTest extends TestCase
 {
-
-    /**
-     * @return void
-     */
     public function testName(): void
     {
         $attr = new Attribute('format', '');
@@ -18,9 +16,7 @@ class AttributeTest extends TestCase
         $this->assertEquals('format', $attr->getName());
     }
 
-    /**
-     * @return void
-     */
+
     public function testValue(): void
     {
         $attr = new Attribute('format', 'ini');

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Translator\GoogleCloud;
 
 use Exception;
@@ -11,28 +13,22 @@ use PHPUnuhi\Services\Placeholder\PlaceholderEncoder;
 
 class GoogleCloudTranslator implements TranslatorInterface
 {
+    private string $apiKey = '';
 
-    /**
-     * @var string
-     */
-    private $apiKey;
+    private PlaceholderEncoder $placeholderEncoder;
 
-    /**
-     * @var PlaceholderEncoder
-     */
-    private $placeholderEncoder;
 
-    /**
-     * @return string
-     */
+    public function __construct()
+    {
+        $this->placeholderEncoder = new PlaceholderEncoder();
+    }
+
     public function getName(): string
     {
         return 'googlecloud';
     }
 
-    /**
-     * @return string
-     */
+
     public function getApiKey(): string
     {
         return $this->apiKey;
@@ -51,7 +47,6 @@ class GoogleCloudTranslator implements TranslatorInterface
     /**
      * @param array<mixed> $options
      * @throws Exception
-     * @return void
      */
     public function setOptionValues(array $options): void
     {
@@ -62,17 +57,11 @@ class GoogleCloudTranslator implements TranslatorInterface
         if ($this->apiKey === '') {
             throw new Exception('Please provide your API key for GoogleCloud');
         }
-
-        $this->placeholderEncoder = new PlaceholderEncoder();
     }
 
     /**
-     * @param string $text
-     * @param string $sourceLocale
-     * @param string $targetLocale
      * @param Placeholder[] $foundPlaceholders
      * @throws Exception
-     * @return string
      */
     public function translate(string $text, string $sourceLocale, string $targetLocale, array $foundPlaceholders): string
     {

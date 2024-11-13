@@ -1,32 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Components\Validator\CaseStyle\Style;
 
 use PHPUnit\Framework\TestCase;
-use PHPUnuhi\Components\Validator\CaseStyle\CaseStyleValidatorInterface;
 use PHPUnuhi\Components\Validator\CaseStyle\Style\UpperCaseValidator;
 
 class UpperCaseValidatorTest extends TestCase
 {
-
-    /**
-     * @var CaseStyleValidatorInterface
-     */
-    private $validator;
+    private UpperCaseValidator $validator;
 
 
-    /**
-     * @return void
-     */
+
     protected function setUp(): void
     {
         $this->validator = new UpperCaseValidator();
     }
 
 
-    /**
-     * @return void
-     */
+
     public function testIdentifier(): void
     {
         $this->assertEquals('upper', $this->validator->getIdentifier());
@@ -51,7 +44,6 @@ class UpperCaseValidatorTest extends TestCase
 
     /**
      * @dataProvider getData
-     * @return void
      */
     public function testIsValid(bool $expectedValid, string $text): void
     {

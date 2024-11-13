@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Models\Translation;
 
 use PHPUnit\Framework\TestCase;
@@ -7,10 +9,6 @@ use PHPUnuhi\Models\Translation\Translation;
 
 class TranslationTest extends TestCase
 {
-
-    /**
-     * @return void
-     */
     public function testKey(): void
     {
         $translation = new Translation('title', 'Titel', '');
@@ -18,9 +16,7 @@ class TranslationTest extends TestCase
         $this->assertEquals('title', $translation->getID());
     }
 
-    /**
-     * @return void
-     */
+
     public function testValue(): void
     {
         $translation = new Translation('title', 'Titel', '');
@@ -28,9 +24,7 @@ class TranslationTest extends TestCase
         $this->assertEquals('Titel', $translation->getValue());
     }
 
-    /**
-     * @return void
-     */
+
     public function testIsEmptyWithSpaces(): void
     {
         $translation = new Translation('title', '   ', '');
@@ -38,9 +32,7 @@ class TranslationTest extends TestCase
         $this->assertEquals(true, $translation->isEmpty());
     }
 
-    /**
-     * @return void
-     */
+
     public function testSetValue(): void
     {
         $translation = new Translation('title', '   ', '');
@@ -49,9 +41,7 @@ class TranslationTest extends TestCase
         $this->assertEquals('abc', $translation->getValue());
     }
 
-    /**
-     * @return void
-     */
+
     public function testGroup(): void
     {
         $translation = new Translation('title', '   ', 'product-123');
@@ -66,9 +56,6 @@ class TranslationTest extends TestCase
      *            [ 1, "title.title" ]
      *            [ 2, "title.title.title" ]
      *
-     * @param int $expected
-     * @param string $key
-     * @return void
      */
     public function testGetLevel(int $expected, string $key): void
     {
@@ -79,9 +66,7 @@ class TranslationTest extends TestCase
         $this->assertEquals($expected, $level);
     }
 
-    /**
-     * @return void
-     */
+
     public function testGetLevelWithEmptyDelimiter(): void
     {
         $translation = new Translation('title.title2', '', '');

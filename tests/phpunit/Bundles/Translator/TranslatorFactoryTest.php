@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Bundles\Translator;
 
 use Exception;
@@ -11,10 +13,6 @@ use PHPUnuhi\Tests\Utils\Fakes\FakeTranslator;
 
 class TranslatorFactoryTest extends TestCase
 {
-
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         TranslatorFactory::getInstance()->resetStorages();
@@ -22,7 +20,6 @@ class TranslatorFactoryTest extends TestCase
 
     /**
      * @throws ConfigurationException
-     * @return void
      */
     public function testGetCustomTranslator(): void
     {
@@ -36,7 +33,6 @@ class TranslatorFactoryTest extends TestCase
 
     /**
      * @throws ConfigurationException
-     * @return void
      */
     public function testUnknownServiceThrowsException(): void
     {
@@ -47,7 +43,6 @@ class TranslatorFactoryTest extends TestCase
 
     /**
      * @throws ConfigurationException
-     * @return void
      */
     public function testNoServiceNameLeadsToException(): void
     {
@@ -58,7 +53,6 @@ class TranslatorFactoryTest extends TestCase
 
     /**
      * @throws ConfigurationException
-     * @return void
      */
     public function testDoubleRegistrationThrowsException(): void
     {
@@ -70,9 +64,7 @@ class TranslatorFactoryTest extends TestCase
         TranslatorFactory::getInstance()->registerTranslator($custom);
     }
 
-    /**
-     * @return void
-     */
+
     public function testAllOptions(): void
     {
         $options = TranslatorFactory::getInstance()->getAllOptions();

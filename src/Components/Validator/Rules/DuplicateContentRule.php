@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Components\Validator\Rules;
 
 use PHPUnuhi\Bundles\Storage\StorageInterface;
@@ -11,11 +13,10 @@ use PHPUnuhi\Models\Translation\TranslationSet;
 
 class DuplicateContentRule implements RuleValidatorInterface
 {
-
     /**
      * @var DuplicateContent[]
      */
-    private $localeSettings;
+    private array $localeSettings;
 
 
     /**
@@ -27,23 +28,17 @@ class DuplicateContentRule implements RuleValidatorInterface
     }
 
 
-    /**
-     * @return string
-     */
+
     public function getRuleIdentifier(): string
     {
         return 'DUPLICATE_CONTENT';
     }
 
 
-    /**
-     * @param TranslationSet $set
-     * @param StorageInterface $storage
-     * @return ValidationResult
-     */
+
     public function validate(TranslationSet $set, StorageInterface $storage): ValidationResult
     {
-        if (count($this->localeSettings) === 0) {
+        if ($this->localeSettings === []) {
             return new ValidationResult([]);
         }
 
@@ -88,10 +83,7 @@ class DuplicateContentRule implements RuleValidatorInterface
         return new ValidationResult($tests);
     }
 
-    /**
-     * @param string $locale
-     * @return bool
-     */
+
     private function requiresDuplicateContent(string $locale): bool
     {
         foreach ($this->localeSettings as $localeSetting) {
@@ -111,12 +103,7 @@ class DuplicateContentRule implements RuleValidatorInterface
     }
 
 
-    /**
-     * @param Locale $locale
-     * @param string $translationKey
-     * @param bool $passed
-     * @return ValidationTest
-     */
+
     private function buildTestEntry(Locale $locale, string $translationKey, bool $passed): ValidationTest
     {
         return new ValidationTest(

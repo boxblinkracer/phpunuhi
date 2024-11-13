@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Components\Repoter\JSON;
 
 use PHPUnit\Framework\TestCase;
@@ -16,24 +18,16 @@ class JsonReporterTest extends TestCase
     use TestReportBuilderTrait;
     use StringCleanerTrait;
 
-    /**
-     * @var JsonReporter
-     */
-    private $reporter;
 
-    /**
-     * @var FakeFileWriter
-     */
-    private $fakeFileWriter;
+    private JsonReporter $reporter;
 
-    /**
-     * @var FakeDirectoryWriter
-     */
-    private $fakeDirectoryWriter;
 
-    /**
-     * @return void
-     */
+    private FakeFileWriter $fakeFileWriter;
+
+
+    private FakeDirectoryWriter $fakeDirectoryWriter;
+
+
     public function setUp(): void
     {
         $this->fakeDirectoryWriter = new FakeDirectoryWriter();
@@ -43,25 +37,19 @@ class JsonReporterTest extends TestCase
     }
 
 
-    /**
-     * @return void
-     */
+
     public function testName(): void
     {
         $this->assertEquals('json', $this->reporter->getName());
     }
 
-    /**
-     * @return void
-     */
+
     public function testDefaultFilename(): void
     {
         $this->assertEquals('report.json', $this->reporter->getDefaultFilename());
     }
 
-    /**
-     * @return void
-     */
+
     public function testCorrectFilenameIsWritten(): void
     {
         $result = new ReportResult();
@@ -71,9 +59,7 @@ class JsonReporterTest extends TestCase
         $this->assertEquals('my-file.json', $this->fakeFileWriter->getProvidedFilename());
     }
 
-    /**
-     * @return void
-     */
+
     public function testSubfoldersAreGeneratedForResultFile(): void
     {
         $result = new ReportResult();
@@ -83,9 +69,7 @@ class JsonReporterTest extends TestCase
         $this->assertEquals('./subfolder/subfolder2', $this->fakeDirectoryWriter->getCreatedDirectory());
     }
 
-    /**
-     * @return void
-     */
+
     public function testReportGeneration(): void
     {
         $suite = new ReportSetResult('Storefront');

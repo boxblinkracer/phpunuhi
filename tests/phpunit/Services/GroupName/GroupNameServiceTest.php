@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Services\GroupName;
 
 use PHPUnit\Framework\TestCase;
@@ -7,10 +9,6 @@ use PHPUnuhi\Services\GroupName\GroupNameService;
 
 class GroupNameServiceTest extends TestCase
 {
-
-    /**
-     * @return void
-     */
     public function testGetGroupId(): void
     {
         $service = new GroupNameService();
@@ -20,9 +18,7 @@ class GroupNameServiceTest extends TestCase
         $this->assertEquals('product_7d1abedd2d22436385580e2ff42431b9', $groupId);
     }
 
-    /**
-     * @return void
-     */
+
     public function testPropertyName(): void
     {
         $service = new GroupNameService();
@@ -36,7 +32,6 @@ class GroupNameServiceTest extends TestCase
      * This test verifies that an invalid group id
      * does not return anything...because theres no ID :)
      *
-     * @return void
      */
     public function testInvalidGroupId(): void
     {
@@ -47,9 +42,7 @@ class GroupNameServiceTest extends TestCase
         $this->assertEquals('', $propertyKey);
     }
 
-    /**
-     * @return void
-     */
+
     public function testInvalidGroupName(): void
     {
         $service = new GroupNameService();

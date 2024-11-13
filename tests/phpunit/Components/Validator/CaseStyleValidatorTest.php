@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Components\Validator;
 
 use Exception;
@@ -18,20 +20,12 @@ use PHPUnuhi\Models\Translation\TranslationSet;
 
 class CaseStyleValidatorTest extends TestCase
 {
+    private CaseStyleValidator $validator;
 
-    /**
-     * @var CaseStyleValidator
-     */
-    private $validator;
-    /**
-     * @var JsonStorage
-     */
-    private $storageJson;
+    private JsonStorage $storageJson;
 
 
-    /**
-     * @return void
-     */
+
     protected function setUp(): void
     {
         $this->validator = new CaseStyleValidator();
@@ -40,9 +34,7 @@ class CaseStyleValidatorTest extends TestCase
     }
 
 
-    /**
-     * @return void
-     */
+
     public function testTypeIdentifier(): void
     {
         $this->assertEquals('CASE_STYLE', $this->validator->getTypeIdentifier());
@@ -50,7 +42,6 @@ class CaseStyleValidatorTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testValidMixedCases(): void
     {
@@ -69,7 +60,6 @@ class CaseStyleValidatorTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testInvalidCases(): void
     {
@@ -87,7 +77,6 @@ class CaseStyleValidatorTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testMixedWithLevels(): void
     {
@@ -117,7 +106,6 @@ class CaseStyleValidatorTest extends TestCase
      * This is only valid because level 0 + 2 are snake-validated, and the rest is globally validated with camel.
      *
      * @throws Exception
-     * @return void
      */
     public function testMixedWithMissingLevels(): void
     {
@@ -148,7 +136,6 @@ class CaseStyleValidatorTest extends TestCase
      * pascal, so it's still not valid.
      *
      * @throws Exception
-     * @return void
      */
     public function testGlobalStylesNotValidatedForExistingLevels(): void
     {
@@ -172,7 +159,6 @@ class CaseStyleValidatorTest extends TestCase
      * Our 2nd level has an invalid style, so this should break.
      *
      * @throws Exception
-     * @return void
      */
     public function testMixedWithInvalidLevels(): void
     {
@@ -200,7 +186,6 @@ class CaseStyleValidatorTest extends TestCase
      * and we have invalid key, that it fails correctly.
      *
      * @throws CaseStyleNotFoundException
-     * @return void
      */
     public function testOnlyLevel1IsSetAndFails(): void
     {
@@ -225,7 +210,6 @@ class CaseStyleValidatorTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testValidCasesWithoutSetStyles(): void
     {
@@ -241,7 +225,6 @@ class CaseStyleValidatorTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testSingleHierarchyValidation(): void
     {
@@ -272,10 +255,7 @@ class CaseStyleValidatorTest extends TestCase
      *             [ true, "IGNORE_THIS" ]
      *             [ false, "DIFFERENT_KEY" ]
      *
-     * @param bool $isValid
-     * @param string $ignoreKey
      * @throws CaseStyleNotFoundException
-     * @return void
      */
     public function testIgnoreWrongKeyNoFQP(bool $isValid, string $ignoreKey): void
     {
@@ -307,10 +287,7 @@ class CaseStyleValidatorTest extends TestCase
      *             [ false, "IGNORE_THIS" ]
      *             [ false, "DIFFERENT_KEY" ]
      *
-     * @param bool $isValid
-     * @param string $ignoreKey
      * @throws CaseStyleNotFoundException
-     * @return void
      */
     public function testIgnoreWrongKeyScopeFQP(bool $isValid, string $ignoreKey): void
     {
@@ -333,10 +310,8 @@ class CaseStyleValidatorTest extends TestCase
     }
 
     /**
-     * @param Locale $locale
      * @param CaseStyle[] $caseStyles
      * @param CaseStyleIgnoreKey[] $ignoreCaseKeys
-     * @return TranslationSet
      */
     private function buildSet(Locale $locale, array $caseStyles, array $ignoreCaseKeys): TranslationSet
     {

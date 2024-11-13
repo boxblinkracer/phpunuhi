@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Configuration\Services;
 
 use PHPUnuhi\Models\Configuration\Coverage;
@@ -11,10 +13,7 @@ class CoverageLoader
 {
     use XmlTrait;
 
-    /**
-     * @param SimpleXMLElement $coverageNode
-     * @return Coverage
-     */
+
     public function loadGlobalCoverage(SimpleXMLElement $coverageNode): Coverage
     {
         $coverage = new Coverage();
@@ -43,10 +42,7 @@ class CoverageLoader
         return $coverage;
     }
 
-    /**
-     * @param SimpleXMLElement $coverageNode
-     * @return TranslationSetCoverage
-     */
+
     public function loadTranslationCoverage(SimpleXMLElement $coverageNode): TranslationSetCoverage
     {
         $coverage = new TranslationSetCoverage();

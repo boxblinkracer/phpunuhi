@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Components\Filter;
 
 use PHPUnit\Framework\TestCase;
@@ -12,7 +14,6 @@ use PHPUnuhi\Models\Translation\TranslationSet;
 
 class FilterHandlerTest extends TestCase
 {
-
     /**
      * This test verifies that our filter handler correctly
      * removes keys depending on our filters.
@@ -20,7 +21,6 @@ class FilterHandlerTest extends TestCase
      * Then we create an exclude-filter entry and make sure
      * those translations are removed.
      *
-     * @return void
      */
     public function testApplyFilter(): void
     {

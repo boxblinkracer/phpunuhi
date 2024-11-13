@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Exchange\CSV;
 
 use Exception;
@@ -14,38 +16,25 @@ use PHPUnuhi\Models\Translation\TranslationSet;
 
 class CSVExchange implements ExchangeInterface
 {
+    private CSVWriterInterface $csvWriter;
 
-    /**
-     * @var CSVWriterInterface
-     */
-    private $csvWriter;
-
-    /**
-     * @var string
-     */
-    private $csvDelimiter = ',';
+    private string $csvDelimiter = ',';
 
 
-    /**
-     * @param CSVWriterInterface $csvWriter
-     */
+
     public function __construct(CSVWriterInterface $csvWriter)
     {
         $this->csvWriter = $csvWriter;
     }
 
 
-    /**
-     * @return string
-     */
+
     public function getName(): string
     {
         return 'csv';
     }
 
-    /**
-     * @return string
-     */
+
     public function getCsvDelimiter(): string
     {
         return $this->csvDelimiter;
@@ -64,7 +53,6 @@ class CSVExchange implements ExchangeInterface
 
     /**
      * @param array<mixed> $options
-     * @return void
      */
     public function setOptionValues(array $options): void
     {
@@ -78,11 +66,7 @@ class CSVExchange implements ExchangeInterface
     }
 
     /**
-     * @param TranslationSet $set
-     * @param string $outputDir
-     * @param bool $onlyEmpty
      * @throws TranslationNotFoundException
-     * @return void
      */
     public function export(TranslationSet $set, string $outputDir, bool $onlyEmpty): void
     {
@@ -91,9 +75,7 @@ class CSVExchange implements ExchangeInterface
     }
 
     /**
-     * @param string $filename
      * @throws Exception
-     * @return ImportResult
      */
     public function import(string $filename): ImportResult
     {

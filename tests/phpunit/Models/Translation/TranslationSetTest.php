@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Models\Translation;
 
 use Exception;
@@ -17,10 +19,6 @@ use PHPUnuhi\Models\Translation\TranslationSet;
 
 class TranslationSetTest extends TestCase
 {
-
-    /**
-     * @return void
-     */
     public function testName(): void
     {
         $attributes = [];
@@ -32,9 +30,7 @@ class TranslationSetTest extends TestCase
         $this->assertEquals('storefront', $set->getName());
     }
 
-    /**
-     * @return void
-     */
+
     public function testFormat(): void
     {
         $attributes = [];
@@ -49,7 +45,6 @@ class TranslationSetTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testProtection(): void
     {
@@ -67,7 +62,6 @@ class TranslationSetTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testRules(): void
     {
@@ -86,7 +80,6 @@ class TranslationSetTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testHasRuleTrue(): void
     {
@@ -105,7 +98,6 @@ class TranslationSetTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testHasRuleFalse(): void
     {
@@ -124,7 +116,6 @@ class TranslationSetTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testGetRule(): void
     {
@@ -145,7 +136,6 @@ class TranslationSetTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testGetRuleNotFoundThrowsException(): void
     {
@@ -164,9 +154,7 @@ class TranslationSetTest extends TestCase
         $set->getRule('abc');
     }
 
-    /**
-     * @return void
-     */
+
     public function testAttributes(): void
     {
         $attributes = [];
@@ -186,9 +174,7 @@ class TranslationSetTest extends TestCase
         $this->assertEquals($expected, $set->getAttributes());
     }
 
-    /**
-     * @return void
-     */
+
     public function testAttributeValue(): void
     {
         $attributes = [];
@@ -202,9 +188,7 @@ class TranslationSetTest extends TestCase
         $this->assertEquals('2', $set->getAttributeValue('indent'));
     }
 
-    /**
-     * @return void
-     */
+
     public function testGetAttributeValueNotFound(): void
     {
         $attributes = [];
@@ -218,9 +202,7 @@ class TranslationSetTest extends TestCase
         $this->assertEquals('', $set->getAttributeValue('abc'));
     }
 
-    /**
-     * @return void
-     */
+
     public function testGetLocales(): void
     {
         $attributes = [];
@@ -237,7 +219,6 @@ class TranslationSetTest extends TestCase
 
     /**
      * @throws TranslationNotFoundException
-     * @return void
      */
     public function testFindAnyExistingTranslation(): void
     {
@@ -266,7 +247,6 @@ class TranslationSetTest extends TestCase
 
     /**
      * @throws TranslationNotFoundException
-     * @return void
      */
     public function testFindAnyExistingTranslationWithLocale(): void
     {
@@ -299,7 +279,6 @@ class TranslationSetTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testFindAnyExistingTranslationNotFound(): void
     {
@@ -316,7 +295,6 @@ class TranslationSetTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testFindAnyExistingTranslationThrowsErrorOnEmptyValues(): void
     {
@@ -339,7 +317,6 @@ class TranslationSetTest extends TestCase
      * We start with a EN translation, the DE one is missing, so it's not completely translated.
      * Then we add a translation that is invalid and last but not least we add a valid translation.
      *
-     * @return void
      */
     public function testIsCompletelyTranslated(): void
     {
@@ -377,7 +354,6 @@ class TranslationSetTest extends TestCase
 
     /**
      * @throws TranslationNotFoundException
-     * @return void
      */
     public function testFindAnyExistingTranslationSkipsWrongIDs(): void
     {
@@ -406,7 +382,6 @@ class TranslationSetTest extends TestCase
 
     /**
      * @throws TranslationNotFoundException
-     * @return void
      */
     public function testFindAnyExistingTranslationPrioritizesBaseLocale(): void
     {
@@ -438,9 +413,7 @@ class TranslationSetTest extends TestCase
         $this->assertEquals($expected, $existing);
     }
 
-    /**
-     * @return void
-     */
+
     public function testGetCasingStyle(): void
     {
         $pascalCase = new CaseStyle('pascal');
@@ -464,9 +437,7 @@ class TranslationSetTest extends TestCase
         $this->assertEquals('camel', $set->getCasingStyle(2));
     }
 
-    /**
-     * @return void
-     */
+
     public function testGetCasingStyleReturnEmptyIfNotFound(): void
     {
         $set = new TranslationSet(
@@ -486,7 +457,6 @@ class TranslationSetTest extends TestCase
 
     /**
      * @throws TranslationNotFoundException
-     * @return void
      */
     public function testGetInvalidTranslationIDs(): void
     {

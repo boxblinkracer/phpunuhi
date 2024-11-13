@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Components\Validator;
 
 use PHPUnuhi\Bundles\Storage\StorageInterface;
@@ -10,21 +12,12 @@ use PHPUnuhi\Models\Translation\TranslationSet;
 
 class MissingStructureValidator implements ValidatorInterface
 {
-
-    /**
-     * @return string
-     */
     public function getTypeIdentifier(): string
     {
         return 'STRUCTURE';
     }
 
 
-    /**
-     * @param TranslationSet $set
-     * @param StorageInterface $storage
-     * @return ValidationResult
-     */
     public function validate(TranslationSet $set, StorageInterface $storage): ValidationResult
     {
         $allKeys = $set->getAllTranslationIDs();
@@ -59,16 +52,12 @@ class MissingStructureValidator implements ValidatorInterface
 
 
     /**
-     * @param mixed $a
+     * @param array<mixed> $a
      * @param array<mixed> $b
-     * @return bool
      */
-    private function isStructureEqual($a, array $b): bool
+    private function isStructureEqual(array $a, array $b): bool
     {
-        return (
-            is_array($b)
-            && is_array($a)
-            && count($a) === count($b)
+        return (count($a) === count($b)
             && array_diff($a, $b) === array_diff($b, $a)
         );
     }
@@ -99,12 +88,7 @@ class MissingStructureValidator implements ValidatorInterface
         return array_merge($diffA, $diffB);
     }
 
-    /**
-     * @param string $key
-     * @param Locale $locale
-     * @param bool $success
-     * @return ValidationTest
-     */
+
     private function buildValidationTest(string $key, Locale $locale, bool $success): ValidationTest
     {
         return new ValidationTest(

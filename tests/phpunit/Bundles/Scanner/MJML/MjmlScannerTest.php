@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Bundles\Scanner\MJML;
 
 use PHPUnit\Framework\TestCase;
@@ -7,18 +9,12 @@ use PHPUnuhi\Bundles\MJML\MjmlScanner;
 
 class MjmlScannerTest extends TestCase
 {
-
-    /**
-     * @return void
-     */
     public function testGetScannerName(): void
     {
         $this->assertEquals('mjml', (new MjmlScanner())->getScannerName());
     }
 
-    /**
-     * @return void
-     */
+
     public function testGetExtension(): void
     {
         $this->assertEquals('mjml', (new MjmlScanner())->getExtension());
@@ -46,8 +42,6 @@ class MjmlScannerTest extends TestCase
     /**
      * @dataProvider getFoundData
      *
-     * @param string $text
-     * @return void
      */
     public function testTranslationFound(string $text): void
     {
@@ -58,9 +52,7 @@ class MjmlScannerTest extends TestCase
         $this->assertTrue($found);
     }
 
-    /**
-     * @return void
-     */
+
     public function testTranslationNotFound(): void
     {
         $text = "This is a sample {{ 'email.contact.subject' | trans | sw_sanitize }} text.";

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Storage\JSON\Services;
 
 use Exception;
@@ -12,11 +14,7 @@ class JsonLoader
     use ArrayTrait;
 
 
-    /**
-     * @param Locale $locale
-     * @param StorageHierarchy $hierarchy
-     * @return void
-     */
+
     public function loadTranslations(Locale $locale, StorageHierarchy $hierarchy): void
     {
         $snippetJson = (string)file_get_contents($locale->getFilename());

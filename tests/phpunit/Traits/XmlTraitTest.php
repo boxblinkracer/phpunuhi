@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Traits;
 
 use PHPUnit\Framework\TestCase;
@@ -11,9 +13,7 @@ class XmlTraitTest extends TestCase
     use XmlTrait;
 
 
-    /**
-     * @return void
-     */
+
     public function testHasAttributeFalse(): void
     {
         $xmlNode = new SimpleXMLElement('<root attr1="value1" attr2="value2"/>');
@@ -23,9 +23,7 @@ class XmlTraitTest extends TestCase
         $this->assertEquals(false, $hasAttribute);
     }
 
-    /**
-     * @return void
-     */
+
     public function testHasAttributeFalseNoAttributes(): void
     {
         $xmlNode = new SimpleXMLElement('<root/>');
@@ -35,9 +33,7 @@ class XmlTraitTest extends TestCase
         $this->assertEquals(false, $hasAttribute);
     }
 
-    /**
-     * @return void
-     */
+
     public function testHasAttributeTrue(): void
     {
         $xmlNode = new SimpleXMLElement('<root attr1="value1" attr2="value2"/>');
@@ -47,9 +43,7 @@ class XmlTraitTest extends TestCase
         $this->assertEquals(true, $hasAttribute);
     }
 
-    /**
-     * @return void
-     */
+
     public function testGetAttribute(): void
     {
         $xmlNode = new SimpleXMLElement('<root attr1="value1" attr2="value2"/>');
@@ -60,9 +54,7 @@ class XmlTraitTest extends TestCase
         $this->assertEquals('value1', $attr->getValue());
     }
 
-    /**
-     * @return void
-     */
+
     public function testGetAttributeNotFoundLeadsToEmpty(): void
     {
         $xmlNode = new SimpleXMLElement('<root attr1="value1" attr2="value2"/>');
@@ -73,9 +65,7 @@ class XmlTraitTest extends TestCase
         $this->assertEquals('', $attr->getValue());
     }
 
-    /**
-     * @return void
-     */
+
     public function testGetAttributes(): void
     {
         $xmlNode = new SimpleXMLElement('<root attr1="value1" attr2="value2"/>');

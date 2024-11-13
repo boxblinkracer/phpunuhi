@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Models\Configuration\Coverage;
 
 use PHPUnit\Framework\TestCase;
@@ -7,10 +9,6 @@ use PHPUnuhi\Models\Configuration\Coverage\TranslationSetCoverage;
 
 class TranslationSetCoverageTest extends TestCase
 {
-
-    /**
-     * @return void
-     */
     public function testSetMinCoverage(): void
     {
         $cov = new TranslationSetCoverage();
@@ -25,9 +23,6 @@ class TranslationSetCoverageTest extends TestCase
      *               [ 100.0, 100.0 ]
      *               [ 100.0, 100.1 ]
      *
-     * @param float $expected
-     * @param float $input
-     * @return void
      */
     public function testSetMinCoverageIsMaximum100(float $expected, float $input): void
     {
@@ -38,9 +33,7 @@ class TranslationSetCoverageTest extends TestCase
         $this->assertEquals($expected, $cov->getMinCoverage());
     }
 
-    /**
-     * @return void
-     */
+
     public function testHasMinCoverage(): void
     {
         $cov = new TranslationSetCoverage();
@@ -52,9 +45,7 @@ class TranslationSetCoverageTest extends TestCase
         $this->assertTrue($cov->hasMinCoverage());
     }
 
-    /**
-     * @return void
-     */
+
     public function testGetLocaleCoverages(): void
     {
         $cov = new TranslationSetCoverage();
@@ -67,9 +58,7 @@ class TranslationSetCoverageTest extends TestCase
         $this->assertCount(2, $cov->getLocaleCoverages());
     }
 
-    /**
-     * @return void
-     */
+
     public function testGetLocaleCoverageByName(): void
     {
         $cov = new TranslationSetCoverage();
@@ -83,9 +72,7 @@ class TranslationSetCoverageTest extends TestCase
         $this->assertEquals(35, $locale->getMinCoverage());
     }
 
-    /**
-     * @return void
-     */
+
     public function testHasLocaleCoverages(): void
     {
         $cov = new TranslationSetCoverage();
@@ -97,9 +84,7 @@ class TranslationSetCoverageTest extends TestCase
         $this->assertTrue($cov->hasLocaleCoverages());
     }
 
-    /**
-     * @return void
-     */
+
     public function testHasLocaleCoverage(): void
     {
         $cov = new TranslationSetCoverage();

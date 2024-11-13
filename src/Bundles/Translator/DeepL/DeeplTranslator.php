@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Translator\DeepL;
 
 use DeepL\TextResult;
@@ -18,9 +20,7 @@ class DeeplTranslator implements TranslatorInterface
 
     public const ENV_DEEPL_FORMAL = 'DEEPL_FORMAL';
 
-    /**
-     *
-     */
+
     public const ALLOWED_FORMALITY = [
         'de',
         'nl',
@@ -37,42 +37,32 @@ class DeeplTranslator implements TranslatorInterface
      */
     private $apiKey;
 
-    /**
-     * @var bool
-     */
-    private $formality;
+    private bool $formality = false;
 
 
-    /**
-     * @var PlaceholderEncoder
-     */
-    private $placeholderEncoder;
+    private PlaceholderEncoder $placeholderEncoder;
 
 
-    /**
-     * @return string
-     */
+    public function __construct()
+    {
+        $this->placeholderEncoder = new PlaceholderEncoder();
+    }
+
+
     public function getName(): string
     {
         return 'deepl';
     }
 
-    /**
-     * @return string
-     */
     public function getApiKey(): string
     {
         return $this->apiKey;
     }
 
-    /**
-     * @return bool
-     */
     public function isFormality(): bool
     {
         return $this->formality;
     }
-
 
     /**
      * @return CommandOption[]
@@ -88,33 +78,26 @@ class DeeplTranslator implements TranslatorInterface
     /**
      * @param array<mixed> $options
      * @throws Exception
-     * @return void
      */
     public function setOptionValues(array $options): void
     {
         $this->apiKey = isset($options['deepl-key'])
-            ? (string) $options['deepl-key']
-            : (string) getenv(self::ENV_DEEPL_KEY);
+            ? (string)$options['deepl-key']
+            : (string)getenv(self::ENV_DEEPL_KEY);
         $this->formality = isset($options['deepl-formal'])
-            ? (bool) $options['deepl-formal']
-            : (bool) getenv(self::ENV_DEEPL_FORMAL);
+            ? (bool)$options['deepl-formal']
+            : (bool)getenv(self::ENV_DEEPL_FORMAL);
 
         $this->apiKey = trim($this->apiKey);
 
         if ($this->apiKey === '') {
             throw new Exception('Please provide your API key for DeepL');
         }
-
-        $this->placeholderEncoder = new PlaceholderEncoder();
     }
 
     /**
-     * @param string $text
-     * @param string $sourceLocale
-     * @param string $targetLocale
      * @param Placeholder[] $foundPlaceholders
      * @throws Exception
-     * @return string
      */
     public function translate(string $text, string $sourceLocale, string $targetLocale, array $foundPlaceholders): string
     {

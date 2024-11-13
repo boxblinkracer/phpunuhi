@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Models\Configuration;
 
 use PHPUnuhi\Models\Configuration\CaseStyle\CaseStyle;
@@ -7,12 +9,11 @@ use PHPUnuhi\Models\Configuration\CaseStyle\CaseStyleIgnoreKey;
 
 class CaseStyleSetting
 {
-
     /** @var CaseStyle[] */
-    private $caseStyles;
+    private array $caseStyles;
 
     /** @var CaseStyleIgnoreKey[] */
-    private $ignoreKeys;
+    private array $ignoreKeys;
 
 
     /**

@@ -6,11 +6,8 @@ namespace PHPUnuhi\Traits;
 
 trait ArrayTrait
 {
-
     /**
      * @param array<mixed> $array
-     * @param string $delimiter
-     * @param string $rootPrefix
      * @return array<mixed>
      */
     protected function getFlatArray(array $array, string $delimiter, string $rootPrefix = ''): array
@@ -34,10 +31,6 @@ trait ArrayTrait
      * # TODO it's working in most cases but not all the time if new lines exist on top of the file.
      *
      * @param array<mixed> $array
-     * @param string $delimiter
-     * @param string $rootPrefix
-     * @param int $lineNumber
-     * @param bool $closingBracket
      * @return int[]
      */
     protected function getLineNumbers(array $array, string $delimiter, string $rootPrefix = '', int $lineNumber = 0, bool $closingBracket = false): array
@@ -75,7 +68,6 @@ trait ArrayTrait
 
     /**
      * @param array<mixed> $array
-     * @param string $delimiter
      * @return array<mixed>
      */
     protected function getMultiDimensionalArray(array $array, string $delimiter): array

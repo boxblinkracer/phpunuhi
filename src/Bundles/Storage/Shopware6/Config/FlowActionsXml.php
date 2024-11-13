@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Storage\Shopware6\Config;
 
 use DOMDocument;
@@ -16,20 +18,11 @@ class FlowActionsXml implements ShopwareXmlInterface
 {
     use StringTrait;
 
-    /**
-     * @var XmlHandler
-     */
-    private $xmlHandler;
+    private XmlHandler $xmlHandler;
 
-    /**
-     * @var string
-     */
-    private $filename;
+    private string $filename;
 
-    /**
-     * @var string
-     */
-    private $xmlString;
+    private string $xmlString;
 
 
     public function __construct(string $filename, string $xmlString, string $defaultLocale)
@@ -41,7 +34,6 @@ class FlowActionsXml implements ShopwareXmlInterface
     }
 
     /**
-     * @param string $locale
      * @return array|mixed[]
      */
     public function readTranslations(string $locale): array
@@ -126,10 +118,8 @@ class FlowActionsXml implements ShopwareXmlInterface
     }
 
     /**
-     * @param string $locale
      * @param Translation[] $translations
      * @throws DOMException
-     * @return void
      */
     public function writeTranslations(string $locale, array $translations): void
     {
@@ -207,7 +197,6 @@ class FlowActionsXml implements ShopwareXmlInterface
     }
 
     /**
-     * @param DOMXPath $xpath
      * @return DOMElement[]
      */
     private function getFlowActions(DOMXPath $xpath): array
@@ -237,8 +226,6 @@ class FlowActionsXml implements ShopwareXmlInterface
     }
 
     /**
-     * @param string $actionName
-     * @param DOMXPath $xpath
      * @return DOMElement[]
      */
     public function getFlowActionConfigs(string $actionName, DOMXPath $xpath): array
@@ -270,9 +257,6 @@ class FlowActionsXml implements ShopwareXmlInterface
     }
 
     /**
-     * @param string $configName
-     * @param string $actionName
-     * @param DOMXPath $xpath
      * @return DOMElement[]
      */
     public function getFlowActionConfigOptions(string $configName, string $actionName, DOMXPath $xpath): array

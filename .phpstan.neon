@@ -7,11 +7,11 @@ parameters:
     paths:
         - ./src
         - ./tests/phpunit
-    excludePaths:
-        - ./src/vendor/*
     checkExplicitMixed: false
     disallowedFunctionCalls:
         - function: 'var_dump()'
+          message: 'use some logger instead'
+        - function: 'dump()'
           message: 'use some logger instead'
         - function: 'var_export()'
           message: 'use some logger instead'

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Storage\PHP;
 
 use PHPUnuhi\Bundles\Storage\PHP\Services\PHPLoader;
@@ -15,15 +17,9 @@ class PhpStorage implements StorageInterface
 {
     use ArrayTrait;
 
-    /**
-     * @var PHPSaver
-     */
-    private $saver;
+    private PHPSaver $saver ;
 
-    /**
-     * @var PHPLoader
-     */
-    private $loader;
+    private PHPLoader $loader;
 
     /**
      * @var bool
@@ -36,41 +32,31 @@ class PhpStorage implements StorageInterface
     private $eolLast;
 
 
-    /**
-     *
-     */
+
     public function __construct()
     {
         $this->loader = new PHPLoader();
     }
 
-    /**
-     * @return string
-     */
+
     public function getStorageName(): string
     {
         return 'php';
     }
 
-    /**
-     * @return string
-     */
+
     public function getFileExtension(): string
     {
         return 'php';
     }
 
-    /**
-     * @return bool
-     */
+
     public function supportsFilters(): bool
     {
         return false;
     }
 
-    /**
-     * @return StorageHierarchy
-     */
+
     public function getHierarchy(): StorageHierarchy
     {
         return new StorageHierarchy(
@@ -79,10 +65,7 @@ class PhpStorage implements StorageInterface
         );
     }
 
-    /**
-     * @param TranslationSet $set
-     * @return void
-     */
+
     public function configureStorage(TranslationSet $set): void
     {
         $this->sort = filter_var($set->getAttributeValue('sort'), FILTER_VALIDATE_BOOLEAN);
@@ -91,19 +74,13 @@ class PhpStorage implements StorageInterface
         $this->saver = new PHPSaver($this->eolLast);
     }
 
-    /**
-     * @param TranslationSet $set
-     * @return void
-     */
+
     public function loadTranslationSet(TranslationSet $set): void
     {
         $this->loader->loadTranslationSet($set, $this->getHierarchy()->getDelimiter());
     }
 
-    /**
-     * @param TranslationSet $set
-     * @return StorageSaveResult
-     */
+
     public function saveTranslationSet(TranslationSet $set): StorageSaveResult
     {
         $localeCount = 0;
@@ -125,11 +102,7 @@ class PhpStorage implements StorageInterface
         return new StorageSaveResult($localeCount, $translationCount);
     }
 
-    /**
-     * @param Locale $locale
-     * @param string $filename
-     * @return StorageSaveResult
-     */
+
     public function saveTranslationLocale(Locale $locale, string $filename): StorageSaveResult
     {
         $translationCount = $this->saver->saveLocale(

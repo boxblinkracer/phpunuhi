@@ -1,18 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Services\CaseStyle;
 
 interface CaseStyleConverterInterface
 {
+    public function getIdentifier(): string;
 
-    /**
-     * @return string
-     */
-    public function getIdentifier():string;
 
-    /**
-     * @param string $text
-     * @return string
-     */
     public function convert(string $text): string;
 }

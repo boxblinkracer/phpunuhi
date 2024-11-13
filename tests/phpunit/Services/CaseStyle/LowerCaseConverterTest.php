@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Services\CaseStyle;
 
 use Exception;
@@ -8,11 +10,6 @@ use PHPUnuhi\Services\CaseStyle\LowerCaseConverter;
 
 class LowerCaseConverterTest extends TestCase
 {
-
-
-    /**
-     * @return void
-     */
     public function testIdentifier(): void
     {
         $converter = new LowerCaseConverter();
@@ -38,10 +35,7 @@ class LowerCaseConverterTest extends TestCase
     /**
      * @dataProvider getData
      *
-     * @param string $expected
-     * @param string $text
      * @throws Exception
-     * @return void
      */
     public function testConvert(string $expected, string $text): void
     {

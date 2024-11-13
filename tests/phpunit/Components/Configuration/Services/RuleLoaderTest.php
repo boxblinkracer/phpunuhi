@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Components\Configuration\Services;
 
 use PHPUnit\Framework\TestCase;
@@ -15,9 +17,7 @@ class RuleLoaderTest extends TestCase
     use XmlLoaderTrait;
 
 
-    /**
-     * @return void
-     */
+
     public function testNestingRuleLoaded(): void
     {
         $xml = '
@@ -39,9 +39,7 @@ class RuleLoaderTest extends TestCase
         $this->assertEquals($expectedRules, $actualRules);
     }
 
-    /**
-     * @return void
-     */
+
     public function testKeyLengthRuleLoaded(): void
     {
         $xml = '
@@ -63,9 +61,7 @@ class RuleLoaderTest extends TestCase
         $this->assertEquals($expectedRules, $actualRules);
     }
 
-    /**
-     * @return void
-     */
+
     public function testDisallowedTextsRuleLoaded(): void
     {
         $xml = '
@@ -90,9 +86,7 @@ class RuleLoaderTest extends TestCase
         $this->assertEquals($expectedRules, $actualRules);
     }
 
-    /**
-     * @return void
-     */
+
     public function testDuplicateContentRuleLoaded(): void
     {
         $xml = '
@@ -120,9 +114,7 @@ class RuleLoaderTest extends TestCase
         $this->assertEquals($expectedRules, $actualRules);
     }
 
-    /**
-     * @return void
-     */
+
     public function testEmptyContentRuleLoaded(): void
     {
         $xml = '

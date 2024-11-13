@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Configuration\Services;
 
 use PHPUnuhi\Models\Configuration\Filter;
@@ -7,11 +9,6 @@ use SimpleXMLElement;
 
 class FilterLoader
 {
-
-    /**
-     * @param SimpleXMLElement $filterNode
-     * @return Filter
-     */
     public function loadFilter(SimpleXMLElement $filterNode): Filter
     {
         $filter = new Filter();

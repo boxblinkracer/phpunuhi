@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Storage\PO;
 
 use Exception;
@@ -23,33 +25,25 @@ class PoStorage implements StorageInterface
     private $eolLast;
 
 
-    /**
-     * @return string
-     */
+
     public function getStorageName(): string
     {
         return 'po';
     }
 
-    /**
-     * @return string
-     */
+
     public function getFileExtension(): string
     {
         return 'po';
     }
 
-    /**
-     * @return bool
-     */
+
     public function supportsFilters(): bool
     {
         return false;
     }
 
-    /**
-     * @return StorageHierarchy
-     */
+
     public function getHierarchy(): StorageHierarchy
     {
         return new StorageHierarchy(
@@ -58,19 +52,14 @@ class PoStorage implements StorageInterface
         );
     }
 
-    /**
-     * @param TranslationSet $set
-     * @return void
-     */
+
     public function configureStorage(TranslationSet $set): void
     {
         $this->eolLast = filter_var($set->getAttributeValue('eol-last'), FILTER_VALIDATE_BOOLEAN);
     }
 
     /**
-     * @param TranslationSet $set
      * @throws Exception
-     * @return void
      */
     public function loadTranslationSet(TranslationSet $set): void
     {
@@ -88,10 +77,7 @@ class PoStorage implements StorageInterface
     }
 
 
-    /**
-     * @param TranslationSet $set
-     * @return StorageSaveResult
-     */
+
     public function saveTranslationSet(TranslationSet $set): StorageSaveResult
     {
         $localeCount = 0;
@@ -111,11 +97,7 @@ class PoStorage implements StorageInterface
         return new StorageSaveResult($localeCount, $translationCount);
     }
 
-    /**
-     * @param Locale $locale
-     * @param string $filename
-     * @return StorageSaveResult
-     */
+
     public function saveTranslationLocale(Locale $locale, string $filename): StorageSaveResult
     {
         $contentBuffer = [];
@@ -128,10 +110,7 @@ class PoStorage implements StorageInterface
     }
 
     /**
-     * @param Locale $locale
      * @param array<mixed> $contentBuffer
-     * @param string $filename
-     * @return int
      */
     private function saveLocale(Locale $locale, array &$contentBuffer, string $filename): int
     {
@@ -220,7 +199,6 @@ class PoStorage implements StorageInterface
     }
 
     /**
-     * @param string $filename
      * @return array<string>
      */
     private function getLines(string $filename): array

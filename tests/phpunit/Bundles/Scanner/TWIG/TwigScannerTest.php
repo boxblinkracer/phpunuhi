@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Bundles\Scanner\TWIG;
 
 use PHPUnit\Framework\TestCase;
@@ -7,18 +9,12 @@ use PHPUnuhi\Bundles\Twig\TwigScanner;
 
 class TwigScannerTest extends TestCase
 {
-
-    /**
-     * @return void
-     */
     public function testGetScannerName(): void
     {
         $this->assertEquals('twig', (new TwigScanner())->getScannerName());
     }
 
-    /**
-     * @return void
-     */
+
     public function testGetExtension(): void
     {
         $this->assertEquals('twig', (new TwigScanner())->getExtension());
@@ -48,8 +44,6 @@ class TwigScannerTest extends TestCase
     /**
      * @dataProvider getFoundData
      *
-     * @param string $text
-     * @return void
      */
     public function testTranslationFound(string $text): void
     {
@@ -60,9 +54,7 @@ class TwigScannerTest extends TestCase
         $this->assertTrue($found);
     }
 
-    /**
-     * @return void
-     */
+
     public function testTranslationNotFound(): void
     {
         $text = "This is a sample {{ ' header.example ' | trans }} text.";

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Traits;
 
 use PHPUnuhi\Models\Configuration\Attribute;
@@ -7,12 +9,6 @@ use SimpleXMLElement;
 
 trait XmlTrait
 {
-
-    /**
-     * @param string $name
-     * @param SimpleXMLElement $node
-     * @return bool
-     */
     protected function hasAttribute(string $name, SimpleXMLElement $node): bool
     {
         $nodeAttributes = $node->attributes();
@@ -28,11 +24,7 @@ trait XmlTrait
         return false;
     }
 
-    /**
-     * @param string $name
-     * @param SimpleXMLElement $node
-     * @return Attribute
-     */
+
     protected function getAttribute(string $name, SimpleXMLElement $node): Attribute
     {
         $nodeAttributes = $node->attributes();
@@ -40,7 +32,7 @@ trait XmlTrait
         if ($nodeAttributes !== null) {
             foreach ($nodeAttributes as $attrName => $value) {
                 if ($attrName === $name) {
-                    return new Attribute($attrName, $value);
+                    return new Attribute($attrName, (string)$value);
                 }
             }
         }
@@ -49,7 +41,6 @@ trait XmlTrait
     }
 
     /**
-     * @param SimpleXMLElement $node
      * @return array<Attribute>
      */
     protected function getAttributes(SimpleXMLElement $node): array
@@ -58,7 +49,7 @@ trait XmlTrait
         $nodeAttributes = $node->attributes();
         if ($nodeAttributes !== null) {
             foreach ($nodeAttributes as $attrName => $value) {
-                $setAttributes[] = new Attribute($attrName, $value);
+                $setAttributes[] = new Attribute($attrName, (string)$value);
             }
         }
 

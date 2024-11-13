@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Storage;
 
 use Exception;
@@ -15,24 +17,18 @@ use PHPUnuhi\Models\Translation\TranslationSet;
 
 class StorageFactory
 {
-
-    /**
-     * @var StorageFactory
-     */
-    private static $instance;
+    private static ?\PHPUnuhi\Bundles\Storage\StorageFactory $instance = null;
 
     /**
      * @var StorageInterface[]
      */
-    private $storages;
+    private array $storages;
 
 
-    /**
-     * @return StorageFactory
-     */
+
     public static function getInstance(): StorageFactory
     {
-        if (self::$instance === null) {
+        if (!self::$instance instanceof \PHPUnuhi\Bundles\Storage\StorageFactory) {
             self::$instance = new self();
         }
 
@@ -40,9 +36,7 @@ class StorageFactory
     }
 
 
-    /**
-     *
-     */
+
     private function __construct()
     {
         $this->resetStorages();
@@ -50,9 +44,7 @@ class StorageFactory
 
 
     /**
-     * @param StorageInterface $storage
      * @throws ConfigurationException
-     * @return void
      */
     public function registerStorage(StorageInterface $storage): void
     {
@@ -70,7 +62,6 @@ class StorageFactory
 
     /**
      * Resets the registered storages to the default ones.
-     * @return void
      */
     public function resetStorages(): void
     {
@@ -86,9 +77,7 @@ class StorageFactory
     }
 
     /**
-     * @param TranslationSet $set
      * @throws ConfigurationException
-     * @return StorageInterface
      */
     public function getStorage(TranslationSet $set): StorageInterface
     {
@@ -98,10 +87,7 @@ class StorageFactory
     }
 
     /**
-     * @param string $name
-     * @param TranslationSet $set
      * @throws ConfigurationException
-     * @return StorageInterface
      */
     public function getStorageByFormat(string $name, TranslationSet $set): StorageInterface
     {

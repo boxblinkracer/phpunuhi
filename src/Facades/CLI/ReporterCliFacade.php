@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Facades\CLI;
 
 use PHPUnuhi\Components\Reporter\Model\ReportResult;
@@ -9,15 +11,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ReporterCliFacade
 {
+    private SymfonyStyle $io;
 
-    /**
-     * @var SymfonyStyle
-     */
-    private $io;
 
-    /**
-     * @param SymfonyStyle $io
-     */
     public function __construct(SymfonyStyle $io)
     {
         $this->io = $io;
@@ -25,11 +21,7 @@ class ReporterCliFacade
 
 
     /**
-     * @param string $reportFormat
-     * @param string $reportFilename
-     * @param ReportResult $reportResult
      * @throws ConfigurationException
-     * @return void
      */
     public function execute(string $reportFormat, string $reportFilename, ReportResult $reportResult): void
     {

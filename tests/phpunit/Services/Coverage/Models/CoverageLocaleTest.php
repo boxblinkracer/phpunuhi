@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Services\Coverage\Models;
 
 use PHPUnit\Framework\TestCase;
@@ -8,16 +10,10 @@ use PHPUnuhi\Services\Coverage\Models\CoverageLocale;
 
 class CoverageLocaleTest extends TestCase
 {
-
-    /**
-     * @var Locale
-     */
-    private $locale;
+    private Locale $locale;
 
 
-    /**
-     * @return void
-     */
+
     public function setUp(): void
     {
         $this->locale = new Locale('en', false, 'English', '');
@@ -28,9 +24,7 @@ class CoverageLocaleTest extends TestCase
         $this->locale->addTranslation('text2', '', '');
     }
 
-    /**
-     * @return void
-     */
+
     public function testName(): void
     {
         $coverage = new CoverageLocale($this->locale);
@@ -40,9 +34,7 @@ class CoverageLocaleTest extends TestCase
         $this->assertEquals('en', $value);
     }
 
-    /**
-     * @return void
-     */
+
     public function testCoverage(): void
     {
         $coverage = new CoverageLocale($this->locale);
@@ -52,9 +44,7 @@ class CoverageLocaleTest extends TestCase
         $this->assertEquals(75, $value);
     }
 
-    /**
-     * @return void
-     */
+
     public function testWordCount(): void
     {
         $coverage = new CoverageLocale($this->locale);
@@ -64,9 +54,7 @@ class CoverageLocaleTest extends TestCase
         $this->assertEquals(4, $value);
     }
 
-    /**
-     * @return void
-     */
+
     public function testCountAll(): void
     {
         $coverage = new CoverageLocale($this->locale);
@@ -76,9 +64,7 @@ class CoverageLocaleTest extends TestCase
         $this->assertEquals(4, $value);
     }
 
-    /**
-     * @return void
-     */
+
     public function testCountTranslated(): void
     {
         $coverage = new CoverageLocale($this->locale);

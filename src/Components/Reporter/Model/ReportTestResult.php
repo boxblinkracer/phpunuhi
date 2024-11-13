@@ -1,54 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Components\Reporter\Model;
 
 class ReportTestResult
 {
+    private string $name;
 
-    /**
-     * @var string
-     */
-    private $name;
+    private string $translationKey;
 
-    /**
-     * @var string
-     */
-    private $translationKey;
+    private string $className;
 
-    /**
-     * @var string
-     */
-    private $className;
+    private int $lineNumber;
 
-    /**
-     * @var int
-     */
-    private $lineNumber;
+    private string $failureType;
 
-    /**
-     * @var string
-     */
-    private $failureType;
+    private string $failureMessage;
 
-    /**
-     * @var string
-     */
-    private $failureMessage;
-
-    /**
-     * @var bool
-     */
-    private $success;
+    private bool $success;
 
 
-    /**
-     * @param string $name
-     * @param string $translationKey
-     * @param string $className
-     * @param string $failureType
-     * @param string $failureMessage
-     * @param bool $success
-     */
+
     public function __construct(
         string $name,
         string $translationKey,
@@ -68,57 +41,43 @@ class ReportTestResult
     }
 
 
-    /**
-     * @return string
-     */
+
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
+
     public function getTranslationKey(): string
     {
         return $this->translationKey;
     }
 
-    /**
-     * @return string
-     */
+
     public function getClassName(): string
     {
         return $this->className;
     }
 
-    /**
-     * @return int
-     */
+
     public function getLineNumber(): int
     {
         return $this->lineNumber;
     }
 
-    /**
-     * @return string
-     */
+
     public function getFailureType(): string
     {
         return $this->failureType;
     }
 
-    /**
-     * @return string
-     */
+
     public function getFailureMessage(): string
     {
         return $this->failureMessage;
     }
 
-    /**
-     * @return bool
-     */
+
     public function isSuccess(): bool
     {
         return $this->success;

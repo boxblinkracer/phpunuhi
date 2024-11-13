@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi;
 
 use Exception;
@@ -25,10 +27,8 @@ use Symfony\Component\Console\Application;
 
 class AppManager
 {
-
     /**
      * @throws Exception
-     * @return void
      */
     public static function run(): void
     {

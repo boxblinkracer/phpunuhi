@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Facades\CLI;
 
 use PHPUnuhi\Components\Validator\Coverage\CoverageValidator;
@@ -8,21 +10,12 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class CoverageCliFacade
 {
+    private SymfonyStyle $io;
 
-    /**
-     * @var SymfonyStyle
-     */
-    private $io;
-
-    /**
-     * @var CoverageValidator
-     */
-    private $coverageValidator;
+    private CoverageValidator $coverageValidator;
 
 
-    /**
-     * @param SymfonyStyle $io
-     */
+
     public function __construct(SymfonyStyle $io)
     {
         $this->io = $io;
@@ -30,10 +23,7 @@ class CoverageCliFacade
         $this->coverageValidator = new CoverageValidator();
     }
 
-    /**
-     * @param Configuration $config
-     * @return bool
-     */
+
     public function execute(Configuration $config): bool
     {
         $this->io->section('coverage checks');

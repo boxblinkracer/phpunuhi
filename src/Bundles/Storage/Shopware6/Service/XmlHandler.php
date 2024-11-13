@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Storage\Shopware6\Service;
 
 use DOMDocument;
@@ -16,10 +18,7 @@ class XmlHandler
 
     private const LANG_ATTRIBUTE = 'lang';
 
-    /**
-     * @var string
-     */
-    private $defaultLocale;
+    private string $defaultLocale;
 
 
     public function __construct(string $defaultLocale)
@@ -27,13 +26,7 @@ class XmlHandler
         $this->defaultLocale = $defaultLocale;
     }
 
-    /**
-     * @param string $tagName
-     * @param string $locale
-     * @param DOMXPath $xpath
-     * @param DOMElement $contextNode
-     * @return null|string
-     */
+
     public function findLocaleValue(string $tagName, string $locale, DOMXPath $xpath, DOMElement $contextNode): ?string
     {
         $locale = strtolower($locale);
@@ -60,14 +53,7 @@ class XmlHandler
     }
 
     /**
-     * @param string $tagName
-     * @param string $locale
-     * @param Translation $translation
-     * @param DOMNode $contextNode
-     * @param DOMDocument $document
-     * @param DOMXPath $xpath
      * @throws DOMException
-     * @return void
      */
     public function updateNode(string $tagName, string $locale, Translation $translation, DOMNode $contextNode, DOMDocument $document, DOMXPath $xpath): void
     {

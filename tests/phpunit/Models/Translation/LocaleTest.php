@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Models\Translation;
 
 use Exception;
@@ -10,11 +12,6 @@ use PHPUnuhi\Models\Translation\Translation;
 
 class LocaleTest extends TestCase
 {
-
-
-    /**
-     * @return void
-     */
     public function testName(): void
     {
         $locale = new Locale('en GB', false, 'de.json', 'de-section');
@@ -22,9 +19,7 @@ class LocaleTest extends TestCase
         $this->assertEquals('en GB', $locale->getName());
     }
 
-    /**
-     * @return void
-     */
+
     public function testIsBase(): void
     {
         $locale = new Locale('en GB', true, 'de.json', 'de-section');
@@ -32,9 +27,7 @@ class LocaleTest extends TestCase
         $this->assertEquals(true, $locale->isBase());
     }
 
-    /**
-     * @return void
-     */
+
     public function testFilename(): void
     {
         $locale = new Locale('en GB', false, './de.json', 'de-section');
@@ -42,9 +35,7 @@ class LocaleTest extends TestCase
         $this->assertEquals('./de.json', $locale->getFilename());
     }
 
-    /**
-     * @return void
-     */
+
     public function testIniSection(): void
     {
         $locale = new Locale('en GB', false, 'de.json', 'de-section');
@@ -52,9 +43,7 @@ class LocaleTest extends TestCase
         $this->assertEquals('de-section', $locale->getIniSection());
     }
 
-    /**
-     * @return void
-     */
+
     public function testExchangeIdentifierFilename(): void
     {
         $locale = new Locale('', false, 'de.json', '');
@@ -62,9 +51,7 @@ class LocaleTest extends TestCase
         $this->assertEquals('de.json', $locale->getExchangeIdentifier());
     }
 
-    /**
-     * @return void
-     */
+
     public function testExchangeIdentifierName(): void
     {
         $locale = new Locale('DE', false, 'de.json', '');
@@ -72,9 +59,7 @@ class LocaleTest extends TestCase
         $this->assertEquals('DE', $locale->getExchangeIdentifier());
     }
 
-    /**
-     * @return void
-     */
+
     public function testExchangeIdentifierHasNoSpaces(): void
     {
         $locale = new Locale('en GB', false, 'de.json', '');
@@ -82,9 +67,7 @@ class LocaleTest extends TestCase
         $this->assertEquals('en-GB', $locale->getExchangeIdentifier());
     }
 
-    /**
-     * @return void
-     */
+
     public function testGetTranslationKeys(): void
     {
         $locale = new Locale('', false, '', '');
@@ -96,9 +79,7 @@ class LocaleTest extends TestCase
         $this->assertCount(2, $locale->getTranslationIDs());
     }
 
-    /**
-     * @return void
-     */
+
     public function testGetValidTranslations(): void
     {
         $locale = new Locale('', false, '', '');
@@ -110,9 +91,7 @@ class LocaleTest extends TestCase
         $this->assertCount(1, $locale->getValidTranslations());
     }
 
-    /**
-     * @return void
-     */
+
     public function testGetTranslations(): void
     {
         $locale = new Locale('', false, '', '');
@@ -122,9 +101,7 @@ class LocaleTest extends TestCase
         $this->assertCount(2, $locale->getTranslations());
     }
 
-    /**
-     * @return void
-     */
+
     public function testSetTranslations(): void
     {
         $locale = new Locale('', false, '', '');
@@ -184,7 +161,6 @@ class LocaleTest extends TestCase
      * but do correctly update them in this case.
      *
      * @throws TranslationNotFoundException
-     * @return void
      */
     public function testAddTranslationAvoidDuplicates(): void
     {
@@ -204,7 +180,6 @@ class LocaleTest extends TestCase
 
     /**
      * @throws TranslationNotFoundException
-     * @return void
      */
     public function testUpdateTranslationKey(): void
     {
@@ -222,7 +197,6 @@ class LocaleTest extends TestCase
 
     /**
      * @throws TranslationNotFoundException
-     * @return void
      */
     public function testUpdateTranslationKeyIfNewKeyExists(): void
     {

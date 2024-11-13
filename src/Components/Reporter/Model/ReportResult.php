@@ -1,20 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Components\Reporter\Model;
 
 class ReportResult
 {
-
     /**
      * @var ReportSetResult[]
      */
-    private $suites = [];
+    private array $suites = [];
 
 
-    /**
-     * @param ReportSetResult $result
-     * @return void
-     */
+
     public function addTranslationSet(ReportSetResult $result): void
     {
         $this->suites[] = $result;
@@ -28,9 +26,7 @@ class ReportResult
         return $this->suites;
     }
 
-    /**
-     * @return int
-     */
+
     public function getTestCount(): int
     {
         $count = 0;
@@ -41,9 +37,7 @@ class ReportResult
         return $count;
     }
 
-    /**
-     * @return int
-     */
+
     public function getFailureCount(): int
     {
         $count = 0;

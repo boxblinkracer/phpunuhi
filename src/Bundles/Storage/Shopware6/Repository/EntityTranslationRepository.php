@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Storage\Shopware6\Repository;
 
 use PDO;
@@ -10,22 +12,16 @@ class EntityTranslationRepository
 {
     use BinaryTrait;
 
-    /**
-     * @var PDO
-     */
-    private $pdo;
+    private PDO $pdo;
 
 
-    /**
-     * @param PDO $pdo
-     */
+
     public function __construct(PDO $pdo)
     {
         $this->pdo = $pdo;
     }
 
     /**
-     * @param string $entity
      * @return array<mixed>
      */
     public function getTranslations(string $entity): array
@@ -44,11 +40,7 @@ class EntityTranslationRepository
     }
 
     /**
-     * @param string $entity
-     * @param string $entityId
-     * @param string $languageId
      * @param UpdateField[] $fieldValues
-     * @return void
      */
     public function writeTranslation(string $entity, string $entityId, string $languageId, array $fieldValues): void
     {
@@ -62,9 +54,6 @@ class EntityTranslationRepository
     }
 
     /**
-     * @param string $entity
-     * @param string $entityId
-     * @param string $languageId
      * @return null|array<mixed>
      */
     public function getTranslationRow(string $entity, string $entityId, string $languageId): ?array
@@ -86,11 +75,7 @@ class EntityTranslationRepository
     }
 
     /**
-     * @param string $entity
-     * @param string $entityId
-     * @param string $languageId
      * @param UpdateField[] $fieldValues
-     * @return void
      */
     public function updateTranslationRow(string $entity, string $entityId, string $languageId, array $fieldValues): void
     {
@@ -151,7 +136,6 @@ class EntityTranslationRepository
     }
 
     /**
-     * @param string $tableName
      * @param UpdateField[] $fieldValues
      * @return array<string, null|string>
      */
@@ -175,7 +159,6 @@ class EntityTranslationRepository
     }
 
     /**
-     * @param string $table
      * @return array<mixed>
      */
     private function getJsonFields(string $table): array

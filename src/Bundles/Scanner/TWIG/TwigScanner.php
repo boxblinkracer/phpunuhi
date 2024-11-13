@@ -1,21 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Twig;
 
 class TwigScanner implements ScannerInterface
 {
-
-    /**
-     * @return string
-     */
     public function getScannerName(): string
     {
         return 'twig';
     }
 
-    /**
-     * @return string
-     */
+
     public function getExtension(): string
     {
         return 'twig';
@@ -24,9 +20,6 @@ class TwigScanner implements ScannerInterface
     /**
      * {{ 'header.example' | trans }}
      *
-     * @param string $key
-     * @param string $content
-     * @return bool
      */
     public function findKey(string $key, string $content): bool
     {

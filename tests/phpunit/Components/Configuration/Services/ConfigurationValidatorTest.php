@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Components\Configuration\Services;
 
 use PHPUnit\Framework\TestCase;
@@ -18,14 +20,10 @@ class ConfigurationValidatorTest extends TestCase
     use TranslationSetBuilderTrait;
 
 
-    /**
-     * @var ConfigurationValidator
-     */
-    private $validator;
 
-    /**
-     * @return void
-     */
+    private ConfigurationValidator $validator;
+
+
     public function setUp(): void
     {
         $this->validator = new ConfigurationValidator();
@@ -33,7 +31,6 @@ class ConfigurationValidatorTest extends TestCase
 
     /**
      * @throws ConfigurationException
-     * @return void
      */
     public function testEmptySetsLeadToException(): void
     {
@@ -46,7 +43,6 @@ class ConfigurationValidatorTest extends TestCase
 
     /**
      * @throws ConfigurationException
-     * @return void
      */
     public function testSetsWithoutNameLeadToException(): void
     {
@@ -70,7 +66,6 @@ class ConfigurationValidatorTest extends TestCase
 
     /**
      * @throws ConfigurationException
-     * @return void
      */
     public function testSetsWithoutFormatLeadToException(): void
     {
@@ -94,7 +89,6 @@ class ConfigurationValidatorTest extends TestCase
 
     /**
      * @throws ConfigurationException
-     * @return void
      */
     public function testSetsWithSameNameLeadToException(): void
     {
@@ -118,7 +112,6 @@ class ConfigurationValidatorTest extends TestCase
 
     /**
      * @throws ConfigurationException
-     * @return void
      */
     public function testLocalesWithoutNameLeadToException(): void
     {
@@ -135,7 +128,6 @@ class ConfigurationValidatorTest extends TestCase
 
     /**
      * @throws ConfigurationException
-     * @return void
      */
     public function testLocalesWithSameNameLeadToException(): void
     {
@@ -152,7 +144,6 @@ class ConfigurationValidatorTest extends TestCase
 
     /**
      * @throws ConfigurationException
-     * @return void
      */
     public function testLocalesWithNotExistingFileLeadToException(): void
     {

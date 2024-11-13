@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Services\Loaders\Directory;
 
 use RecursiveDirectoryIterator;
@@ -7,10 +9,7 @@ use RecursiveIteratorIterator;
 
 class DirectoryLoader
 {
-
     /**
-     * @param string $directory
-     * @param string $extension
      * @return array<mixed>
      */
     public function getFiles(string $directory, string $extension): array

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Bundles\Translator\OpenAI;
 
 use Exception;
@@ -8,10 +10,6 @@ use PHPUnuhi\Bundles\Translator\OpenAI\OpenAITranslator;
 
 class OpenAITranslatorTest extends TestCase
 {
-
-    /**
-     * @return void
-     */
     public function testGetName(): void
     {
         $translator = new OpenAITranslator();
@@ -19,9 +17,7 @@ class OpenAITranslatorTest extends TestCase
         $this->assertEquals('openai', $translator->getName());
     }
 
-    /**
-     * @return void
-     */
+
     public function testGetOptions(): void
     {
         $translator = new OpenAITranslator();
@@ -34,7 +30,6 @@ class OpenAITranslatorTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testSetOptionsWithMissingKeyThrowsException(): void
     {
@@ -50,7 +45,6 @@ class OpenAITranslatorTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testSetOptions(): void
     {

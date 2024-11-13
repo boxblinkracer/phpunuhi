@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Services\CaseStyle;
 
 use PHPUnit\Framework\TestCase;
@@ -7,10 +9,6 @@ use PHPUnuhi\Services\CaseStyle\CamelCaseConverter;
 
 class CamelCaseConverterTest extends TestCase
 {
-
-    /**
-     * @return void
-     */
     public function testIdentifier(): void
     {
         $converter = new CamelCaseConverter();
@@ -36,9 +34,6 @@ class CamelCaseConverterTest extends TestCase
     /**
      * @dataProvider getData
      *
-     * @param string $expected
-     * @param string $text
-     * @return void
      */
     public function testConvertCamelCase(string $expected, string $text): void
     {

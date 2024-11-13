@@ -1,16 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Services\Loaders\File;
 
 use Exception;
 
 class FileLoader
 {
-
     /**
-     * @param string $filename
      * @throws Exception
-     * @return string
      */
     public function load(string $filename): string
     {

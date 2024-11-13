@@ -1,32 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Components\Validator\CaseStyle\Style;
 
 use PHPUnit\Framework\TestCase;
-use PHPUnuhi\Components\Validator\CaseStyle\CaseStyleValidatorInterface;
 use PHPUnuhi\Components\Validator\CaseStyle\Style\CamelCaseValidator;
 
 class CamelCaseValidatorTest extends TestCase
 {
-
-    /**
-     * @var CaseStyleValidatorInterface
-     */
-    private $validator;
+    private CamelCaseValidator $validator;
 
 
-    /**
-     * @return void
-     */
+
     protected function setUp(): void
     {
         $this->validator = new CamelCaseValidator();
     }
 
 
-    /**
-     * @return void
-     */
+
     public function testIdentifier(): void
     {
         $this->assertEquals('camel', $this->validator->getIdentifier());
@@ -50,9 +43,6 @@ class CamelCaseValidatorTest extends TestCase
     /**
      * @dataProvider getData
      *
-     * @param bool $expectedValid
-     * @param string $text
-     * @return void
      */
     public function testIsValid(bool $expectedValid, string $text): void
     {

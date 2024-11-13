@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Facades\CLI;
 
 use PHPUnuhi\Models\Translation\TranslationSet;
@@ -7,15 +9,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class TranslationSetCliFacade
 {
+    private SymfonyStyle $io;
 
-    /**
-     * @var SymfonyStyle
-     */
-    private $io;
 
-    /**
-     * @param SymfonyStyle $io
-     */
     public function __construct(SymfonyStyle $io)
     {
         $this->io = $io;
@@ -23,7 +19,6 @@ class TranslationSetCliFacade
 
     /**
      * @param TranslationSet[] $translationSets
-     * @return void
      */
     public function showConfig(array $translationSets): void
     {

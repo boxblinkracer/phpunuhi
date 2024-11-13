@@ -1,21 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Models\Configuration;
 
 use PHPUnuhi\Models\Translation\TranslationSet;
 
 class Configuration
 {
-
     /**
      * @var array<TranslationSet>
      */
-    private $sets;
+    private array $sets;
 
-    /**
-     * @var Coverage
-     */
-    private $coverage;
+    private Coverage $coverage;
 
 
     /**
@@ -36,33 +34,26 @@ class Configuration
         return $this->sets;
     }
 
-    /**
-     * @return Coverage
-     */
+
     public function getCoverage(): Coverage
     {
         return $this->coverage;
     }
 
-    /**
-     * @param Coverage $coverage
-     * @return void
-     */
+
     public function setCoverage(Coverage $coverage): void
     {
         $this->coverage = $coverage;
     }
 
-    /**
-     * @return bool
-     */
+
     public function hasCoverageSetting(): bool
     {
         if ($this->coverage->hasMinCoverage()) {
             return true;
         }
 
-        if (count($this->coverage->getLocaleCoverages()) > 0) {
+        if ($this->coverage->getLocaleCoverages() !== []) {
             return true;
         }
 

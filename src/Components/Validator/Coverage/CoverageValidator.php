@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Components\Validator\Coverage;
 
 use PHPUnuhi\Models\Configuration\Coverage;
@@ -8,16 +10,10 @@ use PHPUnuhi\Services\Coverage\CoverageService;
 
 class CoverageValidator
 {
-
-    /**
-     * @var CoverageService
-     */
-    private $coverageService;
+    private CoverageService $coverageService;
 
 
-    /**
-     *
-     */
+
     public function __construct()
     {
         $this->coverageService = new CoverageService();
@@ -25,9 +21,7 @@ class CoverageValidator
 
 
     /**
-     * @param Coverage $coverageSetting
      * @param TranslationSet[] $translationSets
-     * @return CoverageValidatorResult
      */
     public function validate(Coverage $coverageSetting, array $translationSets): CoverageValidatorResult
     {

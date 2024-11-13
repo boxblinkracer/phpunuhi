@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Services\CaseStyle;
 
 use PHPUnit\Framework\TestCase;
@@ -9,10 +11,8 @@ use PHPUnuhi\Services\CaseStyle\UpperCaseConverter;
 
 class CaseStyleConverterFactoryTest extends TestCase
 {
-
     /**
      * @throws CaseStyleNotFoundException
-     * @return void
      */
     public function testGetConverter(): void
     {
@@ -24,7 +24,6 @@ class CaseStyleConverterFactoryTest extends TestCase
 
     /**
      * @throws CaseStyleNotFoundException
-     * @return void
      */
     public function testUnknownConverterThrowsException(): void
     {

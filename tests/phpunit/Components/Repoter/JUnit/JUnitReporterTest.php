@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Components\Repoter\JUnit;
 
 use PHPUnit\Framework\TestCase;
@@ -17,25 +19,17 @@ class JUnitReporterTest extends TestCase
     use StringCleanerTrait;
 
 
-    /**
-     * @var JUnitReporter
-     */
-    private $reporter;
 
-    /**
-     * @var FakeXmlWriter
-     */
-    private $fakeXmlWriter;
-
-    /**
-     * @var FakeDirectoryWriter
-     */
-    private $fakeDirectoryWriter;
+    private JUnitReporter $reporter;
 
 
-    /**
-     * @return void
-     */
+    private FakeXmlWriter $fakeXmlWriter;
+
+
+    private FakeDirectoryWriter $fakeDirectoryWriter;
+
+
+
     public function setUp(): void
     {
         $this->fakeXmlWriter = new FakeXmlWriter();
@@ -48,25 +42,19 @@ class JUnitReporterTest extends TestCase
     }
 
 
-    /**
-     * @return void
-     */
+
     public function testName(): void
     {
         $this->assertEquals('junit', $this->reporter->getName());
     }
 
-    /**
-     * @return void
-     */
+
     public function testDefaultFilename(): void
     {
         $this->assertEquals('junit.xml', $this->reporter->getDefaultFilename());
     }
 
-    /**
-     * @return void
-     */
+
     public function testCorrectFilenameIsWritten(): void
     {
         $result = new ReportResult();
@@ -76,9 +64,7 @@ class JUnitReporterTest extends TestCase
         $this->assertEquals('my-file.xml', $this->fakeXmlWriter->getProvidedFilename());
     }
 
-    /**
-     * @return void
-     */
+
     public function testSubfoldersAreGeneratedForResultFile(): void
     {
         $result = new ReportResult();
@@ -88,9 +74,7 @@ class JUnitReporterTest extends TestCase
         $this->assertEquals('./subfolder/subfolder2', $this->fakeDirectoryWriter->getCreatedDirectory());
     }
 
-    /**
-     * @return void
-     */
+
     public function testReportGeneration(): void
     {
         $suite = new ReportSetResult('Storefront');

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Components\Validator;
 
 use PHPUnuhi\Bundles\Storage\StorageHierarchy;
@@ -17,19 +19,14 @@ class CaseStyleValidator implements ValidatorInterface
     use StringTrait;
 
 
-    /**
-     * @return string
-     */
+
     public function getTypeIdentifier(): string
     {
         return 'CASE_STYLE';
     }
 
     /**
-     * @param TranslationSet $set
-     * @param StorageInterface $storage
      * @throws CaseStyleNotFoundException
-     * @return ValidationResult
      */
     public function validate(TranslationSet $set, StorageInterface $storage): ValidationResult
     {
@@ -114,8 +111,6 @@ class CaseStyleValidator implements ValidatorInterface
     }
 
     /**
-     * @param string $key
-     * @param StorageHierarchy $hierarchy
      * @return string[]
      */
     private function getKeyParts(string $key, StorageHierarchy $hierarchy): array
@@ -129,11 +124,8 @@ class CaseStyleValidator implements ValidatorInterface
 
 
     /**
-     * @param string $part
-     * @param int $level
      * @param CaseStyle[] $caseStyles
      * @throws CaseStyleNotFoundException
-     * @return bool
      */
     private function verifyLevel(string $part, int $level, array $caseStyles): bool
     {
@@ -159,7 +151,6 @@ class CaseStyleValidator implements ValidatorInterface
     }
 
     /**
-     * @param int $level
      * @param CaseStyle[] $caseStyles
      * @return CaseStyle[]
      */

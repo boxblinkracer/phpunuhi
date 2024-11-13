@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Traits;
 
 use PHPUnuhi\Components\Validator\Model\ValidationTest;
@@ -11,11 +13,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 trait CommandOutputTrait
 {
-
     /**
      * @param array<mixed> $rows
-     * @param OutputInterface $output
-     * @return void
      */
     public function showTranslationTable(array $rows, OutputInterface $output): void
     {
@@ -63,8 +62,6 @@ trait CommandOutputTrait
 
     /**
      * @param ValidationTest[] $rows
-     * @param OutputInterface $output
-     * @return void
      */
     public function showErrorTable(array $rows, OutputInterface $output): void
     {

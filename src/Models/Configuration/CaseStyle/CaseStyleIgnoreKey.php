@@ -1,25 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Models\Configuration\CaseStyle;
 
 class CaseStyleIgnoreKey
 {
+    private string $key;
 
-    /**
-     * @var string
-     */
-    private $key;
-
-    /**
-     * @var bool
-     */
-    private $fullyQualifiedPath;
+    private bool $fullyQualifiedPath;
 
 
-    /**
-     * @param string $key
-     * @param bool $fullyQualifiedPath
-     */
+
     public function __construct(string $key, bool $fullyQualifiedPath)
     {
         $this->key = $key;
@@ -27,17 +19,13 @@ class CaseStyleIgnoreKey
     }
 
 
-    /**
-     * @return string
-     */
+
     public function getKey(): string
     {
         return $this->key;
     }
 
-    /**
-     * @return bool
-     */
+
     public function isFullyQualifiedPath(): bool
     {
         return $this->fullyQualifiedPath;

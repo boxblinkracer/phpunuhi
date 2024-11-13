@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Models\Translation;
 
 use Exception;
@@ -15,66 +17,39 @@ use PHPUnuhi\Services\Placeholder\PlaceholderExtractor;
 
 class TranslationSet
 {
+    private string $name;
 
-    /**
-     * @var string
-     */
-    private $name;
+    private string $format;
 
-    /**
-     * @var string
-     */
-    private $format;
-
-    /**
-     * @var Protection
-     */
-    private $protection;
+    private Protection $protection;
 
     /**
      * @var Attribute[]
      */
-    private $attributes;
+    private array $attributes;
 
     /**
      * @var Locale[]
      */
-    private $locales;
+    private array $locales;
 
-    /**
-     * @var Filter
-     */
-    private $filter;
+    private Filter $filter;
 
-    /**
-     * @var CaseStyleSetting
-     */
-    private $casingStyleSettings;
+    private CaseStyleSetting $casingStyleSettings;
 
     /**
      * @var Rule[]
      */
-    private $rules;
+    private array $rules;
 
-    /**
-     * @var PlaceholderEncoder
-     */
-    private $placeHolderEncoder;
+    private PlaceholderEncoder $placeHolderEncoder;
 
-    /**
-     * @var PlaceholderExtractor
-     */
-    private $placeholderExtractor;
+    private PlaceholderExtractor $placeholderExtractor;
 
 
     /**
-     * @param string $name
-     * @param string $format
-     * @param Protection $protection
      * @param Locale[] $locales
-     * @param Filter $filter
      * @param Attribute[] $attributes
-     * @param CaseStyleSetting $styles
      * @param Rule[] $rules
      */
     public function __construct(string $name, string $format, Protection $protection, array $locales, Filter $filter, array $attributes, CaseStyleSetting $styles, array $rules)
@@ -93,33 +68,25 @@ class TranslationSet
     }
 
 
-    /**
-     * @return string
-     */
+
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
+
     public function getFormat(): string
     {
         return $this->format;
     }
 
-    /**
-     * @return Protection
-     */
+
     public function getProtection(): Protection
     {
         return $this->protection;
     }
 
-    /**
-     * @return Filter
-     */
+
     public function getFilter(): Filter
     {
         return $this->filter;
@@ -133,10 +100,7 @@ class TranslationSet
         return $this->attributes;
     }
 
-    /**
-     * @param string $name
-     * @return string
-     */
+
     public function getAttributeValue(string $name): string
     {
         foreach ($this->attributes as $attribute) {
@@ -148,10 +112,7 @@ class TranslationSet
         return '';
     }
 
-    /**
-     * @param string $name
-     * @return bool
-     */
+
     public function hasRule(string $name): bool
     {
         foreach ($this->rules as $rule) {
@@ -172,9 +133,7 @@ class TranslationSet
     }
 
     /**
-     * @param string $name
      * @throws Exception
-     * @return Rule
      */
     public function getRule(string $name): Rule
     {
@@ -195,17 +154,13 @@ class TranslationSet
         return $this->locales;
     }
 
-    /**
-     * @return CaseStyleSetting
-     */
+
     public function getCasingStyleSettings(): CaseStyleSetting
     {
         return $this->casingStyleSettings;
     }
 
-    /**
-     * @return bool
-     */
+
     public function hasGroups(): bool
     {
         foreach ($this->locales as $locale) {
@@ -237,8 +192,6 @@ class TranslationSet
     }
 
     /**
-     * @param string $searchID
-     * @param string $sourceLocaleName
      * @throws TranslationNotFoundException
      * @return array{locale: string, translation: Translation}
      */
@@ -278,10 +231,7 @@ class TranslationSet
         throw new TranslationNotFoundException('No valid translation found for ID: ' . $searchID);
     }
 
-    /**
-     * @param string $id
-     * @return bool
-     */
+
     public function isCompletelyTranslated(string $id): bool
     {
         $complete = true;
@@ -303,10 +253,7 @@ class TranslationSet
         return $complete;
     }
 
-    /**
-     * @param int $getLevel
-     * @return string
-     */
+
     public function getCasingStyle(int $getLevel): string
     {
         $caseStyles = $this->casingStyleSettings->getCaseStyles();
@@ -378,7 +325,6 @@ class TranslationSet
     }
 
     /**
-     * @param string $text
      * @return Placeholder[]
      */
     public function findPlaceholders(string $text): array

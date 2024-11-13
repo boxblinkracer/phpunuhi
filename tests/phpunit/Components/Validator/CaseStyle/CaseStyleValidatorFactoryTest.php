@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Components\Validator\CaseStyle;
 
 use PHPUnit\Framework\TestCase;
@@ -9,11 +11,8 @@ use PHPUnuhi\Components\Validator\CaseStyle\Style\CamelCaseValidator;
 
 class CaseStyleValidatorFactoryTest extends TestCase
 {
-
-
     /**
      * @throws CaseStyleNotFoundException
-     * @return void
      */
     public function testUnknownIdentifierThrowsException(): void
     {
@@ -26,7 +25,6 @@ class CaseStyleValidatorFactoryTest extends TestCase
 
     /**
      * @throws CaseStyleNotFoundException
-     * @return void
      */
     public function testValidatorFound(): void
     {

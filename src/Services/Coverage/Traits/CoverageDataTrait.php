@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Services\Coverage\Traits;
 
 use PHPUnuhi\Services\Maths\PercentageCalculator;
 
 trait CoverageDataTrait
 {
-
     /**
      * @var int
      */
@@ -23,9 +24,7 @@ trait CoverageDataTrait
     protected $countWords;
 
 
-    /**
-     * @return float
-     */
+
     public function getCoverage(): float
     {
         $calculator = new PercentageCalculator();
@@ -33,25 +32,19 @@ trait CoverageDataTrait
         return $calculator->getRoundedPercentage($this->countTranslated, $this->countAll);
     }
 
-    /**
-     * @return int
-     */
+
     public function getCountTranslated(): int
     {
         return $this->countTranslated;
     }
 
-    /**
-     * @return int
-     */
+
     public function getCountAll(): int
     {
         return $this->countAll;
     }
 
-    /**
-     * @return int
-     */
+
     public function getWordCount(): int
     {
         return $this->countWords;

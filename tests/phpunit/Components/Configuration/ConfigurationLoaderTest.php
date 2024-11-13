@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Components\Configuration;
 
 use Exception;
@@ -16,10 +18,8 @@ use PHPUnuhi\Tests\Utils\Fakes\FakeXmlLoader;
 
 class ConfigurationLoaderTest extends TestCase
 {
-
     /**
      * @throws ConfigurationException
-     * @return void
      */
     public function testNonExistingFileThrowsException(): void
     {
@@ -31,7 +31,6 @@ class ConfigurationLoaderTest extends TestCase
 
     /**
      * @throws ConfigurationException
-     * @return void
      */
     public function testMissingTranslationNodeThrowsException(): void
     {
@@ -44,7 +43,6 @@ class ConfigurationLoaderTest extends TestCase
 
     /**
      * @throws ConfigurationException
-     * @return void
      */
     public function testEmptyTranslationSetsThrowsException(): void
     {
@@ -57,7 +55,6 @@ class ConfigurationLoaderTest extends TestCase
 
     /**
      * @throws ConfigurationException
-     * @return void
      */
     public function testConfigurationLoaded(): void
     {
@@ -92,7 +89,6 @@ class ConfigurationLoaderTest extends TestCase
 
     /**
      * @throws ConfigurationException
-     * @return void
      */
     public function testFiltersForNotSupportedStorageThrowsException(): void
     {
@@ -123,7 +119,6 @@ class ConfigurationLoaderTest extends TestCase
 
     /**
      * @throws ConfigurationException
-     * @return void
      */
     public function testMissingStorageFormatThrowsException(): void
     {
@@ -146,7 +141,6 @@ class ConfigurationLoaderTest extends TestCase
 
     /**
      * @throws ConfigurationException
-     * @return void
      */
     public function testLoadPHPEnvironment(): void
     {
@@ -177,7 +171,6 @@ class ConfigurationLoaderTest extends TestCase
 
     /**
      * @throws ConfigurationException
-     * @return void
      */
     public function testMissingPhpEnvNodeIsSkipped(): void
     {
@@ -205,10 +198,7 @@ class ConfigurationLoaderTest extends TestCase
     }
 
     /**
-     * @param string $xml
-     * @param StorageInterface $storage
      * @throws ConfigurationException
-     * @return Configuration
      */
     private function loadXml(string $xml, StorageInterface $storage): Configuration
     {

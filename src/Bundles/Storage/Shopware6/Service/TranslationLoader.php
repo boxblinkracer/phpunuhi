@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Storage\Shopware6\Service;
 
 use Exception;
@@ -26,25 +28,14 @@ class TranslationLoader
     ];
 
 
-    /**
-     * @var LanguageRepository
-     */
-    private $repoLanguages;
+    private LanguageRepository $repoLanguages;
 
-    /**
-     * @var EntityTranslationRepository
-     */
-    private $repoEntityTranslations;
+    private EntityTranslationRepository $repoEntityTranslations;
 
-    /**
-     * @var SnippetRepository
-     */
-    private $repoSnippets;
+    private SnippetRepository $repoSnippets;
 
 
-    /**
-     * @param PDO $pdo
-     */
+
     public function __construct(PDO $pdo)
     {
         $this->repoLanguages = new LanguageRepository($pdo);
@@ -54,9 +45,7 @@ class TranslationLoader
 
 
     /**
-     * @param TranslationSet $set
      * @throws ConfigurationException
-     * @return void
      */
     public function loadTranslations(TranslationSet $set): void
     {
@@ -74,10 +63,7 @@ class TranslationLoader
     }
 
 
-    /**
-     * @param TranslationSet $set
-     * @return void
-     */
+
     private function loadSnippets(TranslationSet $set): void
     {
         $allSnippets = $this->repoSnippets->getSnippets();
@@ -104,11 +90,7 @@ class TranslationLoader
         }
     }
 
-    /**
-     * @param string $entity
-     * @param TranslationSet $set
-     * @return void
-     */
+
     private function loadEntities(string $entity, TranslationSet $set): void
     {
         $entityIdKey = $entity . '_id';
@@ -170,9 +152,7 @@ class TranslationLoader
 
 
     /**
-     * @param Locale $locale
      * @param Sw6Locale[] $allLanguages
-     * @return string
      */
     private function getShopwareLanguageId(Locale $locale, array $allLanguages): string
     {

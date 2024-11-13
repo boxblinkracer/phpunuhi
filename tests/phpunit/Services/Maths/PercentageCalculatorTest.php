@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Services\Maths;
 
 use PHPUnit\Framework\TestCase;
@@ -7,10 +9,6 @@ use PHPUnuhi\Services\Maths\PercentageCalculator;
 
 class PercentageCalculatorTest extends TestCase
 {
-
-    /**
-     *
-     */
     public function testRoundedPercentage(): void
     {
         $calculator = new PercentageCalculator();
@@ -20,9 +18,7 @@ class PercentageCalculatorTest extends TestCase
         $this->assertEquals(99.33, $result);
     }
 
-    /**
-     *
-     */
+
     public function testRoundedPercentageDivByZero(): void
     {
         $calculator = new PercentageCalculator();
@@ -32,9 +28,7 @@ class PercentageCalculatorTest extends TestCase
         $this->assertEquals(0, $result);
     }
 
-    /**
-     *
-     */
+
     public function testEmptyMeansFull(): void
     {
         $calculator = new PercentageCalculator();

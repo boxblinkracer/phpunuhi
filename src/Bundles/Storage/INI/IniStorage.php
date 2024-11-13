@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Storage\INI;
 
 use Exception;
@@ -11,7 +13,6 @@ use PHPUnuhi\Models\Translation\TranslationSet;
 
 class IniStorage implements StorageInterface
 {
-
     /**
      * @var bool
      */
@@ -22,33 +23,25 @@ class IniStorage implements StorageInterface
      */
     private $eolLast;
 
-    /**
-     * @return string
-     */
+
     public function getStorageName(): string
     {
         return 'ini';
     }
 
-    /**
-     * @return string
-     */
+
     public function getFileExtension(): string
     {
         return 'ini';
     }
 
-    /**
-     * @return bool
-     */
+
     public function supportsFilters(): bool
     {
         return false;
     }
 
-    /**
-     * @return StorageHierarchy
-     */
+
     public function getHierarchy(): StorageHierarchy
     {
         return new StorageHierarchy(
@@ -57,10 +50,7 @@ class IniStorage implements StorageInterface
         );
     }
 
-    /**
-     * @param TranslationSet $set
-     * @return void
-     */
+
     public function configureStorage(TranslationSet $set): void
     {
         $this->sortIni = filter_var($set->getAttributeValue('sort'), FILTER_VALIDATE_BOOLEAN);
@@ -68,9 +58,7 @@ class IniStorage implements StorageInterface
     }
 
     /**
-     * @param TranslationSet $set
      * @throws Exception
-     * @return void
      */
     public function loadTranslationSet(TranslationSet $set): void
     {
@@ -97,10 +85,7 @@ class IniStorage implements StorageInterface
         }
     }
 
-    /**
-     * @param TranslationSet $set
-     * @return StorageSaveResult
-     */
+
     public function saveTranslationSet(TranslationSet $set): StorageSaveResult
     {
         $localeCount = 0;
@@ -123,11 +108,7 @@ class IniStorage implements StorageInterface
         return new StorageSaveResult($localeCount, $translationCount);
     }
 
-    /**
-     * @param Locale $locale
-     * @param string $filename
-     * @return StorageSaveResult
-     */
+
     public function saveTranslationLocale(Locale $locale, string $filename): StorageSaveResult
     {
         $contentBuffer = [];
@@ -140,10 +121,7 @@ class IniStorage implements StorageInterface
     }
 
     /**
-     * @param Locale $locale
      * @param array<mixed> $contentBuffer
-     * @param string $filename
-     * @return int
      */
     public function buildFileContentBuffer(Locale $locale, array &$contentBuffer, string $filename): int
     {

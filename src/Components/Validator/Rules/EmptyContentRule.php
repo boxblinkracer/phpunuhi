@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Components\Validator\Rules;
 
 use PHPUnuhi\Bundles\Storage\StorageInterface;
@@ -12,19 +14,13 @@ class EmptyContentRule implements RuleValidatorInterface
 {
     public const IDENTIFIER = 'EMPTY_CONTENT';
 
-    /**
-     * @return string
-     */
+
     public function getRuleIdentifier(): string
     {
         return self::IDENTIFIER;
     }
 
-    /**
-     * @param TranslationSet $set
-     * @param StorageInterface $storage
-     * @return ValidationResult
-     */
+
     public function validate(TranslationSet $set, StorageInterface $storage): ValidationResult
     {
         $tests = [];
@@ -42,12 +38,7 @@ class EmptyContentRule implements RuleValidatorInterface
         return new ValidationResult($tests);
     }
 
-    /**
-     * @param Locale $locale
-     * @param string $translationKey
-     * @param bool $passed
-     * @return ValidationTest
-     */
+
     private function buildTestEntry(Locale $locale, string $translationKey, bool $passed): ValidationTest
     {
         return new ValidationTest(

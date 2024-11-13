@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Translator\GoogleWeb;
 
 use Exception;
@@ -10,15 +12,15 @@ use PHPUnuhi\Services\Placeholder\PlaceholderEncoder;
 
 class GoogleWebTranslator implements TranslatorInterface
 {
+    private PlaceholderEncoder $placeholderEncoder;
 
-    /**
-     * @var PlaceholderEncoder
-     */
-    private $placeholderEncoder;
 
-    /**
-     * @return string
-     */
+    public function __construct()
+    {
+        $this->placeholderEncoder = new PlaceholderEncoder();
+    }
+
+
     public function getName(): string
     {
         return 'googleweb';
@@ -34,20 +36,14 @@ class GoogleWebTranslator implements TranslatorInterface
 
     /**
      * @param array<mixed> $options
-     * @return void
      */
     public function setOptionValues(array $options): void
     {
-        $this->placeholderEncoder = new PlaceholderEncoder();
     }
 
     /**
-     * @param string $text
-     * @param string $sourceLocale
-     * @param string $targetLocale
      * @param Placeholder[] $foundPlaceholders
      * @throws Exception
-     * @return string
      */
     public function translate(string $text, string $sourceLocale, string $targetLocale, array $foundPlaceholders): string
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Services\Coverage\Models;
 
 use PHPUnit\Framework\TestCase;
@@ -10,16 +12,13 @@ use RuntimeException;
 
 class CoverageSetTest extends TestCase
 {
-
     /**
      * @var CoverageLocale[]
      */
-    private $locales;
+    private array $locales;
 
 
-    /**
-     * @return void
-     */
+
     public function setUp(): void
     {
         $locale1 = new Locale('en', false, 'English', '');
@@ -34,9 +33,7 @@ class CoverageSetTest extends TestCase
         $this->locales[] = new CoverageLocale($locale2);
     }
 
-    /**
-     * @return void
-     */
+
     public function testName(): void
     {
         $coverage = new CoverageTranslationSet('Storefront', $this->locales);
@@ -46,9 +43,7 @@ class CoverageSetTest extends TestCase
         $this->assertEquals('Storefront', $value);
     }
 
-    /**
-     * @return void
-     */
+
     public function testLocaleCoverages(): void
     {
         $coverage = new CoverageTranslationSet('Storefront', $this->locales);
@@ -58,9 +53,7 @@ class CoverageSetTest extends TestCase
         $this->assertCount(2, $value);
     }
 
-    /**
-     * @return void
-     */
+
     public function testLocaleCoverage(): void
     {
         $coverage = new CoverageTranslationSet('Storefront', $this->locales);
@@ -70,9 +63,7 @@ class CoverageSetTest extends TestCase
         $this->assertEquals(50, $result->getCoverage());
     }
 
-    /**
-     * @return void
-     */
+
     public function testLocaleCoverageNotFound(): void
     {
         $this->expectException(RuntimeException::class);
@@ -82,9 +73,7 @@ class CoverageSetTest extends TestCase
         $coverage->getLocaleCoverage('missing');
     }
 
-    /**
-     * @return void
-     */
+
     public function testCoverage(): void
     {
         $coverage = new CoverageTranslationSet('Storefront', $this->locales);
@@ -94,9 +83,7 @@ class CoverageSetTest extends TestCase
         $this->assertEquals(50, $value);
     }
 
-    /**
-     * @return void
-     */
+
     public function testCountAll(): void
     {
         $coverage = new CoverageTranslationSet('Storefront', $this->locales);
@@ -106,9 +93,7 @@ class CoverageSetTest extends TestCase
         $this->assertEquals(4, $value);
     }
 
-    /**
-     * @return void
-     */
+
     public function testCountTranslated(): void
     {
         $coverage = new CoverageTranslationSet('Storefront', $this->locales);
@@ -118,9 +103,7 @@ class CoverageSetTest extends TestCase
         $this->assertEquals(2, $value);
     }
 
-    /**
-     * @return void
-     */
+
     public function testWordCount(): void
     {
         $coverage = new CoverageTranslationSet('Storefront', $this->locales);

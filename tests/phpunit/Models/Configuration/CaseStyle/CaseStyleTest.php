@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Models\Configuration\CaseStyle;
 
 use PHPUnit\Framework\TestCase;
@@ -7,10 +9,6 @@ use PHPUnuhi\Models\Configuration\CaseStyle\CaseStyle;
 
 class CaseStyleTest extends TestCase
 {
-
-    /**
-     * @return void
-     */
     public function testName(): void
     {
         $style = new CaseStyle('pascal');
@@ -18,9 +16,7 @@ class CaseStyleTest extends TestCase
         $this->assertEquals('pascal', $style->getName());
     }
 
-    /**
-     * @return void
-     */
+
     public function testDefaultLevel(): void
     {
         $style = new CaseStyle('pascal');
@@ -28,9 +24,7 @@ class CaseStyleTest extends TestCase
         $this->assertEquals(-1, $style->getLevel());
     }
 
-    /**
-     * @return void
-     */
+
     public function testSetLevel(): void
     {
         $style = new CaseStyle('pascal');
@@ -39,9 +33,7 @@ class CaseStyleTest extends TestCase
         $this->assertEquals(0, $style->getLevel());
     }
 
-    /**
-     * @return void
-     */
+
     public function testHasLevel(): void
     {
         $style = new CaseStyle('pascal');

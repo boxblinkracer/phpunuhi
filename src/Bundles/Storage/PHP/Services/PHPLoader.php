@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Storage\PHP\Services;
 
 use PHPUnuhi\Models\Translation\TranslationSet;
@@ -9,11 +11,7 @@ class PHPLoader
 {
     use ArrayTrait;
 
-    /**
-     * @param TranslationSet $set
-     * @param string $delimiter
-     * @return void
-     */
+
     public function loadTranslationSet(TranslationSet $set, string $delimiter): void
     {
         foreach ($set->getLocales() as $locale) {

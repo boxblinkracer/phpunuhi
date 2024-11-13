@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Spelling\OpenAI;
 
 use Exception;
@@ -14,34 +16,23 @@ use RuntimeException;
 
 class OpenAISpellChecker implements SpellCheckerInterface
 {
+    use StringTrait;
+
     private const DEFAULT_MODEL = 'gpt-4-turbo';
 
     private const SPELLING_RULES = 'Only correct spelling errors, grammar. Keep placeholders and wildcards. Ignore words in other languages - just return the input text in that case. Do not translate or suggest translations.';
 
-    use StringTrait;
+    private string $apiKey = '';
 
-    /**
-     * @var string
-     */
-    private $apiKey;
-
-    /**
-     * @var string
-     */
-    private $model;
+    private string $model = '';
 
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return 'openai';
     }
 
-    /**
-     * @return string
-     */
+
     public function getApiKey(): string
     {
         return $this->apiKey;
@@ -61,7 +52,6 @@ class OpenAISpellChecker implements SpellCheckerInterface
     /**
      * @param array<mixed> $options
      * @throws Exception
-     * @return void
      */
     public function setOptionValues(array $options): void
     {
@@ -92,10 +82,7 @@ class OpenAISpellChecker implements SpellCheckerInterface
     }
 
     /**
-     * @param Text $text
-     * @param string $locale
      * @throws Exception
-     * @return SpellingValidationResult
      */
     public function validate(Text $text, string $locale): SpellingValidationResult
     {
@@ -115,10 +102,7 @@ class OpenAISpellChecker implements SpellCheckerInterface
     }
 
     /**
-     * @param Text $text
-     * @param string $locale
      * @throws Exception
-     * @return string
      */
     public function fixSpelling(Text $text, string $locale): string
     {

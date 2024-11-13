@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Services\Placeholder;
 
 use PHPUnit\Framework\TestCase;
@@ -7,12 +9,10 @@ use PHPUnuhi\Services\Placeholder\PlaceholderExtractor;
 
 class PlaceholderExtractorTest extends TestCase
 {
-
     /**
      * This test verifies that both placeholders are correctly
      * extracted and returned from the given text.
      *
-     * @return void
      */
     public function testBothPlaceholdersAreFound(): void
     {
@@ -31,7 +31,6 @@ class PlaceholderExtractorTest extends TestCase
     /**
      * This test verifies that we do get an empty list in case nothing is found.
      *
-     * @return void
      */
     public function testNoPlaceholdersReturnsEmptyList(): void
     {
@@ -48,7 +47,6 @@ class PlaceholderExtractorTest extends TestCase
      * This test verifies that we only get the 1 correct placeholders.
      * The second and third one have missing start and end markers and must not be found.
      *
-     * @return void
      */
     public function testMissingStartAndEndMarkers(): void
     {
@@ -66,7 +64,6 @@ class PlaceholderExtractorTest extends TestCase
     /**
      * This test verifies that we also get placeholders that contain a space in it.
      *
-     * @return void
      */
     public function testPlaceholderWithSpace(): void
     {

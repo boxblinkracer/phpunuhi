@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Services\Connection;
 
 use PHPUnit\Framework\TestCase;
@@ -7,10 +9,6 @@ use PHPUnuhi\Services\Connection\ConnectionFactory;
 
 class ConnectionFactoryTest extends TestCase
 {
-
-    /**
-     * @return void
-     */
     public function testBuildMySQLConnectionString(): void
     {
         $host = 'localhost';
@@ -24,9 +22,7 @@ class ConnectionFactoryTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    /**
-     * @return void
-     */
+
     public function testConnectionRefused(): void
     {
         $this->expectExceptionMessage('SQLSTATE[HY000] [2002] Connection refused');

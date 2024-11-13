@@ -1,32 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Components\Validator\CaseStyle\Style;
 
 use PHPUnit\Framework\TestCase;
-use PHPUnuhi\Components\Validator\CaseStyle\CaseStyleValidatorInterface;
 use PHPUnuhi\Components\Validator\CaseStyle\Style\NumberCaseValidator;
 
 class NumberCaseValidatorTest extends TestCase
 {
-
-    /**
-     * @var CaseStyleValidatorInterface
-     */
-    private $validator;
+    private NumberCaseValidator $validator;
 
 
-    /**
-     * @return void
-     */
+
     protected function setUp(): void
     {
         $this->validator = new NumberCaseValidator();
     }
 
 
-    /**
-     * @return void
-     */
+
     public function testIdentifier(): void
     {
         $this->assertEquals('number', $this->validator->getIdentifier());
@@ -50,7 +43,6 @@ class NumberCaseValidatorTest extends TestCase
 
     /**
      * @dataProvider getData
-     * @return void
      */
     public function testIsValid(bool $expectedValid, string $text): void
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Components\Configuration\Services;
 
 use PHPUnit\Framework\TestCase;
@@ -11,20 +13,14 @@ class LocalesLoaderTest extends TestCase
 {
     use XmlLoaderTrait;
 
-    /**
-     * @var string
-     */
-    private $existingLocaleFile;
 
-    /**
-     * @var LocalesLoader
-     */
-    private $loader;
+    private string $existingLocaleFile;
 
 
-    /**
-     * @return void
-     */
+    private LocalesLoader $loader;
+
+
+
     protected function setUp(): void
     {
         $this->existingLocaleFile = __DIR__ . '/tmp_locale_file.json';
@@ -32,9 +28,7 @@ class LocalesLoaderTest extends TestCase
         $this->loader = new LocalesLoader();
     }
 
-    /**
-     * @return void
-     */
+
     protected function tearDown(): void
     {
         if (file_exists($this->existingLocaleFile)) {
@@ -44,7 +38,6 @@ class LocalesLoaderTest extends TestCase
 
     /**
      * @throws ConfigurationException
-     * @return void
      */
     public function testLocalesLoadedCorrectly(): void
     {
@@ -71,7 +64,6 @@ class LocalesLoaderTest extends TestCase
      * locale should at least be loaded correclty.
      *
      * @throws ConfigurationException
-     * @return void
      */
     public function testLocaleWithoutExistingFileIsAlsoLoaded(): void
     {
@@ -89,7 +81,6 @@ class LocalesLoaderTest extends TestCase
 
     /**
      * @throws ConfigurationException
-     * @return void
      */
     public function testBaseLocaleAttributeIsLoaded(): void
     {
@@ -117,7 +108,6 @@ class LocalesLoaderTest extends TestCase
 
     /**
      * @throws ConfigurationException
-     * @return void
      */
     public function testBaseLocaleAttributeCannotBeDefinedTwice(): void
     {
@@ -136,7 +126,6 @@ class LocalesLoaderTest extends TestCase
 
     /**
      * @throws ConfigurationException
-     * @return void
      */
     public function testBasePathPlaceholder(): void
     {
@@ -155,9 +144,7 @@ class LocalesLoaderTest extends TestCase
      * @testWith  [ "" ]
      *            [ " " ]
      *
-     * @param string $placeholder
      * @throws ConfigurationException
-     * @return void
      */
     public function testInvalidBasePathPlaceholdersAreSkipped(string $placeholder): void
     {
@@ -178,11 +165,7 @@ class LocalesLoaderTest extends TestCase
      *               [ "en", "%locale_lc%", "EN" ]
      *               [ "fr_Fr", "%locale_un%", "fr-Fr" ]
      *
-     * @param string $expectedLocalePart
-     * @param string $placeholder
-     * @param string $locale
      * @throws ConfigurationException
-     * @return void
      */
     public function testLocalePlaceholder(string $expectedLocalePart, string $placeholder, string $locale): void
     {
@@ -199,7 +182,6 @@ class LocalesLoaderTest extends TestCase
 
     /**
      * @throws ConfigurationException
-     * @return void
      */
     public function testIniSectionLoaded(): void
     {
@@ -219,7 +201,6 @@ class LocalesLoaderTest extends TestCase
      * The ConfigurationValidator does then need to throw an exception for this.
      *
      * @throws ConfigurationException
-     * @return void
      */
     public function testLocaleWithoutNameIsLoaded(): void
     {
@@ -236,7 +217,6 @@ class LocalesLoaderTest extends TestCase
 
     /**
      * @throws ConfigurationException
-     * @return void
      */
     public function testOtherNodesAreSkipped(): void
     {

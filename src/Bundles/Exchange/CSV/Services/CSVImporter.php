@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Exchange\CSV\Services;
 
 use Exception;
@@ -12,15 +14,10 @@ class CSVImporter
     use StringTrait;
 
 
-    /**
-     * @var string
-     */
-    private $delimiter;
+    private string $delimiter;
 
 
-    /**
-     * @param string $delimiter
-     */
+
     public function __construct(string $delimiter)
     {
         $this->delimiter = $delimiter;
@@ -28,9 +25,7 @@ class CSVImporter
 
 
     /**
-     * @param string $filename
      * @throws Exception
-     * @return ImportResult
      */
     public function import(string $filename): ImportResult
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Components\Validator\Rules;
 
 use Exception;
@@ -14,10 +16,6 @@ use PHPUnuhi\Models\Translation\TranslationSet;
 
 class EmptyContentRuleTest extends TestCase
 {
-
-    /**
-     * @return void
-     */
     public function getRuleIdentifier(): void
     {
         $validator = new EmptyContentRule();
@@ -27,7 +25,6 @@ class EmptyContentRuleTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testEmptyContentIsAlwaysTrue(): void
     {
@@ -47,7 +44,6 @@ class EmptyContentRuleTest extends TestCase
 
     /**
      * @param Locale[] $locales
-     * @return TranslationSet
      */
     private function buildSet(array $locales): TranslationSet
     {

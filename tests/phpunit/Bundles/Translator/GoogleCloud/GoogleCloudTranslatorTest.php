@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Bundles\Translator\GoogleCloud;
 
 use Exception;
@@ -8,11 +10,6 @@ use PHPUnuhi\Bundles\Translator\GoogleCloud\GoogleCloudTranslator;
 
 class GoogleCloudTranslatorTest extends TestCase
 {
-
-
-    /**
-     * @return void
-     */
     public function testGetName(): void
     {
         $translator = new GoogleCloudTranslator();
@@ -20,9 +17,7 @@ class GoogleCloudTranslatorTest extends TestCase
         $this->assertEquals('googlecloud', $translator->getName());
     }
 
-    /**
-     * @return void
-     */
+
     public function testGetOptions(): void
     {
         $translator = new GoogleCloudTranslator();
@@ -35,7 +30,6 @@ class GoogleCloudTranslatorTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testSetOptions(): void
     {
@@ -51,7 +45,6 @@ class GoogleCloudTranslatorTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testSetOptionsWithMissingKeyThrowsException(): void
     {

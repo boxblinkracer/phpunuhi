@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Components\Validator\CaseStyle\Style;
 
 use PHPUnuhi\Components\Validator\CaseStyle\CaseStyleValidatorInterface;
@@ -10,19 +12,12 @@ use PHPUnuhi\Components\Validator\CaseStyle\CaseStyleValidatorInterface;
  */
 class NoneCaseValidator implements CaseStyleValidatorInterface
 {
-
-    /**
-     * @return string
-     */
     public function getIdentifier(): string
     {
         return 'none';
     }
 
-    /**
-     * @param string $text
-     * @return bool
-     */
+
     public function isValid(string $text): bool
     {
         return true;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Storage\Shopware6\Repository;
 
 use PDO;
@@ -9,23 +11,16 @@ class EntityRepository
 {
     use BinaryTrait;
 
-    /**
-     * @var PDO
-     */
-    private $pdo;
+    private PDO $pdo;
 
 
-    /**
-     * @param PDO $pdo
-     */
+
     public function __construct(PDO $pdo)
     {
         $this->pdo = $pdo;
     }
 
     /**
-     * @param string $entity
-     * @param string $id
      * @return array<mixed>
      */
     public function getEntity(string $entity, string $id): array

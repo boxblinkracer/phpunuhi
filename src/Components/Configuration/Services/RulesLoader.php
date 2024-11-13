@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Configuration\Services;
 
 use PHPUnuhi\Components\Validator\DuplicateContent\DuplicateContent;
@@ -14,7 +16,6 @@ class RulesLoader
     use XmlTrait;
 
     /**
-     * @param SimpleXMLElement $rulesNode
      * @return Rule[]
      */
     public function loadRules(SimpleXMLElement $rulesNode): array

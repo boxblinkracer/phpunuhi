@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Translator\OpenAI;
 
 use Exception;
@@ -13,28 +15,17 @@ class OpenAITranslator implements TranslatorInterface
 {
     private const DEFAULT_MODEL = 'gpt-4-turbo';
 
-    /**
-     * @var string
-     */
-    private $apiKey;
+    private string $apiKey = '';
 
-    /**
-     * @var string
-     */
-    private $model;
+    private string $model = '';
 
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return 'openai';
     }
 
-    /**
-     * @return string
-     */
+
     public function getApiKey(): string
     {
         return $this->apiKey;
@@ -54,7 +45,6 @@ class OpenAITranslator implements TranslatorInterface
     /**
      * @param array<mixed> $options
      * @throws Exception
-     * @return void
      */
     public function setOptionValues(array $options): void
     {
@@ -75,12 +65,8 @@ class OpenAITranslator implements TranslatorInterface
 
 
     /**
-     * @param string $text
-     * @param string $sourceLocale
-     * @param string $targetLocale
      * @param Placeholder[] $foundPlaceholders
      * @throws Exception
-     * @return string
      */
     public function translate(string $text, string $sourceLocale, string $targetLocale, array $foundPlaceholders): string
     {

@@ -1,50 +1,35 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Models\Configuration;
 
 class Attribute
 {
+    private string $name;
 
-    /**
-     * @var string
-     */
-    private $name;
+    private string $value;
 
-    /**
-     * @var string
-     */
-    private $value;
 
-    /**
-     * @param string $name
-     * @param string $value
-     */
     public function __construct(string $name, string $value)
     {
         $this->name = $name;
         $this->value = $value;
     }
 
-    /**
-     * @return string
-     */
+
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
+
     public function getValue(): string
     {
         return $this->value;
     }
 
-    /**
-     * @param string $fixedPath
-     * @return void
-     */
+
     public function setValue(string $fixedPath): void
     {
         $this->value = $fixedPath;

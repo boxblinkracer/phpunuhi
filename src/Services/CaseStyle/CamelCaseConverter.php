@@ -1,24 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Services\CaseStyle;
 
 use PHPUnuhi\Components\Validator\CaseStyle\Style\CamelCaseValidator;
 
 class CamelCaseConverter implements CaseStyleConverterInterface
 {
-
-    /**
-     * @return string
-     */
     public function getIdentifier(): string
     {
         return 'camel';
     }
 
-    /**
-     * @param string $text
-     * @return string
-     */
+
     public function convert(string $text): string
     {
         $validator = new CamelCaseValidator();

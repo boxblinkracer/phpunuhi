@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Components\Reporter\JSON;
 
 use PHPUnuhi\Components\Reporter\Model\ReportResult;
@@ -9,22 +11,12 @@ use PHPUnuhi\Services\Writers\File\FileWriterInterface;
 
 class JsonReporter implements ReporterInterface
 {
+    private DirectoryWriterInterface $directoryWriter;
 
-    /**
-     * @var DirectoryWriterInterface
-     */
-    private $directoryWriter;
-
-    /**
-     * @var FileWriterInterface
-     */
-    private $fileWriter;
+    private FileWriterInterface $fileWriter;
 
 
-    /**
-     * @param DirectoryWriterInterface $directoryWriter
-     * @param FileWriterInterface $fileWriter
-     */
+
     public function __construct(DirectoryWriterInterface $directoryWriter, FileWriterInterface $fileWriter)
     {
         $this->directoryWriter = $directoryWriter;
@@ -32,27 +24,19 @@ class JsonReporter implements ReporterInterface
     }
 
 
-    /**
-     * @return string
-     */
+
     public function getName(): string
     {
         return 'json';
     }
 
-    /**
-     * @return string
-     */
+
     public function getDefaultFilename(): string
     {
         return 'report.json';
     }
 
-    /**
-     * @param string $filename
-     * @param ReportResult $report
-     * @return void
-     */
+
     public function generate(string $filename, ReportResult $report): void
     {
         $content = [

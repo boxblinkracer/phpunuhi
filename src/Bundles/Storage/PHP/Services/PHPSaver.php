@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Storage\PHP\Services;
 
 use PHPUnuhi\Models\Translation\Locale;
@@ -9,27 +11,16 @@ class PHPSaver
 {
     use ArrayTrait;
 
-    /**
-     * @var bool
-     */
-    private $eolLast;
+    private bool $eolLast;
 
-    /**
-     * @param bool $eolLast
-     */
+
     public function __construct(bool $eolLast)
     {
         $this->eolLast = $eolLast;
     }
 
 
-    /**
-     * @param Locale $locale
-     * @param string $filename
-     * @param string $delimiter
-     * @param bool $sort
-     * @return int
-     */
+
     public function saveLocale(Locale $locale, string $filename, string $delimiter, bool $sort): int
     {
         $translationCount = 0;
@@ -68,8 +59,6 @@ class PHPSaver
 
     /**
      * @param array<mixed> $root
-     * @param int $indent
-     * @return string
      */
     private function buildArray(array $root, int $indent): string
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Commands;
 
 use PHPUnuhi\Bundles\Storage\StorageFactory;
@@ -34,10 +36,7 @@ class MigrateCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
      * @throws ConfigurationException
-     * @return int
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -75,11 +74,7 @@ class MigrateCommand extends Command
         return 0;
     }
 
-    /**
-     * @param Locale $locale
-     * @param StorageInterface $targetStorage
-     * @return string
-     */
+
     private function getNewLocaleFilename(Locale $locale, StorageInterface $targetStorage): string
     {
         $originalFilename = $locale->getFilename();

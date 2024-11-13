@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Models\Configuration\Coverage;
 
 use PHPUnuhi\Models\Percentage;
@@ -18,13 +20,10 @@ class TranslationSetCoverage
     /**
      * @var array<LocaleCoverage>
      */
-    private $localeCoverages = [];
+    private array $localeCoverages = [];
 
 
-    /**
-     * @param float $totalMinCoverage
-     * @return void
-     */
+
     public function setMinCoverage(float $totalMinCoverage): void
     {
         $this->minCoverage = $totalMinCoverage;
@@ -36,45 +35,31 @@ class TranslationSetCoverage
         }
     }
 
-    /**
-     * @return bool
-     */
+
     public function hasMinCoverage(): bool
     {
         return $this->minCoverage > self::COVERAGE_NOT_SET;
     }
 
-    /**
-     * @return float
-     */
+
     public function getMinCoverage(): float
     {
         return $this->minCoverage;
     }
 
-    /**
-     * @param string $locale
-     * @return bool
-     */
+
     public function hasLocaleCoverage(string $locale): bool
     {
         return isset($this->localeCoverages[$locale]);
     }
 
-    /**
-     * @param string $locale
-     * @return LocaleCoverage
-     */
+
     public function getLocaleCoverage(string $locale): LocaleCoverage
     {
         return $this->localeCoverages[$locale];
     }
 
-    /**
-     * @param string $locale
-     * @param float $minCoverage
-     * @return void
-     */
+
     public function addLocaleCoverage(string $locale, float $minCoverage): void
     {
         $this->localeCoverages[$locale] = new LocaleCoverage($locale, $minCoverage);
@@ -88,11 +73,9 @@ class TranslationSetCoverage
         return $this->localeCoverages;
     }
 
-    /**
-     * @return bool
-     */
+
     public function hasLocaleCoverages(): bool
     {
-        return count($this->localeCoverages) > 0;
+        return $this->localeCoverages !== [];
     }
 }

@@ -1,16 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Components\Filter;
 
 use PHPUnuhi\Models\Translation\TranslationSet;
 
 class FilterHandler
 {
-
-    /**
-     * @param TranslationSet $set
-     * @return void
-     */
     public function applyFilter(TranslationSet $set): void
     {
         $filter = $set->getFilter();

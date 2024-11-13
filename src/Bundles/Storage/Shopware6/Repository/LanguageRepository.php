@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Storage\Shopware6\Repository;
 
 use PDO;
@@ -10,15 +12,10 @@ class LanguageRepository
 {
     use BinaryTrait;
 
-    /**
-     * @var PDO
-     */
-    private $pdo;
+    private PDO $pdo;
 
 
-    /**
-     * @param PDO $pdo
-     */
+
     public function __construct(PDO $pdo)
     {
         $this->pdo = $pdo;

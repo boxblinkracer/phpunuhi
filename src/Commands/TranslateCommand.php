@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Commands;
 
 use PHPUnuhi\Bundles\Storage\StorageFactory;
@@ -57,10 +59,7 @@ class TranslateCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
      * @throws ConfigurationException
-     * @return int
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {

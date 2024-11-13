@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Components\Validator\Rules;
 
 use Exception;
@@ -14,11 +16,6 @@ use PHPUnuhi\Models\Translation\TranslationSet;
 
 class DisallowedTextsRuleTest extends TestCase
 {
-
-
-    /**
-     * @return void
-     */
     public function getRuleIdentifier(): void
     {
         $validator = new DisallowedTextsRule([]);
@@ -28,7 +25,6 @@ class DisallowedTextsRuleTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testAllValid(): void
     {
@@ -52,7 +48,6 @@ class DisallowedTextsRuleTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testDisallowedTextFound(): void
     {
@@ -82,7 +77,6 @@ class DisallowedTextsRuleTest extends TestCase
 
     /**
      * @param Locale[] $locales
-     * @return TranslationSet
      */
     private function buildSet(array $locales): TranslationSet
     {

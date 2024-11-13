@@ -1,32 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Components\Validator\CaseStyle\Style;
 
 use PHPUnit\Framework\TestCase;
-use PHPUnuhi\Components\Validator\CaseStyle\CaseStyleValidatorInterface;
 use PHPUnuhi\Components\Validator\CaseStyle\Style\PascalCaseValidator;
 
 class PascalCaseValidatorTest extends TestCase
 {
-
-    /**
-     * @var CaseStyleValidatorInterface
-     */
-    private $validator;
+    private PascalCaseValidator $validator;
 
 
-    /**
-     * @return void
-     */
+
     protected function setUp(): void
     {
         $this->validator = new PascalCaseValidator();
     }
 
 
-    /**
-     * @return void
-     */
+
     public function testIdentifier(): void
     {
         $this->assertEquals('pascal', $this->validator->getIdentifier());
@@ -50,7 +43,6 @@ class PascalCaseValidatorTest extends TestCase
 
     /**
      * @dataProvider getData
-     * @return void
      */
     public function testIsValid(bool $expectedValid, string $text): void
     {

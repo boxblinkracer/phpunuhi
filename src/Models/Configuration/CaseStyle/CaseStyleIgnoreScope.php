@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Models\Configuration\CaseStyle;
 
 interface CaseStyleIgnoreScope
 {
-
     /**
      * This means that the provided key is ignored globally,
      * independent of it's nested level.

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Translator;
 
 use Exception;
@@ -12,24 +14,18 @@ use PHPUnuhi\Models\Command\CommandOption;
 
 class TranslatorFactory
 {
-
-    /**
-     * @var TranslatorFactory
-     */
-    private static $instance;
+    private static ?\PHPUnuhi\Bundles\Translator\TranslatorFactory $instance = null;
 
     /**
      * @var TranslatorInterface[]
      */
-    private $translators;
+    private array $translators;
 
 
-    /**
-     * @return TranslatorFactory
-     */
+
     public static function getInstance(): TranslatorFactory
     {
-        if (self::$instance === null) {
+        if (!self::$instance instanceof \PHPUnuhi\Bundles\Translator\TranslatorFactory) {
             self::$instance = new self();
         }
 
@@ -37,9 +33,7 @@ class TranslatorFactory
     }
 
 
-    /**
-     *
-     */
+
     private function __construct()
     {
         $this->resetStorages();
@@ -47,9 +41,7 @@ class TranslatorFactory
 
 
     /**
-     * @param TranslatorInterface $translator
      * @throws ConfigurationException
-     * @return void
      */
     public function registerTranslator(TranslatorInterface $translator): void
     {
@@ -67,7 +59,6 @@ class TranslatorFactory
 
     /**
      * Resets the registered translators to the default ones.
-     * @return void
      */
     public function resetStorages(): void
     {
@@ -95,10 +86,8 @@ class TranslatorFactory
     }
 
     /**
-     * @param string $service
      * @param array<mixed> $options
      * @throws Exception
-     * @return TranslatorInterface
      */
     public function fromService(string $service, array $options): TranslatorInterface
     {

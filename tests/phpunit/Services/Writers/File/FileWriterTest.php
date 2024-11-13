@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Services\Writers\File;
 
 use PHPUnit\Framework\TestCase;
@@ -7,24 +9,19 @@ use PHPUnuhi\Services\Writers\File\FileWriter;
 
 class FileWriterTest extends TestCase
 {
-
     /**
      * @var string
      */
     protected $testFilePath;
 
 
-    /**
-     * @return void
-     */
+
     protected function setUp(): void
     {
         $this->testFilePath = __DIR__ . '/testfile.txt';
     }
 
-    /**
-     * @return void
-     */
+
     protected function tearDown(): void
     {
         if (file_exists($this->testFilePath)) {
@@ -32,9 +29,7 @@ class FileWriterTest extends TestCase
         }
     }
 
-    /**
-     * @return void
-     */
+
     public function testWriteFile(): void
     {
         $fileWriter = new FileWriter();

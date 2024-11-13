@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Exchange\CSV\Services;
 
 use PHPUnuhi\Exceptions\TranslationNotFoundException;
@@ -7,22 +9,12 @@ use PHPUnuhi\Models\Translation\TranslationSet;
 
 class CSVExporter
 {
+    private CSVWriterInterface $csvWriter;
 
-    /**
-     * @var CSVWriterInterface
-     */
-    private $csvWriter;
-
-    /**
-     * @var string
-     */
-    private $delimiter;
+    private string $delimiter;
 
 
-    /**
-     * @param CSVWriterInterface $csvWriter
-     * @param string $delimiter
-     */
+
     public function __construct(CSVWriterInterface $csvWriter, string $delimiter)
     {
         $this->csvWriter = $csvWriter;
@@ -31,11 +23,7 @@ class CSVExporter
 
 
     /**
-     * @param TranslationSet $set
-     * @param string $outputDir
-     * @param bool $onlyEmpty
      * @throws TranslationNotFoundException
-     * @return void
      */
     public function export(TranslationSet $set, string $outputDir, bool $onlyEmpty): void
     {

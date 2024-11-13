@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Bundles\Exchange;
 
 use Exception;
@@ -11,10 +13,6 @@ use PHPUnuhi\Tests\Utils\Fakes\FakeExchangeFormat;
 
 class ExchangeFactoryTest extends TestCase
 {
-
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         ExchangeFactory::getInstance()->resetExchangeFormats();
@@ -23,7 +21,6 @@ class ExchangeFactoryTest extends TestCase
 
     /**
      * @throws ConfigurationException
-     * @return void
      */
     public function testGetCustomExchangeFormat(): void
     {
@@ -37,7 +34,6 @@ class ExchangeFactoryTest extends TestCase
 
     /**
      * @throws ConfigurationException
-     * @return void
      */
     public function testDoubleRegistrationThrowsException(): void
     {
@@ -51,7 +47,6 @@ class ExchangeFactoryTest extends TestCase
 
     /**
      * @throws ConfigurationException
-     * @return void
      */
     public function testUnknownFormatThrowsException(): void
     {
@@ -62,7 +57,6 @@ class ExchangeFactoryTest extends TestCase
 
     /**
      * @throws ConfigurationException
-     * @return void
      */
     public function testEmptyFormatThrowsException(): void
     {
@@ -71,9 +65,7 @@ class ExchangeFactoryTest extends TestCase
         ExchangeFactory::getInstance()->getExchange('', []);
     }
 
-    /**
-     *
-     */
+
     public function testGetAllOptions(): void
     {
         $options = ExchangeFactory::getInstance()->getAllOptions();

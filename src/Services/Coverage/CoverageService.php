@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Services\Coverage;
 
 use PHPUnuhi\Models\Translation\TranslationSet;
@@ -9,10 +11,8 @@ use PHPUnuhi\Services\Coverage\Models\CoverageTranslationSet;
 
 class CoverageService
 {
-
     /**
      * @param TranslationSet[] $sets
-     * @return CoverageTotal
      */
     public function getCoverage(array $sets): CoverageTotal
     {

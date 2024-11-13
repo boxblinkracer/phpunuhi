@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Exchange\HTML\Services;
 
 use PHPUnuhi\Bundles\Exchange\ImportEntry;
@@ -12,10 +14,7 @@ class HTMLImporter
 {
     use StringTrait;
 
-    /**
-     * @param string $filename
-     * @return ImportResult
-     */
+
     public function import(string $filename): ImportResult
     {
         $foundData = [];

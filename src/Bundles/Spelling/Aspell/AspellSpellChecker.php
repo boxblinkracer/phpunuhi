@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Spelling\Aspell;
 
 use PHPUnuhi\Bundles\Spelling\Result\MisspelledWord;
@@ -21,15 +23,10 @@ class AspellSpellChecker implements SpellCheckerInterface
      */
     private $binary = 'aspell';
 
-    /**
-     * @var OSProcess
-     */
-    private $process;
+    private OSProcess $process;
 
 
-    /**
-     *
-     */
+
     public function __construct()
     {
         $this->process = new OSProcess();
@@ -52,7 +49,6 @@ class AspellSpellChecker implements SpellCheckerInterface
 
     /**
      * @param array<mixed> $options
-     * @return void
      */
     public function setOptionValues(array $options): void
     {
@@ -87,7 +83,7 @@ class AspellSpellChecker implements SpellCheckerInterface
         $cmdResult = $this->process->execute($command);
 
         # if we do not get an output, then we have no misspelled words
-        $isSpellingValid = count($cmdResult->getOutputLines()) === 0;
+        $isSpellingValid = $cmdResult->getOutputLines() === [];
 
         $misspelledWords = [];
 

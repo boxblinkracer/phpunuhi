@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Configuration\Services;
 
 use PHPUnuhi\Exceptions\ConfigurationException;
@@ -7,11 +9,8 @@ use PHPUnuhi\Models\Configuration\Configuration;
 
 class ConfigurationValidator
 {
-
     /**
-     * @param Configuration $configuration
      * @throws ConfigurationException
-     * @return void
      */
     public function validateConfig(Configuration $configuration): void
     {

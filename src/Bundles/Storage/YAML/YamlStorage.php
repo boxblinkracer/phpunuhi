@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Storage\YAML;
 
 use PHPUnuhi\Bundles\Storage\StorageHierarchy;
@@ -15,44 +17,25 @@ class YamlStorage implements StorageInterface
 {
     use ArrayTrait;
 
-    /**
-     * @var YamlLoader
-     */
-    private $loader;
-
-    /**
-     * @var YamlSaver
-     */
-    private $saver;
+    private YamlLoader $loader;
+    private YamlSaver $saver;
 
 
-    /**
-     * @return string
-     */
     public function getStorageName(): string
     {
         return 'yaml';
     }
 
-    /**
-     * @return string
-     */
     public function getFileExtension(): string
     {
         return 'yaml';
     }
 
-    /**
-     * @return bool
-     */
     public function supportsFilters(): bool
     {
         return false;
     }
 
-    /**
-     * @return StorageHierarchy
-     */
     public function getHierarchy(): StorageHierarchy
     {
         return new StorageHierarchy(
@@ -61,10 +44,6 @@ class YamlStorage implements StorageInterface
         );
     }
 
-    /**
-     * @param TranslationSet $set
-     * @return void
-     */
     public function configureStorage(TranslationSet $set): void
     {
         $indent = $set->getAttributeValue('indent');
@@ -76,10 +55,6 @@ class YamlStorage implements StorageInterface
         $this->saver = new YamlSaver((int)$indent, $sort, $eolLast);
     }
 
-    /**
-     * @param TranslationSet $set
-     * @return void
-     */
     public function loadTranslationSet(TranslationSet $set): void
     {
         $delimiter = $this->getHierarchy()->getDelimiter();
@@ -89,10 +64,6 @@ class YamlStorage implements StorageInterface
         }
     }
 
-    /**
-     * @param TranslationSet $set
-     * @return StorageSaveResult
-     */
     public function saveTranslationSet(TranslationSet $set): StorageSaveResult
     {
         $delimiter = $this->getHierarchy()->getDelimiter();
@@ -109,11 +80,6 @@ class YamlStorage implements StorageInterface
         return new StorageSaveResult($localeCount, $translationCount);
     }
 
-    /**
-     * @param Locale $locale
-     * @param string $filename
-     * @return StorageSaveResult
-     */
     public function saveTranslationLocale(Locale $locale, string $filename): StorageSaveResult
     {
         $delimiter = $this->getHierarchy()->getDelimiter();

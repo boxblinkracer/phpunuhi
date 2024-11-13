@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Services\Writers\Directory;
 
 use PHPUnit\Framework\TestCase;
@@ -7,24 +9,19 @@ use PHPUnuhi\Services\Writers\Directory\DirectoryWriter;
 
 class DirectoryWriterTest extends TestCase
 {
-
     /**
      * @var string
      */
     protected $testDirectoryPath;
 
 
-    /**
-     * @return void
-     */
+
     protected function setUp(): void
     {
         $this->testDirectoryPath = __DIR__ . '/test_directory';
     }
 
-    /**
-     * @return void
-     */
+
     protected function tearDown(): void
     {
         if (is_dir($this->testDirectoryPath)) {
@@ -33,9 +30,7 @@ class DirectoryWriterTest extends TestCase
     }
 
 
-    /**
-     * @return void
-     */
+
     public function testCreateDirectory(): void
     {
         $directoryWriter = new DirectoryWriter();
@@ -45,9 +40,7 @@ class DirectoryWriterTest extends TestCase
         $this->assertDirectoryExists($this->testDirectoryPath);
     }
 
-    /**
-     * @return void
-     */
+
     public function testCreateDirectoryTwice(): void
     {
         $directoryWriter = new DirectoryWriter();
@@ -59,10 +52,7 @@ class DirectoryWriterTest extends TestCase
     }
 
 
-    /**
-     * @param string $path
-     * @return void
-     */
+
     private function deleteDirectory(string $path): void
     {
         if (!is_dir($path)) {

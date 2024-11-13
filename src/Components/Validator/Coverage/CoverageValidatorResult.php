@@ -1,37 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Components\Validator\Coverage;
 
 class CoverageValidatorResult
 {
+    private bool $success;
 
-    /**
-     * @var bool
-     */
-    private $success;
+    private float $coverageExpected;
 
-    /**
-     * @var float
-     */
-    private $coverageExpected;
+    private float $coverageActual;
 
-    /**
-     * @var float
-     */
-    private $coverageActual;
-
-    /**
-     * @var string
-     */
-    private $scope = '';
+    private string $scope;
 
 
-    /**
-     * @param bool $success
-     * @param float $coverageExpected
-     * @param float $coverageActual
-     * @param string $scope
-     */
+
     public function __construct(bool $success, float $coverageExpected, float $coverageActual, string $scope)
     {
         $this->success = $success;
@@ -40,33 +24,25 @@ class CoverageValidatorResult
         $this->scope = $scope;
     }
 
-    /**
-     * @return bool
-     */
+
     public function isSuccess(): bool
     {
         return $this->success;
     }
 
-    /**
-     * @return float
-     */
+
     public function getCoverageExpected(): float
     {
         return $this->coverageExpected;
     }
 
-    /**
-     * @return float
-     */
+
     public function getCoverageActual(): float
     {
         return $this->coverageActual;
     }
 
-    /**
-     * @return string
-     */
+
     public function getScope(): string
     {
         return $this->scope;

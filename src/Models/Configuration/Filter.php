@@ -1,35 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Models\Configuration;
 
 class Filter
 {
+    /**
+     * @var string[]
+     */
+    private array $fieldsAllow = [];
 
     /**
      * @var string[]
      */
-    private $fieldsAllow = [];
+    private array $fieldsExclude = [];
 
-    /**
-     * @var string[]
-     */
-    private $fieldsExclude = [];
 
-    /**
-     * @return bool
-     */
     public function hasFilters(): bool
     {
-        if (count($this->fieldsAllow) > 0) {
+        if ($this->fieldsAllow !== []) {
             return true;
         }
-        return count($this->fieldsExclude) > 0;
+        return $this->fieldsExclude !== [];
     }
 
-    /**
-     * @param string $key
-     * @return void
-     */
+
     public function addIncludeKey(string $key): void
     {
         if (in_array($key, $this->fieldsAllow)) {
@@ -39,10 +35,7 @@ class Filter
         $this->fieldsAllow[] = $key;
     }
 
-    /**
-     * @param string $key
-     * @return void
-     */
+
     public function addExcludeKey(string $key): void
     {
         if (in_array($key, $this->fieldsExclude)) {
@@ -52,13 +45,10 @@ class Filter
         $this->fieldsExclude[] = $key;
     }
 
-    /**
-     * @param string $key
-     * @return bool
-     */
+
     public function isKeyAllowed(string $key): bool
     {
-        if (count($this->fieldsAllow) > 0) {
+        if ($this->fieldsAllow !== []) {
             foreach ($this->fieldsAllow as $fieldPattern) {
                 if ($this->stringMatchWithWildcard($key, $fieldPattern)) {
                     return true;
@@ -77,11 +67,7 @@ class Filter
         return true;
     }
 
-    /**
-     * @param string $haystack
-     * @param string $wildcard_pattern
-     * @return bool
-     */
+
     private function stringMatchWithWildcard(string $haystack, string $wildcard_pattern): bool
     {
         $regex = str_replace(

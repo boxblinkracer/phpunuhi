@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Services\Coverage;
 
 use PHPUnit\Framework\TestCase;
@@ -12,16 +14,13 @@ use PHPUnuhi\Services\Coverage\CoverageService;
 
 class CoverageServiceTest extends TestCase
 {
-
     /**
      * @var TranslationSet[]
      */
-    private $sets;
+    private array $sets;
 
 
-    /**
-     * @return void
-     */
+
     public function setUp(): void
     {
         $locale1 = new Locale('en', false, 'English', '');
@@ -57,9 +56,7 @@ class CoverageServiceTest extends TestCase
     }
 
 
-    /**
-     * @return void
-     */
+
     public function testGetCoverage(): void
     {
         $service = new CoverageService();

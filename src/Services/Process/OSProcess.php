@@ -1,16 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Services\Process;
 
 use Symfony\Component\Process\Process;
 
 class OSProcess
 {
-
-    /**
-     * @param string $command
-     * @return ProcessResult
-     */
     public function execute(string $command): ProcessResult
     {
         $process = Process::fromShellCommandline($command);

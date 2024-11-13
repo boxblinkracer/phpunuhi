@@ -1,18 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Components\Validator\CaseStyle;
 
 interface CaseStyleValidatorInterface
 {
+    public function getIdentifier(): string;
 
-    /**
-     * @return string
-     */
-    public function getIdentifier():string;
 
-    /**
-     * @param string $text
-     * @return bool
-     */
     public function isValid(string $text): bool;
 }

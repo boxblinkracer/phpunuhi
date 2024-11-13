@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Components\Validator\Rules;
 
 use PHPUnuhi\Bundles\Storage\StorageInterface;
@@ -10,36 +12,24 @@ use PHPUnuhi\Models\Translation\TranslationSet;
 
 class NestingDepthRule implements RuleValidatorInterface
 {
-
-    /**
-     * @var int
-     */
-    private $maxNestingLevel;
+    private int $maxNestingLevel;
 
 
-    /**
-     * @param int $maxDepth
-     */
+
     public function __construct(int $maxDepth)
     {
         $this->maxNestingLevel = $maxDepth;
     }
 
 
-    /**
-     * @return string
-     */
+
     public function getRuleIdentifier(): string
     {
         return 'NESTING';
     }
 
 
-    /**
-     * @param TranslationSet $set
-     * @param StorageInterface $storage
-     * @return ValidationResult
-     */
+
     public function validate(TranslationSet $set, StorageInterface $storage): ValidationResult
     {
         $hierarchy = $storage->getHierarchy();
@@ -81,13 +71,7 @@ class NestingDepthRule implements RuleValidatorInterface
         return new ValidationResult($tests);
     }
 
-    /**
-     * @param Locale $locale
-     * @param string $translationKey
-     * @param int $depthOfKey
-     * @param bool $passed
-     * @return ValidationTest
-     */
+
     private function buildTestEntry(Locale $locale, string $translationKey, int $depthOfKey, bool $passed): ValidationTest
     {
         return new ValidationTest(

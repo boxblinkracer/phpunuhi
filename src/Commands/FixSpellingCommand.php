@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Commands;
 
 use Exception;
@@ -45,12 +47,9 @@ class FixSpellingCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
      * @throws Exception
-     * @return int
      */
-    public function execute(InputInterface $input, OutputInterface $output) : int
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 

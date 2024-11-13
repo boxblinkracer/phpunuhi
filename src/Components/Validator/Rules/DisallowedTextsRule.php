@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Components\Validator\Rules;
 
 use PHPUnuhi\Bundles\Storage\StorageInterface;
@@ -15,7 +17,7 @@ class DisallowedTextsRule implements RuleValidatorInterface
     /**
      * @var array<string>
      */
-    private $disallowedWords;
+    private array $disallowedWords;
 
 
     /**
@@ -27,19 +29,13 @@ class DisallowedTextsRule implements RuleValidatorInterface
     }
 
 
-    /**
-     * @return string
-     */
+
     public function getRuleIdentifier(): string
     {
         return 'DISALLOWED_TEXT';
     }
 
-    /**
-     * @param TranslationSet $set
-     * @param StorageInterface $storage
-     * @return ValidationResult
-     */
+
     public function validate(TranslationSet $set, StorageInterface $storage): ValidationResult
     {
         $tests = [];

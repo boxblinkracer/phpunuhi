@@ -1,16 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Storage\Shopware6\Service;
 
 use Exception;
 
 class Uuid
 {
-
-
     /**
      * @throws Exception
-     * @return string
      */
     public static function randomHex(): string
     {
@@ -35,11 +34,7 @@ class Uuid
         );
     }
 
-    /**
-     * @param string $timeHi
-     * @param int $version
-     * @return int
-     */
+
     private static function applyVersion(string $timeHi, int $version): int
     {
         $timeHi = hexdec($timeHi) & 0x0fff;
@@ -48,10 +43,7 @@ class Uuid
         return $timeHi | $version << 12;
     }
 
-    /**
-     * @param int $clockSeqHi
-     * @return int
-     */
+
     private static function applyVariant(int $clockSeqHi): int
     {
         // Set the variant to RFC 4122

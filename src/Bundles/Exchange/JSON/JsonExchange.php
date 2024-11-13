@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Exchange\JSON;
 
 use PHPUnuhi\Bundles\Exchange\ExchangeInterface;
@@ -14,9 +16,7 @@ class JsonExchange implements ExchangeInterface
 {
     use StringTrait;
 
-    /**
-     * @return string
-     */
+
     public function getName(): string
     {
         return 'json';
@@ -32,18 +32,13 @@ class JsonExchange implements ExchangeInterface
 
     /**
      * @param array<mixed> $options
-     * @return void
      */
     public function setOptionValues(array $options): void
     {
     }
 
     /**
-     * @param TranslationSet $set
-     * @param string $outputDir
-     * @param bool $onlyEmpty
      * @throws TranslationNotFoundException
-     * @return void
      */
     public function export(TranslationSet $set, string $outputDir, bool $onlyEmpty): void
     {
@@ -70,10 +65,7 @@ class JsonExchange implements ExchangeInterface
         file_put_contents($outputDir . '/' . $set->getName() . '.json', $json);
     }
 
-    /**
-     * @param string $filename
-     * @return ImportResult
-     */
+
     public function import(string $filename): ImportResult
     {
         $entries = [];

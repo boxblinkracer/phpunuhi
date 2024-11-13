@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Components\Validator\Rules;
 
 use Exception;
@@ -15,11 +17,6 @@ use PHPUnuhi\Tests\Utils\Fakes\FakeEmptyDelimiterStorage;
 
 class MaxKeyLengthRuleTest extends TestCase
 {
-
-
-    /**
-     * @return void
-     */
     public function getRuleIdentifier(): void
     {
         $validator = new MaxKeyLengthRule(0);
@@ -29,7 +26,6 @@ class MaxKeyLengthRuleTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testAllValid(): void
     {
@@ -54,7 +50,6 @@ class MaxKeyLengthRuleTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testLengthZeroAlwaysValid(): void
     {
@@ -78,7 +73,6 @@ class MaxKeyLengthRuleTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testKeyLengthExceeded(): void
     {
@@ -105,7 +99,6 @@ class MaxKeyLengthRuleTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testStorageWithEmptyDelimiterUsesNoNesting(): void
     {
@@ -129,7 +122,6 @@ class MaxKeyLengthRuleTest extends TestCase
 
     /**
      * @param Locale[] $locales
-     * @return TranslationSet
      */
     private function buildSet(array $locales): TranslationSet
     {

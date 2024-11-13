@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Configuration\Services;
 
 use PHPUnuhi\Models\Configuration\CaseStyle\CaseStyle;
@@ -14,7 +16,6 @@ class StyleLoader
     use BoolTrait;
 
     /**
-     * @param SimpleXMLElement $stylesNode
      * @return CaseStyle[]
      */
     public function loadStyles(SimpleXMLElement $stylesNode): array
@@ -42,7 +43,6 @@ class StyleLoader
     }
 
     /**
-     * @param SimpleXMLElement $stylesNode
      * @return CaseStyleIgnoreKey[]
      */
     public function loadIgnoredKeys(SimpleXMLElement $stylesNode): array

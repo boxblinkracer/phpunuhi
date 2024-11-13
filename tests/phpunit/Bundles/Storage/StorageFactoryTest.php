@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Bundles\Storage;
 
 use Exception;
@@ -14,16 +16,10 @@ use PHPUnuhi\Tests\Utils\Fakes\FakeStorage;
 
 class StorageFactoryTest extends TestCase
 {
-
-    /**
-     * @var TranslationSet
-     */
-    private $set;
+    private TranslationSet $set;
 
 
-    /**
-     * @return void
-     */
+
     protected function setUp(): void
     {
         $this->set = new TranslationSet(
@@ -45,7 +41,6 @@ class StorageFactoryTest extends TestCase
      * This test verifies that we can successfully register a new storage
      * and that it will be returned correctly when accessing it.
      * @throws ConfigurationException
-     * @return void
      */
     public function testGetCustomStorage(): void
     {
@@ -61,7 +56,6 @@ class StorageFactoryTest extends TestCase
      * This test verifies that we can successfully register a new storage
      * and that it will be returned for the provided set correctly.
      * @throws ConfigurationException
-     * @return void
      */
     public function testGetCustomStorageBySet(): void
     {
@@ -77,9 +71,7 @@ class StorageFactoryTest extends TestCase
      * @testWith [""]
      *           [" "]
      *
-     * @param string $emptyFormat
      * @throws ConfigurationException
-     * @return void
      */
     public function testEmptyStorageFormatThrowsException(string $emptyFormat): void
     {
@@ -90,7 +82,6 @@ class StorageFactoryTest extends TestCase
 
     /**
      * @throws ConfigurationException
-     * @return void
      */
     public function testUnknownStorageFormatThrowsException(): void
     {
@@ -101,7 +92,6 @@ class StorageFactoryTest extends TestCase
 
     /**
      * @throws ConfigurationException
-     * @return void
      */
     public function testDuplicateRegistrationThrowsException(): void
     {

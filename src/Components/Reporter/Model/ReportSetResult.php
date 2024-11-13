@@ -1,40 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Components\Reporter\Model;
 
 class ReportSetResult
 {
-
-    /**
-     * @var string
-     */
-    private $name;
+    private string $name;
 
     /**
      * @var ReportTestResult[]
      */
-    private $tests = [];
+    private array $tests = [];
 
-    /**
-     * @param string $name
-     */
+
     public function __construct(string $name)
     {
         $this->name = $name;
     }
 
-    /**
-     * @return string
-     */
+
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param ReportTestResult $result
-     * @return void
-     */
+
     public function addTestResult(ReportTestResult $result): void
     {
         $this->tests[] = $result;
@@ -48,17 +39,13 @@ class ReportSetResult
         return $this->tests;
     }
 
-    /**
-     * @return int
-     */
+
     public function getTestCount(): int
     {
         return count($this->tests);
     }
 
-    /**
-     * @return int
-     */
+
     public function getFailureCount(): int
     {
         $count = 0;

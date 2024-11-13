@@ -27,7 +27,6 @@ echo ">> build complete...";
 
 /**
  * @param $dir
- * @return bool
  */
 function deleteDirectory(string $dir): bool
 {

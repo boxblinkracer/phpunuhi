@@ -14,29 +14,15 @@ use PHPUnuhi\Models\Configuration\Rule;
 
 class LazyTranslationSet extends TranslationSet
 {
-    /**
-     * @var null|StorageInterface
-     */
-    private $storage;
+    private ?StorageInterface $storage = null;
+
+    private ?FilterHandler $filterHandler = null;
+
+    private bool $initialized = false;
 
     /**
-     * @var null|FilterHandler
-     */
-    private $filterHandler;
-
-    /**
-     * @var bool
-     */
-    private $initialized = false;
-
-    /**
-     * @param string $name
-     * @param string $format
-     * @param Protection $protection
      * @param Locale[] $locales
-     * @param Filter $filter
      * @param Attribute[] $attributes
-     * @param CaseStyleSetting $styles
      * @param Rule[] $rules
      */
     public function __construct(string $name, string $format, Protection $protection, array $locales, Filter $filter, array $attributes, CaseStyleSetting $styles, array $rules)
@@ -89,7 +75,7 @@ class LazyTranslationSet extends TranslationSet
 
     public function loadFromStorage(): void
     {
-        if ($this->initialized || !$this->storage || !$this->filterHandler) {
+        if ($this->initialized || !$this->storage instanceof StorageInterface || !$this->filterHandler instanceof FilterHandler) {
             return;
         }
 
@@ -97,7 +83,7 @@ class LazyTranslationSet extends TranslationSet
 
         $this->storage->loadTranslationSet($this);
 
-        if ($this->filterHandler) {
+        if ($this->filterHandler instanceof FilterHandler) {
             # remove fields that must not be existing
             # because of our allow or exclude list
             $this->filterHandler->applyFilter($this);

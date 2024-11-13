@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Traits;
 
 use PHPUnit\Framework\TestCase;
@@ -9,9 +11,7 @@ class ArrayTraitTest extends TestCase
 {
     use ArrayTrait;
 
-    /**
-     * @return void
-     */
+
     public function testGetFlatArray(): void
     {
         $array = [
@@ -33,9 +33,7 @@ class ArrayTraitTest extends TestCase
         $this->assertEquals($expected, $flat);
     }
 
-    /**
-     * @return void
-     */
+
     public function testGetMultiDimensionalArray(): void
     {
         $array = [
@@ -57,9 +55,7 @@ class ArrayTraitTest extends TestCase
         $this->assertEquals($expected, $dimensional);
     }
 
-    /**
-     * @return void
-     */
+
     public function testGetMultiDimensionalWithDifferentDelimiter(): void
     {
         $array = [
@@ -79,9 +75,7 @@ class ArrayTraitTest extends TestCase
         $this->assertEquals($expected, $dimensional);
     }
 
-    /**
-     * @return void
-     */
+
     public function testGetMultiDimensionalWithEmptyDelimiter(): void
     {
         $array = [
@@ -97,9 +91,7 @@ class ArrayTraitTest extends TestCase
         $this->assertEquals($expected, $dimensional);
     }
 
-    /**
-     * @return void
-     */
+
     public function testGetMultiDimensionalWith2NestedLevels(): void
     {
         $array = [

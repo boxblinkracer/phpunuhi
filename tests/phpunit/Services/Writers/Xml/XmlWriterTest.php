@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Services\Writers\Xml;
 
 use PHPUnit\Framework\TestCase;
@@ -17,18 +19,14 @@ class XmlWriterTest extends TestCase
     protected $testXmlFilePath;
 
 
-    /**
-     * @return void
-     */
+
     protected function setUp(): void
     {
         $this->testXmlFilePath = __DIR__ . '/testfile.xml';
     }
 
 
-    /**
-     * @return void
-     */
+
     protected function tearDown(): void
     {
         if (file_exists($this->testXmlFilePath)) {
@@ -36,9 +34,7 @@ class XmlWriterTest extends TestCase
         }
     }
 
-    /**
-     * @return void
-     */
+
     public function testSaveXml(): void
     {
         $xmlWriter = new XmlWriter();

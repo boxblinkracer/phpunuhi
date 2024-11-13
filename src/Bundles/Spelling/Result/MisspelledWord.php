@@ -1,22 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Spelling\Result;
 
 class MisspelledWord
 {
-
-    /**
-     * @var string
-     */
-    private $word;
+    private string $word;
 
     /**
      * @var string[]
      */
-    private $suggestions;
+    private array $suggestions;
 
     /**
-     * @param string $word
      * @param string[] $suggestions
      */
     public function __construct(string $word, array $suggestions)
@@ -25,9 +22,7 @@ class MisspelledWord
         $this->suggestions = $suggestions;
     }
 
-    /**
-     * @return string
-     */
+
     public function getWord(): string
     {
         return $this->word;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Components\Validator;
 
 use PHPUnuhi\Bundles\Storage\StorageInterface;
@@ -12,12 +14,10 @@ use PHPUnuhi\Models\Translation\TranslationSet;
 
 class EmptyContentValidator implements ValidatorInterface
 {
-
-
     /**
      * @var AllowEmptyContent[]
      */
-    private $allowList;
+    private array $allowList;
 
 
     /**
@@ -29,19 +29,13 @@ class EmptyContentValidator implements ValidatorInterface
     }
 
 
-    /**
-     * @return string
-     */
+
     public function getTypeIdentifier(): string
     {
         return 'EMPTY_CONTENT';
     }
 
-    /**
-     * @param TranslationSet $set
-     * @param StorageInterface $storage
-     * @return ValidationResult
-     */
+
     public function validate(TranslationSet $set, StorageInterface $storage): ValidationResult
     {
         $tests = [];
@@ -74,13 +68,7 @@ class EmptyContentValidator implements ValidatorInterface
         return new ValidationResult($tests);
     }
 
-    /**
-     * @param string $identifier
-     * @param Locale $locale
-     * @param Translation $translation
-     * @param bool $testPassed
-     * @return ValidationTest
-     */
+
     private function buildValidationTest(string $identifier, Locale $locale, Translation $translation, bool $testPassed): ValidationTest
     {
         return new ValidationTest(

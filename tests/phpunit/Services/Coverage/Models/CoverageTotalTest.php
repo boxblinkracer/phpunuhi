@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Services\Coverage\Models;
 
 use PHPUnit\Framework\TestCase;
@@ -11,16 +13,13 @@ use RuntimeException;
 
 class CoverageTotalTest extends TestCase
 {
-
     /**
      * @var CoverageTranslationSet[]
      */
-    private $sets;
+    private array $sets;
 
 
-    /**
-     * @return void
-     */
+
     public function setUp(): void
     {
         $locale1 = new Locale('en', false, 'English', '');
@@ -55,9 +54,7 @@ class CoverageTotalTest extends TestCase
         );
     }
 
-    /**
-     * @return void
-     */
+
     public function testCoverageSets(): void
     {
         $coverage = new CoverageTotal($this->sets);
@@ -67,9 +64,7 @@ class CoverageTotalTest extends TestCase
         $this->assertCount(3, $value);
     }
 
-    /**
-     * @return void
-     */
+
     public function testCountAll(): void
     {
         $coverage = new CoverageTotal($this->sets);
@@ -79,9 +74,7 @@ class CoverageTotalTest extends TestCase
         $this->assertEquals(4, $value);
     }
 
-    /**
-     * @return void
-     */
+
     public function testCountTranslated(): void
     {
         $coverage = new CoverageTotal($this->sets);
@@ -91,9 +84,7 @@ class CoverageTotalTest extends TestCase
         $this->assertEquals(2, $value);
     }
 
-    /**
-     * @return void
-     */
+
     public function testWordCount(): void
     {
         $coverage = new CoverageTotal($this->sets);
@@ -103,9 +94,7 @@ class CoverageTotalTest extends TestCase
         $this->assertEquals(5, $value);
     }
 
-    /**
-     * @return void
-     */
+
     public function testCoverage(): void
     {
         $coverage = new CoverageTotal($this->sets);
@@ -130,9 +119,6 @@ class CoverageTotalTest extends TestCase
     /**
      * @dataProvider getLocaleCoverageData
      *
-     * @param float $expected
-     * @param string $locale
-     * @return void
      */
     public function testLocaleCoverage(float $expected, string $locale): void
     {
@@ -146,7 +132,6 @@ class CoverageTotalTest extends TestCase
     /**
      * If we have a locale with no words, the coverage should be 100%.
      * Then this is fine.
-     * @return void
      */
     public function testCoverageWithNoWordsIs100(): void
     {
@@ -159,7 +144,6 @@ class CoverageTotalTest extends TestCase
 
     /**
      * If we have a locale that is not in the sets, the coverage should be 0%.
-     * @return void
      */
     public function testCoverageOfMissingLocaleIsZero(): void
     {
@@ -170,9 +154,7 @@ class CoverageTotalTest extends TestCase
         $this->assertEquals(0, $value);
     }
 
-    /**
-     * @return void
-     */
+
     public function testTranslationSetCoverage(): void
     {
         $coverage = new CoverageTotal($this->sets);
@@ -182,9 +164,7 @@ class CoverageTotalTest extends TestCase
         $this->assertEquals(50.0, $result->getCoverage());
     }
 
-    /**
-     * @return void
-     */
+
     public function testTranslationSetCoverageNotFound(): void
     {
         $this->expectException(RuntimeException::class);

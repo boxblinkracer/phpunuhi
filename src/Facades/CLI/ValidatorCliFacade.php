@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Facades\CLI;
 
 use PHPUnuhi\Bundles\Storage\StorageFactory;
@@ -17,20 +19,11 @@ class ValidatorCliFacade
     use CommandOutputTrait;
 
 
-    /**
-     * @var SymfonyStyle
-     */
-    private $io;
+    private SymfonyStyle $io;
 
-    /**
-     * @var OutputInterface
-     */
-    private $output;
+    private OutputInterface $output;
 
-    /**
-     * @param SymfonyStyle $io
-     * @param OutputInterface $output
-     */
+
     public function __construct(SymfonyStyle $io, OutputInterface $output)
     {
         $this->io = $io;
@@ -38,10 +31,8 @@ class ValidatorCliFacade
     }
 
     /**
-     * @param TranslationSet $set
      * @param ValidatorInterface[] $validators
      * @throws ConfigurationException
-     * @return ReportSetResult
      */
     public function execute(TranslationSet $set, array $validators): ReportSetResult
     {

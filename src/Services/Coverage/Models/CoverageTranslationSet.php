@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Services\Coverage\Models;
 
 use PHPUnuhi\Services\Coverage\Traits\CoverageDataTrait;
@@ -9,19 +11,15 @@ class CoverageTranslationSet
 {
     use CoverageDataTrait;
 
-    /**
-     * @var string
-     */
-    private $name;
+    private string $name;
 
     /**
      * @var CoverageLocale[]
      */
-    private $localeCoverages;
+    private array $localeCoverages;
 
 
     /**
-     * @param string $name
      * @param CoverageLocale[] $localeCoverages
      */
     public function __construct(string $name, array $localeCoverages)
@@ -33,9 +31,7 @@ class CoverageTranslationSet
     }
 
 
-    /**
-     * @return string
-     */
+
     public function getName(): string
     {
         return $this->name;
@@ -61,9 +57,7 @@ class CoverageTranslationSet
     }
 
 
-    /**
-     * @return void
-     */
+
     private function calculate(): void
     {
         $this->countAll = 0;

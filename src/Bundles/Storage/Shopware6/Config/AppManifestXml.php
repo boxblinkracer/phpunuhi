@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Storage\Shopware6\Config;
 
 use DOMDocument;
@@ -15,20 +17,11 @@ class AppManifestXml implements ShopwareXmlInterface
 {
     use StringTrait;
 
-    /**
-     * @var XmlHandler
-     */
-    private $xmlHandler;
+    private XmlHandler $xmlHandler;
 
-    /**
-     * @var string
-     */
-    private $filename;
+    private string $filename;
 
-    /**
-     * @var string
-     */
-    private $xmlString;
+    private string $xmlString;
 
 
     public function __construct(string $filename, string $xmlString, string $defaultLocale)
@@ -40,7 +33,6 @@ class AppManifestXml implements ShopwareXmlInterface
     }
 
     /**
-     * @param string $locale
      * @return array|mixed[]
      */
     public function readTranslations(string $locale): array
@@ -218,10 +210,8 @@ class AppManifestXml implements ShopwareXmlInterface
     }
 
     /**
-     * @param string $locale
      * @param Translation[] $translations
      * @throws DOMException
-     * @return void
      */
     public function writeTranslations(string $locale, array $translations): void
     {
@@ -498,8 +488,6 @@ class AppManifestXml implements ShopwareXmlInterface
     }
 
     /**
-     * @param DOMElement $customFieldSet
-     * @param DOMXPath $xpath
      * @return DOMElement[]
      */
     private function getCustomFieldSetFields(DOMElement $customFieldSet, DOMXPath $xpath): array

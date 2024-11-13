@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Traits;
 
 use PHPUnit\Framework\TestCase;
@@ -12,9 +14,6 @@ class CommandTraitTest extends TestCase
     use CommandTrait;
 
 
-    /**
-     * @return void
-     */
     public function testShowHeader(): void
     {
         $this->expectOutputString("PHPUnuhi Framework, v" . PHPUnuhi::getVersion() . "\nCopyright (c) 2023 - " . date('Y') . ", Christian Dangl and contributors\n\n");
@@ -22,9 +21,7 @@ class CommandTraitTest extends TestCase
         $this->showHeader();
     }
 
-    /**
-     * @return void
-     */
+
     public function testGetConfigFileWithCustomValue(): void
     {
         $input = $this->createMock(InputInterface::class);
@@ -43,7 +40,6 @@ class CommandTraitTest extends TestCase
      *            [ " " ]
      *
      * @param mixed $option
-     * @return void
      */
     public function testGetConfigFileWithoutValueGivesDefaultConfig($option): void
     {
@@ -64,9 +60,7 @@ class CommandTraitTest extends TestCase
      *            [ "", 4 ]
      *            [ "", 4.5 ]
      *
-     * @param string $expected
      * @param mixed $option
-     * @return void
      */
     public function testGetConfigStringValue(string $expected, $option): void
     {
@@ -89,9 +83,7 @@ class CommandTraitTest extends TestCase
      *            [ false, "true" ]
      *            [ true, true ]
      *
-     * @param bool $expected
      * @param mixed $option
-     * @return void
      */
     public function testGetConfigBoolValue(bool $expected, $option): void
     {

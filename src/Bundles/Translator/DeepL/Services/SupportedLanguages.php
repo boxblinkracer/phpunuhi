@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Translator\DeepL\Services;
 
 use DeepL;
@@ -8,10 +10,7 @@ use DeepL\Translator;
 
 class SupportedLanguages
 {
-    /**
-     * @var DeepL\Translator
-     */
-    private $translator;
+    private Translator $translator;
 
     /**
      * @var array<DeepL\Language>
@@ -23,18 +22,13 @@ class SupportedLanguages
         'pt' => 'pt-pt'
     ];
 
-    /**
-     * @param DeepL\Translator $translator
-     */
     public function __construct(Translator $translator)
     {
         $this->translator = $translator;
     }
 
     /**
-     * @param string $locale
      * @throws DeepLException
-     * @return string
      */
     public function getAvailableLocale(string $locale): string
     {

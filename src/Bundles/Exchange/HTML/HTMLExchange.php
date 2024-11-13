@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Exchange\HTML;
 
 use Exception;
@@ -13,10 +15,6 @@ use PHPUnuhi\Models\Translation\TranslationSet;
 
 class HTMLExchange implements ExchangeInterface
 {
-
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return 'html';
@@ -33,18 +31,13 @@ class HTMLExchange implements ExchangeInterface
 
     /**
      * @param array<mixed> $options
-     * @return void
      */
     public function setOptionValues(array $options): void
     {
     }
 
     /**
-     * @param TranslationSet $set
-     * @param string $outputDir
-     * @param bool $onlyEmpty
      * @throws TranslationNotFoundException
-     * @return void
      */
     public function export(TranslationSet $set, string $outputDir, bool $onlyEmpty): void
     {
@@ -53,9 +46,7 @@ class HTMLExchange implements ExchangeInterface
     }
 
     /**
-     * @param string $filename
      * @throws Exception
-     * @return ImportResult
      */
     public function import(string $filename): ImportResult
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Configuration\Services;
 
 use PHPUnuhi\Exceptions\ConfigurationException;
@@ -13,15 +15,10 @@ class LocalesLoader
     use XmlTrait;
     use BoolTrait;
 
-    /**
-     * @var LocalesPlaceholderProcessor
-     */
-    private $placholderProcessor;
+    private LocalesPlaceholderProcessor $placholderProcessor;
 
 
-    /**
-     *
-     */
+
     public function __construct()
     {
         $this->placholderProcessor = new LocalesPlaceholderProcessor();
@@ -29,8 +26,6 @@ class LocalesLoader
 
 
     /**
-     * @param SimpleXMLElement $rootLocales
-     * @param string $configFilename
      * @throws ConfigurationException
      * @return array<mixed>
      */

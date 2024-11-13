@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Exchange;
 
 use Exception;
@@ -12,24 +14,18 @@ use PHPUnuhi\Models\Command\CommandOption;
 
 class ExchangeFactory
 {
-
-    /**
-     * @var ExchangeFactory
-     */
-    private static $instance;
+    private static ?\PHPUnuhi\Bundles\Exchange\ExchangeFactory $instance = null;
 
     /**
      * @var ExchangeInterface[]
      */
-    private $exchangeServices;
+    private array $exchangeServices;
 
 
-    /**
-     * @return ExchangeFactory
-     */
+
     public static function getInstance(): ExchangeFactory
     {
-        if (self::$instance === null) {
+        if (!self::$instance instanceof \PHPUnuhi\Bundles\Exchange\ExchangeFactory) {
             self::$instance = new self();
         }
 
@@ -37,9 +33,7 @@ class ExchangeFactory
     }
 
 
-    /**
-     *
-     */
+
     private function __construct()
     {
         $this->resetExchangeFormats();
@@ -47,9 +41,7 @@ class ExchangeFactory
 
 
     /**
-     * @param ExchangeInterface $exchangeFormat
      * @throws ConfigurationException
-     * @return void
      */
     public function registerExchangeFormat(ExchangeInterface $exchangeFormat): void
     {
@@ -67,7 +59,6 @@ class ExchangeFactory
 
     /**
      * Resets the registered exchange formats to the default ones.
-     * @return void
      */
     public function resetExchangeFormats(): void
     {
@@ -94,10 +85,8 @@ class ExchangeFactory
     }
 
     /**
-     * @param string $format
      * @param array<mixed> $options
      * @throws Exception
-     * @return ExchangeInterface
      */
     public function getExchange(string $format, array $options): ExchangeInterface
     {

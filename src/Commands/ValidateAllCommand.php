@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Commands;
 
 use Exception;
@@ -47,11 +49,8 @@ class ValidateAllCommand extends Command
 
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
      * @throws Exception
      * @throws ConfigurationException
-     * @return int
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {

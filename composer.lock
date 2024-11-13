@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9a0593bf794aa116e2d028003b2eea17",
+    "content-hash": "2e4632c32922a3301f18943a7ec5afb8",
     "packages": [
         {
             "name": "deeplcom/deepl-php",
@@ -923,16 +923,16 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "2.9.3",
+            "version": "2.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "a30bfe2e142720dfa990d0a7e573997f5d884215"
+                "reference": "5cf826f2991858b54d5c3809bee745560a1042a7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/a30bfe2e142720dfa990d0a7e573997f5d884215",
-                "reference": "a30bfe2e142720dfa990d0a7e573997f5d884215",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/5cf826f2991858b54d5c3809bee745560a1042a7",
+                "reference": "5cf826f2991858b54d5c3809bee745560a1042a7",
                 "shasum": ""
             },
             "require": {
@@ -1009,7 +1009,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Seldaek/monolog/issues",
-                "source": "https://github.com/Seldaek/monolog/tree/2.9.3"
+                "source": "https://github.com/Seldaek/monolog/tree/2.10.0"
             },
             "funding": [
                 {
@@ -1021,7 +1021,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-04-12T20:52:51+00:00"
+            "time": "2024-11-12T12:43:37+00:00"
         },
         {
             "name": "orhanerday/open-ai",
@@ -4126,6 +4126,88 @@
             "time": "2022-02-18T08:23:19+00:00"
         },
         {
+            "name": "phparkitect/phparkitect",
+            "version": "0.3.22",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phparkitect/arkitect.git",
+                "reference": "13ff662df4ab28607d0853fb39d6d69c92b995b0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phparkitect/arkitect/zipball/13ff662df4ab28607d0853fb39d6d69c92b995b0",
+                "reference": "13ff662df4ab28607d0853fb39d6d69c92b995b0",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "nikic/php-parser": "~4",
+                "php": "^7.1|^8",
+                "phpstan/phpdoc-parser": "^1.2",
+                "symfony/console": "^3.0|^4.0|^5.0|^6.0",
+                "symfony/event-dispatcher": "^3.0|^4.0|^5.0|^6.0",
+                "symfony/finder": "^3.0|^4.0|^5.0|^6.0",
+                "symfony/polyfill-php80": "^1.20",
+                "webmozart/assert": "^1.9"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.0",
+                "mikey179/vfsstream": "^1.6",
+                "phpspec/prophecy": "^1.10",
+                "phpunit/phpunit": "^7.5|^9.0|^10.0",
+                "roave/security-advisories": "dev-master",
+                "symfony/var-dumper": "^3.0|^4.0|^5.0|^6.0",
+                "vimeo/psalm": "^4.6"
+            },
+            "bin": [
+                "bin-stub/phparkitect"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Arkitect\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Pietro Campagnano",
+                    "email": "hello@pietro.camp"
+                },
+                {
+                    "name": "Patrick Luca Fazzi",
+                    "email": "patrick91@live.it"
+                },
+                {
+                    "name": "Alessandro Minoccheri",
+                    "email": "alessandro.minoccheri@gmail.com"
+                },
+                {
+                    "name": "Michele Orselli",
+                    "email": "michele.orselli@gmail.com"
+                }
+            ],
+            "description": "Enforce architectural constraints in your PHP applications",
+            "support": {
+                "issues": "https://github.com/phparkitect/arkitect/issues",
+                "source": "https://github.com/phparkitect/arkitect/tree/0.3.22"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/AlessandroMinoccheri",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/micheleorselli",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-04-04T16:16:54+00:00"
+        },
+        {
             "name": "phpcompatibility/php-compatibility",
             "version": "9.3.5",
             "source": {
@@ -4186,6 +4268,53 @@
                 "source": "https://github.com/PHPCompatibility/PHPCompatibility"
             },
             "time": "2019-12-27T09:44:58+00:00"
+        },
+        {
+            "name": "phpstan/phpdoc-parser",
+            "version": "1.33.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpstan/phpdoc-parser.git",
+                "reference": "82a311fd3690fb2bf7b64d5c98f912b3dd746140"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/82a311fd3690fb2bf7b64d5c98f912b3dd746140",
+                "reference": "82a311fd3690fb2bf7b64d5c98f912b3dd746140",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2 || ^8.0"
+            },
+            "require-dev": {
+                "doctrine/annotations": "^2.0",
+                "nikic/php-parser": "^4.15",
+                "php-parallel-lint/php-parallel-lint": "^1.2",
+                "phpstan/extension-installer": "^1.0",
+                "phpstan/phpstan": "^1.5",
+                "phpstan/phpstan-phpunit": "^1.1",
+                "phpstan/phpstan-strict-rules": "^1.0",
+                "phpunit/phpunit": "^9.5",
+                "symfony/process": "^5.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PHPStan\\PhpDocParser\\": [
+                        "src/"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "PHPDoc parser with support for nullable, intersection and generic types",
+            "support": {
+                "issues": "https://github.com/phpstan/phpdoc-parser/issues",
+                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.33.0"
+            },
+            "time": "2024-10-13T11:25:22+00:00"
         },
         {
             "name": "phpstan/phpstan",
@@ -4835,12 +4964,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "e63317470a1b96346be224a68f9e64567e1001c3"
+                "reference": "7643106bdba2fda72ee6f586a74a231155901935"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/e63317470a1b96346be224a68f9e64567e1001c3",
-                "reference": "e63317470a1b96346be224a68f9e64567e1001c3",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/7643106bdba2fda72ee6f586a74a231155901935",
+                "reference": "7643106bdba2fda72ee6f586a74a231155901935",
                 "shasum": ""
             },
             "conflict": {
@@ -5159,7 +5288,7 @@
                 "lara-zeus/artemis": ">=1,<=1.0.6",
                 "lara-zeus/dynamic-dashboard": ">=3,<=3.0.1",
                 "laravel/fortify": "<1.11.1",
-                "laravel/framework": "<6.20.44|>=7,<7.30.6|>=8,<8.75",
+                "laravel/framework": "<6.20.45|>=7,<7.30.7|>=8,<8.83.28|>=9,<9.52.17|>=10,<10.48.23|>=11,<11.31",
                 "laravel/laravel": ">=5.4,<5.4.22",
                 "laravel/reverb": "<1.4",
                 "laravel/socialite": ">=1,<2.0.10",
@@ -5217,7 +5346,7 @@
                 "mojo42/jirafeau": "<4.4",
                 "mongodb/mongodb": ">=1,<1.9.2",
                 "monolog/monolog": ">=1.8,<1.12",
-                "moodle/moodle": "<4.3.6|>=4.4.0.0-beta,<4.4.2",
+                "moodle/moodle": "<4.3.6|>=4.4,<4.4.2",
                 "mos/cimage": "<0.7.19",
                 "movim/moxl": ">=0.8,<=0.10",
                 "movingbytes/social-network": "<=1.2.1",
@@ -5265,7 +5394,7 @@
                 "openmage/magento-lts": "<20.10.1",
                 "opensolutions/vimbadmin": "<=3.0.15",
                 "opensource-workshop/connect-cms": "<1.7.2|>=2,<2.3.2",
-                "orchid/platform": ">=9,<9.4.4|>=14.0.0.0-alpha4,<14.5",
+                "orchid/platform": ">=8,<14.43",
                 "oro/calendar-bundle": ">=4.2,<=4.2.6|>=5,<=5.0.6|>=5.1,<5.1.1",
                 "oro/commerce": ">=4.1,<5.0.11|>=5.1,<5.1.1",
                 "oro/crm": ">=1.7,<1.7.4|>=3.1,<4.1.17|>=4.2,<4.2.7",
@@ -5668,7 +5797,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-11-07T19:04:57+00:00"
+            "time": "2024-11-12T23:05:16+00:00"
         },
         {
             "name": "rregeer/phpunit-coverage-check",
@@ -6941,16 +7070,16 @@
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "3.10.3",
+            "version": "3.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHP_CodeSniffer.git",
-                "reference": "62d32998e820bddc40f99f8251958aed187a5c9c"
+                "reference": "70c08f8d20c0eb4fe56f26644dd94dae76a7f450"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/62d32998e820bddc40f99f8251958aed187a5c9c",
-                "reference": "62d32998e820bddc40f99f8251958aed187a5c9c",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/70c08f8d20c0eb4fe56f26644dd94dae76a7f450",
+                "reference": "70c08f8d20c0eb4fe56f26644dd94dae76a7f450",
                 "shasum": ""
             },
             "require": {
@@ -7017,20 +7146,20 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2024-09-18T10:38:58+00:00"
+            "time": "2024-11-12T09:53:29+00:00"
         },
         {
             "name": "staabm/phpstan-todo-by",
-            "version": "0.1.32",
+            "version": "0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/staabm/phpstan-todo-by.git",
-                "reference": "81a55caa8af4451082c5688f9e69089275332d9a"
+                "reference": "de149a2dcdc0bcb5f3ebc6f6c571bf50d74aea92"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/staabm/phpstan-todo-by/zipball/81a55caa8af4451082c5688f9e69089275332d9a",
-                "reference": "81a55caa8af4451082c5688f9e69089275332d9a",
+                "url": "https://api.github.com/repos/staabm/phpstan-todo-by/zipball/de149a2dcdc0bcb5f3ebc6f6c571bf50d74aea92",
+                "reference": "de149a2dcdc0bcb5f3ebc6f6c571bf50d74aea92",
                 "shasum": ""
             },
             "require": {
@@ -7040,7 +7169,7 @@
                 "ext-json": "*",
                 "nikolaposa/version": "^4.1",
                 "php": "^7.4 || ^8.0",
-                "phpstan/phpstan": "^1.10"
+                "phpstan/phpstan": "^1.10 || ^2.0"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^3.64",
@@ -7077,7 +7206,7 @@
             ],
             "support": {
                 "issues": "https://github.com/staabm/phpstan-todo-by/issues",
-                "source": "https://github.com/staabm/phpstan-todo-by/tree/0.1.32"
+                "source": "https://github.com/staabm/phpstan-todo-by/tree/0.2"
             },
             "funding": [
                 {
@@ -7085,7 +7214,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-10-08T10:08:28+00:00"
+            "time": "2024-11-11T08:11:22+00:00"
         },
         {
             "name": "svrunit/svrunit",
@@ -8230,7 +8359,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.2",
+        "php": ">=7.4",
         "ext-json": "*",
         "ext-pdo": "*",
         "ext-simplexml": "*",

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Storage\RESX;
 
 use Exception;
@@ -13,51 +15,36 @@ use SimpleXMLElement;
 
 class ResxStorage implements StorageInterface
 {
-
-    /**
-     * @return string
-     */
     public function getStorageName(): string
     {
         return "resx";
     }
 
-    /**
-     * @return string
-     */
+
     public function getFileExtension(): string
     {
         return "resx";
     }
 
-    /**
-     * @return bool
-     */
+
     public function supportsFilters(): bool
     {
         return false;
     }
 
-    /**
-     * @return StorageHierarchy
-     */
+
     public function getHierarchy(): StorageHierarchy
     {
         return new StorageHierarchy(false, '');
     }
 
-    /**
-     * @param TranslationSet $set
-     * @return void
-     */
+
     public function configureStorage(TranslationSet $set): void
     {
     }
 
     /**
-     * @param TranslationSet $set
      * @throws Exception
-     * @return void
      */
     public function loadTranslationSet(TranslationSet $set): void
     {
@@ -83,10 +70,7 @@ class ResxStorage implements StorageInterface
         }
     }
 
-    /**
-     * @param TranslationSet $set
-     * @return StorageSaveResult
-     */
+
     public function saveTranslationSet(TranslationSet $set): StorageSaveResult
     {
         $totalCount = 0;
@@ -98,11 +82,7 @@ class ResxStorage implements StorageInterface
         return new StorageSaveResult(count($set->getLocales()), 0);
     }
 
-    /**
-     * @param Locale $locale
-     * @param string $filename
-     * @return StorageSaveResult
-     */
+
     public function saveTranslationLocale(Locale $locale, string $filename): StorageSaveResult
     {
         $totalCount = $this->writeResxFile($filename, $locale->getTranslations());
@@ -111,10 +91,8 @@ class ResxStorage implements StorageInterface
     }
 
     /**
-     * @param string $filename
      * @param Translation[] $translations
      * @throws Exception
-     * @return int
      */
     private function writeResxFile(string $filename, array $translations): int
     {

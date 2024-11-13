@@ -1,23 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\MJML;
 
 use PHPUnuhi\Bundles\Twig\ScannerInterface;
 
 class MjmlScanner implements ScannerInterface
 {
-
-    /**
-     * @return string
-     */
     public function getScannerName(): string
     {
         return 'mjml';
     }
 
-    /**
-     * @return string
-     */
+
     public function getExtension(): string
     {
         return 'mjml';
@@ -26,9 +22,6 @@ class MjmlScanner implements ScannerInterface
     /**
      * {{ 'email.contact.subject' | trans | sw_sanitize }}
      *
-     * @param string $key
-     * @param string $content
-     * @return bool
      */
     public function findKey(string $key, string $content): bool
     {

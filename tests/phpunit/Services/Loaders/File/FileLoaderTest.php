@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Services\Loaders\File;
 
 use Exception;
@@ -8,20 +10,12 @@ use PHPUnuhi\Services\Loaders\File\FileLoader;
 
 class FileLoaderTest extends TestCase
 {
+    private FileLoader $loader;
 
-    /**
-     * @var FileLoader
-     */
-    private $loader;
 
-    /**
-     * @var string
-     */
-    private $testFile;
+    private string $testFile;
 
-    /**
-     * @return void
-     */
+
     public function setUp(): void
     {
         $this->loader = new FileLoader();
@@ -30,9 +24,7 @@ class FileLoaderTest extends TestCase
         file_put_contents($this->testFile, 'Sample content');
     }
 
-    /**
-     * @return void
-     */
+
     public function tearDown(): void
     {
         if (file_exists($this->testFile)) {
@@ -40,9 +32,7 @@ class FileLoaderTest extends TestCase
         }
     }
 
-    /**
-     * @return void
-     */
+
     public function testLoadFileNotFound(): void
     {
         $nonExistentFile = 'path/to/non_existent_file.xml';
@@ -55,7 +45,6 @@ class FileLoaderTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testLoadFile(): void
     {

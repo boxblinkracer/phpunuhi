@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Facades\CLI;
 
 use PHPUnuhi\Components\Reporter\Model\ReportResult;
@@ -15,14 +17,9 @@ class MessValidatorCliFacade
 {
     use CommandOutputTrait;
 
-    /**
-     * @var SymfonyStyle
-     */
-    private $io;
+    private SymfonyStyle $io;
 
-    /**
-     * @param SymfonyStyle $io
-     */
+
     public function __construct(SymfonyStyle $io)
     {
         $this->io = $io;
@@ -31,7 +28,6 @@ class MessValidatorCliFacade
     /**
      * @param TranslationSet[] $translationSets
      * @throws TranslationNotFoundException
-     * @return ReportResult
      */
     public function execute(array $translationSets): ReportResult
     {
@@ -76,11 +72,7 @@ class MessValidatorCliFacade
         return $reportResult;
     }
 
-    /**
-     * @param string $translationID
-     * @param bool $success
-     * @return ValidationTest
-     */
+
     private function buildTestValidation(string $translationID, bool $success): ValidationTest
     {
         return new ValidationTest(

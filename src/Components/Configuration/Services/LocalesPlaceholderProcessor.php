@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Configuration\Services;
 
 use PHPUnuhi\Traits\StringTrait;
@@ -14,9 +16,6 @@ class LocalesPlaceholderProcessor
      * Some files are relative in the configuration file and therefore their full path
      * would be the configuration file's directory + the relative path.
      * TODO this is just placed in here for now to avoid duplicate code, although it has nothing to do with locales
-     * @param string $filename
-     * @param string $configFilename
-     * @return string
      */
     public function buildFullPath(string $filename, string $configFilename): string
     {
@@ -33,13 +32,7 @@ class LocalesPlaceholderProcessor
         return $configuredFileName;
     }
 
-    /**
-     * @param string $localeName
-     * @param string $localeFile
-     * @param string $basePath
-     * @param string $configFilename
-     * @return string
-     */
+
     public function buildRealLocaleFilename(string $localeName, string $localeFile, string $basePath, string $configFilename): string
     {
         if ($localeFile === '') {

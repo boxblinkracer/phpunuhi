@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Components\Validator;
 
 use Exception;
@@ -14,25 +16,17 @@ use PHPUnuhi\Models\Translation\TranslationSet;
 
 class MixedStructureValidatorTest extends TestCase
 {
-
-    /**
-     * @var MissingStructureValidator
-     */
-    private $validator;
+    private MissingStructureValidator $validator;
 
 
-    /**
-     * @return void
-     */
+
     protected function setUp(): void
     {
         $this->validator = new MissingStructureValidator();
     }
 
 
-    /**
-     * @return void
-     */
+
     public function testTypeIdentifier(): void
     {
         $this->assertEquals('STRUCTURE', $this->validator->getTypeIdentifier());
@@ -40,7 +34,6 @@ class MixedStructureValidatorTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testAllValid(): void
     {
@@ -63,7 +56,6 @@ class MixedStructureValidatorTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testMixedStructureFound(): void
     {
@@ -87,7 +79,6 @@ class MixedStructureValidatorTest extends TestCase
 
     /**
      * @param Locale[] $locales
-     * @return TranslationSet
      */
     private function buildSet(array $locales): TranslationSet
     {

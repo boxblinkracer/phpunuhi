@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Exchange\HTML\Services;
 
 use PHPUnuhi\Exceptions\TranslationNotFoundException;
@@ -9,13 +11,8 @@ use PHPUnuhi\Models\Translation\TranslationSet;
 
 class HTMLExporter
 {
-
     /**
-     * @param TranslationSet $set
-     * @param string $outputDir
-     * @param bool $onlyEmpty
      * @throws TranslationNotFoundException
-     * @return void
      */
     public function export(TranslationSet $set, string $outputDir, bool $onlyEmpty): void
     {
@@ -169,11 +166,7 @@ class HTMLExporter
         echo '   [+] generated file: ' . $fullFile . PHP_EOL . PHP_EOL;
     }
 
-    /**
-     * @param Locale $locale
-     * @param string $key
-     * @return string
-     */
+
     private function getTranslationValue(Locale $locale, string $key): string
     {
         $translation = $locale->findTranslationOrNull($key);

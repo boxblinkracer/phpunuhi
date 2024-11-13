@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Storage\Shopware6;
 
 use Exception;
@@ -19,39 +21,21 @@ use PHPUnuhi\Services\Connection\ConnectionFactory;
 
 class Shopware6Storage implements StorageInterface
 {
+    private TranslationLoader $loader;
 
-    /**
-     * @var TranslationLoader
-     */
-    private $loader;
+    private TranslationSaver $saver;
 
-    /**
-     * @var TranslationSaver
-     */
-    private $saver;
+    private string $type = '';
 
-    /**
-     * @var string
-     */
-    private $type;
-
-    /**
-     * @var string
-     */
-    private $file;
+    private string $file = '';
 
 
-    /**
-     * @return string
-     */
     public function getStorageName(): string
     {
         return 'shopware6';
     }
 
-    /**
-     * @return string
-     */
+
     public function getFileExtension(): string
     {
         if ($this->type === 'config') {
@@ -60,17 +44,13 @@ class Shopware6Storage implements StorageInterface
         return "-";
     }
 
-    /**
-     * @return bool
-     */
+
     public function supportsFilters(): bool
     {
         return true;
     }
 
-    /**
-     * @return StorageHierarchy
-     */
+
     public function getHierarchy(): StorageHierarchy
     {
         return new StorageHierarchy(
@@ -79,10 +59,7 @@ class Shopware6Storage implements StorageInterface
         );
     }
 
-    /**
-     * @param TranslationSet $set
-     * @return void
-     */
+
     public function configureStorage(TranslationSet $set): void
     {
         $this->type = $set->getAttributeValue('type');
@@ -110,9 +87,7 @@ class Shopware6Storage implements StorageInterface
     }
 
     /**
-     * @param TranslationSet $set
      * @throws ConfigurationException
-     * @return void
      */
     public function loadTranslationSet(TranslationSet $set): void
     {
@@ -137,9 +112,7 @@ class Shopware6Storage implements StorageInterface
     }
 
     /**
-     * @param TranslationSet $set
      * @throws ConfigurationException
-     * @return StorageSaveResult
      */
     public function saveTranslationSet(TranslationSet $set): StorageSaveResult
     {
@@ -161,10 +134,7 @@ class Shopware6Storage implements StorageInterface
     }
 
     /**
-     * @param Locale $locale
-     * @param string $filename
      * @throws Exception
-     * @return StorageSaveResult
      */
     public function saveTranslationLocale(Locale $locale, string $filename): StorageSaveResult
     {
@@ -183,11 +153,10 @@ class Shopware6Storage implements StorageInterface
     /**
      * @param Locale[] $locales
      * @throws Exception
-     * @return void
      */
     private function validateConfigType(array $locales): void
     {
-        if (empty($this->file)) {
+        if ($this->file === '') {
             throw new Exception('No "file" attribute configured. Please assign a the path to the configuration file in the storage format node');
         }
 
@@ -208,7 +177,6 @@ class Shopware6Storage implements StorageInterface
     /**
      * @param Locale[] $locales
      * @throws Exception
-     * @return ShopwareXmlInterface
      */
     private function getXmlAdapter(array $locales): ShopwareXmlInterface
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Services\OpenAI;
 
 use Exception;
@@ -7,15 +9,10 @@ use Orhanerday\OpenAi\OpenAi;
 
 class OpenAIClient
 {
-    /**
-     * @var string
-     */
-    private $apiKey;
+    private string $apiKey;
 
 
-    /**
-     * @param string $apiKey
-     */
+
     public function __construct(string $apiKey)
     {
         $this->apiKey = $apiKey;
@@ -23,10 +20,7 @@ class OpenAIClient
 
 
     /**
-     * @param string $prompt
-     * @param string $model
      * @throws Exception
-     * @return OpenAIResponse
      */
     public function chat(string $prompt, string $model): OpenAIResponse
     {

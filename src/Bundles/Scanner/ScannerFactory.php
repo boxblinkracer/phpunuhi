@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Twig;
 
 use Exception;
@@ -8,24 +10,18 @@ use PHPUnuhi\Exceptions\ConfigurationException;
 
 class ScannerFactory
 {
-
-    /**
-     * @var ScannerFactory
-     */
-    private static $instance;
+    private static ?\PHPUnuhi\Bundles\Twig\ScannerFactory $instance = null;
 
     /**
      * @var ScannerInterface[]
      */
-    private $scanners;
+    private array $scanners;
 
 
-    /**
-     * @return ScannerFactory
-     */
+
     public static function getInstance(): ScannerFactory
     {
-        if (self::$instance === null) {
+        if (!self::$instance instanceof \PHPUnuhi\Bundles\Twig\ScannerFactory) {
             self::$instance = new self();
         }
 
@@ -33,18 +29,14 @@ class ScannerFactory
     }
 
 
-    /**
-     *
-     */
+
     private function __construct()
     {
         $this->resetScanners();
     }
 
     /**
-     * @param ScannerInterface $scanner
      * @throws ConfigurationException
-     * @return void
      */
     public function registerScanner(ScannerInterface $scanner): void
     {
@@ -62,7 +54,6 @@ class ScannerFactory
 
     /**
      * Resets the registered scanners to the default ones.
-     * @return void
      */
     public function resetScanners(): void
     {
@@ -73,9 +64,7 @@ class ScannerFactory
     }
 
     /**
-     * @param string $name
      * @throws ConfigurationException
-     * @return ScannerInterface
      */
     public function getScanner(string $name): ScannerInterface
     {

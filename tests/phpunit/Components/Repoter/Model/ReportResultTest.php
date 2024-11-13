@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Components\Repoter\Model;
 
 use PHPUnit\Framework\TestCase;
@@ -9,17 +11,10 @@ use PHPUnuhi\Components\Reporter\Model\ReportTestResult;
 
 class ReportResultTest extends TestCase
 {
+    private ReportResult $result;
 
 
-    /**
-     * @var ReportResult
-     */
-    private $result;
 
-
-    /**
-     * @return void
-     */
     public function setUp(): void
     {
         $suite1 = new ReportSetResult('test');
@@ -66,25 +61,19 @@ class ReportResultTest extends TestCase
         $this->result->addTranslationSet($suite2);
     }
 
-    /**
-     * @return void
-     */
+
     public function testGetSuites(): void
     {
         $this->assertCount(2, $this->result->getSuites());
     }
 
-    /**
-     * @return void
-     */
+
     public function testGetCount(): void
     {
         $this->assertEquals(3, $this->result->getTestCount());
     }
 
-    /**
-     * @return void
-     */
+
     public function testFailureCount(): void
     {
         $this->assertEquals(1, $this->result->getFailureCount());

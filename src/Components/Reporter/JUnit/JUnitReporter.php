@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Components\Reporter\JUnit;
 
 use PHPUnuhi\Components\Reporter\Model\ReportResult;
@@ -9,22 +11,12 @@ use PHPUnuhi\Services\Writers\Xml\XmlWriterInterface;
 
 class JUnitReporter implements ReporterInterface
 {
+    private DirectoryWriterInterface $directoryWriter;
 
-    /**
-     * @var DirectoryWriterInterface
-     */
-    private $directoryWriter;
-
-    /**
-     * @var XmlWriterInterface
-     */
-    private $xmlWriter;
+    private XmlWriterInterface $xmlWriter;
 
 
-    /**
-     * @param DirectoryWriterInterface $directoryWriter
-     * @param XmlWriterInterface $xmlWriter
-     */
+
     public function __construct(DirectoryWriterInterface $directoryWriter, XmlWriterInterface $xmlWriter)
     {
         $this->directoryWriter = $directoryWriter;
@@ -32,27 +24,19 @@ class JUnitReporter implements ReporterInterface
     }
 
 
-    /**
-     * @return string
-     */
+
     public function getName(): string
     {
         return 'junit';
     }
 
-    /**
-     * @return string
-     */
+
     public function getDefaultFilename(): string
     {
         return 'junit.xml';
     }
 
-    /**
-     * @param string $filename
-     * @param ReportResult $report
-     * @return void
-     */
+
     public function generate(string $filename, ReportResult $report): void
     {
         $content = '<?xml version="1.0" encoding="UTF-8"?>';

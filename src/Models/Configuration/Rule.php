@@ -1,14 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Models\Configuration;
 
 class Rule
 {
-
-    /**
-     * @var string
-     */
-    private $name;
+    private string $name;
 
     /**
      * @var mixed
@@ -17,7 +15,6 @@ class Rule
 
 
     /**
-     * @param string $name
      * @param mixed $value
      */
     public function __construct(string $name, $value)
@@ -26,9 +23,7 @@ class Rule
         $this->value = $value;
     }
 
-    /**
-     * @return string
-     */
+
     public function getName(): string
     {
         return $this->name;

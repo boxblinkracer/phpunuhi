@@ -1,41 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Storage;
 
 class StorageHierarchy
 {
+    private bool $nestedStorage;
 
-    /**
-     * @var bool
-     */
-    private $nestedStorage;
+    private string $delimiter;
 
-    /**
-     * @var string
-     */
-    private $delimiter;
 
-    /**
-     * @param bool $isNested
-     * @param string $delimiter
-     */
     public function __construct(bool $isNested, string $delimiter)
     {
         $this->nestedStorage = $isNested;
         $this->delimiter = $delimiter;
     }
 
-    /**
-     * @return bool
-     */
+
     public function isNestedStorage(): bool
     {
         return $this->nestedStorage;
     }
 
-    /**
-     * @return string
-     */
+
     public function getDelimiter(): string
     {
         return $this->delimiter;

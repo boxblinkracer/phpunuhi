@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Components\Reporter\Service;
 
 use PHPUnuhi\Components\Reporter\Model\ReportTestResult;
@@ -7,11 +9,6 @@ use PHPUnuhi\Components\Validator\Model\ValidationTest;
 
 class ReportTestResultConverter
 {
-
-    /**
-     * @param ValidationTest $test
-     * @return ReportTestResult
-     */
     public function toTestResult(ValidationTest $test): ReportTestResult
     {
         return new ReportTestResult(

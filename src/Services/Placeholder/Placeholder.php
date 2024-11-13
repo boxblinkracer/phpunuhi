@@ -1,41 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Services\Placeholder;
 
 class Placeholder
 {
+    private string $id;
 
-    /**
-     * @var string
-     */
-    private $id;
-
-    /**
-     * @var string
-     */
-    private $value;
+    private string $value;
 
 
-    /**
-     * @param string $value
-     */
+
     public function __construct(string $value)
     {
         $this->id = md5($value);
         $this->value = $value;
     }
 
-    /**
-     * @return string
-     */
+
     public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
+
     public function getValue(): string
     {
         return $this->value;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Components\Validator;
 
 use Exception;
@@ -15,25 +17,17 @@ use PHPUnuhi\Models\Translation\TranslationSet;
 
 class EmptyContentValidatorTest extends TestCase
 {
-
-    /**
-     * @var EmptyContentValidator
-     */
-    private $validator;
+    private EmptyContentValidator $validator;
 
 
-    /**
-     * @return void
-     */
+
     protected function setUp(): void
     {
         $this->validator = new EmptyContentValidator([]);
     }
 
 
-    /**
-     * @return void
-     */
+
     public function testTypeIdentifier(): void
     {
         $this->assertEquals('EMPTY_CONTENT', $this->validator->getTypeIdentifier());
@@ -41,7 +35,6 @@ class EmptyContentValidatorTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testAllValid(): void
     {
@@ -64,7 +57,6 @@ class EmptyContentValidatorTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testEmptyContentFound(): void
     {
@@ -88,7 +80,6 @@ class EmptyContentValidatorTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testEmptyContentWithAllowList(): void
     {
@@ -126,7 +117,6 @@ class EmptyContentValidatorTest extends TestCase
 
     /**
      * @param Locale[] $locales
-     * @return TranslationSet
      */
     private function buildSet(array $locales): TranslationSet
     {

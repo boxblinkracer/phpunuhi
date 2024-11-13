@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Services\Coverage\Models;
 
 use PHPUnuhi\Services\Coverage\Traits\CoverageDataTrait;
@@ -13,7 +15,7 @@ class CoverageTotal
     /**
      * @var CoverageTranslationSet[]
      */
-    private $translationSets;
+    private array $translationSets;
 
 
     /**
@@ -34,10 +36,7 @@ class CoverageTotal
         return $this->translationSets;
     }
 
-    /**
-     * @param string $translationSetName
-     * @return CoverageTranslationSet
-     */
+
     public function getTranslationSetCoverage(string $translationSetName): CoverageTranslationSet
     {
         foreach ($this->translationSets as $coverageSet) {
@@ -49,10 +48,7 @@ class CoverageTotal
         throw new RuntimeException('CoverageSet not found');
     }
 
-    /**
-     * @param string $locale
-     * @return float
-     */
+
     public function getLocaleCoverage(string $locale): float
     {
         $fullWords = 0;
@@ -79,9 +75,7 @@ class CoverageTotal
         return $calculator->getRoundedPercentage($fullTranslated, $fullWords);
     }
 
-    /**
-     * @return void
-     */
+
     private function calculate(): void
     {
         $this->countTranslated = 0;

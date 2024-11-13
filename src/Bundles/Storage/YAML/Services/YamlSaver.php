@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Storage\YAML\Services;
 
 use PHPUnuhi\Models\Translation\Locale;
@@ -10,27 +12,14 @@ class YamlSaver
 {
     use ArrayTrait;
 
-    /**
-     * @var int
-     */
-    private $yamlIndent;
+    private int $yamlIndent;
 
-    /**
-     * @var bool
-     */
-    private $sortYaml;
+    private bool $sortYaml;
 
-    /**
-     * @var bool
-     */
-    private $eolLast;
+    private bool $eolLast;
 
 
-    /**
-     * @param int $yamlIndent
-     * @param bool $sortYaml
-     * @param bool $eolLast
-     */
+
     public function __construct(int $yamlIndent, bool $sortYaml, bool $eolLast)
     {
         $this->yamlIndent = $yamlIndent;
@@ -39,12 +28,7 @@ class YamlSaver
     }
 
 
-    /**
-     * @param Locale $locale
-     * @param string $delimiter
-     * @param string $filename
-     * @return int
-     */
+
     public function saveTranslations(Locale $locale, string $delimiter, string $filename): int
     {
         $translationCount = 0;

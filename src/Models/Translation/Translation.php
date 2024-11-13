@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Models\Translation;
 
 use PHPUnuhi\Traits\StringTrait;
@@ -8,27 +10,14 @@ class Translation
 {
     use StringTrait;
 
-    /**
-     * @var string
-     */
-    private $key;
+    private string $key;
 
-    /**
-     * @var string
-     */
-    private $value;
+    private string $value;
 
-    /**
-     * @var string
-     */
-    private $group;
+    private string $group;
 
 
-    /**
-     * @param string $key
-     * @param string $value
-     * @param string $group
-     */
+
     public function __construct(string $key, string $value, string $group)
     {
         $this->key = $key;
@@ -39,11 +28,10 @@ class Translation
     /**
      * Gets the ID of the translation.
      * This one is unique within a locale.
-     * @return string
      */
     public function getID(): string
     {
-        if (!empty($this->group)) {
+        if ($this->group !== '' && $this->group !== '0') {
             return 'group--' . $this->group . '.' . $this->key;
         }
 
@@ -53,50 +41,37 @@ class Translation
     /**
      * Gets the property key of the translation.
      * This one might not be unique in a locale.
-     * @return string
      */
     public function getKey(): string
     {
         return $this->key;
     }
 
-    /**
-     * @return string
-     */
+
     public function getValue(): string
     {
         return $this->value;
     }
 
-    /**
-     * @return string
-     */
+
     public function getGroup(): string
     {
         return $this->group;
     }
 
-    /**
-     * @param string $newValue
-     * @return void
-     */
+
     public function setValue(string $newValue): void
     {
         $this->value = $newValue;
     }
 
-    /**
-     * @return bool
-     */
+
     public function isEmpty(): bool
     {
         return (trim($this->value) === '');
     }
 
-    /**
-     * @param string $delimiter
-     * @return int
-     */
+
     public function getLevel(string $delimiter): int
     {
         if ($delimiter === '') {

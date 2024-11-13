@@ -1,61 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Components\Validator\Model;
 
 class ValidationTest
 {
+    private string $translationKey;
 
-    /**
-     * @var string
-     */
-    private $translationKey;
+    private string $locale;
 
-    /**
-     * @var string
-     */
-    private $locale;
+    private string $title;
 
-    /**
-     * @var string
-     */
-    private $title;
+    private string $filename;
 
-    /**
-     * @var string
-     */
-    private $filename;
+    private int $lineNumber;
 
-    /**
-     * @var int
-     */
-    private $lineNumber;
+    private string $classification;
 
-    /**
-     * @var string
-     */
-    private $classification;
+    private string $failureMessage;
 
-    /**
-     * @var string
-     */
-    private $failureMessage;
-
-    /**
-     * @var bool
-     */
-    private $success;
+    private bool $success;
 
 
-    /**
-     * @param string $translationKey
-     * @param string $locale
-     * @param string $title
-     * @param string $filename
-     * @param int $lineNumber
-     * @param string $classification
-     * @param string $failureMessage
-     * @param bool $success
-     */
+
     public function __construct(string $translationKey, string $locale, string $title, string $filename, int $lineNumber, string $classification, string $failureMessage, bool $success)
     {
         $this->translationKey = $translationKey;
@@ -68,25 +36,19 @@ class ValidationTest
         $this->success = $success;
     }
 
-    /**
-     * @return string
-     */
+
     public function getTranslationKey(): string
     {
         return $this->translationKey;
     }
 
-    /**
-     * @return string
-     */
+
     public function getTitle(): string
     {
         return '[' . $this->locale . '] ' . $this->title;
     }
 
-    /**
-     * @return string
-     */
+
     public function getFilename(): string
     {
         return $this->filename;
@@ -97,33 +59,25 @@ class ValidationTest
         return $this->lineNumber;
     }
 
-    /**
-     * @return string
-     */
+
     public function getClassification(): string
     {
         return $this->classification;
     }
 
-    /**
-     * @return string
-     */
+
     public function getFailureMessage(): string
     {
         return $this->failureMessage;
     }
 
-    /**
-     * @return bool
-     */
+
     public function isSuccess(): bool
     {
         return $this->success;
     }
 
-    /**
-     * @return string
-     */
+
     public function getLocale(): string
     {
         return $this->locale;

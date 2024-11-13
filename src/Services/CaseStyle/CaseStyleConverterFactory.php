@@ -1,21 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Services\CaseStyle;
 
 use PHPUnuhi\Components\Validator\CaseStyle\Exception\CaseStyleNotFoundException;
 
 class CaseStyleConverterFactory
 {
-
     /**
      * @var CaseStyleConverterInterface[]
      */
-    private $converters = [];
+    private array $converters = [];
 
 
-    /**
-     *
-     */
+
     public function __construct()
     {
         $this->converters[] = new UpperCaseConverter();
@@ -24,9 +23,7 @@ class CaseStyleConverterFactory
     }
 
     /**
-     * @param string $identifier
      * @throws CaseStyleNotFoundException
-     * @return CaseStyleConverterInterface
      */
     public function fromIdentifier(string $identifier): CaseStyleConverterInterface
     {

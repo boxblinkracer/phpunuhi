@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Bundles\Exchange\CSV;
 
 use Exception;
@@ -16,21 +18,13 @@ use PHPUnuhi\Tests\Utils\Fakes\FakeCSVWriter;
 
 class CSVExchangeTest extends TestCase
 {
-
-    /**
-     * @var FakeCSVWriter
-     */
-    private $fakeWriter;
-
-    /**
-     * @var CSVExchange
-     */
-    private $csv;
+    private FakeCSVWriter $fakeWriter;
 
 
-    /**
-     * @return void
-     */
+    private CSVExchange $csv;
+
+
+
     public function setUp(): void
     {
         $this->fakeWriter = new FakeCSVWriter();
@@ -39,17 +33,13 @@ class CSVExchangeTest extends TestCase
     }
 
 
-    /**
-     * @return void
-     */
+
     public function testGetName(): void
     {
         $this->assertEquals('csv', $this->csv->getName());
     }
 
-    /**
-     * @return void
-     */
+
     public function testPossibleOptions(): void
     {
         $expected = [
@@ -61,7 +51,6 @@ class CSVExchangeTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testSetOptionsWithMissingDelimiterUsesDefaultDelimiter(): void
     {
@@ -76,7 +65,6 @@ class CSVExchangeTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testSetOptions(): void
     {
@@ -95,7 +83,6 @@ class CSVExchangeTest extends TestCase
      * The export does not consider groups
      *
      * @throws TranslationNotFoundException
-     * @return void
      */
     public function testExportWithoutGroups(): void
     {
@@ -146,7 +133,6 @@ class CSVExchangeTest extends TestCase
      * The export considers groups
      *
      * @throws TranslationNotFoundException
-     * @return void
      */
     public function testExportWithGroups(): void
     {
@@ -208,7 +194,6 @@ class CSVExchangeTest extends TestCase
      * In this case we only export empty translations
      *
      * @throws TranslationNotFoundException
-     * @return void
      */
     public function testExportOnlyEmpty(): void
     {

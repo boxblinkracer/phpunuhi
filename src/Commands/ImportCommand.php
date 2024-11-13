@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Commands;
 
 use Exception;
@@ -49,10 +51,7 @@ class ImportCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
      * @throws ConfigurationException
-     * @return int
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -120,11 +119,7 @@ class ImportCommand extends Command
         return 1;
     }
 
-    /**
-     * @param TranslationSet $set
-     * @param ImportResult $importData
-     * @return void
-     */
+
     private function updateTranslationSet(TranslationSet $set, ImportResult $importData): void
     {
         foreach ($importData->getEntries() as $entry) {

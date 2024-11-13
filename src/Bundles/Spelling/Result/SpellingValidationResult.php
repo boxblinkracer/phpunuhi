@@ -1,34 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Spelling\Result;
 
 class SpellingValidationResult
 {
+    private bool $isValid;
 
-    /**
-     * @var bool
-     */
-    private $isValid;
+    private string $locale;
 
-    /**
-     * @var string
-     */
-    private $locale;
-
-    /**
-     * @var string
-     */
-    private $suggestedText;
+    private string $suggestedText;
 
     /**
      * @var MisspelledWord[]
      */
-    private $misspelledWords;
+    private array $misspelledWords;
 
 
     /**
-     * @param bool $isValid
-     * @param string $locale
      * @param MisspelledWord[] $misspelledWords
      */
     public function __construct(bool $isValid, string $locale, string $suggestedText, array $misspelledWords)
@@ -39,25 +29,19 @@ class SpellingValidationResult
         $this->misspelledWords = $misspelledWords;
     }
 
-    /**
-     * @return bool
-     */
+
     public function isValid(): bool
     {
         return $this->isValid;
     }
 
-    /**
-     * @return string
-     */
+
     public function getLocale(): string
     {
         return $this->locale;
     }
 
-    /**
-     * @return string
-     */
+
     public function getSuggestedText(): string
     {
         return $this->suggestedText;

@@ -1,18 +1,28 @@
-# Makefile  Project
-
 .PHONY: help
 .DEFAULT_GOAL := help
 
 
 # -------------------------------------------------------
-PHP_MIN_VERSION := 7.2
+# minimum php version to use PHPUnuhi
+PHP_MIN_VERSION := $(shell php -f php_min_version.php -- --echo)
+# minimum code coverage for unit tests in PHPUnit
 PHPUNIT_MIN_COVERAGE := 38
+# This is the main score indicator across the whole source code.
+MUTANTS_MIN_MSI := 90
+# This is the score for code that is actually covered by tests. This shows you how effective the tests really are.
+MUTANTS_MIN_COVERED_MSI := 90
 # -------------------------------------------------------
 
 
 #------------------------------------------------------------------------------------------------
 
 help:
+	@echo ""
+	@echo ""
+	@echo "PHPUNUHI PROJECT"
+	@echo "--------------------------------------------------------------------------------------------"
+	@echo "   * PHP_MIN_VERSION: $(PHP_MIN_VERSION)"
+	@echo ""
 	@echo ""
 	@echo "PROJECT COMMANDS"
 	@echo "--------------------------------------------------------------------------------------------"
@@ -83,13 +93,16 @@ phpmnd: ##3 Runs the checks for magic numbers
 rector: ##3 Runs the Rector checks in dry run
 	php vendor/bin/rector process --dry-run
 
+arkitect: ##3 Starts the PHPArkitect Analyser
+	php ./vendor/bin/phparkitect check
+
 phpunit: ##3 Runs all tests
 	XDEBUG_MODE=coverage php ./vendor/bin/phpunit -v --coverage-html ./.reports/phpunit/coverage --coverage-clover ./.reports/phpunit/clover/index.xml
 	php vendor/bin/coverage-check ./.reports/phpunit/clover/index.xml $(PHPUNIT_MIN_COVERAGE)
 
 infection: ##3 Starts all Infection/Mutation tests
 	rm -rf ./.reports/infection
-	@XDEBUG_MODE=coverage php vendor/bin/infection --configuration=./infection.json --log-verbosity=all --debug
+	@XDEBUG_MODE=coverage php vendor/bin/infection --configuration=./infection.json --min-msi=$(MUTANTS_MIN_MSI) --min-covered-msi=$(MUTANTS_MIN_COVERED_MSI) --threads=4 --log-verbosity=all --debug
 
 svrunit: ##3 Runs all SVRUnit tests
 	php vendor/bin/svrunit test --configuration=./svrunit.xml --debug --report-junit --report-html

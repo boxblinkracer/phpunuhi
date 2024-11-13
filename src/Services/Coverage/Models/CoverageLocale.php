@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Services\Coverage\Models;
 
 use PHPUnuhi\Models\Translation\Locale;
@@ -10,15 +12,10 @@ class CoverageLocale
 {
     use CoverageDataTrait;
 
-    /**
-     * @var Locale
-     */
-    private $locale;
+    private Locale $locale;
 
 
-    /**
-     * @param Locale $locale
-     */
+
     public function __construct(Locale $locale)
     {
         $this->locale = $locale;
@@ -27,9 +24,7 @@ class CoverageLocale
     }
 
 
-    /**
-     * @return string
-     */
+
     public function getLocaleName(): string
     {
         return $this->locale->getName();
@@ -37,9 +32,7 @@ class CoverageLocale
 
 
 
-    /**
-     * @return void
-     */
+
     private function calculate(): void
     {
         $wordCounter = new WordCounter();

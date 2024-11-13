@@ -1,19 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Services\Process;
 
 class ProcessResult
 {
+    private string $output;
 
-    /**
-     * @var string
-     */
-    private $output;
-
-    /**
-     * @var string
-     */
-    private $errorOutput;
+    private string $errorOutput;
 
     /**
      * @var string[]
@@ -21,10 +16,7 @@ class ProcessResult
     private $_cachedLines;
 
 
-    /**
-     * @param string $output
-     * @param string $errorOutput
-     */
+
     public function __construct(string $output, string $errorOutput)
     {
         $this->output = trim($output);
@@ -33,7 +25,7 @@ class ProcessResult
 
     public function isSuccess(): bool
     {
-        return empty($this->errorOutput);
+        return $this->errorOutput === '' || $this->errorOutput === '0';
     }
 
     public function getOutput(): string

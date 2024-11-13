@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Facades\CLI;
 
 use PHPUnuhi\Bundles\Spelling\OpenAI\OpenAISpellChecker;
@@ -19,19 +21,11 @@ class SpellingValidatorCliFacade
 {
     use CommandOutputTrait;
 
-    /**
-     * @var SymfonyStyle
-     */
-    private $io;
+    private SymfonyStyle $io;
 
-    /**
-     * @var SpellCheckerInterface
-     */
-    private $spellChecker;
+    private SpellCheckerInterface $spellChecker;
 
-    /**
-     * @param SymfonyStyle $io
-     */
+
     public function __construct(SymfonyStyle $io, SpellCheckerInterface $spellChecker)
     {
         $this->io = $io;
@@ -41,7 +35,6 @@ class SpellingValidatorCliFacade
     /**
      * @param TranslationSet[] $translationSets
      * @throws TranslationNotFoundException
-     * @return ReportResult
      */
     public function execute(array $translationSets): ReportResult
     {
@@ -101,12 +94,7 @@ class SpellingValidatorCliFacade
         return $reportResult;
     }
 
-    /**
-     * @param string $translationID
-     * @param string $originalText
-     * @param SpellingValidationResult $spellingResult
-     * @return ValidationTest
-     */
+
     private function buildTestValidation(string $translationID, string $originalText, SpellingValidationResult $spellingResult, TranslationSet $set): ValidationTest
     {
         $failureMessage = 'Translation spelled incorrectly: ' . $originalText;

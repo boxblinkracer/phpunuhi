@@ -1,20 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Services\Maths;
 
 class PercentageCalculator
 {
-
-    /**
-     *
-     */
     private const MAX_PERCENTAGE = 100;
 
-    /**
-     * @param int $numberExisting
-     * @param int $numberTotal
-     * @return float
-     */
+
     public function getRoundedPercentage(int $numberExisting, int $numberTotal): float
     {
         if ($numberExisting === 0 && $numberTotal === 0) {

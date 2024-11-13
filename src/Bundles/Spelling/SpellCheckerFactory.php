@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Spelling;
 
 use Exception;
@@ -10,24 +12,18 @@ use PHPUnuhi\Models\Command\CommandOption;
 
 class SpellCheckerFactory
 {
-
-    /**
-     * @var SpellCheckerFactory
-     */
-    private static $instance;
+    private static ?\PHPUnuhi\Bundles\Spelling\SpellCheckerFactory $instance = null;
 
     /**
      * @var SpellCheckerInterface[]
      */
-    private $spellCheckers;
+    private array $spellCheckers;
 
 
-    /**
-     * @return SpellCheckerFactory
-     */
+
     public static function getInstance(): SpellCheckerFactory
     {
-        if (self::$instance === null) {
+        if (!self::$instance instanceof \PHPUnuhi\Bundles\Spelling\SpellCheckerFactory) {
             self::$instance = new self();
         }
 
@@ -35,9 +31,7 @@ class SpellCheckerFactory
     }
 
 
-    /**
-     *
-     */
+
     private function __construct()
     {
         $this->resetSpellCheckers();
@@ -45,9 +39,7 @@ class SpellCheckerFactory
 
 
     /**
-     * @param SpellCheckerInterface $spellChecker
      * @throws ConfigurationException
-     * @return void
      */
     public function registerSpellChecker(SpellCheckerInterface $spellChecker): void
     {
@@ -65,7 +57,6 @@ class SpellCheckerFactory
 
     /**
      * Resets the registered translators to the default ones.
-     * @return void
      */
     public function resetSpellCheckers(): void
     {
@@ -90,10 +81,8 @@ class SpellCheckerFactory
     }
 
     /**
-     * @param string $service
      * @param array<mixed> $options
      * @throws Exception
-     * @return SpellCheckerInterface
      */
     public function fromService(string $service, array $options): SpellCheckerInterface
     {

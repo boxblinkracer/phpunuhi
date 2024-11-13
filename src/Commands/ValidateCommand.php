@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Commands;
 
 use PHPUnuhi\Exceptions\ConfigurationException;
@@ -10,7 +12,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ValidateCommand extends Command
 {
-
     /**
      * @return void
      */
@@ -28,10 +29,7 @@ class ValidateCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
      * @throws ConfigurationException
-     * @return int
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {

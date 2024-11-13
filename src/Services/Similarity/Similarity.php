@@ -1,13 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Services\Similarity;
 
 class Similarity
 {
-
     /**
      * @param string[] $keys
-     * @param float $threshold
      * @return array<mixed>
      */
     public function findSimilarString(array $keys, float $threshold = 70.0): array

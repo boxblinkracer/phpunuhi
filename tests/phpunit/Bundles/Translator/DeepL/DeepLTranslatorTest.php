@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Bundles\Translator\DeepL;
 
 use Exception;
@@ -8,11 +10,6 @@ use PHPUnuhi\Bundles\Translator\DeepL\DeeplTranslator;
 
 class DeepLTranslatorTest extends TestCase
 {
-
-
-    /**
-     * @return void
-     */
     public function testGetName(): void
     {
         $translator = new DeeplTranslator();
@@ -20,9 +17,7 @@ class DeepLTranslatorTest extends TestCase
         $this->assertEquals('deepl', $translator->getName());
     }
 
-    /**
-     * @return void
-     */
+
     public function testGetOptions(): void
     {
         $translator = new DeeplTranslator();
@@ -38,7 +33,6 @@ class DeepLTranslatorTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testSetOptionsWithMissingKeyThrowsException(): void
     {
@@ -54,7 +48,6 @@ class DeepLTranslatorTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testSetOptions(): void
     {
@@ -71,9 +64,7 @@ class DeepLTranslatorTest extends TestCase
     }
 
 
-    /**
-     * @return void
-     */
+
     public function testAllowedFormality(): void
     {
         $expected = [

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Models\Configuration;
 
 use PHPUnit\Framework\TestCase;
@@ -7,10 +9,6 @@ use PHPUnuhi\Models\Configuration\Protection;
 
 class ProtectionTest extends TestCase
 {
-
-    /**
-     * @return void
-     */
     public function testAddMarker(): void
     {
         $protection = new Protection();
@@ -22,9 +20,7 @@ class ProtectionTest extends TestCase
         $this->assertEquals('[', $protection->getMarkers()[1]->getStart());
     }
 
-    /**
-     * @return void
-     */
+
     public function testAddTerm(): void
     {
         $protection = new Protection();
@@ -34,9 +30,7 @@ class ProtectionTest extends TestCase
         $this->assertEquals('device', $protection->getTerms()[0]);
     }
 
-    /**
-     * @return void
-     */
+
     public function testAddTermDuplicateSkipped(): void
     {
         $protection = new Protection();

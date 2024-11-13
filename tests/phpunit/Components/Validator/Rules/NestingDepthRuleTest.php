@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Components\Validator\Rules;
 
 use Exception;
@@ -16,11 +18,6 @@ use PHPUnuhi\Tests\Utils\Fakes\FakeEmptyDelimiterStorage;
 
 class NestingDepthRuleTest extends TestCase
 {
-
-
-    /**
-     * @return void
-     */
     public function getRuleIdentifier(): void
     {
         $validator = new NestingDepthRule(0);
@@ -30,7 +27,6 @@ class NestingDepthRuleTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testAllValid(): void
     {
@@ -52,7 +48,6 @@ class NestingDepthRuleTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testNestingDepthNotAppliedOnSingleHierarchy(): void
     {
@@ -74,7 +69,6 @@ class NestingDepthRuleTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testLengthZeroAlwaysValid(): void
     {
@@ -96,7 +90,6 @@ class NestingDepthRuleTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testNestingDepthReached(): void
     {
@@ -118,7 +111,6 @@ class NestingDepthRuleTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testStorageWithEmptyDelimiterIsValid(): void
     {
@@ -138,7 +130,6 @@ class NestingDepthRuleTest extends TestCase
 
     /**
      * @param Locale[] $locales
-     * @return TranslationSet
      */
     private function buildSet(array $locales): TranslationSet
     {

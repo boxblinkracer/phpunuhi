@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Storage\PO\Models;
 
 use PHPUnuhi\Traits\StringTrait;
@@ -11,7 +13,7 @@ class Block
     /**
      * @var array<string>
      */
-    private $lines;
+    private array $lines;
 
 
     /**
@@ -30,9 +32,7 @@ class Block
         return $this->lines;
     }
 
-    /**
-     * @return string
-     */
+
     public function getId(): string
     {
         foreach ($this->lines as $line) {
@@ -46,9 +46,7 @@ class Block
         return '';
     }
 
-    /**
-     * @return string
-     */
+
     public function getMessage(): string
     {
         foreach ($this->lines as $line) {
@@ -62,10 +60,7 @@ class Block
         return '';
     }
 
-    /**
-     * @param string $msg
-     * @return void
-     */
+
     public function setMessage(string $msg): void
     {
         foreach ($this->lines as &$line) {
@@ -78,10 +73,7 @@ class Block
         }
     }
 
-    /**
-     * @param string $line
-     * @return string
-     */
+
     private function getLineValue(string $line): string
     {
         $parts = explode(' ', $line, 2);

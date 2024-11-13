@@ -6,15 +6,9 @@ namespace PHPUnuhi\Models\Translation;
 
 class LazyLocale extends Locale
 {
-    /**
-     * @var Locale
-     */
-    private $locale;
+    private Locale $locale;
 
-    /**
-     * @var LazyTranslationSet
-     */
-    private $lazyTranslationSet;
+    private LazyTranslationSet $lazyTranslationSet;
 
     public function __construct(
         Locale $locale,

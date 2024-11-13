@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Storage\Shopware6\Repository;
 
 use DateTime;
@@ -15,15 +17,10 @@ class SnippetRepository
 {
     use BinaryTrait;
 
-    /**
-     * @var PDO
-     */
-    private $pdo;
+    private PDO $pdo;
 
 
-    /**
-     * @param PDO $pdo
-     */
+
     public function __construct(PDO $pdo)
     {
         $this->pdo = $pdo;
@@ -85,10 +82,7 @@ class SnippetRepository
     }
 
     /**
-     * @param string $key
-     * @param string $snippetSetId
      * @throws SnippetNotFoundException
-     * @return Snippet
      */
     public function getSnippet(string $key, string $snippetSetId): Snippet
     {
@@ -109,9 +103,7 @@ class SnippetRepository
     }
 
     /**
-     * @param string $key
      * @throws SnippetNotFoundException
-     * @return Snippet
      */
     public function getSnippetByKey(string $key): Snippet
     {
@@ -131,12 +123,7 @@ class SnippetRepository
     }
 
 
-    /**
-     * @param string $key
-     * @param string $snippetSetId
-     * @param string $value
-     * @return void
-     */
+
     public function updateSnippet(string $key, string $snippetSetId, string $value): void
     {
         $stmt = $this->pdo->prepare('UPDATE snippet SET value = :value WHERE translation_key = :key AND snippet_set_id = :setId');
@@ -149,13 +136,7 @@ class SnippetRepository
     }
 
     /**
-     * @param string $key
-     * @param string $snippetSetId
-     * @param string $value
-     * @param string $author
-     * @param string $customFields
      * @throws Exception
-     * @return void
      */
     public function insertSnippet(string $key, string $snippetSetId, string $value, string $author, string $customFields): void
     {
@@ -185,7 +166,6 @@ class SnippetRepository
 
     /**
      * @param array<mixed> $row
-     * @return Snippet
      */
     private function toEntity(array $row): Snippet
     {

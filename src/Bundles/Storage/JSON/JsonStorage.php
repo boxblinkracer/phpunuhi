@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Storage\JSON;
 
 use Exception;
@@ -13,50 +15,32 @@ use PHPUnuhi\Models\Translation\TranslationSet;
 
 class JsonStorage implements StorageInterface
 {
+    private JsonLoader $loader ;
 
-    /**
-     * @var JsonLoader
-     */
-    private $loader;
+    private JsonSaver $saver ;
 
-    /**
-     * @var JsonSaver
-     */
-    private $saver;
-
-    /**
-     * @var bool
-     */
-    private $isNested = true;
+    private bool $isNested = true;
 
 
-    /**
-     * @return string
-     */
+
     public function getStorageName(): string
     {
         return 'json';
     }
 
-    /**
-     * @return string
-     */
+
     public function getFileExtension(): string
     {
         return 'json';
     }
 
-    /**
-     * @return bool
-     */
+
     public function supportsFilters(): bool
     {
         return false;
     }
 
-    /**
-     * @return StorageHierarchy
-     */
+
     public function getHierarchy(): StorageHierarchy
     {
         return new StorageHierarchy(
@@ -65,10 +49,7 @@ class JsonStorage implements StorageInterface
         );
     }
 
-    /**
-     * @param TranslationSet $set
-     * @return void
-     */
+
     public function configureStorage(TranslationSet $set): void
     {
         $indent = $set->getAttributeValue('indent');
@@ -85,9 +66,7 @@ class JsonStorage implements StorageInterface
     }
 
     /**
-     * @param TranslationSet $set
      * @throws Exception
-     * @return void
      */
     public function loadTranslationSet(TranslationSet $set): void
     {
@@ -96,10 +75,7 @@ class JsonStorage implements StorageInterface
         }
     }
 
-    /**
-     * @param TranslationSet $set
-     * @return StorageSaveResult
-     */
+
     public function saveTranslationSet(TranslationSet $set): StorageSaveResult
     {
         $localeCount = 0;
@@ -114,11 +90,7 @@ class JsonStorage implements StorageInterface
         return new StorageSaveResult($localeCount, $translationCount);
     }
 
-    /**
-     * @param Locale $locale
-     * @param string $filename
-     * @return StorageSaveResult
-     */
+
     public function saveTranslationLocale(Locale $locale, string $filename): StorageSaveResult
     {
         $translationsCount = $this->saver->saveLocale($locale, $this->getHierarchy(), $filename);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Utils\Fakes;
 
 use PHPUnuhi\Bundles\Exchange\ExchangeInterface;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Components\Reporter;
 
 use InvalidArgumentException;
@@ -12,42 +14,32 @@ use PHPUnuhi\Services\Writers\Xml\XmlWriter;
 
 class ReporterFactory
 {
-
-    /**
-     * @var ReporterFactory
-     */
-    private static $instance;
+    private static ?\PHPUnuhi\Components\Reporter\ReporterFactory $instance = null;
 
     /**
      * @var ReporterInterface[]
      */
-    private $reporters;
+    private array $reporters;
 
 
-    /**
-     * @return ReporterFactory
-     */
+
     public static function getInstance(): ReporterFactory
     {
-        if (self::$instance === null) {
+        if (!self::$instance instanceof \PHPUnuhi\Components\Reporter\ReporterFactory) {
             self::$instance = new self();
         }
 
         return self::$instance;
     }
 
-    /**
-     *
-     */
+
     public function __construct()
     {
         $this->resetStorages();
     }
 
 
-    /**
-     * @return void
-     */
+
     public function resetStorages(): void
     {
         $this->reporters = [];
@@ -60,9 +52,7 @@ class ReporterFactory
 
 
     /**
-     * @param string $name
      * @throws ConfigurationException
-     * @return ReporterInterface
      */
     public function getReporter(string $name): ReporterInterface
     {

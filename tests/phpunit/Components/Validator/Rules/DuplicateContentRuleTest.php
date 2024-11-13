@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Components\Validator\Rules;
 
 use Exception;
@@ -16,10 +18,6 @@ use PHPUnuhi\Models\Translation\TranslationSet;
 
 class DuplicateContentRuleTest extends TestCase
 {
-
-    /**
-     * @return void
-     */
     public function getRuleIdentifier(): void
     {
         $validator = new DuplicateContentRule([]);
@@ -29,7 +27,6 @@ class DuplicateContentRuleTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testDuplicateContentNotAllowedInSingleHiearchyStorage(): void
     {
@@ -54,7 +51,6 @@ class DuplicateContentRuleTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testNoDuplicatesMeansValid(): void
     {
@@ -83,7 +79,6 @@ class DuplicateContentRuleTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testDuplicateInDifferentLocalesIsValid(): void
     {
@@ -111,7 +106,6 @@ class DuplicateContentRuleTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testWithLocaleAndFallbackWildcard(): void
     {
@@ -141,7 +135,6 @@ class DuplicateContentRuleTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testNoDuplicateContentRequiredForLocale(): void
     {
@@ -171,7 +164,6 @@ class DuplicateContentRuleTest extends TestCase
 
     /**
      * @param Locale[] $locales
-     * @return TranslationSet
      */
     private function buildSet(array $locales): TranslationSet
     {

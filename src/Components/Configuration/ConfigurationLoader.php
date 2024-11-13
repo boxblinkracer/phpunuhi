@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Configuration;
 
 use Exception;
@@ -31,65 +33,32 @@ class ConfigurationLoader
     use XmlTrait;
 
 
-    /**
-     * @var XmlLoaderInterface
-     */
-    private $xmlLoader;
+    private XmlLoaderInterface $xmlLoader;
 
-    /**
-     * @var FilterHandler
-     */
-    private $filterHandler;
+    private FilterHandler $filterHandler;
 
-    /**
-     * @var ConfigurationValidator
-     */
-    private $configValidator;
+    private ConfigurationValidator $configValidator;
 
-    /**
-     * @var LocalesLoader
-     */
-    private $localesLoader;
+    private LocalesLoader $localesLoader;
 
-    /**
-     * @var RulesLoader
-     */
-    private $rulesLoader;
+    private RulesLoader $rulesLoader;
 
-    /**
-     * @var StyleLoader
-     */
-    private $styleLoader;
+    private StyleLoader $styleLoader;
 
-    /**
-     * @var FilterLoader
-     */
-    private $filterLoader;
+    private FilterLoader $filterLoader;
 
-    /**
-     * @var ProtectionLoader
-     */
-    private $protectionLoader;
+    private ProtectionLoader $protectionLoader;
 
-    /**
-     * @var CoverageLoader
-     */
-    private $coverageLoader;
+    private CoverageLoader $coverageLoader;
 
     /**
      * @var TranslationSetCoverage[]
      */
-    private $bufferTranslationSetCoverages;
+    private array $bufferTranslationSetCoverages = [];
 
-    /**
-     * @var LocalesPlaceholderProcessor
-     */
-    private $localesPlaceholderProcessor;
+    private LocalesPlaceholderProcessor $localesPlaceholderProcessor;
 
 
-    /**
-     * @param XmlLoaderInterface $xmlLoader
-     */
     public function __construct(XmlLoaderInterface $xmlLoader)
     {
         $this->xmlLoader = $xmlLoader;
@@ -107,10 +76,8 @@ class ConfigurationLoader
 
 
     /**
-     * @param string $rootConfigFilename
      * @throws Exception
      * @throws ConfigurationException
-     * @return Configuration
      */
     public function load(string $rootConfigFilename): Configuration
     {
@@ -184,10 +151,6 @@ class ConfigurationLoader
     }
 
 
-    /**
-     * @param SimpleXMLElement $rootNode
-     * @return void
-     */
     private function loadPHPEnvironment(SimpleXMLElement $rootNode): void
     {
         $phpNodeValues = $rootNode->php->children();
@@ -208,7 +171,6 @@ class ConfigurationLoader
     }
 
     /**
-     * @param SimpleXMLElement $rootNode
      * @return array<mixed>
      */
     private function loadImports(SimpleXMLElement $rootNode): array
@@ -236,8 +198,6 @@ class ConfigurationLoader
     }
 
     /**
-     * @param SimpleXMLElement $rootNode
-     * @param string $configFilename
      * @throws Exception
      * @return TranslationSet[]
      */
@@ -351,7 +311,6 @@ class ConfigurationLoader
 
 
     /**
-     * @param SimpleXMLElement $rootFormat
      * @throws ConfigurationException
      * @return array<mixed>
      */

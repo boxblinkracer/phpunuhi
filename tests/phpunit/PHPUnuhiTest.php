@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests;
 
 use PHPUnit\Framework\TestCase;
@@ -7,10 +9,6 @@ use PHPUnuhi\PHPUnuhi;
 
 class PHPUnuhiTest extends TestCase
 {
-
-    /**
-     * @return void
-     */
     public function testVersion(): void
     {
         $this->assertNotEmpty(PHPUnuhi::getVersion());

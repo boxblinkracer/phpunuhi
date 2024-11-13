@@ -1,14 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Exchange;
 
 class ImportResult
 {
-
     /**
      * @var ImportEntry[]
      */
-    private $entries;
+    private array $entries;
 
 
     /**

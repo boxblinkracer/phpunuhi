@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Storage\Shopware6\Config;
 
 use DOMDocument;
@@ -15,23 +17,14 @@ class PluginConfigXml implements ShopwareXmlInterface
 {
     use StringTrait;
 
-    const LENGTH_WITH_TITLE = 3;
+    public const LENGTH_WITH_TITLE = 3;
 
 
-    /**
-     * @var XmlHandler
-     */
-    private $xmlHandler;
+    private XmlHandler $xmlHandler;
 
-    /**
-     * @var string
-     */
-    private $filename;
+    private string $filename;
 
-    /**
-     * @var string
-     */
-    private $xmlString;
+    private string $xmlString;
 
 
     public function __construct(string $filename, string $xmlString, string $defaultLocale)
@@ -101,10 +94,8 @@ class PluginConfigXml implements ShopwareXmlInterface
     }
 
     /**
-     * @param string $locale
      * @param Translation[] $translations
      * @throws DOMException
-     * @return void
      */
     public function writeTranslations(string $locale, array $translations): void
     {

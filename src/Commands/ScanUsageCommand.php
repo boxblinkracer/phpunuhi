@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Commands;
 
 use Exception;
@@ -22,9 +24,7 @@ class ScanUsageCommand extends Command
 {
     use CommandTrait;
 
-    /**
-     * @return void
-     */
+
     protected function configure(): void
     {
         $this->setName('scan:usage');
@@ -38,10 +38,7 @@ class ScanUsageCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
      * @throws ConfigurationException
-     * @return int
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {

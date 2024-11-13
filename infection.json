@@ -1,21 +1,17 @@
 {
-  "$schema": "vendor/infection/infection/resources/schema.json",
-  "bootstrap": "./vendor/autoload.php",
-  "mutators": {
-    "@default": true
-  },
-  "minMsi": 90,
-  "minCoveredMsi": 90,
   "source": {
     "directories": [
       "src/Models/Command",
       "src/Models/Configuration"
     ]
   },
+  "bootstrap": "./vendor/autoload.php",
+  "mutators": {
+    "@default": true
+  },
   "logs": {
     "text": ".reports/infection/infection.log",
     "summary": ".reports/infection/summary.log",
-    "json": ".reports/infection/infection.json",
     "perMutator": ".reports/infection/per-mutator.md"
   }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Components\Validator\CaseStyle;
 
 use PHPUnuhi\Components\Validator\CaseStyle\Exception\CaseStyleNotFoundException;
@@ -15,16 +17,13 @@ use PHPUnuhi\Components\Validator\CaseStyle\Style\UpperCaseValidator;
 
 class CaseStyleValidatorFactory
 {
-
     /**
      * @var CaseStyleValidatorInterface[]
      */
-    private $validators = [];
+    private array $validators = [];
 
 
-    /**
-     *
-     */
+
     public function __construct()
     {
         $this->validators[] = new KebabCaseValidator();
@@ -39,9 +38,7 @@ class CaseStyleValidatorFactory
     }
 
     /**
-     * @param string $identifier
      * @throws CaseStyleNotFoundException
-     * @return CaseStyleValidatorInterface
      */
     public function fromIdentifier(string $identifier): CaseStyleValidatorInterface
     {

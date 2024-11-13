@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Components\Configuration\Services;
 
 use PHPUnit\Framework\TestCase;
@@ -12,9 +14,7 @@ class FilterLoaderTest extends TestCase
     use XmlLoaderTrait;
 
 
-    /**
-     * @return void
-     */
+
     public function testLoadFilter(): void
     {
         $xml = '

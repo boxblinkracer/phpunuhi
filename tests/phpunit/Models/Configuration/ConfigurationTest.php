@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Models\Configuration;
 
 use PHPUnit\Framework\TestCase;
@@ -13,10 +15,6 @@ use PHPUnuhi\Models\Translation\TranslationSet;
 
 class ConfigurationTest extends TestCase
 {
-
-    /**
-     * @return void
-     */
     public function testTranslationSets(): void
     {
         $sets = [];
@@ -27,9 +25,7 @@ class ConfigurationTest extends TestCase
         $this->assertCount(1, $config->getTranslationSets());
     }
 
-    /**
-     * @return void
-     */
+
     public function testCoverageCanBeConfigured(): void
     {
         $cov = new Coverage();
@@ -41,9 +37,7 @@ class ConfigurationTest extends TestCase
         $this->assertSame($cov, $config->getCoverage());
     }
 
-    /**
-     * @return void
-     */
+
     public function testHasCoverageWithGlobalMinCoverage(): void
     {
         $cov = new Coverage();
@@ -58,9 +52,7 @@ class ConfigurationTest extends TestCase
         $this->assertTrue($config->hasCoverageSetting());
     }
 
-    /**
-     * @return void
-     */
+
     public function testHasCoverageWithGlobalLocaleCoverage(): void
     {
         $cov = new Coverage();
@@ -75,9 +67,7 @@ class ConfigurationTest extends TestCase
         $this->assertTrue($config->hasCoverageSetting());
     }
 
-    /**
-     * @return void
-     */
+
     public function testHasCoverageWithTranslationSetMinCoverage(): void
     {
         $set = new TranslationSet('products', 'ini', new Protection(), [], new Filter(), [], new CaseStyleSetting([], []), []);
@@ -97,9 +87,7 @@ class ConfigurationTest extends TestCase
         $this->assertTrue($config->hasCoverageSetting());
     }
 
-    /**
-     * @return void
-     */
+
     public function testHasCoverageWithTranslationSetLocaleCoverage(): void
     {
         $set = new TranslationSet('products', 'ini', new Protection(), [], new Filter(), [], new CaseStyleSetting([], []), []);
@@ -119,9 +107,7 @@ class ConfigurationTest extends TestCase
         $this->assertTrue($config->hasCoverageSetting());
     }
 
-    /**
-     * @return void
-     */
+
     public function testHasCoverageIfOnlyOneTranslationSetHasCoverage(): void
     {
         $set1 = new TranslationSet('admin', 'ini', new Protection(), [], new Filter(), [], new CaseStyleSetting([], []), []);

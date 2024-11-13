@@ -1,14 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Components\Validator\Model;
 
 class ValidationResult
 {
-
     /**
      * @var ValidationTest[]
      */
-    private $tests;
+    private array $tests;
 
 
     /**
@@ -19,9 +20,7 @@ class ValidationResult
         $this->tests = $tests;
     }
 
-    /**
-     * @return bool
-     */
+
     public function isValid(): bool
     {
         return $this->getErrors() === [];

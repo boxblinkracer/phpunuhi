@@ -1,49 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Storage\Shopware6\Models;
 
 class Snippet
 {
+    private string $id;
 
-    /**
-     * @var string
-     */
-    private $id;
+    private string $snippetSetId;
 
-    /**
-     * @var string
-     */
-    private $snippetSetId;
+    private string $key;
 
-    /**
-     * @var string
-     */
-    private $key;
+    private string $value;
 
-    /**
-     * @var string
-     */
-    private $value;
+    private string $author;
 
-    /**
-     * @var string
-     */
-    private $author;
-
-    /**
-     * @var string
-     */
-    private $customFields;
+    private string $customFields;
 
 
-    /**
-     * @param string $id
-     * @param string $snippetSetId
-     * @param string $key
-     * @param string $value
-     * @param string $author
-     * @param string $customFields
-     */
+
     public function __construct(string $id, string $snippetSetId, string $key, string $value, string $author, string $customFields)
     {
         $this->id = $id;
@@ -54,49 +30,37 @@ class Snippet
         $this->customFields = $customFields;
     }
 
-    /**
-     * @return string
-     */
+
     public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
+
     public function getSnippetSetId(): string
     {
         return $this->snippetSetId;
     }
 
-    /**
-     * @return string
-     */
+
     public function getKey(): string
     {
         return $this->key;
     }
 
-    /**
-     * @return string
-     */
+
     public function getValue(): string
     {
         return $this->value;
     }
 
-    /**
-     * @return string
-     */
+
     public function getAuthor(): string
     {
         return $this->author;
     }
 
-    /**
-     * @return string
-     */
+
     public function getCustomFields(): string
     {
         return $this->customFields;

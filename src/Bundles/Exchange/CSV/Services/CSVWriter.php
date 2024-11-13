@@ -1,17 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Exchange\CSV\Services;
 
 use Exception;
 
 class CSVWriter implements CSVWriterInterface
 {
-
-
-    /**
-     * @param string $outputDir
-     * @return void
-     */
     public function prepareDirectory(string $outputDir): void
     {
         if (!file_exists($outputDir)) {
@@ -19,17 +15,13 @@ class CSVWriter implements CSVWriterInterface
         }
     }
 
-    /**
-     * @param string $filename
-     * @return void
-     */
+
     public function deleteFile(string $filename): void
     {
         unlink($filename);
     }
 
     /**
-     * @param string $filename
      * @throws Exception
      * @return null|resource
      */
@@ -47,8 +39,6 @@ class CSVWriter implements CSVWriterInterface
     /**
      * @param $file
      * @param array<mixed> $row
-     * @param string $delimiter
-     * @return void
      */
     public function writeLine($file, array $row, string $delimiter): void
     {
@@ -57,7 +47,6 @@ class CSVWriter implements CSVWriterInterface
 
     /**
      * @param $file
-     * @return void
      */
     public function close($file): void
     {

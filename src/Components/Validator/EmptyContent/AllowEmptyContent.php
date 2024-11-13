@@ -1,23 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Components\Validator\EmptyContent;
 
 class AllowEmptyContent
 {
-
-    /**
-     * @var string
-     */
-    private $key;
+    private string $key;
 
     /**
      * @var array<mixed>
      */
-    private $locales;
+    private array $locales;
 
 
     /**
-     * @param string $key
      * @param mixed[] $locales
      */
     public function __construct(string $key, array $locales)
@@ -26,18 +23,13 @@ class AllowEmptyContent
         $this->locales = $locales;
     }
 
-    /**
-     * @return string
-     */
+
     public function getKey(): string
     {
         return $this->key;
     }
 
-    /**
-     * @param string $locale
-     * @return bool
-     */
+
     public function isLocaleAllowed(string $locale): bool
     {
         # if we have an entry without locales, we allow all locales to be empty

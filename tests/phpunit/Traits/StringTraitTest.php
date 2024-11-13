@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Traits;
 
 use PHPUnit\Framework\TestCase;
@@ -9,9 +11,7 @@ class StringTraitTest extends TestCase
 {
     use StringTrait;
 
-    /**
-     * @return void
-     */
+
     public function testContainsTrue(): void
     {
         $contains = $this->stringDoesContain('this is a text', 'text');
@@ -19,9 +19,7 @@ class StringTraitTest extends TestCase
         $this->assertEquals(true, $contains);
     }
 
-    /**
-     * @return void
-     */
+
     public function testContainsFalse(): void
     {
         $contains = $this->stringDoesContain('this is a text', 'blub');
@@ -29,9 +27,7 @@ class StringTraitTest extends TestCase
         $this->assertEquals(false, $contains);
     }
 
-    /**
-     * @return void
-     */
+
     public function testStringStartsWithTrue(): void
     {
         $contains = $this->stringDoesStartsWith('this is a text', 'this');
@@ -39,9 +35,7 @@ class StringTraitTest extends TestCase
         $this->assertEquals(true, $contains);
     }
 
-    /**
-     * @return void
-     */
+
     public function testStringStartsWithFalse(): void
     {
         $contains = $this->stringDoesStartsWith('this is a text', 'is');
@@ -49,9 +43,7 @@ class StringTraitTest extends TestCase
         $this->assertEquals(false, $contains);
     }
 
-    /**
-     * @return void
-     */
+
     public function testStringEndsWithTrue(): void
     {
         $contains = $this->stringDoesEndsWith('this is a text', 'text');
@@ -59,9 +51,7 @@ class StringTraitTest extends TestCase
         $this->assertEquals(true, $contains);
     }
 
-    /**
-     * @return void
-     */
+
     public function testStringEndsWithFalse(): void
     {
         $contains = $this->stringDoesEndsWith('this is a text', 'this');
@@ -69,9 +59,7 @@ class StringTraitTest extends TestCase
         $this->assertEquals(false, $contains);
     }
 
-    /**
-     * @return void
-     */
+
     public function testStringEndsWithEmptySearchString(): void
     {
         $contains = $this->stringDoesEndsWith('this is a text', '');
@@ -79,9 +67,7 @@ class StringTraitTest extends TestCase
         $this->assertEquals(true, $contains);
     }
 
-    /**
-     * @return void
-     */
+
     public function testStringDoesContainInArray(): void
     {
         $contains = $this->stringDoesContainInArray('car', ['tshirt', 'car', 'jeans']);
@@ -89,9 +75,7 @@ class StringTraitTest extends TestCase
         $this->assertEquals(true, $contains);
     }
 
-    /**
-     * @return void
-     */
+
     public function testStringDoesNotContainInEmptyArray(): void
     {
         $contains = $this->stringDoesContainInArray('this is a text', []);

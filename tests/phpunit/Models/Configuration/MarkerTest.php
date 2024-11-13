@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Models\Configuration;
 
 use PHPUnit\Framework\TestCase;
@@ -7,10 +9,6 @@ use PHPUnuhi\Models\Configuration\Marker;
 
 class MarkerTest extends TestCase
 {
-
-    /**
-     * @return void
-     */
     public function testStart(): void
     {
         $marker = new Marker('<', '>');
@@ -18,9 +16,7 @@ class MarkerTest extends TestCase
         $this->assertEquals('<', $marker->getStart());
     }
 
-    /**
-     * @return void
-     */
+
     public function testEnd(): void
     {
         $marker = new Marker('<', '>');

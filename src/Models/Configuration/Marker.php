@@ -1,25 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Models\Configuration;
 
 class Marker
 {
+    private string $start;
 
-    /**
-     * @var string
-     */
-    private $start;
-
-    /**
-     * @var string
-     */
-    private $end;
+    private string $end;
 
 
-    /**
-     * @param string $start
-     * @param string $end
-     */
+
     public function __construct(string $start, string $end)
     {
         $this->start = $start;
@@ -27,17 +19,13 @@ class Marker
     }
 
 
-    /**
-     * @return string
-     */
+
     public function getStart(): string
     {
         return $this->start;
     }
 
-    /**
-     * @return string
-     */
+
     public function getEnd(): string
     {
         return $this->end;

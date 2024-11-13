@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Storage\YAML\Services;
 
 use PHPUnuhi\Models\Translation\Locale;
@@ -10,12 +12,7 @@ class YamlLoader
 {
     use ArrayTrait;
 
-    /**
-     * @param Locale $locale
-     * @param string $delimiter
-     *
-     * @return void
-     */
+
     public function loadLocale(Locale $locale, string $delimiter): void
     {
         $arrayData = Yaml::parseFile($locale->getFilename());

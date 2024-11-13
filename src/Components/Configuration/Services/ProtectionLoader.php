@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Configuration\Services;
 
 use PHPUnuhi\Models\Configuration\Protection;
@@ -10,10 +12,7 @@ class ProtectionLoader
 {
     use XmlTrait;
 
-    /**
-     * @param SimpleXMLElement $filterNode
-     * @return Protection
-     */
+
     public function loadProtection(SimpleXMLElement $filterNode): Protection
     {
         $protection = new Protection();

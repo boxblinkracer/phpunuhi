@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Components\Validator\EmptyContent;
 
 use PHPUnit\Framework\TestCase;
@@ -7,10 +9,6 @@ use PHPUnuhi\Components\Validator\EmptyContent\AllowEmptyContent;
 
 class AllowEmptyContentTest extends TestCase
 {
-
-    /**
-     * @return void
-     */
     public function testKey(): void
     {
         $data = new AllowEmptyContent('lblTitle', ['en-GB', 'de-DE']);
@@ -18,9 +16,7 @@ class AllowEmptyContentTest extends TestCase
         $this->assertEquals('lblTitle', $data->getKey());
     }
 
-    /**
-     * @return void
-     */
+
     public function testLocaleFound(): void
     {
         $data = new AllowEmptyContent('lblTitle', ['en-GB', 'de-DE']);
@@ -28,9 +24,7 @@ class AllowEmptyContentTest extends TestCase
         $this->assertTrue($data->isLocaleAllowed('de-DE'));
     }
 
-    /**
-     * @return void
-     */
+
     public function testLocaleNotFound(): void
     {
         $data = new AllowEmptyContent('lblTitle', ['en-GB', 'de-DE']);
@@ -38,9 +32,7 @@ class AllowEmptyContentTest extends TestCase
         $this->assertFalse($data->isLocaleAllowed('fr-FR'));
     }
 
-    /**
-     * @return void
-     */
+
     public function testLocaleWithWildcardIsAlwaysTrue(): void
     {
         $data = new AllowEmptyContent('lblTitle', ['*']);
@@ -48,9 +40,7 @@ class AllowEmptyContentTest extends TestCase
         $this->assertTrue($data->isLocaleAllowed('fr-FR'));
     }
 
-    /**
-     * @return void
-     */
+
     public function testEmptyLocalesIsAlwaysTrue(): void
     {
         $data = new AllowEmptyContent('lblTitle', []);

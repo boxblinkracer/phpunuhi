@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Storage\JSON\Services;
 
 use PHPUnuhi\Bundles\Storage\StorageHierarchy;
@@ -11,25 +13,13 @@ class JsonSaver
     use ArrayTrait;
 
 
-    /**
-     * @var int
-     */
-    private $jsonIndent;
+    private int $jsonIndent;
 
-    /**
-     * @var bool
-     */
-    private $sortJson;
+    private bool $sortJson;
 
-    /**
-     * @var bool
-     */
-    private $eolLast;
+    private bool $eolLast;
 
-    /**
-     * @param int $jsonIndent
-     * @param bool $sortJson
-     */
+
     public function __construct(int $jsonIndent, bool $sortJson, bool $eolLast)
     {
         $this->jsonIndent = $jsonIndent;
@@ -38,12 +28,7 @@ class JsonSaver
     }
 
 
-    /**
-     * @param Locale $locale
-     * @param StorageHierarchy $hierarchy
-     * @param string $filename
-     * @return int
-     */
+
     public function saveLocale(Locale $locale, StorageHierarchy  $hierarchy, string $filename): int
     {
         $indent = $this->jsonIndent;

@@ -1,20 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Services\Placeholder;
 
 class PlaceholderEncoder
 {
-
-    /**
-     *
-     */
     public const ENCODING_MARKER = '//';
 
 
     /**
-     * @param string $text
      * @param Placeholder[] $placeholders
-     * @return string
      */
     public function encode(string $text, array $placeholders): string
     {
@@ -32,9 +28,7 @@ class PlaceholderEncoder
     }
 
     /**
-     * @param string $text
      * @param Placeholder[] $placeholders
-     * @return string
      */
     public function decode(string $text, array $placeholders): string
     {

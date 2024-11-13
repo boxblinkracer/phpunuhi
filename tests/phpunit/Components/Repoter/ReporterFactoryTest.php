@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Components\Repoter;
 
 use InvalidArgumentException;
@@ -10,10 +12,8 @@ use PHPUnuhi\Exceptions\ConfigurationException;
 
 class ReporterFactoryTest extends TestCase
 {
-
     /**
      * @throws ConfigurationException
-     * @return void
      */
     public function testEmptyReportNameThrowsException(): void
     {
@@ -26,7 +26,6 @@ class ReporterFactoryTest extends TestCase
 
     /**
      * @throws ConfigurationException
-     * @return void
      */
     public function testUnknownReporterThrowsException(): void
     {
@@ -39,7 +38,6 @@ class ReporterFactoryTest extends TestCase
 
     /**
      * @throws ConfigurationException
-     * @return void
      */
     public function testJUnitReporterIsFound(): void
     {

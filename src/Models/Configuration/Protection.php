@@ -1,34 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Models\Configuration;
 
 class Protection
 {
-
     /**
      * @var Marker[]
      */
-    private $markers = [];
+    private array $markers = [];
 
     /**
      * @var string[]
      */
-    private $terms = [];
+    private array $terms = [];
 
-    /**
-     * @param string $start
-     * @param string $end
-     * @return void
-     */
+
     public function addMarker(string $start, string $end): void
     {
         $this->markers[] = new Marker($start, $end);
     }
 
-    /**
-     * @param string $term
-     * @return void
-     */
+
     public function addTerm(string $term): void
     {
         if (in_array($term, $this->terms)) {

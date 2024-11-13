@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Services\Loaders\Xml;
 
 use Exception;
@@ -9,24 +11,15 @@ use SimpleXMLElement;
 
 class XmlLoaderTest extends TestCase
 {
-    /**
-     * @var XmlLoader
-     */
-    private $loader;
+    private XmlLoader $loader;
 
-    /**
-     * @var string
-     */
-    private $invalidXmlFile;
 
-    /**
-     * @var string
-     */
-    private $validXmlFile;
+    private string $invalidXmlFile;
 
-    /**
-     * @return void
-     */
+
+    private string $validXmlFile;
+
+
     public function setUp(): void
     {
         $this->loader = new XmlLoader();
@@ -39,9 +32,7 @@ class XmlLoaderTest extends TestCase
         file_put_contents($this->validXmlFile, $validXmlContent);
     }
 
-    /**
-     * @return void
-     */
+
     public function tearDown(): void
     {
         if (file_exists($this->invalidXmlFile)) {
@@ -53,9 +44,7 @@ class XmlLoaderTest extends TestCase
         }
     }
 
-    /**
-     * @return void
-     */
+
     public function testLoadXMLFileNotFound(): void
     {
         $nonExistentFile = 'path/to/non_existent_file.xml';
@@ -66,9 +55,7 @@ class XmlLoaderTest extends TestCase
         $this->loader->loadXML($nonExistentFile);
     }
 
-    /**
-     * @return void
-     */
+
     public function testLoadXMLInvalidFile(): void
     {
         $this->expectException(Exception::class);
@@ -79,7 +66,6 @@ class XmlLoaderTest extends TestCase
 
     /**
      * @throws Exception
-     * @return void
      */
     public function testLoadXMLValidFile(): void
     {

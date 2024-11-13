@@ -1,42 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Bundles\Storage;
 
 class StorageSaveResult
 {
+    private int $savedLocales;
 
-    /**
-     * @var int
-     */
-    private $savedLocales;
+    private int $savedTranslations;
 
-    /**
-     * @var int
-     */
-    private $savedTranslations;
 
-    
-    /**
-     * @param int $savedLocales
-     * @param int $savedTranslations
-     */
+
     public function __construct(int $savedLocales, int $savedTranslations)
     {
         $this->savedLocales = $savedLocales;
         $this->savedTranslations = $savedTranslations;
     }
 
-    /**
-     * @return int
-     */
+
     public function getSavedLocales(): int
     {
         return $this->savedLocales;
     }
 
-    /**
-     * @return int
-     */
+
     public function getSavedTranslations(): int
     {
         return $this->savedTranslations;

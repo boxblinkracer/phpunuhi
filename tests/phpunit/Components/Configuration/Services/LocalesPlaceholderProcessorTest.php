@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Components\Configuration\Services;
 
 use PHPUnit\Framework\TestCase;
@@ -7,25 +9,17 @@ use PHPUnuhi\Configuration\Services\LocalesPlaceholderProcessor;
 
 class LocalesPlaceholderProcessorTest extends TestCase
 {
-
-    /**
-     * @var LocalesPlaceholderProcessor
-     */
-    private $processor;
+    private LocalesPlaceholderProcessor $processor;
 
 
-    /**
-     * @return void
-     */
+
     public function setUp(): void
     {
         $this->processor = new LocalesPlaceholderProcessor();
     }
 
 
-    /**
-     * @return void
-     */
+
     public function testEmptyFileNameReturnsEmptyString(): void
     {
         $filename = $this->processor->buildRealLocaleFilename(
@@ -38,9 +32,7 @@ class LocalesPlaceholderProcessorTest extends TestCase
         $this->assertEquals('', $filename);
     }
 
-    /**
-     * @return void
-     */
+
     public function testPlainFile(): void
     {
         $filename = $this->processor->buildRealLocaleFilename(
@@ -54,9 +46,7 @@ class LocalesPlaceholderProcessorTest extends TestCase
     }
 
 
-    /**
-     * @return void
-     */
+
     public function testPlainFileWithAbsolutePath(): void
     {
         $filename = $this->processor->buildRealLocaleFilename(
@@ -69,9 +59,7 @@ class LocalesPlaceholderProcessorTest extends TestCase
         $this->assertEquals('/var/www/translations/en.json', $filename);
     }
 
-    /**
-     * @return void
-     */
+
     public function testPlainFileWithAbsolutePathAndConfigWorkdir(): void
     {
         $filename = $this->processor->buildRealLocaleFilename(
@@ -89,7 +77,6 @@ class LocalesPlaceholderProcessorTest extends TestCase
      * then we need to resolve it correctly. This means the work-directory is based on the
      * directory the configuration file is in.
      *
-     * @return void
      */
     public function testConfigDirectoryWorkDirBeforePlainFile(): void
     {
@@ -103,9 +90,7 @@ class LocalesPlaceholderProcessorTest extends TestCase
         $this->assertEquals('sub-dir/config/en/data.xml', $filename);
     }
 
-    /**
-     * @return void
-     */
+
     public function testPlaceholderLocaleInFilename(): void
     {
         $filename = $this->processor->buildRealLocaleFilename(
@@ -118,9 +103,7 @@ class LocalesPlaceholderProcessorTest extends TestCase
         $this->assertEquals('snippets/data-en.xml', $filename);
     }
 
-    /**
-     * @return void
-     */
+
     public function testPlaceholderLocaleUCInFilename(): void
     {
         $filename = $this->processor->buildRealLocaleFilename(
@@ -133,9 +116,7 @@ class LocalesPlaceholderProcessorTest extends TestCase
         $this->assertEquals('snippets/data-EN.xml', $filename);
     }
 
-    /**
-     * @return void
-     */
+
     public function testPlaceholderLocaleLCInFilename(): void
     {
         $filename = $this->processor->buildRealLocaleFilename(
@@ -148,9 +129,7 @@ class LocalesPlaceholderProcessorTest extends TestCase
         $this->assertEquals('snippets/data-en.xml', $filename);
     }
 
-    /**
-     * @return void
-     */
+
     public function testBasePathIsUsed(): void
     {
         $filename = $this->processor->buildRealLocaleFilename(
@@ -163,9 +142,7 @@ class LocalesPlaceholderProcessorTest extends TestCase
         $this->assertEquals('translations/administration/data.xml', $filename);
     }
 
-    /**
-     * @return void
-     */
+
     public function testAbsoluteBasePathIsUsed(): void
     {
         $filename = $this->processor->buildRealLocaleFilename(
@@ -178,9 +155,7 @@ class LocalesPlaceholderProcessorTest extends TestCase
         $this->assertEquals('/translations/administration/data.xml', $filename);
     }
 
-    /**
-     * @return void
-     */
+
     public function testBasePathWithUpperDirectory(): void
     {
         $filename = $this->processor->buildRealLocaleFilename(
@@ -193,9 +168,7 @@ class LocalesPlaceholderProcessorTest extends TestCase
         $this->assertEquals('/var/www/html/../../translations/administration/data.json', $filename);
     }
 
-    /**
-     * @return void
-     */
+
     public function testBasePathWithUpperDirectoryWithoutConfigFile(): void
     {
         $filename = $this->processor->buildRealLocaleFilename(
@@ -208,9 +181,7 @@ class LocalesPlaceholderProcessorTest extends TestCase
         $this->assertEquals('../../translations/administration/data.json', $filename);
     }
 
-    /**
-     * @return void
-     */
+
     public function testBasePathIsSkippedIfNotUsed(): void
     {
         $filename = $this->processor->buildRealLocaleFilename(
@@ -223,9 +194,7 @@ class LocalesPlaceholderProcessorTest extends TestCase
         $this->assertEquals('data.xml', $filename);
     }
 
-    /**
-     * @return void
-     */
+
     public function testBasePathUsesLocalesPlaceholder(): void
     {
         $filename = $this->processor->buildRealLocaleFilename(
@@ -243,7 +212,6 @@ class LocalesPlaceholderProcessorTest extends TestCase
      *           [ "fr_be", "fr-be" ]
      *           [ "fr_cH", "fr-cH" ]
      *           [ "fr", "fr" ]
-     * @return void
      */
     public function testPlaceholderLocaleUNInFilename(string $expect, string $locale): void
     {

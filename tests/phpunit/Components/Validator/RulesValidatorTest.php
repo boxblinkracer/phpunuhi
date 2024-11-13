@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Components\Validator;
 
 use PHPUnit\Framework\TestCase;
@@ -15,9 +17,7 @@ class RulesValidatorTest extends TestCase
 {
     use TranslationSetBuilderTrait;
 
-    /**
-     * @return void
-     */
+
     public function testTypeIdentifier(): void
     {
         $validator = new RulesValidator();
@@ -26,9 +26,6 @@ class RulesValidatorTest extends TestCase
     }
 
 
-    /**
-     * @return void
-     */
     public function testValidationWithoutTranslationsIsOkay(): void
     {
         $storage = new JsonStorage();
@@ -65,10 +62,7 @@ class RulesValidatorTest extends TestCase
 
     /**
      * @dataProvider ruleValidationDataProvider
-     *
-     * @param string $ruleName
      * @param mixed $ruleValue
-     * @return void
      */
     public function testRulesCorrectlyValidate(string $ruleName, $ruleValue): void
     {

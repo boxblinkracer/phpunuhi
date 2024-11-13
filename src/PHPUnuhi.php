@@ -1,13 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi;
 
 class PHPUnuhi
 {
-
-    /**
-     * @return string
-     */
     public static function getVersion(): string
     {
         $composerFile = __DIR__ . '/../composer.json';

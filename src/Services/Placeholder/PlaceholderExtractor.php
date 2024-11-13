@@ -1,14 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Services\Placeholder;
 
 class PlaceholderExtractor
 {
-
     /**
-     * @param string $text
-     * @param string $markerStart
-     * @param string $markerEnd
      * @return Placeholder[]
      * @return Placeholder[]
      */

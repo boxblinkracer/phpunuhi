@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Bundles\Translator\DeepL\Services;
 
 use DeepL\DeepLException;
@@ -14,8 +16,6 @@ class SupportedLanguagesTest extends TestCase
 {
     /**
      * @dataProvider supportedLanguages
-     * @param stdClass $data
-     * @return void
      */
     public function testSupportedLocale(stdClass $data): void
     {

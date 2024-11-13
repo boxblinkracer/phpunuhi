@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Components\Validator\Model;
 
 use PHPUnit\Framework\TestCase;
@@ -8,17 +10,10 @@ use PHPUnuhi\Components\Validator\Model\ValidationTest;
 
 class ValidationResultTest extends TestCase
 {
+    private ValidationResult $result;
 
 
-    /**
-     * @var ValidationResult
-     */
-    private $result;
 
-
-    /**
-     * @return void
-     */
     public function setUp(): void
     {
         $test = new ValidationTest(
@@ -35,17 +30,13 @@ class ValidationResultTest extends TestCase
         $this->result = new ValidationResult([$test]);
     }
 
-    /**
-     * @return void
-     */
+
     public function testGetTests(): void
     {
         $this->assertCount(1, $this->result->getTests());
     }
 
-    /**
-     * @return void
-     */
+
     public function testGetErrors(): void
     {
         $this->assertCount(1, $this->result->getErrors());

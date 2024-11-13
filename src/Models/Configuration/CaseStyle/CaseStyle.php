@@ -1,56 +1,42 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Models\Configuration\CaseStyle;
 
 class CaseStyle
 {
     private const MIN_LEVEL = 0;
 
-    /**
-     * @var string
-     */
-    private $name;
+    private string $name;
 
-    /**
-     * @var int
-     */
-    private $level = -1;
+    private int $level = -1;
 
-    /**
-     * @param string $name
-     */
+
     public function __construct(string $name)
     {
         $this->name = $name;
     }
 
-    /**
-     * @return string
-     */
+
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return bool
-     */
+
     public function hasLevel(): bool
     {
         return $this->level >= self::MIN_LEVEL;
     }
 
-    /**
-     * @return int
-     */
+
     public function getLevel(): int
     {
         return $this->level;
     }
 
-    /**
-     * @param int $level
-     */
+
     public function setLevel(int $level): void
     {
         $this->level = $level;

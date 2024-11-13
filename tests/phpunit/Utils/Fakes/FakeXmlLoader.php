@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Tests\Utils\Fakes;
 
 use Exception;
@@ -8,25 +10,16 @@ use SimpleXMLElement;
 
 class FakeXmlLoader implements XmlLoaderInterface
 {
-
-    /**
-     * @var string
-     */
-    private $xmlString;
+    private string $xmlString;
 
 
-    /**
-     * @param string $xmlString
-     */
+
     public function __construct(string $xmlString)
     {
         $this->xmlString = $xmlString;
     }
 
-    /**
-     * @param string $filename
-     * @return SimpleXMLElement
-     */
+
     public function loadXML(string $filename): SimpleXMLElement
     {
         $xml = simplexml_load_string($this->xmlString);

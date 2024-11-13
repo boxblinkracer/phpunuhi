@@ -1,24 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Models\Text;
 
 class Text
 {
+    private string $originalText;
 
-    /**
-     * @var string
-     */
-    private $originalText;
+    private string $encodedText;
 
-    /**
-     * @var string
-     */
-    private $encodedText;
 
-    /**
-     * @param string $originalText
-     * @param string $encodedText
-     */
     public function __construct(string $originalText, string $encodedText)
     {
         $this->originalText = $originalText;

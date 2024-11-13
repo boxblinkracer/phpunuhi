@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPUnuhi\Models\Translation;
 
 use Exception;
@@ -7,44 +9,26 @@ use PHPUnuhi\Exceptions\TranslationNotFoundException;
 
 class Locale
 {
+    private string $name;
 
-    /**
-     * @var string
-     */
-    private $name;
+    private bool $isBase;
 
-    /**
-     * @var bool
-     */
-    private $isBase;
+    private string $filename;
 
-    /**
-     * @var string
-     */
-    private $filename;
-
-    /**
-     * @var string
-     */
-    private $iniSection;
+    private string $iniSection;
 
     /**
      * @var array<string, Translation>
      */
-    private $translations = [];
+    private array $translations = [];
 
     /**
      * @var array<string, int>
      */
-    private $lineNumbers = [];
+    private array $lineNumbers = [];
 
 
-    /**
-     * @param string $name
-     * @param bool $isMain
-     * @param string $filename
-     * @param string $iniSection
-     */
+
     public function __construct(string $name, bool $isMain, string $filename, string $iniSection)
     {
         $this->name = $name;
@@ -53,36 +37,28 @@ class Locale
         $this->iniSection = $iniSection;
     }
 
-    /**
-     * @return string
-     */
+
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return bool
-     */
+
     public function isBase(): bool
     {
         return $this->isBase;
     }
 
-    /**
-     * @return string
-     */
+
     public function getFilename(): string
     {
         return $this->filename;
     }
 
-    /**
-     * @return string
-     */
+
     public function getExchangeIdentifier(): string
     {
-        $id = empty($this->name) ? basename($this->filename) : $this->name;
+        $id = $this->name === '' || $this->name === '0' ? basename($this->filename) : $this->name;
 
         # we use this also in technical environments
         # such as class and id names in HTML
@@ -90,20 +66,13 @@ class Locale
         return str_replace(' ', '-', $id);
     }
 
-    /**
-     * @return string
-     */
+
     public function getIniSection(): string
     {
         return $this->iniSection;
     }
 
-    /**
-     * @param string $key
-     * @param string $value
-     * @param string $group
-     * @return Translation
-     */
+
     public function addTranslation(string $key, string $value, string $group): Translation
     {
         $translation = new Translation(
@@ -136,7 +105,6 @@ class Locale
     /**
      * @param array<string, int> $lineNumbers
      *
-     * @return void
      */
     public function setLineNumbers(array $lineNumbers): void
     {
@@ -151,11 +119,7 @@ class Locale
         return $this->lineNumbers;
     }
 
-    /**
-     * @param string $key
-     *
-     * @return int
-     */
+
     public function findLineNumber(string $key): int
     {
         if (isset($this->lineNumbers[$key])) {
@@ -174,9 +138,7 @@ class Locale
     }
 
     /**
-     * @param string $searchID
      * @throws TranslationNotFoundException
-     * @return Translation
      */
     public function findTranslation(string $searchID): Translation
     {
@@ -187,10 +149,7 @@ class Locale
         return $this->translations[$searchID];
     }
 
-    /**
-     * @param string $searchID
-     * @return null|Translation
-     */
+
     public function findTranslationOrNull(string $searchID): ?Translation
     {
         if (!isset($this->translations[$searchID])) {
@@ -213,20 +172,14 @@ class Locale
         );
     }
 
-    /**
-     * @param string $id
-     * @return void
-     */
+
     public function removeTranslation(string $id): void
     {
         unset($this->translations[$id]);
     }
 
     /**
-     * @param string $oldKey
-     * @param string $newKey
      * @throws TranslationNotFoundException
-     * @return void
      */
     public function updateTranslationKey(string $oldKey, string $newKey): void
     {
