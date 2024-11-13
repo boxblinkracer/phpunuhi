@@ -6,6 +6,7 @@ namespace PHPUnuhi\Services\Loaders\Directory;
 
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use SplFileInfo;
 
 class DirectoryLoader
 {
@@ -22,12 +23,13 @@ class DirectoryLoader
             $iterator = new RecursiveIteratorIterator($directoryIterator, RecursiveIteratorIterator::SELF_FIRST);
 
             // Iterate through files
+            /** @var SplFileInfo $file */
             foreach ($iterator as $file) {
                 // Check if it's a file and has the specified extension
                 if (!$file->isFile()) {
                     continue;
                 }
-                if (pathinfo($file, PATHINFO_EXTENSION) != $extension) {
+                if (pathinfo($file->getFilename(), PATHINFO_EXTENSION) != $extension) {
                     continue;
                 }
                 $files[] = $file->getPathname();
