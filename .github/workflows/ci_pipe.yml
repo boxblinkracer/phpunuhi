@@ -22,15 +22,32 @@ jobs:
 
   # ------------------------------------------------------------------------------------------------------------------------
 
+  checks:
+    name: Release Checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        # -----------------------------------
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+        # -----------------------------------
+      - name: Check XSD for release version
+        run: |
+          php tests/scripts/check_xsd.php dev-main
+
+  # ------------------------------------------------------------------------------------------------------------------------
+
   release:
     name: Release Pipeline
     uses: ./.github/workflows/step_release.yml
-    needs: [ review ]
+    needs: [ review, checks ]
     secrets:
       DOCKER_USERNAME: "${{ secrets.DOCKER_USERNAME }}"
       DOCKER_PASSWORD: "${{ secrets.DOCKER_PASSWORD }}"
       PACKAGIST_USER: "${{ secrets.PACKAGIST_USER }}"
       PACKAGIST_TOKEN: "${{ secrets.PACKAGIST_TOKEN }}"
     with:
-      VERSION: "dev-master"
+      VERSION: "dev-main"
       PHP_VERSION: 8.2
