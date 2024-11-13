@@ -24,3 +24,6 @@
 /tests/playground/shopware6-config/.exports
 /tests/playground/resx/.exports
 /devops/docker_release/phpunuhi.phar
+/tests/svrunit/fixtures/json/de.ini
+/tests/svrunit/fixtures/json/en.ini
+/tests/svrunit/fixtures/json/nl.ini

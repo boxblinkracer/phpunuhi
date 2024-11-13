@@ -166,7 +166,7 @@ jobs:
     needs: install_dev
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         # -----------------------------------
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -188,7 +188,7 @@ jobs:
     needs: install_dev
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         # -----------------------------------
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -212,7 +212,7 @@ jobs:
     needs: [ syntax_checks, php_min, unit_tests, phpstan, phpcsfixer ]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         # -----------------------------------
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
