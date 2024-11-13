@@ -3,5 +3,7 @@
 
 "views.login.btnConnect" = "Connect to App";
 
-"views.components.textelementinput.placeholder" = "";
+"views.components.textelementinput.placeholder" = "Enter your text";
+
+
 

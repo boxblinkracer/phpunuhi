@@ -11,8 +11,10 @@ COMPONENTS
 ====================================================================================
 
 */
-"views.components.textelementinput.placeholder" = "";
+"views.components.textelementinput.placeholder" = "Geben Sie Ihren Text ein";
 
 "views.login.placeholder.password" = "Passwort";
 "views.login.btnConnect" = "Mit der App verbinden";
+
+
 

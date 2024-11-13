@@ -63,27 +63,31 @@ class StringsStorage implements StorageInterface
 
     public function saveTranslationSet(TranslationSet $set): StorageSaveResult
     {
+        $count = 0;
+
         foreach ($set->getLocales() as $locale) {
-            $this->writeLocale($locale);
+            $count += $this->writeLocale($locale);
         }
 
-        return new StorageSaveResult(0, 0);
+        return new StorageSaveResult(count($set->getLocales()), $count);
     }
 
     public function saveTranslationLocale(Locale $locale, string $filename): StorageSaveResult
     {
-        $this->writeLocale($locale);
+        $saved = $this->writeLocale($locale);
 
-        return new StorageSaveResult(0, 0);
+        return new StorageSaveResult(1, $saved);
     }
 
 
-    private function writeLocale(Locale $locale): void
+    private function writeLocale(Locale $locale): int
     {
+        $count = 0;
+
         $lines = file($locale->getFilename());
 
         if ($lines === []) {
-            return;
+            return $count;
         }
 
         $newContent = '';
@@ -102,6 +106,7 @@ class StringsStorage implements StorageInterface
                         $translationFound = true;
 
                         $processedTranslationKeys[] = $translation->getKey();
+                        $count++;
                         break;
                     }
                 }
@@ -119,12 +124,15 @@ class StringsStorage implements StorageInterface
 
             foreach ($locale->getTranslations() as $translation) {
                 if (!in_array($translation->getKey(), $processedTranslationKeys)) {
+                    $count++;
                     $newContent .= "\"{$translation->getKey()}\" = \"{$translation->getValue()}\";\n";
                 }
             }
         }
 
         file_put_contents($locale->getFilename(), $newContent);
+
+        return $count;
     }
 
     private function getTranslationFromLine(string $line): ?Translation
