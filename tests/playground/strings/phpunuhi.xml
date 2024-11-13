@@ -1,0 +1,18 @@
+<phpunuhi
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../schema/dev-main.xsd"
+>
+    <translations>
+
+        <set name="ios-app">
+            <format>
+                <strings/>
+            </format>
+            <locales>
+                <locale name="en-GB" base="true">./files/en.lproj/Localizable.strings</locale>
+                <locale name="de-DE">./files/de.lproj/Localizable.strings</locale>
+            </locales>
+        </set>
+
+    </translations>
+</phpunuhi>

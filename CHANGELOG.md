@@ -8,6 +8,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 ### Added
 
 - Add new **resx** storage format to support Windows applications.
+- Add new **strings** storage format to support Apple applications.
 - Add new **Docker Image** for PHPUnuhi to run it in a container without installing in your project
 - Add new version specific XSD files in the schema folder for upcoming releases
 - Include new error hints for missing and empty keys, particularly when the base language may also lack the same translation. In such cases, this could be an expected behavior.

@@ -247,9 +247,10 @@
             <xs:element name="ini" type="typeFormatINI" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="po" type="typeFormatPO" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="php" type="typeFormatPHP" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="shopware6" type="typeFormatShopware6" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="yaml" type="typeFormatYAML" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="resx" type="typeFormatRESX" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="strings" type="typeFormatStrings" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="shopware6" type="typeFormatShopware6" minOccurs="0" maxOccurs="unbounded"/>
         </xs:choice>
     </xs:complexType>
 
@@ -302,6 +303,13 @@
     </xs:complexType>
 
     <xs:complexType name="typeFormatRESX">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="typeFormatStrings">
         <xs:simpleContent>
             <xs:extension base="xs:string">
             </xs:extension>

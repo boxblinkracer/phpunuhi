@@ -1,0 +1,18 @@
+/*
+
+  Testontroller.strings
+
+*/
+
+/*
+
+COMPONENTS
+
+====================================================================================
+
+*/
+"views.components.textelementinput.placeholder" = "";
+
+"views.login.placeholder.password" = "Passwort";
+"views.login.btnConnect" = "Mit der App verbinden";
+

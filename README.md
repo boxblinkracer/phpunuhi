@@ -73,7 +73,8 @@ Now that you know this, let's get started!
             * [8.3.1.4 PHP](#8314-php)
             * [8.3.1.5 YAML](#8315-yaml)
             * [8.3.1.6 RESX](#8316-resx)
-            * [8.3.1.7 Shopware 6](#8317-shopware-6)
+            * [8.3.1.7 Strings (Apple)](#8317-strings-apple)
+            * [8.3.1.8 Shopware 6](#8318-shopware-6)
                 * [Entities](#entities)
                 * [Configs](#configs)
         * [8.3.2 Custom Formats](#832-custom-formats)
@@ -884,7 +885,27 @@ It will automatically only touch text types and not binary data, such as images.
 </set>
 ```
 
-##### 8.3.1.7 Shopware 6
+##### 8.3.1.7 Strings (Apple)
+
+The Strings format is used in Apple applications.
+It's a simple text format that contains key-value pairs.
+
+This storage type makes sure to read and also write Strings files.
+
+```xml
+
+<set name="sample">
+    <format>
+        <strings/>
+    </format>
+    <locales>
+        <locale name="de">./de.lproj/Localizable.string</locale>
+        <locale name="en">./en.lproj/Localizable.string</locale>
+    </locales>
+</set>
+```
+
+##### 8.3.1.8 Shopware 6
 
 | Format Attributes | Default | Description                                                                                                                  | 
 |-------------------|---------|------------------------------------------------------------------------------------------------------------------------------|
