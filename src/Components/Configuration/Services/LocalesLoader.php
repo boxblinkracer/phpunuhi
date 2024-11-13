@@ -17,13 +17,10 @@ class LocalesLoader
 
     private LocalesPlaceholderProcessor $placholderProcessor;
 
-
-
     public function __construct()
     {
         $this->placholderProcessor = new LocalesPlaceholderProcessor();
     }
-
 
     /**
      * @throws ConfigurationException

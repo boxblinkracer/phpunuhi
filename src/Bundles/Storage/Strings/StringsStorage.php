@@ -155,4 +155,9 @@ class StringsStorage implements StorageInterface
 
         return null;
     }
+
+    public function getContentFileTemplate(): string
+    {
+        return file_get_contents(__DIR__ . '/Template/StorageFileTemplate.strings') ?: '';
+    }
 }

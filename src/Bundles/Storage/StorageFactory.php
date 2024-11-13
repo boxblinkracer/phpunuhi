@@ -115,4 +115,15 @@ class StorageFactory
 
         throw new ConfigurationException('No storage found for name: ' . $name);
     }
+
+    public function getStorageFileTemplate(string $filename): string
+    {
+        foreach ($this->storages as $storage) {
+            if (strtolower($storage->getStorageName()) === strtolower(pathinfo($filename, PATHINFO_EXTENSION))) {
+                return $storage->getContentFileTemplate();
+            }
+        }
+
+        throw new ConfigurationException('No file template storage found for file: ' . $filename);
+    }
 }
