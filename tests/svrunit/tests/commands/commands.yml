@@ -7,6 +7,10 @@ commands:
     command: "(($EXEC)) list:translation-keys --configuration=./tests/svrunit/fixtures/json/phpunuhi.xml"
     expected: "[~] card.description"
 
+  - name: "List Translations"
+    command: "(($EXEC)) list:translations --configuration=./tests/svrunit/fixtures/json/phpunuhi.xml"
+    expected: "Herzlich willkommen"
+
   - name: "Validate (deprecated))"
     command: "(($EXEC)) validate --configuration=./tests/svrunit/fixtures/json/phpunuhi.xml"
     expected: "All translations are valid"
@@ -26,3 +30,7 @@ commands:
   - name: "Export"
     command: "(($EXEC)) export --configuration=./tests/svrunit/fixtures/json/phpunuhi.xml --dir=.svrunit"
     expected: "All translations exported"
+
+  - name: "Migrate"
+    command: "(($EXEC)) migrate --configuration=./tests/svrunit/fixtures/json/phpunuhi.xml --output=ini"
+    expected: "Storage successfully migrated to format: ini"
