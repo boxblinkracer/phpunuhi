@@ -77,7 +77,7 @@ class MessValidatorCliFacade
     {
         return new ValidationTest(
             $translationID,
-            '-',
+            null,
             'Test if translation for key ' . $translationID . ' exists in any locale',
             '',
             0,

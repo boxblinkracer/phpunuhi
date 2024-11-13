@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PHPUnuhi\Traits;
 
 use PHPUnuhi\Components\Validator\Model\ValidationTest;
+use PHPUnuhi\Models\Translation\Locale;
 use PHPUnuhi\Services\OpenAI\OpenAIUsageTracker;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Helper\TableCell;
@@ -103,10 +104,22 @@ trait CommandOutputTrait
                 continue;
             }
 
+            $localeName = '-';
+
+            $locale = $row->getLocale();
+
+            if ($locale instanceof Locale) {
+                $localeName = $locale->getName();
+
+                if ($locale->isBase()) {
+                    $localeName .= ' (base)';
+                }
+            }
+
             $rowData[] = [
                 $intRowIndex,
                 ' ' . $row->getClassification() . ' ',
-                '  ' . $row->getLocale() . ' ',
+                '  ' . $localeName . ' ',
                 ' ' . $row->getTranslationKey() . ' ',
                 $row->getFailureMessage()
             ];

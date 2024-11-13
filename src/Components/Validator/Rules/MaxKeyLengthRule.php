@@ -68,7 +68,7 @@ class MaxKeyLengthRule implements RuleValidatorInterface
 
                 $tests[] = new ValidationTest(
                     $identifier,
-                    $locale->getName(),
+                    $locale,
                     "Test length of key '" . $translation->getKey(),
                     $locale->getFilename(),
                     $locale->findLineNumber($translation->getKey()),

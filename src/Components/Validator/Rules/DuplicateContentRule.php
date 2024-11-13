@@ -108,7 +108,7 @@ class DuplicateContentRule implements RuleValidatorInterface
     {
         return new ValidationTest(
             $translationKey,
-            $locale->getName(),
+            $locale,
             "Testing for duplicate content in key: '" . $translationKey . "'",
             $locale->getFilename(),
             $locale->findLineNumber($translationKey),

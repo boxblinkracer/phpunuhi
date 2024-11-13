@@ -60,7 +60,7 @@ class DisallowedTextsRule implements RuleValidatorInterface
 
                 $tests[] = new ValidationTest(
                     $identifier,
-                    $locale->getName(),
+                    $locale,
                     "Test against disallowed texts for key: '" . $translation->getKey(),
                     $locale->getFilename(),
                     $locale->findLineNumber($translation->getKey()),

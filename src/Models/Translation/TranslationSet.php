@@ -346,4 +346,15 @@ class TranslationSet
 
         return $foundPlaceholders;
     }
+
+    public function getLocale(string $name): Locale
+    {
+        foreach ($this->locales as $locale) {
+            if ($locale->getName() === $name) {
+                return $locale;
+            }
+        }
+
+        throw new Exception('Locale not found: ' . $name);
+    }
 }

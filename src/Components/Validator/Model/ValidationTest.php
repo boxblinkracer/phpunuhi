@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace PHPUnuhi\Components\Validator\Model;
 
+use PHPUnuhi\Models\Translation\Locale;
+
 class ValidationTest
 {
     private string $translationKey;
 
-    private string $locale;
+    private ?Locale $locale;
 
     private string $title;
 
@@ -23,8 +25,7 @@ class ValidationTest
     private bool $success;
 
 
-
-    public function __construct(string $translationKey, string $locale, string $title, string $filename, int $lineNumber, string $classification, string $failureMessage, bool $success)
+    public function __construct(string $translationKey, ?Locale $locale, string $title, string $filename, int $lineNumber, string $classification, string $failureMessage, bool $success)
     {
         $this->translationKey = $translationKey;
         $this->locale = $locale;
@@ -45,7 +46,9 @@ class ValidationTest
 
     public function getTitle(): string
     {
-        return '[' . $this->locale . '] ' . $this->title;
+        $localeName = $this->locale instanceof Locale ? $this->locale->getName() : '-';
+
+        return '[' . $localeName . '] ' . $this->title;
     }
 
 
@@ -77,8 +80,7 @@ class ValidationTest
         return $this->success;
     }
 
-
-    public function getLocale(): string
+    public function getLocale(): ?Locale
     {
         return $this->locale;
     }

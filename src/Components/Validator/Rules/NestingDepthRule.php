@@ -76,7 +76,7 @@ class NestingDepthRule implements RuleValidatorInterface
     {
         return new ValidationTest(
             $translationKey,
-            $locale->getName(),
+            $locale,
             "Test nesting-depth of key '" . $translationKey,
             $locale->getFilename(),
             $locale->findLineNumber($translationKey),

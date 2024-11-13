@@ -124,7 +124,7 @@ class SpellingValidatorCliFacade
 
         return new ValidationTest(
             $translationID,
-            $spellingResult->getLocale(),
+            $set->getLocale($spellingResult->getLocale()),
             'Test if translation for key ' . $translationID . ' is spelled correctly',
             '',
             0,

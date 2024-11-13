@@ -147,7 +147,7 @@ class ValidateSimilarityCommand extends Command
 
         return new ValidationTest(
             $key1,
-            $locale->getName(),
+            $locale,
             'Test Similarity',
             '',
             0,

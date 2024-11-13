@@ -6,6 +6,7 @@ namespace PHPUnuhi\Tests\Components\Validator\Model;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnuhi\Components\Validator\Model\ValidationTest;
+use PHPUnuhi\Models\Translation\Locale;
 
 class ValidationTestTest extends TestCase
 {
@@ -15,9 +16,11 @@ class ValidationTestTest extends TestCase
 
     public function setUp(): void
     {
+        $locale = new Locale('en_US', false, '', '');
+
         $this->test = new ValidationTest(
             'btnCancel',
-            'en_US',
+            $locale,
             'Testing btnCancel',
             'en.json',
             15,

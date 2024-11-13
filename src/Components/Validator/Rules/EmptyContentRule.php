@@ -43,7 +43,7 @@ class EmptyContentRule implements RuleValidatorInterface
     {
         return new ValidationTest(
             $translationKey,
-            $locale->getName(),
+            $locale,
             'Testing for empty content of key: ' . $translationKey,
             $locale->getFilename(),
             $locale->findLineNumber($translationKey),

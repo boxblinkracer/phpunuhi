@@ -18,7 +18,7 @@ class ValidationResultTest extends TestCase
     {
         $test = new ValidationTest(
             '',
-            '',
+            null,
             '',
             '',
             5,
