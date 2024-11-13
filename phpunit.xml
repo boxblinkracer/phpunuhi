@@ -10,7 +10,7 @@
 
     <testsuites>
         <testsuite name="PHPUnuhi">
-            <directory suffix=".php">./tests</directory>
+            <directory suffix=".php">./tests/phpunit</directory>
         </testsuite>
     </testsuites>
 
