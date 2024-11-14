@@ -1,5 +1,5 @@
 
-FOLDER := po
+FOLDER := custom-xml
 
 include ../makefile
 
