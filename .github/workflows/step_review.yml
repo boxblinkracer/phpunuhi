@@ -239,7 +239,7 @@ jobs:
           name: svrunit_report
           retention-days: 3
           path: |
-            .reports
+            /home/runner/work/phpunuhi/phpunuhi/./.reports
         # -----------------------------------
       - name: Build JUnit Report
         uses: dorny/test-reporter@v1
