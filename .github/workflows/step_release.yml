@@ -41,7 +41,7 @@ jobs:
         with:
           key: cache-build-${{ github.run_id }}
           path: |
-            build
+            .build
             vendor
         # -----------------------------------
       - name: Build Artifacts
@@ -62,7 +62,7 @@ jobs:
         with:
           key: cache-build-${{ github.run_id }}
           path: |
-            build
+            .build
             vendor
         # -----------------------------------
       - name: Log in to Docker Hub
