@@ -219,6 +219,8 @@ jobs:
         with:
           php-version: ${{ inputs.PHP_VERSION }}
           ini-values: phar.readonly=OFF
+      - name: Install aspell
+        run: sudo apt-get update && sudo apt-get install -y aspell aspell-en
         # -----------------------------------
       - name: Build PHAR
         run: make prod && make build -B
