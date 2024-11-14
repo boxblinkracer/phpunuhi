@@ -8,7 +8,7 @@ RUN echo "memory_limit=-1" > /usr/local/etc/php/conf.d/memory-limit.ini \
        icu-dev \
        aspell \
     && docker-php-ext-configure intl \
-    && docker-php-ext-install intl \
+    && docker-php-ext-install intl pdo_mysql \
     && rm -rf /var/cache/apk/*
 
 
