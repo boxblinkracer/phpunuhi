@@ -28,3 +28,4 @@
 /tests/svrunit/fixtures/json/en.ini
 /tests/svrunit/fixtures/json/nl.ini
 /tests/playground/strings/.exports
+/.build/

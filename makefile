@@ -49,13 +49,15 @@ dev: ##1 Installs all dev dependencies
 clean: ##1 Clears all dependencies
 	rm -rf vendor/*
 	rm -rf .reports
+	rm -rf .svrunit
+	rm -rf .build
 
 build: ##1 Builds PHPUnuhi and creates phpunuhi.phar
 	@echo "===================================================================="
 	@echo "verifying if phar files can be created....phar.readonly has to be OFF"
 	@php -i | grep phar.readonly
 	@php -i | grep "Loaded Configuration"
-	@cd scripts && php build.php
+	@cd devops/scripts && php build.php
 
 #------------------------------------------------------------------------------------------------
 
@@ -110,14 +112,14 @@ svrunit: ##3 Runs all SVRUnit tests
 #------------------------------------------------------------------------------------------------
 
 artifact: ##4 Create a ZIP file in the build folder
-	cd build && zip phpunuhi.zip phpunuhi.phar
+	cd .build && zip phpunuhi.zip phpunuhi.phar
 
-pack: ##4 Builds the Docker image
+docker: ##4 Builds the Docker image
 ifndef version
 	$(error version is not set)
 endif
 	rm -f ./devops/docker_release/phpunuhi.phar || true
 	docker rmi -f $(shell docker images boxblinkracer/phpunuhi -q) || true
-	cp ./build/phpunuhi.phar ./devops/docker_release/phpunuhi.phar
+	cp ./.build/phpunuhi.phar ./devops/docker_release/phpunuhi.phar
 	cd ./devops/docker_release && DOCKER_BUILDKIT=1 docker build --no-cache -t boxblinkracer/phpunuhi:$(version) .
 

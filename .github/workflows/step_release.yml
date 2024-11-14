@@ -72,7 +72,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
         # -----------------------------------
       - name: Build Docker Image
-        run: make pack version=${{ inputs.VERSION }}
+        run: make docker version=${{ inputs.VERSION }}
         # -----------------------------------
       - name: Push Docker Image
         run: |

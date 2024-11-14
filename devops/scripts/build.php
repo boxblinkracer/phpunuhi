@@ -2,8 +2,8 @@
 
 $pharName = 'phpunuhi.phar';
 
-$srcRoot = __DIR__ . "/..";
-$buildRoot = __DIR__ . "/../build";
+$srcRoot = __DIR__ . "/../..";
+$buildRoot = __DIR__ . "/../../.build";
 
 
 echo ">> building " . $pharName . "\n";
@@ -56,13 +56,6 @@ foreach ($folder as $item) {
             continue 2;
         }
     }
-
-    // Skip files in directories starting with "tests" or ".github"
-    if (preg_match('#^(tests|\.github)/#', $relativePath)) {
-        continue;
-    }
-
-    $filename = pathinfo($item->getPathName(), PATHINFO_BASENAME);
 
     $items[$relativePath] = $filePath;
 }
