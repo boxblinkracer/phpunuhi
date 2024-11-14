@@ -1,7 +1,7 @@
 {
-    "card": {
-        "description": "This is the overview of all general points.",
-        "title": "General"
-    },
-    "title": "Welcome"
+  "card": {
+    "description": "This is the overview of all general points.",
+    "title": "General"
+  },
+  "title": "Welcome"
 }

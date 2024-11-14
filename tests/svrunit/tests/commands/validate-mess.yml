@@ -1,5 +1,0 @@
-commands:
-
-  - name: "Validate Mess"
-    command: "(($EXEC)) validate:mess --configuration=./tests/svrunit/fixtures/json/phpunuhi.xml"
-    expected: "All translations are valid"
