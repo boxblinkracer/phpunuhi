@@ -15,7 +15,7 @@ class TranslatorFactoryTest extends TestCase
 {
     protected function setUp(): void
     {
-        TranslatorFactory::getInstance()->resetStorages();
+        TranslatorFactory::getInstance()->resetTranslators();
     }
 
     /**

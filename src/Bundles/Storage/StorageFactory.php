@@ -79,6 +79,14 @@ class StorageFactory
     }
 
     /**
+     * @return StorageInterface[]
+     */
+    public function getStorages(): array
+    {
+        return $this->storages;
+    }
+
+    /**
      * @throws ConfigurationException
      */
     public function getStorage(TranslationSet $set): StorageInterface

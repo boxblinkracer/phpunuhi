@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PHPUnuhi;
 
 use Exception;
+use PHPUnuhi\Commands\AvailableServicesCommand;
 use PHPUnuhi\Commands\ExportCommand;
 use PHPUnuhi\Commands\FixMessCommand;
 use PHPUnuhi\Commands\FixSpellingCommand;
@@ -34,6 +35,7 @@ class AppManager
     {
         $application = new Application('PHPUnuhi', PHPUnuhi::getVersion());
 
+        $application->add(new AvailableServicesCommand());
         $application->add(new StatusCommand());
         $application->add(new ListTranslationKeysCommand());
         $application->add(new ListTranslationsCommand());

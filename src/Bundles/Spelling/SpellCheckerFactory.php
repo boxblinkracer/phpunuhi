@@ -20,7 +20,6 @@ class SpellCheckerFactory
     private array $spellCheckers;
 
 
-
     public static function getInstance(): SpellCheckerFactory
     {
         if (!self::$instance instanceof \PHPUnuhi\Bundles\Spelling\SpellCheckerFactory) {
@@ -29,7 +28,6 @@ class SpellCheckerFactory
 
         return self::$instance;
     }
-
 
 
     private function __construct()
@@ -54,6 +52,13 @@ class SpellCheckerFactory
         $this->spellCheckers[] = $spellChecker;
     }
 
+    /**
+     * @return SpellCheckerInterface[]
+     */
+    public function getSpellCheckers(): array
+    {
+        return $this->spellCheckers;
+    }
 
     /**
      * Resets the registered translators to the default ones.

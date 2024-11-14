@@ -36,7 +36,7 @@ class TranslatorFactory
 
     private function __construct()
     {
-        $this->resetStorages();
+        $this->resetTranslators();
     }
 
 
@@ -56,11 +56,18 @@ class TranslatorFactory
         $this->translators[] = $translator;
     }
 
+    /**
+     * @return TranslatorInterface[]
+     */
+    public function getTranslators(): array
+    {
+        return $this->translators;
+    }
 
     /**
      * Resets the registered translators to the default ones.
      */
-    public function resetStorages(): void
+    public function resetTranslators(): void
     {
         $this->translators = [];
 

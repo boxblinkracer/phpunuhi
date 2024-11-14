@@ -22,7 +22,6 @@ class ExchangeFactory
     private array $exchangeServices;
 
 
-
     public static function getInstance(): ExchangeFactory
     {
         if (!self::$instance instanceof \PHPUnuhi\Bundles\Exchange\ExchangeFactory) {
@@ -31,7 +30,6 @@ class ExchangeFactory
 
         return self::$instance;
     }
-
 
 
     private function __construct()
@@ -56,6 +54,14 @@ class ExchangeFactory
         $this->exchangeServices[] = $exchangeFormat;
     }
 
+
+    /**
+     * @return ExchangeInterface[]
+     */
+    public function getExchangeFormats(): array
+    {
+        return $this->exchangeServices;
+    }
 
     /**
      * Resets the registered exchange formats to the default ones.

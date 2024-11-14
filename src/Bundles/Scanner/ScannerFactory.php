@@ -53,6 +53,14 @@ class ScannerFactory
 
 
     /**
+     * @return ScannerInterface[]
+     */
+    public function getScanners(): array
+    {
+        return $this->scanners;
+    }
+
+    /**
      * Resets the registered scanners to the default ones.
      */
     public function resetScanners(): void

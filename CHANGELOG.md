@@ -11,6 +11,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 - Add new **strings** storage format to support Mac applications.
 - Add new **Docker Image** for PHPUnuhi to run it in a container without installing in your project
 - Add new version specific XSD files in the schema folder for upcoming releases
+- Add new **services command** to see all available default and custom services
 - Include new error hints for missing and empty keys, particularly when the base language may also lack the same translation. In such cases, this could be an expected behavior.
 - Add base locale indicator in terminal output of errors (next to the locale name).
 

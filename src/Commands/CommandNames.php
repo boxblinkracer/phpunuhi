@@ -6,6 +6,7 @@ namespace PHPUnuhi\Commands;
 
 interface CommandNames
 {
+    public const AVAILABLE_SERVICES = 'services';
     public const STATUS = 'status';
 
     public const VALIDATE = 'validate';
