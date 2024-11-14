@@ -223,6 +223,9 @@ jobs:
       - name: Build PHAR
         run: make prod && make build -B
         # -----------------------------------
+      - name: Build Docker Image
+        run: make docker version=dev-main
+        # -----------------------------------
       - name: Install SVRUnit
         run: make dev -B
         # -----------------------------------
