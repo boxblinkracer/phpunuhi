@@ -16,13 +16,63 @@ mkdir($buildRoot);
 
 $phar = new Phar($buildRoot . "/" . $pharName, FilesystemIterator::CURRENT_AS_FILEINFO | FilesystemIterator::KEY_AS_FILENAME, $pharName);
 
-# embed all php files from directory
-$phar->buildFromDirectory($srcRoot, '/.$/');
+$folder = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($srcRoot));
+$items = array();
+foreach ($folder as $item) {
+
+    $filePath = $item->getPathname();
+    $relativePath = str_replace($srcRoot . '/', '', $filePath);
+
+    // Skip if the file or directory ends with "." or ".."
+    if (preg_match('#(\.|\.\.)$#', $relativePath)) {
+        continue;
+    }
+
+    $ignore = [
+        '.idea/',
+        '.github/',
+        '.reports/',
+        '.run/',
+        '.svrunit/',
+        'build',
+        'devops/',
+        'schema/',
+        'scripts/',
+        'tests/',
+        '.gitignore',
+        '.php_cs.php',
+        '.phpstan.neon',
+        'infection.js',
+        'makefile',
+        'php_min_version.php',
+        'phparkitect.php',
+        'phpunit.xml',
+        'rector.php',
+        'svrunit.xml',
+    ];
+
+    foreach ($ignore as $i) {
+        if (startsWith($relativePath, $i)) {
+            continue 2;
+        }
+    }
+
+    // Skip files in directories starting with "tests" or ".github"
+    if (preg_match('#^(tests|\.github)/#', $relativePath)) {
+        continue;
+    }
+
+    $filename = pathinfo($item->getPathName(), PATHINFO_BASENAME);
+
+    $items[$relativePath] = $filePath;
+}
+$phar->buildFromIterator(new ArrayIterator($items));
 
 # set stub to index.php file
 $phar->setStub($phar->createDefaultStub("src/index.php"));
 
-echo ">> build complete...";
+
+echo ">> build complete..." . PHP_EOL;
 
 
 /**
@@ -51,4 +101,9 @@ function deleteDirectory(string $dir): bool
     }
 
     return rmdir($dir);
+}
+
+function startsWith(string $haystack, string $needle): bool
+{
+    return strncmp($haystack, $needle, strlen($needle)) === 0;
 }

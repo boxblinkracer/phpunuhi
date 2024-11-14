@@ -1,13 +1,15 @@
-FROM php:cli
+FROM php:8.3.13-cli-alpine3.20
 
-COPY ./phpunuhi.phar /usr/local/bin/phpunuhi
-COPY ./run.sh /run.sh
+COPY --chmod=0755 ./phpunuhi.phar /usr/local/bin/phpunuhi
+COPY --chmod=0755 ./run.sh /run.sh
 
-RUN chmod +x /usr/local/bin/phpunuhi \
-    && echo "memory_limit=-1" > /usr/local/etc/php/conf.d/memory-limit.ini \
-    && apt-get update && apt-get install -y libicu-dev \
+RUN echo "memory_limit=-1" > /usr/local/etc/php/conf.d/memory-limit.ini \
+    && apk add --no-cache \
+       icu-dev \
+       aspell \
+    && docker-php-ext-configure intl \
     && docker-php-ext-install intl \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/cache/apk/*
 
 
 WORKDIR /app
