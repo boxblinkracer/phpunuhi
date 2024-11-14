@@ -11,7 +11,7 @@
             <directory>tests/svrunit/tests/commands</directory>
         </testsuite>
 
-        <testsuite name="docker" executable="docker run --rm -it -v $(pwd):/app boxblinkracer/phpunuhi:dev-main ">
+        <testsuite name="docker" executable="docker run --rm -v $(pwd):/app boxblinkracer/phpunuhi:dev-main ">
             <directory>tests/svrunit/tests</directory>
             <directory>tests/svrunit/tests/commands</directory>
         </testsuite>
