@@ -15,6 +15,10 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 - Include new error hints for missing and empty keys, particularly when the base language may also lack the same translation. In such cases, this could be an expected behavior.
 - Add base locale indicator in terminal output of errors (next to the locale name).
 
+### Fixed
+
+- Fixed problem where directories for reports couldn't be created if multiple subdirectories were missing.
+
 ## [1.22.0]
 
 ### Added

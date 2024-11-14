@@ -9,7 +9,7 @@ class DirectoryWriter implements DirectoryWriterInterface
     public function createDirectory(string $path): void
     {
         if (!is_dir($path)) {
-            mkdir($path);
+            mkdir($path, 0777, true);
         }
     }
 }
