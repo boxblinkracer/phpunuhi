@@ -9,6 +9,7 @@ use PHPUnuhi\Bundles\Storage\StorageHierarchy;
 use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Bundles\Storage\StorageSaveResult;
 use PHPUnuhi\Models\Translation\Locale;
+use PHPUnuhi\Models\Translation\Translation;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
 class IniStorage implements StorageInterface
@@ -118,6 +119,13 @@ class IniStorage implements StorageInterface
         file_put_contents($filename, $contentBuffer);
 
         return new StorageSaveResult(1, $translationCount);
+    }
+
+    public function saveTranslation(Translation $translation, Locale $locale): StorageSaveResult
+    {
+        $this->saveTranslationLocale($locale, $locale->getFilename());
+
+        return new StorageSaveResult(1, 1);
     }
 
     /**

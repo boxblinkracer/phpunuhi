@@ -15,6 +15,11 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 - Include new error hints for missing and empty keys, particularly when the base language may also lack the same translation. In such cases, this could be an expected behavior.
 - Add base locale indicator in terminal output of errors (next to the locale name).
 
+### Changed
+
+- Changed **Interface** of storage formats. A new function **saveTranslation(Translation $translation, Locale $locale)** is now required that allows to save a single translation in a specific locale.
+- The **translate command** will now use the new single-translation save function of storage formats. This means your translations will be updated directly during a long running translation process. Also if that fails, the processed translations will still be saved.
+
 ### Fixed
 
 - Fixed problem where directories for reports couldn't be created if multiple subdirectories were missing.

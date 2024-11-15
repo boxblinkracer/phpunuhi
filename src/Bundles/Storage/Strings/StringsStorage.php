@@ -79,6 +79,13 @@ class StringsStorage implements StorageInterface
         return new StorageSaveResult(1, $saved);
     }
 
+    public function saveTranslation(Translation $translation, Locale $locale): StorageSaveResult
+    {
+        $this->saveTranslationLocale($locale, $locale->getFilename());
+
+        return new StorageSaveResult(1, 1);
+    }
+
 
     private function writeLocale(Locale $locale): int
     {

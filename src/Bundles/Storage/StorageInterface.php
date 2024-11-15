@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PHPUnuhi\Bundles\Storage;
 
 use PHPUnuhi\Models\Translation\Locale;
+use PHPUnuhi\Models\Translation\Translation;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
 interface StorageInterface
@@ -59,4 +60,11 @@ interface StorageInterface
      *
      */
     public function saveTranslationLocale(Locale $locale, string $filename): StorageSaveResult;
+
+    /**
+     * This function should only save the provided translation to the provided locale.
+     * This can be used if you immediately want to update and store translations without
+     * waiting for certain processes to complete.
+     */
+    public function saveTranslation(Translation $translation, Locale $locale): StorageSaveResult;
 }

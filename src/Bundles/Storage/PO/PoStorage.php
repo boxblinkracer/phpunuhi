@@ -109,6 +109,14 @@ class PoStorage implements StorageInterface
         return new StorageSaveResult(1, $translationCount);
     }
 
+    public function saveTranslation(Translation $translation, Locale $locale): StorageSaveResult
+    {
+        $this->saveTranslationLocale($locale, $locale->getFilename());
+
+        return new StorageSaveResult(1, 1);
+    }
+
+
     /**
      * @param array<mixed> $contentBuffer
      */

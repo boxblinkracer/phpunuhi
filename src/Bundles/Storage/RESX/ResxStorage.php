@@ -79,7 +79,7 @@ class ResxStorage implements StorageInterface
             $totalCount += $this->saveTranslationLocale($locale, $locale->getFilename());
         }
 
-        return new StorageSaveResult(count($set->getLocales()), 0);
+        return new StorageSaveResult(count($set->getLocales()), $totalCount);
     }
 
 
@@ -89,6 +89,14 @@ class ResxStorage implements StorageInterface
 
         return new StorageSaveResult(1, $totalCount);
     }
+
+    public function saveTranslation(Translation $translation, Locale $locale): StorageSaveResult
+    {
+        $this->saveTranslationLocale($locale, $locale->getFilename());
+
+        return new StorageSaveResult(1, 1);
+    }
+
 
     /**
      * @param Translation[] $translations

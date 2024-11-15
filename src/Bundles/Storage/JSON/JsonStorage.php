@@ -11,6 +11,7 @@ use PHPUnuhi\Bundles\Storage\StorageHierarchy;
 use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Bundles\Storage\StorageSaveResult;
 use PHPUnuhi\Models\Translation\Locale;
+use PHPUnuhi\Models\Translation\Translation;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
 class JsonStorage implements StorageInterface
@@ -96,5 +97,12 @@ class JsonStorage implements StorageInterface
         $translationsCount = $this->saver->saveLocale($locale, $this->getHierarchy(), $filename);
 
         return new StorageSaveResult(1, $translationsCount);
+    }
+
+    public function saveTranslation(Translation $translation, Locale $locale): StorageSaveResult
+    {
+        $this->saveTranslationLocale($locale, $locale->getFilename());
+
+        return new StorageSaveResult(1, 1);
     }
 }

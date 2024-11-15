@@ -10,6 +10,7 @@ use PHPUnuhi\Bundles\Storage\StorageSaveResult;
 use PHPUnuhi\Bundles\Storage\YAML\Services\YamlLoader;
 use PHPUnuhi\Bundles\Storage\YAML\Services\YamlSaver;
 use PHPUnuhi\Models\Translation\Locale;
+use PHPUnuhi\Models\Translation\Translation;
 use PHPUnuhi\Models\Translation\TranslationSet;
 use PHPUnuhi\Traits\ArrayTrait;
 
@@ -87,5 +88,12 @@ class YamlStorage implements StorageInterface
         $translationCount = $this->saver->saveTranslations($locale, $delimiter, $filename);
 
         return new StorageSaveResult(1, $translationCount);
+    }
+
+    public function saveTranslation(Translation $translation, Locale $locale): StorageSaveResult
+    {
+        $this->saveTranslationLocale($locale, $locale->getFilename());
+
+        return new StorageSaveResult(1, 1);
     }
 }

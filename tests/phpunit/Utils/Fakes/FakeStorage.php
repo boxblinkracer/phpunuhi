@@ -8,6 +8,7 @@ use PHPUnuhi\Bundles\Storage\StorageHierarchy;
 use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Bundles\Storage\StorageSaveResult;
 use PHPUnuhi\Models\Translation\Locale;
+use PHPUnuhi\Models\Translation\Translation;
 use PHPUnuhi\Models\Translation\TranslationSet;
 
 class FakeStorage implements StorageInterface
@@ -46,6 +47,11 @@ class FakeStorage implements StorageInterface
     }
 
     public function saveTranslationLocale(Locale $locale, string $filename): StorageSaveResult
+    {
+        return new StorageSaveResult(0, 0);
+    }
+
+    public function saveTranslation(Translation $translation, Locale $locale): StorageSaveResult
     {
         return new StorageSaveResult(0, 0);
     }

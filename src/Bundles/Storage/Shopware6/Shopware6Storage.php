@@ -16,6 +16,7 @@ use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Bundles\Storage\StorageSaveResult;
 use PHPUnuhi\Exceptions\ConfigurationException;
 use PHPUnuhi\Models\Translation\Locale;
+use PHPUnuhi\Models\Translation\Translation;
 use PHPUnuhi\Models\Translation\TranslationSet;
 use PHPUnuhi\Services\Connection\ConnectionFactory;
 
@@ -147,7 +148,18 @@ class Shopware6Storage implements StorageInterface
 
             return new StorageSaveResult(0, 0);
         }
-        throw new Exception('Not supported at the moment');
+
+        throw new Exception('Saving a single locale in the database is currently not supported');
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function saveTranslation(Translation $translation, Locale $locale): StorageSaveResult
+    {
+        $this->saveTranslationLocale($locale, $locale->getFilename());
+
+        return new StorageSaveResult(1, 1);
     }
 
     /**

@@ -109,6 +109,8 @@ class TranslateCommand extends Command
 
             $io->section('Translation Set: ' . $set->getName());
 
+            $storageSaver = StorageFactory::getInstance()->getStorage($set);
+
             $allIDs = $set->getAllTranslationIDs();
 
             # first iterate through ids
@@ -162,6 +164,9 @@ class TranslateCommand extends Command
 
                         # -----------------------------------------------------------------------------------------------------------------------------------
 
+                        # immediately save translation to storage
+                        $storageSaver->saveTranslation($currentTranslation, $locale);
+
                         $io->writeln('   [~] Translated "' . $currentTranslation->getID() . '" (' . $locale->getName() . ') => ' . $newTranslation);
 
                         if ($newTranslation !== '' && $newTranslation !== '0') {
@@ -178,14 +183,7 @@ class TranslateCommand extends Command
 
             if ($translatedInSet <= 0) {
                 $io->note('nothing translated in this set...');
-                continue;
             }
-
-            $io->block('saving translations of this set...');
-
-            $storageSaver = StorageFactory::getInstance()->getStorage($set);
-
-            $storageSaver->saveTranslationSet($set);
         }
 
         if ($translator instanceof OpenAITranslator) {
