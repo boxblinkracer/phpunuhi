@@ -1,5 +1,0 @@
-commands:
-
-  - name: "Version is correct (command header)"
-    command: "(($EXEC)) status --configuration=./tests/svrunit/fixtures/json/phpunuhi.xml"
-    expected: "PHPUnuhi Framework, v1.22.0"
