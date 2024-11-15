@@ -37,7 +37,7 @@ jobs:
         # -----------------------------------
       - name: Check Release
         run: |
-          make check-release version=${{ inputs.PHP_VERSION }}
+          make check-release version=${{ inputs.VERSION }}
 
   build:
     name: Build Artifacts
