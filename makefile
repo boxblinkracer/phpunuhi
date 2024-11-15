@@ -110,6 +110,12 @@ svrunit: ##3 Runs all SVRUnit tests
 
 #------------------------------------------------------------------------------------------------
 
+check-release: ##4 Checks if everything is fine to release the provided version
+ifndef version
+	$(error version is not set)
+endif
+	php tests/scripts/check_xsd.php $(version)
+
 artifact: ##4 Create a ZIP file in the build folder
 	cd .build && zip phpunuhi.zip phpunuhi.phar
 

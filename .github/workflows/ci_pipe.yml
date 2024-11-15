@@ -22,23 +22,6 @@ jobs:
 
   # ------------------------------------------------------------------------------------------------------------------------
 
-  checks:
-    name: Release Checks
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        # -----------------------------------
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 8.2
-        # -----------------------------------
-      - name: Check XSD for release version
-        run: |
-          php tests/scripts/check_xsd.php dev-main
-
-  # ------------------------------------------------------------------------------------------------------------------------
-
   release:
     name: Release Pipeline
     uses: ./.github/workflows/step_release.yml
