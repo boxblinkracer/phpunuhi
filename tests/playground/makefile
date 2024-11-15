@@ -1,6 +1,11 @@
-# Central Makefile
 
 MAKEFILE_DIR := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
+
+#--------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------
+# REQUIRED FROM PLAYGROUND FOLDERS
+#    * FOLDER: their folder name
+
 
 #--------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------
@@ -17,9 +22,11 @@ EXECUTE := $(BINARY) --configuration=$(TEST_FOLDER)
 REPORT_FORMAT := junit
 EXPORT_FORMAT := html
 SPELLING_SERVICE := aspell
+SCANNER_SERVICE := mjml
 TRANSLATION_SERVICE := googleweb
 #--------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------
+
 
 help:
 	@printf "\033[33mStatus:\033[0m\n"
@@ -38,6 +45,7 @@ help:
 
 services: ##1 services
 	$(EXECUTE) services
+	make post-service
 
 status: ##1 status
 	$(EXECUTE) status
@@ -94,4 +102,4 @@ migrate: ##4 migrate
 	$(EXECUTE) migrate --output=json
 
 scan: ##4 scan
-	$(EXECUTE) scan:usage --dir=./tests/playground/json/templates --scanner=mjml --verbose
+	$(EXECUTE) scan:usage --dir=./tests/playground/json/templates --scanner=$(SCANNER_SERVICE) --verbose

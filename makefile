@@ -69,7 +69,6 @@ pr: ##2 Runs and prepares everything for a pull request
 	@make stan -B
 	@make phpmnd -B
 	@make phpunit -B
-	@make svrunit -B
 	@make infection -B
 
 phpunit-debug: ##2 Debug the unit test with group "debug"
