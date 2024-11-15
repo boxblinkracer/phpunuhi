@@ -164,9 +164,6 @@ class TranslateCommand extends Command
 
                         # -----------------------------------------------------------------------------------------------------------------------------------
 
-                        # immediately save translation to storage
-                        $storageSaver->saveTranslation($currentTranslation, $locale);
-
                         $io->writeln('   [~] Translated "' . $currentTranslation->getID() . '" (' . $locale->getName() . ') => ' . $newTranslation);
 
                         if ($newTranslation !== '' && $newTranslation !== '0') {
@@ -177,6 +174,10 @@ class TranslateCommand extends Command
                         } else {
                             $translateFailedCount++;
                         }
+
+                        # we NOW save after updating the original one
+                        # just in case the storage format uses the translation-set value for the translation
+                        $storageSaver->saveTranslation($currentTranslation, $locale);
                     }
                 }
             }
