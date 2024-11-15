@@ -41,9 +41,11 @@ help:
 #------------------------------------------------------------------------------------------------
 
 prod: ##1 Installs all prod dependencies
+	composer validate
 	composer install --no-dev
 
 dev: ##1 Installs all dev dependencies
+	composer validate
 	composer install --ignore-platform-req=ext-intl
 
 clean: ##1 Clears all dependencies
@@ -110,11 +112,16 @@ svrunit: ##3 Runs all SVRUnit tests
 
 #------------------------------------------------------------------------------------------------
 
-check-release: ##4 Checks if everything is fine to release the provided version
+check-release: ##4 Checks if everything is valid to release the provided version
 ifndef version
 	$(error version is not set)
 endif
-	php tests/scripts/check_xsd.php $(version)
+	@echo ""
+	@echo "Checking release for version $(version)"
+	@echo "--------------------------------------------------------"
+	@php tests/scripts/check_composer_version.php $(version)
+	@composer validate
+	@php tests/scripts/check_xsd.php $(version)
 
 artifact: ##4 Create a ZIP file in the build folder
 	cd .build && zip phpunuhi.zip phpunuhi.phar

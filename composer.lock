@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "913fb8b236f4629ee712f68047d46fc6",
+    "content-hash": "6ccd92ea89ee285f3ec13f7ee2c9dec9",
     "packages": [
         {
             "name": "deeplcom/deepl-php",
-            "version": "v1.9.0",
+            "version": "v1.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DeepLcom/deepl-php.git",
-                "reference": "fdf86cce24718d0ca4fa237e809951ec0d4835a8"
+                "reference": "a0957084135e92b3813971a893b305a5fed4e73d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DeepLcom/deepl-php/zipball/fdf86cce24718d0ca4fa237e809951ec0d4835a8",
-                "reference": "fdf86cce24718d0ca4fa237e809951ec0d4835a8",
+                "url": "https://api.github.com/repos/DeepLcom/deepl-php/zipball/a0957084135e92b3813971a893b305a5fed4e73d",
+                "reference": "a0957084135e92b3813971a893b305a5fed4e73d",
                 "shasum": ""
             },
             "require": {
@@ -65,9 +65,9 @@
             ],
             "support": {
                 "issues": "https://github.com/DeepLcom/deepl-php/issues",
-                "source": "https://github.com/DeepLcom/deepl-php/tree/v1.9.0"
+                "source": "https://github.com/DeepLcom/deepl-php/tree/v1.10.0"
             },
-            "time": "2024-09-17T08:33:38+00:00"
+            "time": "2024-11-15T11:24:00+00:00"
         },
         {
             "name": "firebase/php-jwt",

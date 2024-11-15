@@ -1,15 +1,20 @@
 {
     "name": "boxblinkracer/phpunuhi",
-    "version": "1.22.0",
+    "version": "1.23.0",
     "license": "MIT",
     "description": "Easy tool to work with translation files for validation, exports, imports and more.",
     "homepage": "https://github.com/boxblinkracer/phpunuhi",
     "keywords": [
         "translation",
+        "language",
         "deepl",
-        "open-ai",
+        "openai",
+        "spell-checker",
+        "grammar-checker",
         "shopware",
-        "dev"
+        "developer tools",
+        "automation",
+        "localization",
     ],
     "authors": [
         {
