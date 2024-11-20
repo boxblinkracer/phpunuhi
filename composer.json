@@ -77,6 +77,9 @@
             "tests/"
         ]
     },
+    "suggest": {
+        "TumTum/phpunuhi-export-excel": "Export translations directly into Spreadsheet for easy review and processing."
+    },
     "scripts": {
         "post-install-cmd": [
             "[ ! -f vendor/bin/phpcs ] || vendor/bin/phpcs --config-set installed_paths vendor/phpcompatibility/php-compatibility"

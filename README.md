@@ -109,7 +109,7 @@ Now that you know this, let's get started!
     * [8.15 Spell Checkers](#815-spell-checkers)
         * [8.15.1 Aspell](#8151-aspell)
         * [8.15.2 OpenAI](#8152-openai)
-
+* [9. Suggest](#9-suggest)
 <!-- TOC -->
 
 
@@ -1648,3 +1648,9 @@ Please make sure to install it properly on your system before using it.
 | fix:spelling, validate:spelling | --openai-model | The OpenAI model you want to use such as gpt-4o |
 
 With the OpenAI service you do even get improvements for gramma and not just spelling.
+
+## 9. Suggest
+
+* This extension, [phpunuhi-export-excel](https://github.com/TumTum/phpunuhi-export-excel), _is optional_ and enables 
+  the export of translations into a spreadsheet file. With this functionality, all translation data can be conveniently 
+  stored and managed in a spreadsheet format. It is ideal for exporting and importing translations.
