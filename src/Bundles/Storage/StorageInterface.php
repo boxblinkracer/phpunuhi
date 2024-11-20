@@ -67,4 +67,11 @@ interface StorageInterface
      * waiting for certain processes to complete.
      */
     public function saveTranslation(Translation $translation, Locale $locale): StorageSaveResult;
+
+    /**
+     * Get the content file template to create automate files.
+     *
+     * @return string The content file template.
+     */
+    public function getContentFileTemplate(): string;
 }

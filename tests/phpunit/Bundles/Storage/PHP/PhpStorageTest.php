@@ -43,4 +43,10 @@ class PhpStorageTest extends TestCase
         $this->assertTrue($hierarchy->isNestedStorage());
         $this->assertEquals('.', $hierarchy->getDelimiter());
     }
+
+    public function testContentFileTemplate(): void
+    {
+        $content = $this->storage->getContentFileTemplate();
+        $this->assertStringEqualsFile(__DIR__ . '/../../../../../src/Bundles/Storage/PHP/Template/StorageFileTemplate.php', $content);
+    }
 }

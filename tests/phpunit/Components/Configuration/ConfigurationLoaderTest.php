@@ -15,6 +15,7 @@ use PHPUnuhi\Services\Loaders\Xml\XmlLoader;
 use PHPUnuhi\Tests\Utils\Fakes\FakeStorage;
 use PHPUnuhi\Tests\Utils\Fakes\FakeStorageNoFilter;
 use PHPUnuhi\Tests\Utils\Fakes\FakeXmlLoader;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ConfigurationLoaderTest extends TestCase
 {
@@ -24,8 +25,9 @@ class ConfigurationLoaderTest extends TestCase
     public function testNonExistingFileThrowsException(): void
     {
         $this->expectException(Exception::class);
+        $io = $this->createMock(SymfonyStyle::class);
 
-        $loader = new ConfigurationLoader(new XmlLoader());
+        $loader = new ConfigurationLoader(new XmlLoader(), $io);
         $loader->load('not-existing.xml');
     }
 
@@ -205,7 +207,12 @@ class ConfigurationLoaderTest extends TestCase
         StorageFactory::getInstance()->resetStorages();
         StorageFactory::getInstance()->registerStorage($storage);
 
-        $loader = new ConfigurationLoader(new FakeXmlLoader($xml));
+        $io = $this->createMock(SymfonyStyle::class);
+        $io->expects($this->any())
+            ->method('askQuestion')
+            ->willReturn('no');
+
+        $loader = new ConfigurationLoader(new FakeXmlLoader($xml), $io);
 
         return $loader->load('not-existing.xml');
     }

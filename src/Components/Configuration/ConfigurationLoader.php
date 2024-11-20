@@ -7,6 +7,7 @@ namespace PHPUnuhi\Configuration;
 use Exception;
 use PHPUnuhi\Bundles\Storage\StorageFactory;
 use PHPUnuhi\Components\Filter\FilterHandler;
+use PHPUnuhi\Configuration\Services\CommandPrompt;
 use PHPUnuhi\Configuration\Services\ConfigurationValidator;
 use PHPUnuhi\Configuration\Services\CoverageLoader;
 use PHPUnuhi\Configuration\Services\FilterLoader;
@@ -15,6 +16,7 @@ use PHPUnuhi\Configuration\Services\LocalesPlaceholderProcessor;
 use PHPUnuhi\Configuration\Services\ProtectionLoader;
 use PHPUnuhi\Configuration\Services\RulesLoader;
 use PHPUnuhi\Configuration\Services\StyleLoader;
+use PHPUnuhi\Configuration\Services\TranslationFile;
 use PHPUnuhi\Exceptions\ConfigurationException;
 use PHPUnuhi\Models\Configuration\Attribute;
 use PHPUnuhi\Models\Configuration\CaseStyleSetting;
@@ -27,11 +29,11 @@ use PHPUnuhi\Models\Translation\TranslationSet;
 use PHPUnuhi\Services\Loaders\Xml\XmlLoaderInterface;
 use PHPUnuhi\Traits\XmlTrait;
 use SimpleXMLElement;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ConfigurationLoader
 {
     use XmlTrait;
-
 
     private XmlLoaderInterface $xmlLoader;
 
@@ -58,8 +60,9 @@ class ConfigurationLoader
 
     private LocalesPlaceholderProcessor $localesPlaceholderProcessor;
 
+    private TranslationFile $translationFile;
 
-    public function __construct(XmlLoaderInterface $xmlLoader)
+    public function __construct(XmlLoaderInterface $xmlLoader, SymfonyStyle $style)
     {
         $this->xmlLoader = $xmlLoader;
 
@@ -72,6 +75,7 @@ class ConfigurationLoader
         $this->protectionLoader = new ProtectionLoader();
         $this->coverageLoader = new CoverageLoader();
         $this->localesPlaceholderProcessor = new LocalesPlaceholderProcessor();
+        $this->translationFile = new TranslationFile(new CommandPrompt($style));
     }
 
 
@@ -144,6 +148,8 @@ class ConfigurationLoader
         if (count($config->getTranslationSets()) <= 0) {
             throw new ConfigurationException('Invalid configuration! No translation-sets have been found!');
         }
+
+        $this->translationFile->autoCreate($config);
 
         $this->configValidator->validateConfig($config);
 

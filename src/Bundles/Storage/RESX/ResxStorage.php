@@ -133,4 +133,9 @@ class ResxStorage implements StorageInterface
 
         return $totalCount;
     }
+
+    public function getContentFileTemplate(): string
+    {
+        return file_get_contents(__DIR__ . "/Template/StorageFileTemplate.resx") ?: '';
+    }
 }

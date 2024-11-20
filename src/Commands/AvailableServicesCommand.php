@@ -50,7 +50,7 @@ class AvailableServicesCommand extends Command
 
         $configFile = $this->getConfigFile($input);
 
-        $configLoader = new ConfigurationLoader(new XmlLoader());
+        $configLoader = new ConfigurationLoader(new XmlLoader(), $io);
         $configLoader->load($configFile);
 
         # -----------------------------------------------------------------

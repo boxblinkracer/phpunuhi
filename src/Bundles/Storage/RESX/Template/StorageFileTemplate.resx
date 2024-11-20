@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root xmlns="http://schemas.microsoft.com/winfx/2006/xaml">
+<!-- Example
+    <data name="Hello">
+        <value>Hallo</value>
+    </data>
+    <data name="Logo" type="System.Drawing.Bitmap, System.Drawing">
+        <value>Image content not needed</value>
+    </data>
+-->
+ </root>
