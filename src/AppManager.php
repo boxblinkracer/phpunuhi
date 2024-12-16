@@ -25,9 +25,13 @@ use PHPUnuhi\Commands\ValidateSimilarityCommand;
 use PHPUnuhi\Commands\ValidateSpellingCommand;
 use PHPUnuhi\Commands\ValidateStructureCommand;
 use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Command\Command;
 
 class AppManager
 {
+    /** @var array<Command> $extensionCommands  */
+    private static array $extensionCommands = [];
+
     /**
      * @throws Exception
      */
@@ -61,8 +65,17 @@ class AppManager
 
         $application->add(new FixSpellingCommand());
 
+        foreach (self::$extensionCommands as $command) {
+            $application->add($command);
+        }
+
         $application->setDefaultCommand('list');
 
         $application->run();
+    }
+
+    public static function registerExtensionCommand(Command $command): void
+    {
+        self::$extensionCommands[$command->getName()] = $command;
     }
 }
