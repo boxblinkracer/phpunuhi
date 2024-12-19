@@ -24,58 +24,118 @@ use PHPUnuhi\Commands\ValidateMessCommand;
 use PHPUnuhi\Commands\ValidateSimilarityCommand;
 use PHPUnuhi\Commands\ValidateSpellingCommand;
 use PHPUnuhi\Commands\ValidateStructureCommand;
+use PHPUnuhi\Exceptions\ConfigurationException;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;
 
 class AppManager
 {
-    /** @var array<Command> $extensionCommands  */
+    /**
+     * @var array<Command> $extensionCommands
+     */
     private static array $extensionCommands = [];
+
 
     /**
      * @throws Exception
      */
     public static function run(): void
     {
+        // Check if configuration argument is provided
+        global $argv;
+        $configPath = self::getConfigurationPath($argv);
+
+        // Load bootstrap if specified in the configuration
+        if ($configPath !== null) {
+            self::loadBootstrap($configPath);
+        }
+
         $application = new Application('PHPUnuhi', PHPUnuhi::getVersion());
 
-        $application->add(new AvailableServicesCommand());
-        $application->add(new StatusCommand());
-        $application->add(new ListTranslationKeysCommand());
-        $application->add(new ListTranslationsCommand());
-
-        $application->add(new ValidateCommand());
-        $application->add(new ValidateAllCommand());
-        $application->add(new ValidateMessCommand());
-        $application->add(new ValidateCoverageCommand());
-        $application->add(new ValidateStructureCommand());
-        $application->add(new ValidateSpellingCommand());
-        $application->add(new ValidateSimilarityCommand());
-
-        $application->add(new ImportCommand());
-        $application->add(new ExportCommand());
-
-        $application->add(new TranslateCommand());
-
-        $application->add(new MigrateCommand());
-        $application->add(new FixStructureCommand());
-        $application->add(new FixMessCommand());
-
-        $application->add(new ScanUsageCommand());
-
-        $application->add(new FixSpellingCommand());
+        // Register commands
+        $application->addCommands(self::getDefaultCommands());
 
         foreach (self::$extensionCommands as $command) {
             $application->add($command);
         }
 
         $application->setDefaultCommand('list');
-
         $application->run();
     }
+
+    /**
+     * @return Command[]
+     */
+    private static function getDefaultCommands(): array
+    {
+        return [
+            new AvailableServicesCommand(),
+            new StatusCommand(),
+            new ListTranslationKeysCommand(),
+            new ListTranslationsCommand(),
+            new ValidateCommand(),
+            new ValidateAllCommand(),
+            new ValidateMessCommand(),
+            new ValidateCoverageCommand(),
+            new ValidateStructureCommand(),
+            new ValidateSpellingCommand(),
+            new ValidateSimilarityCommand(),
+            new ImportCommand(),
+            new ExportCommand(),
+            new TranslateCommand(),
+            new MigrateCommand(),
+            new FixStructureCommand(),
+            new FixMessCommand(),
+            new ScanUsageCommand(),
+            new FixSpellingCommand(),
+        ];
+    }
+
 
     public static function registerExtensionCommand(Command $command): void
     {
         self::$extensionCommands[$command->getName()] = $command;
+    }
+
+
+    /**
+     * @param array<mixed> $args
+     */
+    private static function getConfigurationPath(array $args): ?string
+    {
+        foreach ($args as $arg) {
+            if (str_starts_with($arg, '--configuration=')) {
+                return str_replace('--configuration=', '', $arg);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Loads the bootstrap file if specified in the configuration XML.
+     *
+     * @throws Exception
+     */
+    private static function loadBootstrap(string $configPath): void
+    {
+        if (!file_exists($configPath)) {
+            throw new Exception("Configuration file not found: $configPath");
+        }
+
+        $xml = simplexml_load_string((string)file_get_contents($configPath));
+        if (!$xml) {
+            throw new Exception("Invalid XML in configuration file: $configPath");
+        }
+
+        $rootConfigDir = dirname($configPath) . '/';
+
+        $bootstrap = (string)($xml->attributes()->bootstrap ?? '');
+        $bootstrap = (string)realpath($rootConfigDir . '/' . $bootstrap);
+
+        if (file_exists($bootstrap)) {
+            require_once $bootstrap;
+        } elseif (!file_exists($bootstrap)) {
+            throw new ConfigurationException('Bootstrap file not found: ' . $bootstrap);
+        }
     }
 }

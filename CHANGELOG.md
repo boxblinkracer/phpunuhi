@@ -3,6 +3,12 @@
 All notable changes of releases are documented in this file
 using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
+## [unreleased]
+
+### Added
+
+- Add new feature to **register custom commands** if you write extensions for PHPUnuhi (thx @flkasper)
+
 ## [1.23.0]
 
 ### Added

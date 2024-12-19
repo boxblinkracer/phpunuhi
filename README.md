@@ -109,7 +109,9 @@ Now that you know this, let's get started!
     * [8.15 Spell Checkers](#815-spell-checkers)
         * [8.15.1 Aspell](#8151-aspell)
         * [8.15.2 OpenAI](#8152-openai)
-* [9. Suggest](#9-suggest)
+* [9. Custom Commands](#9-custom-commands)
+* [10. Suggest](#10-suggest)
+
 <!-- TOC -->
 
 
@@ -1361,11 +1363,11 @@ translation keys and their values.
 
 ```json 
 {
-  "id": "group--state_machine_018f6237aded716a9d5d74d49254115d.name",
-  "group": "state_machine_018f6237aded716a9d5d74d49254115d",
-  "key": "name",
-  "en-GB": "Refund state",
-  "de-DE": "Erstattungsstatus"
+    "id": "group--state_machine_018f6237aded716a9d5d74d49254115d.name",
+    "group": "state_machine_018f6237aded716a9d5d74d49254115d",
+    "key": "name",
+    "en-GB": "Refund state",
+    "de-DE": "Erstattungsstatus"
 }
 ```
 
@@ -1649,8 +1651,21 @@ Please make sure to install it properly on your system before using it.
 
 With the OpenAI service you do even get improvements for gramma and not just spelling.
 
-## 9. Suggest
+## 9. Custom Commands
 
-* This extension, [phpunuhi-export-excel](https://github.com/TumTum/phpunuhi-export-excel), _is optional_ and enables 
-  the export of translations into a spreadsheet file. With this functionality, all translation data can be conveniently 
+You can even create extension with custom commands.
+In that case, all you need to do, is to create a configuration XML that has a bootstrap file.
+
+In that bootstrap file, just load your classes and register your Symfony commands.
+
+```php 
+include_once __DIR__ . '/src/CustomCommand.php';
+
+\PHPUnuhi\AppManager::registerExtensionCommand(new CustomCommand());
+```
+
+## 10. Suggest
+
+* This extension, [phpunuhi-export-excel](https://github.com/TumTum/phpunuhi-export-excel), _is optional_ and enables
+  the export of translations into a spreadsheet file. With this functionality, all translation data can be conveniently
   stored and managed in a spreadsheet format. It is ideal for exporting and importing translations.

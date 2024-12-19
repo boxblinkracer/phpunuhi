@@ -1,0 +1,5 @@
+commands:
+
+  - name: "custom:command-xy from extension is working"
+    command: "(($EXEC)) custom:command-xy --configuration=./tests/svrunit/fixtures/custom-command/phpunuhi.xml"
+    expected: "PHPUnuhi Custom Command XY"
