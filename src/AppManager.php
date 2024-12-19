@@ -129,13 +129,18 @@ class AppManager
 
         $rootConfigDir = dirname($configPath) . '/';
 
-        $bootstrap = (string)($xml->attributes()->bootstrap ?? '');
-        $bootstrap = (string)realpath($rootConfigDir . '/' . $bootstrap);
+        $bootstrapFile = (string)($xml->attributes()->bootstrap ?? '');
 
-        if (file_exists($bootstrap)) {
-            require_once $bootstrap;
-        } elseif (!file_exists($bootstrap)) {
-            throw new ConfigurationException('Bootstrap file not found: ' . $bootstrap);
+        if ($bootstrapFile === '') {
+            return;
+        }
+
+        $bootstrapFixedFilename = (string)realpath($rootConfigDir . '/' . $bootstrapFile);
+
+        if (file_exists($bootstrapFixedFilename)) {
+            require_once $bootstrapFixedFilename;
+        } elseif (!file_exists($bootstrapFixedFilename)) {
+            throw new ConfigurationException('Bootstrap file not found: ' . $bootstrapFixedFilename);
         }
     }
 }
