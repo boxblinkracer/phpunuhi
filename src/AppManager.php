@@ -118,6 +118,8 @@ class AppManager
      */
     private static function loadBootstrap(string $configPath): void
     {
+        $configPath = self::getConfigFile($configPath);
+
         if (!file_exists($configPath)) {
             throw new Exception("Configuration file not found: $configPath");
         }
@@ -142,5 +144,22 @@ class AppManager
         } elseif (!file_exists($bootstrapFixedFilename)) {
             throw new ConfigurationException('Bootstrap file not found: ' . $bootstrapFixedFilename);
         }
+    }
+
+    /**
+     * TODO this is duplicate code from CommandTrait.php, but for now it works
+     */
+    private static function getConfigFile(string $configFile): string
+    {
+        $configFile = trim($configFile);
+
+        if ($configFile === '' || $configFile === '0') {
+            $configFile = 'phpunuhi.xml';
+        }
+
+        $cur_dir = explode('\\', (string)getcwd());
+        $workingDir = $cur_dir[count($cur_dir) - 1];
+
+        return $workingDir . '/' . $configFile;
     }
 }
