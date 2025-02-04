@@ -8,6 +8,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 ### Added
 
 - Add new feature to **register custom commands** if you write extensions for PHPUnuhi (thx @flkasper)
+- Add recommendation for the first ever community extension **Excel Exports** by @TumTum.
 
 ## [1.23.0]
 
