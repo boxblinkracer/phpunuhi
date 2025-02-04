@@ -29,7 +29,7 @@ class DirectoryLoader
                 if (!$file->isFile()) {
                     continue;
                 }
-                if (pathinfo($file->getFilename(), PATHINFO_EXTENSION) != $extension) {
+                if (pathinfo($file->getFilename(), PATHINFO_EXTENSION) !== $extension) {
                     continue;
                 }
                 $files[] = $file->getPathname();

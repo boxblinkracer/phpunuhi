@@ -19,10 +19,7 @@ class PoStorage implements StorageInterface
     use StringTrait;
 
 
-    /**
-     * @var bool
-     */
-    private $eolLast;
+    private ?bool $eolLast = null;
 
 
 
@@ -175,7 +172,7 @@ class PoStorage implements StorageInterface
         # last EOL is optional, so let's remove it first
         $content = rtrim($content, PHP_EOL);
 
-        if ($this->eolLast) {
+        if ($this->eolLast === true) {
             $content .= PHP_EOL;
         }
 

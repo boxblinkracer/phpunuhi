@@ -18,20 +18,13 @@ class PhpStorage implements StorageInterface
 {
     use ArrayTrait;
 
-    private PHPSaver $saver ;
+    private PHPSaver $saver;
 
     private PHPLoader $loader;
 
-    /**
-     * @var bool
-     */
-    private $sort;
+    private bool $sort = false;
 
-    /**
-     * @var bool
-     */
-    private $eolLast;
-
+    private bool $eolLast = false;
 
 
     public function __construct()

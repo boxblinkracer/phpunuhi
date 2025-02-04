@@ -29,6 +29,7 @@ class RulesValidator implements ValidatorInterface
             return new ValidationResult([]);
         }
 
+        /** @var RuleValidatorInterface[] $ruleValidators */
         $ruleValidators = [];
 
         foreach ($set->getRules() as $rule) {

@@ -93,6 +93,10 @@ class StringsStorage implements StorageInterface
 
         $lines = file($locale->getFilename());
 
+        if ($lines === false) {
+            $lines = [];
+        }
+
         if ($lines === []) {
             return $count;
         }

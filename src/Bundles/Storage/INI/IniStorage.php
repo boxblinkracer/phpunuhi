@@ -14,15 +14,9 @@ use PHPUnuhi\Models\Translation\TranslationSet;
 
 class IniStorage implements StorageInterface
 {
-    /**
-     * @var bool
-     */
-    private $sortIni;
+    private ?bool $sortIni = null;
 
-    /**
-     * @var bool
-     */
-    private $eolLast;
+    private ?bool $eolLast = null;
 
 
     public function getStorageName(): string
@@ -152,7 +146,7 @@ class IniStorage implements StorageInterface
             $preparedTranslations[$id] = $translation->getValue();
         }
 
-        if ($this->sortIni) {
+        if ($this->sortIni === true) {
             ksort($preparedTranslations);
         }
 
@@ -164,7 +158,7 @@ class IniStorage implements StorageInterface
         # last EOL is optional, so let's remove it first
         $content = rtrim($content, PHP_EOL);
 
-        if ($this->eolLast) {
+        if ($this->eolLast === true) {
             $content .= PHP_EOL;
         }
 
