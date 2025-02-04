@@ -72,6 +72,10 @@ class JUnitReporter implements ReporterInterface
             $this->directoryWriter->createDirectory($path);
         }
 
+        if (is_dir($filename)) {
+            $filename = rtrim($filename, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'junit.xml';
+        }
+
         $this->xmlWriter->saveXml($filename, $content);
     }
 }

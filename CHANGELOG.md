@@ -10,6 +10,10 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 - Add new feature to **register custom commands** if you write extensions for PHPUnuhi (thx @flkasper)
 - Add recommendation for the first ever community extension **Excel Exports** by @TumTum.
 
+### Changed
+
+- If a JUnit report gets a directory as output, then it will automatically append **junit.xml** to the path.
+
 ## [1.23.0]
 
 ### Added
