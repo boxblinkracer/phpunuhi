@@ -115,4 +115,9 @@ class PhpStorage implements StorageInterface
 
         return new StorageSaveResult(1, 1);
     }
+
+    public function getContentFileTemplate(): string
+    {
+        return file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'Template' . DIRECTORY_SEPARATOR . 'StorageFileTemplate.php') ?: '';
+    }
 }

@@ -43,4 +43,10 @@ class PoStorageTest extends TestCase
         $this->assertFalse($hierarchy->isNestedStorage());
         $this->assertEquals('', $hierarchy->getDelimiter());
     }
+
+    public function testContentFileTemplate(): void
+    {
+        $content = $this->storage->getContentFileTemplate();
+        $this->assertStringEqualsFile(__DIR__ . '/../../../../../src/Bundles/Storage/PO/Template/StorageFileTemplate.po', $content);
+    }
 }

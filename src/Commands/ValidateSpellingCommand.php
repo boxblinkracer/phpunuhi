@@ -78,7 +78,7 @@ class ValidateSpellingCommand extends Command
         # -----------------------------------------------------------------
         # -----------------------------------------------------------------
 
-        $configLoader = new ConfigurationLoader(new XmlLoader());
+        $configLoader = new ConfigurationLoader(new XmlLoader(), $io);
         $config = $configLoader->load($configFile);
 
         $validatorResult = $validatorCLI->execute($config->getTranslationSets());

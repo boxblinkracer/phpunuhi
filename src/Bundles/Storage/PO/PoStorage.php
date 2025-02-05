@@ -260,4 +260,9 @@ class PoStorage implements StorageInterface
 
         return $blocks;
     }
+
+    public function getContentFileTemplate(): string
+    {
+        return file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'Template' . DIRECTORY_SEPARATOR . 'StorageFileTemplate.po') ?: '';
+    }
 }
