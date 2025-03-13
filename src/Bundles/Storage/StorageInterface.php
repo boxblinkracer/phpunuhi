@@ -67,4 +67,6 @@ interface StorageInterface
      * waiting for certain processes to complete.
      */
     public function saveTranslation(Translation $translation, Locale $locale): StorageSaveResult;
+
+    public function storageAvailable(string $dsn): bool;
 }

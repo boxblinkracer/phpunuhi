@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PHPUnuhi\Bundles\Storage\PHP;
 
+use PHPUnuhi\Bundles\Storage\FileBasedStorageAvailableTrait;
 use PHPUnuhi\Bundles\Storage\PHP\Services\PHPLoader;
 use PHPUnuhi\Bundles\Storage\PHP\Services\PHPSaver;
 use PHPUnuhi\Bundles\Storage\StorageHierarchy;
@@ -18,6 +19,9 @@ class PhpStorage implements StorageInterface
 {
     use ArrayTrait;
 
+    use FileBasedStorageAvailableTrait;
+
+
     private PHPSaver $saver;
 
     private PHPLoader $loader;
@@ -29,7 +33,7 @@ class PhpStorage implements StorageInterface
 
     public function __construct()
     {
-        $this->loader = new PHPLoader();
+        $this->loader = new PHPLoader($this);
     }
 
 

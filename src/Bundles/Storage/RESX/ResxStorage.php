@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PHPUnuhi\Bundles\Storage\RESX;
 
 use Exception;
+use PHPUnuhi\Bundles\Storage\FileBasedStorageAvailableTrait;
 use PHPUnuhi\Bundles\Storage\StorageHierarchy;
 use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Bundles\Storage\StorageSaveResult;
@@ -15,6 +16,9 @@ use SimpleXMLElement;
 
 class ResxStorage implements StorageInterface
 {
+    use FileBasedStorageAvailableTrait;
+
+
     public function getStorageName(): string
     {
         return "resx";
@@ -49,6 +53,10 @@ class ResxStorage implements StorageInterface
     public function loadTranslationSet(TranslationSet $set): void
     {
         foreach ($set->getLocales() as $locale) {
+            if ($locale->isIgnoreMissing() && !$this->storageAvailable('file://' . $locale->getFilename())) {
+                continue;
+            }
+
             $xmlContent = (string)file_get_contents($locale->getFilename());
 
             $xml = new SimpleXMLElement($xmlContent);

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PHPUnuhi\Bundles\Storage\INI;
 
 use Exception;
+use PHPUnuhi\Bundles\Storage\FileBasedStorageAvailableTrait;
 use PHPUnuhi\Bundles\Storage\StorageHierarchy;
 use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Bundles\Storage\StorageSaveResult;
@@ -14,6 +15,9 @@ use PHPUnuhi\Models\Translation\TranslationSet;
 
 class IniStorage implements StorageInterface
 {
+    use FileBasedStorageAvailableTrait;
+
+
     private ?bool $sortIni = null;
 
     private ?bool $eolLast = null;
@@ -58,6 +62,10 @@ class IniStorage implements StorageInterface
     public function loadTranslationSet(TranslationSet $set): void
     {
         foreach ($set->getLocales() as $locale) {
+            if ($locale->isIgnoreMissing() && !$this->storageAvailable('file://' . $locale->getFilename())) {
+                continue;
+            }
+
             $iniArray = parse_ini_file($locale->getFilename(), true, INI_SCANNER_RAW);
 
             if ($iniArray === false) {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PHPUnuhi\Bundles\Storage\Strings;
 
+use PHPUnuhi\Bundles\Storage\FileBasedStorageAvailableTrait;
 use PHPUnuhi\Bundles\Storage\StorageHierarchy;
 use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Bundles\Storage\StorageSaveResult;
@@ -15,6 +16,9 @@ use PHPUnuhi\Traits\StringTrait;
 class StringsStorage implements StorageInterface
 {
     use StringTrait;
+
+    use FileBasedStorageAvailableTrait;
+
 
     public function getStorageName(): string
     {
@@ -43,6 +47,10 @@ class StringsStorage implements StorageInterface
     public function loadTranslationSet(TranslationSet $set): void
     {
         foreach ($set->getLocales() as $locale) {
+            if ($locale->isIgnoreMissing() && !$this->storageAvailable('file://' . $locale->getFilename())) {
+                continue;
+            }
+
             $lines = file($locale->getFilename());
             if ($lines === []) {
                 continue;

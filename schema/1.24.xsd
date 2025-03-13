@@ -230,12 +230,14 @@
                             <xs:attribute name="name" type="xs:string" use="required"/>
                             <xs:attribute name="base" type="xs:boolean" use="optional"/>
                             <xs:attribute name="iniSection" type="xs:string" use="optional"/>
+                            <xs:attribute name="ignoreMissing" type="xs:boolean" use="optional"/>
                         </xs:extension>
                     </xs:simpleContent>
                 </xs:complexType>
             </xs:element>
         </xs:sequence>
         <xs:attribute name="basePath" type="xs:string" use="optional"/>
+        <xs:attribute name="ignoreMissing" type="xs:boolean" use="optional"/>
     </xs:complexType>
 
     <!-- ================================================================================================================================ -->

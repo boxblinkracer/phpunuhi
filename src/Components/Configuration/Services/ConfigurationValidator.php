@@ -48,7 +48,7 @@ class ConfigurationValidator
                 }
 
                 $filename = $locale->getFilename();
-                if ($filename !== '' && !file_exists($filename)) {
+                if ($filename !== '' && !$locale->isIgnoreMissing() && !file_exists($filename)) {
                     throw new ConfigurationException('Attention, translation file not found: ' . $filename);
                 }
 

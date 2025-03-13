@@ -35,6 +35,7 @@ class LocalesLoader
 
         # load optional <locale basePath=xy">
         $basePath = $this->getAttribute('basePath', $rootLocales);
+        $ignoreMissing = $this->getBool($this->getAttribute('ignoreMissing', $rootLocales)->getValue());
 
         foreach ($rootLocales->children() as $nodeLocale) {
             $nodeType = $nodeLocale->getName();
@@ -47,6 +48,10 @@ class LocalesLoader
             $localeName = (string)$nodeLocale['name'];
             $iniSection = (string)$nodeLocale['iniSection'];
             $isBase = isset($nodeLocale['base']) && $this->getBool((string)$nodeLocale['base']);
+            $ignoreMissing = isset($nodeLocale['ignoreMissing']) && null !== $nodeLocale['ignoreMissing']
+                ? $this->getBool((string)$nodeLocale['ignoreMissing'])
+                : $ignoreMissing
+            ;
 
             $localeFile = $this->placholderProcessor->buildRealLocaleFilename(
                 $localeName,
@@ -55,7 +60,7 @@ class LocalesLoader
                 $configFilename
             );
 
-            $foundLocales[] = new Locale($localeName, $isBase, $localeFile, $iniSection);
+            $foundLocales[] = new Locale($localeName, $isBase, $localeFile, $iniSection, $ignoreMissing);
         }
 
         # check if we have 2 base locales, and throw an exception if so

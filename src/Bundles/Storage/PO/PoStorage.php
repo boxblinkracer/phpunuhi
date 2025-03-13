@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PHPUnuhi\Bundles\Storage\PO;
 
 use Exception;
+use PHPUnuhi\Bundles\Storage\FileBasedStorageAvailableTrait;
 use PHPUnuhi\Bundles\Storage\PO\Models\Block;
 use PHPUnuhi\Bundles\Storage\StorageHierarchy;
 use PHPUnuhi\Bundles\Storage\StorageInterface;
@@ -17,6 +18,8 @@ use PHPUnuhi\Traits\StringTrait;
 class PoStorage implements StorageInterface
 {
     use StringTrait;
+
+    use FileBasedStorageAvailableTrait;
 
 
     private ?bool $eolLast = null;
@@ -61,6 +64,10 @@ class PoStorage implements StorageInterface
     public function loadTranslationSet(TranslationSet $set): void
     {
         foreach ($set->getLocales() as $locale) {
+            if ($locale->isIgnoreMissing() && !$this->storageAvailable('file://' . $locale->getFilename())) {
+                continue;
+            }
+
             $lines = $this->getLines($locale->getFilename());
             $blocks = $this->getBlocks($lines);
 

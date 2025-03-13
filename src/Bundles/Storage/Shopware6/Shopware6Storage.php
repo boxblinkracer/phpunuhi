@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PHPUnuhi\Bundles\Storage\Shopware6;
 
 use Exception;
+use PHPUnuhi\Bundles\Storage\FileBasedStorageAvailableTrait;
 use PHPUnuhi\Bundles\Storage\Shopware6\Config\AppManifestXml;
 use PHPUnuhi\Bundles\Storage\Shopware6\Config\FlowActionsXml;
 use PHPUnuhi\Bundles\Storage\Shopware6\Config\PluginConfigXml;
@@ -22,6 +23,9 @@ use PHPUnuhi\Services\Connection\ConnectionFactory;
 
 class Shopware6Storage implements StorageInterface
 {
+    use FileBasedStorageAvailableTrait;
+
+
     private TranslationLoader $loader;
 
     private TranslationSaver $saver;
@@ -92,23 +96,28 @@ class Shopware6Storage implements StorageInterface
      */
     public function loadTranslationSet(TranslationSet $set): void
     {
-        if ($this->type === 'config') {
-            foreach ($set->getLocales() as $locale) {
-
-                # reload xml for every locale is currently required
-                $this->validateConfigType($set->getLocales());
-
-                $xmlAdapter = $this->getXmlAdapter($set->getLocales());
-
-                $translations = $xmlAdapter->readTranslations($locale->getName());
-
-                foreach ($translations as $translationKey => $value) {
-                    $locale->addTranslation($translationKey, $value, '');
-                }
-            }
-        } else {
-            # type entity
+        if ($this->type === 'entity') {
             $this->loader->loadTranslations($set);
+
+            return;
+        }
+
+        # type config
+        foreach ($set->getLocales() as $locale) {
+            if ($locale->isIgnoreMissing() && !$this->storageAvailable('file://' . $locale->getFilename())) {
+                continue;
+            }
+
+            # reload xml for every locale is currently required
+            $this->validateConfigType($set->getLocales());
+
+            $xmlAdapter = $this->getXmlAdapter($set->getLocales());
+
+            $translations = $xmlAdapter->readTranslations($locale->getName());
+
+            foreach ($translations as $translationKey => $value) {
+                $locale->addTranslation($translationKey, $value, '');
+            }
         }
     }
 

@@ -27,14 +27,16 @@ class Locale
      */
     private array $lineNumbers = [];
 
+    private bool $ignoreMissing;
 
 
-    public function __construct(string $name, bool $isMain, string $filename, string $iniSection)
+    public function __construct(string $name, bool $isMain, string $filename, string $iniSection, bool $ignoreMissing)
     {
         $this->name = $name;
         $this->isBase = $isMain;
         $this->filename = $filename;
         $this->iniSection = $iniSection;
+        $this->ignoreMissing = $ignoreMissing;
     }
 
 
@@ -200,5 +202,10 @@ class Locale
             $oldExisting->getValue(),
             $oldExisting->getGroup()
         );
+    }
+
+    public function isIgnoreMissing(): bool
+    {
+        return $this->ignoreMissing;
     }
 }

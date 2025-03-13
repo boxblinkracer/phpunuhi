@@ -14,7 +14,7 @@ class LazyLocale extends Locale
         Locale $locale,
         LazyTranslationSet $lazyTranslationSet
     ) {
-        parent::__construct('', false, '', '');
+        parent::__construct('', false, '', '', false);
 
         $this->locale = $locale;
         $this->lazyTranslationSet = $lazyTranslationSet;
@@ -106,5 +106,10 @@ class LazyLocale extends Locale
     public function updateTranslationKey(string $oldKey, string $newKey): void
     {
         $this->locale->updateTranslationKey($oldKey, $newKey);
+    }
+
+    public function isIgnoreMissing(): bool
+    {
+        return $this->locale->isIgnoreMissing();
     }
 }

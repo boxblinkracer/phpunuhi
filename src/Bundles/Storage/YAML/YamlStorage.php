@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PHPUnuhi\Bundles\Storage\YAML;
 
+use PHPUnuhi\Bundles\Storage\FileBasedStorageAvailableTrait;
 use PHPUnuhi\Bundles\Storage\StorageHierarchy;
 use PHPUnuhi\Bundles\Storage\StorageInterface;
 use PHPUnuhi\Bundles\Storage\StorageSaveResult;
@@ -17,6 +18,7 @@ use PHPUnuhi\Traits\ArrayTrait;
 class YamlStorage implements StorageInterface
 {
     use ArrayTrait;
+    use FileBasedStorageAvailableTrait;
 
     private YamlLoader $loader;
     private YamlSaver $saver;
@@ -61,6 +63,10 @@ class YamlStorage implements StorageInterface
         $delimiter = $this->getHierarchy()->getDelimiter();
 
         foreach ($set->getLocales() as $locale) {
+            if ($locale->isIgnoreMissing() && !$this->storageAvailable('file://' . $locale->getFilename())) {
+                continue;
+            }
+
             $this->loader->loadLocale($locale, $delimiter);
         }
     }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PHPUnuhi\Bundles\Storage\JSON;
 
 use Exception;
+use PHPUnuhi\Bundles\Storage\FileBasedStorageAvailableTrait;
 use PHPUnuhi\Bundles\Storage\JSON\Services\JsonLoader;
 use PHPUnuhi\Bundles\Storage\JSON\Services\JsonSaver;
 use PHPUnuhi\Bundles\Storage\StorageHierarchy;
@@ -16,6 +17,10 @@ use PHPUnuhi\Models\Translation\TranslationSet;
 
 class JsonStorage implements StorageInterface
 {
+    use FileBasedStorageAvailableTrait;
+
+
+
     private JsonLoader $loader ;
 
     private JsonSaver $saver ;
@@ -72,6 +77,10 @@ class JsonStorage implements StorageInterface
     public function loadTranslationSet(TranslationSet $set): void
     {
         foreach ($set->getLocales() as $locale) {
+            if ($locale->isIgnoreMissing() && !$this->storageAvailable('file://' . $locale->getFilename())) {
+                continue;
+            }
+
             $this->loader->loadTranslations($locale, $this->getHierarchy());
         }
     }
