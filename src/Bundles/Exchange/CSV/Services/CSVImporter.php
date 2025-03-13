@@ -45,7 +45,7 @@ class CSVImporter
             } else {
                 $startIndex = 1;
 
-                if (in_array('Group', $headerFiles)) {
+                if (in_array('Group', $headerFiles, true)) {
                     $group = $row[0];
                     $key = $row[1];
                     $startIndex = 2;

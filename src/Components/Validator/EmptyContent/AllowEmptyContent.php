@@ -9,13 +9,13 @@ class AllowEmptyContent
     private string $key;
 
     /**
-     * @var array<mixed>
+     * @var list<string>
      */
     private array $locales;
 
 
     /**
-     * @param mixed[] $locales
+     * @param list<string> $locales
      */
     public function __construct(string $key, array $locales)
     {
@@ -38,10 +38,10 @@ class AllowEmptyContent
         }
 
         # if we have a locale with * wildcard, we also allow all locales to be empty
-        if (in_array('*', $this->locales)) {
+        if (in_array('*', $this->locales, true)) {
             return true;
         }
 
-        return in_array($locale, $this->locales);
+        return in_array($locale, $this->locales, true);
     }
 }

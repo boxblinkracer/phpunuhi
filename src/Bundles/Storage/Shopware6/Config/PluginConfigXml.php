@@ -159,12 +159,6 @@ class PluginConfigXml implements ShopwareXmlInterface
 
     private function getInput(DOMXPath $xpath, string $name, DOMElement $card): ?DOMElement
     {
-        /** @var DOMElement[] $nodes */
-        $nodes = $xpath->query('.//input-field[name="' . $name . '"]', $card);
-
-        foreach ($nodes as $existingInput) {
-            return $existingInput;
-        }
-        return null;
+        return $xpath->query('.//input-field[name="' . $name . '"]', $card)->item(0) ?: null;
     }
 }

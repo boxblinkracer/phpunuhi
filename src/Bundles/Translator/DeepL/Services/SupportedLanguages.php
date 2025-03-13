@@ -15,7 +15,7 @@ class SupportedLanguages
     /**
      * @var array<DeepL\Language>
      */
-    private static $supportedLanguages;
+    private static array $supportedLanguages;
 
     private const must_have_country = [
         'en' => 'en-gb',
@@ -45,7 +45,7 @@ class SupportedLanguages
             $locale = $matches[1];
         }
 
-        if (isset($localeCountry) && isset($supportedLocales[$localeCountry])) {
+        if (isset($localeCountry, $supportedLocales[$localeCountry])) {
             return $localeCountry;
         }
 

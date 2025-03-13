@@ -51,10 +51,11 @@ class LocalesPlaceholderProcessor
 
 
         # replace our locale-name placeholders
-        $filename = str_replace('%locale%', $localeName, $filename);
-        $filename = str_replace('%locale_uc%', strtoupper($localeName), $filename);
-        $filename = str_replace('%locale_lc%', strtolower($localeName), $filename);
-        $filename = str_replace('%locale_un%', str_replace('-', '_', $localeName), $filename);
+        $filename = str_replace(
+            [ '%locale%', '%locale_uc%', '%locale_lc%', '%locale_un%' ],
+            [ $localeName, strtoupper($localeName), strtolower($localeName), str_replace('-', '_', $localeName) ],
+            $filename
+        );
 
         # clear duplicate slashes that exist somehow
         $filename = str_replace('//', '/', $filename);

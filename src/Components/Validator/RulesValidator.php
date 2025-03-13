@@ -65,8 +65,10 @@ class RulesValidator implements ValidatorInterface
         foreach ($ruleValidators as $validator) {
             $result = $validator->validate($set, $storage);
 
-            $allTests = array_merge($allTests, $result->getTests());
+            $allTests[] = $result->getTests();
         }
+
+        $allTests = array_merge([], ...$allTests);
 
         return new ValidationResult($allTests);
     }

@@ -148,7 +148,7 @@ class EntityTranslationRepository
             $value = $fieldValue->getValue();
 
             # make sure empty JSON fields are NULL
-            if ($value === '' && in_array($fieldValue->getField(), $jsonFields)) {
+            if ($value === '' && in_array($fieldValue->getField(), $jsonFields, true)) {
                 $value = null;
             }
 

@@ -37,7 +37,7 @@ class CaseStyleValidator implements ValidatorInterface
         $caseStyles = $set->getCasingStyleSettings()->getCaseStyles();
         $ignoreKeys = $set->getCasingStyleSettings()->getIgnoreKeys();
 
-        $allowedCaseStylesText = implode(', ', array_map(function (CaseStyle $caseStyle): string {
+        $allowedCaseStylesText = implode(', ', array_map(static function (CaseStyle $caseStyle): string {
             return $caseStyle->getName();
         }, $caseStyles));
 

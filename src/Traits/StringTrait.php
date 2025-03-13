@@ -14,8 +14,7 @@ trait StringTrait
 
     protected function stringDoesStartsWith(string $string, string $startString): bool
     {
-        $len = strlen($startString);
-        return (substr($string, 0, $len) === $startString);
+        return 0 === strpos($string, $startString);
     }
 
 

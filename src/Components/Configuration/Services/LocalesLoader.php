@@ -27,7 +27,7 @@ class LocalesLoader
 
     /**
      * @throws ConfigurationException
-     * @return array<mixed>
+     * @return list<Locale>
      */
     public function loadLocales(SimpleXMLElement $rootLocales, string $configFilename): array
     {
@@ -59,7 +59,7 @@ class LocalesLoader
         }
 
         # check if we have 2 base locales, and throw an exception if so
-        $baseLocales = array_filter($foundLocales, function (Locale $locale): bool {
+        $baseLocales = array_filter($foundLocales, static function (Locale $locale): bool {
             return $locale->isBase();
         });
 

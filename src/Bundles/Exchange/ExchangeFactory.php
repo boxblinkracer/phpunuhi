@@ -14,7 +14,7 @@ use PHPUnuhi\Models\Command\CommandOption;
 
 class ExchangeFactory
 {
-    private static ?\PHPUnuhi\Bundles\Exchange\ExchangeFactory $instance = null;
+    private static ?ExchangeFactory $instance = null;
 
     /**
      * @var ExchangeInterface[]
@@ -24,7 +24,7 @@ class ExchangeFactory
 
     public static function getInstance(): ExchangeFactory
     {
-        if (!self::$instance instanceof \PHPUnuhi\Bundles\Exchange\ExchangeFactory) {
+        if (!self::$instance instanceof self) {
             self::$instance = new self();
         }
 
@@ -84,14 +84,14 @@ class ExchangeFactory
         $options = [];
 
         foreach ($this->exchangeServices as $exchangeService) {
-            $options = array_merge($exchangeService->getOptions(), $options);
+            $options[] = $exchangeService->getOptions();
         }
 
-        return $options;
+        return array_merge([], ...array_reverse($options));
     }
 
     /**
-     * @param array<mixed> $options
+     * @param array<string|bool|int|float|array|null> $options
      * @throws Exception
      */
     public function getExchange(string $format, array $options): ExchangeInterface

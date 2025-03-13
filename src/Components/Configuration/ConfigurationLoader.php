@@ -122,8 +122,10 @@ class ConfigurationLoader
             # load translation-sets
             $suites = $this->loadTranslationSets($fileXmlNode, $fullFilename);
 
-            $allSuites = array_merge($allSuites, $suites);
+            $allSuites[] = $suites;
         }
+
+        $allSuites = array_merge([], ...$allSuites);
 
         # create and validate the configuration object
         $config = new Configuration($allSuites);

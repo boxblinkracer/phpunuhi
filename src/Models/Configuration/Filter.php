@@ -28,7 +28,7 @@ class Filter
 
     public function addIncludeKey(string $key): void
     {
-        if (in_array($key, $this->fieldsAllow)) {
+        if (in_array($key, $this->fieldsAllow, true)) {
             return;
         }
 
@@ -38,7 +38,7 @@ class Filter
 
     public function addExcludeKey(string $key): void
     {
-        if (in_array($key, $this->fieldsExclude)) {
+        if (in_array($key, $this->fieldsExclude, true)) {
             return;
         }
 

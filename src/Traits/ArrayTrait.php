@@ -13,15 +13,20 @@ trait ArrayTrait
     protected function getFlatArray(array $array, string $delimiter, string $rootPrefix = ''): array
     {
         $result = [];
+        $nestedResults = [];
 
         foreach ($array as $key => $value) {
             $newKey = $rootPrefix . ($rootPrefix === '' || $rootPrefix === '0' ? '' : $delimiter) . $key;
 
             if (is_array($value)) {
-                $result = array_merge($result, $this->getFlatArray($value, $delimiter, $newKey));
+                $nestedResults[] = $this->getFlatArray($value, $delimiter, $newKey);
             } else {
                 $result[$newKey] = $value;
             }
+        }
+
+        if ([] !== $nestedResults) {
+            $result = array_merge($result, ...$nestedResults);
         }
 
         return $result;
@@ -39,20 +44,19 @@ trait ArrayTrait
             '__LINE_NUMBER__' => $lineNumber
         ];
 
+        $nestedResults = [];
+
         foreach ($array as $key => $value) {
             $result['__LINE_NUMBER__']++;
             $newKey = $rootPrefix . ($rootPrefix === '' || $rootPrefix === '0' ? '' : $delimiter) . $key;
 
             if (is_array($value)) {
-                $result = array_merge(
-                    $result,
-                    $this->getLineNumbers(
-                        $value,
-                        $delimiter,
-                        $newKey,
-                        $result['__LINE_NUMBER__'],
-                        $closingBracket
-                    )
+                $nestedResults[] = $this->getLineNumbers(
+                    $value,
+                    $delimiter,
+                    $newKey,
+                    $result['__LINE_NUMBER__'],
+                    $closingBracket
                 );
 
                 if ($closingBracket) {
@@ -61,6 +65,10 @@ trait ArrayTrait
             } else {
                 $result[$newKey] = $result['__LINE_NUMBER__'];
             }
+        }
+
+        if ([] !== $nestedResults) {
+            $result = array_merge($result, ...$nestedResults);
         }
 
         return $result;

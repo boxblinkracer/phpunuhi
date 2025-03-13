@@ -175,7 +175,7 @@ class TranslationSet
     }
 
     /**
-     * @return array<mixed>
+     * @return list<string>
      */
     public function getAllTranslationIDs(): array
     {
@@ -183,7 +183,7 @@ class TranslationSet
 
         foreach ($this->locales as $locale) {
             foreach ($locale->getTranslationIDs() as $key) {
-                if (!in_array($key, $allIDs)) {
+                if (!in_array($key, $allIDs, true)) {
                     $allIDs[] = $key;
                 }
             }
@@ -275,7 +275,7 @@ class TranslationSet
 
     /**
      * @throws TranslationNotFoundException
-     * @return array<mixed>
+     * @return list<string>
      */
     public function getInvalidTranslationsIDs(): array
     {
@@ -336,8 +336,10 @@ class TranslationSet
             # we must not translate them (happens with DeepL, ...)
             $markerPlaceholders = $this->placeholderExtractor->extract($text, $marker->getStart(), $marker->getEnd());
 
-            $foundPlaceholders = array_merge($foundPlaceholders, $markerPlaceholders);
+            $foundPlaceholders[] = $markerPlaceholders;
         }
+
+        $foundPlaceholders = array_merge([], ...$foundPlaceholders);
 
         foreach ($this->getProtection()->getTerms() as $term) {
             # just add these as placeholders

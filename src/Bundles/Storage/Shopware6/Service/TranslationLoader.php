@@ -128,7 +128,7 @@ class TranslationLoader
                 foreach ($dbRow as $property => $value) {
 
                     # also exclude a few things hardcoded because they just make no sense
-                    if (in_array($property, self::FIELD_BLACKLIST)) {
+                    if (in_array($property, self::FIELD_BLACKLIST, true)) {
                         continue;
                     }
 

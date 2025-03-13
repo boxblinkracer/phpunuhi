@@ -156,8 +156,8 @@ class HTMLExporter
         $html .= "</body>";
         $html .= "</html>";
 
-        if (!file_exists($outputDir)) {
-            mkdir($outputDir);
+        if (!is_dir($outputDir) && !mkdir($outputDir) && !is_dir($outputDir)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $outputDir));
         }
 
         $fullFile = sprintf('%s/%s.html', $outputDir, $set->getName());

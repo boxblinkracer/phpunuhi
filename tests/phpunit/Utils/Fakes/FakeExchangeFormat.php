@@ -15,11 +15,17 @@ class FakeExchangeFormat implements ExchangeInterface
         return 'fake';
     }
 
+    /**
+     * @return array{}
+     */
     public function getOptions(): array
     {
         return [];
     }
 
+    /**
+     * @param array<string|bool|int|float|array|null> $options
+     */
     public function setOptionValues(array $options): void
     {
     }

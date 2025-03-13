@@ -57,7 +57,7 @@ class JsonSaver
 
         $json = preg_replace_callback(
             '/^ +/m',
-            function (array $m) use ($indentStr): string {
+            static function (array $m) use ($indentStr): string {
                 $repeat = (int)(strlen($m[0]) / 4);
                 return str_repeat($indentStr, $repeat);
             },

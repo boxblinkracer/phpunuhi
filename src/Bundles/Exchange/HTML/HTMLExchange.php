@@ -21,16 +21,15 @@ class HTMLExchange implements ExchangeInterface
     }
 
     /**
-     * @return CommandOption[]
+     * @return array{}
      */
     public function getOptions(): array
     {
-        return [
-        ];
+        return [];
     }
 
     /**
-     * @param array<mixed> $options
+     * @param array<string|bool|int|float|array|null> $options
      */
     public function setOptionValues(array $options): void
     {
@@ -50,7 +49,6 @@ class HTMLExchange implements ExchangeInterface
      */
     public function import(string $filename): ImportResult
     {
-        $importer = new HTMLImporter();
-        return $importer->import($filename);
+        return (new HTMLImporter())->import($filename);
     }
 }

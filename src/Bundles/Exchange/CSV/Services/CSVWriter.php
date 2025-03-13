@@ -10,8 +10,8 @@ class CSVWriter implements CSVWriterInterface
 {
     public function prepareDirectory(string $outputDir): void
     {
-        if (!file_exists($outputDir)) {
-            mkdir($outputDir, 0775, true);
+        if (!is_dir($outputDir) && !mkdir($outputDir, 0775, true) && !is_dir($outputDir)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $outputDir));
         }
     }
 

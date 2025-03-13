@@ -186,14 +186,7 @@ class FlowActionsXml implements ShopwareXmlInterface
 
     private function getNode(string $node, DOMNode $contextNode, DOMXPath $xpath): ?DOMElement
     {
-        /** @var DOMElement[] $nodes */
-        $nodes = $xpath->query('.//' . $node, $contextNode);
-
-        foreach ($nodes as $foundNode) {
-            return $foundNode;
-        }
-
-        return null;
+        return $xpath->query('.//' . $node, $contextNode)->item(0) ?: null;
     }
 
     /**
@@ -201,10 +194,7 @@ class FlowActionsXml implements ShopwareXmlInterface
      */
     private function getFlowActions(DOMXPath $xpath): array
     {
-        /** @var DOMElement[] $nodes */
-        $nodes = $xpath->query('//flow-actions/flow-action');
-
-        return $nodes;
+        return $xpath->query('//flow-actions/flow-action');
     }
 
 
@@ -230,11 +220,7 @@ class FlowActionsXml implements ShopwareXmlInterface
      */
     public function getFlowActionConfigs(string $actionName, DOMXPath $xpath): array
     {
-        $action = $this->getFlowAction($actionName, $xpath);
-
-        /** @var DOMElement[] $nodes */
-        $nodes = $xpath->query('//config/*', $action);
-        return $nodes;
+        return $xpath->query('//config/*', $this->getFlowAction($actionName, $xpath));
     }
 
     public function getFlowActionConfig(string $configName, string $actionName, DOMXPath $xpath): ?DOMElement
@@ -261,12 +247,7 @@ class FlowActionsXml implements ShopwareXmlInterface
      */
     public function getFlowActionConfigOptions(string $configName, string $actionName, DOMXPath $xpath): array
     {
-        $config = $this->getFlowActionConfig($configName, $actionName, $xpath);
-
-        /** @var DOMElement[] $nodes */
-        $nodes = $xpath->query('//options/*', $config);
-
-        return $nodes;
+        return $xpath->query('//options/*', $this->getFlowActionConfig($configName, $actionName, $xpath));
     }
 
     public function getFlowActionConfigOption(string $optionValue, string $configName, string $actionName, DOMXPath $xpath): ?DOMElement

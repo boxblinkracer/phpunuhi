@@ -33,7 +33,7 @@ class ValidateSimilarityCommand extends Command
     /**
      * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName(CommandNames::VALIDATE_SIMILARITY)
@@ -99,7 +99,7 @@ class ValidateSimilarityCommand extends Command
 
                     # our similar entry was already found as main entry
                     # so we dont need it twice
-                    if (in_array($pair['key2'], $foundMainKeys)) {
+                    if (in_array($pair['key2'], $foundMainKeys, true)) {
                         continue;
                     }
 

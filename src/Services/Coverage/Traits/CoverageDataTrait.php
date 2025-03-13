@@ -11,25 +11,23 @@ trait CoverageDataTrait
     /**
      * @var int
      */
-    protected $countAll;
+    protected int $countAll;
 
     /**
      * @var int
      */
-    protected $countTranslated;
+    protected int $countTranslated;
 
     /**
      * @var int
      */
-    protected $countWords;
+    protected int $countWords;
 
 
 
     public function getCoverage(): float
     {
-        $calculator = new PercentageCalculator();
-
-        return $calculator->getRoundedPercentage($this->countTranslated, $this->countAll);
+        return (new PercentageCalculator())->getRoundedPercentage($this->countTranslated, $this->countAll);
     }
 
 

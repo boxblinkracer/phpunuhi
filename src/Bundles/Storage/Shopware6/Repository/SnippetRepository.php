@@ -39,7 +39,7 @@ class SnippetRepository
 
         $dbRows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        if ($dbRows !== (array)$dbRows) {
+        if ([] === $dbRows) {
             throw new Exception('not found!');
         }
 
@@ -68,7 +68,7 @@ class SnippetRepository
 
         $dbRows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        if ($dbRows !== (array)$dbRows) {
+        if ([] === $dbRows) {
             throw new Exception('not found!');
         }
 

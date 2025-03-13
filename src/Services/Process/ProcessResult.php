@@ -13,7 +13,7 @@ class ProcessResult
     /**
      * @var string[]
      */
-    private $_cachedLines;
+    private ?array $_cachedLines = null;
 
 
 
@@ -47,7 +47,7 @@ class ProcessResult
             $this->_cachedLines = $tmpArray;
 
             # now remove any empty lines
-            $this->_cachedLines = array_filter($this->_cachedLines, function ($line): bool {
+            $this->_cachedLines = array_filter($this->_cachedLines, static function ($line): bool {
                 return trim($line) !== '';
             });
         }

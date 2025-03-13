@@ -193,7 +193,7 @@ class PoStorage implements StorageInterface
             if (empty($line)) {
                 if ($count <= 0) {
                     $newLines[] = $line;
-                    $count += 1;
+                    ++$count;
                 }
             } else {
                 $newLines[] = $line;

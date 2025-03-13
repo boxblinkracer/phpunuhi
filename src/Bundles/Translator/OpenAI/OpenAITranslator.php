@@ -76,8 +76,6 @@ class OpenAITranslator implements TranslatorInterface
 
         $client = new OpenAIClient($this->apiKey);
 
-        $result = $client->chat($prompt, $this->model);
-
-        return $result->getResponse();
+        return $client->chat($prompt, $this->model)->getResponse();
     }
 }

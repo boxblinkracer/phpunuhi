@@ -25,7 +25,7 @@ interface ExchangeInterface
     /**
      * Sets the CLI options for this service.
      * Please assign all API keys and other configurations in here.
-     * @param array<mixed> $options
+     * @param array<string|bool|int|float|array|null> $options
      */
     public function setOptionValues(array $options): void;
 

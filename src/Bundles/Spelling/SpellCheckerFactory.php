@@ -22,7 +22,7 @@ class SpellCheckerFactory
 
     public static function getInstance(): SpellCheckerFactory
     {
-        if (!self::$instance instanceof \PHPUnuhi\Bundles\Spelling\SpellCheckerFactory) {
+        if (!self::$instance instanceof self) {
             self::$instance = new self();
         }
 
@@ -79,10 +79,10 @@ class SpellCheckerFactory
         $options = [];
 
         foreach ($this->spellCheckers as $spellChecker) {
-            $options = array_merge($spellChecker->getOptions(), $options);
+            $options[] = $spellChecker->getOptions();
         }
 
-        return $options;
+        return array_merge([], ...array_reverse($options));
     }
 
     /**

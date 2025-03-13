@@ -16,7 +16,7 @@ trait SnippetSetFinderTrait
     {
         $filteredSnippetSets = array_filter(
             $snippetSets,
-            function (SnippetSet $set) use ($name): bool {
+            static function (SnippetSet $set) use ($name): bool {
                 return $set->getName() === $name;
             }
         );
@@ -24,7 +24,7 @@ trait SnippetSetFinderTrait
         if (count($filteredSnippetSets) !== 1) {
             $filteredSnippetSets = array_filter(
                 $snippetSets,
-                function (SnippetSet $set) use ($name): bool {
+                static function (SnippetSet $set) use ($name): bool {
                     return $set->getIso() === $name;
                 }
             );

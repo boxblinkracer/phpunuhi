@@ -29,7 +29,7 @@ class StorageFactory
 
     public static function getInstance(): StorageFactory
     {
-        if (!self::$instance instanceof \PHPUnuhi\Bundles\Storage\StorageFactory) {
+        if (!self::$instance instanceof self) {
             self::$instance = new self();
         }
 

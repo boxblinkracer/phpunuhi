@@ -70,9 +70,7 @@ class CoverageTotal
             return 0;
         }
 
-        $calculator = new PercentageCalculator();
-
-        return $calculator->getRoundedPercentage($fullTranslated, $fullWords);
+        return (new PercentageCalculator())->getRoundedPercentage($fullTranslated, $fullWords);
     }
 
 

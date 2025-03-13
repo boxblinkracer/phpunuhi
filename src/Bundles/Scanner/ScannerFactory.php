@@ -21,7 +21,7 @@ class ScannerFactory
 
     public static function getInstance(): ScannerFactory
     {
-        if (!self::$instance instanceof \PHPUnuhi\Bundles\Twig\ScannerFactory) {
+        if (!self::$instance instanceof self) {
             self::$instance = new self();
         }
 

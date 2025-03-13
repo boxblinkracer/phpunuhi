@@ -122,11 +122,7 @@ class Locale
 
     public function findLineNumber(string $key): int
     {
-        if (isset($this->lineNumbers[$key])) {
-            return $this->lineNumbers[$key];
-        }
-
-        return 0;
+        return $this->lineNumbers[$key] ?? 0;
     }
 
     /**
@@ -152,11 +148,7 @@ class Locale
 
     public function findTranslationOrNull(string $searchID): ?Translation
     {
-        if (!isset($this->translations[$searchID])) {
-            return null;
-        }
-
-        return $this->translations[$searchID];
+        return $this->translations[$searchID] ?? null;
     }
 
     /**
@@ -166,7 +158,7 @@ class Locale
     {
         return array_filter(
             $this->translations,
-            function ($translation): bool {
+            static function ($translation): bool {
                 return !$translation->isEmpty();
             }
         );

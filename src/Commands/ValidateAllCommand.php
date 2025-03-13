@@ -34,7 +34,7 @@ class ValidateAllCommand extends Command
     /**
      * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName(CommandNames::VALIDATE_ALL)
@@ -108,7 +108,7 @@ class ValidateAllCommand extends Command
             $validationResult->addTranslationSet($setResult);
         }
 
-        $coverageResult = $useCoverageOnly ? $coverageCLI->execute($config) : true;
+        $coverageResult = !$useCoverageOnly || $coverageCLI->execute($config);
 
         $reporterCLI->execute($reportFormat, $reportFilename, $validationResult);
 

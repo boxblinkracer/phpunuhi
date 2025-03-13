@@ -134,7 +134,7 @@ class StringsStorage implements StorageInterface
             $newContent .= "\n";
 
             foreach ($locale->getTranslations() as $translation) {
-                if (!in_array($translation->getKey(), $processedTranslationKeys)) {
+                if (!in_array($translation->getKey(), $processedTranslationKeys, true)) {
                     $count++;
                     $newContent .= "\"{$translation->getKey()}\" = \"{$translation->getValue()}\";\n";
                 }

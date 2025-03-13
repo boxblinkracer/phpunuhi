@@ -23,7 +23,7 @@ class JsonExchange implements ExchangeInterface
     }
 
     /**
-     * @return array<mixed>
+     * @return array[}
      */
     public function getOptions(): array
     {
@@ -31,7 +31,7 @@ class JsonExchange implements ExchangeInterface
     }
 
     /**
-     * @param array<mixed> $options
+     * @param array<string|bool|int|float|array|null> $options
      */
     public function setOptionValues(array $options): void
     {

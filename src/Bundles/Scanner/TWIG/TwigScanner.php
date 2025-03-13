@@ -23,8 +23,7 @@ class TwigScanner implements ScannerInterface
      */
     public function findKey(string $key, string $content): bool
     {
-        $content = str_replace(" ", '', $content);
-        $content = str_replace('"', "'", $content);
+        $content = str_replace([ " ", '"' ], [ '', "'" ], $content);
 
         $pattern = '/{{\s*\'?' . preg_quote($key, '/') . '\'?\s*\|\s*.*trans.*\s*}}/';
 

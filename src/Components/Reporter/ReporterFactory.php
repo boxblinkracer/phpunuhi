@@ -25,7 +25,7 @@ class ReporterFactory
 
     public static function getInstance(): ReporterFactory
     {
-        if (!self::$instance instanceof \PHPUnuhi\Components\Reporter\ReporterFactory) {
+        if (!self::$instance instanceof self) {
             self::$instance = new self();
         }
 

@@ -138,7 +138,7 @@ class ScanUsageCommand extends Command
         }
 
         # order alphabetically
-        usort($errorRows, function (array $a, array $b): int {
+        usort($errorRows, static function (array $a, array $b): int {
             return strcmp($a[1], $b[1]);
         });
 
@@ -147,6 +147,8 @@ class ScanUsageCommand extends Command
             $errorRow[0] = $index;
             $index++;
         }
+
+        unset($errorRow);
 
 
         $table = new Table($output);

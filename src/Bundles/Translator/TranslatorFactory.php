@@ -25,7 +25,7 @@ class TranslatorFactory
 
     public static function getInstance(): TranslatorFactory
     {
-        if (!self::$instance instanceof \PHPUnuhi\Bundles\Translator\TranslatorFactory) {
+        if (!self::$instance instanceof self) {
             self::$instance = new self();
         }
 
@@ -86,10 +86,10 @@ class TranslatorFactory
         $options = [];
 
         foreach ($this->translators as $translator) {
-            $options = array_merge($translator->getOptions(), $options);
+            $options[] = $translator->getOptions();
         }
 
-        return $options;
+        return array_merge([], ...array_reverse($options));
     }
 
     /**

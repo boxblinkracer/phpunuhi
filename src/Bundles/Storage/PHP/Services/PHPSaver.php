@@ -69,7 +69,7 @@ class PHPSaver
 
         foreach ($root as $key => $value) {
             if (is_array($value)) {
-                $indent += 1;
+                ++$indent;
 
                 $content .= $indentStr . '"' . $key . '" => [' . PHP_EOL;
                 $content .= $this->buildArray($value, $indent);

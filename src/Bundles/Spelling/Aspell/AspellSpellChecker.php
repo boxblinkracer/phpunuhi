@@ -21,7 +21,7 @@ class AspellSpellChecker implements SpellCheckerInterface
     /**
      * @var string
      */
-    private $binary = 'aspell';
+    private string $binary = 'aspell';
 
     private OSProcess $process;
 

@@ -50,7 +50,7 @@ class ValidatorCliFacade
             $validatorResult = $validator->validate($set, $storage);
 
             if (!$validatorResult->isValid()) {
-                $allTableErrors = array_merge($allTableErrors, $validatorResult->getErrors());
+                $allTableErrors[] = $validatorResult->getErrors();
             }
 
             foreach ($validatorResult->getTests() as $test) {
@@ -58,6 +58,8 @@ class ValidatorCliFacade
                 $translationSetResult->addTestResult($testResult);
             }
         }
+
+        $allTableErrors = array_merge([], ...$allTableErrors);
 
         $this->showErrorTable($allTableErrors, $this->output);
 

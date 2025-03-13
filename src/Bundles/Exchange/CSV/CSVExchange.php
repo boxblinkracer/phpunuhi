@@ -52,7 +52,7 @@ class CSVExchange implements ExchangeInterface
     }
 
     /**
-     * @param array<mixed> $options
+     * @param array<string|bool|int|float|array|null> $options
      */
     public function setOptionValues(array $options): void
     {
@@ -79,7 +79,6 @@ class CSVExchange implements ExchangeInterface
      */
     public function import(string $filename): ImportResult
     {
-        $importer = new CSVImporter($this->csvDelimiter);
-        return $importer->import($filename);
+        return (new CSVImporter($this->csvDelimiter))->import($filename);
     }
 }

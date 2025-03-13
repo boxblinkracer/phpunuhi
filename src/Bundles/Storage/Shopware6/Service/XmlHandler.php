@@ -65,33 +65,17 @@ class XmlHandler
         if ($this->stringDoesEndsWith($translation->getKey(), '.' . $tagName)) {
             $isDefaultLocale = strtolower($locale) === strtolower($this->defaultLocale);
 
-            $foundNodeForLocale = null;
-            $foundOtherExistingNode = null;
-            $foundDefaultLocaleNode = null; # en-GB
+            $foundNodeForLocale = $xpath->query(
+                './' . $tagName . '[@' . self::LANG_ATTRIBUTE . '="' . $locale . '"]',
+                $contextNode
+            )->item(0) ?: null;
 
-            /** @var DOMNode[] $nodes1 */
-            $nodes1 = $xpath->query('./' . $tagName . '[@' . self::LANG_ATTRIBUTE . '="' . $locale . '"]', $contextNode);
+            $foundDefaultLocaleNode = $xpath->query(
+                './' . $tagName . '[not(@' . self::LANG_ATTRIBUTE . ')]',
+                $contextNode
+            )->item(0) ?: null;
 
-            foreach ($nodes1 as $tmpNode) {
-                $foundNodeForLocale = $tmpNode;
-                break;
-            }
-
-            /** @var DOMNode[] $nodes2 */
-            $nodes2 = $xpath->query('./' . $tagName . '[not(@' . self::LANG_ATTRIBUTE . ')]', $contextNode);
-
-            foreach ($nodes2 as $tmpNode) {
-                $foundDefaultLocaleNode = $tmpNode;
-                break;
-            }
-
-            /** @var DOMNode[] $nodes3 */
-            $nodes3 = $xpath->query('./' . $tagName, $contextNode);
-
-            foreach ($nodes3 as $tmpNode) {
-                $foundOtherExistingNode = $tmpNode;
-                break;
-            }
+            $foundOtherExistingNode = $xpath->query('./' . $tagName, $contextNode)->item(0) ?: null;
 
             # if we have the default locale without the attribute, and we have found it
             # assign this as our found node

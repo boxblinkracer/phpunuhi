@@ -373,62 +373,28 @@ class AppManifestXml implements ShopwareXmlInterface
 
     private function getMeta(DOMXPath $xpath): ?DOMElement
     {
-        /** @var DOMElement[] $nodes */
-        $nodes = $xpath->query('.//meta');
-
-        foreach ($nodes as $node) {
-            return $node;
-        }
-
-        return null;
+        return $xpath->query('.//meta')->item(0) ?: null;
     }
 
     private function getAdmin(DOMXPath $xpath): ?DOMElement
     {
-        /** @var DOMElement[] $nodes */
-        $nodes = $xpath->query('.//admin');
-
-        foreach ($nodes as $node) {
-            return $node;
-        }
-
-        return null;
+        return $xpath->query('.//admin')->item(0) ?: null;
     }
 
     private function getPayments(DOMXPath $xpath): ?DOMElement
     {
-        /** @var DOMElement[] $nodes */
-        $nodes = $xpath->query('.//payments');
+        return $xpath->query('.//payments')->item(0) ?: null;
 
-        foreach ($nodes as $node) {
-            return $node;
-        }
-
-        return null;
     }
 
     private function getCustomFields(DOMXPath $xpath): ?DOMElement
     {
-        /** @var DOMElement[] $nodes */
-        $nodes = $xpath->query('.//custom-fields');
-
-        foreach ($nodes as $node) {
-            return $node;
-        }
-
-        return null;
+        return $xpath->query('.//custom-fields')->item(0) ?: null;
     }
 
     private function getRuleConditions(DOMXPath $xpath): ?DOMElement
     {
-        /** @var DOMElement[] $nodes */
-        $nodes = $xpath->query('.//rule-conditions');
-
-        foreach ($nodes as $node) {
-            return $node;
-        }
-
-        return null;
+        return $xpath->query('.//rule-conditions')->item(0) ?: null;
     }
 
     private function getActionButton(string $actionName, DOMElement $adminContext, DOMXPath $xpath): ?DOMElement

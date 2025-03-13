@@ -25,7 +25,7 @@ class Protection
 
     public function addTerm(string $term): void
     {
-        if (in_array($term, $this->terms)) {
+        if (in_array($term, $this->terms, true)) {
             return;
         }
 

@@ -29,7 +29,7 @@ class ConfigurationValidator
                 throw new ConfigurationException('TranslationSet has no format. This is required!');
             }
 
-            if (in_array($set->getName(), $foundSets)) {
+            if (in_array($set->getName(), $foundSets, true)) {
                 throw new ConfigurationException('TranslationSet "' . $set->getName() . '" has already been found');
             }
 
@@ -43,7 +43,7 @@ class ConfigurationValidator
                     throw new ConfigurationException('Locale has no name. This is required!');
                 }
 
-                if (in_array($locale->getName(), $foundLocales)) {
+                if (in_array($locale->getName(), $foundLocales, true)) {
                     throw new ConfigurationException('Locale "' . $locale->getName() . '" has already been found in Translation-Set: ' . $set->getName());
                 }
 

@@ -21,7 +21,7 @@ class ListTranslationKeysCommand extends Command
     /**
      * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName(CommandNames::LIST_TRANSLATION_KEYS)

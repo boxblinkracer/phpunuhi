@@ -17,7 +17,7 @@ class OpenAIUsageTracker
 
     public static function getInstance(): OpenAIUsageTracker
     {
-        if (!self::$instance instanceof \PHPUnuhi\Services\OpenAI\OpenAIUsageTracker) {
+        if (!self::$instance instanceof self) {
             self::$instance = new self();
         }
 

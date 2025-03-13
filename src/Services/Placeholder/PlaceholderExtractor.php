@@ -8,7 +8,6 @@ class PlaceholderExtractor
 {
     /**
      * @return Placeholder[]
-     * @return Placeholder[]
      */
     public function extract(string $text, string $markerStart, string $markerEnd): array
     {
@@ -23,7 +22,7 @@ class PlaceholderExtractor
         $resultsWithoutMarkers = $foundValues[1];
 
         foreach ($resultsWithoutMarkers as $result) {
-            if (!in_array($result, $uniqueList)) {
+            if (!in_array($result, $uniqueList, true)) {
                 $uniqueList[] = $result;
             }
         }

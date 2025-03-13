@@ -35,7 +35,7 @@ class DeeplTranslator implements TranslatorInterface
     /**
      * @var string
      */
-    private $apiKey;
+    private string $apiKey;
 
     private bool $formality = false;
 

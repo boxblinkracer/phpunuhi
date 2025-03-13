@@ -8,7 +8,7 @@ class Similarity
 {
     /**
      * @param string[] $keys
-     * @return array<mixed>
+     * @return list<array{ key1: string, key2: string, similarity: int }>
      */
     public function findSimilarString(array $keys, float $threshold = 70.0): array
     {
