@@ -38,6 +38,11 @@ class TwigScannerTest extends TestCase
 
             ['This is a sample {{"header.example" | trans | raw }} text.'],
             ['This is a sample {{"header.example" | raw | trans }} text.'],
+
+            ['This is a sample {{ translate({ ident: "header.example" }) }} text.'],
+            ['This is a sample {{translate({ident:"header.example"})}} text.'],
+            ['This is a sample {% include "inputhelp.html.twig" with {"sHelpId": help_id("header.example")} %} text.'],
+            ['This is a sample {% include "inputhelp.html.twig" with {"sHelpText": help_text("header.example")} %} text.'],
         ];
     }
 
