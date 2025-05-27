@@ -19,6 +19,9 @@ class TwigScanner implements ScannerInterface
 
     /**
      * {{ 'header.example' | trans }}
+     * {{ translate({ ident: 'header.example' }) }}
+     * help_id('header.example')
+     * help_text('header.example')
      *
      */
     public function findKey(string $key, string $content): bool
@@ -26,10 +29,16 @@ class TwigScanner implements ScannerInterface
         $content = str_replace(" ", '', $content);
         $content = str_replace('"', "'", $content);
 
-        $pattern = '/{{\s*\'?' . preg_quote($key, '/') . '\'?\s*\|\s*.*trans.*\s*}}/';
+        $defaultPattern = '{{\s*\'?' . preg_quote($key, '/') . '\'?\s*\|\s*.*trans.*\s*}}';
+        $oxidPattern1 = '{{\s*translate\({\s*ident:\s*([\'"])?'.preg_quote($key, '/').'([\'"])?\s*}\)\s*}}';
+        $oxidPattern2 = 'help_(id|text)\(\s*([\'"])?'.preg_quote($key, '/').'([\'"])?\)';
+
+        $pattern = '/('.implode(
+            ')|(',
+            [$defaultPattern, $oxidPattern1, $oxidPattern2],
+        ).')/';
 
         $matches = [];
-
         preg_match($pattern, $content, $matches);
 
         return ($matches !== []);
