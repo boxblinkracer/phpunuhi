@@ -23,10 +23,7 @@ class AvailableServicesCommand extends Command
 {
     use CommandTrait;
 
-    /**
-     * @return void
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName(CommandNames::AVAILABLE_SERVICES)

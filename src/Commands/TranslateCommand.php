@@ -31,10 +31,7 @@ class TranslateCommand extends Command
     public $placeholderExtractor;
 
 
-    /**
-     * @return void
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this->placeholderExtractor = new PlaceholderExtractor();
 

@@ -20,10 +20,7 @@ class ListTranslationsCommand extends Command
     use CommandTrait;
     use CommandOutputTrait;
 
-    /**
-     * @return void
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName(CommandNames::LIST_TRANSLATIONS)

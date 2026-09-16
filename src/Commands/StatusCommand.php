@@ -20,10 +20,7 @@ class StatusCommand extends Command
 {
     use CommandTrait;
 
-    /**
-     * @return void
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName(CommandNames::STATUS)

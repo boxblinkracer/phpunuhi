@@ -12,10 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ValidateCommand extends Command
 {
-    /**
-     * @return void
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName(CommandNames::VALIDATE)

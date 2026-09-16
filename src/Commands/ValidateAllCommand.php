@@ -31,10 +31,7 @@ class ValidateAllCommand extends Command
     use CommandTrait;
     use StringTrait;
 
-    /**
-     * @return void
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName(CommandNames::VALIDATE_ALL)

@@ -18,10 +18,7 @@ class ListTranslationKeysCommand extends Command
 {
     use CommandTrait;
 
-    /**
-     * @return void
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName(CommandNames::LIST_TRANSLATION_KEYS)
