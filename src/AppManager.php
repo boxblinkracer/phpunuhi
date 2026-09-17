@@ -54,10 +54,7 @@ class AppManager
 
         // Register commands
         $application->addCommands(self::getDefaultCommands());
-
-        foreach (self::$extensionCommands as $command) {
-            $application->add($command);
-        }
+        $application->addCommands(self::$extensionCommands);
 
         $application->setDefaultCommand('list');
         $application->run();
