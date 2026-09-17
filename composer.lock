@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ccd48aa1ea590f9904b5ca3aac9b30b7",
+    "content-hash": "0be32b3c7ea700d7ee492a13499a005a",
     "packages": [
         {
             "name": "deeplcom/deepl-php",

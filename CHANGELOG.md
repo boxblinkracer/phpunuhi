@@ -3,6 +3,13 @@
 All notable changes of releases are documented in this file
 using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
+## [1.24.1]
+
+### Fixed
+
+- Fixed a fatal error with **Symfony 8**. The `configure()` methods of all commands now declare the `: void` return type that Symfony 8 requires.
+- Fixed the registration of custom commands from extensions. It now uses `addCommands()`, because `Application::add()` has been removed in Symfony 8.
+
 ## [1.24.0]
 
 ### Added

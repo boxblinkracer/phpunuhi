@@ -112,7 +112,7 @@ svrunit: ##3 Runs all SVRUnit tests
 
 #------------------------------------------------------------------------------------------------
 
-check-release: ##4 Checks if everything is valid to release the provided version
+check-release: ##4 [CONTAINER] Checks if everything is valid to release the provided version [make check-release version=x.x.x]
 ifndef version
 	$(error version is not set)
 endif
@@ -123,10 +123,11 @@ endif
 	@composer validate
 	@php tests/scripts/check_xsd.php $(version)
 
-artifact: ##4 Create a ZIP file in the build folder
+artifact: ##4 [CONTAINER] Create a ZIP file in the build folder
+	make build -B
 	cd .build && zip phpunuhi.zip phpunuhi.phar
 
-docker: ##4 Builds the Docker image
+docker: ##4 [HOST] Builds the Docker image [make docker version=x.x.x]
 ifndef version
 	$(error version is not set)
 endif
@@ -134,4 +135,3 @@ endif
 	docker rmi -f $(shell docker images boxblinkracer/phpunuhi -q) || true
 	cp ./.build/phpunuhi.phar ./devops/docker_release/phpunuhi.phar
 	cd ./devops/docker_release && DOCKER_BUILDKIT=1 docker build --no-cache -t boxblinkracer/phpunuhi:$(version) .
-
