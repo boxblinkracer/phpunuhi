@@ -104,10 +104,10 @@ class MissingStructureValidator implements ValidatorInterface
      */
     private function getSame(array $a, array $b): array
     {
-        $diffA = array_intersect($a, $b);
-        $diffB = array_intersect($b, $a);
-
-        return array_merge($diffA, $diffB);
+        # both arrays contain the same values in here, only the order differs.
+        # so we must only intersect in one direction, otherwise every
+        # matching key would be returned (and tested) twice
+        return array_intersect($a, $b);
     }
 
 

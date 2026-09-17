@@ -316,21 +316,20 @@ class ConfigurationLoader
      */
     private function parseFormat(SimpleXMLElement $rootFormat): array
     {
-        $children = get_object_vars($rootFormat);
+        # we must not use get_object_vars() in here.
+        # if the format node has no whitespace inside it, such as <format><json/></format>,
+        # then SimpleXML returns a numeric key instead of the name of the format node
+        $children = $rootFormat->children();
 
-        if (count($children) <= 0) {
+        if ($children === null || count($children) <= 0) {
             throw new ConfigurationException('No format provided');
         }
 
         $format = '';
-        $setAttributes = '';
+        $setAttributes = [];
 
         foreach ($children as $formatTag => $formatElement) {
-            if ($formatTag === '@attributes') {
-                continue;
-            }
-
-            $format = $formatTag;
+            $format = (string)$formatTag;
             $setAttributes = $this->getAttributes($formatElement);
         }
 

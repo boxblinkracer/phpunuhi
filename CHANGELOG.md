@@ -8,6 +8,12 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 ### Performance
 
 - Improved the performance of `TranslationSet::getAllTranslationIDs()` from O(n^2) to O(n). With 10,000 keys in 5 locales the method drops from 1109 ms to 1.50 ms (738x).
+- The structure validation is now twice as fast, because every translation key is only tested once (see the fix below). With 10,000 keys in 5 locales it drops from 66 ms to 31 ms.
+
+### Fixed
+
+- Fixed the structure validation counting every valid translation key twice. A set with 10,000 keys in 5 locales reported 100,000 tests instead of 50,000. This was visible in the test counts of the JUnit and JSON reports, and it also doubled the memory usage of a validation run. The validation result itself (valid or invalid) was always correct.
+- Fixed a crash when the `<format>` node of a translation set is written without any whitespace inside it, such as `<format><json/></format>`. This is valid XML, but PHPUnuhi aborted with `LazyTranslationSet::__construct(): Argument #2 ($format) must be of type string, int given`. The format node is now read with the SimpleXML child elements instead of `get_object_vars()`, which returns a numeric key in that case.
 
 ## [1.24.1]
 

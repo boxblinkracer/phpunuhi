@@ -78,6 +78,30 @@ class MixedStructureValidatorTest extends TestCase
 
 
     /**
+     * Every key that exists in a locale must only lead to a single test result.
+     *
+     * @throws Exception
+     */
+    public function testValidKeysAreOnlyTestedOnce(): void
+    {
+        $localeDE = new Locale('de-DE', false, '', '');
+        $localeDE->addTranslation('card.btnCancel', 'Abbrechen', 'group1');
+        $localeDE->addTranslation('card.btnOK', 'OK', 'group1');
+
+        $localeEN = new Locale('en-GB', false, '', '');
+        $localeEN->addTranslation('card.btnCancel', 'Cancel', 'group1');
+        $localeEN->addTranslation('card.btnOK', 'OK', 'group1');
+
+        $set = $this->buildSet([$localeDE, $localeEN]);
+
+        $result = $this->validator->validate($set, new JsonStorage());
+
+        # 2 keys in 2 locales
+        $this->assertCount(4, $result->getTests());
+    }
+
+
+    /**
      * @param Locale[] $locales
      */
     private function buildSet(array $locales): TranslationSet

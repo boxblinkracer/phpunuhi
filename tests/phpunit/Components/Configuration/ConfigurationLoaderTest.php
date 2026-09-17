@@ -88,6 +88,24 @@ class ConfigurationLoaderTest extends TestCase
     }
 
     /**
+     * The format node might be written without any whitespace inside it.
+     * This is still valid XML and has to lead to the same format as the multiline notation.
+     *
+     * @throws ConfigurationException
+     */
+    public function testFormatNodeWithoutWhitespaceIsLoaded(): void
+    {
+        $xml = '<phpunuhi><translations><set name="Storefront"><format><fake/></format><locales><locale name="en"></locale></locales></set></translations></phpunuhi>';
+
+        $configuration = $this->loadXml($xml, new FakeStorage());
+
+        $set1 = $configuration->getTranslationSets()[0];
+
+        $this->assertEquals('fake', $set1->getFormat());
+    }
+
+
+    /**
      * @throws ConfigurationException
      */
     public function testFiltersForNotSupportedStorageThrowsException(): void
