@@ -3,6 +3,12 @@
 All notable changes of releases are documented in this file
 using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
+## [Unreleased]
+
+### Performance
+
+- Improved the performance of `TranslationSet::getAllTranslationIDs()` from O(n^2) to O(n). With 10,000 keys in 5 locales the method drops from 1109 ms to 1.50 ms (738x).
+
 ## [1.24.1]
 
 ### Fixed
@@ -174,7 +180,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 ### Changed
 
 - Due to the new mess command the old validate function is now deprecated and should be replaced with the new *
-  *validate:all** command.
+  _validate:all_* command.
 
 ## [1.15.0]
 
@@ -223,8 +229,8 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 ### Added
 
 - Added new **JSON** reporter that creates a JSON file with all validation errors.
-- Add option to register **custom translator services* by using the TranslatorFactory **register** command.
-- Add option to register **custom exchange formats* by using the ExchangeFactory **register** command.
+- Add option to register *_custom translator services_ by using the TranslatorFactory **register** command.
+- Add option to register *_custom exchange formats_ by using the ExchangeFactory **register** command.
 
 ### Changed
 
@@ -239,7 +245,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 ### Added
 
-- Add option to register **custom storages* by using the StorageFactory **register** command.
+- Add option to register *_custom storages_ by using the StorageFactory **register** command.
 - Add first support for **PO** files. This covers the **msgid** and **msgstr** values.
 - Add new **word** count statistic to the status command.
 - Add better error output on OpenAI translation errors, like "Quota exceeded" and more.
@@ -248,7 +254,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 ### Changed
 
 - Improved OpenAI creativity by using a new **temperature** value. This allows to control the creativity of the AI.
-- Improved **StorageInterface* definition for more future proven implementations.
+- Improved *_StorageInterface_ definition for more future proven implementations.
 
 ### Fixed
 
@@ -304,7 +310,7 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
 - Add new **number** case-style validator.
 - Add new **keyLength** rule. Validate a maximum length of your keys.
-- Add new *disallowedTexts** rule. Provide a list of texts that must not appear in any of your translations.
+- Add new _disallowedTexts_* rule. Provide a list of texts that must not appear in any of your translations.
 
 ### Fixed
 
@@ -439,4 +445,3 @@ using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 ### Added
 
 - Initial version
-

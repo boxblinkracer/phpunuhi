@@ -485,4 +485,42 @@ class TranslationSetTest extends TestCase
 
         $this->assertEquals($expected, $existing);
     }
+
+    /**
+     * Keys that exist in multiple locales must only be returned once,
+     * while keeping the original order of the locales and their keys.
+     */
+    public function testGetAllTranslationIDsIsUniqueAndKeepsOrder(): void
+    {
+        $localeEN = new Locale('EN', false, '', '');
+        $localeEN->addTranslation('lblTitle', 'Title', '');
+        $localeEN->addTranslation('lblSave', 'Save', '');
+
+        $localeDE = new Locale('DE', false, '', '');
+        $localeDE->addTranslation('lblTitle', 'Titel', '');
+        $localeDE->addTranslation('lblCancel', 'Abbrechen', '');
+
+        $set = new TranslationSet('storefront', 'json', new Protection(), [$localeEN, $localeDE], new Filter(), [], new CaseStyleSetting([], []), []);
+
+        $expected = [
+            'lblTitle',
+            'lblSave',
+            'lblCancel',
+        ];
+
+        $this->assertSame($expected, $set->getAllTranslationIDs());
+    }
+
+    /**
+     * Numeric keys must still be returned as strings.
+     */
+    public function testGetAllTranslationIDsReturnsNumericKeysAsString(): void
+    {
+        $localeEN = new Locale('EN', false, '', '');
+        $localeEN->addTranslation('123', 'Title', '');
+
+        $set = new TranslationSet('storefront', 'json', new Protection(), [$localeEN], new Filter(), [], new CaseStyleSetting([], []), []);
+
+        $this->assertSame(['123'], $set->getAllTranslationIDs());
+    }
 }

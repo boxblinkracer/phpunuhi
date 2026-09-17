@@ -183,12 +183,15 @@ class TranslationSet
 
         foreach ($this->locales as $locale) {
             foreach ($locale->getTranslationIDs() as $key) {
-                if (!in_array($key, $allIDs)) {
-                    $allIDs[] = $key;
-                }
+                # use the key as array key for a O(1) uniqueness check.
+                # array_keys keeps the original insertion order afterwards
+                $allIDs[$key] = true;
             }
         }
-        return $allIDs;
+
+        # PHP casts numeric array keys to int, so we have to make sure
+        # that we always return the IDs as strings again
+        return array_map('strval', array_keys($allIDs));
     }
 
     /**
